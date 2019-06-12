@@ -1,0 +1,583 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Best Practices for Oracle Streams Replication Databases</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Replication Administrator’s Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Replication Administrator’s Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-replication-administrators-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T23:25:23-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2003, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83780-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="oracle-streams-replication-best-practices.html" title="Previous" type="text/html">
+      <link rel="next" href="best-practices-for-capture.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.isVersionOf" content="STREP">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="oracle-streams-replication-best-practices.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="best-practices-for-capture.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Replication Administrator’s Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="oracle-streams-replication-best-practices.html" property="item" typeof="WebPage"><span property="name"> Oracle Streams Replication Best Practices </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Best Practices for Oracle Streams Replication Databases</li>
+            </ol>
+            <a id="GUID-3BE2D126-6E83-48C4-92E6-5EA916CE95E1" name="GUID-3BE2D126-6E83-48C4-92E6-5EA916CE95E1"></a><a id="STREP501"></a>
+            
+            <h2 id="STREP-GUID-3BE2D126-6E83-48C4-92E6-5EA916CE95E1" class="sect2"><span class="enumeration_chapter">15 </span> Best Practices for Oracle Streams Replication Databases
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>An Oracle Streams replication database is a database that participates in an Oracle Streams replication environment. An Oracle Streams replication environment uses Oracle Streams clients to replicate database changes from one database to another. Oracle Streams clients include capture processes, synchronous captures, propagations, and apply processes. This chapter describes general best practices for Oracle Streams replication databases.</p>
+               <p>This chapter contains these topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-F7B6CE27-8711-486B-A9F3-FE3D3F9A864A">Best Practices for Oracle Streams Database Configuration</a></p>
+                  </li>
+                  <li>
+                     <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-A0113C05-708E-4BFD-8F26-7B4DDAD18501">Best Practices for Oracle Streams Database Operation</a></p>
+                  </li>
+                  <li>
+                     <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-9E3CABFC-BE9C-49ED-BD21-0A1858868AAB">Best Practices for Oracle Real Application Clusters and Oracle Streams</a></p>
+                  </li>
+               </ul>
+            </div><a id="STREP502"></a><div class="props_rev_3"><a id="GUID-F7B6CE27-8711-486B-A9F3-FE3D3F9A864A" name="GUID-F7B6CE27-8711-486B-A9F3-FE3D3F9A864A"></a><h3 id="STREP-GUID-F7B6CE27-8711-486B-A9F3-FE3D3F9A864A" class="sect3"><span class="enumeration_section">15.1 </span>Best Practices for Oracle Streams Database Configuration
+               </h3>
+               <div>
+                  <p>For your Oracle Streams replication environment to run properly and efficiently, follow the best practices in this section when you are configuring the environment. This section contains these topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-878A63D6-9D30-4369-A877-C3DC5DAAA28C">Use a Separate Queue for Capture and Apply Oracle Streams Clients</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-730B5286-F0EA-4E67-BE0F-700610E16AD8">Automate the Oracle Streams Replication Configuration</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-F7B6CE27-8711-486B-A9F3-FE3D3F9A864A__GUID-CCBCDE84-D61F-4126-9896-5DDBA2EAD1F8">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="preparing-for-oracle-streams-replication.html#GUID-9110C1DA-8450-42A5-BA4B-2C0117DB8BFC"> Preparing for Oracle Streams Replication</a> describes best practices to follow when preparing for Oracle Streams replication
+                     </p>
+                  </div>
+               </div><a id="STREP503"></a><div class="props_rev_3"><a id="GUID-878A63D6-9D30-4369-A877-C3DC5DAAA28C" name="GUID-878A63D6-9D30-4369-A877-C3DC5DAAA28C"></a><h4 id="STREP-GUID-878A63D6-9D30-4369-A877-C3DC5DAAA28C" class="sect4"><span class="enumeration_section">15.1.1 </span>Use a Separate Queue for Capture and Apply Oracle Streams Clients
+                  </h4>
+                  <div>
+                     <p>Configure a separate queue for each capture process, for each synchronous capture, and for each apply process, and ensure that each queue has its own queue table. Using separate queues is especially important when configuring bidirectional replication between two databases or when a single database receives messages from several other databases.</p>
+                     <p>For example, suppose a database called <code class="codeph">db1</code> is using a capture process to capture changes that will be sent to other databases and is receiving changes from a database named <code class="codeph">db2</code>. The changes received from <code class="codeph">db2</code> are applied by an apply process running on <code class="codeph">db1</code>. In this scenario, create a separate queue for the capture process and apply process at <code class="codeph">db1</code>, and ensure that these queues use different queue tables.
+                     </p>
+                     <p>The following example creates the queue for the capture process. The queue name is <code class="codeph">capture_queue</code>, and this queue uses queue table <code class="codeph">qt_capture_queue</code>:
+                     </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table =&gt; 'strmadmin.qt_capture_queue',
+    queue_name  =&gt; 'strmadmin.capture_queue');
+END;
+/
+</pre><p>The following example creates the queue for the apply process. The queue name is <code class="codeph">apply_queue</code>, and this queue uses queue table <code class="codeph">qt_apply_queue</code>:
+                     </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table =&gt; 'strmadmin.qt_apply_queue',
+    queue_name  =&gt; 'strmadmin.apply_queue');
+END;
+/
+</pre><p>Subsequently, specify the queue <code class="codeph">strmadmin.capture_queue</code> when you configure the capture process at <code class="codeph">db1</code>, and specify the queue <code class="codeph">strmadmin.apply_queue</code> when you configure the apply process at <code class="codeph">db1</code>. If necessary, the <code class="codeph">SET_UP_QUEUE</code> procedure lets you specify a <code class="codeph">storage_clause</code> parameter to configure separate tablespace and storage specifications for each queue table.
+                     </p>
+                     <p>If you automate the configuration, as described in <span class="q">"<a href="best-practices-for-oracle-streams-replication-databases.html#GUID-730B5286-F0EA-4E67-BE0F-700610E16AD8">Automate the Oracle Streams Replication Configuration</a>"</span>, then each Oracle Streams client is configured with its own queue automatically.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-878A63D6-9D30-4369-A877-C3DC5DAAA28C__GUID-CB47D151-C1EB-4BA2-92B1-59DA8E84B802">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="configuring-implicit-capture.html#GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B">Configuring a Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="configuring-implicit-apply.html#GUID-7D393976-B22F-4CF1-901E-62451DEB64DB"> Configuring Implicit Apply</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STREP504"></a><div class="props_rev_3"><a id="GUID-730B5286-F0EA-4E67-BE0F-700610E16AD8" name="GUID-730B5286-F0EA-4E67-BE0F-700610E16AD8"></a><h4 id="STREP-GUID-730B5286-F0EA-4E67-BE0F-700610E16AD8" class="sect4"><span class="enumeration_section">15.1.2 </span>Automate the Oracle Streams Replication Configuration
+                  </h4>
+                  <div>
+                     <p>Use the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create your Oracle Streams replication environment whenever possible:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS825"><code class="codeph">MAINTAIN_GLOBAL</code></a> configures an Oracle Streams environment that replicates changes at the database level between two databases.
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS826"><code class="codeph">MAINTAIN_SCHEMAS</code></a> configures an Oracle Streams environment that replicates changes to specified schemas between two databases.
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS863"><code class="codeph">MAINTAIN_SIMPLE_TTS</code></a> clones a simple tablespace from a source database at a destination database and uses Oracle Streams to maintain this tablespace at both databases.
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS827"><code class="codeph">MAINTAIN_TABLES</code></a> configures an Oracle Streams environment that replicates changes to specified tables between two databases.
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS864"><code class="codeph">MAINTAIN_TTS</code></a> clones a set of tablespaces from a source database at a destination database and uses Oracle Streams to maintain these tablespaces at both databases.
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> and <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> configure an Oracle Streams environment that replicates changes either at the database level or to specified tablespaces between two databases. These procedures must be used together, and instantiation actions must be performed manually, to complete the Oracle Streams replication configuration.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>These procedures automate the entire configuration of the Oracle Streams clients at multiple databases. Further, the configuration follows Oracle Streams best practices. For example, these procedures create queue-to-queue propagations whenever possible.</p>
+                     <p>If these procedures are not suitable for your environment, then use the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create Oracle Streams clients, rules sets, and rules:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS308"><code class="codeph">ADD_TABLE_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS329"><code class="codeph">ADD_SUBSET_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS309"><code class="codeph">ADD_SCHEMA_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS310"><code class="codeph">ADD_GLOBAL_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS316"><code class="codeph">ADD_TABLE_PROPAGATION_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS394"><code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS317"><code class="codeph">ADD_SCHEMA_PROPAGATION_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS318"><code class="codeph">ADD_GLOBAL_PROPAGATION_RULES</code></a></p>
+                        </li>
+                     </ul>
+                     <p>These procedures minimize the number of steps required to configure Oracle Streams clients. It is also possible to create rules for nonexistent objects, so ensure that you check the spelling of each object specified in a rule carefully.</p>
+                     <p>Although it is typically not recommended, a propagation or apply process can be used without rule sets or rules if you always want to propagate or apply all of the messages in a queue. However, a capture process requires one or more rule sets with rules, and a synchronous capture requires a positive rule set. You can use the <code class="codeph">ADD_GLOBAL_RULES</code> procedure to capture data manipulation language (DML) changes to an entire database with a capture process if a negative rule set is configured for the capture process to filter out changes to unsupported objects. You can also use the <code class="codeph">ADD_GLOBAL_RULES</code> procedure to capture all data definition language (DDL) changes to the database with a capture process.
+                     </p>
+                     <p>The rules in the rule set for a propagation can differ from the rules specified for a capture process or a synchronous capture. For example, to configure that all captured changes be propagated to a destination database, you can run the <code class="codeph">ADD_GLOBAL_PROPAGATION_RULES</code> procedure for the propagation even though multiple rules might have been configured using <code class="codeph">ADD_TABLE_RULES</code> for the capture process or synchronous capture. Similarly, the rules in the rule set for an apply process can differ from the rules specified for the capture process, synchronous capture, and propagation(s) that capture and propagate messages to the apply process.
+                     </p>
+                     <p>An Oracle Streams client can process changes for multiple tables or schemas. For the best performance, ensure that the rules for these multiple tables or schemas are simple. Complex rules will impact the performance of Oracle Streams. For example, rules with conditions that include <code class="codeph">LIKE</code> clauses are complex. When you use a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create rules, the rules are always simple.
+                     </p>
+                     <p>When you configure multiple source databases in an Oracle Streams replication environment, change cycling should be avoided. Change cycling means sending a change back to the database where it originated. You can use Oracle Streams tags to prevent change cycling.</p>
+                     <div class="infoboxnotealso" id="GUID-730B5286-F0EA-4E67-BE0F-700610E16AD8__GUID-6D70EADF-0C98-4247-91CE-8D31EF1FA559">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="simple-oracle-streams-replication-configuration.html#GUID-8FAAAEF7-0689-4A95-8BD4-D8630CE45FD5">Configuring Replication Using the DBMS_STREAMS_ADM Package</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="best-practices-for-propagation.html#GUID-D100FFC6-39C5-40CD-8E73-1B3C89430E5B">Use Queue-to-Queue Propagations</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-tags.html#GUID-DEA16475-320C-4256-A4E0-C341712AF7F7">Oracle Streams Tags in a Replication Environment</a>"</span> for information about using Oracle Streams tags to avoid change cycling
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../strms/advanced-rule-concepts.html#STRMS005"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about simple and complex rules
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STREP505"></a><div class="props_rev_3"><a id="GUID-A0113C05-708E-4BFD-8F26-7B4DDAD18501" name="GUID-A0113C05-708E-4BFD-8F26-7B4DDAD18501"></a><h3 id="STREP-GUID-A0113C05-708E-4BFD-8F26-7B4DDAD18501" class="sect3"><span class="enumeration_section">15.2 </span>Best Practices for Oracle Streams Database Operation
+               </h3>
+               <div>
+                  <p>After the Oracle Streams replication environment is configured, follow the best practices in this section to keep it running properly and efficiently. This section contains these topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-89103992-2B44-469E-9589-81BAB7797BC3">Follow the Best Practices for the Global Name of an Oracle Streams Database</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-4CFDB58D-3B6E-4548-981E-2E0DB6BD5C31">Monitor Performance and Make Adjustments When Necessary</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-54D079B0-6C02-4AAF-ABA1-77B5AE8FE973">Monitor Capture Process's and Synchronous Capture's Queues for Size</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-4A8E0E90-15B0-4BA1-94DF-5E80833DC960">Follow the Oracle Streams Best Practices for Backups</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-8D16A40B-FAA4-4C63-861E-C97734D2BD34">Adjust the Automatic Collection of Optimizer Statistics</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-A0715AD7-C65D-488B-8269-A904DC63CBFF">Check the Alert Log for Oracle Streams Information</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-F9EED488-73C4-4438-8EE9-7901E01B51F2">Follow the Best Practices for Removing an Oracle Streams Configuration at a Database</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STREP506"></a><div class="props_rev_3"><a id="GUID-89103992-2B44-469E-9589-81BAB7797BC3" name="GUID-89103992-2B44-469E-9589-81BAB7797BC3"></a><h4 id="STREP-GUID-89103992-2B44-469E-9589-81BAB7797BC3" class="sect4"><span class="enumeration_section">15.2.1 </span>Follow the Best Practices for the Global Name of an Oracle Streams Database
+                  </h4>
+                  <div>
+                     <p>Oracle Streams uses the global name of a database to identify changes from or to a particular database. For example, the system-generated rules for capture, propagation, and apply typically specify the global name of the source database. In addition, changes captured by an Oracle Streams capture process or synchronous capture automatically include the current global name of the source database. If possible, do not modify the global name of a database that is participating in an Oracle Streams replication environment after the environment has been configured. The <code class="codeph">GLOBAL_NAMES</code> initialization parameter must also be set to <code class="codeph">TRUE</code> to guarantee that database link names match the global name of each destination database. 
+                     </p>
+                     <p>If the global name of an Oracle Streams database must be modified, then do so at a time when no user changes are possible on the database, the queues are empty, and no outstanding changes must be applied by any apply process. When these requirements are met, you can modify the global name of a database and re-create the parts of the Oracle Streams configuration that reference the modified database. All queue subscribers, including propagations and apply processes, must be re-created if the source database global name is changed.</p>
+                     <div class="infoboxnotealso" id="GUID-89103992-2B44-469E-9589-81BAB7797BC3__GUID-F8A49588-81B1-439A-8005-275B65816CEA">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="managing-oracle-streams-replication.html#GUID-15E7DA26-5E2C-4C0A-9626-6041C75E6E72">Changing the DBID or Global Name of a Source Database</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STREP507"></a><div class="props_rev_3"><a id="GUID-4CFDB58D-3B6E-4548-981E-2E0DB6BD5C31" name="GUID-4CFDB58D-3B6E-4548-981E-2E0DB6BD5C31"></a><h4 id="STREP-GUID-4CFDB58D-3B6E-4548-981E-2E0DB6BD5C31" class="sect4"><span class="enumeration_section">15.2.2 </span>Monitor Performance and Make Adjustments When Necessary
+                  </h4>
+                  <div>
+                     <p>For Oracle Database 11<span class="italic">g</span> Release 1 (11.1) and later databases, the Oracle Streams Performance Advisor provides information about how Oracle Streams components are performing. You can use this advisor to monitor the performance of multiple Oracle Streams components in your environment and make adjustments to improve performance when necessary.
+                     </p>
+                     <p>The <code class="codeph">UTL_SPADV</code> package also provides performance statistics for an Oracle Streams environment. This package uses the Oracle Streams Performance Advisor to gather performance statistics. The package enables you to format the statistics in output that can be imported into a spreadsheet for analysis.
+                     </p>
+                     <p>For databases before Oracle Database 11<span class="italic">g</span> Release 1 (11.1), you can use <code class="codeph">STRMMON</code> to monitor the performance of an Oracle Streams environment. You can use this tool to obtain a quick overview of the Oracle Streams activity in a database. <code class="codeph">STRMMON</code> reports information in a single line display. You can configure the reporting interval and the number of iterations to display. <code class="codeph">STRMMON</code> is available in the <code class="codeph">rdbms/demo</code> directory in your Oracle home.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-4CFDB58D-3B6E-4548-981E-2E0DB6BD5C31__GUID-FA6B90B7-7829-45CC-B29A-AED626D50204">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../strms/monitoring-the-oracle-streams-topology-and-performance.html#STRMS170"><span class="italic">Oracle Streams Concepts and Administration</span></a> for information about the Oracle Streams Performance Advisor
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/UTL_SPADV.html#ARPLS883"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">UTL_SPADV</code> package
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STREP508"></a><div class="props_rev_3"><a id="GUID-54D079B0-6C02-4AAF-ABA1-77B5AE8FE973" name="GUID-54D079B0-6C02-4AAF-ABA1-77B5AE8FE973"></a><h4 id="STREP-GUID-54D079B0-6C02-4AAF-ABA1-77B5AE8FE973" class="sect4"><span class="enumeration_section">15.2.3 </span>Monitor Capture Process's and Synchronous Capture's Queues for Size
+                  </h4>
+                  <div>
+                     <p>You should monitor the queues used by a capture process to check for queue size. The number of messages in a queue used by a capture process or synchronous capture increases if the messages in the queue cannot be propagated to one or more destination queues. When a source queue becomes large, it often indicates that there is a problem with the Oracle Streams replication environment. Common reasons why messages cannot be propagated include the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>One of the destination databases is down for an extended period.</p>
+                        </li>
+                        <li>
+                           <p>An apply process at a destination database is disabled for an extended period.</p>
+                        </li>
+                        <li>
+                           <p>The queue is the source queue for a propagation that cannot deliver the messages to a particular destination queue for an extended period due to network problems or propagation job problems.</p>
+                        </li>
+                     </ul>
+                     <p>When a capture process's queue becomes large, the capture process pauses for flow control to minimize the number of messages that are spilled to disk. You can monitor the number of messages in a capture process's queue by querying the <code class="codeph">V$BUFFERED_QUEUES</code> dynamic performance view. This view shows the number of messages in memory and the number of messages spilled to disk.
+                     </p>
+                     <p>You can monitor the number of messages in a synchronous capture's queue by querying the <code class="codeph">V$PERSISTENT_QUEUES</code> or <code class="codeph">V$AQ</code> dynamic performance view. This view shows the number of messages in different message states in the persistent queue.
+                     </p>
+                     <p>Propagation is implemented using Oracle Scheduler. If a job cannot execute 16 successive times, the job is marked as "broken" and is aborted. Check propagation jobs periodically to ensure that they are running successfully to minimize the size of the source queue.</p>
+                     <div class="infoboxnotealso" id="GUID-54D079B0-6C02-4AAF-ABA1-77B5AE8FE973__GUID-77D41888-54AF-4218-8962-00162C8D145C">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="best-practices-for-propagation.html#GUID-B35F79D2-496C-42BC-8583-E69E31F5B67B">Restart Broken Propagations</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STREP509"></a><div class="props_rev_3"><a id="GUID-4A8E0E90-15B0-4BA1-94DF-5E80833DC960" name="GUID-4A8E0E90-15B0-4BA1-94DF-5E80833DC960"></a><h4 id="STREP-GUID-4A8E0E90-15B0-4BA1-94DF-5E80833DC960" class="sect4"><span class="enumeration_section">15.2.4 </span>Follow the Oracle Streams Best Practices for Backups
+                  </h4>
+                  <div>
+                     <p>The following sections contain information about best practices for backing up source databases and destination databases in an Oracle Streams replication environment. A single database can be both a source database and a destination database.</p>
+                  </div><a id="STREP510"></a><div class="props_rev_3"><a id="GUID-1A0BA14B-FA0A-4E17-8712-94F8493BF0B8" name="GUID-1A0BA14B-FA0A-4E17-8712-94F8493BF0B8"></a><h5 id="STREP-GUID-1A0BA14B-FA0A-4E17-8712-94F8493BF0B8" class="sect5"><span class="enumeration_section">15.2.4.1 </span>Best Practices for Backups of an Oracle Streams Source Database
+                     </h5>
+                     <div>
+                        <p>A source database is a database where changes captured by a capture process are generated in a redo log or a database where an Oracle Streams synchronous capture is configured. Follow these best practices for backups of an Oracle Streams source database:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Use an Oracle Streams tag in the session that runs the online backup SQL statements to ensure that the capture process which captures changes to the source database <span class="italic">will not</span> capture the backup statements. An online backup statement uses the <code class="codeph">BEGIN</code> <code class="codeph">BACKUP</code> and <code class="codeph">END</code> <code class="codeph">BACKUP</code> clauses in an <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> or <code class="codeph">ALTER</code> <code class="codeph">DATABASE</code> statement. To set an Oracle Streams session tag, use the <code class="codeph">DBMS_STREAMS.SET_TAG</code> procedure.
+                              </p>
+                              <div class="infoboxnote" id="GUID-1A0BA14B-FA0A-4E17-8712-94F8493BF0B8__GUID-95C3BB64-491B-4EFA-A9AA-A42150341169">
+                                 <p class="notep1">Note:</p>
+                                 <p>Backups performed using Recovery Manager (RMAN) do not need to set an Oracle Streams session tag.</p>
+                              </div>
+                              <div class="infoboxnotealso" id="GUID-1A0BA14B-FA0A-4E17-8712-94F8493BF0B8__GUID-27B3239D-7C96-49C9-80C4-A213452ED18F">
+                                 <p class="notep1">See Also:</p>
+                                 <p><a href="oracle-streams-tags.html#GUID-9339D29B-65F3-450B-B3CD-A7B4ADCA4AAF"> Oracle Streams Tags</a></p>
+                              </div>
+                           </li>
+                           <li>
+                              <p>Do not allow any automated backup of the archived logs that might remove archive logs required by a capture process. It is especially important in an Oracle Streams environment that all required archive log files remain available online and in the expected location until the capture process has finished processing them. If a log required by a capture process is unavailable, then the capture process will abort.</p>
+                              <p>To list each required archive redo log file in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CONSUMER_NAME HEADING 'Capture|Process|Name' FORMAT A15
+COLUMN SOURCE_DATABASE HEADING 'Source|Database' FORMAT A10
+COLUMN SEQUENCE# HEADING 'Sequence|Number' FORMAT 99999
+COLUMN NAME HEADING 'Required|Archived Redo Log|File Name' FORMAT A40
+ 
+SELECT r.CONSUMER_NAME,
+       r.SOURCE_DATABASE,
+       r.SEQUENCE#, 
+       r.NAME 
+  FROM DBA_REGISTERED_ARCHIVED_LOG r, DBA_CAPTURE c
+  WHERE r.CONSUMER_NAME =  c.CAPTURE_NAME AND
+        r.NEXT_SCN      &gt;= c.REQUIRED_CHECKPOINT_SCN;
+</pre></li>
+                           <li>
+                              <p>Ensure that all archive log files from all threads are available. Database recovery depends on the availability of these logs, and a missing log will result in incomplete recovery.</p>
+                           </li>
+                           <li>
+                              <p>In situations that result in incomplete recovery (point-in-time recovery) at a source database, follow the instructions in <span class="q">"<a href="managing-oracle-streams-replication.html#GUID-2C997159-A1F8-46F8-855F-DB2F0B12BDC3">Performing Point-in-Time Recovery on the Source in a Single-Source Environment</a>"</span> or <span class="q">"<a href="managing-oracle-streams-replication.html#GUID-ABC4B432-DD47-46AF-8889-5C90D231A4AA">Performing Point-in-Time Recovery in a Multiple-Source Environment</a>"</span>.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STREP511"></a><div class="props_rev_3"><a id="GUID-BACCCF50-967D-4A2C-B46A-4EC978F24F06" name="GUID-BACCCF50-967D-4A2C-B46A-4EC978F24F06"></a><h5 id="STREP-GUID-BACCCF50-967D-4A2C-B46A-4EC978F24F06" class="sect5"><span class="enumeration_section">15.2.4.2 </span>Best Practices for Backups of an Oracle Streams Destination Database
+                     </h5>
+                     <div>
+                        <p>In an Oracle Streams replication environment, a destination database is a database where an apply process applies changes. Follow these best practices for backups of an Oracle Streams destination database:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Ensure that the <code class="codeph">commit_serialization</code> apply process parameter is set to <code class="codeph">FULL</code>. 
+                              </p>
+                           </li>
+                           <li>
+                              <p>In situations that result in incomplete recovery (point-in-time recovery) at a destination database, follow the instructions in <span class="q">"<a href="managing-oracle-streams-replication.html#GUID-8738698A-F47F-496A-80BE-4DB1F19F2BA5">Performing Point-in-Time Recovery on a Destination Database</a>"</span>.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STREP512"></a><div class="props_rev_3"><a id="GUID-8D16A40B-FAA4-4C63-861E-C97734D2BD34" name="GUID-8D16A40B-FAA4-4C63-861E-C97734D2BD34"></a><h4 id="STREP-GUID-8D16A40B-FAA4-4C63-861E-C97734D2BD34" class="sect4"><span class="enumeration_section">15.2.5 </span>Adjust the Automatic Collection of Optimizer Statistics
+                  </h4>
+                  <div>
+                     <p>Every night by default, the optimizer automatically collects statistics on tables whose statistics have become stale. For volatile tables, such as Oracle Streams queue tables, it is likely that the statistics collection job runs when these tables might not have data that is representative of their full load period.</p>
+                     <p>You create these volatile queue tables using the <code class="codeph">DBMS_AQADM.CREATE_QUEUE_TABLE</code> or <code class="codeph">DBMS_STREAMS_ADM.SETUP_QUEUE</code> procedure. You specify the queue table name when you run these procedures. In addition to the queue table, the following tables are created when the queue table is created and are also volatile:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">AQ$_</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">_I</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">AQ$_</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">_H</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">AQ$_</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">_T</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">AQ$_</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">_P</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">AQ$_</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">_D</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">AQ$_</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">_C</code></p>
+                        </li>
+                     </ul>
+                     <p>Replace <span class="italic"><code class="codeph">queue_table_name</code></span> with the name of the queue table.
+                     </p>
+                     <p>Oracle recommends that you collect statistics on volatile tables by completing the following steps:</p>
+                     <ol>
+                        <li>
+                           <p>Run the <code class="codeph">DBMS_STATS.GATHER_TABLE_STATS</code> procedure manually on volatile tables when these tables are at their fullest.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Immediately after the statistics are collected on volatile tables, run the <code class="codeph">DBMS_STATS.LOCK_TABLE_STATS</code> procedure on these tables.
+                           </p>
+                        </li>
+                     </ol>
+                     <p>Locking the statistics on volatile tables ensures that the automatic statistics collection job skips these tables, and the tables are not analyzed.</p>
+                     <div class="infoboxnotealso" id="GUID-8D16A40B-FAA4-4C63-861E-C97734D2BD34__GUID-B2940F6B-FE8A-40E1-906B-3F94B8BEFA3A">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../tgsql/gathering-optimizer-statistics.html#TGSQL389"><span class="italic">Oracle Database SQL Tuning Guide</span></a> for more information about managing optimizer statistics
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STREP513"></a><div class="props_rev_3"><a id="GUID-A0715AD7-C65D-488B-8269-A904DC63CBFF" name="GUID-A0715AD7-C65D-488B-8269-A904DC63CBFF"></a><h4 id="STREP-GUID-A0715AD7-C65D-488B-8269-A904DC63CBFF" class="sect4"><span class="enumeration_section">15.2.6 </span>Check the Alert Log for Oracle Streams Information
+                  </h4>
+                  <div>
+                     <p>By default, the alert log contains information about why Oracle Streams capture and apply processes stopped. Also, Oracle Streams capture and apply processes report long-running and large transactions in the alert log.</p>
+                     <p>Long-running transactions are open transactions with no activity (that is, no new change records, rollbacks, or commits) for an extended period (20 minutes). Large transactions are open transactions with a large number of change records. The alert log reports whether a long-running or large transaction has been seen every 20 minutes. Not all such transactions are reported, because only one transaction is reported for each 20 minute period. When the commit or rollback is received, this information is reported in the alert log as well.</p>
+                     <p>You can use the following views for information about long-running transactions:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The <code class="codeph">V$STREAMS_TRANSACTION</code> dynamic performance view enables monitoring of long running transactions that are currently being processed by Oracle Streams capture processes and apply processes.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">DBA_APPLY_SPILL_TXN</code> and <code class="codeph">V$STREAMS_APPLY_READER</code> views enable you to monitor the number of transactions and messages spilled by an apply process.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-A0715AD7-C65D-488B-8269-A904DC63CBFF__GUID-F175D4FA-AC48-4A05-9D38-1EA1CDAF3B89">
+                        <p class="notep1">Note:</p>
+                        <p>The <code class="codeph">V$STREAMS_TRANSACTION</code> view does not pertain to synchronous captures.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-A0715AD7-C65D-488B-8269-A904DC63CBFF__GUID-B6E4BF54-69B8-4ED0-A646-59721873D900">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS132"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about Oracle Streams information in the alert log
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STREP514"></a><div class="props_rev_3"><a id="GUID-F9EED488-73C4-4438-8EE9-7901E01B51F2" name="GUID-F9EED488-73C4-4438-8EE9-7901E01B51F2"></a><h4 id="STREP-GUID-F9EED488-73C4-4438-8EE9-7901E01B51F2" class="sect4"><span class="enumeration_section">15.2.7 </span>Follow the Best Practices for Removing an Oracle Streams Configuration at a Database
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To completely remove the Oracle Streams configuration at a database, complete the following steps:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the database as an administrative user.</span><div>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Run the <code class="codeph">DBMS_STREAMS_ADM.REMOVE_STREAMS_CONFIGURATION</code> procedure.</span></li>
+                        <li class="stepexpand"><span>Drop the Oracle Streams administrator, if possible.</span></li>
+                     </ol>
+                  </div>
+               </div>
+            </div><a id="STREP153"></a><div class="props_rev_3"><a id="GUID-9E3CABFC-BE9C-49ED-BD21-0A1858868AAB" name="GUID-9E3CABFC-BE9C-49ED-BD21-0A1858868AAB"></a><h3 id="STREP-GUID-9E3CABFC-BE9C-49ED-BD21-0A1858868AAB" class="sect3"><span class="enumeration_section">15.3 </span>Best Practices for Oracle Real Application Clusters and Oracle Streams
+               </h3>
+               <div>
+                  <p>The following best practices are for Oracle Real Application Clusters (Oracle RAC) databases in Oracle Streams replication environments:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-8D94DF5F-5E4E-483D-A92A-EBF63BB4C95F">Make Archive Log Files of All Threads Available to Capture Processes</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-0460C2E3-A0C3-4F50-BEE2-12A470605AF0">Follow the Best Practices for the Global Name of an Oracle RAC Database</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-E88C3128-1177-44DC-9887-2CB22CD54809">Follow the Best Practices for Configuring and Managing Propagations</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-oracle-streams-replication-databases.html#GUID-4CB1A90A-E222-455E-AE9E-5A0C3DD33DFE">Follow the Best Practices for Queue Ownership</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-9E3CABFC-BE9C-49ED-BD21-0A1858868AAB__GUID-F2E612D8-8F5C-459E-AE0B-77111B26BB56">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS179"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about how Oracle Streams works with Oracle RAC
+                     </p>
+                  </div>
+               </div><a id="STREP515"></a><div class="props_rev_3"><a id="GUID-8D94DF5F-5E4E-483D-A92A-EBF63BB4C95F" name="GUID-8D94DF5F-5E4E-483D-A92A-EBF63BB4C95F"></a><h4 id="STREP-GUID-8D94DF5F-5E4E-483D-A92A-EBF63BB4C95F" class="sect4"><span class="enumeration_section">15.3.1 </span>Make Archive Log Files of All Threads Available to Capture Processes
+                  </h4>
+                  <div>
+                     <p>The archive log files of all threads from all instances must be available to any instance running a capture process. This requirement pertains to both local and downstream capture processes.</p>
+                  </div>
+               </div><a id="STREP516"></a><div class="props_rev_3"><a id="GUID-0460C2E3-A0C3-4F50-BEE2-12A470605AF0" name="GUID-0460C2E3-A0C3-4F50-BEE2-12A470605AF0"></a><h4 id="STREP-GUID-0460C2E3-A0C3-4F50-BEE2-12A470605AF0" class="sect4"><span class="enumeration_section">15.3.2 </span>Follow the Best Practices for the Global Name of an Oracle RAC Database
+                  </h4>
+                  <div>
+                     <p>The general best practices described in <span class="q">"<a href="best-practices-for-oracle-streams-replication-databases.html#GUID-89103992-2B44-469E-9589-81BAB7797BC3">Follow the Best Practices for the Global Name of an Oracle Streams Database</a>"</span> also apply to Oracle Real Application Clusters (Oracle RAC) databases in an Oracle Streams environment. In addition, if the global name of an Oracle RAC destination database does not match the <span class="italic"><code class="codeph">DB_NAME.DB_DOMAIN</code></span> of the database, then include the global name for the database in the list of services for the database specified by the <code class="codeph">SERVICE_NAMES</code> initialization parameter.
+                     </p>
+                     <p>In the <code class="codeph">tnsnames.ora</code> file, ensure that the <code class="codeph">CONNECT_DATA</code> clause in the connect descriptor specifies the global name of the destination database for the <code class="codeph">SERVICE_NAME</code>. Also, ensure that the <code class="codeph">CONNECT_DATA</code> clause does not include the <code class="codeph">INSTANCE_NAME</code> parameter. 
+                     </p>
+                     <p>If the global name of an Oracle RAC database that contains Oracle Streams propagations is changed, then drop and re-create all propagations. Ensure that the new propagations are queue-to-queue propagations by setting the <code class="codeph">queue_to_queue</code> parameter set to <code class="codeph">TRUE</code> during creation.
+                     </p>
+                     <p>If the global name of an Oracle RAC destination database must be changed, then ensure that the queue used by each apply process is empty and that there are no unapplied transactions before changing the global name. After the global name is changed, drop and re-create each apply process's queue and each apply process.</p>
+                     <div class="infoboxnotealso" id="GUID-0460C2E3-A0C3-4F50-BEE2-12A470605AF0__GUID-53427D12-9ACE-403D-ACA9-CCDF168385D1">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="best-practices-for-oracle-streams-replication-databases.html#GUID-4CB1A90A-E222-455E-AE9E-5A0C3DD33DFE">Follow the Best Practices for Queue Ownership</a>"</span> for more information about the <code class="codeph">SERVICE_NAME</code> parameter in the <code class="codeph">tnsnames.ora</code> file
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STREP517"></a><div class="props_rev_3"><a id="GUID-E88C3128-1177-44DC-9887-2CB22CD54809" name="GUID-E88C3128-1177-44DC-9887-2CB22CD54809"></a><h4 id="STREP-GUID-E88C3128-1177-44DC-9887-2CB22CD54809" class="sect4"><span class="enumeration_section">15.3.3 </span>Follow the Best Practices for Configuring and Managing Propagations
+                  </h4>
+                  <div>
+                     <p>The general best practices described in <span class="q">"<a href="best-practices-for-propagation.html#GUID-B35F79D2-496C-42BC-8583-E69E31F5B67B">Restart Broken Propagations</a>"</span> also apply to Oracle Real Application Clusters (Oracle RAC) databases in an Oracle Streams environment. Use the procedures <code class="codeph">START_PROPAGATION</code> and <code class="codeph">STOP_PROPAGATION</code> in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package to start and stop propagations. These procedures automatically handle queue-to-queue propagation.
+                     </p>
+                     <p>Also, on an Oracle RAC database, a service is created for each buffered queue. This service always runs on the owner instance of the destination queue and follows the ownership of this queue upon queue ownership switches, which include instance startup, instance shutdown, and so on. This service is used by queue-to-queue propagations. You can query <code class="codeph">NETWORK_NAME</code> column of the <code class="codeph">DBA_SERVICES</code> data dictionary view to determine the service name for a queue-to-queue propagation. If you are running Oracle RAC instances, and you have queues that were created before Oracle Database 10<span class="italic">g</span> Release 2, then drop and re-create these queues to take advantage of the automatic service generation and queue-to-queue propagation. Ensure that you re-create these queues when they are empty and no new messages are being enqueued into them.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-E88C3128-1177-44DC-9887-2CB22CD54809__GUID-AC0FF02F-6FAE-4302-B23C-89EBF010DEC2">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="best-practices-for-propagation.html#GUID-D100FFC6-39C5-40CD-8E73-1B3C89430E5B">Use Queue-to-Queue Propagations</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STREP518"></a><div class="props_rev_3"><a id="GUID-4CB1A90A-E222-455E-AE9E-5A0C3DD33DFE" name="GUID-4CB1A90A-E222-455E-AE9E-5A0C3DD33DFE"></a><h4 id="STREP-GUID-4CB1A90A-E222-455E-AE9E-5A0C3DD33DFE" class="sect4"><span class="enumeration_section">15.3.4 </span>Follow the Best Practices for Queue Ownership
+                  </h4>
+                  <div>
+                     <p>All Oracle Streams processing is done at the owning instance of the queue used by the Oracle Streams client. To determine the owning instance of each <code class="codeph">ANYDATA</code> queue in a database, run the following query:
+                     </p><pre class="oac_no_warn" dir="ltr">SELECT q.OWNER, q.NAME, t.QUEUE_TABLE, t.OWNER_INSTANCE
+   FROM DBA_QUEUES q, DBA_QUEUE_TABLES t
+   WHERE t.OBJECT_TYPE = 'SYS.ANYDATA' AND
+         q.QUEUE_TABLE = t.QUEUE_TABLE AND
+         q.OWNER = t.OWNER;
+</pre><p>When Oracle Streams is configured in an Oracle Real Application Clusters (Oracle RAC) environment, each queue table has an owning instance. Also, all queues within an individual queue table are owned by the same instance. The following Oracle Streams clients use the owning instance of the relevant queue to perform their work:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Each capture process is run at the owning instance of its queue.</p>
+                        </li>
+                        <li>
+                           <p>Each propagation is run at the owning instance of the propagation's source queue.</p>
+                        </li>
+                        <li>
+                           <p>Each propagation must connect to the owning instance of the propagation's destination queue.</p>
+                        </li>
+                        <li>
+                           <p>Each apply process is run at the owning instance of its queue.</p>
+                        </li>
+                     </ul>
+                     <p>You can configure ownership of a queue to remain on a specific instance, if that instance is available, by running the <code class="codeph">DBMS_AQADM.ALTER_QUEUE_TABLE</code> procedure and setting the <code class="codeph">primary_instance</code> and <code class="codeph">secondary_instance</code> parameters. When the primary instance of a queue table is set to a specific instance, the queue ownership will return to the specified instance whenever the instance is running.
+                     </p>
+                     <p>Capture processes and apply processes automatically follow the ownership of the queue. If the ownership changes while process is running, then the process stops on the current instance and restarts on the new owner instance. </p>
+                     <p>Queue-to-queue propagations send messages only to the specific queue identified as the destination queue. Also, the source database link for the destination database connect descriptor must specify the correct service to connect to the destination database. The <code class="codeph">CONNECT_DATA</code> clause in the connect descriptor should specify the global name of the destination database for the <code class="codeph">SERVICE_NAME</code>.
+                     </p>
+                     <p>For example, consider the <code class="codeph">tnsnames.ora</code> file for a database with the global name <code class="codeph">db.mycompany.com</code>. Assume that the alias name for the first instance is <code class="codeph">db1</code> and that the alias for the second instance is <code class="codeph">db2</code>. The <code class="codeph">tnsnames.ora</code> file for this database might include the following entries:
+                     </p><pre class="oac_no_warn" dir="ltr">db.mycompany.com= 
+ (description= 
+  (load_balance=on)
+   (address=(protocol=tcp)(host=node1-vip)(port=1521))
+   (address=(protocol=tcp)(host=node2-vip)(port=1521))
+  (connect_data=
+     (service_name=db.mycompany.com)))
+ 
+db1.mycompany.com=
+ (description=
+  (address=(protocol=tcp)(host=node1-vip)(port=1521))
+  (connect_data= 
+    (service_name=db.mycompany.com)
+    (instance_name=db1)))
+ 
+db2.mycompany.com= 
+ (description= 
+  (address=(protocol=tcp)(host=node2-vip)(port=1521))
+  (connect_data= 
+    (service_name=db.mycompany.com)
+    (instance_name=db2)))
+</pre></div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

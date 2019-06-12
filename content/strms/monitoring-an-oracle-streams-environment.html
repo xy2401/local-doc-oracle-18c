@@ -1,0 +1,1083 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Monitoring an Oracle Streams Environment</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="monitoring-oracle-streams.html" title="Previous" type="text/html">
+      <link rel="next" href="monitoring-the-oracle-streams-topology-and-performance.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="monitoring-oracle-streams.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="monitoring-the-oracle-streams-topology-and-performance.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="monitoring-oracle-streams.html" property="item" typeof="WebPage"><span property="name">    Monitoring Oracle Streams </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Monitoring an Oracle Streams Environment</li>
+            </ol>
+            <a id="GUID-045F7FFD-95FE-4B24-A058-8C3D441B21CB" name="GUID-045F7FFD-95FE-4B24-A058-8C3D441B21CB"></a><a id="STRMS118"></a>
+            
+            <h2 id="STRMS-GUID-045F7FFD-95FE-4B24-A058-8C3D441B21CB" class="sect2"><span class="enumeration_chapter">22 </span> Monitoring an Oracle Streams Environment
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d100190e125" class="indexterm-anchor"></a><a id="d100190e129" class="indexterm-anchor"></a><a id="d100190e133" class="indexterm-anchor"></a>This chapter lists the static data dictionary views and dynamic performance views related to Oracle Streams. You can use these views to monitor your Oracle Streams environment.
+               </p>
+               <p>The following sections contain data dictionary views for monitoring an Oracle Streams environment:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="monitoring-an-oracle-streams-environment.html#GUID-FF9048FE-AF96-48DF-AC8B-CF98C63DCCAD">Summary of Oracle Streams Static Data Dictionary Views</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-an-oracle-streams-environment.html#GUID-E43568D4-75DA-40DD-BD30-44C5E9754960">Summary of Oracle Streams Dynamic Performance Views</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-045F7FFD-95FE-4B24-A058-8C3D441B21CB__GUID-C5832DA7-3C92-44A1-BB48-DB844AB8DEA1">
+                  <p class="notep1">Note:</p>
+                  <p>The Oracle Streams tool in Oracle Enterprise Manager Cloud Control is also an excellent way to monitor an Oracle Streams environment. See the online help for the Oracle Streams tool for more information.</p>
+               </div>
+               <div class="infoboxnotealso" id="GUID-045F7FFD-95FE-4B24-A058-8C3D441B21CB__GUID-56404EA7-DECA-4C5B-82F9-40E57C71288B">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for information about the data dictionary views described in this chapter
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS848"></a><a id="STRMS847"></a><div class="props_rev_3"><a id="GUID-FF9048FE-AF96-48DF-AC8B-CF98C63DCCAD" name="GUID-FF9048FE-AF96-48DF-AC8B-CF98C63DCCAD"></a><h3 id="STRMS-GUID-FF9048FE-AF96-48DF-AC8B-CF98C63DCCAD" class="sect3"><span class="enumeration_section">22.1 </span>Summary of Oracle Streams Static Data Dictionary Views
+               </h3>
+               <div>
+                  <div class="section">
+                     <p><a href="monitoring-an-oracle-streams-environment.html#GUID-FF9048FE-AF96-48DF-AC8B-CF98C63DCCAD__CHDCCHFF" title="This table lists the static data dictionary views related to Streams. This table lists the ALL_ views in one column, the DBA_ views in another column, and the USER_ views in another column.">Table 22-1</a> lists the Oracle Streams static data dictionary views.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformalwide" id="GUID-FF9048FE-AF96-48DF-AC8B-CF98C63DCCAD__CHDCCHFF">
+                     <p class="titleintable">Table 22-1 Oracle Streams Static Data Dictionary Views </p>
+                     <table cellpadding="4" cellspacing="0" class="FormalWide" title="Oracle Streams Static Data Dictionary Views " summary="This table lists the static data dictionary views related to Streams. This table lists the ALL_ views in one column, the DBA_ views in another column, and the USER_ views in another column." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="33%" id="d100190e310">ALL_ Views</th>
+                              <th align="left" valign="bottom" width="33%" id="d100190e313">DBA_ Views</th>
+                              <th align="left" valign="bottom" width="33%" id="d100190e316">USER_ Views</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e321" headers="d100190e310 ">
+                                 <p><a href="../refrn/ALL_APPLY.html#REFRN20005"><code class="codeph">ALL_APPLY</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e321 d100190e313 ">
+                                 <p><a href="../refrn/DBA_APPLY.html#REFRN23005"><code class="codeph">DBA_APPLY</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e321 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e337" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20752"><code class="codeph">ALL_APPLY_CHANGE_HANDLERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e337 d100190e313 ">
+                                 <p><a href="../refrn/DBA_APPLY_CHANGE_HANDLERS.html#REFRN23752"><code class="codeph">DBA_APPLY_CHANGE_HANDLERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e337 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e353" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20006"><code class="codeph">ALL_APPLY_CONFLICT_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e353 d100190e313 ">
+                                 <p><a href="../refrn/DBA_APPLY_CONFLICT_COLUMNS.html#REFRN23006"><code class="codeph">DBA_APPLY_CONFLICT_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e353 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e369" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20007"><code class="codeph">ALL_APPLY_DML_HANDLERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e369 d100190e313 ">
+                                 <p><a href="../refrn/DBA_APPLY_DML_HANDLERS.html#REFRN23007"><code class="codeph">DBA_APPLY_DML_HANDLERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e369 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e385" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20332"><code class="codeph">ALL_APPLY_ENQUEUE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e385 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23332"><code class="codeph">DBA_APPLY_ENQUEUE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e385 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e401" headers="d100190e310 ">
+                                 <p><a href="../refrn/ALL_APPLY_ERROR.html#REFRN20008"><code class="codeph">ALL_APPLY_ERROR</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e401 d100190e313 ">
+                                 <p><a href="../refrn/DBA_APPLY_ERROR.html#REFRN23008"><code class="codeph">DBA_APPLY_ERROR</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e401 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e417" headers="d100190e310 ">
+                                 <p><a href="../refrn/ALL_APPLY_EXECUTE.html#REFRN20333"><code class="codeph">ALL_APPLY_EXECUTE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e417 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23333"><code class="codeph">DBA_APPLY_EXECUTE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e417 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e433" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e433 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23334"><code class="codeph">DBA_APPLY_INSTANTIATED_GLOBAL</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e433 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e446" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e446 d100190e313 ">
+                                 <p><a href="../refrn/DBA_APPLY_INSTANTIATED_OBJECTS.html#REFRN23009"><code class="codeph">DBA_APPLY_INSTANTIATED_OBJECTS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e446 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e459" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e459 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23335"><code class="codeph">DBA_APPLY_INSTANTIATED_SCHEMAS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e459 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e472" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20010"><code class="codeph">ALL_APPLY_KEY_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e472 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23010"><code class="codeph">DBA_APPLY_KEY_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e472 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e489" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e489 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23497"><code class="codeph">DBA_APPLY_OBJECT_DEPENDENCIES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e489 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e502" headers="d100190e310 ">
+                                 <p><a href="../refrn/ALL_APPLY_PARAMETERS.html#REFRN20011"><code class="codeph">ALL_APPLY_PARAMETERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e502 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23011"><code class="codeph">DBA_APPLY_PARAMETERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e502 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e518" headers="d100190e310 ">
+                                 <p><a href="../refrn/ALL_APPLY_PROGRESS.html#REFRN20012"><code class="codeph">ALL_APPLY_PROGRESS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e518 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23012"><code class="codeph">DBA_APPLY_PROGRESS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e518 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e534" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e534 d100190e313 ">
+                                 <p><a href="../refrn/DBA_APPLY_SPILL_TXN.html#REFRN23543"><code class="codeph">DBA_APPLY_SPILL_TXN</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e534 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e547" headers="d100190e310 ">
+                                 <p><a href="../refrn/ALL_APPLY_TABLE_COLUMNS.html#REFRN20398"><code class="codeph">ALL_APPLY_TABLE_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e547 d100190e313 ">
+                                 <p><a href="../refrn/DBA_APPLY_TABLE_COLUMNS.html#REFRN23398"><code class="codeph">DBA_APPLY_TABLE_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e547 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e563" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e563 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23498"><code class="codeph">DBA_APPLY_VALUE_DEPENDENCIES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e563 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e576" headers="d100190e310 ">
+                                 <p><a href="../refrn/ALL_CAPTURE.html#REFRN20031"><code class="codeph">ALL_CAPTURE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e576 d100190e313 ">
+                                 <p><a href="../refrn/DBA_CAPTURE.html#REFRN23031"><code class="codeph">DBA_CAPTURE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e576 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e592" headers="d100190e310 ">
+                                 <p><a href="../refrn/ALL_CAPTURE_EXTRA_ATTRIBUTES.html#REFRN20337"><code class="codeph">ALL_CAPTURE_EXTRA_ATTRIBUTES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e592 d100190e313 ">
+                                 <p><a href="../refrn/DBA_CAPTURE_EXTRA_ATTRIBUTES.html#REFRN23337"><code class="codeph">DBA_CAPTURE_EXTRA_ATTRIBUTES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e592 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e608" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20032"><code class="codeph">ALL_CAPTURE_PARAMETERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e608 d100190e313 ">
+                                 <p><a href="../refrn/DBA_CAPTURE_PARAMETERS.html#REFRN23032"><code class="codeph">DBA_CAPTURE_PARAMETERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e608 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e624" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20033"><code class="codeph">ALL_CAPTURE_PREPARED_DATABASE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e624 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23033"><code class="codeph">DBA_CAPTURE_PREPARED_DATABASE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e624 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e640" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20034"><code class="codeph">ALL_CAPTURE_PREPARED_SCHEMAS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e640 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23034"><code class="codeph">DBA_CAPTURE_PREPARED_SCHEMAS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e640 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e657" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20035"><code class="codeph">ALL_CAPTURE_PREPARED_TABLES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e657 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23035"><code class="codeph">DBA_CAPTURE_PREPARED_TABLES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e657 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e673" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e673 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23582"><code class="codeph">DBA_COMPARISON</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e673 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26582"><code class="codeph">USER_COMPARISON</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e689" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e689 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23583"><code class="codeph">DBA_COMPARISON_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e689 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26583"><code class="codeph">USER_COMPARISON_COLUMNS</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e705" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e705 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23584"><code class="codeph">DBA_COMPARISON_ROW_DIF</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e705 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26584"><code class="codeph">USER_COMPARISON_ROW_DIF</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e721" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e721 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23585"><code class="codeph">DBA_COMPARISON_SCAN</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e721 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26585"><code class="codeph">USER_COMPARISON_SCAN</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e737" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e737 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23586"><code class="codeph">DBA_COMPARISON_SCAN_VALUES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e737 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26586"><code class="codeph">USER_COMPARISON_SCAN_VALUES</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e753" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20066"><code class="codeph">ALL_EVALUATION_CONTEXT_TABLES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e753 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23066"><code class="codeph">DBA_EVALUATION_CONTEXT_TABLES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e753 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26066"><code class="codeph">USER_EVALUATION_CONTEXT_TABLES</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e772" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20067"><code class="codeph">ALL_EVALUATION_CONTEXT_VARS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e772 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23067"><code class="codeph">DBA_EVALUATION_CONTEXT_VARS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e772 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26067"><code class="codeph">USER_EVALUATION_CONTEXT_VARS</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e791" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20068"><code class="codeph">ALL_EVALUATION_CONTEXTS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e791 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23068"><code class="codeph">DBA_EVALUATION_CONTEXTS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e791 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26068"><code class="codeph">USER_EVALUATION_CONTEXTS</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e810" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20499"><code class="codeph">ALL_FILE_GROUP_EXPORT_INFO</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e810 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23499"><code class="codeph">DBA_FILE_GROUP_EXPORT_INFO</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e810 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26499"><code class="codeph">USER_FILE_GROUP_EXPORT_INFO</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e829" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20500"><code class="codeph">ALL_FILE_GROUP_FILES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e829 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23500"><code class="codeph">DBA_FILE_GROUP_FILES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e829 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26500"><code class="codeph">USER_FILE_GROUP_FILES</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e849" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20501"><code class="codeph">ALL_FILE_GROUP_TABLES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e849 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23501"><code class="codeph">DBA_FILE_GROUP_TABLES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e849 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26501"><code class="codeph">USER_FILE_GROUP_TABLES</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e868" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20502"><code class="codeph">ALL_FILE_GROUP_TABLESPACES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e868 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23502"><code class="codeph">DBA_FILE_GROUP_TABLESPACES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e868 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26502"><code class="codeph">USER_FILE_GROUP_TABLESPACES</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e887" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20503"><code class="codeph">ALL_FILE_GROUP_VERSIONS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e887 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23503"><code class="codeph">DBA_FILE_GROUP_VERSIONS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e887 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26503"><code class="codeph">USER_FILE_GROUP_VERSIONS</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e906" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20504"><code class="codeph">ALL_FILE_GROUPS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e906 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23504"><code class="codeph">DBA_FILE_GROUPS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e906 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26504"><code class="codeph">USER_FILE_GROUPS</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e925" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e925 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23526"><code class="codeph">DBA_HIST_STREAMS_APPLY_SUM</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e925 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e938" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e938 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23527"><code class="codeph">DBA_HIST_STREAMS_CAPTURE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e938 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e951" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e951 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23505"><code class="codeph">DBA_HIST_STREAMS_POOL_ADVICE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e951 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e964" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20170"><code class="codeph">ALL_PROPAGATION</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e964 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23170"><code class="codeph">DBA_PROPAGATION</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e964 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e980" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e980 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23545"><code class="codeph">DBA_RECOVERABLE_SCRIPT</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e980 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e993" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e993 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23546"><code class="codeph">DBA_RECOVERABLE_SCRIPT_BLOCKS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e993 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1006" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1006 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23547"><code class="codeph">DBA_RECOVERABLE_SCRIPT_ERRORS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1006 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1020" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1020 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23755"><code class="codeph">DBA_RECOVERABLE_SCRIPT_HIST</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1020 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1033" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1033 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23548"><code class="codeph">DBA_RECOVERABLE_SCRIPT_PARAM</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1033 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1046" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1046 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23343"><code class="codeph">DBA_REGISTERED_ARCHIVED_LOG</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1046 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1059" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20238"><code class="codeph">ALL_RULE_SET_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1059 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23238"><code class="codeph">DBA_RULE_SET_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1059 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26238"><code class="codeph">USER_RULE_SET_RULES</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1078" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20239"><code class="codeph">ALL_RULE_SETS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1078 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23239"><code class="codeph">DBA_RULE_SETS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1078 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26239"><code class="codeph">USER_RULE_SETS</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1097" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20240"><code class="codeph">ALL_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1097 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23240"><code class="codeph">DBA_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1097 d100190e316 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN26240"><code class="codeph">USER_RULES</code></a></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1116" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1116 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23512"><code class="codeph">DBA_STREAMS_ADD_COLUMN</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1116 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1129" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1129 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23371"><code class="codeph">DBA_STREAMS_ADMINISTRATOR</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1129 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1142" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20600"><code class="codeph">ALL_STREAMS_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1142 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23600"><code class="codeph">DBA_STREAMS_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1142 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1158" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1158 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23513"><code class="codeph">DBA_STREAMS_DELETE_COLUMN</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1158 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1171" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20257"><code class="codeph">ALL_STREAMS_GLOBAL_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1171 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23257"><code class="codeph">DBA_STREAMS_GLOBAL_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1171 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1188" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1188 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23746"><code class="codeph">DBA_STREAMS_KEEP_COLUMNS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1188 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1201" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20372"><code class="codeph">ALL_STREAMS_MESSAGE_CONSUMERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1201 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23372"><code class="codeph">DBA_STREAMS_MESSAGE_CONSUMERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1201 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1217" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20373"><code class="codeph">ALL_STREAMS_MESSAGE_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1217 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23373"><code class="codeph">DBA_STREAMS_MESSAGE_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1217 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1233" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20390"><code class="codeph">ALL_STREAMS_NEWLY_SUPPORTED</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1233 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23390"><code class="codeph">DBA_STREAMS_NEWLY_SUPPORTED</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1233 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1249" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1249 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23514"><code class="codeph">DBA_STREAMS_RENAME_COLUMN</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1249 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1262" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1262 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23515"><code class="codeph">DBA_STREAMS_RENAME_SCHEMA</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1262 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1275" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1275 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23516"><code class="codeph">DBA_STREAMS_RENAME_TABLE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1275 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1288" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20475"><code class="codeph">ALL_STREAMS_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1288 d100190e313 ">
+                                 <p><a href="../refrn/DBA_STREAMS_RULES.html#REFRN23475"><code class="codeph">DBA_STREAMS_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1288 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1304" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20258"><code class="codeph">ALL_STREAMS_SCHEMA_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1304 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23258"><code class="codeph">DBA_STREAMS_SCHEMA_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1304 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1320" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1320 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23744"><code class="codeph">DBA_STREAMS_SPLIT_MERGE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1320 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1333" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1333 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23764"><code class="codeph">DBA_STREAMS_SPLIT_MERGE_HIST</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1333 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1347" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1347 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23765"><code class="codeph">DBA_STREAMS_STMT_HANDLERS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1347 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1360" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1360 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23766"><code class="codeph">DBA_STREAMS_STMTS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1360 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1373" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20259"><code class="codeph">ALL_STREAMS_TABLE_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1373 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23259"><code class="codeph">DBA_STREAMS_TABLE_RULES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1373 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1389" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1389 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23517"><code class="codeph">DBA_STREAMS_TRANSFORMATIONS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1389 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1402" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20374"><code class="codeph">ALL_STREAMS_TRANSFORM_FUNCTION</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1402 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23374"><code class="codeph">DBA_STREAMS_TRANSFORM_FUNCTION</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1402 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1418" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1418 d100190e313 ">
+                                 <p><a href="../refrn/DBA_STREAMS_TP_COMPONENT.html#REFRN23611"><code class="codeph">DBA_STREAMS_TP_COMPONENT</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1418 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1431" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1431 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23612"><code class="codeph">DBA_STREAMS_TP_COMPONENT_LINK</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1431 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1444" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1444 d100190e313 ">
+                                 <p><a href="../refrn/DBA_STREAMS_TP_COMPONENT_STAT.html#REFRN23613"><code class="codeph">DBA_STREAMS_TP_COMPONENT_STAT</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1444 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1457" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1457 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23614"><code class="codeph">DBA_STREAMS_TP_DATABASE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1457 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1470" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1470 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23615"><code class="codeph">DBA_STREAMS_TP_PATH_BOTTLENECK</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1470 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1483" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1483 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23616"><code class="codeph">DBA_STREAMS_TP_PATH_STAT</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1483 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1497" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20391"><code class="codeph">ALL_STREAMS_UNSUPPORTED</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1497 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23391"><code class="codeph">DBA_STREAMS_UNSUPPORTED</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1497 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1513" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20572"><code class="codeph">ALL_SYNC_CAPTURE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1513 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23572"><code class="codeph">DBA_SYNC_CAPTURE</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1513 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1529" headers="d100190e310 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN20573"><code class="codeph">ALL_SYNC_CAPTURE_PREPARED_TABS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1529 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23573"><code class="codeph">DBA_SYNC_CAPTURE_PREPARED_TABS</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1529 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="33%" id="d100190e1545" headers="d100190e310 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1545 d100190e313 ">
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN23574"><code class="codeph">DBA_SYNC_CAPTURE_TABLES</code></a></p>
+                              </td>
+                              <td align="left" valign="top" width="33%" headers="d100190e1545 d100190e316 ">
+                                 <p>N/A</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div>
+            </div><a id="STRMS849"></a><div class="props_rev_3"><a id="GUID-E43568D4-75DA-40DD-BD30-44C5E9754960" name="GUID-E43568D4-75DA-40DD-BD30-44C5E9754960"></a><h3 id="STRMS-GUID-E43568D4-75DA-40DD-BD30-44C5E9754960" class="sect3"><span class="enumeration_section">22.2 </span>Summary of Oracle Streams Dynamic Performance Views
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The Oracle Streams dynamic performance views are:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30316"><code class="codeph">V$BUFFERED_PUBLISHERS</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30317"><code class="codeph">V$BUFFERED_QUEUES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30318"><code class="codeph">V$BUFFERED_SUBSCRIBERS</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30352"><code class="codeph">V$PROPAGATION_RECEIVER</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30353"><code class="codeph">V$PROPAGATION_SENDER</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30307"><code class="codeph">V$RULE</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30218"><code class="codeph">V$RULE_SET</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30219"><code class="codeph">V$RULE_SET_AGGREGATE_STATS</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30266"><code class="codeph">V$STREAMS_APPLY_COORDINATOR</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30267"><code class="codeph">V$STREAMS_APPLY_READER</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30268"><code class="codeph">V$STREAMS_APPLY_SERVER</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../refrn/V-STREAMS_CAPTURE.html#REFRN30269"><code class="codeph">V$STREAMS_CAPTURE</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30324"><code class="codeph">V$STREAMS_POOL_ADVICE</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30324"><code class="codeph">V$STREAMS_POOL_STATISTICS</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../refrn/V-STREAMS_TRANSACTION.html#REFRN30415"><code class="codeph">V$STREAMS_TRANSACTION</code></a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-E43568D4-75DA-40DD-BD30-44C5E9754960__GUID-60C7D6A6-2D4B-4568-BEC7-6CB80E381582">
+                        <p class="notep1">Note:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>When monitoring an Oracle Real Application Clusters (Oracle RAC) database, use the GV$ versions of the dynamic performance views.</p>
+                           </li>
+                           <li>
+                              <p>To collect elapsed time statistics in these dynamic performance views, set the <code class="codeph">TIMED_STATISTICS</code> initialization parameter to&nbsp;<code class="codeph">TRUE</code>.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

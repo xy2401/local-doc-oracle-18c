@@ -1,0 +1,1905 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Oracle Connection Manager Parameters (cman.ora)</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Net Services Reference ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Net Services Reference">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="net-services-reference.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-07-10T00:04:44-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83751-06">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="Oracle-Net-Listener-parameters-in-listener-ora-file.html" title="Previous" type="text/html">
+      <link rel="next" href="directory-usage-parameters-in-ldap-ora-file.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Net Services Reference">
+    <meta name="dcterms.isVersionOf" content="NETRF">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="directory-usage-parameters-in-ldap-ora-file.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Net Services Reference </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="part-II-configuration-parameters.html" property="item" typeof="WebPage"><span property="name">Configuration Parameters </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Oracle Connection Manager Parameters (cman.ora)</li>
+            </ol>
+            <a id="GUID-B85F09B1-563C-4D5A-92CA-84B768DF73F6" name="GUID-B85F09B1-563C-4D5A-92CA-84B768DF73F6"></a><a id="NETRF009"></a>
+            
+            <h2 id="NETRF-GUID-B85F09B1-563C-4D5A-92CA-84B768DF73F6" class="sect2"><span class="enumeration_chapter">8 </span>Oracle Connection Manager Parameters (cman.ora)
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>This chapter provides a complete listing of the <code class="codeph">cman.ora</code> file configuration parameters.
+               </p>
+               <p>This chapter contains the following topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="Oracle-Connection-Manager-parameters.html#GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80">Overview of Oracle Connection Manager Configuration File</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Connection-Manager-parameters.html#GUID-F99CE045-F58A-4A80-9BC4-C03D3D002CE3">Oracle Connection Manager Parameters</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Connection-Manager-parameters.html#GUID-612923DC-9562-4A77-BD88-B00AC40FD58D">ADR Diagnostic Parameters for Oracle Connection Manager</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Connection-Manager-parameters.html#GUID-5801C89F-2542-4B7B-B867-9F9ECA840185">Non-ADR Diagnostic Parameters for Oracle Connection Manager</a></p>
+                  </li>
+               </ul>
+            </div><a id="NETRF1589"></a><a id="NETRF1926"></a><a id="NETRF332"></a><div class="sect2"><a id="GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80" name="GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80"></a><h3 id="NETRF-GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80" class="sect3"><span class="enumeration_section">8.1 </span>Overview of Oracle Connection Manager Configuration File
+               </h3>
+               <div>
+                  <p><a href="glossary.html#GUID-2ED11D19-D4D9-413E-A353-685E712E2208"><span class="xrefglossterm">Oracle Connection Manager</span></a> configuration information is stored in the <code class="codeph">cman.ora</code> file, and consists of the following elements:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Protocol address of the Oracle Connection Manager listener</p>
+                     </li>
+                     <li>
+                        <p>Access control parameters</p>
+                     </li>
+                     <li>
+                        <p>Performance parameters</p>
+                     </li>
+                  </ul>
+                  <p>By default, the <code class="codeph">cman.ora</code> file is located in the <code class="codeph">ORACLE_HOME/network/admin</code> directory. The <code class="codeph">cman.ora</code> file can also be stored in the following locations:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The directory specified by the <code class="codeph">TNS_ADMIN</code> environment variable or registry value.
+                        </p>
+                     </li>
+                     <li>
+                        <p>On Linux and UNIX operating systems, the global configuration directory. For example, on the Oracle Solaris operating system, this directory is <code class="codeph">/var/opt/oracle</code>.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80__GUID-088055C6-5A66-4ACB-9DDD-EE413A02EBAB">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="../gsmug/global-data-services-admin.html#GSMUG141" target="_blank"><span class="italic">Oracle Database Global Data Services Concepts and Administration Guide</span></a> for information about management of global services
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Oracle operating system-specific documentation</p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                  </ul>
+                  <p><a href="Oracle-Connection-Manager-parameters.html#GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80__BAJBIGAG">Example 8-1</a> shows an sample of a <code class="codeph">cman.ora</code> file.
+                  </p>
+                  <div class="example" id="GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80__BAJBIGAG">
+                     <p class="titleinexample">Example 8-1 Sample cman.ora File</p><pre class="oac_no_warn" dir="ltr">CMAN=
+  (CONFIGURATION=
+    (ADDRESS=(PROTOCOL=tcp)(HOST=proxysvr)(PORT=1521))
+    (RULE_LIST=
+      (RULE=(SRC=192.0.2.32/27)(DST=sales-server)(SRV=*)(ACT=accept))
+        (ACTION_LIST=(AUT=on)(MCT=120)(MIT=30)))
+      (RULE=(SRC=foo)(DST=hr-server)(SRV=cmon)(ACT=accept)))
+    (PARAMETER_LIST=
+      (MAX_GATEWAY_PROCESSES=8)
+      (MIN_GATEWAY_PRCESSSES=3)
+      (DIAG_ADR_ENABLED=ON)
+      (ADR_BASE=/oracle/log)))
+</pre></div>
+                  <!-- class="example" -->
+                  <p>The <a id="d31775e209" class="indexterm-anchor"></a><a id="d31775e213" class="indexterm-anchor"></a><a id="d31775e217" class="indexterm-anchor"></a><code class="codeph">cman.ora</code> configuration file consists of the following sections:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Listening address: Preceded by <code class="codeph">ADDRESS=</code>, this section contains information pertinent to the listener. The <code class="codeph">ADDRESS</code> parameter is required.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Rule list: Preceded by <code class="codeph">RULE_LIST=</code>, this section contains rule information. The <a href="Oracle-Connection-Manager-parameters.html#GUID-6257F6E0-8857-4997-994B-546A3647A830">RULE</a> parameter is listed in the rule list section of the file. The <code class="codeph">RULE</code> parameter is required.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Parameter list: Preceded by <code class="codeph">PARAMETER_LIST=</code>, this section contains all other parameters including those listed in <span class="q">"<a href="Oracle-Connection-Manager-parameters.html#GUID-612923DC-9562-4A77-BD88-B00AC40FD58D">ADR Diagnostic Parameters for Oracle Connection Manager</a>"</span>, and <span class="q">"<a href="Oracle-Connection-Manager-parameters.html#GUID-5801C89F-2542-4B7B-B867-9F9ECA840185">Non-ADR Diagnostic Parameters for Oracle Connection Manager</a>"</span>.
+                        </p>
+                        <p>The following parameters are allowed in the parameter list section of the <code class="codeph">cman.ora</code> file. The default values are bold. To override the default setting for a parameter, enter the parameter and a nondefault value.
+                        </p>
+                        <p><code class="codeph">ASO_AUTHENTICATION_FILTER={</code><span class="bold"><code class="codeph">off</code></span> <code class="codeph">| on}</code></p>
+                        <p><code class="codeph">CONNECTION_STATISTICS={</code><span class="bold"><code class="codeph">no</code></span> <code class="codeph">| yes}</code></p>
+                        <p><code class="codeph">EVENT_GROUP={init_and_term | memory_ops | conn_hdlg | proc_mgmt | reg_and_load | wake_up | timer | cmd_proc | relay}</code></p>
+                        <p><code class="codeph">IDLE_TIMEOUT=</code><span class="bold"><code class="codeph">0</code></span> or greater
+                        </p>
+                        <p><code class="codeph">INBOUND_CONNECT_TIMEOUT=0</code> or greater. The default value is 60.
+                        </p>
+                        <p><code class="codeph">LOG_DIRECTORY=</code><span class="italic"><code class="codeph">log_directory</code></span>. The default value is <code class="codeph">ORACLE_HOME/network/log</code>. 
+                        </p>
+                        <p><code class="codeph">LOG_LEVEL={off | user | admin |</code> <span class="bold"><code class="codeph">support</code></span><code class="codeph">}</code></p>
+                        <p><code class="codeph">MAX_CMCTL_SESSIONS= </code>Any positive number. The default value is 4.
+                        </p>
+                        <p><code class="codeph">MAX_CONNECTIONS=</code> A value between 1 and 1024. The default value is 256.
+                        </p>
+                        <p><code class="codeph">MAX_GATEWAY_PROCESSES=</code> Any number greater than the minimum number of gateway processes up to 64. The default value is 16.
+                        </p>
+                        <p><code class="codeph">MIN_GATEWAY_PROCESSES=</code> Any positive number less than or equal to 64. Must be less than or equal to the maximum number of gateway processes. The default value is 2.
+                        </p>
+                        <p><code class="codeph">OUTBOUND_CONNECT_TIMEOUT=</code><span class="bold"><code class="codeph">0</code></span> or greater
+                        </p>
+                        <p><code class="codeph">PASSWORD_</code><span class="italic"><code class="codeph">instance_name</code></span><code class="codeph">=</code> Value is the encrypted instance password, if one has been set. The default value is no value.
+                        </p>
+                        <p><code class="codeph">SESSION_TIMEOUT=</code><span class="bold"><code class="codeph">0</code></span> or greater
+                        </p>
+                        <p><code class="codeph">TRACE_DIRECTORY=</code><span class="italic"><code class="codeph">trace_directory</code></span>. The default value is <code class="codeph">ORACLE_HOME/network/trace</code>.
+                        </p>
+                        <p><code class="codeph">TRACE_FILELEN= </code>Any positive number. The default value is 0 (zero).
+                        </p>
+                        <p><code class="codeph">TRACE_FILENO= </code>Any positive number. The default value is 0 (zero).
+                        </p>
+                        <p><code class="codeph">TRACE_LEVEL={</code><span class="bold"><code class="codeph">off</code></span> <code class="codeph">| user | admin | support}</code></p>
+                        <p><code class="codeph">TRACE_TIMESTAMP={</code><span class="bold"><code class="codeph">off</code></span><code class="codeph"> | on}</code></p>
+                        <div class="infoboxnote" id="GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80__GUID-94D92595-CB94-4FE8-9573-79DC079E9CC9">
+                           <p class="notep1">Note:</p>
+                           <p></p>
+                           <p>You cannot add the parameter <code class="codeph">PASSWORD_</code><span class="italic"><code class="codeph">instance_name</code></span> directly to the <code class="codeph">cman.ora</code> file. The parameter is added using the <code class="codeph">SAVE_PASSWD</code> command. 
+                           </p>
+                        </div>
+                     </li>
+                  </ul>
+                  <p><a href="Oracle-Connection-Manager-parameters.html#GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80__CACFHECG">Example 8-2</a> shows the parameter list section of a <code class="codeph">cman.ora</code> file.
+                  </p>
+                  <div class="example" id="GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80__CACFHECG">
+                     <p class="titleinexample">Example 8-2 Parameter List Section of a cman.ora File</p><pre class="oac_no_warn" dir="ltr">   (PARAMETER_LIST= 
+      (ASO_AUTHENTICATION_FILTER=ON)
+      (CONNECTION_STATISTICS=NO)
+      (EVENT_GROUP=INIT_AND_TERM,MEMORY_OPS,PROCESS_MGMT)
+      (IDLE_TIMEOUT=30)
+      (INBOUND_CONNECT_TIMEOUT=30)
+      (LOG_DIRECTORY=/home/user/network/admin/log)   
+      (LOG_LEVEL=SUPPORT)
+      (MAX_CMCTL_SESSIONS=6)
+      (MAX_CONNECTIONS=512)
+      (MAX_GATEWAY_PROCESSES=10)
+      (MIN_GATEWAY_PROCESSES=4)
+      (OUTBOUND_CONNECT_TIMEOUT=30)
+      (SESSION_TIMEOUT=60)
+      (TRACE_DIRECTORY=/home/user/network/admin/trace)
+      (TRACE_FILELEN=100)
+      (TRACE_FILENO=2)
+      (TRACE_LEVEL=SUPPORT)
+      (TRACE_TIMESTAMP=ON)
+      (VALID_NODE_CHECKING_REGISTRATION=ON)
+      (REGISTRATION_EXCLUDED_NODES = 10.1.26.*)
+      (REGISTRATION_INVITED_NODES = 10.1.35.*)
+)  
+<a id="d31775e421" class="indexterm-anchor"></a><a id="d31775e423" class="indexterm-anchor"></a></pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="NETRF333"></a><div class="sect2"><a id="GUID-F99CE045-F58A-4A80-9BC4-C03D3D002CE3" name="GUID-F99CE045-F58A-4A80-9BC4-C03D3D002CE3"></a><h3 id="NETRF-GUID-F99CE045-F58A-4A80-9BC4-C03D3D002CE3" class="sect3"><span class="enumeration_section">8.2 </span>Oracle Connection Manager Parameters
+               </h3>
+               <div>
+                  <p>This section lists and describes the following <a id="d31775e484" class="indexterm-anchor"></a><code class="codeph">cman.ora</code> file parameters:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-DB360027-6700-4339-A101-F2DB4234441A">ADDRESS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-FB180322-9AAF-4D71-8A26-BA10334EF97F">ASO_AUTHENTICATION_FILTER</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-DE264439-1E23-4CC3-A741-A78392DC6324">COMPRESSION</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-43E02A64-166D-4A37-9321-E19834D65B53">COMPRESSION_LEVELS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-2A2DCA97-F078-43EE-AF96-7A86EE774F4E">COMPRESSION_THRESHOLD</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-D7815199-A42B-4967-92D3-04AD7BACBF02">CONNECTION_STATISTICS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-187C2C17-C046-41F0-AB81-B3F096B9D4F6">EVENT_GROUP</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-C8680AE5-C080-4978-9732-282A6DC732A7">IDLE_TIMEOUT</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-8C4B60B4-2F44-448F-B64B-8CD7D90B8ED8">INBOUND_CONNECT_TIMEOUT</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-1A3E1F90-B251-4D9E-A562-505618609580">LOG_DIRECTORY</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-53CEF98E-212F-4862-A1A5-719E16F63972">LOG_LEVEL</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-1617D259-3EE3-4F5E-BC35-C76A6ED564BA">MAX_ALL_CONNECTIONS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-62CAF5B8-4B59-4081-991D-39D1D5135D11">MAX_CMCTL_SESSIONS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-9F609A45-99DF-4D39-8867-B417423635FA">MAX_CONNECTIONS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-F31ABCEB-BB56-446D-98F7-7A30CC37955D">MAX_GATEWAY_PROCESSES</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-9C68551B-927E-4DD9-9201-37C5A44772EF">MIN_GATEWAY_PROCESSES</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-9C58A972-7548-4AA0-BAAF-6F39A072457A">MAX_REG_CONNECTIONS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-AEFEDC67-02AE-4AFE-9A59-ADD7B34704DB">OUTBOUND_CONNECT_TIMEOUT</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-977A0B65-8369-47A5-A198-59140225A07F">PASSWORD_instance_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-5284BAA4-6D93-48F8-9016-99A96D80A170">REGISTRATION_EXCLUDED_NODES</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-4DCAD84A-DD5F-4C15-9758-1C00DFAD1D0B">REGISTRATION_INVITED_NODES</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-6257F6E0-8857-4997-994B-546A3647A830">RULE</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-831099D9-731A-4B74-8B34-B7870F405DE5">SDU</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-3277FC7C-7DC9-4B4D-A714-C7588E9CFB24">SESSION_TIMEOUT</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-CEA51EF7-EFEB-466C-8A97-3EB4C164D31F">TRACE_FILE</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-E8EE426B-6725-4C58-B96D-4682769CCE76">TRACE_FILELEN</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-F98792FA-CB85-4AD2-872D-05499710ECD3">TRACE_FILENO</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-7867B60D-23CD-40E8-88A3-70BC0DE535B8">TRACE_LEVEL</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-86390F92-19B4-4AAD-95DB-9479444E8F80">TRACE_TIMESTAMP</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-2582BA12-8436-435E-9DFE-7C6B77CADF57">VALID_NODE_CHECKING_REGISTRATION</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-037F18E5-2AE3-41D9-932C-1A032A1F9D2F">WALLET_LOCATION</a></p>
+                     </li>
+                  </ul>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="Oracle-Connection-Manager-parameters.html#GUID-E52E7D07-FD9C-4B21-9EEA-65D7B0AB453F">Oracle Connection Manager in Traffic Director Mode Parameters</a></li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF1594"></a><a id="NETRF1595"></a><a id="NETRF1596"></a><a id="NETRF335"></a><div class="sect3"><a id="GUID-DB360027-6700-4339-A101-F2DB4234441A" name="GUID-DB360027-6700-4339-A101-F2DB4234441A"></a><h4 id="NETRF-GUID-DB360027-6700-4339-A101-F2DB4234441A" class="sect4"><span class="enumeration_section">8.2.1 </span>ADDRESS
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the protocol address of Oracle Connection Manager.</p>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">(ADDRESS=(PROTOCOL=<span class="italic"><code class="codeph">protocol</code></span>)(HOST=<span class="italic"><code class="codeph">host_name</code></span>)(PORT=<span class="italic"><code class="codeph">port_number</code></span>)</pre><div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">(ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521))</pre></div>
+               </div><a id="NETRF1927"></a><a id="NETRF2261"></a><a id="NETRF1928"></a><a id="NETRF340"></a><div class="sect3"><a id="GUID-FB180322-9AAF-4D71-8A26-BA10334EF97F" name="GUID-FB180322-9AAF-4D71-8A26-BA10334EF97F"></a><h4 id="NETRF-GUID-FB180322-9AAF-4D71-8A26-BA10334EF97F" class="sect4"><span class="enumeration_section">8.2.2 </span>ASO_AUTHENTICATION_FILTER
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify whether Oracle Database security authentication settings must be used by the client. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The global setting can be overridden by a rule-level setting in <code class="codeph">ACTION_LIST</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">on</code> to instruct Oracle Connection Manager to reject connection requests that are not using Secure Network Services (SNS). SNS is part of Oracle Database security. 
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">off</code> to instruct Oracle Connection Manager not to check for SNS between the client and server. This is the default.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-DE264439-1E23-4CC3-A741-A78392DC6324" name="GUID-DE264439-1E23-4CC3-A741-A78392DC6324"></a><h4 id="NETRF-GUID-DE264439-1E23-4CC3-A741-A78392DC6324" class="sect4"><span class="enumeration_section">8.2.3 </span>COMPRESSION
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To enable or disable data compression. If both the Oracle Connection Manager and the other end (server or client or Oracle Connection Manager) have this parameter set to <code class="codeph">ON</code>, then compression is used for the connection.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">off</code></p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">on</code> to enable data compression.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">off</code> to disable data compression.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">COMPRESSION=on</code></p>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-43E02A64-166D-4A37-9321-E19834D65B53" name="GUID-43E02A64-166D-4A37-9321-E19834D65B53"></a><h4 id="NETRF-GUID-43E02A64-166D-4A37-9321-E19834D65B53" class="sect4"><span class="enumeration_section">8.2.4 </span>COMPRESSION_LEVELS
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the compression level. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The compression levels are used at the time of negotiation to verify which levels are used at both ends, and select one level.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">low</code></p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">low</code> for low CPU usage and a low compression ratio.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">high</code> for high CPU usage and a high compression ratio.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">COMPRESSION_LEVELS=high,low</code></p>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-2A2DCA97-F078-43EE-AF96-7A86EE774F4E" name="GUID-2A2DCA97-F078-43EE-AF96-7A86EE774F4E"></a><h4 id="NETRF-GUID-2A2DCA97-F078-43EE-AF96-7A86EE774F4E" class="sect4"><span class="enumeration_section">8.2.5 </span>COMPRESSION_THRESHOLD
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the minimum data size, in bytes, for which compression is required.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Compression is not be done if the size of the data to be sent is less than this value.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">1024 bytes</code></p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">COMPRESSION_THRESHOLD=1024</code></p>
+                  </div>
+               </div><a id="NETRF1929"></a><a id="NETRF2262"></a><a id="NETRF1930"></a><a id="NETRF341"></a><div class="sect3"><a id="GUID-D7815199-A42B-4967-92D3-04AD7BACBF02" name="GUID-D7815199-A42B-4967-92D3-04AD7BACBF02"></a><h4 id="NETRF-GUID-D7815199-A42B-4967-92D3-04AD7BACBF02" class="sect4"><span class="enumeration_section">8.2.6 </span>CONNECTION_STATISTICS
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify whether the <code class="codeph">SHOW_CONNECTIONS</code> command displays connection statistics. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The global setting can be overridden by a rule-level setting in <code class="codeph">ACTION_LIST</code>. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">yes</code> to display statistics.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">no</code> to not display statistics. This is the default.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF1931"></a><a id="NETRF2263"></a><a id="NETRF1932"></a><a id="NETRF342"></a><div class="sect3"><a id="GUID-187C2C17-C046-41F0-AB81-B3F096B9D4F6" name="GUID-187C2C17-C046-41F0-AB81-B3F096B9D4F6"></a><h4 id="NETRF-GUID-187C2C17-C046-41F0-AB81-B3F096B9D4F6" class="sect4"><span class="enumeration_section">8.2.7 </span>EVENT_GROUP
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify which event groups are logged. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Multiple events may be designated using a comma-delimited list.</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">alert</code> for alert notifications.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">cmd_proc</code> for command processing.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">conn_hdlg</code> for connection handling.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">init_and_term</code> for initialization and termination.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">memory_ops</code> for memory operations.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">proc_mgmt</code> for process management.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">reg_and_load</code> for registration and load update.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">relay</code> for events associated with connection control blocks.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">timer</code> for gateway timeouts.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">wake_up</code> for events related to Connection Manager Administration (CMADMIN) wake-up queue.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-187C2C17-C046-41F0-AB81-B3F096B9D4F6__GUID-EA6084F4-04CA-42A4-8BE3-F50AD67FCE5A">
+                        <p class="notep1">Note:</p>
+                        <p>The event group <code class="codeph">ALERT</code> cannot be turned off. 
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="NETRF1933"></a><a id="NETRF2264"></a><a id="NETRF1934"></a><a id="NETRF343"></a><div class="sect3"><a id="GUID-C8680AE5-C080-4978-9732-282A6DC732A7" name="GUID-C8680AE5-C080-4978-9732-282A6DC732A7"></a><h4 id="NETRF-GUID-C8680AE5-C080-4978-9732-282A6DC732A7" class="sect4"><span class="enumeration_section">8.2.8 </span>IDLE_TIMEOUT
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the amount of time that an established connection can remain active without transmitting data. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The global setting can be overridden by a rule-level setting in <code class="codeph">ACTION_LIST</code>. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">0</code> to disable the timeout. This is the default.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Any number greater than 0 to enable the timeout. The number equals the timeout period in seconds.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF1935"></a><a id="NETRF1936"></a><a id="NETRF344"></a><div class="sect3"><a id="GUID-8C4B60B4-2F44-448F-B64B-8CD7D90B8ED8" name="GUID-8C4B60B4-2F44-448F-B64B-8CD7D90B8ED8"></a><h4 id="NETRF-GUID-8C4B60B4-2F44-448F-B64B-8CD7D90B8ED8" class="sect4"><span class="enumeration_section">8.2.9 </span>INBOUND_CONNECT_TIMEOUT
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify how long in seconds the Oracle Connection Manager listener waits for a valid connection from a client or another instance of Oracle Connection Manager.</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">60 sec</code> is the default. Use value <code class="codeph">0</code> to disable timeout. 
+                           </p>
+                        </li>
+                        <li>
+                           <p>Any number greater than 0 to enable the timeout. The number equals the timeout period in seconds.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF1938"></a><a id="NETRF1937"></a><div class="sect3"><a id="GUID-1A3E1F90-B251-4D9E-A562-505618609580" name="GUID-1A3E1F90-B251-4D9E-A562-505618609580"></a><h4 id="NETRF-GUID-1A3E1F90-B251-4D9E-A562-505618609580" class="sect4"><span class="enumeration_section">8.2.10 </span>LOG_DIRECTORY
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the directory for the Oracle Connection Manager log files.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">ORACLE_BASE_</code><span class="italic">HOME</span><code class="codeph">/network/log</code></p>
+                  </div>
+               </div><a id="NETRF1940"></a><a id="NETRF1941"></a><a id="NETRF1939"></a><div class="sect3"><a id="GUID-53CEF98E-212F-4862-A1A5-719E16F63972" name="GUID-53CEF98E-212F-4862-A1A5-719E16F63972"></a><h4 id="NETRF-GUID-53CEF98E-212F-4862-A1A5-719E16F63972" class="sect4"><span class="enumeration_section">8.2.11 </span>LOG_LEVEL
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the level for log messages.</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">off</code> for no logging. This is the default.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">user</code> for user-induced errors log information.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">admin</code> for administration log information, such as installation-specific.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">support</code> for Oracle Support Services information.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF2139"></a><a id="NETRF2265"></a><a id="NETRF2140"></a><a id="NETRF2141"></a><a id="NETRF2138"></a><div class="sect3"><a id="GUID-1617D259-3EE3-4F5E-BC35-C76A6ED564BA" name="GUID-1617D259-3EE3-4F5E-BC35-C76A6ED564BA"></a><h4 id="NETRF-GUID-1617D259-3EE3-4F5E-BC35-C76A6ED564BA" class="sect4"><span class="enumeration_section">8.2.12 </span>MAX_ALL_CONNECTIONS
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the maximum number of concurrent registration and client connection sessions that can be supported by Oracle Connection Manager. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This number includes registration connections from databases, and ongoing client connection establishment requests. After a connection is established, the clients do not maintain a connection to the listener. This limit only applies to client connections that are in the initial connection establishment phase from a listener perspective.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Operating system-specific</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">MAX_ALL_CONNECTIONS=40
+</pre></div>
+               </div><a id="NETRF1942"></a><a id="NETRF2266"></a><a id="NETRF1943"></a><a id="NETRF347"></a><div class="sect3"><a id="GUID-62CAF5B8-4B59-4081-991D-39D1D5135D11" name="GUID-62CAF5B8-4B59-4081-991D-39D1D5135D11"></a><h4 id="NETRF-GUID-62CAF5B8-4B59-4081-991D-39D1D5135D11" class="sect4"><span class="enumeration_section">8.2.13 </span>MAX_CMCTL_SESSIONS
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the maximum number of concurrent local or remote sessions of the Oracle Connection Manager control utility allowable for a given instance. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>One of the sessions must be a local session.</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any number of sessions can be designated.</p>
+                  </div>
+               </div><a id="NETRF1944"></a><a id="NETRF1945"></a><a id="NETRF348"></a><div class="sect3"><a id="GUID-9F609A45-99DF-4D39-8867-B417423635FA" name="GUID-9F609A45-99DF-4D39-8867-B417423635FA"></a><h4 id="NETRF-GUID-9F609A45-99DF-4D39-8867-B417423635FA" class="sect4"><span class="enumeration_section">8.2.14 </span>MAX_CONNECTIONS
+                  </h4>
+                  <div>
+                     <p>Bug 2447824</p>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the maximum number of connection slots that a gateway process can handle.</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any number in the range of 1 to 1024.</p>
+                  </div>
+               </div><a id="NETRF1946"></a><a id="NETRF1947"></a><a id="NETRF349"></a><div class="sect3"><a id="GUID-F31ABCEB-BB56-446D-98F7-7A30CC37955D" name="GUID-F31ABCEB-BB56-446D-98F7-7A30CC37955D"></a><h4 id="NETRF-GUID-F31ABCEB-BB56-446D-98F7-7A30CC37955D" class="sect4"><span class="enumeration_section">8.2.15 </span>MAX_GATEWAY_PROCESSES
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the maximum number of gateway processes that an instance of Oracle Connection Manager supports.</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The number designated must be greater than the minimum number of gateway processes. The maximum is 64. </p>
+                  </div>
+               </div><a id="NETRF2143"></a><a id="NETRF2144"></a><a id="NETRF2145"></a><a id="NETRF2142"></a><div class="sect3"><a id="GUID-9C58A972-7548-4AA0-BAAF-6F39A072457A" name="GUID-9C58A972-7548-4AA0-BAAF-6F39A072457A"></a><h4 id="NETRF-GUID-9C58A972-7548-4AA0-BAAF-6F39A072457A" class="sect4"><span class="enumeration_section">8.2.16 </span>MAX_REG_CONNECTIONS
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the maximum number of concurrent registration connection sessions that can be supported by Oracle Connection Manager.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>512</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">MAX_REG_CONNECTIONS=20
+</pre></div>
+               </div><a id="NETRF1948"></a><a id="NETRF1949"></a><a id="NETRF350"></a><div class="sect3"><a id="GUID-9C68551B-927E-4DD9-9201-37C5A44772EF" name="GUID-9C68551B-927E-4DD9-9201-37C5A44772EF"></a><h4 id="NETRF-GUID-9C68551B-927E-4DD9-9201-37C5A44772EF" class="sect4"><span class="enumeration_section">8.2.17 </span>MIN_GATEWAY_PROCESSES
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the minimum number of gateway processes that an instance of Oracle Connection Manager supports. </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any number of sessions can be designated up to 64.</p>
+                  </div>
+               </div><a id="NETRF1950"></a><a id="NETRF1951"></a><a id="NETRF351"></a><div class="sect3"><a id="GUID-AEFEDC67-02AE-4AFE-9A59-ADD7B34704DB" name="GUID-AEFEDC67-02AE-4AFE-9A59-ADD7B34704DB"></a><h4 id="NETRF-GUID-AEFEDC67-02AE-4AFE-9A59-ADD7B34704DB" class="sect4"><span class="enumeration_section">8.2.18 </span>OUTBOUND_CONNECT_TIMEOUT
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the length of time in seconds that the Oracle Connection Manager instance waits for a valid connection to be established with the database server or with another Oracle Connection Manager instance. </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">60</code> to disable the timeout. This is the default.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Any number greater than 0 to enable the timeout. The number equals the timeout period in seconds.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF1952"></a><a id="NETRF352"></a><div class="sect3"><a id="GUID-977A0B65-8369-47A5-A198-59140225A07F" name="GUID-977A0B65-8369-47A5-A198-59140225A07F"></a><h4 id="NETRF-GUID-977A0B65-8369-47A5-A198-59140225A07F" class="sect4"><span class="enumeration_section">8.2.19 </span>PASSWORD_<span class="italic">instance_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the encrypted instance password, if one has been set.</p>
+                  </div>
+               </div><a id="NETRF2147"></a><a id="NETRF2149"></a><a id="NETRF2148"></a><a id="NETRF2150"></a><a id="NETRF2146"></a><div class="sect3"><a id="GUID-5284BAA4-6D93-48F8-9016-99A96D80A170" name="GUID-5284BAA4-6D93-48F8-9016-99A96D80A170"></a><h4 id="NETRF-GUID-5284BAA4-6D93-48F8-9016-99A96D80A170" class="sect4"><span class="enumeration_section">8.2.20 </span>REGISTRATION_EXCLUDED_NODES
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the list of nodes that cannot register with the listener. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The list can include host names or CIDR notation for IPv4 and IPv6 addresses. The wildcard format (<code class="codeph">*</code>) is supported for IPv4 addresses. The presence of a host name in the list results in the inclusion of all IP addresses mapped to the host name. The host name should be consistent with the public network interface. 
+                     </p>
+                     <p>If the <code class="codeph">REGISTRATION_INVITED_NODES</code> parameter and the <code class="codeph">REGISTRATION_EXCLUDED_NODES</code> parameter are set, then the <code class="codeph">REGISTRATION_EXCLUDED_NODES</code> parameter is ignored.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Valid nodes and subnet IP addresses or names.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">REGISTRATION_EXCLUDED_NODES = 10.1.26.*, 10.16.40.0/24, \
+                                       2001:DB8:3eff:fe38, node2</pre></div>
+               </div><a id="NETRF2152"></a><a id="NETRF2154"></a><a id="NETRF2153"></a><a id="NETRF2155"></a><a id="NETRF2151"></a><div class="sect3"><a id="GUID-4DCAD84A-DD5F-4C15-9758-1C00DFAD1D0B" name="GUID-4DCAD84A-DD5F-4C15-9758-1C00DFAD1D0B"></a><h4 id="NETRF-GUID-4DCAD84A-DD5F-4C15-9758-1C00DFAD1D0B" class="sect4"><span class="enumeration_section">8.2.21 </span>REGISTRATION_INVITED_NODES
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the list of node that can register with the listener. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The list can include host names or CIDR notation for IPv4 and IPv6 addresses. The wildcard format (<code class="codeph">*</code>) is supported for IPv4 addresses. The presence of a host name in the list results in the inclusion of all IP addresses mapped to the host name. The host name should be consistent with the public network interface.
+                     </p>
+                     <p>If the <code class="codeph">REGISTRATION_INVITED_NODES</code> parameter and the <code class="codeph">REGISTRATION_EXCLUDED_NODES</code> parameter are set, then the <code class="codeph">REGISTRATION_EXCLUDED_NODES</code> parameter is ignored.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Valid nodes and subnet IP addresses or names.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">REGISTRATION_INVITED_NODES = 10.1.35.*, 10.1.34.0/24, \
+                                      2001:DB8:fe38:7303, node1</pre></div>
+               </div><a id="NETRF1953"></a><a id="NETRF2267"></a><a id="NETRF1954"></a><a id="NETRF1598"></a><a id="NETRF1599"></a><a id="NETRF1601"></a><a id="NETRF337"></a><div class="sect3"><a id="GUID-6257F6E0-8857-4997-994B-546A3647A830" name="GUID-6257F6E0-8857-4997-994B-546A3647A830"></a><h4 id="NETRF-GUID-6257F6E0-8857-4997-994B-546A3647A830" class="sect4"><span class="enumeration_section">8.2.22 </span>RULE
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify an access control rule list to filter incoming connections. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>A rule list specifies which connections are accepted, rejected, or dropped.</p>
+                     <p>If no rules are specified, then all connections are rejected. </p>
+                     <p>The source and destination can be a host name, IP address, or subnet mask.</p>
+                     <p>There must be at least one rule for client connections and one rule for CMCTL connections. Omitting one or the other results in the rejection of all connections for the rule type omitted. The last rule in the example that follows is a CMCTL rule.</p>
+                     <p>Oracle Connection Manager does not support wildcards for partial IP addresses. If you use a wildcard, then use it in place of a full IP address. The IP address of the client may, for example, be (SRC=*).</p>
+                     <p>Oracle Connection Manager supports only the <code class="codeph">/nn</code> notation for subnet addresses. In the first rule in <a href="Oracle-Connection-Manager-parameters.html#GUID-668B9035-0B99-4CDF-B7D5-468B30AD7A80__BAJBIGAG">Example 8-1</a>, /27 represents a subnet mask that comprises 27 left-most bits.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is listed in the rule list section of the <code class="codeph">cman.ora</code> file preceded by <code class="codeph">RULE_LIST=</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">(RULE_LIST=
+  (RULE=
+    (SRC=<span class="italic">host</span>)
+    (DST=<span class="italic">host</span>)
+    (SRV=<span class="italic">service_name</span>)
+    (ACT={accept|reject|drop})
+    (ACTION_LIST=AUT={on|off}
+    ((CONN_STATS={yes|no})(MCT=<span class="italic">time</span>)(MIT=<span class="italic">time</span>)(MOCT=<span class="italic">time</span>)))
+  (RULE= ...))</pre><div class="section">
+                        <p class="subhead3">Additional Parameters</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The <code class="codeph">RULE</code> parameter filters a connection or group of connections using the following parameters: 
+                     </p>
+                     <p><a id="d31775e2752" class="indexterm-anchor"></a><a id="d31775e2754" class="indexterm-anchor"></a><code class="codeph">SRC</code>: The source host name or IP address of the client.
+                     </p>
+                     <p><a id="d31775e2764" class="indexterm-anchor"></a><a id="d31775e2766" class="indexterm-anchor"></a><code class="codeph">DST</code>: The destination server host name or IP address of the database server.
+                     </p>
+                     <p><a id="d31775e2776" class="indexterm-anchor"></a><a id="d31775e2778" class="indexterm-anchor"></a><code class="codeph">SRV</code>: The database <a href="glossary.html#GUID-16C98E33-E4F6-4EF5-8BCB-CD7D5359A3C4"><span class="xrefglossterm">service name</span></a> of Oracle Database obtained from the <code class="codeph">SERVICE_NAME</code> parameter in the initialization parameter file. 
+                     </p>
+                     <p><a id="d31775e2795" class="indexterm-anchor"></a><a id="d31775e2797" class="indexterm-anchor"></a><code class="codeph">ACT</code>: The action for the connection request. Use <code class="codeph">accept</code> to accept incoming requests, <code class="codeph">reject</code> to reject incoming requests, or <code class="codeph">drop</code> to reject incoming requests without sending an error message. 
+                     </p>
+                     <p><a id="d31775e2816" class="indexterm-anchor"></a><a id="d31775e2818" class="indexterm-anchor"></a><code class="codeph">ACTION_LIST</code>: The rule-level parameter settings for some parameters. These parameters are as follows:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">AUT</code>: Oracle Database security authentication on client side.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">CONN_STATS</code>: Log input and output statistics.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">MCT</code>: Maximum connect time.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">MIT</code>: Maximum idle timeout.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">MOCT</code>: Maximum outbound connect time.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Rule-level parameters override their global counterparts.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">(RULE_LIST=
+  (RULE=
+    (SRC=client1-pc)
+    (DST=sales-server)
+    (SRV=sales.us.example.com)
+    (ACT=reject))
+  (RULE=
+    (SRC=192.0.2.45)
+    (DST=192.0.2.200)
+    (SRV=db1)
+    (ACT=accept))
+  (RULE=
+    (SRC=sale-rep)
+    (DST=sales1-server)
+    (SRV=cmon)
+    (ACT=accept)))</pre></div>
+               </div>
+               <div class="sect3"><a id="GUID-831099D9-731A-4B74-8B34-B7870F405DE5" name="GUID-831099D9-731A-4B74-8B34-B7870F405DE5"></a><h4 id="NETRF-GUID-831099D9-731A-4B74-8B34-B7870F405DE5" class="sect4"><span class="enumeration_section">8.2.23 </span>SDU
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the <a href="glossary.html#GUID-0D0F2F4B-D451-46D8-A667-18EF46EA30F1"><span class="xrefglossterm">session data unit (SDU)</span></a> size, in bytes, to connections
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Oracle Connection Manager can negotiate large SDU with client and server when configured.  When the configured values of client, database server, and Oracle Connection Manager do not match for a session, the least value of all the three values is used. </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>8192 bytes (8 KB)</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>512 to 2097152 bytes</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">SDU=32768</code></p>
+                  </div>
+               </div><a id="NETRF1955"></a><a id="NETRF2268"></a><a id="NETRF1956"></a><a id="NETRF354"></a><div class="sect3"><a id="GUID-3277FC7C-7DC9-4B4D-A714-C7588E9CFB24" name="GUID-3277FC7C-7DC9-4B4D-A714-C7588E9CFB24"></a><h4 id="NETRF-GUID-3277FC7C-7DC9-4B4D-A714-C7588E9CFB24" class="sect4"><span class="enumeration_section">8.2.24 </span>SESSION_TIMEOUT
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the maximum time in seconds allowed for a user session. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The global setting can be overridden by a rule-level setting in <code class="codeph">ACTION_LIST</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">0</code> to disable the timeout. This is the default.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Any number greater than 0 to enable the timeout. The number equals the timeout period in seconds.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF1958"></a><a id="NETRF1957"></a><div class="sect3"><a id="GUID-CEA51EF7-EFEB-466C-8A97-3EB4C164D31F" name="GUID-CEA51EF7-EFEB-466C-8A97-3EB4C164D31F"></a><h4 id="NETRF-GUID-CEA51EF7-EFEB-466C-8A97-3EB4C164D31F" class="sect4"><span class="enumeration_section">8.2.25 </span>TRACE_FILE
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the directory for Oracle Connection Manager trace files. </p>
+                  </div>
+               </div><a id="NETRF1960"></a><a id="NETRF2269"></a><a id="NETRF1959"></a><div class="sect3"><a id="GUID-E8EE426B-6725-4C58-B96D-4682769CCE76" name="GUID-E8EE426B-6725-4C58-B96D-4682769CCE76"></a><h4 id="NETRF-GUID-E8EE426B-6725-4C58-B96D-4682769CCE76" class="sect4"><span class="enumeration_section">8.2.26 </span>TRACE_FILELEN
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the size of the trace file in KB. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When the size is reached, the trace information is written to the next file. The number of files is specified with the <code class="codeph">TRACE_FILENO</code> parameter.
+                     </p>
+                  </div>
+               </div><a id="NETRF1962"></a><a id="NETRF2270"></a><a id="NETRF1961"></a><div class="sect3"><a id="GUID-F98792FA-CB85-4AD2-872D-05499710ECD3" name="GUID-F98792FA-CB85-4AD2-872D-05499710ECD3"></a><h4 id="NETRF-GUID-F98792FA-CB85-4AD2-872D-05499710ECD3" class="sect4"><span class="enumeration_section">8.2.27 </span>TRACE_FILENO
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the number of trace files. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When this parameter is set along with the <code class="codeph">TRACE_FILELEN</code> parameter, trace files are used in a cyclical fashion. The first file is filled first, then the second file, and so on. When the last file has been filled, the first file is reused, and so on.
+                     </p>
+                  </div>
+               </div><a id="NETRF1964"></a><a id="NETRF1965"></a><a id="NETRF1963"></a><div class="sect3"><a id="GUID-7867B60D-23CD-40E8-88A3-70BC0DE535B8" name="GUID-7867B60D-23CD-40E8-88A3-70BC0DE535B8"></a><h4 id="NETRF-GUID-7867B60D-23CD-40E8-88A3-70BC0DE535B8" class="sect4"><span class="enumeration_section">8.2.28 </span>TRACE_LEVEL
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the level for trace messages. </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">off</code> for no tracing. This is the default.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">user</code> for user-induced errors trace information.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">admin</code> for administration trace information, such as installation-specific.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">support</code> for Oracle Support Services information.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF1967"></a><a id="NETRF2271"></a><a id="NETRF1968"></a><a id="NETRF1966"></a><div class="sect3"><a id="GUID-86390F92-19B4-4AAD-95DB-9479444E8F80" name="GUID-86390F92-19B4-4AAD-95DB-9479444E8F80"></a><h4 id="NETRF-GUID-86390F92-19B4-4AAD-95DB-9479444E8F80" class="sect4"><span class="enumeration_section">8.2.29 </span>TRACE_TIMESTAMP
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the use of a timestamp for the tracing logs. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>If the <code class="codeph">TRACING</code> parameter is enabled, then a time stamp in the form of <code class="codeph">dd-mmm-yyyy hh:mi:ss:mil</code> for every trace event in the trace file. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">off</code> for no timestamp to be included in the file.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">on</code> for timestamp to be included in the file.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="NETRF2157"></a><a id="NETRF2272"></a><a id="NETRF2158"></a><a id="NETRF2159"></a><a id="NETRF2160"></a><a id="NETRF2156"></a><div class="sect3"><a id="GUID-2582BA12-8436-435E-9DFE-7C6B77CADF57" name="GUID-2582BA12-8436-435E-9DFE-7C6B77CADF57"></a><h4 id="NETRF-GUID-2582BA12-8436-435E-9DFE-7C6B77CADF57" class="sect4"><span class="enumeration_section">8.2.30 </span>VALID_NODE_CHECKING_REGISTRATION
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To determine whether valid node checking registration is performed, and if the subnet is allowed. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When set to <code class="codeph">on</code>, valid node checking registration is performed at the listener for any incoming registration request, and only local IP addresses are allowed. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">on</code></p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">off | 0</code> to specify valid node checking registration is off, and no checking is performed.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">on | 1 | local</code> to specify valid node checking registration is on, and all local IP addresses can register. If a list of invited nodes is set, then all IP addresses, host names, or subnets in the list as well as local IP addresses are allowed.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">subnet | 2</code> to specify valid node checking registration is on, and all machines in the local subnets are allowed to register. If a list of invited nodes is set, then all nodes in the local subnets as well as all IP addresses, host names and subnets in the list are allowed. 
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">VALID_NODE_CHECKING_REGISTRATION = on</pre></div>
+               </div>
+               <div class="sect3"><a id="GUID-037F18E5-2AE3-41D9-932C-1A032A1F9D2F" name="GUID-037F18E5-2AE3-41D9-932C-1A032A1F9D2F"></a><h4 id="NETRF-GUID-037F18E5-2AE3-41D9-932C-1A032A1F9D2F" class="sect4"><span class="enumeration_section">8.2.31 </span>WALLET_LOCATION
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the location of wallets. Wallets are certificates, keys, and trustpoints processed by SSL.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The key/value pair for Microsoft certificate store (MCS) omits the <code class="codeph">METHOD_DATA</code> parameter because MCS does not use wallets. Instead, Oracle PKI (public key infrastructure) applications obtain certificates, trustpoints and private keys directly from the user's profile.
+                     </p>
+                     <p>If an Oracle wallet is stored in the Microsoft Windows registry and the wallet's key (<code class="codeph">KEY)</code> is <code class="codeph">SALESAPP</code>, then the storage location of the encrypted wallet is <code class="codeph">HKEY_CURRENT_USER\SOFTWARE\ORACLE\WALLETS\SALESAPP\EWALLET.P12</code>. The storage location of the decrypted wallet is <code class="codeph">HKEY_CURRENT_USER\SOFTWARE\ORACLE\WALLETS\SALESAPP\CWALLET.SSO.</code> 
+                     </p>
+                     <div class="infoboxnote" id="GUID-037F18E5-2AE3-41D9-932C-1A032A1F9D2F__GUID-FA434007-BCBD-4698-8650-12F9AA5B09D6">
+                        <p class="notep1">Note:</p>This parameter must be specified outside Oracle Connection Manager alias
+                     </div>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The syntax depends on the wallet, as follows:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Oracle wallets on the file system:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+  (SOURCE=
+    (METHOD=<span class="italic">file</span>)
+    (METHOD_DATA=
+       (DIRECTORY=<span class="italic">directory</span>)
+       [(PKCS11=TRUE/FALSE)]))
+</pre></li>
+                        <li>
+                           <p>Microsoft certificate store:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+  (SOURCE=
+     (METHOD=mcs))
+</pre></li>
+                        <li>
+                           <p>Oracle wallets in the Microsoft Windows registry:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+      (METHOD=reg)
+      (METHOD_DATA=
+         (KEY=<span class="italic">registry_key</span>)))
+</pre></li>
+                        <li>
+                           <p>Entrust wallets:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+      (METHOD=entr)
+      (METHOD_DATA=
+         (PROFILE=<span class="italic">file</span>.epf)
+         (INIFILE=<span class="italic">file</span>.ini)))</pre></li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Additional Parameters</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">WALLET_LOCATION</code> supports the following parameters:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">SOURCE</code>: The type of storage for wallets, and storage location.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">METHOD</code>: The type of storage.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">METHOD_DATA</code>: The storage location.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DIRECTORY</code>: The location of Oracle wallets on file system.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">KEY</code>: The wallet type and location in the Microsoft Windows registry.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">PROFILE</code>: The Entrust profile file (<code class="codeph">.epf</code>).
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">INIFILE</code>: The Entrust initialization file (<code class="codeph">.ini</code>).
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>None</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">true | false</pre><div class="section">
+                        <p class="subhead3">Examples</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Oracle wallets on file system:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=  
+  (SOURCE=
+      (METHOD=file)
+      (METHOD_DATA=  
+         (DIRECTORY=/etc/oracle/wallets/databases)))
+</pre><p>Microsoft certificate store:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+     (METHOD=mcs))
+   </pre><p>Oracle Wallets in the Microsoft Windows registry:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+     (METHOD=REG)
+     (METHOD_DATA=
+        (KEY=SALESAPP)))
+</pre><p>Entrust Wallets:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+     (METHOD=entr)
+     (METHOD_DATA=
+       (PROFILE=/etc/oracle/wallets/test.epf)
+       (INIFILE=/etc/oracle/wallets/test.ini)))</pre></div>
+               </div>
+            </div>
+            <div class="sect2"><a id="GUID-E52E7D07-FD9C-4B21-9EEA-65D7B0AB453F" name="GUID-E52E7D07-FD9C-4B21-9EEA-65D7B0AB453F"></a><h3 id="NETRF-GUID-E52E7D07-FD9C-4B21-9EEA-65D7B0AB453F" class="sect3"><span class="enumeration_section">8.3 </span>Oracle Connection Manager in Traffic Director Mode Parameters
+               </h3>
+               <div>
+                  <p>This section lists and describes the following <a id="d31775e3870" class="indexterm-anchor"></a><code class="codeph">cman.ora</code> file parameters:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-75CC4985-5721-43B7-B162-546EF6EEA0C5">TDM</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-770591B9-49C7-4E44-8BEA-E314330D12F1">TDM_BIND_THREAD</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-0FFD1883-1F4F-4E7C-98D6-47FDA469A4F9">TDM_DATATYPE_CHECK</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-4EC06E4A-ABEC-49D9-A0B0-153D0AD6E8D2">TDM_PRCP_MAX_CALL_WAIT_TIME</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-E566729A-DAAA-41FB-9490-9A6215B2BC69">TDM_PRCP_MAX_TXN_CALL_WAIT_TIME</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-F6758F4D-4CBE-4513-9920-8E3E6A5BD402">TDM_SHARED_THREADS_MAX</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-BDB5FDC4-9063-46C5-912E-DA183BBB0574">TDM_SHARED_THREADS_MIN</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-DDB3E2F7-DC83-42A8-A8A8-A86E531C32F0">TDM_THREADING_MODE</a></p>
+                     </li>
+                  </ul>
+               </div>
+               <div class="sect3"><a id="GUID-75CC4985-5721-43B7-B162-546EF6EEA0C5" name="GUID-75CC4985-5721-43B7-B162-546EF6EEA0C5"></a><h4 id="NETRF-GUID-75CC4985-5721-43B7-B162-546EF6EEA0C5" class="sect4"><span class="enumeration_section">8.3.1 </span>TDM
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To configure Oracle Connection Manager to act as Oracle Connection Manager in Traffic Director Mode.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">FALSE</code></p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">TRUE</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">FALSE</code></p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">tdm = TRUE</code></p>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-770591B9-49C7-4E44-8BEA-E314330D12F1" name="GUID-770591B9-49C7-4E44-8BEA-E314330D12F1"></a><h4 id="NETRF-GUID-770591B9-49C7-4E44-8BEA-E314330D12F1" class="sect4"><span class="enumeration_section">8.3.2 </span>TDM_BIND_THREAD
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To make the application connection hold on to the TDM thread and has different implications with and without PRCP. This parameter only applies when <code class="codeph">TDM_THREADING_MODE</code> is set to <code class="codeph">SHARED</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Without PRCP, setting this parameter to <code class="codeph">yes</code> makes the application connection hold on the TDM worker thread as long as there is a transaction in progress. 
+                     </p>
+                     <p>With PRCP, setting this parameter to <code class="codeph">yes</code> makes the application connection hold on to the TDM thread from the time <code class="codeph">OCISessionGet</code> is done by the application till it does an <code class="codeph">OCISessionRelease</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">no</code></p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">yes</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">no</code></p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                        <p><code class="codeph">TDM_BIND_THREAD = yes</code></p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-0FFD1883-1F4F-4E7C-98D6-47FDA469A4F9" name="GUID-0FFD1883-1F4F-4E7C-98D6-47FDA469A4F9"></a><h4 id="NETRF-GUID-0FFD1883-1F4F-4E7C-98D6-47FDA469A4F9" class="sect4"><span class="enumeration_section">8.3.3 </span>TDM_DATATYPE_CHECK
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To validate all the inbound data to the database, of the data type <code class="codeph">NUMBER, DATE, TIMESTAMP, TIMESTAMP WITH LOCAL TIMEZONE, TIMESTAMP WITH TIMEZONE, BLOB, CLOB, BFILE, UROWID</code> and <code class="codeph">REF</code>. The following error is received by the application if there is any problem with the data sent to the Oracle Connection Manager in Traffic Director Mode.
+                     </p>
+                     <p><code class="codeph">ORA-03137: malformed TTC packet from client rejected: [3101]</code></p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Turning <code class="codeph">ON/OFF</code> this parameter enables or disables the data validation.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">OFF</code></p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">ON</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">OFF</code></p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">tdm_datatype_check={ON | OFF}</code></p>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-4EC06E4A-ABEC-49D9-A0B0-153D0AD6E8D2" name="GUID-4EC06E4A-ABEC-49D9-A0B0-153D0AD6E8D2"></a><h4 id="NETRF-GUID-4EC06E4A-ABEC-49D9-A0B0-153D0AD6E8D2" class="sect4"><span class="enumeration_section">8.3.4 </span>TDM_PRCP_MAX_CALL_WAIT_TIME
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To record the maximum time of inactivity, in seconds, for a client after obtaining a session from the PRCP pool. This parameter is applicable when the Oracle Connection Manager in Traffic Director Mode is configured to have Proxy Resident Connection Pool.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>After obtaining a session from the PRCP pool, if the client application does not issue a database call for the time specified by <code class="codeph">TDM_PRCP_MAX_CALL_WAIT_TIME</code> parameter , then the PRCP session is freed and the client connection is terminated.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>30 seconds</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any non negative value. However, Oracle recommends not to use a value of <code class="codeph">0</code> as that implies that a connection can acquire a PRCP session for an indefinite amount of time 
+                     </p>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-E566729A-DAAA-41FB-9490-9A6215B2BC69" name="GUID-E566729A-DAAA-41FB-9490-9A6215B2BC69"></a><h4 id="NETRF-GUID-E566729A-DAAA-41FB-9490-9A6215B2BC69" class="sect4"><span class="enumeration_section">8.3.5 </span>TDM_PRCP_MAX_TXN_CALL_WAIT_TIME
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To record the maximum time of inactivity, in seconds, for a client after it obtains a session from the Proxy Resident Connection Pool and starts a transaction. This parameter is applicable when the Oracle Connection Manager in Traffic Director Mode is configured to have PRCP.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p> </p>
+                     <p>If the client application does not issue a database call for the time specified by <code class="codeph">TDM_PRCP_MAX_TXN_CALL_WAIT_TIME</code> parameter while in a transaction, the PRCP session is freed, the transaction is rolled back, and the client connection is terminated. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">0</code></p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any nonnegative value. However, it is recommended not to use a value of<code class="codeph">0</code> as it implies that a connection can acquire a PRCP session for an indefinite amount of time. 
+                     </p>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-F6758F4D-4CBE-4513-9920-8E3E6A5BD402" name="GUID-F6758F4D-4CBE-4513-9920-8E3E6A5BD402"></a><h4 id="NETRF-GUID-F6758F4D-4CBE-4513-9920-8E3E6A5BD402" class="sect4"><span class="enumeration_section">8.3.6 </span>TDM_SHARED_THREADS_MAX
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To configure the maximum number of threads that an Oracle Connection Manager process in Traffic Director Mode should have, when <code class="codeph">tdm_threading_mode</code> is set to <code class="codeph">SHARED</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any number can be designated for the maximum number of threads. For <code class="codeph">DEDICATED</code> mode, the maximum number of threads is same as the maximum number of connections. In <code class="codeph">SHARED</code> mode, though there is no fixed upper bound, it should ideally be proportional to the load.
+                     </p>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-BDB5FDC4-9063-46C5-912E-DA183BBB0574" name="GUID-BDB5FDC4-9063-46C5-912E-DA183BBB0574"></a><h4 id="NETRF-GUID-BDB5FDC4-9063-46C5-912E-DA183BBB0574" class="sect4"><span class="enumeration_section">8.3.7 </span>TDM_SHARED_THREADS_MIN
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To configure the minimum number of threads that an Oracle Connection Manager process in Traffic Director Mode should have, when <code class="codeph">tdm_threading_mode</code> is set to <code class="codeph">SHARED</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any number can be designated for the minimum number of threads. For <code class="codeph">SHARED</code> mode, there is no limit enforced. However, the number of threads should be proportional to the load. 
+                     </p>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-DDB3E2F7-DC83-42A8-A8A8-A86E531C32F0" name="GUID-DDB3E2F7-DC83-42A8-A8A8-A86E531C32F0"></a><h4 id="NETRF-GUID-DDB3E2F7-DC83-42A8-A8A8-A86E531C32F0" class="sect4"><span class="enumeration_section">8.3.8 </span>TDM_THREADING_MODE
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To configure the usage of threads by the Oracle Connection Manager in Traffic Director Mode.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>If this parameter is set to <code class="codeph">DEDICATED</code>, then a worker thread is spawned for each inbound connection and the maximum number of threads is determined by the<code class="codeph"> max_connections</code> parameter
+                     </p>
+                     <p>If this parameter is set to <code class="codeph">SHARED</code>, then a shared pool of worker threads handle all inbound connections. The minimum number of worker threads is specified by the <code class="codeph">tdm_shared_threads_min</code> setting and the maximum number of worker threads is specified by the <code class="codeph">tdm_shared_threads_max</code> setting. The thread pool is internally managed within these bounds.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">DEDICATED</code></p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">DEDICATED</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">SHARED</code></p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">tdm_threading_mode={DEDICATED | SHARED}</code></p>
+                     <p><code class="codeph">tdm_shared_threads_min = 4</code></p>
+                     <p><code class="codeph">tdm_shared_threads_max = 5</code></p>
+                  </div>
+               </div>
+            </div><a id="NETRF422"></a><div class="sect2"><a id="GUID-612923DC-9562-4A77-BD88-B00AC40FD58D" name="GUID-612923DC-9562-4A77-BD88-B00AC40FD58D"></a><h3 id="NETRF-GUID-612923DC-9562-4A77-BD88-B00AC40FD58D" class="sect3"><span class="enumeration_section">8.4 </span>ADR Diagnostic Parameters for Oracle Connection Manager
+               </h3>
+               <div>
+                  <p>Since Oracle Database 11<span class="italic">g</span>, Oracle Database includes an advanced fault diagnosability infrastructure for preventing, detecting, diagnosing, and resolving problems. The problems are critical errors such as those caused by database code bugs, metadata corruption, and customer data corruption.
+                  </p>
+                  <p>When a critical error occurs, it is assigned an incident number, and diagnostic data for the error, such as traces and dumps, are immediately captured and tagged with the incident number. The data is then stored in the <a id="d31775e4781" class="indexterm-anchor"></a><a id="d31775e4785" class="indexterm-anchor"></a><a id="d31775e4789" class="indexterm-anchor"></a><a href="glossary.html#GUID-4E8722BB-B669-45B8-91A6-741AD9580997"><span class="xrefglossterm">Automatic Diagnostic Repository (ADR)</span></a>, a file-based repository outside the database.
+                  </p>
+                  <p>This section describes the parameters used when ADR is enabled. Non-ADR parameters listed in the <code class="codeph">cman.ora</code> file are ignored when ADR is enabled. <span class="q">"<a href="Oracle-Connection-Manager-parameters.html#GUID-5801C89F-2542-4B7B-B867-9F9ECA840185">Non-ADR Diagnostic Parameters for Oracle Connection Manager</a>"</span> <a href="Oracle-Connection-Manager-parameters.html#GUID-5801C89F-2542-4B7B-B867-9F9ECA840185">Non-ADR Diagnostic Parameters for Oracle Connection Manager</a> describes the parameters used when ADR is disabled. ADR is enabled by default.
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-18F04750-E673-477F-9C99-EBA20819F08E">ADR_BASE</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-D071B037-4736-4978-8164-C4F879C4A23A">DIAG_ADR_ENABLED</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-A3F2A1EA-86F5-46DB-ADFC-EFF5879A14D8">LOG_LEVEL</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-920382DD-3B8D-4057-9130-353043B1FB88">TRACE_LEVEL</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-63A5E79F-D2F3-425A-9636-E5BC57AF225D">TRACE_TIMESTAMP</a></p>
+                     </li>
+                  </ul>
+               </div><a id="NETRF1602"></a><a id="NETRF1603"></a><a id="NETRF1604"></a><a id="NETRF1605"></a><a id="NETRF414"></a><div class="sect3"><a id="GUID-18F04750-E673-477F-9C99-EBA20819F08E" name="GUID-18F04750-E673-477F-9C99-EBA20819F08E"></a><h4 id="NETRF-GUID-18F04750-E673-477F-9C99-EBA20819F08E" class="sect4"><span class="enumeration_section">8.4.1 </span>ADR_BASE
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the base directory to store tracing and logging incidents when ADR is enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The default is <code class="codeph">ORACLE_BASE</code>, or <code class="codeph">ORACLE_HOME/log</code> if <code class="codeph">ORACLE_BASE</code> is not defined.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any valid directory path to a directory with write permission.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">ADR_BASE=/oracle/network/trace</pre></div>
+               </div><a id="NETRF1606"></a><a id="NETRF1607"></a><a id="NETRF1608"></a><a id="NETRF1609"></a><a id="NETRF415"></a><div class="sect3"><a id="GUID-D071B037-4736-4978-8164-C4F879C4A23A" name="GUID-D071B037-4736-4978-8164-C4F879C4A23A"></a><h4 id="NETRF-GUID-D071B037-4736-4978-8164-C4F879C4A23A" class="sect4"><span class="enumeration_section">8.4.2 </span>DIAG_ADR_ENABLED
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To indicate whether ADR tracing is enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When the <code class="codeph">DIAG_ADR_ENABLED</code> parameter is set to <code class="codeph">OFF</code>, then non-ADR file tracing is used.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">on</code> | <code class="codeph">off</code></p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">DIAG_ADR_ENABLED=on</pre></div>
+               </div><a id="NETRF1610"></a><a id="NETRF2273"></a><a id="NETRF1611"></a><a id="NETRF1612"></a><a id="NETRF1613"></a><a id="NETRF346"></a><div class="sect3"><a id="GUID-A3F2A1EA-86F5-46DB-ADFC-EFF5879A14D8" name="GUID-A3F2A1EA-86F5-46DB-ADFC-EFF5879A14D8"></a><h4 id="NETRF-GUID-A3F2A1EA-86F5-46DB-ADFC-EFF5879A14D8" class="sect4"><span class="enumeration_section">8.4.3 </span>LOG_LEVEL
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the level of logging performed by Oracle Connection Manager. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is also applicable when non-ADR logging is used.</p>
+                     <p>The following log files are used with Oracle Connection Manager: </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="italic"><code class="codeph">instance-name_pid</code></span><code class="codeph">.log</code> for the listener.
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">instance-name_</code></span><code class="codeph">cmadmin</code><span class="italic"><code class="codeph">_pid</code></span><code class="codeph">.log</code> for CMADMIN.
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">instance-name_</code></span><code class="codeph">cmgw</code><span class="italic"><code class="codeph">_pid</code></span><code class="codeph">.log</code> for the gateway processes.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The log files are located in the <code class="codeph">ORACLE_HOME/network/log</code> directory.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>off or 0</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">off</code> or <code class="codeph">0</code> for no log output.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">user</code> or <code class="codeph">4</code> for user log information.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">admin</code> or <code class="codeph">10</code> for administration log information.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">support</code> or <code class="codeph">16</code> for Oracle Support Services log information.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LOG_LEVEL=admin</pre></div>
+               </div><a id="NETRF1614"></a><a id="NETRF2274"></a><a id="NETRF1615"></a><a id="NETRF1616"></a><a id="NETRF1617"></a><a id="NETRF358"></a><div class="sect3"><a id="GUID-920382DD-3B8D-4057-9130-353043B1FB88" name="GUID-920382DD-3B8D-4057-9130-353043B1FB88"></a><h4 id="NETRF-GUID-920382DD-3B8D-4057-9130-353043B1FB88" class="sect4"><span class="enumeration_section">8.4.4 </span>TRACE_LEVEL
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the trace level for the Oracle Connection Manager instance. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is also applicable when non-ADR tracing is used.</p>
+                     <p>The following trace files are used with Oracle Connection Manager: </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="italic"><code class="codeph">instance-name_pid</code></span><code class="codeph">.trc</code> for the listener.
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">instance-name_</code></span><code class="codeph">cmadmin</code><span class="italic"><code class="codeph">_pid</code></span><code class="codeph">.trc</code> for CMADMIN.
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">instance-name_</code></span><code class="codeph">cmgw</code><span class="italic"><code class="codeph">_pid</code></span><code class="codeph">.trc</code> for the gateway processes.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The log files are located in the <code class="codeph">ORACLE_HOME/network/log</code> directory.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>off</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">off</code> for no trace output.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">user</code> for user trace information.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">admin</code> for administration trace information.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">support</code> for Oracle Support Services trace information.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_LEVEL=admin</pre></div>
+               </div><a id="NETRF1618"></a><a id="NETRF2275"></a><a id="NETRF1619"></a><a id="NETRF1620"></a><a id="NETRF1621"></a><a id="NETRF359"></a><div class="sect3"><a id="GUID-63A5E79F-D2F3-425A-9636-E5BC57AF225D" name="GUID-63A5E79F-D2F3-425A-9636-E5BC57AF225D"></a><h4 id="NETRF-GUID-63A5E79F-D2F3-425A-9636-E5BC57AF225D" class="sect4"><span class="enumeration_section">8.4.5 </span>TRACE_TIMESTAMP
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To add a time stamp in the form of <code class="codeph">dd-mmm-yyyy hh:mi:ss:mil</code> to every trace event in the trace file for the listener. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is used with the <a href="Oracle-Connection-Manager-parameters.html#GUID-920382DD-3B8D-4057-9130-353043B1FB88">TRACE_LEVEL</a> parameter. This parameter is also applicable when non-ADR tracing is used.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>on</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">on</code> or <code class="codeph">true</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">off</code> or <code class="codeph">false</code></p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_TIMESTAMP=true</pre></div>
+               </div>
+            </div><a id="NETRF423"></a><div class="sect2"><a id="GUID-5801C89F-2542-4B7B-B867-9F9ECA840185" name="GUID-5801C89F-2542-4B7B-B867-9F9ECA840185"></a><h3 id="NETRF-GUID-5801C89F-2542-4B7B-B867-9F9ECA840185" class="sect3"><span class="enumeration_section">8.5 </span>Non-ADR Diagnostic Parameters for Oracle Connection Manager
+               </h3>
+               <div>
+                  <p>This section lists the parameters used when ADR is disabled:</p>
+                  <div class="infoboxnote" id="GUID-5801C89F-2542-4B7B-B867-9F9ECA840185__GUID-FA283ADE-F7DB-4449-80E4-6807606971B5">
+                     <p class="notep1">Note:</p>
+                     <p>The default value of <a href="Oracle-Connection-Manager-parameters.html#GUID-D071B037-4736-4978-8164-C4F879C4A23A">DIAG_ADR_ENABLED</a> is <code class="codeph">on</code>. Therefore, the <code class="codeph">DIAG_ADR_ENABLED</code> parameter <span class="italic">must</span> explicitly be set to <code class="codeph">off</code> in order for non-ADR tracing to be used.
+                     </p>
+                  </div>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-33507BB4-D0A8-4711-98FA-105B1A5C1856">LOG_DIRECTORY</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-72BD9F21-3359-4DFA-8E86-726FE0093BA5">TRACE_DIRECTORY</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-F37AA4F0-1BC4-404E-B45D-0C71C8A43241">TRACE_FILELEN</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Connection-Manager-parameters.html#GUID-17AAC336-9445-4292-B840-4EE1E7FD9331">TRACE_FILENO</a></p>
+                     </li>
+                  </ul>
+               </div><a id="NETRF1622"></a><a id="NETRF2276"></a><a id="NETRF1623"></a><a id="NETRF1624"></a><a id="NETRF1625"></a><a id="NETRF345"></a><div class="sect3"><a id="GUID-33507BB4-D0A8-4711-98FA-105B1A5C1856" name="GUID-33507BB4-D0A8-4711-98FA-105B1A5C1856"></a><h4 id="NETRF-GUID-33507BB4-D0A8-4711-98FA-105B1A5C1856" class="sect4"><span class="enumeration_section">8.5.1 </span>LOG_DIRECTORY
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the location of Oracle Connection Manager log files. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Use this parameter when ADR is not enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">ORACLE_BASE_<span class="italic">HOME</span>/network/log</pre><div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any valid directory path to a directory with write permission.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LOG_DIRECTORY=/oracle/network/log</pre></div>
+               </div><a id="NETRF1626"></a><a id="NETRF2277"></a><a id="NETRF1627"></a><a id="NETRF1628"></a><a id="NETRF1629"></a><a id="NETRF355"></a><div class="sect3"><a id="GUID-72BD9F21-3359-4DFA-8E86-726FE0093BA5" name="GUID-72BD9F21-3359-4DFA-8E86-726FE0093BA5"></a><h4 id="NETRF-GUID-72BD9F21-3359-4DFA-8E86-726FE0093BA5" class="sect4"><span class="enumeration_section">8.5.2 </span>TRACE_DIRECTORY
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the location of the Oracle Connection Manager trace files. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Use this parameter when ADR is not enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">ORACLE_BASE_<span class="italic">HOME</span>/network/trace </pre><div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any valid directory path to a directory with write permission.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_DIRECTORY=/oracle/network/admin/trace</pre></div>
+               </div><a id="NETRF1630"></a><a id="NETRF2278"></a><a id="NETRF1631"></a><a id="NETRF1632"></a><a id="NETRF356"></a><div class="sect3"><a id="GUID-F37AA4F0-1BC4-404E-B45D-0C71C8A43241" name="GUID-F37AA4F0-1BC4-404E-B45D-0C71C8A43241"></a><h4 id="NETRF-GUID-F37AA4F0-1BC4-404E-B45D-0C71C8A43241" class="sect4"><span class="enumeration_section">8.5.3 </span>TRACE_FILELEN
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the size, in KB, of the trace file. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When the size is met, the trace information is written to the next file. The number of files is specified with the <a href="Oracle-Connection-Manager-parameters.html#GUID-17AAC336-9445-4292-B840-4EE1E7FD9331">TRACE_FILENO</a> parameter. Any size can be designated. Use this parameter when ADR is not enabled.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Unlimited</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_FILELEN=100</pre></div>
+               </div><a id="NETRF1633"></a><a id="NETRF2279"></a><a id="NETRF1634"></a><a id="NETRF1635"></a><a id="NETRF357"></a><div class="sect3"><a id="GUID-17AAC336-9445-4292-B840-4EE1E7FD9331" name="GUID-17AAC336-9445-4292-B840-4EE1E7FD9331"></a><h4 id="NETRF-GUID-17AAC336-9445-4292-B840-4EE1E7FD9331" class="sect4"><span class="enumeration_section">8.5.4 </span>TRACE_FILENO
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the number of trace files for Oracle Connection Manager tracing. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When this parameter is set along with the <a href="Oracle-Connection-Manager-parameters.html#GUID-F37AA4F0-1BC4-404E-B45D-0C71C8A43241">TRACE_FILELEN</a> parameter, trace files are used in a cyclical fashion. The first file is filled first, then the second file, and so on. When the last file has been filled, the first file is reused, and so on. Any number of files can be designated.
+                     </p>
+                     <p>The trace file names are distinguished from one another by their sequence number. For example, if this parameter is set to <code class="codeph">3</code>, then the gateway trace files would be named <span class="italic"><code class="codeph">instance-name_</code></span><code class="codeph">cmgw1</code><span class="italic"><code class="codeph">_pid</code></span><code class="codeph">.trc</code>, <span class="italic"><code class="codeph">instance_name_</code></span><code class="codeph">cmgw2</code><span class="italic"><code class="codeph">_pid</code></span><code class="codeph">.trc</code> and <span class="italic"><code class="codeph">instance_name_</code></span><code class="codeph">cmgw3</code><span class="italic"><code class="codeph">_pid</code></span><code class="codeph">.trc</code>.
+                     </p>
+                     <p>In addition, trace events in the trace files are preceded by the sequence number of the file. Use this parameter when ADR is not enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>1</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_FILENO=3</pre></div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

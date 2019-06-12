@@ -1,0 +1,579 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Troubleshooting Implicit Capture</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="identifying-problems-in-an-oracle-streams-environment.html" title="Previous" type="text/html">
+      <link rel="next" href="troubleshooting-propagation.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="identifying-problems-in-an-oracle-streams-environment.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="troubleshooting-propagation.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="troubleshooting-an-oracle-streams-environment.html" property="item" typeof="WebPage"><span property="name">   Troubleshooting an Oracle Streams Environment </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Troubleshooting Implicit Capture</li>
+            </ol>
+            <a id="GUID-FEBDFF33-DBD9-442E-B767-D421074F4A54" name="GUID-FEBDFF33-DBD9-442E-B767-D421074F4A54"></a><a id="STRMS1024"></a>
+            
+            <h2 id="STRMS-GUID-FEBDFF33-DBD9-442E-B767-D421074F4A54" class="sect2"><span class="enumeration_chapter">31 </span> Troubleshooting Implicit Capture
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d131960e125" class="indexterm-anchor"></a><a id="d131960e129" class="indexterm-anchor"></a><a id="d131960e133" class="indexterm-anchor"></a><a id="d131960e137" class="indexterm-anchor"></a>The following topics describe identifying and resolving common problems with <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es and <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s in an Oracle Streams environment:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="troubleshooting-implicit-capture.html#GUID-B4A2F6C5-09CC-4BE7-8716-BB6A97C7C9B8">Troubleshooting Capture Process Problems</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-implicit-capture.html#GUID-DFDED448-A00C-448F-B5C7-B4642D53160C">Troubleshooting Synchronous Capture Problems</a></p>
+                  </li>
+               </ul>
+            </div><a id="STRMS1025"></a><a id="STRMS_TROUBLE_CAPTURE"></a><div class="props_rev_3"><a id="GUID-B4A2F6C5-09CC-4BE7-8716-BB6A97C7C9B8" name="GUID-B4A2F6C5-09CC-4BE7-8716-BB6A97C7C9B8"></a><h3 id="STRMS-GUID-B4A2F6C5-09CC-4BE7-8716-BB6A97C7C9B8" class="sect3"><span class="enumeration_section">31.1 </span>Troubleshooting Capture Process Problems
+               </h3>
+               <div>
+                  <p>If a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> is not capturing changes as expected, or if you are having other problems with a capture process, then use the following checklist to identify and resolve capture problems:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-8228A5DF-0036-44F5-9D6E-52F0A639BD8C">Is Capture Process Creation or Data Dictionary Build Taking a Long Time?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-46A5B8C0-288D-4B75-B64B-185FA30F293F">Is the Capture Process Enabled?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-BB663548-9CE7-4B8D-82B9-F8B52BF6B407">Is the Capture Process Waiting for Redo?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-B96665E8-D2E3-4CCB-8591-6E57ADA9F4F1">Is the Capture Process Paused for Flow Control?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-A7860CA5-622C-45C0-9F31-6353086D8DA8">Is the Capture Process Current?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-71818F6E-9C98-42CB-AFC7-0AE197F96FA8">Are Required Redo Log Files Missing?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-FB014422-DEF3-4E0C-B516-8FD6E33E20C6">Is a Downstream Capture Process Waiting for Redo Data?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-9CA20B86-58D4-4BD7-9A87-1A924B922FB5">Are You Trying to Configure Downstream Capture Incorrectly?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-FCB64C74-BF90-4D1C-A3B7-49CFF25F2B27">Are You Trying to Configure Downstream Capture without Proper Authentication?</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-56E99C3E-DAA7-492E-8E67-D57A6E769BBB">Are More Actions Required for Downstream Capture without a Database Link?</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-B4A2F6C5-09CC-4BE7-8716-BB6A97C7C9B8__GUID-14BEA400-7845-482B-92F5-EC1D27624929">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-84DD3325-51A9-46D7-8BE0-81E48893DFAB">Implicit Capture with an Oracle Streams Capture Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/configuring-implicit-capture.html#STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring a capture process
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-0D7FEE0E-48E4-43E2-AFBB-DF89D37A94B7">Managing a Capture Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-F763BE4D-CE6B-4C91-9FBF-73F9E75D5A62">Monitoring a Capture Process</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS1026"></a><div class="props_rev_3"><a id="GUID-8228A5DF-0036-44F5-9D6E-52F0A639BD8C" name="GUID-8228A5DF-0036-44F5-9D6E-52F0A639BD8C"></a><h4 id="STRMS-GUID-8228A5DF-0036-44F5-9D6E-52F0A639BD8C" class="sect4"><span class="enumeration_section">31.1.1 </span>Is Capture Process Creation or Data Dictionary Build Taking a Long Time?
+                  </h4>
+                  <div>
+                     <p>If capture process creation or a data dictionary build is taking an inordinately long time, then it might be because one or more in-flight transactions have not yet committed. An in-flight transaction is one that is active during capture process creation or a data dictionary build.</p>
+                     <p>To determine whether there are in-flight transactions, check the alert log for the following messages:</p><pre class="oac_no_warn" dir="ltr">wait for inflight txns at this scn
+Done with waiting for inflight txns at this scn
+</pre><p>If you see only the first message in the alert log, then the capture process creation or data dictionary build is waiting for the inflight transactions and will complete after all of the in-flight transactions have committed.</p>
+                     <div class="infoboxnotealso" id="GUID-8228A5DF-0036-44F5-9D6E-52F0A639BD8C__GUID-50D888CD-31A8-45D8-A86A-7DA973601558">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../strep/configuring-implicit-capture.html#STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring a capture process
+                              </p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-CCC1CC2B-CA3E-486E-BB1B-FE01EA3C12E5">Capture Process Creation</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-7D02B3F6-23FD-436E-B0F4-AA60128DF77A">Checking the Trace Files and Alert Log for Problems</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1027"></a><div class="props_rev_3"><a id="GUID-46A5B8C0-288D-4B75-B64B-185FA30F293F" name="GUID-46A5B8C0-288D-4B75-B64B-185FA30F293F"></a><h4 id="STRMS-GUID-46A5B8C0-288D-4B75-B64B-185FA30F293F" class="sect4"><span class="enumeration_section">31.1.2 </span>Is the Capture Process Enabled?
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> captures changes only when it is enabled.
+                     </p>
+                     <p>You can check whether a capture process is enabled, disabled, or aborted by querying the <code class="codeph">DBA_CAPTURE</code> data dictionary view. For example, to check whether a capture process named <code class="codeph">capture</code> is enabled, run the following query:
+                     </p><pre class="oac_no_warn" dir="ltr">SELECT STATUS FROM DBA_CAPTURE WHERE CAPTURE_NAME = 'CAPTURE';
+</pre><p>If the capture process is disabled, then your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">STATUS
+--------
+DISABLED
+</pre><p>If the capture process is disabled, then try restarting it. If the capture process is aborted, then you might need to correct an error before you can restart it successfully.</p>
+                     <p>To determine why the capture process aborted, query the <code class="codeph">DBA_CAPTURE</code> data dictionary view or check the trace file for the capture process. The following query shows when the capture process aborted and the error that caused it to abort:
+                     </p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Process|Name' FORMAT A10
+COLUMN STATUS_CHANGE_TIME HEADING 'Abort Time'
+COLUMN ERROR_NUMBER HEADING 'Error Number' FORMAT 99999999
+COLUMN ERROR_MESSAGE HEADING 'Error Message' FORMAT A40
+
+SELECT CAPTURE_NAME, STATUS_CHANGE_TIME, ERROR_NUMBER, ERROR_MESSAGE
+  FROM DBA_CAPTURE WHERE STATUS='ABORTED';
+</pre><div class="infoboxnotealso" id="GUID-46A5B8C0-288D-4B75-B64B-185FA30F293F__GUID-7A4655BA-813F-45FB-BEB5-FCBB5F8EEF4A">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-6A359154-0CB1-4FE8-B9CE-741887C4DAB8">Starting a Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-7D02B3F6-23FD-436E-B0F4-AA60128DF77A">Checking the Trace Files and Alert Log for Problems</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="how-oracle-streams-works-with-other-database-components.html#GUID-720225FB-3DDB-45AD-957E-BF11688C05F0">Capture Processes and Oracle Real Application Clusters</a>"</span> for information about restarting a capture process in an Oracle Real Application Clusters (Oracle RAC) environment
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1031"></a><div class="props_rev_3"><a id="GUID-BB663548-9CE7-4B8D-82B9-F8B52BF6B407" name="GUID-BB663548-9CE7-4B8D-82B9-F8B52BF6B407"></a><h4 id="STRMS-GUID-BB663548-9CE7-4B8D-82B9-F8B52BF6B407" class="sect4"><span class="enumeration_section">31.1.3 </span>Is the Capture Process Waiting for Redo?
+                  </h4>
+                  <div>
+                     <p>If an enabled capture process is not capturing changes as expected, then the capture process might be in <code class="codeph">WAITING</code> <code class="codeph">FOR</code> <code class="codeph">REDO</code> state.
+                     </p>
+                     <p>To check the state of each capture process in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture Name' FORMAT A30
+COLUMN STATE HEADING 'State' FORMAT A30
+ 
+SELECT CAPTURE_NAME, STATE FROM V$STREAMS_CAPTURE;
+</pre><p>If the capture process state is <code class="codeph">WAITING</code> <code class="codeph">FOR</code> <code class="codeph">REDO</code>, then the capture process is waiting for new redo log files to be added to the capture process session. This state is possible if a redo log file is missing or if there is no activity at a source database. For a downstream capture process, this state is possible if the capture process is waiting for new log files to be added to its session.
+                     </p>
+                     <p>Additional information might be displayed along with the state information when you query the <code class="codeph">V$STREAMS_CAPTURE</code> view. The additional information can help you to determine why the capture process is waiting for redo. For example, a statement similar to the following might appear for the <code class="codeph">STATE</code> column when you query the view:
+                     </p><pre class="oac_no_warn" dir="ltr">WAITING FOR REDO: LAST SCN MINED 8077284
+</pre><p>In this case, the output only identifies the last system change number (SCN) scanned by the capture process. In other cases, the output might identify the redo log file name explicitly. Either way, the additional information can help you identify the redo log file for which the capture process is waiting. To correct the problem, make any missing redo log files available to the capture process.</p>
+                     <div class="infoboxnotealso" id="GUID-BB663548-9CE7-4B8D-82B9-F8B52BF6B407__GUID-5D658504-2C93-4439-BC08-4F8979D433C6">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="troubleshooting-implicit-capture.html#GUID-FB014422-DEF3-4E0C-B516-8FD6E33E20C6">Is a Downstream Capture Process Waiting for Redo Data?</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1032"></a><div class="props_rev_3"><a id="GUID-B96665E8-D2E3-4CCB-8591-6E57ADA9F4F1" name="GUID-B96665E8-D2E3-4CCB-8591-6E57ADA9F4F1"></a><h4 id="STRMS-GUID-B96665E8-D2E3-4CCB-8591-6E57ADA9F4F1" class="sect4"><span class="enumeration_section">31.1.4 </span>Is the Capture Process Paused for Flow Control?
+                  </h4>
+                  <div>
+                     <p>If an enabled capture process is not capturing changes as expected, then the capture process might be in <code class="codeph">PAUSED</code> <code class="codeph">FOR</code> <code class="codeph">FLOW</code> <code class="codeph">CONTROL</code> state.
+                     </p>
+                     <p>To check the state of each capture process in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture Name' FORMAT A30
+COLUMN STATE HEADING 'State' FORMAT A30
+ 
+SELECT CAPTURE_NAME, STATE FROM V$STREAMS_CAPTURE;
+</pre><p>If the capture process state is <code class="codeph">PAUSED</code> <code class="codeph">FOR</code> <code class="codeph">FLOW</code> <code class="codeph">CONTROL</code>, then the capture process cannot enqueue logical change records (LCRs) either because of low memory or because propagations and apply processes are consuming messages at a slower rate than the capture process is creating them. This state indicates flow control that is used to reduce the spilling of captured LCRs when propagation or apply has fallen behind or is unavailable.
+                     </p>
+                     <p>If a capture process is in this state, then check for the following issues:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>An apply process is disabled or is performing slowly.</p>
+                        </li>
+                        <li>
+                           <p>A propagation is disabled or is performing poorly.</p>
+                        </li>
+                        <li>
+                           <p>There is not enough memory in the Streams pool.</p>
+                        </li>
+                     </ul>
+                     <p>You can query the <code class="codeph">V$STREAMS_APPLY_READER</code> view to monitor the LCRs being received by the apply process. You can also query <code class="codeph">V$STREAMS_APPLY_SERVER</code> view to determine whether all apply servers are applying LCRs and executing transactions.
+                     </p>
+                     <p>Also, you can query the <code class="codeph">PUBLISHER_STATE</code> column in the <code class="codeph">V$BUFFERED_PUBLISHERS</code> view to determine the exact reason why the capture process is paused for flow control.
+                     </p>
+                     <p>To correct the problem, perform one or more of the following actions:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If any propagation or apply process is disabled, then enable the propagation or apply process.</p>
+                        </li>
+                        <li>
+                           <p>If the apply reader is not receiving data fast enough, then try removing propagation and apply process rules or simplifying the rule conditions.</p>
+                        </li>
+                        <li>
+                           <p>If there is not enough memory in the Streams pool at the capture process database, then try increasing the size of the Streams pool.</p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-B96665E8-D2E3-4CCB-8591-6E57ADA9F4F1__GUID-88AB1F88-2395-4816-8CFA-803DC29C403F">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="managing-staging-and-propagation.html#GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29"> Managing Staging and Propagation</a></p>
+                           </li>
+                           <li>
+                              <p><a href="managing-oracle-streams-information-consumption.html#GUID-9DEB34C0-21DC-41E0-96CE-699D279F8C42"> Managing Oracle Streams Information Consumption</a></p>
+                           </li>
+                           <li>
+                              <p><a href="combined-capture-and-apply-optimization.html#GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F"> Combined Capture and Apply Optimization</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1033"></a><div class="props_rev_3"><a id="GUID-A7860CA5-622C-45C0-9F31-6353086D8DA8" name="GUID-A7860CA5-622C-45C0-9F31-6353086D8DA8"></a><h4 id="STRMS-GUID-A7860CA5-622C-45C0-9F31-6353086D8DA8" class="sect4"><span class="enumeration_section">31.1.5 </span>Is the Capture Process Current?
+                  </h4>
+                  <div>
+                     <p>If a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> has not captured recent changes, then the cause might be that the capture process has fallen behind. To check, you can query the <code class="codeph">V$STREAMS_CAPTURE</code> dynamic performance view. If capture process latency is high, then you might be able to improve performance by adjusting the setting of the <code class="codeph">parallelism</code> capture process parameter.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-A7860CA5-622C-45C0-9F31-6353086D8DA8__GUID-E170B8C2-CB88-4499-9E0F-29BF60E23A74">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-AD51C935-72DA-410B-B186-5C03BB43F436">Determining Redo Log Scanning Latency for Each Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-C8238AA2-DB5B-4C77-B7E8-0191BE681099">Determining Message Enqueuing Latency for Each Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-00C97579-1532-4535-8CB3-A4CDF5A99097">Capture Process Subcomponents</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-44B88D46-C551-4C17-A1A0-B68842A87C44">Setting a Capture Process Parameter</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1034"></a><div class="props_rev_3"><a id="GUID-71818F6E-9C98-42CB-AFC7-0AE197F96FA8" name="GUID-71818F6E-9C98-42CB-AFC7-0AE197F96FA8"></a><h4 id="STRMS-GUID-71818F6E-9C98-42CB-AFC7-0AE197F96FA8" class="sect4"><span class="enumeration_section">31.1.6 </span>Are Required Redo Log Files Missing?
+                  </h4>
+                  <div>
+                     <p>When a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> is started or restarted, it might need to scan redo log files that were generated before the log file that contains the <a href="strms_glossary.html#GUID-531018E6-B24E-4835-A4F5-179E2E427906"><span class="xrefglossterm">start SCN</span></a>. You can query the <code class="codeph">DBA_CAPTURE</code> data dictionary view to determine the <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> and start SCN for a capture process. Removing required redo log files before they are scanned by a capture process causes the capture process to abort and results in the following error in a capture process trace file: 
+                     </p><pre class="oac_no_warn" dir="ltr">ORA-01291: missing logfile
+</pre><p>If you see this error, then try restoring any missing redo log files and restarting the capture process. You can check the <code class="codeph">V$LOGMNR_LOGS</code> dynamic performance view to determine the missing SCN range, and add the relevant redo log files. A capture process needs the redo log file that includes the <a href="strms_glossary.html#GUID-C3EC3C70-C86C-4F1F-8DDA-8C972D0EEFC2"><span class="xrefglossterm">required checkpoint SCN</span></a> and all subsequent redo log files. You can query the <code class="codeph">REQUIRED_CHECKPOINT_SCN</code> column in the <code class="codeph">DBA_CAPTURE</code> data dictionary view to determine the required checkpoint SCN for a capture process.
+                     </p>
+                     <p>If the capture process is disabled for longer than the amount of time specified in the <code class="codeph">CONTROL_FILE_RECORD_KEEP_TIME</code> initialization parameter, then information about the missing redo log files might have been replaced in the control file. You can query the <code class="codeph">V$ARCHIVE_LOG</code> view to see if the log file names are listed. If they are not listed, then you can register them with a <code class="codeph">ALTER DATABASE REGISTER OR REPLACE LOGFILE</code> SQL statement.
+                     </p>
+                     <p><a id="d131960e1510" class="indexterm-anchor"></a><a id="d131960e1516" class="indexterm-anchor"></a><a id="d131960e1522" class="indexterm-anchor"></a>If you are using the fast recovery area feature of Recovery Manager (RMAN) on a <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> in an Oracle Streams environment, then RMAN might delete archived redo log files that are required by a capture process. RMAN might delete these files when the disk space used by the recovery-related files is nearing the specified disk quota for the fast recovery area. To prevent this problem in the future, complete one or more of the following actions:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Increase the disk quota for the fast recovery area. Increasing the disk quota makes it less likely that RMAN will delete a required archived redo log file, but it will not always prevent the problem.</p>
+                        </li>
+                        <li>
+                           <p>Configure the source database to store archived redo log files in a location other than the fast recovery area. A <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a> will be able to use the log files in the other location if the required log files are missing in the fast recovery area. In this case, a database administrator must manage the log files manually in the other location.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>RMAN always ensures that archived redo log files are backed up before it deletes them. If RMAN deletes an archived redo log file that is required by a capture process, then RMAN records this action in the alert log.</p>
+                     <div class="infoboxnotealso" id="GUID-71818F6E-9C98-42CB-AFC7-0AE197F96FA8__GUID-4037B091-C8A8-465B-A1B2-7F93DB7CBE68">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD">ARCHIVELOG Mode and a Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-E99C4219-767D-40CC-9FE1-044AF4277828">First SCN and Start SCN</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-76DB43BF-5A8D-42FE-B703-FAA2CECAF03B">Displaying the Registered Redo Log Files for Each Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../bradv/configuring-rman-client-basic.html#BRADV8183"><span class="italic">Oracle Database Backup and Recovery User's Guide</span></a> for more information about the fast recovery area feature
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS176"></a><div class="props_rev_3"><a id="GUID-FB014422-DEF3-4E0C-B516-8FD6E33E20C6" name="GUID-FB014422-DEF3-4E0C-B516-8FD6E33E20C6"></a><h4 id="STRMS-GUID-FB014422-DEF3-4E0C-B516-8FD6E33E20C6" class="sect4"><span class="enumeration_section">31.1.7 </span>Is a Downstream Capture Process Waiting for Redo Data?
+                  </h4>
+                  <div>
+                     <p>If a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> is not capturing changes, then it might be waiting for redo data to scan. Redo log files can be registered implicitly or explicitly for a downstream capture process. Redo log files registered implicitly typically are registered in one of the following ways:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>For a <a href="strms_glossary.html#GUID-06A0A2F0-B289-468B-83DD-FA912214CB2F"><span class="xrefglossterm">real-time downstream capture process</span></a>, redo transport services sends the redo data from the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> to the standby redo log at the <a href="strms_glossary.html#GUID-BEBC1371-719D-4103-877E-E3FB7B1DBA46"><span class="xrefglossterm">downstream database</span></a>. Next, the archiver at the downstream database registers the redo log files with the downstream capture process when it archives them.
+                           </p>
+                        </li>
+                        <li>
+                           <p>For an <a href="strms_glossary.html#GUID-B12B203D-0E31-47EE-9B29-AAF4C9E593C2"><span class="xrefglossterm">archived-log downstream capture process</span></a>, redo transport services transfer the archived redo log files from the source database to the downstream database and register the archived redo log files with the downstream capture process.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>If redo log files are registered explicitly for a downstream capture process, then you must manually transfer the redo log files to the downstream database and register them with the downstream capture process.</p>
+                     <p>Regardless of whether the redo log files are registered implicitly or explicitly, the downstream capture process can capture changes made to the source database only if the appropriate redo log files are registered with the downstream capture process. You can query the <code class="codeph">V$STREAMS_CAPTURE</code> dynamic performance view to determine whether a downstream capture process is waiting for a redo log file. For example, run the following query for a downstream capture process named <code class="codeph">strm05_capture</code>:
+                     </p><pre class="oac_no_warn" dir="ltr">SELECT STATE FROM V$STREAMS_CAPTURE WHERE CAPTURE_NAME='STRM05_CAPTURE';
+</pre><p>If the capture process state is either <code class="codeph">WAITING</code> <code class="codeph">FOR</code> <code class="codeph">DICTIONARY</code> <code class="codeph">REDO</code> or <code class="codeph">WAITING</code> <code class="codeph">FOR</code> <code class="codeph">REDO</code>, then verify that the redo log files have been registered with the downstream capture process by querying the <code class="codeph">DBA_REGISTERED_ARCHIVED_LOG</code> and <code class="codeph">DBA_CAPTURE</code> data dictionary views. For example, the following query lists the redo log files currently registered with the <code class="codeph">strm05_capture</code> downstream capture process:
+                     </p><pre class="oac_no_warn" dir="ltr">COLUMN SOURCE_DATABASE HEADING 'Source|Database' FORMAT A15
+COLUMN SEQUENCE# HEADING 'Sequence|Number' FORMAT 9999999
+COLUMN NAME HEADING 'Archived Redo Log|File Name' FORMAT A30
+COLUMN DICTIONARY_BEGIN HEADING 'Dictionary|Build|Begin' FORMAT A10
+COLUMN DICTIONARY_END HEADING 'Dictionary|Build|End' FORMAT A10
+
+SELECT r.SOURCE_DATABASE,
+       r.SEQUENCE#, 
+       r.NAME, 
+       r.DICTIONARY_BEGIN, 
+       r.DICTIONARY_END 
+  FROM DBA_REGISTERED_ARCHIVED_LOG r, DBA_CAPTURE c
+  WHERE c.CAPTURE_NAME = 'STRM05_CAPTURE' AND 
+        r.CONSUMER_NAME = c.CAPTURE_NAME;
+</pre><p>If this query does not return any rows, then no redo log files are registered with the capture process currently. If you configured redo transport services to transfer redo data from the source database to the downstream database for this capture process, then ensure that the redo transport services are configured correctly. If the redo transport services are configured correctly, then run the <code class="codeph">ALTER</code> <code class="codeph">SYSTEM</code> <code class="codeph">ARCHIVE</code> <code class="codeph">LOG</code> <code class="codeph">CURRENT</code> statement at the source database to archive a log file. If you did not configure redo transport services to transfer redo data, then ensure that the method you are using for log file transfer and registration is working properly. You can register log files explicitly using an <code class="codeph">ALTER</code> <code class="codeph">DATABASE</code> <code class="codeph">REGISTER</code> <code class="codeph">LOGICAL</code> <code class="codeph">LOGFILE</code> statement.
+                     </p>
+                     <p>If the downstream capture process is waiting for redo, then it also is possible that there is a problem with the network connection between the source database and the downstream database. There also might be a problem with the log file transfer method. Check your network connection and log file transfer method to ensure that they are working properly.</p>
+                     <p>If you configured a real-time downstream capture process, and no redo log files are registered with the capture process, then try switching the log file at the source database. You might need to switch the log file more than once if there is little or no activity at the source database.</p>
+                     <p>Also, if you plan to use a downstream capture process to capture changes to historical data, then consider the following additional issues:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Both the source database that generates the redo log files and the database that runs a downstream capture process must be Oracle Database 10<span class="italic">g</span> or later databases.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The start of a data dictionary build must be present in the oldest redo log file added, and the capture process must be configured with a <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> that matches the start of the data dictionary build.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The database objects for which the capture process will capture changes must be prepared for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> at the source database, not at the downstream database. In addition, you cannot specify a time in the past when you prepare objects for instantiation. Objects are always prepared for instantiation at the current database SCN, and only changes to a database object that occurred after the object was prepared for instantiation can be captured by a capture process.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-FB014422-DEF3-4E0C-B516-8FD6E33E20C6__GUID-6734D51C-B330-4502-8CC9-A68DEDC8A9DB">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-5C1059F3-DA6E-4B0A-8179-D5304423656E">Local Capture and Downstream Capture</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="oracle-streams-information-capture.html#GUID-6EFCAFE0-E325-4C9F-B9A7-5F9493344DFC">Capture Process States</a></p>
+                           </li>
+                           <li>
+                              <p><a href="../strep/configuring-implicit-capture.html#STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring a capture process
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1035"></a><div class="props_rev_3"><a id="GUID-9CA20B86-58D4-4BD7-9A87-1A924B922FB5" name="GUID-9CA20B86-58D4-4BD7-9A87-1A924B922FB5"></a><h4 id="STRMS-GUID-9CA20B86-58D4-4BD7-9A87-1A924B922FB5" class="sect4"><span class="enumeration_section">31.1.8 </span>Are You Trying to Configure Downstream Capture Incorrectly?
+                  </h4>
+                  <div>
+                     <p>To create a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a>, you must use one of the following procedures:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">DBMS_CAPTURE_ADM.CREATE_CAPTURE</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DBMS_STREAMS_ADM.MAINTAIN_GLOBAL</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DBMS_STREAMS_ADM.MAINTAIN_SCHEMAS</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DBMS_STREAMS_ADM.MAINTAIN_SIMPLE_TTS</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DBMS_STREAMS_ADM.MAINTAIN_TABLES</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DBMS_STREAMS_ADM.MAINTAIN_TTS</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">PRE_INSTANTIATION_SETUP</code> and <code class="codeph">POST_INSTANTIATION_SETUP</code> in the <code class="codeph">DBMS_STREAMS_ADM</code> package
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package can configure a downstream capture process as well as the other Oracle Streams components in an Oracle Streams replication environment.
+                     </p>
+                     <p>If you try to create a downstream capture process without using one of these procedures, then Oracle returns the following error:</p><pre class="oac_no_warn" dir="ltr">ORA-26678: Streams capture process must be created first
+</pre><p>To correct the problem, use one of these procedures to create the downstream capture process. </p>
+                     <p>If you are trying to create a <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a> using a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package, and you encounter this error, then make sure the database name specified in the <code class="codeph">source_database</code> parameter of the procedure you are running matches the global name of the local database.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-9CA20B86-58D4-4BD7-9A87-1A924B922FB5__GUID-8BC1411C-1F33-40F2-B59C-800454CEB535">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../strep/configuring-implicit-capture.html#STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring a capture process
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1036"></a><div class="props_rev_3"><a id="GUID-FCB64C74-BF90-4D1C-A3B7-49CFF25F2B27" name="GUID-FCB64C74-BF90-4D1C-A3B7-49CFF25F2B27"></a><h4 id="STRMS-GUID-FCB64C74-BF90-4D1C-A3B7-49CFF25F2B27" class="sect4"><span class="enumeration_section">31.1.9 </span>Are You Trying to Configure Downstream Capture without Proper Authentication?
+                  </h4>
+                  <div>
+                     <p>If authentication is not configured properly between the source database and the downstream capture database, redo data transfer fails with one of the following errors:</p><pre class="oac_no_warn" dir="ltr">ORA-16191: Primary log shipping client not logged on standby
+ 
+ORA-1017: Invalid username/password; login denied
+</pre><p>Redo transport sessions are authenticated using either the Secure Sockets Layer (SSL) protocol or a remote login password file.</p>
+                     <p>To correct the problem, ensure that the password file is the same at the source database and the downstream capture database. If the source database has a remote login password file, then, to correct the problem, copy it to the appropriate directory on the downstream capture database system. After copying the file, you might need to restart both databases for the change to take effect.</p>
+                     <div class="infoboxnotealso" id="GUID-FCB64C74-BF90-4D1C-A3B7-49CFF25F2B27__GUID-66178542-11FE-4CEF-A73E-49E20EAE9399">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../sbydb/creating-oracle-data-guard-physical-standby.html#SBYDB00424"><span class="italic">Oracle Data Guard Concepts and Administration</span></a> for detailed information about authentication requirements for redo transport
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1037"></a><div class="props_rev_3"><a id="GUID-56E99C3E-DAA7-492E-8E67-D57A6E769BBB" name="GUID-56E99C3E-DAA7-492E-8E67-D57A6E769BBB"></a><h4 id="STRMS-GUID-56E99C3E-DAA7-492E-8E67-D57A6E769BBB" class="sect4"><span class="enumeration_section">31.1.10 </span>Are More Actions Required for Downstream Capture without a Database Link?
+                  </h4>
+                  <div>
+                     <p>When downstream capture is configured with a database link, the database link can be used to perform operations at the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> and obtain information from the source database automatically. When downstream capture is configured without a database link, these actions must be performed manually, and the information must be obtained manually. If you do not complete these actions manually, then errors result when you try to create the downstream <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>.
+                     </p>
+                     <p>Specifically, the following actions must be performed manually when you configure downstream capture without a database link:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>In certain situations, you must run the <code class="codeph">DBMS_CAPTURE_ADM.BUILD</code> procedure at the source database to extract the data dictionary at the source database to the redo log before a capture process is created.
+                           </p>
+                        </li>
+                        <li>
+                           <p>You must prepare the source database objects for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>You must obtain the <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> for the <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> and specify the first SCN using the <code class="codeph">first_scn</code> parameter when you create the capture process with the <code class="codeph">CREATE_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-56E99C3E-DAA7-492E-8E67-D57A6E769BBB__GUID-9DB45E2A-D8D4-4553-BFC2-F5F0F66721FA">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../strep/configuring-implicit-capture.html#STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring a capture process
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS1038"></a><div class="props_rev_3"><a id="GUID-DFDED448-A00C-448F-B5C7-B4642D53160C" name="GUID-DFDED448-A00C-448F-B5C7-B4642D53160C"></a><h3 id="STRMS-GUID-DFDED448-A00C-448F-B5C7-B4642D53160C" class="sect3"><span class="enumeration_section">31.2 </span>Troubleshooting Synchronous Capture Problems
+               </h3>
+               <div>
+                  <p>If a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> is not capturing changes as expected, then use this section to identify and resolve synchronous capture problems.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-DFDED448-A00C-448F-B5C7-B4642D53160C__GUID-3037295F-236E-49BA-BFFF-88C9B9AC4BD7">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-9C81303F-69B5-4817-AB1D-493972C4F096">Implicit Capture with Synchronous Capture</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/configuring-implicit-capture.html#STREP208"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring synchronous capture
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-9B578DC0-B8F6-4097-B1A8-1ACC3800BB41">Managing a Synchronous Capture</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-667ADD9A-6516-49B1-9616-C2BC5A0131DE">Monitoring a Synchronous Capture</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS1039"></a><div class="props_rev_3"><a id="GUID-2CB87650-A854-4AA2-A3BE-7C8BC17BDC3A" name="GUID-2CB87650-A854-4AA2-A3BE-7C8BC17BDC3A"></a><h4 id="STRMS-GUID-2CB87650-A854-4AA2-A3BE-7C8BC17BDC3A" class="sect4"><span class="enumeration_section">31.2.1 </span>Is a Synchronous Capture Failing to Capture Changes to Tables?
+                  </h4>
+                  <div>
+                     <p>If a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> is not capturing changes to tables as you expected, then the <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s in the synchronous capture <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> might not be configured properly. To avoid problems, always use the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add rules to a synchronous capture rules set.
+                     </p>
+                     <p>The following are common reasons why a synchronous capture is not capturing changes as expected:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Global rules or schema rules are being used to try to control the behavior of the synchronous capture. A synchronous capture ignores <a href="strms_glossary.html#GUID-37142187-2A5B-48E7-A1CE-A07D60C60460"><span class="xrefglossterm">global rule</span></a>s and <a href="strms_glossary.html#GUID-59A77572-3B32-483A-A816-5938ACA78220"><span class="xrefglossterm">schema rule</span></a>s in its rule set. A synchronous capture only captures changes that satisfy <a href="strms_glossary.html#GUID-4A72ABEB-7CC1-4A46-A4B9-41F722D872A4"><span class="xrefglossterm">table rule</span></a>s and <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a>s.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">DBMS_RULE_ADM</code> package was used to configure the rules for a synchronous capture. A synchronous capture does not behave correctly when 
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The <code class="codeph">DBMS_RULE_ADM</code> package is used to create rules that are added to a synchronous capture rule set.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">DBMS_RULE_ADM</code> package is used to add rules to a synchronous capture rule set.
+                                 </p>
+                              </li>
+                           </ul>
+                        </li>
+                     </ul>
+                     <p>If a synchronous capture is not capturing changes to tables as expected, then complete the following steps to identify and correct problems:</p>
+                     <ol>
+                        <li>
+                           <p>Query the <code class="codeph">DBA_SYNC_CAPTURE_TABLES</code> data dictionary view to determine the tables for which a synchronous capture is capturing changes. The synchronous capture captures changes to a table only if the <code class="codeph">ENABLED</code> column is set to <code class="codeph">YES</code> for the table.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If the <code class="codeph">DBA_SYNC_CAPTURE_TABLES</code> view does not list tables for which a synchronous capture should capture changes, then use the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add rules for the tables.
+                           </p>
+                        </li>
+                     </ol>
+                     <p>If the <code class="codeph">DBA_SYNC_CAPTURE_TABLES</code> view shows <code class="codeph">ENABLED</code> for a table, and a synchronous capture still does not capture changes to the table, then there might be a problem with the rule condition in the rule for the table. In this case, check the rule condition and correct any errors, or drop the rule and re-create it using the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure.
+                     </p>
+                     <div class="infoboxnote" id="GUID-2CB87650-A854-4AA2-A3BE-7C8BC17BDC3A__GUID-627470C4-F702-4CB4-A89D-946FBA776AB0">
+                        <p class="notep1">Note:</p>
+                        <p>Oracle recommends that you use the <code class="codeph">REMOVE_RULE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to remove a rule from a synchronous capture rule set or drop a rule used by synchronous capture. However, you can also use the <code class="codeph">REMOVE_RULE</code> or <code class="codeph">DROP_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to perform these actions.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-2CB87650-A854-4AA2-A3BE-7C8BC17BDC3A__GUID-54A9B2C0-6FA5-4F25-BB5B-E911FDC14CCD">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-E54A2297-2631-4168-BA59-4739DBE70169">Displaying the Tables For Which Synchronous Capture Captures Changes</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-84E7C9C3-AED9-4D0C-ACA3-D2D1F371B49A">Adding Rules to a Rule Set for a Synchronous Capture</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="monitoring-rules.html#GUID-F8D4505A-DF69-4086-A3B5-3D17783C8440">Displaying the Condition for Each Rule in a Rule Set</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-7589C49A-7650-408E-B2B7-CE35273FA72B">Removing a Rule from a Rule Set for a Synchronous Capture</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

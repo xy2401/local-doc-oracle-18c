@@ -1,0 +1,404 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Learn how to restore and recover VSS snapshots. As in the case of backups, the procedure depends on the archiving mode of the database and the type of snapshot that you are restoring.">
+      <meta name="description" content="Learn how to restore and recover VSS snapshots. As in the case of backups, the procedure depends on the archiving mode of the database and the type of snapshot that you are restoring.">
+      <title>About Restoring and Recovering a Database</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Administrator's Reference ">
+      <meta property="og:description" content="Learn how to restore and recover VSS snapshots. As in the case of backups, the procedure depends on the archiving mode of the database and the type of snapshot that you are restoring.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Administrator's Reference for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="administrators-reference-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-02T05:05:35-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83889-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="about-backing-up-a-database.html" title="Previous" type="text/html">
+      <link rel="next" href="about-integrating-vss-with-third-party-requester-applications.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Administrator's Reference Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="NTQRF">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="about-backing-up-a-database.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="about-integrating-vss-with-third-party-requester-applications.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Administrator's Reference </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="performing-database-backup-and-recovery-with-vss.html" property="item" typeof="WebPage"><span property="name">Performing Database Backup and Recovery with VSS </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">About Restoring and Recovering a Database</li>
+            </ol>
+            <a id="GUID-DB879F99-B37D-4E3B-9B82-49BCEC44DA07" name="GUID-DB879F99-B37D-4E3B-9B82-49BCEC44DA07"></a>
+            
+            <h2 id="NTQRF-GUID-DB879F99-B37D-4E3B-9B82-49BCEC44DA07" class="sect2">About Restoring and Recovering a Database</h2>
+         </header>
+         <div class="ind">
+            <p>Learn how to restore and recover VSS snapshots. As in the case of backups, the procedure depends on the archiving mode of the database and the type of snapshot that you are restoring.</p>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4">About Restoring and Recovering a Database in ARCHIVELOG Mode</a><br>You can select the components listed in Components Usable in a Restore Operation in a restore and recovery operation.
+                  </li>
+                  <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-5D4DDA6D-DF8E-4F1A-98FB-3CA92FD03622">Restoring a Database in NOARCHIVELOG Mode</a><br>For an Oracle Database running in <code class="codeph">NOARCHIVELOG</code> mode, archived redo logs are not generated. So, media recovery is not possible.
+                  </li>
+               </ul>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="performing-database-backup-and-recovery-with-vss.html#GUID-B97FED01-7746-4C7A-9F9E-3EE2C147E4AF">Performing Database Backup and Recovery with VSS</a></p>
+                  </div>
+               </div>
+            </div>
+            <a id="NTQRF306"></a><div class="props_rev_3"><a id="GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4" name="GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4"></a><h3 id="NTQRF-GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4" class="sect3">About Restoring and Recovering a Database in ARCHIVELOG Mode</h3>
+               <div>
+                  <p>You can select the components listed in Components Usable in a Restore Operation in a restore and recovery operation.</p>
+                  <p>The table describes the validations that Oracle VSS writer performs for the components during the pre-restore phase, and the actions that it performs after the restore completes. </p>
+                  <div class="tblformalwide" id="GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4__CIHIGDEE">
+                     <p class="titleintable">Table 9-3 Components Usable in a Restore Operation</p>
+                     <table cellpadding="4" cellspacing="0" class="FormalWide" title="Components Usable in a Restore Operation" summary="This table describes components defined by the Oracle VSS writer. The table has the following columns: Component, Excluded, and Description." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="15%" id="d30483e137">Component</th>
+                              <th align="left" valign="bottom" width="32%" id="d30483e140">Pre-Restore Phase</th>
+                              <th align="left" valign="bottom" width="32%" id="d30483e143">PostRestore Phase</th>
+                              <th align="left" valign="bottom" width="21%" id="d30483e146">Section</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="15%" id="d30483e151" headers="d30483e137 ">
+                                 <p>Server Parameter File</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e151 d30483e140 ">
+                                 <p>Verifies that the database instance is not started. Otherwise, the writer returns a pre-restore failure.</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e151 d30483e143 ">
+                                 <p>Ensures that the database is started <code class="codeph">NOMOUNT</code>. If the server parameter file is restored to the default location for the Oracle home, then the instance starts <code class="codeph">NOMOUNT</code> automatically. Otherwise, you must set <code class="codeph">ORA_</code><span class="italic"><code class="codeph">SID</code></span><code class="codeph">_PFILE</code> to the location of the text-based initialization parameter file that points to the location of the server parameter file.
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d30483e151 d30483e146 ">
+                                 <p><span class="q">"<a href="about-restoring-and-recovering-a-database.html#GUID-2FC034E1-A80B-4EAD-8072-E7B5819BCFB4" title="Use this procedure to restore the server parameter file.">Restoring the Server Parameter File </a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="15%" id="d30483e184" headers="d30483e137 ">
+                                 <p>Control File</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e184 d30483e140 ">
+                                 <p>Verifies that the instance is either started <code class="codeph">NOMOUNT</code> or not started. If the instance is not started, the writer either starts the instance with the <code class="codeph">ORA_</code><span class="italic"><code class="codeph">SID</code></span><code class="codeph">_PFILE</code> instance parameter file, or uses the initialization parameter file or server parameter file in the default location.
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e184 d30483e143 ">
+                                 <p>Mounts control file after replicating control file to all the current control file locations pointed to by the instance.</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d30483e184 d30483e146 ">
+                                 <p><span class="q">"<a href="about-restoring-and-recovering-a-database.html#GUID-A6D42C44-73B8-439D-9D14-474659ED7ACA" title="This procedure explains how to recover from the loss of all multiplexed control files.">Recovering from the Loss of All Control Files</a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="15%" id="d30483e214" headers="d30483e137 ">
+                                 <p>Tablespace or data file component</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e214 d30483e140 ">
+                                 <p>Verifies that the database must be mounted or the specified data files or tablespaces must be offline.</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e214 d30483e143 ">
+                                 <p>Performs complete recovery of these tablespaces or data files. The requester application can override the default recovery behavior.</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d30483e214 d30483e146 ">
+                                 <p><span class="q">"<a href="about-restoring-and-recovering-a-database.html#GUID-6006845B-068C-4E23-9A7C-32B91A3D7FE2" title="This procedure explains how to recover from the loss of one or more tablespaces or data files. This procedure assumes that not all data files are lost.">Recovering Tablespaces or Data Files</a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="15%" id="d30483e233" headers="d30483e137 ">
+                                 <p>All Tablespaces</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e233 d30483e140 ">
+                                 <p>Verifies that the database is mounted.</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e233 d30483e143 ">
+                                 <p>Extracts redo from the backup writer metadata document and performs incomplete recovery on all the restored data files up to the time of snapshot creation. The requester application can override the default recovery behavior.</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d30483e233 d30483e146 ">
+                                 <p><span class="q">"<a href="about-restoring-and-recovering-a-database.html#GUID-0A81F260-D66D-4FAA-84DC-C2BD602027C6" title="This procedure explains how to recover from the loss of all tablespaces.">Recovering All Tablespaces</a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="15%" id="d30483e252" headers="d30483e137 ">
+                                 <p>Oracle Database</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e252 d30483e140 ">
+                                 <p>Verifies that the instance is not started.</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e252 d30483e143 ">
+                                 <p>Starts the database instance, mounts the control file, and performs recovery. See the descriptions of postrestore behavior for Server Parameter File, Control File, and All Tablespaces.</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d30483e252 d30483e146 ">
+                                 <p><span class="q">"<a href="about-restoring-and-recovering-a-database.html#GUID-4B83CA5C-B753-414A-8670-6A0F3E59BD76" title="This procedure explains how to recover from the loss of the server parameter file, control file, and all data files.">Performing Disaster Recovery</a>"</span> and <span class="q">"<a href="about-restoring-and-recovering-a-database.html#GUID-48EE6356-5DB1-4D7B-B95C-09074F3851CD" title="Use this procedure to restore a component-based backup.">Restoring Component-Based Backups of a NOARCHIVELOG Database</a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="15%" id="d30483e279" headers="d30483e137 ">
+                                 <p>Archived redo log or fast recovery area</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e279 d30483e140 ">
+                                 <p>None.</p>
+                              </td>
+                              <td align="left" valign="top" width="32%" headers="d30483e279 d30483e143 ">
+                                 <p>Does not perform default recovery of this component. Nevertheless, the requester application can run required RMAN commands.</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d30483e279 d30483e146 ">&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-2FC034E1-A80B-4EAD-8072-E7B5819BCFB4">Restoring the Server Parameter File</a><br>Use this procedure to restore the server parameter file.
+                     </li>
+                     <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-A6D42C44-73B8-439D-9D14-474659ED7ACA">Recovering from the Loss of All Control Files</a><br>This procedure explains how to recover from the loss of all multiplexed control files.
+                     </li>
+                     <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-6006845B-068C-4E23-9A7C-32B91A3D7FE2">Recovering Tablespaces or Data Files</a><br>This procedure explains how to recover from the loss of one or more tablespaces or data files. This procedure assumes that not all data files are lost.
+                     </li>
+                     <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-0A81F260-D66D-4FAA-84DC-C2BD602027C6">Recovering All Tablespaces</a><br>This procedure explains how to recover from the loss of all tablespaces.
+                     </li>
+                     <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-4B83CA5C-B753-414A-8670-6A0F3E59BD76">Performing Disaster Recovery</a><br>This procedure explains how to recover from the loss of the server parameter file, control file, and all data files.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-DB879F99-B37D-4E3B-9B82-49BCEC44DA07" title="Learn how to restore and recover VSS snapshots. As in the case of backups, the procedure depends on the archiving mode of the database and the type of snapshot that you are restoring.">About Restoring and Recovering a Database</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="NTQRF308"></a><div class="props_rev_3"><a id="GUID-2FC034E1-A80B-4EAD-8072-E7B5819BCFB4" name="GUID-2FC034E1-A80B-4EAD-8072-E7B5819BCFB4"></a><h4 id="NTQRF-GUID-2FC034E1-A80B-4EAD-8072-E7B5819BCFB4" class="sect4">Restoring the Server Parameter File</h4>
+                  <div>
+                     <p>Use this procedure to restore the server parameter file.</p>
+                     <div class="section">
+                        <p>To restore the server parameter file:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Select the component named <code class="codeph">Server Parameter File</code> from a VSS snapshot.</span></li>
+                        <li class="stepexpand"><span>Restore the server parameter file.</span><div>
+                              <p>Oracle VSS writer restores the server parameter file to the original location from where it was copied. You can also restore it to a new location.</p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4" title="You can select the components listed in Components Usable in a Restore Operation in a restore and recovery operation.">About Restoring and Recovering a Database in ARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF309"></a><div class="props_rev_3"><a id="GUID-A6D42C44-73B8-439D-9D14-474659ED7ACA" name="GUID-A6D42C44-73B8-439D-9D14-474659ED7ACA"></a><h4 id="NTQRF-GUID-A6D42C44-73B8-439D-9D14-474659ED7ACA" class="sect4">Recovering from the Loss of All Control Files</h4>
+                  <div>
+                     <p>This procedure explains how to recover from the loss of all multiplexed control files.</p>
+                     <div class="section">
+                        <p>To recover from the loss of all control files:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Ensure that the database is in <code class="codeph">NOMOUNT</code> state or can be started in <code class="codeph">NOMOUNT</code> state by the Oracle VSS writer.</span></li>
+                        <li class="stepexpand"><span>Select the component named <code class="codeph">Control File</code> from a VSS snapshot.</span></li>
+                        <li class="stepexpand"><span>Restore the component containing the lost control file.</span><div>
+                              <p>The Oracle VSS writer automatically mounts the database with the restored control files. If only the control file must be recovered, then the VSS requester application can ask the Oracle writer to perform complete recovery.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Restore and recover other database components if necessary.</span></li>
+                        <li class="stepexpand"><span>Open the database with the <code class="codeph">RESETLOGS</code> option.</span></li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4" title="You can select the components listed in Components Usable in a Restore Operation in a restore and recovery operation.">About Restoring and Recovering a Database in ARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF310"></a><div class="props_rev_3"><a id="GUID-6006845B-068C-4E23-9A7C-32B91A3D7FE2" name="GUID-6006845B-068C-4E23-9A7C-32B91A3D7FE2"></a><h4 id="NTQRF-GUID-6006845B-068C-4E23-9A7C-32B91A3D7FE2" class="sect4">Recovering Tablespaces or Data Files</h4>
+                  <div>
+                     <p>This procedure explains how to recover from the loss of one or more tablespaces or data files. This procedure assumes that not all data files are lost.</p>
+                     <div class="section">
+                        <p>To recover from the loss of all tablespaces or data files:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Ensure that the database is either mounted or open. If the database is open, then take the data files or tablespaces needing recovery offline with the <code class="codeph">ALTER DATABASE ... OFFLINE</code> statement.</span></li>
+                        <li class="stepexpand"><span>If the archived redo logs are required for recovery of the data files or tablespaces, then restore the archived redo logs.</span></li>
+                        <li class="stepexpand"><span>Select the components from the VSS snapshot that contains the lost data files, or all data files in the lost tablespaces.</span></li>
+                        <li class="stepexpand"><span>Restore the component containing the lost data files. </span><div>
+                              <p>The Oracle VSS writer automatically recovers the restored data files. If some archived logs are missing, then you can restore the logs and recover the data files with SQL*Plus or RMAN.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Bring the offline data files or tablespaces back online.</span></li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4" title="You can select the components listed in Components Usable in a Restore Operation in a restore and recovery operation.">About Restoring and Recovering a Database in ARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF311"></a><div class="props_rev_3"><a id="GUID-0A81F260-D66D-4FAA-84DC-C2BD602027C6" name="GUID-0A81F260-D66D-4FAA-84DC-C2BD602027C6"></a><h4 id="NTQRF-GUID-0A81F260-D66D-4FAA-84DC-C2BD602027C6" class="sect4">Recovering All Tablespaces</h4>
+                  <div>
+                     <p>This procedure explains how to recover from the loss of all tablespaces.</p>
+                     <div class="section">
+                        <p>To recover all data files:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Ensure that the database is mounted.</span></li>
+                        <li class="stepexpand"><span>If the archived redo logs are required for recovery of the data files or tablespaces, then restore the archived redo logs.</span></li>
+                        <li class="stepexpand"><span>Select the component named <code class="codeph">All Tablespaces</code> from a VSS snapshot.</span></li>
+                        <li class="stepexpand"><span>Restore the tablespaces. </span><div>
+                              <p>The Oracle VSS writer automatically recovers the restored data files. If some archived logs are missing, then you can restore the logs and recover the data files with SQL*Plus or RMAN.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Open the database.</span></li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4" title="You can select the components listed in Components Usable in a Restore Operation in a restore and recovery operation.">About Restoring and Recovering a Database in ARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF312"></a><div class="props_rev_3"><a id="GUID-4B83CA5C-B753-414A-8670-6A0F3E59BD76" name="GUID-4B83CA5C-B753-414A-8670-6A0F3E59BD76"></a><h4 id="NTQRF-GUID-4B83CA5C-B753-414A-8670-6A0F3E59BD76" class="sect4">Performing Disaster Recovery</h4>
+                  <div>
+                     <p>This procedure explains how to recover from the loss of the server parameter file, control file, and all data files.</p>
+                     <div class="section">
+                        <p>To perform disaster recovery:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Ensure that the instance is not started.</span></li>
+                        <li class="stepexpand"><span>If the archived redo logs are required for recovery of the data files or tablespaces, then restore the archived redo logs.</span></li>
+                        <li class="stepexpand"><span>Select the component named <code class="codeph">Oracle Database</code> from a VSS snapshot.</span></li>
+                        <li class="stepexpand"><span>Restore the database.</span><div>
+                              <p>The Oracle VSS writer automatically starts the instance, mount the database, and recovers the restored data files. If some archived logs are missing, then you can restore the logs and recover the data files with SQL*Plus or RMAN.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Open the database with the <code class="codeph">RESETLOGS</code> option.</span></li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-8F9BBC8C-98B3-4664-85E8-482D69CB2AA4" title="You can select the components listed in Components Usable in a Restore Operation in a restore and recovery operation.">About Restoring and Recovering a Database in ARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div><a id="NTQRF313"></a><div class="props_rev_3"><a id="GUID-5D4DDA6D-DF8E-4F1A-98FB-3CA92FD03622" name="GUID-5D4DDA6D-DF8E-4F1A-98FB-3CA92FD03622"></a><h3 id="NTQRF-GUID-5D4DDA6D-DF8E-4F1A-98FB-3CA92FD03622" class="sect3">Restoring a Database in NOARCHIVELOG Mode</h3>
+               <div>
+                  <p>For an Oracle Database running in <code class="codeph">NOARCHIVELOG</code> mode, archived redo logs are not generated. So, media recovery is not possible.
+                  </p>
+                  <div class="section"></div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-48EE6356-5DB1-4D7B-B95C-09074F3851CD">Restoring Component-Based Backups of a NOARCHIVELOG Database</a><br>Use this procedure to restore a component-based backup.
+                     </li>
+                     <li class="ulchildlink"><a href="about-restoring-and-recovering-a-database.html#GUID-D22EA837-8E50-4085-8942-F6A6A727E2B6">Restoring Volume-Based Backups of a NOARCHIVELOG Database</a><br>Use this procedure to restore a volume-based backup.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-DB879F99-B37D-4E3B-9B82-49BCEC44DA07" title="Learn how to restore and recover VSS snapshots. As in the case of backups, the procedure depends on the archiving mode of the database and the type of snapshot that you are restoring.">About Restoring and Recovering a Database</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="NTQRF314"></a><div class="props_rev_3"><a id="GUID-48EE6356-5DB1-4D7B-B95C-09074F3851CD" name="GUID-48EE6356-5DB1-4D7B-B95C-09074F3851CD"></a><h4 id="NTQRF-GUID-48EE6356-5DB1-4D7B-B95C-09074F3851CD" class="sect4">Restoring Component-Based Backups of a NOARCHIVELOG Database</h4>
+                  <div>
+                     <p>Use this procedure to restore a component-based backup.</p>
+                     <div class="section">
+                        <p>To restore a component-based backup:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Use a third-party VSS requester to select the <code class="codeph">Oracle Database</code> component.</span><div>
+                              <p>The Oracle VSS writer automatically restores the data files and mounts the database.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Open the database with the <code class="codeph">RESETLOGS</code> option.</span></li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-5D4DDA6D-DF8E-4F1A-98FB-3CA92FD03622" title="For an Oracle Database running in NOARCHIVELOG mode, archived redo logs are not generated. So, media recovery is not possible.">Restoring a Database in NOARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF315"></a><div class="props_rev_3"><a id="GUID-D22EA837-8E50-4085-8942-F6A6A727E2B6" name="GUID-D22EA837-8E50-4085-8942-F6A6A727E2B6"></a><h4 id="NTQRF-GUID-D22EA837-8E50-4085-8942-F6A6A727E2B6" class="sect4">Restoring Volume-Based Backups of a NOARCHIVELOG Database</h4>
+                  <div>
+                     <p>Use this procedure to restore a volume-based backup.</p>
+                     <div class="section">
+                        <p>To restore a volume-based backup:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li><span>Use a third-party VSS requester to select the volumes where the data files, control files, and server parameter file are physically located.</span></li>
+                        <li><span>Restore all volumes where data files and logs are located.</span></li>
+                        <li><span>Open the database with the <code class="codeph">RESETLOGS</code> option.</span></li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-restoring-and-recovering-a-database.html#GUID-5D4DDA6D-DF8E-4F1A-98FB-3CA92FD03622" title="For an Oracle Database running in NOARCHIVELOG mode, archived redo logs are not generated. So, media recovery is not possible.">Restoring a Database in NOARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

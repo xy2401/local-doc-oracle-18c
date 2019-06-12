@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Part number: F12384_01 -->
+    <!-- Published date: December 2018 -->
+    <!-- Template date: October 15, 2018 -->
+    <!-- Put the content ID of this OBE between the empty quotation marks for 'content' below -->
+    <meta name="contentid" content="25724">
+    <!-- The title below is displayed on the browser tab, in search results, and in  history. It can be longer than the tutorial title in the <h1> element, below.-->
+    <!-- Use an imperative verb in the title. -->
+    <title>Remove RPM-based Oracle Database 18c Installation</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Install and configure Oracle Database 18c using RPM.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com"
+          class="oracle-logo"> <img src="img/oracle_doc_logo.png" alt="Oracle Documentation"
+            style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <!-- The title below is displayed as the title at the top of the OBE page. It can be shorter than the title in the <title> element, above. -->
+      <!-- Use an imperative verb in the title. -->
+      <h1><img src="img/obe_tag.png" alt="Oracle by Example branding" align="middle">Remove
+        Oracle Database Using yum </h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="img/32_begin.png" alt="section 0" class="num_circ" height="32"
+                  width="32">Before You Begin</h2>
+              <p>This tutorial shows you how to remove and deinstall an
+                RPM-based Oracle Database 18c installation.</p>
+              <h3>Background</h3>
+              <p>You can use this procedure to remove an 18c Oracle Database
+                that you might have installed using RPM packages on Oracle Linux
+                6 or Oracle Linux 7.</p>
+              <p>This procedure will not work for databases installed using
+                other methods.</p>
+              <p><strong>Note:</strong> The ORACLE_HOME path for this software
+                installation is <code>/opt/oracle/product/18c/dbhome_1</code>.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Oracle Linux 7 or Oracle Linux 6 64-bit on the target
+                  server.</li>
+                <li>A minimum of 2 GB swap space.</li>
+                <li>If you are performing the installation on your laptop, then
+                  ensure that the <code>/etc/hosts</code> file contains a fully
+                  qualified name for the target server. </li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="img/32_1.png"
+                  alt="section 1" class="num_circ" height="32" width="32">Remove
+                an RPM-based Oracle Database 18c Installation</h2>
+              <ol>
+                <li>Log in as <code>root</code>.</li>
+                <li>Run the following command to remove the RPM-based database
+                  installation:
+                  <pre># yum -y remove oracle-database-ee-18c
+</pre>
+                  <p> <a target="_blank" href="files/view-oracle-database-rpm-installation-removed-output.txt">view-oracle-database-rpm-installation-removed-output</a></p>
+                </li>
+              </ol>
+              <p> <strong>Note: </strong>If the yum command detects other
+                configured components in the Oracle home such as databases or
+                listeners, then it stops the deinstallation process. </p>
+              <p>A message is displayed that instructs you to remove the
+                configured components manually. Remove those configured
+                components.</p>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="img/32_2.png"
+                  alt="section 2" class="num_circ" height="32" width="32">Remove
+                Configured Components in the Oracle Home </h2>
+              <ol>
+                <li>Login as the Oracle Database installation owner user <code>(oracle)</code>.
+                </li>
+                <li>To remove any database associated with your installation,
+                  use Oracle Database Configuration Assistant (Oracle DBCA):
+                  <pre>$ cd $ORACLE_HOME/bin 
+$ ./dbca
+</pre> </li>
+                <li>In <strong>Select Database Operation</strong> window, click
+                  <strong>Delete database</strong>.
+                  <figure> <img src="./img/dbca-delete-database.png" alt="Description of dbca-delete-database.png follows"
+                      class="ScreenShot"> <figcaption> <a href="./files/dbca-delete-database.txt">Description
+                        of the illustration dbca-delete-database.png</a> </figcaption>
+                  </figure>
+                </li>
+                <li>In <strong>Select Database </strong>window, select the
+                  database that you want to delete. For example, delete the
+                  database ORCLCDB.</li>
+                <li>Specify the SYSDBA user credentials.</li>
+                <li>In <strong>Select De-Register Management Option</strong>
+                  window, uncheck the <strong>De-register from Enterprise
+                    Manager (EM) cloud control</strong> to skip this option.
+                  Click <strong>Next</strong> to view the summary page.</li>
+                <li>In the<strong> Progress Page</strong> window, click <strong>Yes</strong>
+                  to confirm deletion of Oracle instances and data files for
+                  your database.</li>
+                <li>To remove any listeners associated with your installation,
+                  run Oracle Net Configuration Assistant (Oracle NETCA).
+                  <pre>$ cd $ORACLE_HOME/bin 
+$ ./netca</pre>
+                </li>
+                <li>In Oracle Net Configuration Assistant window, select <strong>Delete</strong>.
+                  <figure> <img src="./img/netca-delete-listerner.png" alt="Description of netca-delete-listerner.png follows"
+                      class="ScreenShot"> <figcaption> <a href="./files/netca-delete-listerner.txt">Description
+                        of the illustration netca-delete-listerner.png</a> </figcaption>
+                  </figure>
+                </li>
+                <li>In <strong>Select Listener</strong> window, select the
+                  listener that you want to delete.</li>
+                <li>Click <strong>Yes</strong> to delete the listener.</li>
+                <li>Log in as <code>root</code> and run the <code>yum</code>
+                  command again to remove the rpm-based database installation.
+                  <pre># yum -y remove oracle-database-ee-18c</pre>
+                </li>
+              </ol>
+              <hr>
+              <section>
+                <!-- Include the Next section only in a lab series or tutorial series -->
+                <!-- Don't include this section if you plan to use the tutorials in a learning path -->
+                <h2 id="next" role="button" style="text-align: left;"><img src="img/32_next.png"
+                    alt="next step" class="num_circ" height="32" width="32">Next
+                  Tutorial</h2>
+                <p><a target="_blank" href="https://apexapps.oracle.com/pls/apex/f?p=44785:112:0::::P112_CONTENT_ID:25722">
+                    Run RPM Packages to Install Oracle Database</a></p>
+                <p><a target="_blank" href="https://apexapps.oracle.com/pls/apex/f?p=44785:112:0::::P112_CONTENT_ID:25723">
+                    Create a Sample Database</a></p>
+              </section>
+            </section>
+            <hr>
+            <section>
+              <!-- Include the More Information section only in a standalone tutorial or in the final lab or tutorial in a series (not in a learning path) -->
+              <h2 id="more_info" role="button" style="text-align: left;"><img src="img/32_more.png"
+                  alt="more information" class="num_circ" height="32" width="32">Want
+                to Learn More?</h2>
+              <ul>
+                <li><a href="http://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18&amp;id=LADBI-GUID-7F7AECE2-16D5-433A-95BD-972B97955BF7"
+                    target="_blank">Removing an RPM-based Oracle Database
+                    Installation</a> </li>
+              </ul>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html"
+                target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li> <a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+    <!-- OBE Dialog Box code 5/31/2018 -->
+    <!-- DO NOT ALTER THE CODE BELOW   -->
+    <div id="lpModal" class="modal">
+      <!-- Modal hdr and body -->
+      <div id="obe_dialog" class="modal-content">
+        <div class="modal-header"> <a href="#" class="close"> <span class="close">×</span>
+          </a>
+          <h1>Associated Learning Paths</h1>
+        </div>
+        <div id="dialog-content"> </div>
+        <div id="dialog-close" class="closeBtn"> <a href="#" class="close2">
+            <p class="close2"> <span>&nbsp;&nbsp;Got It! &nbsp;</span> </p>
+          </a> </div>
+      </div>
+    </div>
+    <!-- END OBE Dialog Box code -->
+  </body>
+</html>

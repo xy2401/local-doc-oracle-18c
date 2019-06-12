@@ -1,0 +1,1382 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Monitoring Oracle Streams Queues and Propagations</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="monitoring-oracle-streams-implicit-capture.html" title="Previous" type="text/html">
+      <link rel="next" href="monitoring-oracle-streams-apply-processes.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="monitoring-oracle-streams-implicit-capture.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="monitoring-oracle-streams-apply-processes.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="monitoring-oracle-streams.html" property="item" typeof="WebPage"><span property="name">    Monitoring Oracle Streams </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Monitoring Oracle Streams Queues and Propagations</li>
+            </ol>
+            <a id="GUID-C529B824-EAD6-4BD9-A54F-44D7447A943B" name="GUID-C529B824-EAD6-4BD9-A54F-44D7447A943B"></a><a id="STRMS906"></a>
+            
+            <h2 id="STRMS-GUID-C529B824-EAD6-4BD9-A54F-44D7447A943B" class="sect2"><span class="enumeration_chapter">25 </span> Monitoring Oracle Streams Queues and Propagations
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d119288e125" class="indexterm-anchor"></a><a id="d119288e129" class="indexterm-anchor"></a><a id="d119288e133" class="indexterm-anchor"></a><a id="d119288e137" class="indexterm-anchor"></a>The following topics describe monitoring Oracle Streams <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s and <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6">Monitoring Queues and Messaging</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-856FBF7C-3736-4F60-BE15-90034CAE4ACA">Monitoring Buffered Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2">Monitoring Oracle Streams Propagations and Propagation Jobs</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-C529B824-EAD6-4BD9-A54F-44D7447A943B__GUID-730A7078-47EF-4A7A-A9B9-82E1E5157D39">
+                  <p class="notep1">Note:</p>
+                  <p>The Oracle Streams tool in Oracle Enterprise Manager Cloud Control is also an excellent way to monitor an Oracle Streams environment. See the online help for the Oracle Streams tool for more information.</p>
+               </div>
+               <div class="infoboxnotealso" id="GUID-C529B824-EAD6-4BD9-A54F-44D7447A943B__GUID-AB536DD1-960B-44F1-8EE9-3460B12F4BB4">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-staging-and-propagation.html#GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F"> Oracle Streams Staging and Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29"> Managing Staging and Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for information about the data dictionary views described in this chapter
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS907"></a><div class="props_rev_3"><a id="GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6" name="GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6"></a><h3 id="STRMS-GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6" class="sect3"><span class="enumeration_section">25.1 </span>Monitoring Queues and Messaging
+               </h3>
+               <div>
+                  <p>The following topics describe displaying information about <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s and messaging:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-9D2EA6A0-2AEB-4DB9-A87F-889DEEFC857E">Displaying the ANYDATA Queues in a Database</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-A672E80C-EDD2-47A6-9D99-A56ED3E7F014">Viewing the Messaging Clients in a Database</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-DFDB0973-63BB-48FF-8619-BA4B5E79E51B">Viewing Message Notifications</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-C134B8FD-E2C3-4335-91DC-231E0EB4CE9F">Determining the Consumer of Each Message in a Persistent Queue</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-23354BAF-6658-42CF-A25D-5787F9C99F5A">Viewing the Contents of Messages in a Persistent Queue</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6__GUID-729F8A97-8D31-4B4E-B0A3-88C6D2F2F57B">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="oracle-streams-staging-and-propagation.html#GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F"> Oracle Streams Staging and Propagation</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29"> Managing Staging and Propagation</a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS908"></a><div class="props_rev_3"><a id="GUID-9D2EA6A0-2AEB-4DB9-A87F-889DEEFC857E" name="GUID-9D2EA6A0-2AEB-4DB9-A87F-889DEEFC857E"></a><h4 id="STRMS-GUID-9D2EA6A0-2AEB-4DB9-A87F-889DEEFC857E" class="sect4"><span class="enumeration_section">25.1.1 </span>Displaying the <span>ANYDATA</span> Queues in a Database
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To display all of the <code class="codeph">ANYDATA</code> queues in a database, run the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN OWNER HEADING 'Owner' FORMAT A10
+COLUMN NAME HEADING 'Queue Name' FORMAT A28
+COLUMN QUEUE_TABLE HEADING 'Queue Table' FORMAT A22
+COLUMN USER_COMMENT HEADING 'Comment' FORMAT A15
+
+SELECT q.OWNER, q.NAME, t.QUEUE_TABLE, q.USER_COMMENT
+  FROM DBA_QUEUES q, DBA_QUEUE_TABLES t
+  WHERE t.OBJECT_TYPE = 'SYS.ANYDATA' AND
+        q.QUEUE_TABLE = t.QUEUE_TABLE AND
+        q.OWNER       = t.OWNER;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Owner      Queue Name                   Queue Table            Comment
+---------- ---------------------------- ---------------------- ---------------
+STRMADMIN  DB$APPQ                      DB$APPQT
+STRMADMIN  AQ$_DB$APPQT_E               DB$APPQT               exception queue
+STRMADMIN  DA$CAPQ                      DA$CAPQT
+STRMADMIN  AQ$_DA$CAPQT_E               DA$CAPQT               exception queue
+IX         STREAMS_QUEUE                STREAMS_QUEUE_TABLE
+IX         AQ$_STREAMS_QUEUE_TABLE_E    STREAMS_QUEUE_TABLE    exception queue
+</pre><p>An <a href="strms_glossary.html#GUID-E94DBA36-9FEB-4C59-8D28-DCB32EB8FBC9"><span class="xrefglossterm">exception queue</span></a> is created automatically when you create an <code class="codeph">ANYDATA</code> queue.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-9D2EA6A0-2AEB-4DB9-A87F-889DEEFC857E__GUID-6CE70B59-DF4E-4420-A719-108EF9539000">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-868E73A3-D956-460B-ACBF-B9796CEB3889">Managing Queues</a>"</span></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS917"></a><div class="props_rev_3"><a id="GUID-A672E80C-EDD2-47A6-9D99-A56ED3E7F014" name="GUID-A672E80C-EDD2-47A6-9D99-A56ED3E7F014"></a><h4 id="STRMS-GUID-A672E80C-EDD2-47A6-9D99-A56ED3E7F014" class="sect4"><span class="enumeration_section">25.1.2 </span>Viewing the Messaging Clients in a Database
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can view the <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>s in a database by querying the <code class="codeph">DBA_STREAMS_MESSAGE_CONSUMERS</code> data dictionary view. The query in this section displays the following information about each messaging client:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the messaging client</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> used by the messaging client
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> used by the messaging client
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> used by the messaging client
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Run the following query to view this information about messaging clients:</p><pre class="oac_no_warn" dir="ltr">COLUMN STREAMS_NAME HEADING 'Messaging|Client' FORMAT A25
+COLUMN QUEUE_OWNER HEADING 'Queue|Owner' FORMAT A10
+COLUMN QUEUE_NAME HEADING 'Queue Name' FORMAT A18
+COLUMN RULE_SET_NAME HEADING 'Positive|Rule Set' FORMAT A11
+COLUMN NEGATIVE_RULE_SET_NAME HEADING 'Negative|Rule Set' FORMAT A11
+
+SELECT STREAMS_NAME, 
+       QUEUE_OWNER, 
+       QUEUE_NAME, 
+       RULE_SET_NAME, 
+       NEGATIVE_RULE_SET_NAME 
+  FROM DBA_STREAMS_MESSAGE_CONSUMERS;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Messaging                 Queue                         Positive    Negative
+Client                    Owner      Queue Name         Rule Set    Rule Set
+------------------------- ---------- ------------------ ----------- -----------
+SCHEDULER_PICKUP          SYS        SCHEDULER$_JOBQ    RULESET$_8
+SCHEDULER_COORDINATOR     SYS        SCHEDULER$_JOBQ    RULESET$_4
+HR                        STRMADMIN  STREAMS_QUEUE      RULESET$_15
+</pre><div class="infoboxnotealso" id="GUID-A672E80C-EDD2-47A6-9D99-A56ED3E7F014__GUID-9BD3B6B7-0DE9-40B0-9B47-606EDEA45F6C">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="oracle-streams-staging-and-propagation.html#GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F"> Oracle Streams Staging and Propagation</a> for more information about messaging clients
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS918"></a><div class="props_rev_3"><a id="GUID-DFDB0973-63BB-48FF-8619-BA4B5E79E51B" name="GUID-DFDB0973-63BB-48FF-8619-BA4B5E79E51B"></a><h4 id="STRMS-GUID-DFDB0973-63BB-48FF-8619-BA4B5E79E51B" class="sect4"><span class="enumeration_section">25.1.3 </span>Viewing Message Notifications
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can configure a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> notification to send a notification when a message that can be dequeued by a <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> is enqueued into a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>. The notification can be sent to an e-mail address, to an HTTP URL, or to a PL/SQL procedure. Run the following query to view the message notifications configured in a database:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN STREAMS_NAME HEADING 'Messaging|Client' FORMAT A10
+COLUMN QUEUE_OWNER HEADING 'Queue|Owner' FORMAT A5
+COLUMN QUEUE_NAME HEADING 'Queue Name' FORMAT A20
+COLUMN NOTIFICATION_TYPE HEADING 'Notification|Type' FORMAT A15
+COLUMN NOTIFICATION_ACTION HEADING 'Notification|Action' FORMAT A25
+
+SELECT STREAMS_NAME, 
+       QUEUE_OWNER, 
+       QUEUE_NAME, 
+       NOTIFICATION_TYPE, 
+       NOTIFICATION_ACTION 
+  FROM DBA_STREAMS_MESSAGE_CONSUMERS
+  WHERE NOTIFICATION_TYPE IS NOT NULL;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Messaging  Queue                      Notification    Notification
+Client     Owner Queue Name           Type            Action
+---------- ----- -------------------- --------------- -------------------------
+OE         OE    NOTIFICATION_QUEUE   MAIL            mary.smith@example.com
+</pre><div class="infoboxnotealso" id="GUID-DFDB0973-63BB-48FF-8619-BA4B5E79E51B__GUID-6877F5CD-BF31-4110-82A3-F7C5B62AD0B8">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../adque/toc.htm"><span class="italic">Oracle Database Advanced Queuing User's Guide</span></a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS919"></a><div class="props_rev_3"><a id="GUID-C134B8FD-E2C3-4335-91DC-231E0EB4CE9F" name="GUID-C134B8FD-E2C3-4335-91DC-231E0EB4CE9F"></a><h4 id="STRMS-GUID-C134B8FD-E2C3-4335-91DC-231E0EB4CE9F" class="sect4"><span class="enumeration_section">25.1.4 </span>Determining the Consumer of Each Message in a Persistent Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To determine the consumer for each <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> in a <a href="strms_glossary.html#GUID-8D447372-AA6C-4326-8A8F-2E13F9350AF1"><span class="xrefglossterm">persistent queue</span></a>, query <code class="codeph">AQ$</code><span class="italic"><code class="codeph">queue_table_name</code></span> in the queue owner's schema, where <span class="italic"><code class="codeph">queue_table_name</code></span> is the name of the <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a>. For example, to find the consumers of the messages in the <code class="codeph">oe_q_table_any</code> queue table, run the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN MSG_ID HEADING 'Message ID' FORMAT 9999
+COLUMN MSG_STATE HEADING 'Message State' FORMAT A13
+COLUMN CONSUMER_NAME HEADING 'Consumer' FORMAT A30
+
+SELECT MSG_ID, MSG_STATE, CONSUMER_NAME FROM AQ$OE_Q_TABLE_ANY;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Message ID                       Message State Consumer
+-------------------------------- ------------- ------------------------------
+B79AC412AE6E08CAE034080020AE3E0A PROCESSED     OE
+B79AC412AE6F08CAE034080020AE3E0A PROCESSED     OE
+B79AC412AE7008CAE034080020AE3E0A PROCESSED     OE
+</pre><div class="infoboxnote" id="GUID-C134B8FD-E2C3-4335-91DC-231E0EB4CE9F__GUID-400C3360-ED80-4026-AEAA-FF71F81EBC40">
+                           <p class="notep1">Note:</p>
+                           <p>This query lists only messages in a persistent queue, not <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s or other messages in a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a>.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-C134B8FD-E2C3-4335-91DC-231E0EB4CE9F__GUID-B06509D2-5EDA-48CA-A774-AABFE9578F00">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../adque/streams-messaging-examples.html#ADQUE025"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for an example that enqueues messages into an <code class="codeph">ANYDATA</code> queue
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS920"></a><div class="props_rev_3"><a id="GUID-23354BAF-6658-42CF-A25D-5787F9C99F5A" name="GUID-23354BAF-6658-42CF-A25D-5787F9C99F5A"></a><h4 id="STRMS-GUID-23354BAF-6658-42CF-A25D-5787F9C99F5A" class="sect4"><span class="enumeration_section">25.1.5 </span>Viewing the Contents of Messages in a Persistent Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>In an <code class="codeph">ANYDATA</code> queue, to view the contents of a payload that is encapsulated within an <code class="codeph">ANYDATA</code> payload, you query the <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a> using the <code class="codeph">Access</code><span class="italic"><code class="codeph">data_type</code></span> static functions of the <code class="codeph">ANYDATA</code> type, where <span class="italic"><code class="codeph">data_type</code></span> is the type of payload to view.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-23354BAF-6658-42CF-A25D-5787F9C99F5A__GUID-D0E2FBBE-45AE-40F6-9307-9C54DE5AAF3F">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../adque/omg-monitoring.html#ADQUE2100"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for an example that enqueues the <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s shown in the queries in this section into an <code class="codeph">ANYDATA</code> queue
+                           </p>
+                        </div>
+                        <p>For example, to view the contents of payload of type <code class="codeph">NUMBER</code> in a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> with a queue table named <code class="codeph">oe_queue_table</code>, run the following query as the queue owner:
+                        </p><pre class="oac_no_warn" dir="ltr">SELECT qt.user_data.AccessNumber() "Numbers in Queue" 
+  FROM strmadmin.oe_q_table_any qt;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Numbers in Queue
+----------------
+              16
+</pre><p>Similarly, to view the contents of a payload of type <code class="codeph">VARCHAR2</code> in a queue with a queue table named <code class="codeph">oe_q_table_any</code>, run the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">SELECT qt.user_data.AccessVarchar2() "Varchar2s in Queue"
+   FROM strmadmin.oe_q_table_any qt;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Varchar2s in Queue
+--------------------------------------------------------------------------------
+Chemicals - SW
+</pre><p>To view the contents of a user-defined data type, you query the queue table using a custom function that you create. For example, to view the contents of a payload of <code class="codeph">oe.cust_address_typ</code>, create a function similar to the following:
+                        </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE FUNCTION oe.view_cust_address_typ(
+in_any IN ANYDATA) 
+RETURN oe.cust_address_typ
+IS
+  address   oe.cust_address_typ;
+  num_var   NUMBER;
+BEGIN
+  IF (in_any.GetTypeName() = 'OE.CUST_ADDRESS_TYP') THEN
+    num_var := in_any.GetObject(address);
+    RETURN address;
+  ELSE RETURN NULL;
+  END IF;
+END;
+/
+
+GRANT EXECUTE ON oe.view_cust_address_typ TO strmadmin;
+
+GRANT EXECUTE ON oe.cust_address_typ TO strmadmin;
+</pre><p>Query the queue table using the function, as in the following example:</p><pre class="oac_no_warn" dir="ltr">SELECT oe.view_cust_address_typ(qt.user_data) "Customer Addresses"
+  FROM strmadmin.oe_q_table_any qt 
+  WHERE qt.user_data.GetTypeName() = 'OE.CUST_ADDRESS_TYP';
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Customer Addresses(STREET_ADDRESS, POSTAL_CODE, CITY, STATE_PROVINCE, COUNTRY_ID
+--------------------------------------------------------------------------------
+CUST_ADDRESS_TYP('1646 Brazil Blvd', '361168', 'Chennai', 'Tam', 'IN')</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS163"></a><div class="props_rev_3"><a id="GUID-856FBF7C-3736-4F60-BE15-90034CAE4ACA" name="GUID-856FBF7C-3736-4F60-BE15-90034CAE4ACA"></a><h3 id="STRMS-GUID-856FBF7C-3736-4F60-BE15-90034CAE4ACA" class="sect3"><span class="enumeration_section">25.2 </span>Monitoring Buffered Queues
+               </h3>
+               <div>
+                  <p>A <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a> includes the following storage areas:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>System Global Area (SGA) memory associated with a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a></p>
+                     </li>
+                     <li>
+                        <p>Part of the <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a> for a queue that stores <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s that have spilled from memory
+                        </p>
+                     </li>
+                  </ul>
+                  <p>Buffered queues are stored in the <a href="strms_glossary.html#GUID-34E20CD1-AD4B-4B77-9F96-717397CFC1C4"><span class="xrefglossterm">Oracle Streams pool</span></a>, and the Oracle Streams pool is a portion of memory in the SGA that is used by Oracle Streams. In an Oracle Streams environment, LCRs captured by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> always are stored in the buffered queue of an <code class="codeph">ANYDATA</code> queue. Users and application can also enqueue messages into buffered queues, and these buffered queues be part of <code class="codeph">ANYDATA</code> queues or part of <a href="strms_glossary.html#GUID-A1B782A4-0767-457D-8CFD-D8ABF546A71D"><span class="xrefglossterm">typed queue</span></a>s.
+                  </p>
+                  <p>Buffered queues enable Oracle databases to optimize messages by storing them in the SGA instead of always storing them in a queue table. Captured LCRs always are stored in buffered queues, but other types of messages can be stored in buffered queues or persistently in queue tables. Messages in a buffered queue can spill from memory if they have been staged in the buffered queue for a period of time without being dequeued, or if there is not enough space in memory to hold all of the messages. Messages that spill from memory are stored in the appropriate queue table.</p>
+                  <p>The following sections describe queries that monitor buffered queues:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-062BA2FB-FD4A-4905-AD2D-BC1E262E6D2A">Determining the Number of Messages in Each Buffered Queue</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-083F21C9-6474-4E85-B859-B6B327C60673">Viewing the Capture Processes for the LCRs in Each Buffered Queue</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-1A70DC59-7EF3-40D5-8CA6-C141E6A689A6">Displaying Information About Propagations that Send Buffered Messages</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-B6BDC743-E253-4FD7-AA2A-84C9D8A102F5">Displaying the Number of Messages and Bytes Sent By Propagations</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-0AFCE263-553D-494D-88BD-FCB912E38F92">Displaying Performance Statistics for Propagations that Send Buffered Messages</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-C684E95C-B838-4E5C-98FB-DF89114FDF5C">Viewing the Propagations Dequeuing Messages from Each Buffered Queue</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-66616DA8-6489-4F5A-B321-185416186470">Displaying Performance Statistics for Propagations That Receive Buffered Messages</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-9C62394D-69D4-457F-B244-6E0559A2C56C">Viewing the Apply Processes Dequeuing Messages from Each Buffered Queue</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS921"></a><div class="props_rev_3"><a id="GUID-062BA2FB-FD4A-4905-AD2D-BC1E262E6D2A" name="GUID-062BA2FB-FD4A-4905-AD2D-BC1E262E6D2A"></a><h4 id="STRMS-GUID-062BA2FB-FD4A-4905-AD2D-BC1E262E6D2A" class="sect4"><span class="enumeration_section">25.2.1 </span>Determining the Number of Messages in Each Buffered Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The <code class="codeph">V$BUFFERED_QUEUES</code> dynamic performance view contains information about the number of <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s in a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a>. The messages can be <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s, <a href="strms_glossary.html#GUID-95FF7ACD-11FF-4ACF-8E06-60033BEC621B"><span class="xrefglossterm">buffered LCR</span></a>s, or <a href="strms_glossary.html#GUID-2587F4F8-8B48-40F7-8541-D039E22291C3"><span class="xrefglossterm">buffered user message</span></a>s.
+                        </p>
+                        <p>You can determine the following information about each buffered queue in a database by running the query in this section:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> owner
+                              </p>
+                           </li>
+                           <li>
+                              <p>The queue name</p>
+                           </li>
+                           <li>
+                              <p>The number of messages currently in memory</p>
+                           </li>
+                           <li>
+                              <p>The number of messages that have spilled from memory into the <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a></p>
+                           </li>
+                           <li>
+                              <p>The total number of messages in the buffered queue, which includes the messages in memory and the messages spilled to the queue table</p>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN QUEUE_SCHEMA HEADING 'Queue Owner' FORMAT A15
+COLUMN QUEUE_NAME HEADING 'Queue Name' FORMAT A15
+COLUMN MEM_MSG HEADING 'Messages|in Memory' FORMAT 99999999
+COLUMN SPILL_MSGS HEADING 'Messages|Spilled' FORMAT 99999999
+COLUMN NUM_MSGS HEADING 'Total Messages|in Buffered Queue' FORMAT 99999999
+
+SELECT QUEUE_SCHEMA, 
+       QUEUE_NAME, 
+       (NUM_MSGS - SPILL_MSGS) MEM_MSG, 
+       SPILL_MSGS, 
+       NUM_MSGS
+  FROM V$BUFFERED_QUEUES;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                                     Messages      Messages      Total Messages
+Queue Owner     Queue Name          in Memory       Spilled   in Buffered Queue
+--------------- --------------- ------------- ------------- -------------------
+STRMADMIN       STREAMS_QUEUE             534            21                 555</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS922"></a><div class="props_rev_3"><a id="GUID-083F21C9-6474-4E85-B859-B6B327C60673" name="GUID-083F21C9-6474-4E85-B859-B6B327C60673"></a><h4 id="STRMS-GUID-083F21C9-6474-4E85-B859-B6B327C60673" class="sect4"><span class="enumeration_section">25.2.2 </span>Viewing the Capture Processes for the LCRs in Each Buffered Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> is a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> publisher that enqueues <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s into a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a>. These LCRs can be propagated to other queues subsequently. By querying the <code class="codeph">V$BUFFERED_PUBLISHERS</code> dynamic performance view, you can display each capture process that captured the LCRs in the buffered queue. These LCRs might have been captured at the local database, or they might have been captured at a remote database and propagated to the queue specified in the query.
+                        </p>
+                        <p>The query in this section assumes that the buffered queues in the local database only store captured LCRs, not <a href="strms_glossary.html#GUID-95FF7ACD-11FF-4ACF-8E06-60033BEC621B"><span class="xrefglossterm">buffered LCR</span></a>s or <a href="strms_glossary.html#GUID-2587F4F8-8B48-40F7-8541-D039E22291C3"><span class="xrefglossterm">buffered user message</span></a>s. The query displays the following information about each capture process:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of a capture process that captured the LCRs in the buffered queue</p>
+                           </li>
+                           <li>
+                              <p>If the capture process is running on a remote database, and the captured LCRs have been propagated to the local queue, then the name of the queue and database from which the captured LCRs were last propagated</p>
+                           </li>
+                           <li>
+                              <p>The name of the local queue staging the captured LCRs</p>
+                           </li>
+                           <li>
+                              <p>The total number of LCRs captured by a capture process that have been staged in the buffered queue since the database instance was last started</p>
+                           </li>
+                           <li>
+                              <p>The message number of the LCR last enqueued into the buffered queue from the sender</p>
+                           </li>
+                           <li>
+                              <p>The percentage of the Streams pool used at the capture process database</p>
+                           </li>
+                           <li>
+                              <p>The state of the publisher. The capture process is the publisher, and the following states are possible:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><code class="codeph">PUBLISHING</code> <code class="codeph">MESSAGES</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">IN</code> <code class="codeph">FLOW</code> <code class="codeph">CONTROL:</code> <code class="codeph">TOO</code> <code class="codeph">MANY</code> <code class="codeph">UNBROWSED</code> <code class="codeph">MESSAGES</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">IN</code> <code class="codeph">FLOW</code> <code class="codeph">CONTROL:</code> <code class="codeph">OVERSPILLED</code> <code class="codeph">MESSAGES</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">IN</code> <code class="codeph">FLOW</code> <code class="codeph">CONTROL:</code> <code class="codeph">INSUFFICIENT</code> <code class="codeph">MEMORY</code> <code class="codeph">AND</code> <code class="codeph">UNBROWSED</code> <code class="codeph">MESSAGES</code></p>
+                                 </li>
+                              </ul>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN SENDER_NAME HEADING 'Capture|Process' FORMAT A10
+COLUMN SENDER_ADDRESS HEADING 'Sender Queue' FORMAT A15
+COLUMN QUEUE_NAME HEADING 'Queue Name' FORMAT A10
+COLUMN CNUM_MSGS HEADING 'Number|of LCRs|Enqueued' FORMAT 99999999
+COLUMN LAST_ENQUEUED_MSG HEADING 'Last|Enqueued|LCR' FORMAT 9999999999
+COLUMN MEMORY_USAGE HEADING 'Percent|Streams|Pool|Used' FORMAT 999
+COLUMN PUBLISHER_STATE HEADING 'Publisher|State' FORMAT A10
+ 
+SELECT SENDER_NAME,
+       SENDER_ADDRESS,
+       QUEUE_NAME,        
+       CNUM_MSGS, 
+       LAST_ENQUEUED_MSG,
+       MEMORY_USAGE,
+       PUBLISHER_STATE
+  FROM V$BUFFERED_PUBLISHERS;
+</pre><p>Your output looks similar to the following:   </p><pre class="oac_no_warn" dir="ltr">                                                            Percent
+                                         Number        Last Streams
+Capture                                 of LCRs    Enqueued    Pool Publisher
+Process    Sender Queue    Queue Name  Enqueued         LCR    Used State
+---------- --------------- ---------- --------- ----------- ------- ----------
+DB1$CAP                    DB1$CAPQ        3670     1002253      21 PUBLISHING
+                                                                     MESSAGES
+ 
+DB2$CAP    "STRMADMIN"."DB DB2$APPQ        3427      981066      21 PUBLISHING
+           2$CAPQ"@DB2.EXA                                           MESSAGES
+           MPLE.COM
+</pre><p>This output shows following:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">3670</code> LCRs from the local <code class="codeph">db1$cap</code> capture process were enqueued into the local queue named <code class="codeph">db1$capq</code>. The capture process is local because the <code class="codeph">Sender</code> <code class="codeph">Queue</code> column is <code class="codeph">NULL</code>. The message number of the last enqueued LCR from this capture process was <code class="codeph">1002253</code>. 21% of the Streams pool is used at the capture process database, and the capture process is publishing messages normally.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">3427</code> LCRs from the <code class="codeph">db2$cap</code> capture process running on a remote database were propagated from a queue named <code class="codeph">db2$capq</code> on database <code class="codeph">db2.example.com</code> to the local queue named <code class="codeph">db2$appq</code>. The message number of the last enqueued LCR from this sender was <code class="codeph">961066</code>. 21% of the Streams pool is used at the remote capture process database, and the capture process is publishing messages normally.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS923"></a><div class="props_rev_3"><a id="GUID-1A70DC59-7EF3-40D5-8CA6-C141E6A689A6" name="GUID-1A70DC59-7EF3-40D5-8CA6-C141E6A689A6"></a><h4 id="STRMS-GUID-1A70DC59-7EF3-40D5-8CA6-C141E6A689A6" class="sect4"><span class="enumeration_section">25.2.3 </span>Displaying Information About Propagations that Send Buffered Messages
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information about each <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> that sends buffered <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s from a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a> in the local database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the propagation</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> owner
+                              </p>
+                           </li>
+                           <li>
+                              <p>The queue name</p>
+                           </li>
+                           <li>
+                              <p>The name of the database link used by the propagation</p>
+                           </li>
+                           <li>
+                              <p>The status of the <a href="strms_glossary.html#GUID-AC57AF6F-D7A0-4128-8CE8-C0F434AF7C9E"><span class="xrefglossterm">propagation schedule</span></a></p>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation' FORMAT A15
+COLUMN QUEUE_SCHEMA HEADING 'Queue|Owner' FORMAT A10
+COLUMN QUEUE_NAME HEADING 'Queue|Name' FORMAT A15
+COLUMN DBLINK HEADING 'Database|Link' FORMAT A10
+COLUMN SCHEDULE_STATUS HEADING 'Schedule Status' FORMAT A20
+
+SELECT p.PROPAGATION_NAME,
+       s.QUEUE_SCHEMA,
+       s.QUEUE_NAME,
+       s.DBLINK,
+       s.SCHEDULE_STATUS
+  FROM DBA_PROPAGATION p, V$PROPAGATION_SENDER s
+  WHERE p.SOURCE_QUEUE_OWNER      = s.QUEUE_SCHEMA AND
+        p.SOURCE_QUEUE_NAME       = s.QUEUE_NAME AND
+        p.DESTINATION_QUEUE_OWNER = s.DST_QUEUE_SCHEMA AND
+        p.DESTINATION_QUEUE_NAME  = s.DST_QUEUE_NAME;
+</pre><p>Your output looks similar to the following:                                                                          </p><pre class="oac_no_warn" dir="ltr">                Queue      Queue           Database
+Propagation     Owner      Name            Link       Schedule Status
+--------------- ---------- --------------- ---------- --------------------
+PROPAGATION$_6  STRMADMIN  DB1$CAPQ        "STRMADMIN SCHEDULE OPTIMIZED
+                                           "."DB1$APP
+                                           Q"@DB2.EXA
+                                           MPLE.COM
+</pre><p>When the <code class="codeph">SCHEDULE_STATUS</code> column in the <code class="codeph">V$PROPAGATION_SENDER</code> view shows <code class="codeph">SCHEDULE</code> <code class="codeph">OPTIMIZED</code> for a propagation, it means that the propagation is part of a combined capture and apply optimization.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-1A70DC59-7EF3-40D5-8CA6-C141E6A689A6__GUID-DE634C4F-874B-4DAA-B9DE-641948CCB576">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="combined-capture-and-apply-optimization.html#GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F"> Combined Capture and Apply Optimization</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS924"></a><div class="props_rev_3"><a id="GUID-B6BDC743-E253-4FD7-AA2A-84C9D8A102F5" name="GUID-B6BDC743-E253-4FD7-AA2A-84C9D8A102F5"></a><h4 id="STRMS-GUID-B6BDC743-E253-4FD7-AA2A-84C9D8A102F5" class="sect4"><span class="enumeration_section">25.2.4 </span>Displaying the Number of Messages and Bytes Sent By Propagations
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the number of <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s and the number of bytes sent by each <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> that sends buffered messages from a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a> in the local database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the propagation</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> name
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the database link used by the propagation</p>
+                           </li>
+                           <li>
+                              <p>The total number of messages sent since the database instance was last started</p>
+                           </li>
+                           <li>
+                              <p>The total number of bytes sent since the database instance was last started</p>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation' FORMAT A15
+COLUMN QUEUE_NAME HEADING 'Queue|Name' FORMAT A15
+COLUMN DBLINK HEADING 'Database|Link' FORMAT A20
+COLUMN TOTAL_MSGS HEADING 'Total|Messages' FORMAT 99999999
+COLUMN TOTAL_BYTES HEADING 'Total|Bytes' FORMAT 999999999999
+
+SELECT p.PROPAGATION_NAME,
+       s.QUEUE_NAME,
+       s.DBLINK,
+       s.TOTAL_MSGS,
+       s.TOTAL_BYTES
+  FROM DBA_PROPAGATION p, V$PROPAGATION_SENDER s
+  WHERE p.SOURCE_QUEUE_OWNER      = s.QUEUE_SCHEMA AND
+        p.SOURCE_QUEUE_NAME       = s.QUEUE_NAME AND
+        p.DESTINATION_QUEUE_OWNER = s.DST_QUEUE_SCHEMA AND
+        p.DESTINATION_QUEUE_NAME  = s.DST_QUEUE_NAME;
+</pre><p>Your output looks similar to the following:                                                                          </p><pre class="oac_no_warn" dir="ltr">                Queue           Database            Total     Total
+Propagation     Name            Link                 Messages     Bytes
+--------------- --------------- -------------------- --------- ---------
+MULT1_TO_MULT3  STREAMS_QUEUE   MULT3.EXAMPLE.COM           79     71467
+MULT1_TO_MULT2  STREAMS_QUEUE   MULT2.EXAMPLE.COM           79     71467
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS925"></a><div class="props_rev_3"><a id="GUID-0AFCE263-553D-494D-88BD-FCB912E38F92" name="GUID-0AFCE263-553D-494D-88BD-FCB912E38F92"></a><h4 id="STRMS-GUID-0AFCE263-553D-494D-88BD-FCB912E38F92" class="sect4"><span class="enumeration_section">25.2.5 </span>Displaying Performance Statistics for Propagations that Send Buffered Messages
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the amount of time that a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> sending buffered <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s spends performing various tasks. Each propagation sends messages from the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> to the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>. Specifically, the query displays the following information:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the propagation</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> name
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the database link used by the propagation</p>
+                           </li>
+                           <li>
+                              <p>The amount of time spent dequeuing messages from the queue since the database instance was last started, in seconds</p>
+                           </li>
+                           <li>
+                              <p>The amount of time spent pickling messages since the database instance was last started, in seconds. Pickling involves changing a message in memory into a series of bytes that can be sent over a network.</p>
+                           </li>
+                           <li>
+                              <p>The amount of time spent propagating messages since the database instance was last started, in seconds</p>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation' FORMAT A15
+COLUMN QUEUE_NAME HEADING 'Queue|Name' FORMAT A13
+COLUMN DBLINK HEADING 'Database|Link' FORMAT A9
+COLUMN ELAPSED_DEQUEUE_TIME HEADING 'Dequeue|Time' FORMAT 99999999.99
+COLUMN ELAPSED_PICKLE_TIME HEADING 'Pickle|Time' FORMAT 99999999.99
+COLUMN ELAPSED_PROPAGATION_TIME HEADING 'Propagation|Time' FORMAT 99999999.99
+
+SELECT p.PROPAGATION_NAME,
+       s.QUEUE_NAME,
+       s.DBLINK,
+       (s.ELAPSED_DEQUEUE_TIME / 100) ELAPSED_DEQUEUE_TIME,
+       (s.ELAPSED_PICKLE_TIME / 100) ELAPSED_PICKLE_TIME,
+       (s.ELAPSED_PROPAGATION_TIME / 100) ELAPSED_PROPAGATION_TIME
+  FROM DBA_PROPAGATION p, V$PROPAGATION_SENDER s
+  WHERE p.SOURCE_QUEUE_OWNER      = s.QUEUE_SCHEMA AND
+        p.SOURCE_QUEUE_NAME       = s.QUEUE_NAME AND
+        p.DESTINATION_QUEUE_OWNER = s.DST_QUEUE_SCHEMA AND
+        p.DESTINATION_QUEUE_NAME  = s.DST_QUEUE_NAME;
+</pre><p>Your output looks similar to the following:                                                                          </p><pre class="oac_no_warn" dir="ltr">                Queue         Database       Dequeue       Pickle  Propagation
+Propagation     Name          Link              Time         Time         Time
+--------------- ------------- --------- ------------ ------------ ------------
+MULT1_TO_MULT2  STREAMS_QUEUE MULT2.EXA        30.65        45.10        10.91
+                              MPLE.COM
+MULT1_TO_MULT3  STREAMS_QUEUE MULT3.EXA        25.36        37.07         8.35
+                              MPLE.COM</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS164"></a><div class="props_rev_3"><a id="GUID-C684E95C-B838-4E5C-98FB-DF89114FDF5C" name="GUID-C684E95C-B838-4E5C-98FB-DF89114FDF5C"></a><h4 id="STRMS-GUID-C684E95C-B838-4E5C-98FB-DF89114FDF5C" class="sect4"><span class="enumeration_section">25.2.6 </span>Viewing the Propagations Dequeuing Messages from Each Buffered Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Propagations are <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> subscribers that can dequeue <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s. By querying the <code class="codeph">V$BUFFERED_SUBSCRIBERS</code> dynamic performance view, you can display all the <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s that can dequeue buffered messages. 
+                        </p>
+                        <p>Apply processes also are queue subscribers. This query joins with the <code class="codeph">DBA_PROPAGATION</code> and <code class="codeph">V$BUFFERED_QUEUES</code> views to limit the output to propagations only and to show the propagation name of each propagation.
+                        </p>
+                        <p>The query in this section displays the following information about each propagation that can dequeue messages from queues:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the propagation.</p>
+                           </li>
+                           <li>
+                              <p>The owner and name of the queue to which the propagation subscribes</p>
+                              <p>This queue is the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> for the propagation.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The subscriber address</p>
+                              <p>For a propagation, the subscriber address is the propagation's <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> and <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a></p>
+                           </li>
+                           <li>
+                              <p>The time when the propagation last started</p>
+                           </li>
+                           <li>
+                              <p>The cumulative number of messages dequeued by the propagation since the database last started</p>
+                           </li>
+                           <li>
+                              <p>The total number of messages dequeued by the propagation since the propagation last started</p>
+                           </li>
+                           <li>
+                              <p>The message number of the message most recently dequeued by the propagation</p>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation' FORMAT A11
+COLUMN QUEUE_SCHEMA HEADING 'Queue|Owner' FORMAT A5
+COLUMN QUEUE_NAME HEADING 'Queue|Name' FORMAT A5
+COLUMN SUBSCRIBER_ADDRESS HEADING 'Subscriber|Address' FORMAT A15
+COLUMN STARTUP_TIME HEADING 'Startup|Time' FORMAT A9
+COLUMN CNUM_MSGS HEADING 'Cumulative|Messages' FORMAT 99999999
+COLUMN TOTAL_DEQUEUED_MSG HEADING 'Total|Messages' FORMAT 99999999
+COLUMN LAST_DEQUEUED_NUM HEADING 'Last|Dequeued|Message|Number' FORMAT 99999999
+ 
+SELECT p.PROPAGATION_NAME,
+       s.QUEUE_SCHEMA,
+       s.QUEUE_NAME,
+       s.SUBSCRIBER_ADDRESS,
+       s.STARTUP_TIME,
+       s.CNUM_MSGS,          
+       s.TOTAL_DEQUEUED_MSG,
+       s.LAST_DEQUEUED_NUM
+FROM DBA_PROPAGATION p, V$BUFFERED_SUBSCRIBERS s
+WHERE p.SOURCE_QUEUE_OWNER = s.QUEUE_SCHEMA AND
+      p.SOURCE_QUEUE_NAME  = s.QUEUE_NAME AND 
+      p.PROPAGATION_NAME   = s.SUBSCRIBER_NAME AND
+      s.SUBSCRIBER_ADDRESS LIKE '%' || p.DESTINATION_DBLINK;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                                                                            Last
+                                                                        Dequeued
+            Queue Queue Subscriber      Startup   Cumulative     Total   Message
+Propagation Owner Name  Address         Time        Messages  Messages    Number
+----------- ----- ----- --------------- --------- ---------- --------- ---------
+PROPAGATION STRMA DB1$C "STRMADMIN"."DB 25-JUN-09      11079     11079   1525762
+$_5         DMIN  APQ   1$APPQ"@DB2.EXA
+                        MPLE.COM
+</pre><div class="infoboxnote" id="GUID-C684E95C-B838-4E5C-98FB-DF89114FDF5C__GUID-7AA3D844-5846-48CC-88E3-E8EC08D99A98">
+                           <p class="notep1">Note:</p>
+                           <p>If there are multiple propagations using the same database link but propagating messages to different queues at the destination database, then the statistics returned by this query are approximate rather than accurate.</p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS926"></a><div class="props_rev_3"><a id="GUID-66616DA8-6489-4F5A-B321-185416186470" name="GUID-66616DA8-6489-4F5A-B321-185416186470"></a><h4 id="STRMS-GUID-66616DA8-6489-4F5A-B321-185416186470" class="sect4"><span class="enumeration_section">25.2.7 </span>Displaying Performance Statistics for Propagations That Receive Buffered Messages
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the amount of time that each <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> receiving buffered <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s spends performing various tasks. Each propagation receives the messages and enqueues them into the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> for the propagation. Specifically, the query displays the following information:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> from which messages are propagated.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The amount of time spent unpickling messages since the database instance was last started, in seconds. Unpickling involves changing a series of bytes that can be sent over a network back into a buffered message in memory.</p>
+                           </li>
+                           <li>
+                              <p>The amount of time spent evaluating <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s for propagated messages since the database instance was last started, in seconds.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The amount of time spent enqueuing messages into the destination queue for the propagation since the database instance was last started, in seconds.</p>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN SRC_QUEUE_NAME HEADING 'Source|Queue|Name' FORMAT A20
+COLUMN SRC_DBNAME HEADING 'Source|Database' FORMAT A20
+COLUMN ELAPSED_UNPICKLE_TIME HEADING 'Unpickle|Time' FORMAT 99999999.99
+COLUMN ELAPSED_RULE_TIME HEADING 'Rule|Evaluation|Time' FORMAT 99999999.99
+COLUMN ELAPSED_ENQUEUE_TIME HEADING 'Enqueue|Time' FORMAT 99999999.99
+
+SELECT SRC_QUEUE_NAME,
+       SRC_DBNAME,
+       (ELAPSED_UNPICKLE_TIME / 100) ELAPSED_UNPICKLE_TIME,
+       (ELAPSED_RULE_TIME / 100) ELAPSED_RULE_TIME,
+       (ELAPSED_ENQUEUE_TIME / 100) ELAPSED_ENQUEUE_TIME
+  FROM V$PROPAGATION_RECEIVER;
+</pre><p>Your output looks similar to the following:                                                                          </p><pre class="oac_no_warn" dir="ltr">Source                                                    Rule
+Queue                Source              Unpickle   Evaluation      Enqueue
+Name                 Database                Time         Time         Time
+-------------------- -------------------- ------------ ------------ ------------
+STREAMS_QUEUE        MULT2.EXAMPLE.COM           45.65         5.44        45.85
+STREAMS_QUEUE        MULT3.EXAMPLE.COM           53.35         8.01        50.41
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS927"></a><div class="props_rev_3"><a id="GUID-9C62394D-69D4-457F-B244-6E0559A2C56C" name="GUID-9C62394D-69D4-457F-B244-6E0559A2C56C"></a><h4 id="STRMS-GUID-9C62394D-69D4-457F-B244-6E0559A2C56C" class="sect4"><span class="enumeration_section">25.2.8 </span>Viewing the Apply Processes Dequeuing Messages from Each Buffered Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Apply processes are <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> subscribers that can dequeue <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s. By querying the <code class="codeph">V$BUFFERED_SUBSCRIBERS</code> dynamic performance view, you can display all the apply processes that can dequeue messages. 
+                        </p>
+                        <p>This query joins with the <code class="codeph">V$BUFFERED_QUEUES</code> views to show the name of the queue. In addition, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s also are queue subscribers, and this query limits the output to subscribers where the <code class="codeph">SUBSCRIBER_ADDRESS</code> is <code class="codeph">NULL</code> to return only apply processes.
+                        </p>
+                        <p>The query in this section displays the following information about the apply processes that can dequeue messages from queues:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the apply process</p>
+                           </li>
+                           <li>
+                              <p>The queue owner</p>
+                           </li>
+                           <li>
+                              <p>The queue name</p>
+                           </li>
+                           <li>
+                              <p>The time when the apply process last started</p>
+                           </li>
+                           <li>
+                              <p>The cumulative number of messages dequeued by the apply process since the database last started</p>
+                           </li>
+                           <li>
+                              <p>The total number of messages dequeued by the apply process since the apply process last started</p>
+                           </li>
+                           <li>
+                              <p>The message number of the message most recently dequeued by the apply process</p>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN SUBSCRIBER_NAME HEADING 'Apply Process' FORMAT A16
+COLUMN QUEUE_SCHEMA HEADING 'Queue|Owner' FORMAT A5
+COLUMN QUEUE_NAME HEADING 'Queue|Name' FORMAT A5
+COLUMN STARTUP_TIME HEADING 'Startup|Time' FORMAT A9
+COLUMN CNUM_MSGS HEADING 'Cumulative|Messages' FORMAT 99999999
+COLUMN TOTAL_DEQUEUED_MSG HEADING 'Number of|Dequeued|Messages' 
+  FORMAT 99999999
+COLUMN LAST_DEQUEUED_NUM HEADING 'Last|Dequeued|Message|Number' FORMAT 99999999
+
+SELECT s.SUBSCRIBER_NAME,
+       q.QUEUE_SCHEMA,
+       q.QUEUE_NAME, 
+       s.STARTUP_TIME,
+       s.CNUM_MSGS,          
+       s.TOTAL_DEQUEUED_MSG,
+       s.LAST_DEQUEUED_NUM
+FROM V$BUFFERED_QUEUES q, V$BUFFERED_SUBSCRIBERS s, DBA_APPLY a
+WHERE q.QUEUE_ID = s.QUEUE_ID AND 
+      s.SUBSCRIBER_ADDRESS IS NULL AND
+      s.SUBSCRIBER_NAME = a.APPLY_NAME;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                                                                  Last
+                                                   Number of  Dequeued
+                 Queue Queue Startup   Cumulative   Dequeued   Message
+Apply Process    Owner Name  Time        Messages   Messages    Number
+---------------- ----- ----- --------- ---------- ---------- ---------
+APPLY$_DB2_2     STRMA DB2$A 25-JUN-09      11039      11039   1509859
+                 DMIN  PPQ</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS928"></a><div class="props_rev_3"><a id="GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2" name="GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2"></a><h3 id="STRMS-GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2" class="sect3"><span class="enumeration_section">25.3 </span>Monitoring Oracle Streams Propagations and Propagation Jobs
+               </h3>
+               <div>
+                  <p>The following topics describe monitoring <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s and <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a>s:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-F1DC6DE9-56ED-4C20-9F4D-6DC916EDAE70">Displaying the Queues and Database Link for Each Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-AB6F25CB-0641-47E6-8918-9A323FBC6F80">Determining the Source Queue and Destination Queue for Each Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-A2F9B390-B797-453D-BBB0-1806D5C13478">Determining the Rule Sets for Each Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-B1599124-455A-4716-9DBC-88D64E098FB3">Displaying Information About the Schedules for Propagation Jobs</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-361D677C-25EF-4AF2-AC32-1F2F2AC31C13">Determining the Total Number of Messages and Bytes Propagated</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-47FE9C10-F447-4EB5-8CF3-A3D74352C932">Displaying Information About Propagation Senders</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-D1302D15-A0D0-40B3-AA18-FAA2188EA201">Displaying Information About Propagation Receivers</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-13C2DC8A-5E33-4360-8A03-D1993DAE44FC">Displaying Session Information About Each Propagation</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2__GUID-DF8BF6B4-501E-44DB-86CE-923CD33D82AB">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="oracle-streams-staging-and-propagation.html#GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F"> Oracle Streams Staging and Propagation</a></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-138AAD67-94D5-4475-91EF-5EE7A78B4F49">Managing Oracle Streams Propagations and Propagation Jobs</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-propagation.html#GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08"> Troubleshooting Propagation</a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS933"></a><div class="props_rev_3"><a id="GUID-F1DC6DE9-56ED-4C20-9F4D-6DC916EDAE70" name="GUID-F1DC6DE9-56ED-4C20-9F4D-6DC916EDAE70"></a><h4 id="STRMS-GUID-F1DC6DE9-56ED-4C20-9F4D-6DC916EDAE70" class="sect4"><span class="enumeration_section">25.3.1 </span>Displaying the Queues and Database Link for Each Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can display information about each <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> by querying the <code class="codeph">DBA_PROPAGATION</code> data dictionary view. This view contains information about each propagation with a <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> is at the local database.
+                        </p>
+                        <p>The query in this section displays the following information about each propagation:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The propagation name</p>
+                           </li>
+                           <li>
+                              <p>The source <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> name
+                              </p>
+                           </li>
+                           <li>
+                              <p>The database link used by the propagation</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> name
+                              </p>
+                           </li>
+                           <li>
+                              <p>The status of the propagation, either <code class="codeph">ENABLED</code>, <code class="codeph">DISABLED</code>, or <code class="codeph">ABORTED</code></p>
+                           </li>
+                           <li>
+                              <p>Whether the propagation is a queue-to-queue propagation</p>
+                           </li>
+                        </ul>
+                        <p>To display this information about each propagation in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME        HEADING 'Propagation|Name'   FORMAT A19
+COLUMN SOURCE_QUEUE_NAME       HEADING 'Source|Queue|Name'  FORMAT A17
+COLUMN DESTINATION_DBLINK      HEADING 'Database|Link'      FORMAT A9
+COLUMN DESTINATION_QUEUE_NAME  HEADING 'Dest|Queue|Name'    FORMAT A15
+COLUMN STATUS                  HEADING 'Status'             FORMAT A8
+COLUMN QUEUE_TO_QUEUE          HEADING 'Queue-|to-|Queue?'  FORMAT A6
+ 
+SELECT PROPAGATION_NAME,
+       SOURCE_QUEUE_NAME,
+       DESTINATION_DBLINK, 
+       DESTINATION_QUEUE_NAME,
+       STATUS,
+       QUEUE_TO_QUEUE
+  FROM DBA_PROPAGATION;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                    Source                      Dest                     Queue-
+Propagation         Queue             Database  Queue                    to-
+Name                Name              Link      Name            Status   Queue?
+------------------- ----------------- --------- --------------- -------- ------
+PROPAGATION$_6      DA$CAPQ           DB.EXAMPL DA$APPQ         ENABLED  TRUE
+                                      E.COM
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS934"></a><div class="props_rev_3"><a id="GUID-AB6F25CB-0641-47E6-8918-9A323FBC6F80" name="GUID-AB6F25CB-0641-47E6-8918-9A323FBC6F80"></a><h4 id="STRMS-GUID-AB6F25CB-0641-47E6-8918-9A323FBC6F80" class="sect4"><span class="enumeration_section">25.3.2 </span>Determining the Source Queue and Destination Queue for Each Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can determine the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> and <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> for each <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> by querying the <code class="codeph">DBA_PROPAGATION</code> data dictionary view.
+                        </p>
+                        <p>The query in this section displays the following information about each propagation:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The propagation name</p>
+                           </li>
+                           <li>
+                              <p>The source <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> owner
+                              </p>
+                           </li>
+                           <li>
+                              <p>The source queue name</p>
+                           </li>
+                           <li>
+                              <p>The database that contains the source queue</p>
+                           </li>
+                           <li>
+                              <p>The destination queue owner</p>
+                           </li>
+                           <li>
+                              <p>The destination queue name</p>
+                           </li>
+                           <li>
+                              <p>The database that contains the destination queue</p>
+                           </li>
+                        </ul>
+                        <p>To display this information about each propagation in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation|Name' FORMAT A20
+COLUMN SOURCE_QUEUE_OWNER HEADING 'Source|Queue|Owner' FORMAT A10
+COLUMN 'Source Queue' HEADING 'Source|Queue' FORMAT A15
+COLUMN DESTINATION_QUEUE_OWNER HEADING 'Dest|Queue|Owner'   FORMAT A10
+COLUMN 'Destination Queue' HEADING 'Destination|Queue' FORMAT A15
+
+SELECT p.PROPAGATION_NAME,
+       p.SOURCE_QUEUE_OWNER,
+       p.SOURCE_QUEUE_NAME ||'@'|| 
+       g.GLOBAL_NAME "Source Queue",
+       p.DESTINATION_QUEUE_OWNER,
+       p.DESTINATION_QUEUE_NAME ||'@'|| 
+       p.DESTINATION_DBLINK "Destination Queue"
+  FROM DBA_PROPAGATION p, GLOBAL_NAME g;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                     Source                     Dest
+Propagation          Queue      Source          Queue      Destination
+Name                 Owner      Queue           Owner      Queue
+-------------------- ---------- --------------- ---------- ---------------
+PROPAGATION$_6       STRMADMIN  DA$CAPQ@DA.EXAM STRMADMIN  DA$APPQ@DB.EXAM
+                                PLE.COM                    PLE.COM
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS935"></a><div class="props_rev_3"><a id="GUID-A2F9B390-B797-453D-BBB0-1806D5C13478" name="GUID-A2F9B390-B797-453D-BBB0-1806D5C13478"></a><h4 id="STRMS-GUID-A2F9B390-B797-453D-BBB0-1806D5C13478" class="sect4"><span class="enumeration_section">25.3.3 </span>Determining the Rule Sets for Each Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information for each <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The propagation name</p>
+                           </li>
+                           <li>
+                              <p>The owner of the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for the propagation
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the positive rule set used by the propagation</p>
+                           </li>
+                           <li>
+                              <p>The owner of the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> used by the propagation
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the negative rule set used by the propagation</p>
+                           </li>
+                        </ul>
+                        <p>To display this general information about each propagation in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation|Name' FORMAT A20
+COLUMN RULE_SET_OWNER HEADING 'Positive|Rule Set|Owner' FORMAT A10
+COLUMN RULE_SET_NAME HEADING 'Positive Rule|Set Name' FORMAT A15
+COLUMN NEGATIVE_RULE_SET_OWNER HEADING 'Negative|Rule Set|Owner' FORMAT A10
+COLUMN NEGATIVE_RULE_SET_NAME HEADING 'Negative Rule|Set Name' FORMAT A15
+
+SELECT PROPAGATION_NAME, 
+       RULE_SET_OWNER, 
+       RULE_SET_NAME, 
+       NEGATIVE_RULE_SET_OWNER, 
+       NEGATIVE_RULE_SET_NAME
+  FROM DBA_PROPAGATION;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                     Positive                   Negative
+Propagation          Rule Set   Positive Rule   Rule Set   Negative Rule
+Name                 Owner      Set Name        Owner      Set Name
+-------------------- ---------- --------------- ---------- ---------------
+PROPAGATION$_6       STRMADMIN  RULESET$_7      STRMADMIN  RULESET$_9
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS936"></a><div class="props_rev_3"><a id="GUID-B1599124-455A-4716-9DBC-88D64E098FB3" name="GUID-B1599124-455A-4716-9DBC-88D64E098FB3"></a><h4 id="STRMS-GUID-B1599124-455A-4716-9DBC-88D64E098FB3" class="sect4"><span class="enumeration_section">25.3.4 </span>Displaying Information About the Schedules for Propagation Jobs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information about the <a href="strms_glossary.html#GUID-AC57AF6F-D7A0-4128-8CE8-C0F434AF7C9E"><span class="xrefglossterm">propagation schedule</span></a>s for each <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a> used by a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> in the database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the propagation</p>
+                           </li>
+                           <li>
+                              <p>The latency of the propagation job, which is the maximum wait time to propagate a new message during the duration, when all other messages in the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> to the relevant destination have been propagated
+                              </p>
+                           </li>
+                           <li>
+                              <p>Whether the propagation job is enabled</p>
+                           </li>
+                           <li>
+                              <p>The name of the process that most recently executed the schedule</p>
+                           </li>
+                           <li>
+                              <p>The number of consecutive times schedule execution has failed, if any </p>
+                              <p>After 16 consecutive failures, a propagation job is aborted automatically.</p>
+                           </li>
+                           <li>
+                              <p>Whether the propagation is queue-to-queue or queue-to-dblink</p>
+                           </li>
+                           <li>
+                              <p>The error message text of the last unsuccessful propagation execution</p>
+                           </li>
+                        </ul>
+                        <p>Run this query at the database that contains the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a>:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation' FORMAT A15
+COLUMN LATENCY HEADING 'Latency|in Seconds' FORMAT 99999
+COLUMN SCHEDULE_DISABLED HEADING 'Status' FORMAT A8
+COLUMN PROCESS_NAME HEADING 'Process' FORMAT A8
+COLUMN FAILURES HEADING 'Failures' FORMAT 999
+COLUMN QUEUE_TO_QUEUE HEADING 'Queue|to|Queue'
+COLUMN LAST_ERROR_MSG HEADING 'Last Error|Message' FORMAT A15
+ 
+SELECT p.PROPAGATION_NAME,
+       s.LATENCY,
+       DECODE(s.SCHEDULE_DISABLED,
+                'Y', 'Disabled',
+                'N', 'Enabled') SCHEDULE_DISABLED,
+       s.PROCESS_NAME,
+       s.FAILURES,
+       p.QUEUE_TO_QUEUE,
+       s.LAST_ERROR_MSG
+  FROM DBA_QUEUE_SCHEDULES s, DBA_PROPAGATION p
+  WHERE s.MESSAGE_DELIVERY_MODE = 'BUFFERED'
+    AND s.DESTINATION LIKE '%' || p.DESTINATION_DBLINK
+    AND s.SCHEMA = p.SOURCE_QUEUE_OWNER
+    AND s.QNAME  = p.SOURCE_QUEUE_NAME
+  ORDER BY PROPAGATION_NAME;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                                                      Queue
+                   Latency                            to     Last Error
+Propagation     in Seconds Status   Process  Failures Queue  Message
+--------------- ---------- -------- -------- -------- ------ ---------------
+PROPAGATION$_6          19 Enabled  CS00            0 TRUE
+</pre><div class="infoboxnotealso" id="GUID-B1599124-455A-4716-9DBC-88D64E098FB3__GUID-EB42DE21-1757-4F2D-AB69-1647B6C2649E">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="advanced-propagation-concepts.html#GUID-F620F4FA-970C-4D3A-A552-016A912C95EC">Propagation Scheduling and Oracle Streams Propagations</a>"</span> for more information about the default propagation schedule for an Oracle Streams propagation job
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-0789FE44-E2AE-4D2D-9BBD-FA637BCA3A58">Queue-to-Queue Propagations</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="troubleshooting-propagation.html#GUID-B886EDCF-9FBE-4D94-AF77-2015CF408B73">Is the Propagation Enabled?</a>"</span> if the propagation job is disabled
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../adque/aq-messaging-gateway-views.html#ADQUE0900"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>and <a href="../refrn/DBA_QUEUE_SCHEDULES.html#REFRN23174"><span class="italic">Oracle Database Reference </span></a>for more information about the <code class="codeph">DBA_QUEUE_SCHEDULES</code> data dictionary view
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS937"></a><div class="props_rev_3"><a id="GUID-361D677C-25EF-4AF2-AC32-1F2F2AC31C13" name="GUID-361D677C-25EF-4AF2-AC32-1F2F2AC31C13"></a><h4 id="STRMS-GUID-361D677C-25EF-4AF2-AC32-1F2F2AC31C13" class="sect4"><span class="enumeration_section">25.3.5 </span>Determining the Total Number of Messages and Bytes Propagated
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> can be queue-to-queue or queue-to-database link (queue-to-dblink). A queue-to-queue propagation always has its own exclusive <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a> to propagate <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s from the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> to the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>. Because each propagation job has its own <a href="strms_glossary.html#GUID-AC57AF6F-D7A0-4128-8CE8-C0F434AF7C9E"><span class="xrefglossterm">propagation schedule</span></a>, the propagation schedule of each queue-to-queue propagation can be managed separately. All queue-to-dblink propagations that share the same database link have a single propagation schedule.
+                        </p>
+                        <p>The query in this section displays the following information for each propagation:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the propagation</p>
+                           </li>
+                           <li>
+                              <p>The total time spent by the system executing the propagation schedule</p>
+                           </li>
+                           <li>
+                              <p>The total number of <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s propagated by the propagation schedule
+                              </p>
+                           </li>
+                           <li>
+                              <p>The total number of bytes propagated by the propagation schedule</p>
+                           </li>
+                        </ul>
+                        <p>Run the following query to display this information for each propagation with a source queue at the local database:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation|Name' FORMAT A20
+COLUMN TOTAL_TIME HEADING 'Total Time|Executing|in Seconds' FORMAT 999999
+COLUMN TOTAL_NUMBER HEADING 'Total Messages|Propagated' FORMAT 999999999
+COLUMN TOTAL_BYTES HEADING 'Total Bytes|Propagated' FORMAT 9999999999999
+
+SELECT p.PROPAGATION_NAME, s.TOTAL_TIME, s.TOTAL_NUMBER, s.TOTAL_BYTES 
+  FROM DBA_QUEUE_SCHEDULES s, DBA_PROPAGATION p
+  WHERE s.DESTINATION LIKE '%' || p.DESTINATION_DBLINK
+    AND s.SCHEMA = p.SOURCE_QUEUE_OWNER
+    AND s.QNAME  = p.SOURCE_QUEUE_NAME
+    AND s.MESSAGE_DELIVERY_MODE = 'BUFFERED';
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                     Total Time
+Propagation           Executing Total Messages    Total Bytes
+Name                 in Seconds     Propagated     Propagated
+-------------------- ---------- -------------- --------------
+PROPAGATION$_6                0         432615       94751013
+</pre><div class="infoboxnotealso" id="GUID-361D677C-25EF-4AF2-AC32-1F2F2AC31C13__GUID-C7CF8C24-F594-4003-AB34-1053A9200CCF">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../adque/aq-messaging-gateway-views.html#ADQUE0900"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>and <a href="../refrn/DBA_QUEUE_SCHEDULES.html#REFRN23174"><span class="italic">Oracle Database Reference </span></a>for more information about the <code class="codeph">DBA_QUEUE_SCHEDULES</code> data dictionary view
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS938"></a><div class="props_rev_3"><a id="GUID-47FE9C10-F447-4EB5-8CF3-A3D74352C932" name="GUID-47FE9C10-F447-4EB5-8CF3-A3D74352C932"></a><h4 id="STRMS-GUID-47FE9C10-F447-4EB5-8CF3-A3D74352C932" class="sect4"><span class="enumeration_section">25.3.6 </span>Displaying Information About Propagation Senders
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A propagation sender sends <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s from a <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> to a <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>.
+                        </p>
+                        <p>The query in this section displays the following information about each propagation sender in a database:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the propagation</p>
+                           </li>
+                           <li>
+                              <p>The session identifier of the propagation sender</p>
+                           </li>
+                           <li>
+                              <p>The session serial number of the propagation sender</p>
+                           </li>
+                           <li>
+                              <p>The operating system process identification number of the propagation sender</p>
+                           </li>
+                           <li>
+                              <p>The state of the propagation sender</p>
+                           </li>
+                        </ul>
+                        <p>In a combined capture and apply optimization, the <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> acts as the propagation sender and transmits messages directly to the propagation receiver. When a propagation is part of a combined capture and apply optimization, this query shows the capture process session ID, session serial number, operating system process ID, and state.
+                        </p>
+                        <p>When a propagation is not part of a combined capture and apply optimization, this query shows the propagation job session ID, session serial number, operating system process ID, and state.</p>
+                        <p>To view this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation|Name' FORMAT A11
+COLUMN SESSION_ID HEADING 'Session ID' FORMAT 9999
+COLUMN SERIAL# HEADING 'Session|Serial Number' FORMAT 9999
+COLUMN SPID HEADING 'Operating System|Process ID' FORMAT A24
+COLUMN STATE HEADING 'State' FORMAT A16
+
+SELECT p.PROPAGATION_NAME, 
+       s.SESSION_ID, 
+       s.SERIAL#, 
+       s.SPID, 
+       s.STATE
+  FROM DBA_PROPAGATION p, V$PROPAGATION_SENDER s
+  WHERE p.SOURCE_QUEUE_OWNER      = s.QUEUE_SCHEMA AND
+        p.SOURCE_QUEUE_NAME       = s.QUEUE_NAME AND
+        p.DESTINATION_QUEUE_OWNER = s.DST_QUEUE_SCHEMA AND
+        p.DESTINATION_QUEUE_NAME  = s.DST_QUEUE_NAME;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Propagation                  Session Operating System
+Name        Session ID Serial Number Process ID               State
+----------- ---------- ------------- ------------------------ ----------------
+PROPAGATION         61            17 21145                    Waiting on empty
+$_6                                                            queue
+</pre><div class="infoboxnote" id="GUID-47FE9C10-F447-4EB5-8CF3-A3D74352C932__GUID-8FF85DB7-1184-4EF2-9794-DBCD08A67B5B">
+                           <p class="notep1">Note:</p>
+                           <p>When column <code class="codeph">SCHEDULE_STATUS</code> in the <code class="codeph">V$PROPAGATION_SENDER</code> view shows <code class="codeph">SCHEDULE</code> <code class="codeph">OPTIMIZED</code>, it means that the propagation is part of a combined capture and apply optimization.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-47FE9C10-F447-4EB5-8CF3-A3D74352C932__GUID-E3C1628F-6942-40DE-858F-896331321BD0">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="combined-capture-and-apply-optimization.html#GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F"> Combined Capture and Apply Optimization</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS939"></a><div class="props_rev_3"><a id="GUID-D1302D15-A0D0-40B3-AA18-FAA2188EA201" name="GUID-D1302D15-A0D0-40B3-AA18-FAA2188EA201"></a><h4 id="STRMS-GUID-D1302D15-A0D0-40B3-AA18-FAA2188EA201" class="sect4"><span class="enumeration_section">25.3.7 </span>Displaying Information About Propagation Receivers
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A propagation receiver enqueues messages sent by propagation senders into a <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>. The query in this section displays the following information about each propagation receiver in a database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the propagation</p>
+                           </li>
+                           <li>
+                              <p>The session ID of the propagation receiver</p>
+                           </li>
+                           <li>
+                              <p>The session serial number propagation receiver</p>
+                           </li>
+                           <li>
+                              <p>The operating system process identification number of the propagation receiver</p>
+                           </li>
+                           <li>
+                              <p>The state of the propagation receiver</p>
+                           </li>
+                        </ul>
+                        <p>To view this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN PROPAGATION_NAME HEADING 'Propagation|Name' FORMAT A15
+COLUMN SESSION_ID HEADING 'Session ID' FORMAT 999999
+COLUMN SERIAL# HEADING 'Session|Serial|Number' FORMAT 999999
+COLUMN SPID HEADING 'Operating|System|Process ID' FORMAT 999999
+COLUMN STATE HEADING 'State' FORMAT A16
+ 
+SELECT PROPAGATION_NAME, 
+       SESSION_ID, 
+       SERIAL#, 
+       SPID, 
+       STATE
+  FROM V$PROPAGATION_RECEIVER;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                           Session Operating
+Propagation                 Serial System
+Name            Session ID  Number Process ID               State
+--------------- ---------- ------- ------------------------ ----------------
+PROPAGATION$_5          60       5 21050                    Waiting for mess
+                                                            age from propaga
+                                                            tion sender
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1688"></a><div class="props_rev_3"><a id="GUID-13C2DC8A-5E33-4360-8A03-D1993DAE44FC" name="GUID-13C2DC8A-5E33-4360-8A03-D1993DAE44FC"></a><h4 id="STRMS-GUID-13C2DC8A-5E33-4360-8A03-D1993DAE44FC" class="sect4"><span class="enumeration_section">25.3.8 </span>Displaying Session Information About Each Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following session information about each session associated with a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> in a database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The Oracle Streams component</p>
+                           </li>
+                           <li>
+                              <p>The session identifier</p>
+                           </li>
+                           <li>
+                              <p>The serial number</p>
+                           </li>
+                           <li>
+                              <p>The operating system process identification number</p>
+                           </li>
+                           <li>
+                              <p>The process names of the propagation sender and propagation receiver processes</p>
+                           </li>
+                        </ul>
+                        <p>To display this information for each propagation in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN ACTION HEADING 'Streams Component' FORMAT A28
+COLUMN SID HEADING 'Session ID' FORMAT 99999
+COLUMN SERIAL# HEADING 'Session|Serial|Number' FORMAT 9999999
+COLUMN PROCESS HEADING 'Operating System|Process Number' FORMAT A20
+COLUMN PROCESS_NAME HEADING 'Process|Names' FORMAT A7
+ 
+SELECT /*+PARAM('_module_action_old_length',0)*/ ACTION,
+       SID,
+       SERIAL#,
+       PROCESS,
+       SUBSTR(PROGRAM,INSTR(PROGRAM,'(')+1,4) PROCESS_NAME
+  FROM V$SESSION
+  WHERE MODULE ='Streams' AND
+        ACTION LIKE '%Propagation%';
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                                        Session
+                                         Serial Operating System     Process
+Streams Component            Session ID   Number Process Number       Names
+---------------------------- ---------- -------- -------------------- -------
+APPLY$_DB_3 - Propagation Re         60        5 21048                TNS
+ceiver CCA
+ 
+PROPAGATION$_6 - Propagation         61       17 21145                CS00
+Sender CCA
+</pre><p>The <code class="codeph">CCA</code> in the Streams component sample output indicates that the propagation is part of a combined capture and apply optimization. The <code class="codeph">TNS</code> process name indicates that the propagation receiver was initiated remotely by a capture process.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-13C2DC8A-5E33-4360-8A03-D1993DAE44FC__GUID-5B4CDA9C-8758-4E60-9118-384EE5DB21DC">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="combined-capture-and-apply-optimization.html#GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F"> Combined Capture and Apply Optimization</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

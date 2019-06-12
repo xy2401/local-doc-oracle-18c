@@ -1,0 +1,92 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="SODA for C is designed for lockless multithreading in applications.">
+      <meta name="description" content="SODA for C is designed for lockless multithreading in applications.">
+      <title>Multithreading in SODA for C Applications</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="SODA for C Developers Guide">
+      <meta property="og:description" content="SODA for C is designed for lockless multithreading in applications.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="SODA for C Developers Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="oracle-database-soda-c-developers-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2019-02-25T09:40:03-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2018, 2019">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84721-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="character-set-considerations-soda-c.html" title="Previous" type="text/html">
+      <link rel="next" href="soda-collection-configuration-using-custom-metadata.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Oracle® Database SODA for C Developer's Guide">
+    <meta name="dcterms.isVersionOf" content="ADSDC">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="character-set-considerations-soda-c.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="soda-collection-configuration-using-custom-metadata.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">SODA for C Developers Guide</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Multithreading in SODA for C Applications</li>
+            </ol>
+            <a id="GUID-14CA0427-FEE1-4074-910A-4543BBE0F621" name="GUID-14CA0427-FEE1-4074-910A-4543BBE0F621"></a>
+            
+            <h2 id="ADSDC-GUID-14CA0427-FEE1-4074-910A-4543BBE0F621" class="sect2"><span class="enumeration_chapter">5 </span>Multithreading in SODA for C Applications
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>SODA for C is designed for lockless multithreading in applications.</p>
+               <p>To achieve multithreading, just use separate handles in each thread of your SODA application. SODA handles are not designed to be shared between threads. In particular, they are not locked with mutexes to negotiate mutual exclusion among threads. </p>
+               <p>For example, to read or write to the same collection from multiple threads, obtain a separate collection handle in each thread using <code class="codeph">OCISodaCollOpen()</code>, and use each handle to perform read and write operations.
+               </p>
+               <p>Only in the case of <span class="italic">document</span> handles can it sometimes make sense to share SODA handles among threads.
+               </p>
+               <p>For example, one thread might create documents and put them into a queue, while worker threads dequeue the head document and insert it into a collection. Document handles could be shared among threads, here. </p>
+               <p>You don’t want multiple threads working on the same document at the same time, but a single document handle can be passed from one thread to another. It is your responsibility to provide application-level synchronization so that the document handle is not simultaneously accessed from different threads.</p>
+            </div>
+            <div>
+               <div class="relinfo">
+                  <p><strong>Related Topics</strong></p>
+                  <ul>
+                     <li><a href="using-soda-c.html#GUID-BEE217C1-8B25-4697-8216-F8B86F425386" title="Use OCI function OCISodaCollOpen() to open an existing document collection.">Opening an Existing Document Collection with SODA for C</a></li>
+                     <li><a href="using-soda-c.html#GUID-793B416B-2E8C-4425-9B35-381855E673AA" title="Various ways to create a SODA document are described, along with the components of a document.">Creating Documents with SODA for C</a></li>
+                  </ul>
+               </div>
+            </div>
+            
+         </div>
+      </article>
+   </body>
+</html>

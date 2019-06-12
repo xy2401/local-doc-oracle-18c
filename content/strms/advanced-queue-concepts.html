@@ -1,0 +1,312 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Advanced Queue Concepts</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="advanced-capture-process-concepts.html" title="Previous" type="text/html">
+      <link rel="next" href="advanced-propagation-concepts.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="advanced-capture-process-concepts.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="advanced-propagation-concepts.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="advanced-oracle-streams-concepts.html" property="item" typeof="WebPage"><span property="name">    Advanced Oracle Streams Concepts </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Advanced Queue Concepts</li>
+            </ol>
+            <a id="GUID-86636A79-0F8C-4C96-AF05-E10FC7AA1707" name="GUID-86636A79-0F8C-4C96-AF05-E10FC7AA1707"></a><a id="STRMS484"></a>
+            
+            <h2 id="STRMS-GUID-86636A79-0F8C-4C96-AF05-E10FC7AA1707" class="sect2"><span class="enumeration_chapter">8 </span> Advanced Queue Concepts
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d55237e125" class="indexterm-anchor"></a>The following topics contain conceptual information about staging <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s in <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s and propagating messages from one queue to another:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="advanced-queue-concepts.html#GUID-3D560C85-168F-45D9-BF1C-35E5AE857848">Secure Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-queue-concepts.html#GUID-D52CE614-8368-4CD8-98C5-81BDF20F0477">Transactional and Nontransactional Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-queue-concepts.html#GUID-412BA977-8EF7-48A1-849F-F8B0A7BB02EB">Commit-Time Queues</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-86636A79-0F8C-4C96-AF05-E10FC7AA1707__GUID-9538CA31-D138-4EA4-9324-B3CE57D56E13">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-868E73A3-D956-460B-ACBF-B9796CEB3889">Managing Queues</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="oracle-streams-restrictions.html#GUID-EF156077-A1CA-4C85-B0ED-9105F6382D7D">Queue Restrictions</a>"</span></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS141"></a><div class="props_rev_3"><a id="GUID-3D560C85-168F-45D9-BF1C-35E5AE857848" name="GUID-3D560C85-168F-45D9-BF1C-35E5AE857848"></a><h3 id="STRMS-GUID-3D560C85-168F-45D9-BF1C-35E5AE857848" class="sect3"><span class="enumeration_section">8.1 </span>Secure Queues
+               </h3>
+               <div>
+                  <p><span class="bold">Secure queues</span> are <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s for which Oracle Database Advanced Queuing (AQ) agents must be associated explicitly with one or more database users who can perform queue operations, such as enqueue and dequeue. The owner of a secure queue can perform all queue operations on the queue, but other users cannot perform queue operations on a secure queue, unless they are configured as <span class="bold">secure queue users</span>. In Oracle Streams, you can use secure queues to ensure that only the appropriate users and <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s enqueue <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s and dequeue messages.
+                  </p>
+               </div><a id="STRMS485"></a><div class="props_rev_3"><a id="GUID-B1292AE8-7807-4D3B-BDCA-6C87A72F2430" name="GUID-B1292AE8-7807-4D3B-BDCA-6C87A72F2430"></a><h4 id="STRMS-GUID-B1292AE8-7807-4D3B-BDCA-6C87A72F2430" class="sect4"><span class="enumeration_section">8.1.1 </span>Secure Queues and the SET_UP_QUEUE Procedure 
+                  </h4>
+                  <div>
+                     <p>All <code class="codeph">ANYDATA</code> queues created using the <code class="codeph">SET_UP_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package are secure queues. When you use the <code class="codeph">SET_UP_QUEUE</code> procedure to create a queue, any user specified by the <code class="codeph">queue_user</code> parameter is configured as a secure queue user of the queue automatically, if possible. The queue user is also granted <code class="codeph">ENQUEUE</code> and <code class="codeph">DEQUEUE</code> privileges on the queue. To enqueue messages and dequeue messages, a queue user must also have <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">DBMS_STREAMS_MESSAGING</code> package or the <code class="codeph">DBMS_AQ</code> package. The <code class="codeph">SET_UP_QUEUE</code> procedure does not grant either of these privileges. Also, a message cannot be enqueued unless a subscriber who can dequeue the message is configured.
+                     </p>
+                     <p>To configure a queue user as a secure queue user, the <code class="codeph">SET_UP_QUEUE</code> procedure creates an Oracle Streams AQ agent with the same name as the user name, if one does not already exist. The user must use this agent to perform queue operations on the queue. If an agent with this name already exists and is associated with the queue user only, then the existing agent is used. <code class="codeph">SET_UP_QUEUE</code> then runs the <code class="codeph">ENABLE_DB_ACCESS</code> procedure in the <code class="codeph">DBMS_AQADM</code> package, specifying the agent and the user.
+                     </p>
+                     <p>If you use the <code class="codeph">SET_UP_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create a secure queue, and you want a user who is not the queue owner and who was not specified by the <code class="codeph">queue_user</code> parameter to perform operations on the queue, then you can configure the user as a secure queue user of the queue manually. Alternatively, you can run the <code class="codeph">SET_UP_QUEUE</code> procedure again and specify a different <code class="codeph">queue_user</code> for the queue. In this case, <code class="codeph">SET_UP_QUEUE</code> skips queue creation, but it configures the user specified by <code class="codeph">queue_user</code> as a secure queue user of the queue.
+                     </p>
+                     <p>If you create an <code class="codeph">ANYDATA</code> queue using the <code class="codeph">DBMS_AQADM</code> package, then you use the <code class="codeph">secure</code> parameter when you run the <code class="codeph">CREATE_QUEUE_TABLE</code> procedure to specify whether the queue is secure or not. The queue is secure if you specify <code class="codeph">TRUE</code> for the <code class="codeph">secure</code> parameter when you run this procedure. When you use the <code class="codeph">DBMS_AQADM</code> package to create a secure queue, and you want to allow users to perform queue operations on the secure queue, you must configure these secure queue users manually.
+                     </p>
+                  </div>
+               </div><a id="STRMS486"></a><div class="props_rev_3"><a id="GUID-1AB909AA-5B0B-4F7D-82B9-7333ABC04487" name="GUID-1AB909AA-5B0B-4F7D-82B9-7333ABC04487"></a><h4 id="STRMS-GUID-1AB909AA-5B0B-4F7D-82B9-7333ABC04487" class="sect4"><span class="enumeration_section">8.1.2 </span>Secure Queues and Oracle Streams Clients
+                  </h4>
+                  <div>
+                     <p>When you create a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> or an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, an Oracle Streams AQ agent of the secure queue associated with the Oracle Streams process is configured automatically, and the user who runs the Oracle Streams process is specified as a secure queue user for this queue automatically. Therefore, a capture process is configured to enqueue into its secure queue automatically, and an apply process is configured to dequeue from its secure queue automatically. In either case, the Oracle Streams AQ agent has the same name as the Oracle Streams client.
+                     </p>
+                     <p>For a capture process, the user specified as the <code class="codeph">capture_user</code> is the user who runs the capture process. For an apply process, the user specified as the <code class="codeph">apply_user</code> is the user who runs the apply process. If no <code class="codeph">capture_user</code> or <code class="codeph">apply_user</code> is specified, then the user who invokes the procedure that creates the Oracle Streams process is the user who runs the Oracle Streams process. 
+                     </p>
+                     <p>When you create a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, an Oracle Streams AQ agent of the secure queue with the same name as the synchronous capture is associated with the user specified as the <code class="codeph">capture_user</code>. If no <code class="codeph">capture_user</code> is specified, then the user who invokes the procedure that creates the synchronous capture is the <code class="codeph">capture_user</code>. The <code class="codeph">capture_user</code> is specified as a secure queue user for this queue automatically. Therefore, the synchronous capture can enqueue into its secure queue automatically.
+                     </p>
+                     <p>If you change the <code class="codeph">capture_user</code> for a capture process or synchronous capture or the <code class="codeph">apply_user</code> for an apply process, then the specified <code class="codeph">capture_user</code> or <code class="codeph">apply_user</code> is configured as a secure queue user of the queue used by the Oracle Streams client. However, the old <a href="strms_glossary.html#GUID-33DECAE2-C00F-4805-909D-E9C1C383ECDF"><span class="xrefglossterm">capture user</span></a> or <a href="strms_glossary.html#GUID-87C6D214-6D80-452F-87A2-EA39B884189E"><span class="xrefglossterm">apply user</span></a> remains configured as a secure queue user of the queue. To remove the old user, run the <code class="codeph">DISABLE_DB_ACCESS</code> procedure in the <code class="codeph">DBMS_AQADM</code> package, specifying the old user and the relevant Oracle Streams AQ agent. You might also want to drop the agent if it is no longer needed. You can view the Oracle Streams AQ agents and their associated users by querying the <code class="codeph">DBA_AQ_AGENT_PRIVS</code> data dictionary view.
+                     </p>
+                     <p>When you create a <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>, an Oracle Streams AQ agent of the secure queue with the same name as the messaging client is associated with the user who runs the procedure that creates the messaging client. This messaging client user is specified as a secure queue user for this queue automatically. Therefore, this user can use the messaging client to dequeue messages from the queue.
+                     </p>
+                     <p>A capture process, a synchronous capture, an apply process, or a messaging client can be associated with only one user. However, one user can be associated with multiple Oracle Streams clients, including multiple capture processes, synchronous captures, apply processes, and messaging clients. For example, an apply process cannot have both <code class="codeph">hr</code> and <code class="codeph">oe</code> as apply users, but <code class="codeph">hr</code> can be the apply user for multiple apply processes.
+                     </p>
+                     <p>If you drop a capture process, synchronous capture, apply process, or messaging client, then the users who were configured as secure queue users for these Oracle Streams clients remain secure queue users of the queue. To remove these users as secure queue users, run the <code class="codeph">DISABLE_DB_ACCESS</code> procedure in the <code class="codeph">DBMS_AQADM</code> package for each user. You might also want to drop the agent if it is no longer needed.
+                     </p>
+                     <div class="infoboxnote" id="GUID-1AB909AA-5B0B-4F7D-82B9-7333ABC04487__GUID-61076DAD-1627-4B32-AC71-F5F62B6E5B75">
+                        <p class="notep1">Note:</p>
+                        <p>No configuration is necessary for <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s and secure queues. Therefore, when a propagation is dropped, no additional steps are necessary to remove secure queue users from the propagation's queues.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-1AB909AA-5B0B-4F7D-82B9-7333ABC04487__GUID-5D24B331-723B-4E81-A75C-7F810FD83FAA">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-E35C379E-13EF-4031-888E-1F943B7DAF9C">Enabling a User to Perform Operations on a Secure Queue</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-0D01D5DB-3222-486B-A5B6-D54754FBD592">Disabling a User from Performing Operations on a Secure Queue</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/index.html"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about Oracle Streams AQ agents and using the <code class="codeph">DBMS_AQADM</code> package
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS487"></a><a id="STRMS149"></a><div class="props_rev_3"><a id="GUID-D52CE614-8368-4CD8-98C5-81BDF20F0477" name="GUID-D52CE614-8368-4CD8-98C5-81BDF20F0477"></a><h3 id="STRMS-GUID-D52CE614-8368-4CD8-98C5-81BDF20F0477" class="sect3"><span class="enumeration_section">8.2 </span>Transactional and Nontransactional Queues
+               </h3>
+               <div>
+                  <p>A <span class="bold">transactional queue</span> is a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> in which <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s can be grouped into a set that are applied as one transaction. That is, an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> performs a <code class="codeph">COMMIT</code> after it applies all the messages in a group. A <span class="bold">nontransactional queue</span> is one in which each message is its own transaction. That is, an apply process performs a <code class="codeph">COMMIT</code> after each message it applies. In either case, the messages can be <a href="strms_glossary.html#GUID-43A45807-D91D-43A2-89C8-8DEBCEF70770"><span class="xrefglossterm">LCR</span></a>s or <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a>s.
+                  </p>
+                  <p>The <code class="codeph">SET_UP_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package always creates a transactional queue. The difference between transactional and nontransactional queues is important only for messages that were enqueued by an application, a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, or an apply process. An apply process always applies <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s in transactions that preserve the transactions executed at the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>.
+                  </p>
+                  <p><a href="advanced-queue-concepts.html#GUID-D52CE614-8368-4CD8-98C5-81BDF20F0477__g1011905" title="This table lists the behavior of transactional and nontransactional queues for different event types.">Table 8-1</a> shows apply process behavior for each type of message and each type of queue.
+                  </p>
+                  <div class="tblformal" id="GUID-D52CE614-8368-4CD8-98C5-81BDF20F0477__g1011905">
+                     <p class="titleintable">Table 8-1 Apply Process Behavior for Transactional and Nontransactional Queues</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Apply Process Behavior for Transactional and Nontransactional Queues" summary="This table lists the behavior of transactional and nontransactional queues for different event types." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="26%" id="d55237e1057">Message Type</th>
+                              <th align="left" valign="bottom" width="37%" id="d55237e1060">Transactional Queue</th>
+                              <th align="left" valign="bottom" width="37%" id="d55237e1063">Nontransactional Queue</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="26%" id="d55237e1068" headers="d55237e1057 ">
+                                 <p>Captured LCRs</p>
+                              </td>
+                              <td align="left" valign="top" width="37%" headers="d55237e1068 d55237e1060 ">
+                                 <p>Apply process preserves the original transaction.</p>
+                              </td>
+                              <td align="left" valign="top" width="37%" headers="d55237e1068 d55237e1063 ">
+                                 <p>Apply process preserves the original transaction.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="26%" id="d55237e1078" headers="d55237e1057 ">
+                                 <p>Persistent LCRs or Persistent User Messages</p>
+                              </td>
+                              <td align="left" valign="top" width="37%" headers="d55237e1078 d55237e1060 ">
+                                 <p>Apply process applies a user-specified group of messages as one transaction.</p>
+                              </td>
+                              <td align="left" valign="top" width="37%" headers="d55237e1078 d55237e1063 ">
+                                 <p>Apply process applies each message in its own transaction.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>When it is important to preserve the transactions executed at the source database, use transactional queues to store the messages. Ensure that LCRs captured by synchronous captures are stored in transactional queues.</p>
+                  <div class="infoboxnotealso" id="GUID-D52CE614-8368-4CD8-98C5-81BDF20F0477__GUID-BEAB4FFE-7CE9-4476-AB77-E5089679A774">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-868E73A3-D956-460B-ACBF-B9796CEB3889">Managing Queues</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../adque/toc.htm"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for more information about message grouping
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS148"></a><div class="props_rev_3"><a id="GUID-412BA977-8EF7-48A1-849F-F8B0A7BB02EB" name="GUID-412BA977-8EF7-48A1-849F-F8B0A7BB02EB"></a><h3 id="STRMS-GUID-412BA977-8EF7-48A1-849F-F8B0A7BB02EB" class="sect3"><span class="enumeration_section">8.3 </span>Commit-Time Queues
+               </h3>
+               <div>
+                  <p>You can control the order in which <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s in a <a href="strms_glossary.html#GUID-8D447372-AA6C-4326-8A8F-2E13F9350AF1"><span class="xrefglossterm">persistent queue</span></a> are browsed or dequeued. Message ordering in a queue is determined by its <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a>, and you can specify message ordering for a queue table during queue table creation. Specifically, the <code class="codeph">sort_list</code> parameter in the <code class="codeph">DBMS_AQADM.CREATE_QUEUE_TABLE</code> procedure determines how messages are ordered. Each message in a <span class="bold">commit-time queue</span> is ordered by an <a href="strms_glossary.html#GUID-3751F0F8-7851-4C5A-83EC-7652881948D7"><span class="xrefglossterm">approximate commit system change number (approximate CSCN)</span></a>, which is obtained when the transaction that enqueued each message commits.
+                  </p>
+                  <p>Commit-time ordering is specified for a queue table, and queues that use the queue table are called commit-time queues. When <code class="codeph">commit_time</code> is specified for the <code class="codeph">sort_list</code> parameter in the <code class="codeph">DBMS_AQADM.CREATE_QUEUE_TABLE</code> procedure, the resulting queue table uses commit-time ordering.
+                  </p>
+                  <p>For Oracle Database 10<span class="italic">g</span> Release&nbsp;2 and later, the default <code class="codeph">sort_list</code> setting for queue tables created by the <code class="codeph">SET_UP_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package is <code class="codeph">commit_time</code>. For releases before Oracle Database 10<span class="italic">g</span> Release&nbsp;2, the default is <code class="codeph">enq_time</code>, which is described in the section that follows. When the <code class="codeph">queue_table</code> parameter in the <code class="codeph">SET_UP_QUEUE</code> procedure specifies an existing queue table, message ordering in the queue created by <code class="codeph">SET_UP_QUEUE</code> is determined by the existing queue table.
+                  </p>
+                  <div class="infoboxnote" id="GUID-412BA977-8EF7-48A1-849F-F8B0A7BB02EB__GUID-93537A54-A103-468C-BD5E-7E21D80C8453">
+                     <p class="notep1">Note:</p>
+                     <p>A <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> always enqueues into a commit-time queue to ensure that transactions are ordered properly.
+                     </p>
+                  </div>
+               </div><a id="STRMS488"></a><div class="props_rev_3"><a id="GUID-99EF7142-7E5F-4045-9A5A-98DCB1F73A38" name="GUID-99EF7142-7E5F-4045-9A5A-98DCB1F73A38"></a><h4 id="STRMS-GUID-99EF7142-7E5F-4045-9A5A-98DCB1F73A38" class="sect4"><span class="enumeration_section">8.3.1 </span>When to Use Commit-Time Queues
+                  </h4>
+                  <div>
+                     <p>A user or application can share information by enqueuing messages into a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> in an Oracle database. The enqueued messages can be shared within a single database or propagated to other databases, and the messages can be <a href="strms_glossary.html#GUID-43A45807-D91D-43A2-89C8-8DEBCEF70770"><span class="xrefglossterm">LCR</span></a>s or <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a>s. For example, messages can be enqueued when an application-specific message occurs or when a trigger is fired for a database change. Also, in a heterogeneous environment, an application can enqueue at an Oracle database messages that originated at a non-Oracle database.
+                     </p>
+                     <p>Other than <code class="codeph">commit_time</code>, the settings for the <code class="codeph">sort_list</code> parameter in the <code class="codeph">CREATE_QUEUE_TABLE</code> procedure are <code class="codeph">priority</code> and <code class="codeph">enq­_time</code>. The <code class="codeph">priority</code> setting orders messages by the priority specified during enqueue, highest priority to lowest priority. The <code class="codeph">enq_time</code> setting orders messages by the time when they were enqueued, oldest to newest.
+                     </p>
+                     <p>Commit-time queues are useful when an environment must support either of the following requirements for concurrent enqueues of <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="advanced-queue-concepts.html#GUID-0145F72A-3849-4828-B7DA-FD948284A82C">Transactional Dependency Ordering During Dequeue</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-queue-concepts.html#GUID-7EDB3E14-C6E1-4243-AA70-CD10AAC6B923">Consistent Browse of Messages in a Queue</a></p>
+                        </li>
+                     </ul>
+                     <p>Commit-time queues support these requirements. Neither priority nor enqueue time ordering supports these requirements because both allow transactional dependency violations and inconsistent browses. Both settings allow transactional dependency violations, because messages are dequeued independent of the original dependencies. Also, both settings allow inconsistent browses of the messages in a queue, because multiple browses performed without any dequeue operations between them can result in different sets of messages.</p>
+                     <div class="infoboxnotealso" id="GUID-99EF7142-7E5F-4045-9A5A-98DCB1F73A38__GUID-7037A3FA-1F7B-422F-9D26-35964F89BE81">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-FE609A2B-DF7F-4BCC-979A-362C664C5292">Introduction to Message Staging and Propagation</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../strep/oracle-streams-heterogeneous-information-sharing.html#STREP006"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about <a href="strms_glossary.html#GUID-1F93E716-EB09-4A1F-B0C9-168C62FA80EB"><span class="xrefglossterm">heterogeneous information sharing</span></a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS490"></a><a id="STRMS489"></a><div class="props_rev_3"><a id="GUID-0145F72A-3849-4828-B7DA-FD948284A82C" name="GUID-0145F72A-3849-4828-B7DA-FD948284A82C"></a><h5 id="STRMS-GUID-0145F72A-3849-4828-B7DA-FD948284A82C" class="sect5"><span class="enumeration_section">8.3.1.1 </span>Transactional Dependency Ordering During Dequeue
+                     </h5>
+                     <div>
+                        <p>A transactional dependency occurs when one database transaction requires that another database transaction commits before it can commit successfully. Messages that contain information about database transactions can be enqueued. For example, a database trigger can fire to enqueue messages. <a href="advanced-queue-concepts.html#GUID-0145F72A-3849-4828-B7DA-FD948284A82C__CHDBBBIJ">Figure 8-1</a> shows how enqueue time ordering does not support transactional dependency ordering during dequeue of such messages.
+                        </p>
+                        <div class="figure" id="GUID-0145F72A-3849-4828-B7DA-FD948284A82C__CHDBBBIJ">
+                           <p class="titleinfigure">Figure 8-1 Transactional Dependency Violation During Dequeue</p><img width="538" src="img/strms048.gif" alt="Description of Figure 8-1 follows" title="Description of Figure 8-1 follows" longdesc="img_text/strms048.html"><br><a href="img_text/strms048.html">Description of "Figure 8-1 Transactional Dependency Violation During Dequeue"</a></div>
+                        <!-- class="figure" -->
+                        <p><a href="advanced-queue-concepts.html#GUID-0145F72A-3849-4828-B7DA-FD948284A82C__CHDBBBIJ">Figure 8-1</a> shows how transactional dependency ordering can be violated with enqueue time ordering. The transaction that enqueued message <code class="codeph">e2</code> was committed before the transaction that enqueued messages <code class="codeph">e1</code> and <code class="codeph">e3</code> was committed, and the update in message <code class="codeph">e3</code> depends on the insert in message <code class="codeph">e2</code>. So, the correct dequeue order that supports transactional dependencies is <code class="codeph">e2</code>, <code class="codeph">e1</code>, <code class="codeph">e3</code>. However, with enqueue time ordering, <code class="codeph">e3</code> can be dequeued before <code class="codeph">e2</code>. Therefore, when <code class="codeph">e3</code> is dequeued, an error results when an application attempts to apply the change in <code class="codeph">e3</code> to the <code class="codeph">hr.employees</code> table. Also, after all three messages are dequeued, a row in the <code class="codeph">hr.employees</code> table contains the wrong information because the change in <code class="codeph">e3</code> was not executed.
+                        </p>
+                     </div>
+                  </div><a id="STRMS492"></a><a id="STRMS491"></a><div class="props_rev_3"><a id="GUID-7EDB3E14-C6E1-4243-AA70-CD10AAC6B923" name="GUID-7EDB3E14-C6E1-4243-AA70-CD10AAC6B923"></a><h5 id="STRMS-GUID-7EDB3E14-C6E1-4243-AA70-CD10AAC6B923" class="sect5"><span class="enumeration_section">8.3.1.2 </span>Consistent Browse of Messages in a Queue
+                     </h5>
+                     <div>
+                        <p><a href="advanced-queue-concepts.html#GUID-7EDB3E14-C6E1-4243-AA70-CD10AAC6B923__CHDBDHBB">Figure 8-2</a> shows how enqueue time ordering does not support consistent browse of messages in a queue.
+                        </p>
+                        <div class="figure" id="GUID-7EDB3E14-C6E1-4243-AA70-CD10AAC6B923__CHDBDHBB">
+                           <p class="titleinfigure">Figure 8-2 Inconsistent Browse of Messages in a Queue</p><img width="542" src="img/strms049.gif" alt="Description of Figure 8-2 follows" title="Description of Figure 8-2 follows" longdesc="img_text/strms049.html"><br><a href="img_text/strms049.html">Description of "Figure 8-2 Inconsistent Browse of Messages in a Queue"</a></div>
+                        <!-- class="figure" -->
+                        <p><a href="advanced-queue-concepts.html#GUID-7EDB3E14-C6E1-4243-AA70-CD10AAC6B923__CHDBDHBB">Figure 8-2</a> shows that a client browsing messages in a queue is not guaranteed a definite order with enqueue time ordering. Sessions 1 and 2 are concurrent sessions that are enqueuing messages. Session 3 shows two sets of client browses that return the three enqueued messages in different orders. If the client requires deterministic ordering of messages, then the client might fail. For example, the client might perform a browse to initiate a program state, and a subsequent dequeue might return messages in a different order than expected.
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STRMS493"></a><div class="props_rev_3"><a id="GUID-763F65E5-777C-4272-BB32-312A0B34A2D1" name="GUID-763F65E5-777C-4272-BB32-312A0B34A2D1"></a><h4 id="STRMS-GUID-763F65E5-777C-4272-BB32-312A0B34A2D1" class="sect4"><span class="enumeration_section">8.3.2 </span>How Commit-Time Queues Work
+                  </h4>
+                  <div>
+                     <p>The commit system change number (CSCN) for a message that is enqueued into a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> is not known until Oracle Database writes the redo record for the commit of the transaction that includes the message to the redo log. The CSCN cannot be recorded when the message is enqueued. Commit-time queues use the current SCN of the database when a transaction is committed as the approximate CSCN for all of the messages in the transaction. The order of messages in a commit-time queue is based on the approximate CSCN of the transaction that enqueued the messages.
+                     </p>
+                     <p>In a commit-time queue, messages in a transaction are not visible to dequeue and browse operations until a deterministic order for the messages can be established using the approximate CSCN. When multiple transactions are enqueuing messages concurrently into the same commit-time queue, two or more transactions can commit at nearly the same time, and the commit intervals for these transactions can overlap. In this case, the messages in these transactions are not visible until all of the transactions have committed. At that time, the order of the messages can be determined using the approximate CSCN of each transaction. Dependencies are maintained by using the approximate CSCN for messages rather than the enqueue time. Read consistency for browses is maintained by ensuring that only messages with a fully determined order are visible.</p>
+                     <p>A commit-time queue always maintains transactional dependency ordering for messages that are based on database transactions. However, applications and users can enqueue messages that are not based on database transactions. For these messages, if dependencies exist between transactions, then the application or user must ensure that transactions are committed in the correct order and that the commit intervals of the dependent transactions do not overlap.</p>
+                     <p>The approximate CSCNs of transactions recorded by a commit-time queue might not reflect the actual commit order of these transactions. For example, transaction 1 and transaction 2 can commit at nearly the same time after enqueuing their messages. The approximate CSCN for transaction 1 can be lower than the approximate CSCN for transaction 2, but transaction 1 can take more time to complete the commit than transaction 2. In this case, the actual CSCN for transaction 2 is lower than the actual CSCN for transaction 1.</p>
+                     <div class="infoboxnote" id="GUID-763F65E5-777C-4272-BB32-312A0B34A2D1__GUID-3985769F-9D2A-4EF8-B76A-0CC9860DC2F3">
+                        <p class="notep1">Note:</p>
+                        <p>The <code class="codeph">sort_list</code> parameter in <code class="codeph">CREATE_QUEUE_TABLE</code> can be set to the following:
+                        </p><pre class="oac_no_warn" dir="ltr">priority, commit_time
+</pre><p>In this case, ordering is done by priority first and commit time second. Therefore, this setting does not ensure transactional dependency ordering and browse read consistency for messages with different priorities. However, transactional dependency ordering and browse read consistency are ensured for messages with the same priority.</p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-763F65E5-777C-4272-BB32-312A0B34A2D1__GUID-00A0C321-F20F-416D-91FE-AEB29D0B61FE">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../strep/configuring-queues-and-propagations.html#STREP205"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating a commit-time queue
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

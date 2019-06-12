@@ -1,0 +1,465 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Configuring Implicit Apply</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Replication Administrator’s Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Replication Administrator’s Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-replication-administrators-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T23:25:23-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2003, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83780-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="configuring-queues-and-propagations.html" title="Previous" type="text/html">
+      <link rel="next" href="instantiation-and-oracle-streams-replication.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.isVersionOf" content="STREP">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="configuring-queues-and-propagations.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="instantiation-and-oracle-streams-replication.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Replication Administrator’s Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="configuring-oracle-streams-replication.html" property="item" typeof="WebPage"><span property="name">    Configuring Oracle Streams Replication </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Configuring Implicit Apply</li>
+            </ol>
+            <a id="GUID-7D393976-B22F-4CF1-901E-62451DEB64DB" name="GUID-7D393976-B22F-4CF1-901E-62451DEB64DB"></a><a id="STREP206"></a>
+            
+            <h2 id="STREP-GUID-7D393976-B22F-4CF1-901E-62451DEB64DB" class="sect2"><span class="enumeration_chapter">7 </span> Configuring Implicit Apply
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>In a replication environment, Oracle Streams apply process dequeues logical change records (LCRs) from a specific queue and either applies each one directly or passes it as a parameter to a user-defined procedure called an apply handler.</p>
+               <p>The following topics describe configuring implicit apply:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="configuring-implicit-apply.html#GUID-34561C49-0522-4FC8-8C13-CE963F16D3B8">Overview of Apply Process Creation</a></p>
+                  </li>
+                  <li>
+                     <p><a href="configuring-implicit-apply.html#GUID-1B692D38-FEC4-4D92-A745-DD33A0654BFA">Creating an Apply Process for Captured LCRs Using DBMS_STREAMS_ADM</a></p>
+                  </li>
+                  <li>
+                     <p><a href="configuring-implicit-apply.html#GUID-028FFC4C-26CB-4CB7-B3F7-A515877B5BAE">Creating an Apply Process Using DBMS_APPLY_ADM</a></p>
+                  </li>
+               </ul>
+               <p>Each task described in this chapter should be completed by an Oracle Streams administrator that has been granted the appropriate privileges, unless specified otherwise.</p>
+               <div class="infoboxnotealso" id="GUID-7D393976-B22F-4CF1-901E-62451DEB64DB__GUID-8686F9D0-C1C4-4006-B3EE-8F71CFBAD27A">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS004"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-EF5A403D-42E5-426D-B654-456E634F53B0">Configuring an Oracle Streams Administrator on All Databases</a>"</span></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STREP313"></a><div class="props_rev_3"><a id="GUID-34561C49-0522-4FC8-8C13-CE963F16D3B8" name="GUID-34561C49-0522-4FC8-8C13-CE963F16D3B8"></a><h3 id="STREP-GUID-34561C49-0522-4FC8-8C13-CE963F16D3B8" class="sect3"><span class="enumeration_section">7.1 </span>Overview of Apply Process Creation
+               </h3>
+               <div>
+                  <p>You can use any of the following procedures to configure an apply process:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS308"><code class="codeph">DBMS_STREAMS_ADM.ADD_TABLE_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS329"><code class="codeph">DBMS_STREAMS_ADM.ADD_SUBSET_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS309"><code class="codeph">DBMS_STREAMS_ADM.ADD_SCHEMA_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS310"><code class="codeph">DBMS_STREAMS_ADM.ADD_GLOBAL_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS521"><code class="codeph">DBMS_STREAMS_ADM.ADD_MESSAGE_RULE</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="../arpls/DBMS_APPLY_ADM.html#ARPLS313"><code class="codeph">DBMS_APPLY_ADM.CREATE_APPLY</code></a></p>
+                     </li>
+                  </ul>
+                  <p>Each of the procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package creates an apply process with the specified name if it does not already exist, creates either a positive rule set or negative rule set for the apply process if the apply process does not have such a rule set, and can add table rules, schema rules, global rules, or a message rule to the rule set.
+                  </p>
+                  <p>The <code class="codeph">CREATE_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package creates an apply process, but does not create a rule set or rules for the apply process. However, the <code class="codeph">CREATE_APPLY</code> procedure enables you to specify an existing rule set to associate with the apply process, either as a positive or a negative rule set, and several other options, such as apply handlers, an apply user, an apply tag, and whether to dequeue messages from a buffered queue or a persistent queue.
+                  </p>
+                  <p>A single apply process must either dequeue messages from a buffered queue or a persistent queue. Logical change records that were captured by a capture process are called captured LCRs, and they are always in buffered queues. Therefore, if a single apply process applies LCRs that were captured by a capture process, then it cannot apply persistent LCRs or persistent user messages.</p>
+                  <p>Alternatively, LCRs that were captured by a synchronous capture are persistent LCRs, and they are always in persistent queues. Therefore, if a single apply process applies LCRs that were captured by a synchronous capture, then it cannot apply LCRs captured by a capture process. However, a single apply process can apply both persistent LCRs and persistent user messages because both types of messages are staged in a persistent queue.</p>
+                  <p>The examples in this chapter create apply processes that apply captured LCRs, persistent LCRs, and persistent user messages. Before you create an apply process, create an <code class="codeph">ANYDATA</code> queue to associate with the apply process, if one does not exist.
+                  </p>
+                  <div class="infoboxnote" id="GUID-34561C49-0522-4FC8-8C13-CE963F16D3B8__GUID-277EBBE4-BF26-436D-B104-511088E9E8D4">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>You can configure an entire Oracle Streams environment, including apply processes, using procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package or Oracle Enterprise Manager Cloud Control. See <a href="simple-oracle-streams-replication-configuration.html#GUID-19643DBA-4776-4A74-BC66-1979E6903E0A"> Simple Oracle Streams Replication Configuration</a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Depending on the configuration of the apply process you create, supplemental logging might be required at the source database on columns in the tables for which an apply process applies changes. See <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-12A4DC82-EEC7-4ACC-BF8F-8D82AA1D19DE">Specifying Supplemental Logging</a>"</span>.
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS103"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about the captured LCRs and persistent LCRs
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STREP314"></a><div class="props_rev_3"><a id="GUID-A9D41FE9-120E-4A5C-9898-90E08AE8062A" name="GUID-A9D41FE9-120E-4A5C-9898-90E08AE8062A"></a><h3 id="STREP-GUID-A9D41FE9-120E-4A5C-9898-90E08AE8062A" class="sect3"><span class="enumeration_section">7.2 </span>Preparing to Create an Apply Process
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following tasks must be completed before you create an apply:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Complete the following tasks in <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-BB2E76CA-3645-4469-8750-4B276B8A955B">Tasks to Complete Before Configuring Oracle Streams Replication</a>"</span>.
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-EF5A403D-42E5-426D-B654-456E634F53B0">Configuring an Oracle Streams Administrator on All Databases</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-F16B954D-35E0-422C-A89F-D3E170BD4505">Setting Initialization Parameters Relevant to Oracle Streams</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-E572258F-DEB4-4B0B-B29B-D196C7336112">Configuring the Oracle Streams Pool</a>"</span></p>
+                              </li>
+                           </ul>
+                        </li>
+                        <li>
+                           <p>Create an <code class="codeph">ANYDATA</code> queue to associate with the apply process, if one does not exist. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span> for instructions. The examples in this chapter assume that the queue used by the apply process is <code class="codeph">strmadmin.streams_queue</code>. Create the queue on the same database that will run the apply process.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREP315"></a><div class="props_rev_3"><a id="GUID-1B692D38-FEC4-4D92-A745-DD33A0654BFA" name="GUID-1B692D38-FEC4-4D92-A745-DD33A0654BFA"></a><h3 id="STREP-GUID-1B692D38-FEC4-4D92-A745-DD33A0654BFA" class="sect3"><span class="enumeration_section">7.3 </span>Creating an Apply Process for Captured LCRs Using DBMS_STREAMS_ADM
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following example runs the <code class="codeph">ADD_SCHEMA_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create an apply process that applies captured logical change records (LCRs). This apply process can apply LCRs that were captured by a capture process.
+                     </p>
+                     <p>Complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-apply.html#GUID-A9D41FE9-120E-4A5C-9898-90E08AE8062A">Preparing to Create an Apply Process</a>"</span>.</span></li>
+                     <li class="stepexpand"><span>In SQL*Plus, connect to the database that will run the apply process as the Oracle Streams administrator.</span><div>
+                           <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Create the apply process:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+ &nbsp;&nbsp;&nbsp;schema_name        =&gt; 'hr',
+ &nbsp;&nbsp;&nbsp;streams_type       =&gt; 'apply',
+ &nbsp;&nbsp;&nbsp;streams_name       =&gt; 'strm01_apply',
+ &nbsp;&nbsp;&nbsp;queue_name &nbsp;&nbsp;&nbsp;     =&gt; 'strmadmin.streams_queue',
+ &nbsp;&nbsp;&nbsp;include_dml &nbsp;      =&gt; TRUE,
+&nbsp; &nbsp;&nbsp;include_ddl        =&gt; FALSE,
+&nbsp; &nbsp;&nbsp;include_tagged_lcr =&gt; FALSE,
+    source_database    =&gt; 'dbs1.example.com',
+    inclusion_rule     =&gt; TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates an apply process named <code class="codeph">strm01_apply</code> that applies captured LCRs to the local database. The apply process is created only if it does not already exist.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Associates the apply process with the existing queue <code class="codeph">strmadmin.streams_queue</code>. This queue must exist.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates a positive rule set and associates it with the apply process, if the apply process does not have a positive rule set, because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>. The rule set uses the <code class="codeph">SYS.STREAMS$_EVALUATION_CONTEXT</code> evaluation context. The rule set name is system generated.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates one rule that evaluates to <code class="codeph">TRUE</code> for row LCRs that contain the results of data manipulation language (DML) changes to database objects in the <code class="codeph">hr</code> schema. The rule name is system generated.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Adds the rule to the positive rule set associated with the apply process because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Sets the <code class="codeph">apply_tag</code> for the apply process to a value that is the hexadecimal equivalent of <code class="codeph">'00'</code> (double zero). This is the default apply tag value. Redo entries generated by the apply process have a tag with this value.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Specifies that the apply process applies a row LCR only if it has a <code class="codeph">NULL</code> tag, because the <code class="codeph">include_tagged_lcr</code> parameter is set to&nbsp;<code class="codeph">FALSE</code>. This behavior is accomplished through the system-created rule for the apply process.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Specifies that the LCRs applied by the apply process originate at the <code class="codeph">dbs1.example.com</code> source database. The rules in the apply process rule sets determine which LCRs are dequeued by the apply process. If the apply process dequeues an LCR with a source database other than <code class="codeph">dbs1.example.com</code>, then an error is raised. 
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+            </div><a id="STREP316"></a><div class="props_rev_3"><a id="GUID-028FFC4C-26CB-4CB7-B3F7-A515877B5BAE" name="GUID-028FFC4C-26CB-4CB7-B3F7-A515877B5BAE"></a><h3 id="STREP-GUID-028FFC4C-26CB-4CB7-B3F7-A515877B5BAE" class="sect3"><span class="enumeration_section">7.4 </span>Creating an Apply Process Using DBMS_APPLY_ADM
+               </h3>
+               <div>
+                  <p>This section contains the following examples that create an apply process using the <code class="codeph">DBMS_APPLY_ADM</code> package:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="configuring-implicit-apply.html#GUID-E2520EF7-74F0-4634-BF4E-C37AACAF5C0B">Creating an Apply Process for Captured LCRs with DBMS_APPLY_ADM</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-implicit-apply.html#GUID-B01D8417-45F3-443A-B9F7-B8BB5FF3F2A8">Creating an Apply Process for Persistent LCRs with DBMS_APPLY_ADM</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-028FFC4C-26CB-4CB7-B3F7-A515877B5BAE__GUID-AD8DC357-A83B-479C-975C-1DED45EAA8D7">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-heterogeneous-information-sharing.html#GUID-0623B04D-6597-470E-B85B-4A2A1357ABF2">Change Apply in an Oracle to Non-Oracle Environment</a>"</span> for information about configuring an apply process to apply messages to a non-Oracle database using the <code class="codeph">apply_database_link</code> parameter
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS175"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STREP317"></a><div class="props_rev_3"><a id="GUID-E2520EF7-74F0-4634-BF4E-C37AACAF5C0B" name="GUID-E2520EF7-74F0-4634-BF4E-C37AACAF5C0B"></a><h4 id="STREP-GUID-E2520EF7-74F0-4634-BF4E-C37AACAF5C0B" class="sect4"><span class="enumeration_section">7.4.1 </span>Creating an Apply Process for Captured LCRs with DBMS_APPLY_ADM
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following example runs the <code class="codeph">CREATE_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package to create an apply process that applies captured logical change records (LCRs). This apply process can apply LCRs that were captured by a capture process.
+                        </p>
+                        <p>Complete the following steps:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-apply.html#GUID-A9D41FE9-120E-4A5C-9898-90E08AE8062A">Preparing to Create an Apply Process</a>"</span>.</span></li>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the database that will run the apply process as the Oracle Streams administrator.</span><div>
+                              <p>Ensure that the Oracle Streams administrator is granted <code class="codeph">DBA</code> role. <code class="codeph">DBA</code> role is required because this example sets the apply user to a user other than the Oracle Streams administrator.
+                              </p>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create the rule set that will be used by the apply process if it does not exist. In this example, assume that the rule set is <code class="codeph">strmadmin.strm02_rule_set</code>. Optionally, you can also add rules to the rule set. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS012"><span class="italic">Oracle Streams Concepts and Administration</span></a> for instructions.</span></li>
+                        <li class="stepexpand"><span>Create any apply handlers that will be used by the apply process if they do not exist. In this example, assume that the DDL handler is the <code class="codeph">strmadmin.history_ddl</code> procedure. An example in the <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS206"><span class="italic">Oracle Streams Concepts and Administration</span></a> creates this procedure.</span></li>
+                        <li class="stepexpand"><span>Create the apply process:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.CREATE_APPLY(
+    queue_name             =&gt; 'strmadmin.streams_queue',
+    apply_name             =&gt; 'strm02_apply',
+    rule_set_name          =&gt; 'strmadmin.strm02_rule_set',
+    message_handler        =&gt; NULL,     
+    ddl_handler            =&gt; 'strmadmin.history_ddl',
+    apply_user             =&gt; 'hr',
+    apply_database_link    =&gt; NULL,
+    apply_tag              =&gt; HEXTORAW('5'),
+    apply_captured         =&gt; TRUE,
+    precommit_handler      =&gt; NULL,
+    negative_rule_set_name =&gt; NULL,
+    source_database        =&gt; 'dbs1.example.com');
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Creates an apply process named <code class="codeph">strm02_apply</code>. An apply process with the same name must not exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Associates the apply process with the queue <code class="codeph">strmadmin.streams_queue</code>. This queue must exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Associates the apply process with the rule set <code class="codeph">strmadmin.strm02_rule_set</code>. This rule set must exist. This rule set is the positive rule set for the apply process.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process does not use a message handler.</p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the DDL handler is the <code class="codeph">history_ddl</code> PL/SQL procedure in the <code class="codeph">strmadmin</code> schema. This procedure must exist, and the user who runs the <code class="codeph">CREATE_APPLY</code> procedure must have <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">history_ddl</code> PL/SQL procedure.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the user who applies changes is <code class="codeph">hr</code>, and not the user who is running the <code class="codeph">CREATE_APPLY</code> procedure (the Oracle Streams administrator).
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process applies changes to the local database because the <code class="codeph">apply_database_link</code> parameter is set to <code class="codeph">NULL</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that each redo entry generated by the apply process has a tag that is the hexadecimal equivalent of <code class="codeph">'5'</code>. See <a href="oracle-streams-tags.html#GUID-9339D29B-65F3-450B-B3CD-A7B4ADCA4AAF"> Oracle Streams Tags</a> for more information about tags.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process applies captured LCRs, not persistent LCRs or persistent user messages. Therefore, if an LCR that was constructed by a synchronous capture or a user application, not by a capture process, and is staged in the queue for the apply process, then this apply process does not dequeue the LCR.</p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process does not use a precommit handler.</p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process does not use a negative rule set.</p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the LCRs applied by the apply process originate at the <code class="codeph">dbs1.example.com</code> source database. The rules in the apply process rule sets determine which LCRs are dequeued by the apply process. If the apply process dequeues an LCR with a source database other than <code class="codeph">dbs1.example.com</code>, then an error is raised. 
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <p>After creating the apply process, run the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure to add rules to the apply process rule set. These rules direct the apply process to apply LCRs for the specified tables.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-E2520EF7-74F0-4634-BF4E-C37AACAF5C0B__GUID-B516DE40-0CD0-4531-ABE1-2A096C9E09B3">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS006"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about rules
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP318"></a><div class="props_rev_3"><a id="GUID-B01D8417-45F3-443A-B9F7-B8BB5FF3F2A8" name="GUID-B01D8417-45F3-443A-B9F7-B8BB5FF3F2A8"></a><h4 id="STREP-GUID-B01D8417-45F3-443A-B9F7-B8BB5FF3F2A8" class="sect4"><span class="enumeration_section">7.4.2 </span>Creating an Apply Process for Persistent LCRs with DBMS_APPLY_ADM
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following example runs the <code class="codeph">CREATE_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package to create an apply process that applies persistent logical change records (LCRs). This apply process can apply LCRs that were captured by a synchronous capture or constructed by an application.
+                        </p>
+                        <p>Complete the following steps:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-apply.html#GUID-A9D41FE9-120E-4A5C-9898-90E08AE8062A">Preparing to Create an Apply Process</a>"</span>.</span></li>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the database that will run the apply process as the Oracle Streams administrator.</span><div>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create the rule set that will be used by the apply process if it does not exist. In this example, assume that the rule set is <code class="codeph">strmadmin.strm03_rule_set</code>. Optionally, you can also add rules to the rule set. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS012"><span class="italic">Oracle Streams Concepts and Administration</span></a> for instructions.</span></li>
+                        <li class="stepexpand"><span>Create any apply handlers that will be used by the apply process if they do not exist. The apply process created in this example does not used apply handlers.</span></li>
+                        <li class="stepexpand"><span>Create the apply process:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.CREATE_APPLY(
+    queue_name             =&gt; 'strmadmin.streams_queue',
+    apply_name             =&gt; 'strm03_apply',
+    rule_set_name          =&gt; 'strmadmin.strm03_rule_set',
+    message_handler        =&gt; NULL,
+    ddl_handler            =&gt; NULL,
+    apply_user             =&gt; NULL,
+    apply_database_link    =&gt; NULL,
+    apply_tag              =&gt; NULL,
+    apply_captured         =&gt; FALSE,
+    precommit_handler      =&gt; NULL,
+    negative_rule_set_name =&gt; NULL);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Creates an apply process named <code class="codeph">strm03_apply</code>. An apply process with the same name must not exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Associates the apply process with the queue named <code class="codeph">strmadmin.streams_queue</code>. This queue must exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Associates the apply process with the rule set <code class="codeph">strmadmin.strm03_rule_set</code>. This rule set must exist. This rule set is the positive rule set for the apply process.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process does not use a message handler.</p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process does not use a DDL handler.</p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the user who applies the changes is the user who runs the <code class="codeph">CREATE_APPLY</code> procedure, because the <code class="codeph">apply_user</code> parameter is <code class="codeph">NULL</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process applies changes to the local database, because the <code class="codeph">apply_database_link</code> parameter is set to <code class="codeph">NULL</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that each redo entry generated by the apply process has a <code class="codeph">NULL</code> tag. See <a href="oracle-streams-tags.html#GUID-9339D29B-65F3-450B-B3CD-A7B4ADCA4AAF"> Oracle Streams Tags</a> for more information about tags.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process does not apply captured LCRs. Therefore, the apply process can apply persistent LCRs or persistent user messages that are in the persistent queue portion of the apply process's queue.</p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process does not use a precommit handler.</p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the apply process does not use a negative rule set.</p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <p>After creating the apply process, run the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure to add rules to the apply process rule set. These rules direct the apply process to apply LCRs for the specified tables.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-B01D8417-45F3-443A-B9F7-B8BB5FF3F2A8__GUID-98EE70B6-9E9D-41FA-8EB5-0C2FB14691B6">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../strms/how-rules-are-used-in-oracle-streams.html#STRMS006"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about rules
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

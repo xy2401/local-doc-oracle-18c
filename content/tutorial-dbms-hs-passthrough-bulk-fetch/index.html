@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Part number: f12201-02 -->
+    <!-- Published date: December 2018 -->
+    <!-- Template date: October 15, 2018 -->
+    <!-- Put the content ID of this OBE between the empty quotation marks for 'content' below -->
+    <meta name="contentid" content="25840">
+    <!-- The title below is displayed on the browser tab, in search results, and in  history. It can be longer than the tutorial title in the <h1> element, below.-->
+    <!-- Use an imperative verb in the title. -->
+    <title>Use DBMS_HS_PASSTHROUGH to Execute a Bulk Fetch</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to declare a remote stored procedure and how to execute a bulk fetch from the remote stored procedure using the DBMS_HS_PASSTHROUGH PL/SQL package.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-12-19T17:25:09+00:00">
+    <meta name="dcterms.title" content="Use DBMS_HS_PASSTHROUGH to Execute a Bulk Fetch">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="TUTORIAL-DBMS-HS-PASSTHROUGH-BULK-FETCH">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="F12201-02">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <!-- The title below is displayed as the title at the top of the OBE page. It can be shorter than the title in the <title> element, above. -->
+      <!-- Use an imperative verb in the title. -->
+      <h1><img src="img/obe_tag.png" alt="Oracle by Example branding" align="middle">Use
+        DBMS_HS_PASSTHROUGH to Execute a Bulk Fetch</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p>This 15-minute tutorial demonstrates how to declare a remote
+                stored procedure and execute a bulk fetch of the data from the
+                stored procedure using the <code>DBMS_HS_PASSTHROUGH</code>
+                package.</p>
+              <h3>Background</h3>
+              <p>This tutorial demonstrates that you can send SQL statements
+                directly to a remote foreign data source using the <code>DBMS_HS_PASSTHROUGH</code>
+                PL/SQL package. This is useful when you want to perform an
+                operation on the remote foreign data source and there is no
+                equivalent Oracle SQL to do so. </p>
+              <p>Also, this tutorial uses a configured Oracle Database Gateway
+                for SQL Server (dg4msql) and the Oracle Net listener that has an
+                entry for it.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>You need a database link. </li>
+                <li>In the gateway configuration file, someone with DBA
+                  privileges needs to configure the gateway to handle result
+                  sets by setting the <code>HS_FDS_RESULTSET_SUPPORT</code>
+                  initialization parameter <code>TRUE</code>. For example:
+                  <pre> HS_FDS_RESULTSET_SUPPORT = TRUE</pre>
+                  <p> The gateway configuration file is located at:</p>
+                  <pre> $ORACLE_HOME/<strong>target</strong>/admin/<strong>initgateway_sid.ora</strong></pre>
+                  For this tutorial: <br>
+                  <br>
+                  <ul>
+                    <li>The value for <code><strong>target</strong></code> is <code>dg4msql</code>.</li>
+                    <li>The value for <code><strong>initgateway_sid.ora</strong></code>
+                      is <code>initdg4msql.ora</code>.</li>
+                  </ul>
+                  <br>
+                  Remember that you need DBA privileges to do this. </li>
+                <li>You need access to the following examples used in this
+                  tutorial:</li>
+                <ul>
+                  <li><a href="files/step2_create_table.txt" target="_blank">Example:
+                      Create a Table in the Remote Foreign Data Source</a></li>
+                  <li><a href="files/step3_populate_table.txt" target="_blank">Example:
+                      Populate the Table</a></li>
+                  <li><a href="files/step4_create_stored_proc.txt" target="_blank">Example:
+                      Create a Stored Procedure</a></li>
+                  <li><a href="files/step5_bulk_fetch.txt" target="_blank">Example:
+                      Create a REF CURSOR and Execute a Bulk Fetch</a></li>
+                </ul>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Create
+                a Database Link to the Gateway</h2>
+              <p>Create a database link to your gateway. </p>
+              <pre>CONNECT / AS SYSDBA;<br>Connected.<br>SET ECHO ON;<br>SET SERVEROUTPUT ON;<br>CREATE DATABASE LINK <strong>linkname</strong>
+CONNECT TO <strong>remote_username</strong> IDENTIFIED BY <strong>remote_password</strong>
+USING '<strong>tnsentry_to_gateway</strong>';
+
+Database link created.</pre>
+              <p>For this tutorial: </p>
+              <ul>
+                <li>The value for <code><strong>linkname</strong></code> is <code>fdslink</code>.</li>
+                <li>The value for <code><strong>remote_username</strong></code>
+                  and <code><strong>remote_password</strong></code> are
+                  supplied by you.</li>
+                <li>The value for <code><strong>tnsentry_to_gateway</strong></code>
+                  is <code>dg4msql</code>.</li>
+              </ul>
+              <p></p>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Create
+                a Table in the Remote Foreign Data Source</h2>
+              <p> In order to create objects in the remote non-Oracle database,
+                the user specified in the database link must have <code>CREATE</code>
+                privileges granted. </p>
+              <p><a href="files/step2_create_table.txt" target="_blank">Example:
+                  Create a Table in the Remote Foreign Data Source</a></p>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Populate
+                the Table</h2>
+              <p>Populate the table with sample data. </p>
+              <p><a href="files/step3_populate_table.txt" target="_blank">Example:
+                  Populate the Table</a> </p>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_4" role="button" style="text-align: left;"><img src="img/32_4.png" alt="section 4" class="num_circ" height="32" width="32">Create
+                a Stored Procedure</h2>
+              <p>Create a stored procedure that reads data from the table and
+                returns a result set. </p>
+              <p><a href="files/step4_create_stored_proc.txt" target="_blank">Example:
+                  Create a Stored Procedure</a> </p>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_5" role="button" style="text-align: left;"><img src="img/32_5.png" alt="section 5" class="num_circ" height="32" width="32">Create
+                a REF CURSOR and Execute a Bulk Fetch</h2>
+              <p>To execute a bulk fetch, you must first create a REF CURSOR.
+                Once you have created the REF CURSOR, you can execute a bulk
+                fetch. </p>
+              <p><a href="files/step5_bulk_fetch.txt" target="_blank">Example:
+                  Create a REF CURSOR and Execute a Bulk Fetch</a> </p>
+            </section>
+            <hr>
+            <section>
+              <!-- Include the More Information section only in a standalone tutorial or in the final lab or tutorial in a series (not in a learning path) -->
+              <h2 id="more_info" role="button" style="text-align: left;"><img src="img/32_more.png" alt="more information" class="num_circ" height="32" width="32">Want
+                to Learn More?</h2>
+              <ul>
+                <li><a href="../heter/passthrough-sql.html#HETER-GUID-C03895FB-EE60-4F71-8943-994C185C2EB2" target="_blank">Oracle Database Heterogeneous Connectivity
+                    User's Guide</a></li>
+                <li><a href="../arpls/DBMS_HS_PASSTHROUGH.html#ARPLS-GUID-EFED6D7F-418A-44B4-86D0-707E2A36A9D9" target="_blank">Oracle Database PL/SQL Packages and Types
+                    Reference</a></li>
+              </ul>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li> <a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+    <!-- OBE Dialog Box code 10/15/2018 -->
+    <!-- DO NOT ALTER THE CODE BELOW   -->
+    <div id="lpModal" class="modal">
+      <!-- Modal hdr and body -->
+      <div id="obe_dialog" class="modal-content">
+        <div class="modal-header"> <a href="#" class="close"> <span class="close">×</span>
+          </a>
+          <h1>Associated Learning Paths</h1>
+        </div>
+        <div id="dialog-content"> </div>
+        <div id="dialog-close" class="closeBtn"> <a href="#" class="close2">
+            <p class="close2"> <span>&nbsp;&nbsp;View&nbsp;&nbsp;</span> </p>
+          </a> </div>
+      </div>
+    </div>
+    <!-- END OBE Dialog Box code -->
+  </body>
+</html>

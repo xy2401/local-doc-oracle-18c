@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: F12786-01 -->
+    <!-- Published date: December 2018 -->
+    <!-- Template date: October 15, 2018 -->
+    <!-- Put the content ID of this OBE between the empty quotation marks for 'content' below -->
+    <meta name="contentid" content="25753">
+    <!-- The title below is displayed on the browser tab, in search results, and in  history. It can be longer than the tutorial title in the <h1> element, below.-->
+    <!-- Use an imperative verb in the title. -->
+    <title>Recover a Lost or Damaged Server Parameter File (SPFILE)</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to recover a lost or damaged server parameter file (SPFILE).">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-12-06T07:26:50+00:00">
+    <meta name="dcterms.title" content="Recover a Lost or Damaged Server Parameter File">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="TUTORIAL-RECOVER-A-LOST-OR-DAMAGED-SERVER-PARAMETER-FILE">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="F12786-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <!-- The title below is displayed as the title at the top of the OBE page. It can be shorter than the title in the <title> element, above. -->
+      <!-- Use an imperative verb in the title. -->
+      <h1><img src="img/obe_tag.png" alt="Oracle by Example branding" align="middle">Recover
+        a Lost or Damaged Server Parameter File</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p>This 15-minute tutorial shows you how to recover the lost or
+                corrupt server parameter file (SPFILE). </p>
+              <h3>Background</h3>
+              <p>If your server parameter file is lost or corrupted, then the
+                current instance, or the next attempt at starting the database
+                instance may fail.</p>
+              <p>One way to recover SPFILE is to create the text initialization
+                parameter file (PFILE) from the parameter value listings in the
+                alert log, and then create SPFILE from the PFILE.</p>
+              <p>When an instance starts, Oracle Database writes the
+                initialization parameters used for startup to the alert log. You
+                can copy and paste this section from the text version of the
+                alert log (without XML tags) into a new PFILE.</p>
+              <p>For testing purposes, install and configure Oracle Database 18c
+                using the RPM packages.</p>
+              <p>When you install Oracle Database 18c on Oracle Linux using an
+                RPM, the RPM creates a script that allows you to create a demo
+                database <code>ORCLCDB</code> with a pluggable database (PDB) <code>ORCLPDB1</code>.</p>
+              <p>Note that the <code>ORACLE_HOME</code> for the software
+                installation is <code>/opt/oracle/product/18c/dbhome_1</code>.
+              </p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Create PFILE from the parameter value listings in the alert
+                  log (<code>alert_<var>SID</var>.log</code>).</li>
+                <li>Create SPFILE from PFILE. </li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Create
+                PFILE</h2>
+              <ol>
+                <li>Run the <code>grep</code> command to find the <code>ORACLE_HOME</code>
+                  directory.
+                  <pre>$ . oraenv
+ORACLE_SID = [oracle] ? ORCLCDB
+The Oracle base has been set to /opt/oracle
+$ env|grep -i ORACLE_HOME
+ORACLE_HOME=/opt/oracle/product/18c/dbhome_1</pre>
+                </li>
+                <li>Go to the <code>ORACLE_HOME</code> directory <code>/opt/oracle/product/18c/dbhome_1/dbs</code>
+                  and run the list command to make sure that the parameter files
+                  are there.
+                  <pre>$ ls
+hc_ORCLCDB.dat  init.ora  lkORCLCDB  orapwORCLCDB  spfileORCLCDB.ora</pre>
+                </li>
+                <li>Log in to SQL*Plus and connect to the database as <code>oracle</code>
+                  user.
+                  <pre>$ sqlplus / as sysdba
+
+SQL*Plus: Release 18.0.0.0.0 - Production on Mon Nov 5 10:43:54 2018
+Version 18.3.0.0.0
+
+Copyright (c) 1982, 2018, Oracle.  All rights reserved.
+
+Connected to an idle instance.</pre>
+                </li>
+                <li>Start the database.
+                  <pre>SQL&gt; startup
+ORACLE instance started.
+
+Total System Global Area 1660940400 bytes
+Fixed Size		    8896624 bytes
+Variable Size		 1056964608 bytes
+Database Buffers	  587202560 bytes
+Redo Buffers		    7876608 bytes
+Database mounted.
+Database opened.</pre>
+                </li>
+                <li>Query the <code>V$DIAG_INFO</code> view to find the
+                  location of the trace files.
+                  <p>Note the path that corresponds to the <code>Diag Trace</code>
+                    entry.</p>
+                  <pre>SQL&gt; SELECT * FROM V$DIAG_INFO where NAME='Diag Trace';
+
+INST_ID  NAME         VALUE                                         CON_ID
+-------  ----------   --------------------------------------------  -------
+1        Diag Trace   /opt/oracle/diag/rdbms/orclcdb/ORCLCDB/trace   0</pre>
+                </li>
+                <li>Disconnect from the database.
+                  <pre>SQL&gt; exit
+Disconnected from Oracle Database 18c Enterprise Edition Release 18.0.0.0.0 - Production
+Version 18.3.0.0.0</pre>
+                </li>
+                <li>Go to the trace files directory and run the list command.
+                  <pre>$ cd /opt/oracle/diag/rdbms/orclcdb/ORCLCDB/trace
+$ ls</pre>
+                </li>
+                <li>Locate the <code>alert_ORCLCDB.log</code> file, which you
+                  need to use to extract the initialization parameters and their
+                  values.</li>
+                <li>Open the alert log file in a text editor.
+                  <pre>$ vi alert_ORCLCDB.log</pre>
+                </li>
+                <li>Copy the system parameters that follow, <code>Using
+                    parameter settings in server-side spfile
+                    /opt/oracle/product/18c/dbhome_1/dbs/spfileORCLCDB.ora
+                    System parameters with non-default values:</code> and save
+                  them to a text file.
+                  <p><a href="files/system-parameters.txt" target="_blank">System
+                      Parameters</a></p>
+                </li>
+                <li>Shut down the database before you perform any operations on
+                  the initialization parameter files PFILE and SPFILE.
+                  <pre>$ cd /opt/oracle/product/18c/dbhome_1/bin/</pre>
+                  <pre>$ sqlplus / as sysdba
+
+SQL*Plus: Release 18.0.0.0.0 - Production on Wed Nov 28 23:33:01 2018
+Version 18.3.0.0.0
+
+Copyright (c) 1982, 2018, Oracle.  All rights reserved.
+
+Connected to:
+Oracle Database 18c Enterprise Edition Release 18.0.0.0.0 - Production
+Version 18.3.0.0.0</pre>
+                  <pre>SQL&gt; shutdown immediate;
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+SQL&gt; exit
+Disconnected from Oracle Database 18c Enterprise Edition Release 18.0.0.0.0 - Production
+Version 18.3.0.0.0</pre>
+                </li>
+                <li>Go to the <code>dbs</code> directory and run the list
+                  command.
+                  <pre>$ cd ../
+$ cd dbs
+$ ls
+hc_ORCLCDB.dat init.ora lkORCLCDB orapwORCLCDB spfileORCLCDB.ora</pre>
+                </li>
+                <li>Since we are going to simulate a situation where the SPFILE
+                  is corrupt or lost, delete the <code>init.ora</code> and <code>spfleORCLCDB.ora</code>
+                  files.
+                  <pre>$ rm -rf init.ora spfileORCLCDB.ora</pre>
+                </li>
+                <li>Create the PFILE.
+                  <p>The name of the PFILE must be in the format, <code>init<var>SID_of_the_database_instance</var>.ora</code>.</p>
+                  <p>In this case, <code>ORCLCDB</code> is the SID of the demo
+                    database.</p>
+                  <pre>$ vi initORCLCDB.ora</pre>
+                </li>
+                <li>Copy the content from the text file that you saved earlier,
+                  paste, and then save the PFILE.</li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Connect
+                to the Database Using PFILE</h2>
+              <ol>
+                <li>Log in to SQL*Plus and connect to the database to check if
+                  you have properly configured the PFILE.
+                  <pre>$ sqlplus / as sysdba
+
+SQL*Plus: Release 18.0.0.0.0 - Production on Mon Nov 5 11:11:52 2018
+Version 18.3.0.0.0
+
+Copyright (c) 1982, 2018, Oracle.  All rights reserved.
+
+Connected to an idle instance.</pre>
+                </li>
+                <li>Start the database.
+                  <pre>SQL&gt; startup
+ORACLE instance started.
+
+Total System Global Area 1660940400 bytes
+Fixed Size		    8896624 bytes
+Variable Size		 1056964608 bytes
+Database Buffers	  587202560 bytes
+Redo Buffers		    7876608 bytes
+Database mounted.
+Database opened.</pre>
+                </li>
+                <li>Run the <code>show pdbs</code> command to view the list of
+                  pluggable databases.
+                  <pre>SQL&gt; show pdbs;
+
+    CON_ID CON_NAME			  OPEN MODE  RESTRICTED
+---------- ------------------------------ ---------- ----------
+	 2 PDB$SEED			  READ ONLY  NO
+	 3 ORCLPDB1			  MOUNTED</pre>
+                  <p>The pluggable databases are in the <code>MOUNTED</code>
+                    state when you start the database using the initialization
+                    parameter file.</p>
+                </li>
+                <li>Run the <code>ALTER PLUGGABLE</code> statement to change
+                  the mode of the PDB from <code>MOUNTED</code> to <code>READ
+                    WRITE</code>. Otherwise, you cannot use the PDB <code>ORCLPDB1</code>.
+                  <pre>SQL&gt; alter pluggable database ORCLPDB1 open;
+
+Pluggable database altered.</pre>
+                </li>
+                <li>Run again the <code>show pdbs</code> command.
+                  <pre>SQL&gt; show pdbs;
+
+    CON_ID CON_NAME			  OPEN MODE  RESTRICTED
+---------- ------------------------------ ---------- ----------
+	 2 PDB$SEED			  READ ONLY  NO
+	 3 ORCLPDB1			  READ WRITE NO</pre>
+                  <p>Now, the PDB <code>ORCLPDB1</code> is in <code>READ WRITE</code>
+                    mode.</p>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Create
+                SPFILE</h2>
+              <ol>
+                <li>Run the <code>CREATE SPFILE FROM PFILE</code> statement to
+                  create the SPFILE in the default directory.
+                  <p>The name of the SPFILE must be in the format, <code>spfile<var>SID_of_the_database_instance</var>.ora</code>.</p>
+                  <p>In this case, <code>ORCLCDB</code> is the SID of the demo
+                    database.</p>
+                  <pre>SQL&gt; CREATE SPFILE FROM PFILE='/opt/oracle/product/18c/dbhome_1/dbs/initORCLCDB.ora';
+
+File created.</pre>
+                </li>
+                <li> Shut down the database.
+                  <pre>SQL&gt; shutdown immediate;
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+SQL&gt; exit
+Disconnected from Oracle Database 18c Enterprise Edition Release 18.0.0.0.0 - Production
+Version 18.3.0.0.0</pre>
+                </li>
+                <li>Because you have created the SPFILE, you can safely delete
+                  the PFILE <code>initORCLCDB.ora</code>.
+                  <pre>$ rm -rf initORCLCDB.ora</pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_4" role="button" style="text-align: left;"><img src="img/32_4.png" alt="section 4" class="num_circ" height="32" width="32">Connect
+                to the Database using SPFILE</h2>
+              <ol>
+                <li>Log in to SQL*Plus again and connect to the database as <code>oracle</code>
+                  user to check if you have properly configured the SPFILE <code>spfileORCLCDB.ora</code>.
+                  <pre>$ sqlplus / as sysdba
+
+SQL*Plus: Release 18.0.0.0.0 - Production on Mon Nov 5 11:42:46 2018
+Version 18.3.0.0.0
+
+Copyright (c) 1982, 2018, Oracle.  All rights reserved.
+
+Connected to an idle instance.</pre>
+                </li>
+                <li>Start the database.
+                  <pre>SQL&gt; startup
+ORACLE instance started.
+
+Total System Global Area 1660940400 bytes
+Fixed Size		    8896624 bytes
+Variable Size		 1056964608 bytes
+Database Buffers	  587202560 bytes
+Redo Buffers		    7876608 bytes
+Database mounted.
+Database opened.</pre>
+                </li>
+                <li>Run the <code>show con_name</code> command to view the
+                  current container.
+                  <pre>SQL&gt; show con_name;
+
+CON_NAME
+------------------------------
+CDB$ROOT</pre>
+                </li>
+                <li>Run the <code>show pdbs</code> command to view the list of
+                  pluggable databases.
+                  <p>The pluggable databases are in the <code>MOUNTED</code>
+                    state when you start the database using initialization
+                    parameter file.</p>
+                </li>
+                <li>Run the <code>ALTER PLUGGABLE</code> statement to use the
+                  PDB <code>ORCLPDB1</code>. </li>
+                <li>Query the <code>v$instance</code> view to check the state
+                  of the current database instance.
+                  <pre>SQL&gt; SELECT INSTANCE_NAME, HOST_NAME, VERSION, STATUS FROM V$INSTANCE;
+
+INSTANCE_NAME  HOST_NAME            VERSION     STATUS
+-------------  ---------            -------     -------
+ORCLCDB        ol7-183.localdomain  18.0.0.0.0  OPEN</pre>
+                </li>
+                <li>Shut down the database. </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <!-- Include the More Information section only in a standalone tutorial or in the final lab or tutorial in a series (not in a learning path) -->
+              <h2 id="more_info" role="button" style="text-align: left;"><img src="img/32_more.png" alt="more information" class="num_circ" height="32" width="32">Want
+                to Learn More?</h2>
+              <ul>
+                <li><a href="../ladbi/running-rpm-packages-to-install-oracle-database.html#LADBI-GUID-BB7C11E3-D385-4A2F-9EAF-75F4F0AACF02" target="_blank">Running RPM Packages to Install Oracle
+                    Database</a></li>
+                <li><a href="../admin/creating-and-configuring-an-oracle-database.html#ADMIN-GUID-EB1D87A1-7AC2-4A0B-A928-79D97FD81752" target="_blank">Recovering a Lost or Damaged Server
+                    Parameter File</a></li>
+              </ul>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li> <a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+    <!-- OBE Dialog Box code 5/31/2018 -->
+    <!-- DO NOT ALTER THE CODE BELOW   -->
+    <div id="lpModal" class="modal">
+      <!-- Modal hdr and body -->
+      <div id="obe_dialog" class="modal-content">
+        <div class="modal-header"> <a href="#" class="close"> <span class="close">×</span>
+          </a>
+          <h1>Associated Learning Paths</h1>
+        </div>
+        <div id="dialog-content"> </div>
+        <div id="dialog-close" class="closeBtn"> <a href="#" class="close2">
+            <p class="close2"> <span>&nbsp;&nbsp;Got It! &nbsp;</span> </p>
+          </a> </div>
+      </div>
+    </div>
+    <!-- END OBE Dialog Box code -->
+  </body>
+</html>

@@ -1,0 +1,775 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="This chapter describes how to develop applications using Oracle Multimedia DICOM.">
+      <meta name="description" content="This chapter describes how to develop applications using Oracle Multimedia DICOM.">
+      <title>DICOM Application Development</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="DICOM Developer's Guide ">
+      <meta property="og:description" content="This chapter describes how to develop applications using Oracle Multimedia DICOM.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="DICOM Developer's Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="multimedia-dicom-developers-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-09-07T06:10:21-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2007, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84258-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="dicom-development-usage-and-reference.html" title="Previous" type="text/html">
+      <link rel="next" href="dicom-plsql-api-reference.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Multimedia DICOM Developer's Guide">
+    <meta name="dcterms.isVersionOf" content="IMDCM">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="dicom-development-usage-and-reference.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="dicom-plsql-api-reference.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">DICOM Developer's Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="dicom-development-usage-and-reference.html" property="item" typeof="WebPage"><span property="name">   DICOM Development Usage and Reference </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> DICOM Application Development </li>
+            </ol>
+            <a id="GUID-3A5D2416-EEBC-4699-8CB2-82C59407BBEF" name="GUID-3A5D2416-EEBC-4699-8CB2-82C59407BBEF"></a><a id="IMDCM5000"></a>
+            
+            <h2 id="IMDCM-GUID-3A5D2416-EEBC-4699-8CB2-82C59407BBEF" class="sect2"><span class="enumeration_chapter">5 </span> DICOM Application Development 
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>This chapter describes how to develop applications using Oracle Multimedia DICOM.</p>
+               <div class="infoboxnote" id="GUID-3A5D2416-EEBC-4699-8CB2-82C59407BBEF__GUID-01540A33-6188-4E0F-A6B6-36333FC24248">
+                  <p class="notep1">Note:</p>
+                  <p>The Oracle Multimedia support for DICOM was deprecated in Oracle Database 12<span class="italic">c</span> Release 2 (12.2), and may be desupported in a future release. Oracle recommends that you stop using deprecated features as soon as possible.
+                  </p>
+               </div>
+               <p>Oracle Multimedia DICOM provides support for Oracle Database with these application programming interfaces (APIs):</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>DICOM PL/SQL API</p>
+                  </li>
+                  <li>
+                     <p>ORDDicom object API</p>
+                  </li>
+                  <li>
+                     <p>DICOM data model utility API</p>
+                  </li>
+               </ul>
+               <p>Using these interfaces, you can quickly develop applications to upload to the database, retrieve from it, and manipulate DICOM content.</p>
+               <p>This chapter includes examples of how to import DICOM content into the database, write SQL queries based on DICOM metadata, perform basic image processing, make anonymous copies of ORDDicom objects, and check DICOM content for conformance to user-defined constraint rules. Some examples were extracted from the tutorial <span class="bold">Managing DICOM Format Data in Oracle Database 12</span><span class="italic"><span class="bold">c</span></span>, and adapted for this manual. See <a href="dicom-sample-applications.html#GUID-56885C9B-E4E0-4717-82C2-736B469ED00C" title="This appendix briefly describes some sample SQL and PL/SQL scripts that you can use with Oracle Multimedia DICOM.">DICOM Sample Applications</a> for the location of this tutorial.
+               </p>
+               <p>This chapter includes these sections:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="dicom-application-development.html#GUID-0CB2A250-FC9B-4FC6-B152-189DA59172D3">Setting Up Your Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="dicom-application-development.html#GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317">Creating a Table with an ORDDicom Column</a></p>
+                  </li>
+                  <li>
+                     <p><a href="dicom-application-development.html#GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04">Loading DICOM Content Using the SQL*Loader Utility</a></p>
+                  </li>
+                  <li>
+                     <p><a href="dicom-application-development.html#GUID-C2B6F935-F86C-4F8C-B1FD-839667A77A53">Developing DICOM Applications Using the PL/SQL API</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-3A5D2416-EEBC-4699-8CB2-82C59407BBEF__GUID-E1086811-5C9B-4470-BEA9-9D21B267192C">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/imdcm&amp;id=mm_otn_index" target="_blank"><span class="italic">Oracle Multimedia</span></a> on the Oracle Technology Network Web site for additional examples, articles, and other information
+                  </p>
+               </div>
+            </div><a id="IMDCM5100"></a><div class="props_rev_3"><a id="GUID-0CB2A250-FC9B-4FC6-B152-189DA59172D3" name="GUID-0CB2A250-FC9B-4FC6-B152-189DA59172D3"></a><h3 id="IMDCM-GUID-0CB2A250-FC9B-4FC6-B152-189DA59172D3" class="sect3"><span class="enumeration_section">5.1 </span>Setting Up Your Environment
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The examples in this chapter use the table <code class="codeph">medical_image_table</code> with these four columns:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">id</code>: an integer identifier
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">dicom</code>: an ORDSYS.ORDDicom object
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">imageThumb</code>: an ORDSYS.ORDImage object
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">anonDicom</code>: another ORDSYS.ORDDicom object
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Before running the examples in this chapter, issue the following statements while connected to a user with privileges to create a directory object, where <code class="codeph">c:\mydir\work</code> is the directory where the user <code class="codeph">scott</code> can find the DICOM files:
+                     </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE DIRECTORY FILE_DIR as 'c:\mydir\work';
+GRANT READ ON DIRECTORY FILE_DIR TO scott;
+</pre><p>To use a different directory for your DICOM files, replace <code class="codeph">c:\mydir\work</code> with the directory specification where your files are located.
+                     </p>
+                     <div class="infoboxnote" id="GUID-0CB2A250-FC9B-4FC6-B152-189DA59172D3__GUID-DAECC7B2-8E83-4F8B-BE35-ABA839382DBA">
+                        <p class="notep1">Note:</p>
+                        <p>All Oracle Multimedia objects and procedures provided by Oracle are defined in the schema ORDSYS.</p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="IMDCM13413"></a><a id="IMDCM5200"></a><div class="props_rev_3"><a id="GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317" name="GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317"></a><h3 id="IMDCM-GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317" class="sect3"><span class="enumeration_section">5.2 </span>Creating a Table with an ORDDicom Column
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section shows how to create a table with an ORDDicom column <a id="d11764e215" class="indexterm-anchor"></a>to store DICOM content.
+                     </p>
+                     <p>The code segment shown in <a href="dicom-application-development.html#GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317__CIHDFCIH">Example 5-1</a> creates the table <code class="codeph">medical_image_table</code>, with the four columns <code class="codeph">id</code>, <code class="codeph">dicom</code>, <code class="codeph">imageThumb</code>, and <code class="codeph">anonDicom</code>.
+                     </p>
+                     <p><a href="dicom-application-development.html#GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317__CIHDFCIH">Example 5-1</a> uses SecureFiles LOB storage<a id="d11764e243" class="indexterm-anchor"></a> for the media content. Oracle SecureFiles is a re-engineered binary large object (BLOB) that improves performance and strengthens the content management capabilities of Oracle Database.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317__GUID-D2AF4B27-EDC6-4EC7-80A9-83D5C4EF4612">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../adlob/using-oracle-LOBs-storage.html#ADLOB4444" target="_blank"><span class="italic">Oracle Database SecureFiles and Large Objects Developer's Guide</span></a> for more information about SecureFiles LOBs
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../imurg/oracle-multimedia-tuning-tips-for-dbas.html#IMURG8000" target="_blank"><span class="italic">Oracle Multimedia User's Guide</span></a> for tuning tips with SecureFiles LOBs
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../dbseg/configuring-authentication.html#DBSEG33223" target="_blank"><span class="italic">Oracle Database Security Guide</span></a> for more information about creating secure passwords
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317__CIHDFCIH">
+                     <p class="titleinexample">Example 5-1 Creating a Table for DICOM Content</p><pre class="oac_no_warn" dir="ltr">create table medical_image_table
+             (id          integer primary key,
+              dicom       ordsys.orddicom,
+              imageThumb  ordsys.ordimage,
+              anonDicom   ordsys.orddicom)
+              --
+              -- metadata extraction expands the ORDDicom object, allow room
+              pctfree 60
+              --
+              -- Use SecureFiles LOBS for binary content
+              -- 
+              lob(dicom.source.localdata) store as SecureFile
+                 (nocache filesystem_like_logging),
+              lob(imageThumb.source.localdata) store as SecureFile
+                 (nocache filesystem_like_logging),
+              lob(anonDicom.source.localdata) store as SecureFile
+                 (nocache filesystem_like_logging),
+              --
+              -- disable in row storage for the extension
+              -- so that it does not consume page space
+              -- it is usually &lt; 4k in size
+              --
+              lob(dicom.extension) store as SecureFile
+                 ( nocache disable storage in row ),
+              lob(anonDicom.extension) store as SecureFile
+                 ( nocache disable storage in row ),
+              --
+              -- store the metadata as a CLOB,
+              -- disable storage in row
+              --
+              xmltype dicom.metadata store as SecureFile clob
+                 ( nocache disable storage in row )
+              xmltype anonDicom.metadata store as SecureFile clob
+                 ( nocache disable storage in row )
+;
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="IMDCM13414"></a><a id="IMDCM13415"></a><a id="IMDCM5300"></a><div class="props_rev_3"><a id="GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04" name="GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04"></a><h3 id="IMDCM-GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04" class="sect3"><span class="enumeration_section">5.3 </span>Loading DICOM Content Using the SQL*Loader Utility
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section shows how to use the SQL*Loader utility to <a id="d11764e311" class="indexterm-anchor"></a>load DICOM content into an existing table in Oracle Database. SQL*Loader is a high-performance utility for loading data from external files into tables in an Oracle database. The external data can be loaded across a network from a client system that differs from the system that is running the server for Oracle Database. The data can also be loaded locally on the same system as the database server.
+                     </p>
+                     <p>A typical SQL*Loader session accepts a control file and one or more data files as input. The control file defines how to load the data into the database. The output of the SQL*Loader session is an Oracle database (where the data is loaded), a log file, and potentially, a discard file.</p>
+                     <p><a href="dicom-application-development.html#GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__CIHCECBI">Example 5-2</a> shows a control file for loading DICOM data into the table <code class="codeph">medical_image_table</code>, which you created in <a href="dicom-application-development.html#GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317__CIHDFCIH">Example 5-1</a>. The control file contains directives that map the input data, which is specified at the end of the control file as <code class="codeph">sample1.dcm</code> and <code class="codeph">sample2.dcm</code>, to the columns of the table <code class="codeph">medical_image_table</code>. Only the <code class="codeph">id</code> and <code class="codeph">dicom</code> columns are loaded with externally supplied data. The <code class="codeph">imageThumb</code> and <code class="codeph">anonDicom</code> columns are initialized using constant and default values that are supplied in the control file.
+                     </p>
+                     <p>Before invoking the SQL*Loader utility, you can temporarily disable logging for the LOB data to be loaded into the <code class="codeph">dicom</code> column. When logging is disabled, the data is written to the database table only, and not to the redo log. Disabling logging can reduce the amount of time needed to load the DICOM data by cutting in half the amount of I/O to be performed.
+                     </p>
+                     <p>To disable logging for the DICOM content in the <code class="codeph">dicom</code> column, use the following SQL command:
+                     </p><pre class="oac_no_warn" dir="ltr"> alter table medical_image_table modify lob(dicom.source.localData) (nocache nologging);
+</pre><p>To invoke the SQL*Loader utility, use the following command, then enter the password when prompted:</p><pre class="oac_no_warn" dir="ltr">    sqlldr userid=USER control=load_dicom.ctl
+</pre><p>After the DICOM data is loaded, use the following SQL command to re-enable logging for the DICOM content in the <code class="codeph">dicom</code> column:
+                     </p><pre class="oac_no_warn" dir="ltr"> alter table medical_image_table modify lob(dicom.source.localData)  (nocache logging);
+</pre><p>After the DICOM data is loaded into the table from the external files, another program is required to complete the initialization of the <code class="codeph">dicom</code> column and to generate the data to populate the <code class="codeph">imageThumb</code> and <code class="codeph">anonDicom</code> columns. These tasks can be performed using methods of the ORDDicom object, as shown in <a href="dicom-application-development.html#GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__CIHBFDHD">Example 5-3</a> (which includes a PL/SQL block). In this example, the <code class="codeph">dicom</code> column is initialized using the setProperties( ) method. The <code class="codeph">imageThumb</code> column object is created using the processCopy( ) method. And, the <code class="codeph">anonDicom</code> column object is created using the makeAnonymous( ) method, which requires a unique identifier for one of its input arguments.
+                     </p>
+                     <div class="infoboxnote" id="GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__GUID-AEC0E363-10F2-45D6-A298-E4A0B8869128">
+                        <p class="notep1">Note:</p>
+                        <p><a href="dicom-application-development.html#GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__CIHBFDHD">Example 5-3</a> is a complete code sample that includes a call to the setDataModel( ) procedure. Keep in mind that this procedure call might not be required in all situations.
+                        </p>
+                        <p>See the <a href="dicom-data-model-utility-reference.html#GUID-5A8F4987-DD6B-40E9-9FB1-9E35BAAEC916">setDataModel( ) Procedure</a> for more information about when to call this procedure.
+                        </p>
+                     </div>
+                     <p><a href="dicom-application-development.html#GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__CIHBFDHD">Example 5-3</a> defines a function genUID( ) to generate a unique identifier (UID) by concatenating the value of the <code class="codeph">id</code> column with a DICOM UID root value that you must define. You can replace this function with another function that generates unique UIDs, in accordance with the standards for your organization.
+                     </p>
+                     <p>The PL/SQL block in <a href="dicom-application-development.html#GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__CIHBFDHD">Example 5-3</a> loops once over all the rows in the table <code class="codeph">medical_image_table</code>. Then, it reads and accesses each DICOM image in three passes. The first pass sets the properties of the <code class="codeph">dicom</code> column. The second pass creates a JPEG thumbnail image. And, the third pass creates an anonymous DICOM image to store in the <code class="codeph">anonDicom</code> column. Because of these repeated read operations, you may want to alter the LOB storage property of the <code class="codeph">dicom</code> column to enable caching of the DICOM content.
+                     </p>
+                     <p>To enable caching for the DICOM content in the <code class="codeph">dicom</code> column, use the following SQL command:
+                     </p><pre class="oac_no_warn" dir="ltr"> alter table medical_image_table  modify lob(dicom.source.localData) (cache);
+</pre><p>After the initialization is complete, use the following SQL command to disable caching for the DICOM content in the <code class="codeph">dicom</code> column:
+                     </p><pre class="oac_no_warn" dir="ltr"> alter table medical_image_table  modify lob(dicom.source.localData) (nocache logging);
+</pre><p><a href="dicom-application-development.html#GUID-C2B6F935-F86C-4F8C-B1FD-839667A77A53">Developing DICOM Applications Using the PL/SQL API</a> describes this and other PL/SQL programs in more detail. 
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__GUID-985A4E47-A010-4571-BAA8-570F0CECB783">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../sutil/loading-objects-oracle-sql-loader.html#SUTIL007" target="_blank"><span class="italic">Oracle Database Utilities</span></a> for more information about using the SQL*Loader utility to load objects and LOBs into Oracle Database
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adlob/introduction-to-large-objects.html#ADLOB001" target="_blank"><span class="italic">Oracle Database SecureFiles and Large Objects Developer's Guide</span></a> for more information about LOBs and logging
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__CIHCECBI">
+                     <p class="titleinexample">Example 5-2 Loading DICOM Content</p><pre class="oac_no_warn" dir="ltr">-- This file is a SQL*LDR control file to load DICOM data
+-- into the table MEDICAL_IMAGE_TABLE. The control file contains directives
+-- to load DICOM data into the DICOM column. It also contains directives
+-- to initialize the IMAGETHUMB and ANONDICOM columns. The data to be loaded
+-- is specified in this file after the BEGINDATA delimiter.
+--
+--  The following command invokes the SQL*Loader utility and then prompts you
+--  to enter the password for the specified userid.
+--
+--    sqlldr userid=USER control=load_dicom.ctl
+--
+--
+load data
+-- 
+-- The input data is contained in this file after the BEGINDATA delimiter.
+--
+infile *
+into table medical_image_table
+--
+-- This example truncates the table. Change the following to "append"
+-- if you want to add to an existing table.
+--
+truncate
+fields terminated by whitespace optionally enclosed by '"'
+(
+ --
+ -- The primary key column.
+ --
+ id                 integer external,
+ --
+ -- A filler field that holds the file path of the DICOM data.
+ --
+ dicomFilename      filler char,
+ --
+ -- Load the dicom column object
+ --    The LOB attribute source.localData is loaded with the DICOM data.
+ --    The srcType attribute is initialized to "local".
+ --    The updateTime attribute is initialized to "SYSDATE".
+ --    The LOB attribute extension is initialized with an empty LOB.
+ --
+   dicom             column object (
+     source          column object (
+       localData     lobfile(dicomFilename) terminated by EOF,
+       srcType       constant 'local',
+       updateTime    expression "SYSDATE"
+     ), 
+     extension       lobfile(dicomFilename) terminated by EOF
+                      defaultif dicom.source.srcType='local'
+   ),
+ --
+ -- Initialize the imageThumb column object
+ --    The LOB attribute source.localData is initialized with an empty LOB.
+ --    This LOB will hold the content for the thumbnail image.
+ --    The local attribute is initialized to "1".
+ --
+   imageThumb        column object (
+     source          column object (
+       localData     lobfile(dicomFilename) terminated by EOF
+                       defaultif imageThumb.source.local=X'1',
+       local         constant 1
+     )
+   ),
+ --
+ -- Initialize the anonDicom column object
+ --    The LOB attributes source.localData and extension are initialized.
+ --      with empty LOBs. 
+ --    The localData LOB will hold the content for the DICOM data to be
+ --      made anonymous.
+ --    The extension LOB is an internal field used by ORDDICOM.
+ --    The srcType attribute is initialized to "local".
+ --
+   anonDicom         column object (
+     source          column object (
+       localData     lobfile(dicomFilename) terminated by EOF
+                       defaultif anonDicom.source.srcType='local',
+       srcType       constant 'local'
+     ), 
+     extension         lobfile(dicomFilename) terminated by EOF
+                      defaultif dicom.source.srcType='local'
+   )
+)
+--
+-- Input data begins here
+--
+-- ID  DICOMFILENAME
+BEGINDATA
+   1   sample1.dcm
+   2   sample2.dcm
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04__CIHBFDHD">
+                     <p class="titleinexample">Example 5-3 Finish Loading and Initializing the DICOM Table</p><pre class="oac_no_warn" dir="ltr">--
+-- The ORDDicom method makeAnonymous() takes a unique UID as an input parameter.
+-- This utility function generates a simple UID to use in this example.
+-- Replace the string value of UID_ROOT with the DICOM UID for your organization.
+--
+create or replace function genUID(in_id varchar2)
+return varchar2
+is
+ -- Declare the DICOM UID root value for your organization
+ -- You must replace this value.
+ UID_ROOT varchar2(128) := '&lt;unique-UID root&gt;';
+begin
+ return UID_ROOT || '.' || in_id;
+end;
+/
+show errors;
+ 
+
+--
+-- This PL/SQL block loops over all the rows in the MEDICAL_IMAGE_TABLE and:
+-- 1. Calls the ORDDicom method setProperties() to initialize the dicom column
+-- 2. Calls the ORDDicom method processCopy() to create a JPEG thumbnail image
+--    that is stored in the imageThumb column.
+-- 3. Calls the ORDDicom method makeAnonymous() to create an anonymous version
+--    of the dicom column. The new version is stored in the column anonDicom.
+--
+declare
+ dcm ordsys.orddicom;
+begin
+  -- load the DICOM data model
+  ord_dicom.setDatamodel;
+ 
+  -- loop over all rows in the medical image table
+  for rec in (select * from medical_image_table for update) loop
+ 
+    -- initialize the dicom column
+    rec.dicom.setProperties();
+ 
+    -- create a JPEG thumbnail 
+    rec.dicom.processCopy('fileFormat=jpeg fixedScale=75,100', rec.imageThumb);
+ 
+    -- make a new anonymous version of the ORDDicom object
+    rec.dicom.makeAnonymous(genUID(rec.id), rec.anonDicom);
+    -- write the objects back to the row
+    update medical_image_table
+    set dicom = rec.dicom,
+        imageThumb = rec.imageThumb,
+        anonDicom = rec.anonDicom
+    where id = rec.id;
+ 
+  end loop;
+  commit;
+end;
+/
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="IMDCM13416"></a><a id="IMDCM5400"></a><div class="props_rev_3"><a id="GUID-C2B6F935-F86C-4F8C-B1FD-839667A77A53" name="GUID-C2B6F935-F86C-4F8C-B1FD-839667A77A53"></a><h3 id="IMDCM-GUID-C2B6F935-F86C-4F8C-B1FD-839667A77A53" class="sect3"><span class="enumeration_section">5.4 </span>Developing DICOM Applications Using the PL/SQL API
+               </h3>
+               <div>
+                  <p>This section builds on the code examples in <a href="dicom-application-development.html#GUID-26CB564E-4FCD-435C-85F2-38FAD9EE5317">Creating a Table with an ORDDicom Column</a> and <a href="dicom-application-development.html#GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04">Loading DICOM Content Using the SQL*Loader Utility</a>. It shows PL/SQL code examples<a id="d11764e512" class="indexterm-anchor"></a> that store and manipulate DICOM content inside a database using Oracle Multimedia DICOM.
+                  </p>
+                  <p>Oracle Multimedia DICOM enables you to store DICOM content in database tables with columns of type ORDDicom. The following code sample shows some attributes that are contained within an ORDDicom object in a database table.</p><pre class="pre codeblock"><code>SOP_INSTANCE_UID
+SOP_CLASS_UID
+STUDY_INSTANCE_UID
+SERIES_INSTANCE_UID
+Source (ORDDataSource)
+Metadata (SYS.XMLType)
+ContentLength (integer)
+Internal attributes</code></pre><p>The following subsections describe sample tasks you can perform in PL/SQL using the code examples in this section:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="dicom-application-development.html#GUID-076E26EE-B3F9-4F5C-98DC-30F25EA6C1CA">Selecting DICOM Attributes</a></p>
+                     </li>
+                     <li>
+                        <p><a href="dicom-application-development.html#GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B">Creating Thumbnail Images and Changing Image Formats</a></p>
+                     </li>
+                     <li>
+                        <p><a href="dicom-application-development.html#GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4">Making Anonymous Copies of ORDDicom Objects</a></p>
+                     </li>
+                     <li>
+                        <p><a href="dicom-application-development.html#GUID-45237081-0669-4442-B467-3F47E01A0EA6">Checking the Conformance of ORDDicom Objects</a></p>
+                     </li>
+                     <li>
+                        <p><a href="dicom-application-development.html#GUID-350EAA7E-45D9-4321-BDF4-6A12017FDEB8">Handling Oracle Multimedia DICOM Exceptions in PL/SQL</a></p>
+                     </li>
+                  </ul>
+               </div><a id="IMDCM13418"></a><a id="IMDCM13417"></a><div class="props_rev_3"><a id="GUID-076E26EE-B3F9-4F5C-98DC-30F25EA6C1CA" name="GUID-076E26EE-B3F9-4F5C-98DC-30F25EA6C1CA"></a><h4 id="IMDCM-GUID-076E26EE-B3F9-4F5C-98DC-30F25EA6C1CA" class="sect4"><span class="enumeration_section">5.4.1 </span>Selecting DICOM Attributes
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>This section shows how to access DICOM attributes <a id="d11764e583" class="indexterm-anchor"></a><a id="d11764e587" class="indexterm-anchor"></a>from the DICOM content that you loaded in <a href="dicom-application-development.html#GUID-5A704978-D5D6-4A6A-9ACF-7462B577DF04">Loading DICOM Content Using the SQL*Loader Utility</a>.
+                        </p>
+                        <p>After the table <code class="codeph">medical_image_table</code> is populated and metadata has been extracted, you can access metadata using SQL queries. <a href="dicom-application-development.html#GUID-076E26EE-B3F9-4F5C-98DC-30F25EA6C1CA__CIHGCCFE">Example 5-4</a> demonstrates how to select extracted DICOM metadata from the DICOM content.
+                        </p>
+                        <p>Running <a href="dicom-application-development.html#GUID-076E26EE-B3F9-4F5C-98DC-30F25EA6C1CA__CIHGCCFE">Example 5-4</a> generates the following output:
+                        </p><pre class="oac_no_warn" dir="ltr">ID SOP_INSTANCE_UID
+-- -------------------------------------------------------
+ 1 1.2.392.200036.9116.2.2.2.1762676206.1077529882.102147
+ 
+ID SOP_CLASS_UID
+-- -------------------------------------------------------
+ 1 1.2.840.10008.5.1.4.1.1.2
+ 
+ID STUDY_INSTANCE_UID
+-- -------------------------------------------------------
+ 1 1.2.392.200036.9116.2.2.2.1762929498.1080638122.365416
+ 
+ID SERIES_INSTANCE_UID
+-- -------------------------------------------------------
+ 1 1.2.392.200036.9116.2.2.2.1762929498.1080638122.503288
+ 
+ID CONTENT_LENGTH
+-- ---------------
+ 1   525974
+ 
+ID PATIENT_NAME                    PATIENT_ID      MODALITY
+--- ------------------------------ ----------      ----------
+ 1 CANCIO   2HR                    A-02-013        CT 
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-076E26EE-B3F9-4F5C-98DC-30F25EA6C1CA__CIHGCCFE">
+                        <p class="titleinexample">Example 5-4 Selecting Metadata from the DICOM Content</p><pre class="oac_no_warn" dir="ltr">1.     SOP_INSTANCE_UID.
+2.     SOP_CLASS_UID
+3.     STUDY_INSTANCE_UID
+4.     SERIES_INSTANCE_UID.
+5.     Content length (number of bytes of DICOM content)
+6.     Patient Name, Patient ID, and Modality from DICOM metadata
+ 
+ 
+select id,
+       t.dicom.getSOPInstanceUID() as SOP_Instance_UID
+from medical_image_table t;
+ 
+select id,
+       t.dicom.getSOPClassUID() as SOP_Class_UID
+from medical_image_table t;
+ 
+select id,
+       t.dicom.getStudyInstanceUID() as Study_Instance_UID
+from medical_image_table t;
+ 
+select id,
+       t.dicom.getSeriesInstanceUID() as Series_Instance_UID
+from medical_image_table t;
+ 
+select id,
+       t.dicom.getcontentlength() as content_Length
+from medical_image_table t;
+
+select m.id, t.PATIENT_NAME, t.PATIENT_ID, t.MODALITY
+from medical_image_table m,
+  xmltable
+    (xmlnamespaces
+      (default 'http://xmlns.oracle.com/ord/dicom/metadata_1_0'),
+           '/DICOM_OBJECT'
+       passing m.dicom.metadata
+       columns
+         patient_name varchar2(100)
+                   path './*[@name="Patient''''s Name"]/VALUE',
+         patient_id   varchar2(100)
+                   path './*[@name="Patient ID"]',
+         modality     varchar2(100)
+                   path './*[@name="Modality"]'
+    ) t ;
+</pre></div>
+                     <!-- class="example" -->
+                  </div>
+               </div><a id="IMDCM13420"></a><a id="IMDCM13419"></a><div class="props_rev_3"><a id="GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B" name="GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B"></a><h4 id="IMDCM-GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B" class="sect4"><span class="enumeration_section">5.4.2 </span>Creating Thumbnail Images and Changing Image Formats
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>This section demonstrates some image processing operations<a id="d11764e648" class="indexterm-anchor"></a><a id="d11764e652" class="indexterm-anchor"></a> that can be invoked within the database.
+                        </p>
+                        <p>As an example, to create a JPEG thumbnail image from a DICOM image, you generate a new ORDImage object from the ORDDicom object. Before you can complete this task, you must describe the desired properties of the new ORDImage object.</p>
+                        <p>The following description generates a JPEG thumbnail image of size 75x100 pixels:</p><pre class="oac_no_warn" dir="ltr">'fileFormat=jfif fixedScale=75 100'
+</pre><p>The code segment shown in <a href="dicom-application-development.html#GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B__CIHDJHBA">Example 5-5</a> defines the procedure <code class="codeph">generate_thumb()</code>, which performs these tasks:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Populates the column <code class="codeph">imageThumb</code> of the table <code class="codeph">medical_image_table</code> with the identifier <code class="codeph">source_id</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Generates an ORDImage object in the column by invoking the processCopy( ) method on the ORDDicom object in the source row.</p>
+                           </li>
+                        </ul>
+                        <p>The code statements in <a href="dicom-application-development.html#GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B__CIHDJHBA">Example 5-5</a> where these tasks are performed are highlighted in bold.
+                        </p>
+                        <div class="infoboxnote" id="GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B__GUID-B978E2E1-DC5B-41FC-837F-1E567ECD18E6">
+                           <p class="notep1">Note:</p>
+                           <p><a href="dicom-application-development.html#GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B__CIHDJHBA">Example 5-5</a> is a complete code sample that includes a call to the setDataModel( ) procedure. Keep in mind that this procedure call might not be required in all situations.
+                           </p>
+                           <p>See the <a href="dicom-data-model-utility-reference.html#GUID-5A8F4987-DD6B-40E9-9FB1-9E35BAAEC916">setDataModel( ) Procedure</a> for more information about when to call this procedure.
+                           </p>
+                        </div>
+                        <p>Running <a href="dicom-application-development.html#GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B__CIHDJHBA">Example 5-5</a> generates the following output:
+                        </p><pre class="oac_no_warn" dir="ltr">ID  T.IMAGETHUMB.GETWIDTH() T.IMAGETHUMB.GETHEIGHT() T.IMAGETHUMB.GETFILE
+--- ----------------------- ------------------------ ----------------------
+ 1              75                      100            JFIF
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-6F102A56-18D2-4E1E-A2B9-3B7D5169FE7B__CIHDJHBA">
+                        <p class="titleinexample">Example 5-5 Generating and Processing the New ORDImage Object</p><pre class="oac_no_warn" dir="ltr">-- Set Data Model Repository
+execute ordsys.ord_dicom.setDataModel();
+ 
+create or replace procedure generate_thumb(source_id number, verb varchar2) is
+    dcmSrc    ordsys.orddicom;
+    imgDst    ordsys.ordimage;
+begin
+  select dicom, imageThumb into dcmSrc, imgDst from medical_image_table
+         where id = source_id for update;
+  <span class="bold">dcmSrc.processCopy(verb, imgDst);</span>
+ 
+  update medical_image_table set imageThumb = imgDst where id = source_id;
+  commit;
+end;
+/
+ 
+ 
+-- Create a JPEG thumbnail image for our test DICOM
+<span class="bold">execute generate_thumb(1, 'fileFormat=jfif fixedScale=75 100');</span>
+ 
+-- look at our handiwork
+column t.imageThumb.getFileFormat() format A20;
+select id, t.imageThumb.getWidth(), t.imageThumb.getHeight(), 
+       t.imageThumb.getFileFormat() 
+from medical_image_table t;
+</pre></div>
+                     <!-- class="example" -->
+                  </div>
+               </div><a id="IMDCM13422"></a><a id="IMDCM13421"></a><div class="props_rev_3"><a id="GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4" name="GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4"></a><h4 id="IMDCM-GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4" class="sect4"><span class="enumeration_section">5.4.3 </span>Making Anonymous Copies of ORDDicom Objects
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>This section shows how to protect patient privacy <a id="d11764e751" class="indexterm-anchor"></a><a id="d11764e755" class="indexterm-anchor"></a>by making ORDDicom objects anonymous.
+                        </p>
+                        <p>To make ORDDicom objects anonymous, you must create a new ORDDicom object in which certain user-specifiable DICOM attributes have either been removed or overwritten in both the new DICOM content and the associated ORDDicom object metadata. An XML anonymity document specifies which DICOM attributes to remove or replace and what action to take to make each attribute anonymous.</p>
+                        <p>The default anonymity document, <code class="codeph">ordcman.xml</code>, is loaded during installation. You can create a customized anonymity document, but that topic is beyond the scope of this example. This example uses the default anonymity document.
+                        </p>
+                        <p>The code segment in <a href="dicom-application-development.html#GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4__CIHFGJJG">Example 5-6</a> defines the <a id="d11764e769" class="indexterm-anchor"></a><a id="d11764e773" class="indexterm-anchor"></a>procedure <code class="codeph">generate_anon()</code>, which performs these tasks:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Selects the original content <code class="codeph">dicom</code> and the column <code class="codeph">anonDicom</code> of the table <code class="codeph">medical_image_table</code> with the identifier <code class="codeph">source_id</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Generates an ORDDicom object in the column <code class="codeph">anonDicom</code> by calling the makeAnonymous( ) method on the <code class="codeph">dicom</code> in the source row.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>If you run this code segment, replace the temporary UID for the variable <code class="codeph"> dest_sop_instance_uid</code> in the procedure <code class="codeph">generate_anon</code> with a globally unique UID.
+                        </p>
+                        <p>The code statement in <a href="dicom-application-development.html#GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4__CIHFGJJG">Example 5-6</a> where the makeAnonymous( ) method is called is highlighted in bold.
+                        </p>
+                        <div class="infoboxnote" id="GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4__GUID-8FA6FE83-5994-4B28-8E71-34255186BE07">
+                           <p class="notep1">Note:</p>
+                           <p><a href="dicom-application-development.html#GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4__CIHFGJJG">Example 5-6</a> is a complete code sample that includes a call to the setDataModel( ) procedure. Keep in mind that this procedure call might not be required in all situations.
+                           </p>
+                           <p>See the <a href="dicom-data-model-utility-reference.html#GUID-5A8F4987-DD6B-40E9-9FB1-9E35BAAEC916">setDataModel( ) Procedure</a> for more information about when to call this procedure.
+                           </p>
+                        </div>
+                        <p>Running <a href="dicom-application-development.html#GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4__CIHFGJJG">Example 5-6</a> generates the following output:
+                        </p><pre class="oac_no_warn" dir="ltr">ID PATIENT_NAME                    PATIENT_ID
+--- ------------------------------ ----------
+ 1  anonymous                      anonymous</pre></div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-8BD9982C-5A35-432E-9A6F-1B9F531ED1B4__CIHFGJJG">
+                        <p class="titleinexample">Example 5-6 Populating the Column and Generating an Anonymous ORDDicom Object</p><pre class="oac_no_warn" dir="ltr">-- Set Data Model Repository
+ 
+execute ordsys.ord_dicom.setDataModel();
+ 
+create or replace procedure generate_anon(source_id number) is
+    dcmSrc    ordsys.orddicom;
+    anonDst   ordsys.orddicom;
+    dest_sop_inst_uid varchar2(128) := '1.2.3';
+ 
+begin
+  select dicom, anonDicom into dcmSrc, anonDst from medical_image_table
+         where id = source_id for update;
+  <span class="bold">dcmSrc.makeAnonymous(dest_sop_inst_uid, anonDst);</span>
+  update medical_image_table set anonDicom = anonDst where id = source_id;
+  commit;
+end;
+/
+ 
+-- Generate an Anonymous Copy of our test DICOM
+execute generate_anon(1);
+
+select m.id, t.PATIENT_NAME, t.PATIENT_ID
+from medical_image_table m,
+  xmltable
+   (xmlnamespaces
+     (default 'http://xmlns.oracle.com/ord/dicom/metadata_1_0'),
+          '/DICOM_OBJECT'
+      passing m.anondicom.metadata
+      columns
+        patient_name varchar2(100)
+                  path './*[@name="Patient''''s Name"]/VALUE',
+        patient_id   varchar2(100)
+                  path './*[@name="Patient ID"]'
+   ) t ;
+</pre></div>
+                     <!-- class="example" -->
+                  </div>
+               </div><a id="IMDCM13424"></a><a id="IMDCM13423"></a><div class="props_rev_3"><a id="GUID-45237081-0669-4442-B467-3F47E01A0EA6" name="GUID-45237081-0669-4442-B467-3F47E01A0EA6"></a><h4 id="IMDCM-GUID-45237081-0669-4442-B467-3F47E01A0EA6" class="sect4"><span class="enumeration_section">5.4.4 </span>Checking the Conformance of ORDDicom Objects
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>This section shows how to check the <a id="d11764e876" class="indexterm-anchor"></a><a id="d11764e880" class="indexterm-anchor"></a>conformance of ORDDicom objects against a set of user-specified constraint rules. Constraint rules are specified in one or more constraint documents. These XML documents specify attribute relationships and semantic constraints that cannot be expressed by the DICOM metadata schema.
+                        </p>
+                        <p>A default constraint document, <code class="codeph">ordcmct.xml</code>, is loaded during installation. You can create a customized constraint document, but that topic is beyond the scope of this example. This example uses the default constraint document.
+                        </p>
+                        <p>The code segment in <a href="dicom-application-development.html#GUID-45237081-0669-4442-B467-3F47E01A0EA6__CIHFHBFC">Example 5-7</a> defines the procedure check_conform(), which performs these tasks:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Selects the original content <code class="codeph">dicom</code> of the table <code class="codeph">medical_image_table</code> with the identifier <code class="codeph">source_id</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Displays a line of output text, which indicates either of these conditions for the DICOM content:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Conformance valid</p>
+                                    <p><code class="codeph">isconformanceValid(OracleOrdObject): 1</code></p>
+                                 </li>
+                                 <li>
+                                    <p>Not conformance valid</p>
+                                    <p><code class="codeph">isconformanceValid(OracleOrdObject): 0</code></p>
+                                 </li>
+                              </ul>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-45237081-0669-4442-B467-3F47E01A0EA6__GUID-8856CD48-3D24-4FF5-82D6-76E1717AF0A9">
+                           <p class="notep1">Note:</p>
+                           <p><a href="dicom-application-development.html#GUID-45237081-0669-4442-B467-3F47E01A0EA6__CIHFHBFC">Example 5-7</a> is a complete code sample that includes a call to the setDataModel( ) procedure. Keep in mind that this procedure call might not be required in all situations.
+                           </p>
+                           <p>See the <a href="dicom-data-model-utility-reference.html#GUID-5A8F4987-DD6B-40E9-9FB1-9E35BAAEC916">setDataModel( ) Procedure</a> for more information about when to call this procedure.
+                           </p>
+                        </div>
+                        <p>Running <a href="dicom-application-development.html#GUID-45237081-0669-4442-B467-3F47E01A0EA6__CIHFHBFC">Example 5-7</a> generates the following output:
+                        </p><pre class="oac_no_warn" dir="ltr">SQL&gt; execute check_conform(1) ;
+isconformanceValid(OracleOrdObject): 1
+</pre><p>The value of <code class="codeph">1</code> indicates that the DICOM content used in this example was valid because it conformed to the Oracle default constraint rules. If the DICOM content had not been valid, running the example would have returned a value of <code class="codeph">0</code>. And, one or more constraint messages generated during the previous conformance validation would have been found in the view orddcm_conformance_vld_msgs.
+                        </p>
+                        <p>The following code segment shows the description of this view:</p><pre class="oac_no_warn" dir="ltr">SQL&gt; describe orddcm_conformance_vld_msgs;
+
+ Name                         Null?          Type
+ ----------------------    -------------    ---------------------
+ SOP_INSTANCE_UID                            VARCHAR2(128 CHAR)
+ RULE_NAME                  NOT NULL         VARCHAR2(64 CHAR)
+ MESSAGE                                     VARCHAR2(1999 CHAR)
+ MSG_TYPE                   NOT NULL         VARCHAR2(20 CHAR)
+ MSG_TIME                   NOT NULL         TIMESTAMP(6)
+</pre><p>You can query this view to examine any constraint messages that are generated during conformance validation. Because the DICOM content used in this example conformed with the Oracle constraint rules, there are no messages in the orddcm_conformance_vld_msgs view.</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_conformance_vld_msgs;
+</pre><p>Thus, invoking the preceding select query generates the following output:</p><pre class="oac_no_warn" dir="ltr">no rows selected
+</pre><p>See <a href="overview-of-dicom-development.html#GUID-6025AEA7-998C-45F0-B6CE-FFC34C286BBB">Task 8: Validate Conformance with DICOM Constraints</a> for information about what to do if your DICOM content does not conform to the constraint rules defined for your organization. See <a href="dicom-data-model-utility-reference.html#GUID-D2599862-C238-4E04-A783-4ACF6DDDD75A"> DICOM Repository Public Views</a> for information about the view orddcm_conformance_vld_msgs.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-45237081-0669-4442-B467-3F47E01A0EA6__CIHFHBFC">
+                        <p class="titleinexample">Example 5-7 Checking DICOM Conformance</p><pre class="oac_no_warn" dir="ltr">-- Set Data Model Repository
+execute ordsys.ord_dicom.setDataModel();
+ 
+create or replace procedure check_conform(source_id number) is
+    dcmSrc    ordsys.orddicom;
+begin
+  select dicom into dcmSrc from medical_image_table
+         where id = source_id;
+  dbms_output.put_line('isconformanceValid(OracleOrdObject): ' ||
+    dcmSrc.isConformanceValid('OracleOrdObject'));
+end;
+/
+show errors;
+</pre></div>
+                     <!-- class="example" -->
+                  </div>
+               </div><a id="IMDCM13425"></a><div class="props_rev_3"><a id="GUID-350EAA7E-45D9-4321-BDF4-6A12017FDEB8" name="GUID-350EAA7E-45D9-4321-BDF4-6A12017FDEB8"></a><h4 id="IMDCM-GUID-350EAA7E-45D9-4321-BDF4-6A12017FDEB8" class="sect4"><span class="enumeration_section">5.4.5 </span>Handling Oracle Multimedia DICOM Exceptions in PL/SQL
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Possible errors that can occur during run time should always be handled in your application. This practice enables the program to continue its operation even when it encounters a run-time error. This practice also enables you to know what went wrong during program operation. Proper error handling practices ensure that, whenever possible, you are always able to recover from an error while running an application. In addition, proper error handling provides you with the information you need so you always know what went wrong.</p>
+                        <p>When handling exceptions<a id="d11764e1009" class="indexterm-anchor"></a><a id="d11764e1013" class="indexterm-anchor"></a><a id="d11764e1017" class="indexterm-anchor"></a><a id="d11764e1021" class="indexterm-anchor"></a>, PL/SQL uses exception blocks. For example, in PL/SQL, the exception can appear as:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+&lt;some program logic&gt;
+EXCEPTION
+     WHEN OTHERS THEN
+     &lt;some exception logic&gt;
+END;
+</pre><p>When you design, code, and debug your application, you are aware of the places in your program where processing might stop due to a failure to anticipate an error. Those are the places in your program where you must add exception handling blocks to handle the potential errors.</p>
+                        <div class="infoboxnotealso" id="GUID-350EAA7E-45D9-4321-BDF4-6A12017FDEB8__GUID-E0CBA6F4-648E-4F80-AD06-ACDA74028D03">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../lnpls/plsql-error-handling.html#LNPLS007" target="_blank"><span class="italic">Oracle Database PL/SQL Language Reference</span></a> for more information about handling PL/SQL exceptions
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

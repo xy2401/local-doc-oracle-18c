@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: E94243-01 -->
+    <!-- Published date: August 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Upgrading a 12c CDB to an Oracle Database 18c CDB</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to upgrade a 12c CDB to an Oracle Database 18c CDB.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-08-08T15:14:42+00:00">
+    <meta name="dcterms.title" content="Upgrades a 12c CDB to an Oracle Database 18c CDB going through the prepare, upgrade and finalize phases">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBETO">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E94243-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Upgrading
+        a 12c CDB to an Oracle Database 18c CDB</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer"> <br>
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p><br>
+                This 15-minute tutorial shows you how to upgrade a 12c container
+                database (CDB) to an Oracle Database 18c CDB.</p>
+              <h3>Background</h3>
+              <p> The process and utilities to upgrade a 12.1 CDB to an Oracle
+                Database 12.2 CDB are the same as an upgrade of a 12c CDB to an
+                oracle Database 18c CDB.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Oracle Database 18c installed</li>
+                <li>Oracle Database 12c Release 2 (12.2) installed</li>
+                <li>One Oracle Database 12c Release 2 (12.2) CDB <code>cdb12 </code>
+                  with one PDB opened, <code> PDB12</code>. You can use the <a href="files/dbca.sh" target="_blank"><code>dbca.sh</code> </a>
+                  shell script to create <code>cdb12. </code> Download the
+                  shell script to the labs directory created on your server <code>
+                    /home/oracle/labs.</code> Replace the password in the shell
+                  script with your own complex password</li>
+                <li>The SQL script, <a href="files/create_test_user_bigtab.sql" target="_blank">create_test_user_bigtab.sql </a> downloaded
+                  to the labs directory created on your server <code>
+                    /home/oracle/labs </code> with user password updated</li>
+              </ul>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Back
+                up 12c CDB Before Upgrade</h2>
+              <p>In this section, you'll back up <code> cdb12 </code> before
+                you upgrade the 12c CDB to an Oracle Database 18c CDB. Before
+                you back up the CDB, use the <a href="files/create_test_user_bigtab.sql" target="_blank"><code>create_test_user_bigtab.sql</code></a>
+                SQL script to create a test user and a table with rows in the <code>
+                  PDB12 </code> PDB.</p>
+              <ol>
+                <li>Log in to <code>PDB12 </code> to create the <code>
+                    test.bigtab </code> table loaded with 10000 rows. This is <em>
+                    Session 12. </em><br>
+                  <pre><code>sqlplus sys@PDB12 AS SYSDBA<br>Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Execute the SQL script <a href="files/create_test_user_bigtab.sql" target="_blank"><code>create_test_user_bigtab.sql </code></a>
+                  that creates the <code> TEST </code> user and the <code>
+                    test.bigtab </code> table that is loaded with 10000 rows.
+                  <pre><code>@/home/oracle/labs/create_test_user_bigtab.sql</code></pre>
+                </li>
+                <li>Launch <code> rman </code> to back up <code>cdb12.</code><br>
+                  <pre><code>rman target sys@cdb12<br><br>target database Password: <em>password</em></code></pre>
+                </li>
+                <li>Back up <code>cdb12. </code>
+                  <pre><code>BACKUP DATABASE PLUS ARCHIVELOG;</code></pre>
+                </li>
+                <li>Quit the session.<br>
+                  <pre><code>EXIT;</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Prepare
+                the 12c CDB for Upgrade</h2>
+              <p>In this section, you'll prepare <code>cdb12 </code> to be
+                upgraded to an Oracle Database 18c CDB.</p>
+              <ol>
+                <li>The current terminal window is still set with <code>
+                    ORACLE_HOME </code> set to Oracle Database 12c Release 2
+                  (12.2)&nbsp; and <code>ORACLE_SID </code> set to <code>cdb12.
+                    </code> This session is called <em> Session 12c. </em> <br>
+                  <pre><code>export ORACLE_HOME=/u01/app/oracle/product/12.2.0/dbhome_1</code></pre>
+                  <pre><code>export ORACLE_SID=cdb12</code></pre>
+                </li>
+                <li>Open another terminal window and set <code> ORACLE_HOME </code>
+                  to Oracle Database 18c and <code>ORACLE_SID </code> set to <code>cdb12.
+                    </code> This session is called <em> Session 18c. </em> <br>
+                  <pre><code>export ORACLE_HOME=/u01/app/oracle/product/18.1.0/dbhome_1</code></pre>
+                  <pre><code>export ORACLE_SID=cdb12</code></pre>
+                </li>
+                <li>In <em>Session 12c, </em> change the directory to Oracle
+                  Database 18c <code>
+                    /u01/app/oracle/product/18.1.0/dbhome_1/rdbms/admin. </code><br>
+                  <pre><code>cd /u01/app/oracle/product/18.1.0/dbhome_1/rdbms/admin</code></pre>
+                </li>
+                <li>Prepare <code> CDB12 </code> to be upgraded into an Oracle
+                  Database 18c CDB. First, execute the Pre-Upgrade Information
+                  Tool on the 12c <code>cdb12 </code> by executing the <code>
+                    preupgrade.jar </code> file.
+                  <pre><code>$ORACLE_HOME/jdk/bin/java -jar preupgrade.jar TERMINAL TEXT</code>
+</pre></li>
+                <li>Read the Preupgrade Summary report from <a href="files/preupgrade_summary.txt" target="_blank">preupgrade_summary. </a> </li>
+                <li>Before the upgrade operation, the report suggests that you
+                  execute the pre-upgrade fixups scripts on the entire CDB <code>
+                    cdb12. </code>Copy and paste the command suggested in the
+                  "Before upgrade" paragraph.<code></code>
+                  <pre><code>$ORACLE_HOME/perl/bin/perl -I$ORACLE_HOME/perl/lib -I$ORACLE_HOME/rdbms/admin $ORACLE_HOME/rdbms/admin/catcon.pl -l /u01/app/oracle/cfgtoollogs/cdb12/preupgrade/ -b preup_cdb12 /u01/app/oracle/cfgtoollogs/cdb12/preupgrade/preupgrade_fixups.sql
+catcon: ALL catcon-related output will be written to [/u01/app/oracle/cfgtoollogs/cdb12/preupgrade//preup_cdb12_catcon_5393.lst]
+catcon: See [/u01/app/oracle/cfgtoollogs/cdb12/preupgrade//preup_cdb12*.log] files for output generated by scripts
+catcon: See [/u01/app/oracle/cfgtoollogs/cdb12/preupgrade//preup_cdb12_*.lst] files for spool files, if any
+catcon.pl: completed successfully
+</code></pre></li>
+                <li>After the fixup script completes, shut the instance down by
+                  logging in to the CDB root as <code> SYSDBA. </code>
+                  <pre><code>sqlplus / AS SYSDBA</code></pre>
+                </li>
+                <li>Shut down <code> cdb12.</code>
+                  <pre><code>SHUTDOWN IMMEDIATE</code></pre>
+                </li>
+                <li>Quit the session.
+                  <pre><code>EXIT<br></code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Upgrade
+                the 12c CDB to an Oracle Database 18c CDB</h2>
+              <p>In this section, you'll upgrade <code> cdb12 </code> to
+                Oracle Database 18c. </p>
+              <ol>
+                <li>In <em>Session 18c, </em> copy the <code> cdb12 spfile </code>
+                  from the 12c <code> ORACLE_HOME </code> to the 18c <code>
+                    ORACLE_HOME </code> before you start the <code> cdb12 </code>
+                  instance in the 18c environment. <br>
+                  <pre><code>cp </code><code>/u01/app/oracle/product/12.2.0/dbhome_1/dbs/spfilecdb12.ora </code><code>/u01/app/oracle/product/18.1.0/dbhome_1/dbs/</code>
+</pre>
+                  <pre><code>sqlplus / AS SYSDBA</code></pre>
+                </li>
+                <li>Start up the <code> cdb12 </code> instance in <code>
+                    UPGRADE </code> mode.
+                  <pre><code>STARTUP UPGRADE</code></pre>
+                </li>
+                <li>Open all PDBs in <code> UPGRADE </code> mode.<br>
+                  <pre><code>ALTER PLUGGABLE DATABASE ALL OPEN UPGRADE;
+</code></pre> </li>
+                <li>Display the open mode of the PDBs.
+                  <pre><code>SHOW PDBS
+<br>    CON_ID CON_NAME                       OPEN MODE  RESTRICTED
+---------- ------------------------------ ---------- ----------
+         2 PDB$SEED                       MIGRATE    YES
+         3 PDB12                          MIGRATE    YES
+</code></pre> </li>
+                <li>Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+                <li>Upgrade <code> cdb12. </code>
+                  <pre><code>mkdir /tmp/upgrade_cdb12</code></pre>
+                  <pre><code>cd $ORACLE_HOME/rdbms/admin</code></pre>
+                  <pre><code>$ORACLE_HOME/perl/bin/perl catctl.pl -l /tmp/upgrade_cdb12 catupgrd.sql</code></pre>
+                </li>
+                <li>Read the result of the upgrade operation from the <a href="files/upgrade.txt" target="_blank">upgrade</a> report. </li>
+                <li>Log in to the CDB to open the PDBs.
+                  <pre><code>sqlplus / AS SYSDBA</code></pre>
+                </li>
+                <li>Open the PDBs.<code></code>
+                  <pre><code>ALTER PLUGGABLE DATABASE ALL OPEN;</code></pre>
+                </li>
+                <li>Quit the session.<code></code>
+                  <pre><code>EXIT<br></code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_4" role="button" style="text-align: left;"><img src="./img/32_4.png" alt="section 4" class="num_circ" height="32" width="32">Execute
+                the Post-Upgrade Steps</h2>
+              <p>In this section, after your upgrade is complete, run the
+                post-upgrade script that your <a href="files/preupgrade_summary.txt" target="_blank">preupgrade_summary </a> report indicates as
+                required for your upgrade.</p>
+              <ol>
+                <li>Copy and paste the command suggested in the "After the
+                  upgrade" paragraph.<code></code><br>
+                  <pre><code>$ORACLE_HOME/perl/bin/perl -I$ORACLE_HOME/perl/lib -I$ORACLE_HOME/rdbms/admin $ORACLE_HOME/rdbms/admin/catcon.pl -l /u01/app/oracle/cfgtoollogs/cdb12/preupgrade/ -b postup_cdb12 /u01/app/oracle/cfgtoollogs/cdb12/preupgrade/postupgrade_fixups.sql
+catcon::set_log_file_base_path: ALL catcon-related output will be written to [/u01/app/oracle/cfgtoollogs/cdb12/preupgrade/postup_cdb12_catcon_26887.lst]
+
+catcon::set_log_file_base_path: catcon: See [/u01/app/oracle/cfgtoollogs/cdb12/preupgrade/postup_cdb12*.log] files for output generated by scripts
+
+catcon::set_log_file_base_path: catcon: See [/u01/app/oracle/cfgtoollogs/cdb12/preupgrade/postup_cdb12_*.lst] files for spool files, if any
+<br>catcon.pl: completed successfully
+</code></pre> </li>
+                <li>Log in to <code> PDB12.</code>
+                  <pre><code>sqlplus / AS SYSDBA</code></pre>
+                  <pre><code>ALTER SESSION SET CONTAINER=PDB12;</code></pre>
+                </li>
+                <li>Verify that the <code> TEST.BIGTAB </code> still holds
+                  10000 rows.
+                  <pre><code>SELECT count(*) FROM test.bigtab;</code></pre>
+                </li>
+                <li>Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+                <li>Change the Oracle home for <code> CDB12 </code> by editing
+                  the <code> /etc/oratab </code> file so that it points to the
+                  new 18c Oracle home.<br>
+                  <pre><code>cdb12:/u01/app/oracle/product/18.1.0/dbhome_1:N</code></pre>
+                </li>
+                <li>Create the new <code> cdb12 </code> password file in
+                  Oracle Database 18.1 environment.</li>
+                <pre><code>cd /u01/app/oracle/product/18.1.0/dbhome_1/dbs</code></pre>
+                <pre><code>orapwd file=orapwcdb12 entries=5 password=<em>password</em></code></pre>
+              </ol>
+            </section>
+          </article>
+        </div>
+      </div>
+    </div>
+    <code>&nbsp;<!--end content-->
+      <div class="footer-container ">
+        <div style="max-width: 994px; padding:10px 0 0 17px;">
+          <footer class="footer-list">
+            <ul>
+              <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                  Oracle</a> </li>
+              <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+              <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                  Notices</a> </li>
+              <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                  of Use</a> </li>
+              <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your Privacy Rights</a> </li>
+              <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                  © 2018 Oracle and/or its affiliates. All rights reserved.</a></li>
+            </ul>
+          </footer>
+        </div>
+        <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+      </div>
+    </code>
+  </body>
+</html>

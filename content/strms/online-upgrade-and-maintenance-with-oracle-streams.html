@@ -1,0 +1,1809 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Online Database Upgrade and Maintenance with Oracle Streams</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="xml-schema-for-lcrs.html" title="Previous" type="text/html">
+      <link rel="next" href="online-upgrade-of-an-earlier-database-with-oracle-streams.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="xml-schema-for-lcrs.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="online-upgrade-of-an-earlier-database-with-oracle-streams.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="appendixes.html" property="item" typeof="WebPage"><span property="name">   Appendixes </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Online Database Upgrade and Maintenance with Oracle Streams</li>
+            </ol>
+            <a id="GUID-72101E94-83C1-468E-856D-382862162449" name="GUID-72101E94-83C1-468E-856D-382862162449"></a><a id="STRMS165"></a>
+            
+            <h2 id="STRMS-GUID-72101E94-83C1-468E-856D-382862162449" class="sect2"><span class="enumeration_chapter">D </span> Online Database Upgrade and Maintenance with Oracle Streams
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d152391e125" class="indexterm-anchor"></a><a id="d152391e129" class="indexterm-anchor"></a>This appendix describes how to use Oracle Streams to perform a database upgrade to the current release of Oracle Database from one of the following releases:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>Oracle Database 10<span class="italic">g</span> Release 2 (10.2)
+                     </p>
+                  </li>
+                  <li>
+                     <p>Oracle Database 11<span class="italic">g</span> Release 1 (11.1)
+                     </p>
+                  </li>
+               </ul>
+               <p><a id="d152391e148" class="indexterm-anchor"></a><a id="d152391e152" class="indexterm-anchor"></a>This appendix also describes how to perform some maintenance operations with Oracle Streams on an Oracle Database 11<span class="italic">g</span> Release 2 (11.2) or later database. These maintenance operations include migrating an Oracle database to a different platform or character set, upgrading user-created applications, and applying Oracle Database patches or patch sets.
+               </p>
+               <p>The upgrade and maintenance operations described in this appendix use the features of Oracle Streams to achieve little or no database down time.</p>
+               <p>The following topics describe performing online database maintenance with Oracle Streams:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E">Overview of Using Oracle Streams for Upgrade and Maintenance Operations</a></p>
+                  </li>
+                  <li>
+                     <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-F030D768-C55F-4B08-B98D-36DB7D4483F8">Preparing for a Database Upgrade or Maintenance Operation</a></p>
+                  </li>
+                  <li>
+                     <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-F5CA1100-0064-4827-AD79-4327895E53E7">Performing a Database Upgrade or Maintenance Operation Using Oracle Streams</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-72101E94-83C1-468E-856D-382862162449__GUID-C77B5A63-ECAE-45BD-8E92-1A97BC3E5629">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="online-upgrade-of-an-earlier-database-with-oracle-streams.html#GUID-BAEDD568-51DA-4E58-BFB0-C90046D6581D"> Online Upgrade of an Earlier Database with Oracle Streams</a> for instructions on performing an upgrade of a release before Oracle Database 10<span class="italic">g</span> Release 2 (10.2)
+                  </p>
+               </div>
+            </div><a id="STRMS1255"></a><a id="STRMS1254"></a><div class="props_rev_3"><a id="GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E" name="GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E"></a><h3 id="STRMS-GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E" class="sect3"><span class="enumeration_section">D.1 </span>Overview of Using Oracle Streams for Upgrade and Maintenance Operations
+               </h3>
+               <div>
+                  <p>Database upgrades can require substantial database down time. The following maintenance operations also typically require substantial database down time:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Migrating a database to a different platform</p>
+                     </li>
+                     <li>
+                        <p>Migrating a database to a different character set</p>
+                     </li>
+                     <li>
+                        <p>Modifying database schema objects to support upgrades to user-created applications</p>
+                     </li>
+                     <li>
+                        <p>Applying an Oracle Database software patch or patch set</p>
+                     </li>
+                  </ul>
+                  <p>You can achieve these upgrade and maintenance operations with little or no down time by using the features of Oracle Streams. To do so, you use Oracle Streams to configure a <a href="strms_glossary.html#GUID-5BC36291-C075-4244-905A-ACDAB250E825"><span class="xrefglossterm">replication</span></a> environment with the following databases:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><span class="bold">Source Database:</span> The original database that is being maintained.
+                        </p>
+                     </li>
+                     <li>
+                        <p><span class="bold">Capture Database:</span> The database where a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> captures changes made to the source database during the maintenance operation.
+                        </p>
+                     </li>
+                     <li>
+                        <p><span class="bold">Destination Database:</span> The copy of the source database where an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> applies changes made to the source database during the maintenance operation.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>Specifically, you can use the following general steps to perform the upgrade or maintenance operation while the database is online:</p>
+                  <ol>
+                     <li>
+                        <p>Create an empty <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Configure an Oracle Streams replication environment where the original database is the source database and a copy of the database is the destination database. The <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> and <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package configure the Oracle Streams replication environment.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Perform the upgrade or maintenance operation on the destination database. During this time the original source database is available online, and changes to the original source database are being captured by a capture process.</p>
+                     </li>
+                     <li>
+                        <p>Use Oracle Streams to apply the changes made to the source database at the destination database.</p>
+                     </li>
+                     <li>
+                        <p>When the destination database has caught up with the changes made at the source database, take the source database offline and make the destination database available for applications and users.</p>
+                     </li>
+                  </ol>
+                  <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E__CIHGJCAB">Figure D-1</a> provides an overview of this process.
+                  </p>
+                  <div class="figure" id="GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E__CIHGJCAB">
+                     <p class="titleinfigure">Figure D-1 Online Database Upgrade and Maintenance with Oracle Streams</p><img width="463" src="img/strms052.gif" alt="Description of Figure D-1 follows" title="Description of Figure D-1 follows" longdesc="img_text/strms052.html"><br><a href="img_text/strms052.html">Description of "Figure D-1 Online Database Upgrade and Maintenance with Oracle Streams"</a></div>
+                  <!-- class="figure" -->
+               </div><a id="STRMS1256"></a><div class="props_rev_3"><a id="GUID-69DE9DE0-5F19-4302-B3D5-6271598B2224" name="GUID-69DE9DE0-5F19-4302-B3D5-6271598B2224"></a><h4 id="STRMS-GUID-69DE9DE0-5F19-4302-B3D5-6271598B2224" class="sect4"><span class="enumeration_section">D.1.1 </span>The Capture Database During the Upgrade or Maintenance Operation
+                  </h4>
+                  <div>
+                     <p>During the upgrade or maintenance operation, the capture database is the database where the <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> is created. A <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a> can be created at the source database during the maintenance operation, or a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> can be created at the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> or at a third database. If the destination database is the capture database, then a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> from the capture database to the destination database is not needed. A downstream capture process reduces the resources required at the source database during the maintenance operation.
+                     </p>
+                     <div class="infoboxnote" id="GUID-69DE9DE0-5F19-4302-B3D5-6271598B2224__GUID-D00E2FA2-B578-4760-AD9E-F0BC470BD1D1">
+                        <p class="notep1">Note:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Before you begin the database upgrade or maintenance operation with Oracle Streams, decide which database will be the capture database.</p>
+                           </li>
+                           <li>
+                              <p>If the RMAN <code class="codeph">DUPLICATE</code> or <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command is used for database <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a>, then the destination database cannot be the capture database.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-69DE9DE0-5F19-4302-B3D5-6271598B2224__GUID-647793BC-FA41-45EE-912C-E269965CAE52">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-5C1059F3-DA6E-4B0A-8179-D5304423656E">Local Capture and Downstream Capture</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-29384588-1739-4530-9600-C2301CC79D11">Deciding Which Utility to Use for Instantiation</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1257"></a><div class="props_rev_3"><a id="GUID-4F62D984-0FDC-495E-820F-69A2E7DE7DDB" name="GUID-4F62D984-0FDC-495E-820F-69A2E7DE7DDB"></a><h4 id="STRMS-GUID-4F62D984-0FDC-495E-820F-69A2E7DE7DDB" class="sect4"><span class="enumeration_section">D.1.2 </span>Assumptions for the Database Being Upgraded or Maintained
+                  </h4>
+                  <div>
+                     <p>The instructions in this appendix assume that all of the following statements are true for the database being upgraded or maintained:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The database is not part of an existing Oracle Streams environment.</p>
+                        </li>
+                        <li>
+                           <p>The database is not part of an existing logical standby environment.</p>
+                        </li>
+                        <li>
+                           <p>No tables at the database are master tables for materialized views in other databases.</p>
+                        </li>
+                        <li>
+                           <p>No messages are enqueued into user-created <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s during the upgrade or maintenance operation.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS1258"></a><div class="props_rev_3"><a id="GUID-6E54F924-5300-42C7-B4B7-A6146784A976" name="GUID-6E54F924-5300-42C7-B4B7-A6146784A976"></a><h4 id="STRMS-GUID-6E54F924-5300-42C7-B4B7-A6146784A976" class="sect4"><span class="enumeration_section">D.1.3 </span>Considerations for Job Slaves and PL/SQL Package Subprograms
+                  </h4>
+                  <div>
+                     <p>If possible, ensure that no job slaves are created, modified, or deleted during the upgrade or maintenance operation, and that no Oracle-supplied PL/SQL package subprograms are invoked during the operation that modify both user data and data dictionary metadata at the same time. The following packages contain subprograms that modify both user data and data dictionary metadata at the same time: <code class="codeph">DBMS_RLS</code>, <code class="codeph">DBMS_STATS</code>, and <code class="codeph">DBMS_JOB</code>.
+                     </p>
+                     <p>It might be possible to perform such actions on the database if you ensure that the same actions are performed on the source database and <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> in Steps <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHDIHDD">19</a> and <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHFJJJJ">20</a> in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-F5CA1100-0064-4827-AD79-4327895E53E7">Performing a Database Upgrade or Maintenance Operation Using Oracle Streams</a>"</span>. For example, if a PL/SQL procedure gathers statistics on the source database during the maintenance operation, then the same PL/SQL procedure should be invoked at the destination database in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHFJJJJ">20</a>.
+                     </p>
+                  </div>
+               </div><a id="STRMS1259"></a><div class="props_rev_3"><a id="GUID-D33531FF-369B-4886-9391-F00A3C4155D2" name="GUID-D33531FF-369B-4886-9391-F00A3C4155D2"></a><h4 id="STRMS-GUID-D33531FF-369B-4886-9391-F00A3C4155D2" class="sect4"><span class="enumeration_section">D.1.4 </span>Unsupported Database Objects Are Excluded
+                  </h4>
+                  <div>
+                     <p>The <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> and <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package include the following parameters:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">exclude_schemas</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">exclude_flags</code></p>
+                        </li>
+                     </ul>
+                     <p>These parameters specify which database objects to exclude from the Oracle Streams configuration. The examples in this appendix set these parameters to the following values:</p><pre class="oac_no_warn" dir="ltr">exclude_schemas =&gt; '*',
+exclude_flags   =&gt; DBMS_STREAMS_ADM.EXCLUDE_FLAGS_UNSUPPORTED + 
+                   DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DML + 
+                   DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DDL);
+</pre><p>These values exclude any database objects that are not supported by Oracle Streams. The asterisk (<code class="codeph">*</code>) specified for <code class="codeph">exclude_schemas</code> indicates that some database objects in every schema in the database might be excluded from the <a href="strms_glossary.html#GUID-5BC36291-C075-4244-905A-ACDAB250E825"><span class="xrefglossterm">replication</span></a> environment. The value specified for the <code class="codeph">exclude_flags</code> parameter indicates that DML and DDL changes for all unsupported database objects are excluded from the replication environment. Rules are placed in the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a>s for the <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es to exclude these database objects.
+                     </p>
+                     <p>To list unsupported database objects, query the <code class="codeph">DBA_STREAMS_UNSUPPORTED</code> data dictionary view at the source database. If you use these parameter settings, then changes to the database objects listed in this view are not maintained by Oracle Streams during the maintenance operation. Therefore, Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-319697FF-CBFA-4212-81BF-DCE316264BF2__CIHFIJHG">7</a> in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-319697FF-CBFA-4212-81BF-DCE316264BF2">Task 1: Beginning the Operation</a>"</span> instructs you to ensure that no changes are made to these database objects during the database upgrade or maintenance operation.
+                     </p>
+                     <div class="infoboxnote" id="GUID-D33531FF-369B-4886-9391-F00A3C4155D2__GUID-3C65D6CE-6675-4C0A-8476-0450E6D44826">
+                        <p class="notep1">Note:</p>
+                        <p><span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76">Preparing for Upgrade or Maintenance of a Database with User-Defined Types</a>"</span> discusses a method for retaining changes to tables that contain user-defined types during the maintenance operation. If you are using this method, then tables that contain user-defined types can remain open during the maintenance operation.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-D33531FF-369B-4886-9391-F00A3C4155D2__GUID-7D9248DE-6F9F-47FE-91CC-04B34199DEA1">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS831"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">exclude_schemas</code> and <code class="codeph">exclude_flags</code> parameters
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS1260"></a><div class="props_rev_3"><a id="GUID-F030D768-C55F-4B08-B98D-36DB7D4483F8" name="GUID-F030D768-C55F-4B08-B98D-36DB7D4483F8"></a><h3 id="STRMS-GUID-F030D768-C55F-4B08-B98D-36DB7D4483F8" class="sect3"><span class="enumeration_section">D.2 </span>Preparing for a Database Upgrade or Maintenance Operation
+               </h3>
+               <div>
+                  <p>The following sections describe tasks to complete before starting the database upgrade or maintenance operation with Oracle Streams:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680">Preparing for Downstream Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76">Preparing for Upgrade or Maintenance of a Database with User-Defined Types</a></p>
+                     </li>
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-460B7097-5A37-4873-BF4A-4A8D24CA5DBB">Preparing for Upgrades to User-Created Applications</a></p>
+                     </li>
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-0D1B68DB-740F-49BF-A69A-0D040118FAE0">Deciding Whether to Configure Oracle Streams Directly or Generate a Script</a></p>
+                     </li>
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-29384588-1739-4530-9600-C2301CC79D11">Deciding Which Utility to Use for Instantiation</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS1261"></a><div class="props_rev_3"><a id="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680" name="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680"></a><h4 id="STRMS-GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680" class="sect4"><span class="enumeration_section">D.2.1 </span>Preparing for Downstream Capture
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>If you decided that the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> or a third database will be the capture database, then you must prepare for downstream capture by configuring log file copying from the source database to the capture database. If you decided that the source database will be the capture database, then log file copying is not required. See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-69DE9DE0-5F19-4302-B3D5-6271598B2224">The Capture Database During the Upgrade or Maintenance Operation</a>"</span> for information about the decision.
+                        </p>
+                        <p>Complete the following steps to prepare the source database to copy its redo log files to the capture database, and to prepare the capture database to accept these redo log files:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Configure Oracle Net so that the source database can communicate with the capture database.</span><div>
+                              <div class="infoboxnotealso" id="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__GUID-8E3C6704-030A-43F8-AB78-618F05A96509">
+                                 <p class="notep1">See Also:</p>
+                                 <p><a href="../netag/index.html"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a></p>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Configure authentication at both databases to support the transfer of redo data.</span><div>
+                              <p>Redo transport sessions are authenticated using either the Secure Sockets Layer (SSL) protocol or a remote login password file. If the source database has a remote login password file, then copy it to the appropriate directory on the downstream capture database system. The password file must be the same at the source database and the downstream capture database.</p>
+                              <div class="infoboxnotealso" id="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__GUID-0E659DE6-C9F4-48BB-8671-7F81C386AF87">
+                                 <p class="notep1">See Also:</p>
+                                 <p><a href="../sbydb/creating-oracle-data-guard-physical-standby.html#SBYDB00424"><span class="italic">Oracle Data Guard Concepts and Administration</span></a> for detailed information about authentication requirements for redo transport
+                                 </p>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="stepexpand" id="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__CIHEEABD"><span>At the source database, set the following initialization parameters to configure redo transport services to transmit redo data from the source database to the downstream database:</span><div>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><code class="codeph">LOG_ARCHIVE_DEST_</code><span class="italic"><code class="codeph">n</code></span> - Configure at least one <code class="codeph">LOG_ARCHIVE_DEST_</code><span class="italic"><code class="codeph">n</code></span> initialization parameter to transmit redo data to the downstream database. To do this, set the following attributes of this parameter:
+                                    </p>
+                                    <ul style="list-style-type: disc;">
+                                       <li>
+                                          <p><code class="codeph">SERVICE</code> - Specify the network service name of the downstream database.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p><code class="codeph">ASYNC</code> or <code class="codeph">SYNC</code> - Specify a redo transport mode.
+                                          </p>
+                                          <p>The advantage of specifying <code class="codeph">ASYNC</code> is that it results in little or no effect on the performance of the source database. <code class="codeph">ASYNC</code> is recommended to avoid affecting source database performance if the downstream database or network is performing poorly.
+                                          </p>
+                                          <p>The advantage of specifying <code class="codeph">SYNC</code> is that redo data is sent to the downstream database faster then when <code class="codeph">ASYNC</code> is specified. Also, specifying <code class="codeph">SYNC</code> <code class="codeph">AFFIRM</code> results in behavior that is similar to <code class="codeph">MAXIMUM</code> <code class="codeph">AVAILABILITY</code> standby protection mode. Note that specifying an <code class="codeph">ALTER</code> <code class="codeph">DATABASE</code> <code class="codeph">STANDBY</code> <code class="codeph">DATABASE</code> <code class="codeph">TO</code> <code class="codeph">MAXIMIZE</code> <code class="codeph">AVAILABILITY</code> SQL statement has no effect on an Oracle Streams capture process.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p><code class="codeph">NOREGISTER</code> - Specify this attribute so that the location of the archived redo log files is not recorded in the downstream database control file.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p><code class="codeph">VALID_FOR</code> - Specify either <code class="codeph">(ONLINE_LOGFILE,PRIMARY_ROLE)</code> or <code class="codeph">(ONLINE_LOGFILE,ALL_ROLES)</code>.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p><code class="codeph">TEMPLATE</code> - Specify a directory and format template for archived redo logs at the downstream database. The <code class="codeph">TEMPLATE</code> attribute overrides the <code class="codeph">LOG_ARCHIVE_FORMAT</code> initialization parameter settings at the downstream database. The <code class="codeph">TEMPLATE</code> attribute is valid only with remote destinations. Ensure that the format uses all of the following variables at each source database: <code class="codeph">%t</code>, <code class="codeph">%s</code>, and <code class="codeph">%r</code>.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p><code class="codeph">DB_UNIQUE_NAME</code> - The unique name of the downstream database. Use the name specified for the <code class="codeph">DB_UNIQUE_NAME</code> initialization parameter at the downstream database.
+                                          </p>
+                                       </li>
+                                    </ul>
+                                    <p>The following example is a <code class="codeph">LOG_ARCHIVE_DEST_</code><span class="italic"><code class="codeph">n</code></span> setting that specifies a capture database (<code class="codeph">DBS2.EXAMPLE.COM</code>):
+                                    </p><pre class="oac_no_warn" dir="ltr">LOG_ARCHIVE_DEST_2='SERVICE=DBS2.EXAMPLE.COM ASYNC NOREGISTER
+   VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)
+   TEMPLATE=/usr/oracle/log_for_dbs1/dbs1_arch_%t_%s_%r.log
+   DB_UNIQUE_NAME=dbs2'
+</pre><div class="infoboxnotealso" id="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__GUID-08B8B217-D3F2-452A-90CF-ACE01C6C9542">
+                                       <p class="notep1">Tip:</p>
+                                       <p>Specify a value for the <code class="codeph">TEMPLATE</code> attribute that keeps log files from a remote source database separate from local database log files. In addition, if the downstream database contains log files from multiple source databases, then the log files from each source database should be kept separate from each other.
+                                       </p>
+                                    </div>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">LOG_ARCHIVE_DEST_STATE_</code><span class="italic"><code class="codeph">n</code></span> - Set this initialization parameter that corresponds with the <code class="codeph">LOG_ARCHIVE_DEST_</code><span class="italic"><code class="codeph">n</code></span> parameter for the downstream database to <code class="codeph">ENABLE</code>.
+                                    </p>
+                                    <p>For example, if the <code class="codeph">LOG_ARCHIVE_DEST_2</code> initialization parameter is set for the downstream database, then set the <code class="codeph">LOG_ARCHIVE_DEST_STATE_2</code> parameter in the following way:
+                                    </p><pre class="oac_no_warn" dir="ltr">LOG_ARCHIVE_DEST_STATE_2=ENABLE 
+</pre></li>
+                                 <li>
+                                    <p><code class="codeph">LOG_ARCHIVE_CONFIG</code> - Set the <code class="codeph">DB_CONFIG</code> attribute in this initialization parameter to include the <code class="codeph">DB_UNIQUE_NAME</code> of the source database and the downstream database.
+                                    </p>
+                                    <p>For example, if the <code class="codeph">DB_UNIQUE_NAME</code> of the source database is <code class="codeph">dbs1</code>, and the <code class="codeph">DB_UNIQUE_NAME</code> of the downstream database is <code class="codeph">dbs2</code>, then specify the following parameter:
+                                    </p><pre class="oac_no_warn" dir="ltr">LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbs1,dbs2)'
+</pre><p>By default, the <code class="codeph">LOG_ARCHIVE_CONFIG</code> parameter enables a database to both send and receive redo.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <div class="infoboxnotealso" id="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__GUID-7AD23979-D1BE-4B86-A8CB-02EC1C0A4757">
+                                 <p class="notep1">See Also:</p>
+                                 <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>and<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=SBYDB01100"><span class="italic"> Oracle Data Guard Concepts and Administration </span></a>for more information about these initialization parameters
+                                 </p>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="stepexpand" id="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__CIHDCDBA"><span>At the downstream database, set the <code class="codeph">DB_CONFIG</code> attribute in the <code class="codeph">LOG_ARCHIVE_CONFIG</code> initialization parameter to include the <code class="codeph">DB_UNIQUE_NAME</code> of the source database and the downstream database.</span><div>
+                              <p>For example, if the <code class="codeph">DB_UNIQUE_NAME</code> of the source database is <code class="codeph">dbs1</code>, and the <code class="codeph">DB_UNIQUE_NAME</code> of the downstream database is <code class="codeph">dbs2</code>, then specify the following parameter:
+                              </p><pre class="oac_no_warn" dir="ltr">LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbs1,dbs2)'
+</pre><p>By default, the <code class="codeph">LOG_ARCHIVE_CONFIG</code> parameter enables a database to both send and receive redo.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>If you reset any initialization parameters while the instance is running at a database in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__CIHEEABD">3</a> or Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__CIHDCDBA">4</a>, then you might want to reset them in the initialization parameter file as well, so that the new values are retained when the database is restarted.</span><div>
+                              <p>If you did not reset the initialization parameters while the instance was running, but instead reset them in the initialization parameter file in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__CIHEEABD">3</a> or Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__CIHDCDBA">4</a>, then restart the database. The source database must be open when it sends redo log files to the capture database because the global name of the source database is sent to the capture database only if the source database is open.
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnotealso" id="GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680__GUID-A1D1ACF1-82A8-4613-BF17-6CB7AFF29192">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E">Overview of Using Oracle Streams for Upgrade and Maintenance Operations</a>"</span> for more information about the capture database
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1262"></a><div class="props_rev_3"><a id="GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76" name="GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76"></a><h4 id="STRMS-GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76" class="sect4"><span class="enumeration_section">D.2.2 </span>Preparing for Upgrade or Maintenance of a Database with User-Defined Types
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>User-defined types include object types, <code class="codeph">REF</code> values, varrays, and nested tables. Currently, Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es do not support user-defined types. This section discusses using Oracle Streams to perform an upgrade or maintenance operation on a database that has user-defined types.
+                        </p>
+                        <p>One option is to ensure that no data manipulation language (DML) or data definition language (DDL) changes are made to the tables that contain user-defined types during the operation. In this case, these tables are instantiated at the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>, and no changes are made to these tables during the entire operation. After the operation is complete, make the tables that contain user-defined types read/write at the destination database.
+                        </p>
+                        <p>However, if tables that contain user-defined types must remain open during the operation, then use the following general steps to retain changes to these types during the operation:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li id="GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76__CIHHCBAF"><span>At the source database, create one or more logging tables to store row changes to tables that include user-defined types. Each column in the logging table must use a data type that is supported by Oracle Streams.</span></li>
+                        <li><span>At the source database, create a DML trigger that fires on the tables that contain the user-defined data types. The trigger converts each row change into relational equivalents and logs the modified row in a logging table created in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76__CIHHCBAF">1</a>.</span></li>
+                        <li><span>Ensure that the capture process and <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> are configured to capture and, if necessary, propagate changes made to the logging table to the destination database. Changes to tables that contain user-defined types should not be captured or propagated. Therefore, ensure that the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> and <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedures include the logging tables and exclude the tables that contain user-defined types.</span></li>
+                        <li><span>At the destination database, configure the apply process to use a <a href="strms_glossary.html#GUID-50EF781B-7997-4C30-BE4B-1D3BC501FB24"><span class="xrefglossterm">DML handler</span></a> that processes the changes to the logging tables. The DML handler reconstructs the user-defined types from the relational equivalents and applies the modified changes to the tables that contain user-defined types.</span></li>
+                     </ol>
+                     <div class="section">
+                        <p>For instructions, go to the My Oracle Support (formerly Oracle<span class="italic">MetaLink</span>) Web site using a Web browser:
+                        </p><pre class="oac_no_warn" dir="ltr"><a href="http://support.oracle.com/"><code class="codeph">http://support.oracle.com/</code></a>
+</pre><p>Database bulletin 556742.1 describes additional data type support for Oracle Streams.</p>
+                        <div class="infoboxnotealso" id="GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76__GUID-8783392D-18B6-42DB-8591-6B7865586810">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="../lnpls/plsql-triggers.html#LNPLS020"><span class="italic">Oracle Database PL/SQL Language Reference</span></a> for more information about creating triggers
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-A6074063-2D66-4FB9-864D-D5228624732A">Managing a DML Handler</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1263"></a><div class="props_rev_3"><a id="GUID-460B7097-5A37-4873-BF4A-4A8D24CA5DBB" name="GUID-460B7097-5A37-4873-BF4A-4A8D24CA5DBB"></a><h4 id="STRMS-GUID-460B7097-5A37-4873-BF4A-4A8D24CA5DBB" class="sect4"><span class="enumeration_section">D.2.3 </span>Preparing for Upgrades to User-Created Applications
+                  </h4>
+                  <div>
+                     <p>This section is relevant only if the operation entails upgrading user-created applications. During an upgrade of user-created applications, schema objects can be modified, and there might be logical dependencies that cannot be detected by the database alone. The following sections describe handling these issues during an application upgrade:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-E6A4E0F0-E798-4DFD-89BE-0B7D3A3F0EBE">Handling Modifications to Schema Objects</a></p>
+                        </li>
+                        <li>
+                           <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-E84F5264-B576-4B82-9CC4-7241173CBABC">Handling Logical Dependencies</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS1264"></a><div class="props_rev_3"><a id="GUID-E6A4E0F0-E798-4DFD-89BE-0B7D3A3F0EBE" name="GUID-E6A4E0F0-E798-4DFD-89BE-0B7D3A3F0EBE"></a><h5 id="STRMS-GUID-E6A4E0F0-E798-4DFD-89BE-0B7D3A3F0EBE" class="sect5"><span class="enumeration_section">D.2.3.1 </span>Handling Modifications to Schema Objects
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>If you are upgrading user-created applications, then, typically, schema objects in the database change to support the upgraded applications. In Oracle Streams, row logical change records (LCRs) contain information about row changes that result from DML statements. A <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a> or <a href="strms_glossary.html#GUID-50EF781B-7997-4C30-BE4B-1D3BC501FB24"><span class="xrefglossterm">DML handler</span></a> can modify row LCRs captured from the source database redo log so that the row LCRs can be applied to the altered tables at the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>.
+                           </p>
+                           <p>A <a href="strms_glossary.html#GUID-18697C88-84CA-4F47-8F47-DD5D37E9543B"><span class="xrefglossterm">rule-based transformation</span></a> is any modification to a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> that results when a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> in a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> evaluates to <code class="codeph">TRUE</code>. Declarative rule-based transformations cover a common set of transformation scenarios for row LCRs. Declarative rule-based transformations are run internally without using PL/SQL. You specify such a transformation using a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package. A declarative rule-based transformation can modify row LCRs during capture, propagation, or apply.
+                           </p>
+                           <p>A DML handler is either a collection of SQL statements or a user procedure that processes row LCRs resulting from DML statements at a source database. An Oracle Streams <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> at a destination database can pass row LCRs to a DML handler, and the DML handler can modify the row LCRs.
+                           </p>
+                           <p>The process for upgrading user-created applications using Oracle Streams can involve modifying and creating the schema objects at the destination database after <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a>. You can use one or more declarative rule-based transformations and DML handlers at the destination database to process changes from the source database so that they apply to the modified schema objects correctly. Declarative rule-based transformations and DML handlers can be used during application upgrade to account for differences between the source database and destination database.
+                           </p>
+                           <p>In general, declarative rule-based transformations are easier to use than DML handlers. Therefore, when modifications to row LCRs are required, try to configure a declarative rule-based transformation first. If a declarative rule-based transformation is not sufficient, then use a DML handler. If row LCRs for tables that contain one or more LOB columns must be modified, then you should use a procedure DML handler and <a href="strms_glossary.html#GUID-DFEA5BD4-A81A-4927-B6BB-4CD92113E95B"><span class="xrefglossterm">LOB assembly</span></a>.
+                           </p>
+                           <p>Before you begin the database upgrade or maintenance operation, you should complete the following tasks to prepare your declarative rule-based transformations or DML handlers:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Learn about declarative rule-based transformations. See <span class="q">"<a href="rule-based-transformations.html#GUID-706DC628-4237-41A2-86CA-C9BCCA984052">Declarative Rule-Based Transformations</a>"</span>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Learn about DML handlers. See <span class="q">"<a href="oracle-streams-information-consumption.html#GUID-91C26D01-385D-4BD0-A29F-C2A0BFED0360">Message Processing Options for an Apply Process</a>"</span>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Determine the declarative rule-based transformations and DML handlers you will need at your destination database. Your determination depends on the modifications to the schema objects required by your upgraded applications.</p>
+                              </li>
+                              <li>
+                                 <p>Create the SQL statements or the PL/SQL procedures that you will use for any DML handlers during the database maintenance operation. See <span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-A6074063-2D66-4FB9-864D-D5228624732A">Managing a DML Handler</a>"</span> for information about creating the PL/SQL procedures.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If row LCRs for tables that contain one or more LOB columns must be modified, then learn about using LOB assembly. See <a href="../strep/managing-lcrs.html#STREP137"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a>.
+                                 </p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnote" id="GUID-E6A4E0F0-E798-4DFD-89BE-0B7D3A3F0EBE__GUID-003DD50E-A3A6-4207-9338-CAA87F01AD22">
+                              <p class="notep1">Note:</p>
+                              <p>Custom rule-based transformation can also be used to modify row LCRs during application upgrade. However, these modifications can be accomplished using DML handlers, and DML handlers are more efficient than <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>s.
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1265"></a><div class="props_rev_3"><a id="GUID-E84F5264-B576-4B82-9CC4-7241173CBABC" name="GUID-E84F5264-B576-4B82-9CC4-7241173CBABC"></a><h5 id="STRMS-GUID-E84F5264-B576-4B82-9CC4-7241173CBABC" class="sect5"><span class="enumeration_section">D.2.3.2 </span>Handling Logical Dependencies
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>In some cases, an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> requires additional information to detect dependencies in row LCRs that are being applied in parallel. During application upgrades, an apply process might require additional information to detect dependencies in the following situations:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The application, rather than the database, enforces logical dependencies.</p>
+                              </li>
+                              <li>
+                                 <p>Schema objects have been modified to support the application upgrade, and a <a href="strms_glossary.html#GUID-50EF781B-7997-4C30-BE4B-1D3BC501FB24"><span class="xrefglossterm">DML handler</span></a> will modify row LCRs to account for differences between the source database and destination database.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>A <a href="strms_glossary.html#GUID-0C5FDC3E-3D80-4ED7-B021-44ECB68C9B54"><span class="xrefglossterm">virtual dependency definition</span></a> is a description of a dependency that is used by an apply process to detect dependencies between transactions at a destination database. A virtual dependency definition is not described as a constraint in the destination database data dictionary. Instead, it is specified using procedures in the <code class="codeph">DBMS_APPLY_ADM</code> package. Virtual dependency definitions enable an apply process to detect dependencies that it would not be able to detect by using only the constraint information in the data dictionary. After dependencies are detected, an apply process schedules LCRs and transactions in the correct order for apply.
+                           </p>
+                           <p>If virtual dependency definitions are required for your application upgrade, then learn about virtual dependency definitions and plan to configure them during the application upgrade.</p>
+                           <div class="infoboxnotealso" id="GUID-E84F5264-B576-4B82-9CC4-7241173CBABC__GUID-744E6222-2992-4937-A23D-C3C2487CC986">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="advanced-apply-process-concepts.html#GUID-43293B61-B034-4744-AE93-57A0DAAC39DD">Apply Processes and Dependencies</a>"</span> for more information about virtual dependency definitions
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS1266"></a><div class="props_rev_3"><a id="GUID-0D1B68DB-740F-49BF-A69A-0D040118FAE0" name="GUID-0D1B68DB-740F-49BF-A69A-0D040118FAE0"></a><h4 id="STRMS-GUID-0D1B68DB-740F-49BF-A69A-0D040118FAE0" class="sect4"><span class="enumeration_section">D.2.4 </span>Deciding Whether to Configure Oracle Streams Directly or Generate a Script
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package configure the Oracle Streams <a href="strms_glossary.html#GUID-5BC36291-C075-4244-905A-ACDAB250E825"><span class="xrefglossterm">replication</span></a> environment during the upgrade or maintenance operation. These procedures can configure the Oracle Streams replication environment directly, or they can generate a script that configures the environment.
+                        </p>
+                        <p>Using a procedure to configure replication directly is simpler than running a script, and the environment is configured immediately. However, you might choose to generate a script for the following reasons:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>You want to review the actions performed by the procedure before configuring the environment.</p>
+                           </li>
+                           <li>
+                              <p>You want to modify the script to customize the configuration.</p>
+                           </li>
+                        </ul>
+                        <p>To configure Oracle Streams directly when you run one of these procedures, set the <code class="codeph">perform_actions</code> parameter to <code class="codeph">TRUE</code>. The examples in this appendix assume that the procedures will configure Oracle Streams directly.
+                        </p>
+                        <p>To generate a configuration script when you run one of these procedures, complete the following steps when you are instructed to run a procedure in this appendix:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>In SQL*Plus, connect as the Oracle Streams administrator to database where you will run the procedure.</span><div>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand" id="GUID-0D1B68DB-740F-49BF-A69A-0D040118FAE0__CIHFDBCA"><span>Create a directory object to store the script that will be generated by the procedure. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DIRECTORY scripts_dir AS '/usr/scripts';
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Run the procedure. Ensure that the following parameters are set to generate a script:</span><div>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Set the <code class="codeph">perform_actions</code> parameter to <code class="codeph">FALSE</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Set the <code class="codeph">script_name</code> parameter to the name of the script you want to generate.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Set the <code class="codeph">script_directory_object</code> parameter to the directory object into which you want to place the script. This directory object was created in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-0D1B68DB-740F-49BF-A69A-0D040118FAE0__CIHFDBCA">2</a>.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Review or modify the script, if necessary.</span></li>
+                        <li class="stepexpand"><span>In SQL*Plus, connect as the Oracle Streams administrator to database where you will run the procedure.</span></li>
+                        <li class="stepexpand"><span>Run the generated script. For example:</span><div><pre class="oac_no_warn" dir="ltr">@/usr/scripts/pre_instantiation.sql;
+</pre></div>
+                        </li>
+                     </ol>
+                  </div>
+               </div><a id="STRMS1268"></a><a id="STRMS1267"></a><div class="props_rev_3"><a id="GUID-29384588-1739-4530-9600-C2301CC79D11" name="GUID-29384588-1739-4530-9600-C2301CC79D11"></a><h4 id="STRMS-GUID-29384588-1739-4530-9600-C2301CC79D11" class="sect4"><span class="enumeration_section">D.2.5 </span>Deciding Which Utility to Use for Instantiation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Before you begin the database upgrade or maintenance operation, decide whether you want to use Export/Import utilities (Data Pump or original) or the Recovery Manager (RMAN) utility to instantiate the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> during the operation. Consider the following factors when you make this decision:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>If you are migrating the database to a different platform, then you can use either Export/Import or the RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command. The RMAN <code class="codeph">DUPLICATE</code> command does not support migrating a database to a different platform.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If you are migrating the database to a different character set, then you must use Export/Import, and the new character set must be a superset of the old character set. The RMAN <code class="codeph">DUPLICATE</code> and <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> commands do not support migrating a database to a different character set.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If you are upgrading from a prior release of Oracle Database to Oracle Database 11<span class="italic">g</span> Release 2 (11.2) or later, then consider these additional factors:
+                              </p>
+                           </li>
+                           <li>
+                              <p>If RMAN is supported for the operation, then using RMAN for the <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> might be faster than using Export/Import, especially if the database is large.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Oracle recommends that you do not use RMAN for instantiation in an environment where distributed transactions are possible. Doing so might cause in-doubt transactions that must be corrected manually.</p>
+                           </li>
+                           <li>
+                              <p>If the RMAN <code class="codeph">DUPLICATE</code> or <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command is used for database instantiation, then the destination database cannot be the capture database.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If you are upgrading from a prior release of Oracle Database to Oracle Database 11<span class="italic">g</span> Release 2 (11.2) or later, then consider these additional factors:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>If you use Export/Import, then you can make the destination database an Oracle Database 11<span class="italic">g</span> Release 2 (11.2) or later database at the beginning of the operation. Therefore, you do not need to upgrade the destination database after the <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If you use the RMAN <code class="codeph">DUPLICATE</code>, then the database release of the destination database must be the same as the source database.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If you use the RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code>, then the database release of the destination database must be the equal to or later than the source database.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </li>
+                        </ul>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-29384588-1739-4530-9600-C2301CC79D11__CIHFFCHI" title="This table describes when each instantiation method is supported for the maintenance operation based on whether the platform at the source and destination are the same or different, and whether the character set at the source and destination are the same or different.">Table D-1</a> describes when each instantiation method is supported based on whether the platform at the source and destination databases are the same or different, and whether the character set at the source and destination databases are the same or different.
+                        </p>
+                        <div class="tblformalwide" id="GUID-29384588-1739-4530-9600-C2301CC79D11__CIHFFCHI">
+                           <p class="titleintable">Table D-1 Instantiation Methods for Database Maintenance with Oracle Streams</p>
+                           <table cellpadding="4" cellspacing="0" class="FormalWide" title="Instantiation Methods for Database Maintenance with Oracle Streams" summary="This table describes when each instantiation method is supported for the maintenance operation based on whether the platform at the source and destination are the same or different, and whether the character set at the source and destination are the same or different." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="27%" id="d152391e3014">Instantiation Method</th>
+                                    <th align="left" valign="bottom" width="16%" id="d152391e3017">Same Platform Supported?</th>
+                                    <th align="left" valign="bottom" width="20%" id="d152391e3020">Different Platforms Supported?</th>
+                                    <th align="left" valign="bottom" width="17%" id="d152391e3023">Same Character Set Supported?</th>
+                                    <th align="left" valign="bottom" width="20%" id="d152391e3026">Different Character Sets Supported?</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="27%" id="d152391e3031" headers="d152391e3014 ">
+                                       <p>Data Pump Export/Import</p>
+                                    </td>
+                                    <td align="left" valign="top" width="16%" headers="d152391e3031 d152391e3017 ">
+                                       <p>Yes</p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d152391e3031 d152391e3020 ">
+                                       <p>Yes</p>
+                                    </td>
+                                    <td align="left" valign="top" width="17%" headers="d152391e3031 d152391e3023 ">
+                                       <p>Yes</p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d152391e3031 d152391e3026 ">
+                                       <p>Yes</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="27%" id="d152391e3047" headers="d152391e3014 ">
+                                       <p>RMAN <code class="codeph">DUPLICATE</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="16%" headers="d152391e3047 d152391e3017 ">
+                                       <p>Yes</p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d152391e3047 d152391e3020 ">
+                                       <p>No</p>
+                                    </td>
+                                    <td align="left" valign="top" width="17%" headers="d152391e3047 d152391e3023 ">
+                                       <p>Yes</p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d152391e3047 d152391e3026 ">
+                                       <p>No</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="27%" id="d152391e3065" headers="d152391e3014 ">
+                                       <p>RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="16%" headers="d152391e3065 d152391e3017 ">
+                                       <p>No</p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d152391e3065 d152391e3020 ">
+                                       <p>Maybe</p>
+                                    </td>
+                                    <td align="left" valign="top" width="17%" headers="d152391e3065 d152391e3023 ">
+                                       <p>Yes</p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d152391e3065 d152391e3026 ">
+                                       <p>No</p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                        <p>Only some platform combinations are supported by the RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command. You can use the <code class="codeph">DBMS_TDB</code> package to determine whether a platform combination is supported.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-29384588-1739-4530-9600-C2301CC79D11__GUID-C7D61FCE-F741-411D-BF8E-AAB0D92B866C">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP012"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about Oracle Streams instantiations
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=BRADV010"><span class="italic">Oracle Database Backup and Recovery User's Guide</span></a> for instructions on using the RMAN <code class="codeph">DUPLICATE</code> and <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> commands
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=RCMRF"><span class="italic">Oracle Database Backup and Recovery Reference</span></a> for more information about the RMAN <code class="codeph">DUPLICATE</code> and <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> commands
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS650"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">DBMS_TDB</code> package
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=NLSPG464"><span class="italic">Oracle Database Globalization Support Guide</span></a> for more information about character set conversion and Export/Import
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS1269"></a><div class="props_rev_3"><a id="GUID-F5CA1100-0064-4827-AD79-4327895E53E7" name="GUID-F5CA1100-0064-4827-AD79-4327895E53E7"></a><h3 id="STRMS-GUID-F5CA1100-0064-4827-AD79-4327895E53E7" class="sect3"><span class="enumeration_section">D.3 </span>Performing a Database Upgrade or Maintenance Operation Using Oracle Streams
+               </h3>
+               <div>
+                  <p>This section describes performing one of the following operations on an Oracle database:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Upgrading to the current release of Oracle Database from Oracle Database 10<span class="italic">g</span> Release 2 (10.2) or Oracle Database 11<span class="italic">g</span> Release 1 (11.1)
+                        </p>
+                     </li>
+                     <li>
+                        <p>Migrating the database to a different platform</p>
+                     </li>
+                     <li>
+                        <p>Migrating the database to a different character set</p>
+                     </li>
+                     <li>
+                        <p>Modifying database schema objects to support upgrades to user-created applications</p>
+                     </li>
+                     <li>
+                        <p>Applying an Oracle Database software patch or patch set</p>
+                     </li>
+                  </ul>
+                  <p>You can use Oracle Streams to achieve little or no downtime during these operations. During the operation, the source database is the existing database on which you are performing the database operation. The capture database is the database on which the Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> runs. The <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> is the database that will replace the source database at the end of the operation.
+                  </p>
+                  <p>Complete the following tasks to perform a database maintenance operation using Oracle Streams:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-319697FF-CBFA-4212-81BF-DCE316264BF2">Task 1: Beginning the Operation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-6A076D4E-AA77-4881-AA93-33AA111DC690">Task 2: Setting Up Oracle Streams Before Instantiation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-A29D9D64-7762-43C6-A424-A3B5ACD23B97">Task 3: Instantiating the Database</a></p>
+                     </li>
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-F7663C4A-7D87-41E7-913A-7F529C2BB5AF">Task 4: Setting Up Oracle Streams After Instantiation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70">Task 5: Finishing the Upgrade or Maintenance Operation and Removing Oracle Streams</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS1270"></a><div class="props_rev_3"><a id="GUID-319697FF-CBFA-4212-81BF-DCE316264BF2" name="GUID-319697FF-CBFA-4212-81BF-DCE316264BF2"></a><h4 id="STRMS-GUID-319697FF-CBFA-4212-81BF-DCE316264BF2" class="sect4"><span class="enumeration_section">D.3.1 </span>Task 1: Beginning the Operation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Complete the following steps to begin the upgrade or maintenance operation using Oracle Streams:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Create an empty <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>. If you are migrating the database to a different platform, then create the database on a computer system that uses the new platform. If you are migrating the database to a different character set, then create a database that uses the new character set.</span><div>
+                              <p>Ensure that the destination database has a different global name than the source database. This example assumes that the global name of the source database is <code class="codeph">orcl.example.com</code> and the global name of the destination database during the database maintenance operation is <code class="codeph">stms.example.com</code>. The global name of the destination database is changed when the destination database replaces the source database at the end of the maintenance operation.
+                              </p>
+                              <p>If you are not upgrading from a prior release of Oracle Database, then create an Oracle Database 11<span class="italic">g</span> Release 2 (11.2) or later database. See the Oracle installation guide for your operating system if you must install Oracle, and see the<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN002"><span class="italic"> Oracle Database Administrator's Guide </span></a>for information about creating a database.
+                              </p>
+                              <p>If you are upgrading from a prior release of Oracle Database, then the release of the empty database you create depends on the <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> method you decided to use in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-29384588-1739-4530-9600-C2301CC79D11">Deciding Which Utility to Use for Instantiation</a>"</span>:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>If you decided to use export/import for instantiation, then create an empty Oracle Database 11<span class="italic">g</span> Release 2 or later database. This database will be the destination database during the upgrade process.
+                                    </p>
+                                    <p>See the Oracle Database installation guide for your operating system if you must install Oracle Database, and see the<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN002"><span class="italic"> Oracle Database Administrator's Guide </span></a>for information about creating a database.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If you decided to use RMAN <code class="codeph">DUPLICATE</code> for instantiation, then create an empty Oracle database that is the same release as the database you are upgrading.
+                                    </p>
+                                    <p>Specifically, if you are upgrading an Oracle Database 10<span class="italic">g</span> Release 2 (10.2) database, then create an Oracle Database 10<span class="italic">g</span> Release 2 database. Alternatively, if you are upgrading an Oracle Database 11<span class="italic">g</span> Release 1 (11.1) database, then create an Oracle Database 11<span class="italic">g</span> Release 1 database.
+                                    </p>
+                                    <p>This database will be the destination database during the upgrade process. Both the source database that is being upgraded and the destination database must be the same release of Oracle when you start the upgrade process.</p>
+                                    <p>See the Oracle installation guide for your operating system if you must install Oracle, and see the Oracle <span class="italic">Database Administrator's Guide</span> for the release for information about creating a database.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If you decided to use RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> for instantiation, then create an empty Oracle database that is a release equal to or later than the database you are upgrading.
+                                    </p>
+                                    <p>Specifically, if you are upgrading an Oracle Database 10<span class="italic">g</span> Release 2 (10.2) database, then create an Oracle Database 10<span class="italic">g</span> Release 2 database, an Oracle Database 11<span class="italic">g</span> Release 1 database, or an Oracle Database 11<span class="italic">g</span> Release 2 or later database. Alternatively, if you are upgrading an Oracle Database 11<span class="italic">g</span> Release 1 (11.1) database, then create an Oracle Database 11<span class="italic">g</span> Release 1 database or an Oracle Database 11<span class="italic">g</span> Release 2 or later database.
+                                    </p>
+                                    <p>This database will be the destination database during the upgrade process.</p>
+                                    <p>See the Oracle installation guide for your operating system if you must install Oracle, and see the Oracle <span class="italic">Database Administrator's Guide</span> for the release for information about creating a database.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Ensure that the source database is running in <code class="codeph">ARCHIVELOG</code> mode. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN008"><span class="italic">Oracle Database Administrator's Guide </span></a>for information about running a database in <code class="codeph">ARCHIVELOG</code> mode.</span></li>
+                        <li class="stepexpand"><span>Create an undo tablespace at the capture database if one does not exist. For example, run the following statement while logged into the capture database as an administrative user:</span><div><pre class="oac_no_warn" dir="ltr">CREATE UNDO TABLESPACE undotbs_02
+  DATAFILE '/u01/oracle/rbdb1/undo0201.dbf' SIZE 2M REUSE AUTOEXTEND ON;
+</pre><p>The capture process at the capture database uses the undo tablespace.</p>
+                              <p>See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-69DE9DE0-5F19-4302-B3D5-6271598B2224">The Capture Database During the Upgrade or Maintenance Operation</a>"</span> for more information about the capture database.
+                              </p>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN11473"><span class="italic">Oracle Database Administrator's Guide</span></a> for more information about creating an undo tablespace.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Ensure that the initialization parameters are set properly at both databases to support an Oracle Streams environment.</span><div>
+                              <p>For Oracle Database 11<span class="italic">g</span> Release 2 (11.2) or later databases, see <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP201"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about setting initialization parameters that are relevant to Oracle Streams.
+                              </p>
+                              <p>If you are upgrading from a prior release of Oracle Database, then for the source database, see the Oracle Streams documentation for the source database release.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Configure an Oracle Streams administrator at each database, including the source database, destination database, and capture database (if the capture database is a third database). This example assumes that the name of the Oracle Streams administrator is <code class="codeph">strmadmin</code> at each database.</span><div>
+                              <p>For Oracle Database 11<span class="italic">g</span> Release 2 (11.2) or later databases, see <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information.
+                              </p>
+                              <p>If you are upgrading from a prior release of Oracle Database, then for the source database, see the Oracle Streams documentation for the source database release.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>If you are upgrading user-created applications, then supplementally log any columns at the source database that will be involved in a <a href="strms_glossary.html#GUID-18697C88-84CA-4F47-8F47-DD5D37E9543B"><span class="xrefglossterm">rule-based transformation</span></a>, <a href="strms_glossary.html#GUID-8F26223B-B771-4E5B-9C57-0F748A0904F1"><span class="xrefglossterm">procedure DML handler</span></a>, or <a href="strms_glossary.html#GUID-4DBE2214-AB57-4F4A-A450-98AB207DEB11"><span class="xrefglossterm">value dependency</span></a>. These columns must be unconditionally logged at the source database. See<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP107"><span class="italic"> Oracle Streams Replication Administrator's Guide </span></a>for information about specifying unconditional <a href="strms_glossary.html#GUID-23D2F665-5088-4E75-BD12-EA9DC0A1FC07"><span class="xrefglossterm">supplemental log group</span></a>s for these columns.</span></li>
+                        <li class="stepexpand" id="GUID-319697FF-CBFA-4212-81BF-DCE316264BF2__CIHFIJHG"><span>At the source database, ensure that no changes are made to the database objects that are not supported by Oracle Streams during the upgrade or maintenance operation. To list unsupported database objects, query the <code class="codeph">DBA_STREAMS_UNSUPPORTED</code> data dictionary view.</span><div>
+                              <p><span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C7AC0CCE-02A1-4909-9A9B-9C288509AE76">Preparing for Upgrade or Maintenance of a Database with User-Defined Types</a>"</span> discusses a method for retaining changes to tables that contain user-defined types during the maintenance operation. If you are using this method, then tables that contain user-defined types can remain open during the operation.
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnotealso" id="GUID-319697FF-CBFA-4212-81BF-DCE316264BF2__GUID-688D5B41-C40A-483F-BBD9-0F9CCD526206">
+                           <p class="notep1">Tip:</p>
+                           <p>In Oracle Database 11<span class="italic">g</span> Release 1 (11.1) and later databases, you can use the <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> statement with the <code class="codeph">READ</code> <code class="codeph">ONLY</code> clause to make a table read-only.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1271"></a><div class="props_rev_3"><a id="GUID-6A076D4E-AA77-4881-AA93-33AA111DC690" name="GUID-6A076D4E-AA77-4881-AA93-33AA111DC690"></a><h4 id="STRMS-GUID-6A076D4E-AA77-4881-AA93-33AA111DC690" class="sect4"><span class="enumeration_section">D.3.2 </span>Task 2: Setting Up Oracle Streams Before Instantiation
+                  </h4>
+                  <div>
+                     <p>The specific instructions for setting up Oracle Streams before <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> depend on which database is the capture database. The <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> procedure always configures the capture process on the database where it is run. Therefore, this procedure must be run at the capture database.
+                     </p>
+                     <p>When you run this procedure, you can specify that the procedure performs the configuration directly, or that the procedure generates a script that contains the configuration actions. See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-0D1B68DB-740F-49BF-A69A-0D040118FAE0">Deciding Whether to Configure Oracle Streams Directly or Generate a Script</a>"</span>. The examples in this section specify that the procedure performs the configuration directly.
+                     </p>
+                     <p>Follow the instructions in the appropriate section:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-4E2F2B94-2919-4F3B-9FAE-5B4814D3EAA8">The Source Database Is the Capture Database</a></p>
+                        </li>
+                        <li>
+                           <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C0FF4949-465A-439F-B111-21BD933B8181">The Destination Database Is the Capture Database</a></p>
+                        </li>
+                        <li>
+                           <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-23085DB8-7AC9-4FB2-A91A-ABCC4CC89B95">A Third Database Is the Capture Database</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-6A076D4E-AA77-4881-AA93-33AA111DC690__GUID-A7EEFD38-D2EE-46E3-A7B1-1671A41610ED">
+                        <p class="notep1">Note:</p>
+                        <p>When the <code class="codeph">PRE_INSTANTIATION_SETUP</code> procedure is running with the <code class="codeph">perform_actions</code> parameter set to <code class="codeph">TRUE</code>, metadata about its configuration actions is recorded in the following data dictionary views: <code class="codeph">DBA_RECOVERABLE_SCRIPT</code>, <code class="codeph">DBA_RECOVERABLE_SCRIPT_PARAMS</code>, <code class="codeph">DBA_RECOVERABLE_SCRIPT_BLOCKS</code>, and <code class="codeph">DBA_RECOVERABLE_SCRIPT_ERRORS</code>. If the procedure stops because it encounters an error, then you can use the <code class="codeph">RECOVER_OPERATION</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to complete the configuration after you correct the conditions that caused the error. These views are not populated if a script is used to configure the <a href="strms_glossary.html#GUID-5BC36291-C075-4244-905A-ACDAB250E825"><span class="xrefglossterm">replication</span></a> environment.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-6A076D4E-AA77-4881-AA93-33AA111DC690__GUID-A03764EA-8D1D-42F9-AAFB-6A090E3327CD">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E">Overview of Using Oracle Streams for Upgrade and Maintenance Operations</a>"</span> for information about the capture database
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS865"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">RECOVER_OPERATION</code> procedure
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS1272"></a><div class="props_rev_3"><a id="GUID-4E2F2B94-2919-4F3B-9FAE-5B4814D3EAA8" name="GUID-4E2F2B94-2919-4F3B-9FAE-5B4814D3EAA8"></a><h5 id="STRMS-GUID-4E2F2B94-2919-4F3B-9FAE-5B4814D3EAA8" class="sect5"><span class="enumeration_section">D.3.2.1 </span>The Source Database Is the Capture Database
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Complete the following steps to set up Oracle Streams before instantiation when the source database is the capture database:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Configure your network and Oracle Net so that the source database can communicate with the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>. See<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=NETAG"><span class="italic"> Oracle Database Net Services Administrator's Guide </span></a>for more information.</span></li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the source database as the Oracle Streams administrator. In this example, the source database is <code class="codeph">orcl.example.com</code>.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Create a database link to the destination database. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK stms.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY <span class="italic">password</span> 
+   USING 'stms.example.com';
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Run the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> procedure:</span><div><pre class="oac_no_warn" dir="ltr">DECLARE
+  empty_tbs  DBMS_STREAMS_TABLESPACE_ADM.TABLESPACE_SET; 
+BEGIN
+  DBMS_STREAMS_ADM.PRE_INSTANTIATION_SETUP(
+    maintain_mode           =&gt; 'GLOBAL',
+    tablespace_names        =&gt; empty_tbs,
+    source_database         =&gt; 'orcl.example.com',
+    destination_database    =&gt; 'stms.example.com',
+    perform_actions         =&gt; TRUE,
+    script_name             =&gt; NULL,
+    script_directory_object =&gt; NULL,
+    capture_name            =&gt; 'capture_maint',
+    capture_queue_table     =&gt; 'strmadmin.capture_q_table',
+    capture_queue_name      =&gt; 'strmadmin.capture_q',
+    propagation_name        =&gt; 'prop_maint',
+    apply_name              =&gt; 'apply_maint',
+    apply_queue_table       =&gt; 'strmadmin.apply_q',
+    apply_queue_name        =&gt; 'strmadmin.apply_q_table',
+    bi_directional          =&gt; FALSE,
+    include_ddl             =&gt; TRUE,
+    start_processes         =&gt; FALSE,
+    exclude_schemas         =&gt; '*',
+    exclude_flags           =&gt; DBMS_STREAMS_ADM.EXCLUDE_FLAGS_UNSUPPORTED + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DML + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DDL);
+END;
+/
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Proceed to <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-A29D9D64-7762-43C6-A424-A3B5ACD23B97">Task 3: Instantiating the Database</a>"</span>.</span></li>
+                        </ol>
+                     </div>
+                  </div><a id="STRMS1273"></a><div class="props_rev_3"><a id="GUID-C0FF4949-465A-439F-B111-21BD933B8181" name="GUID-C0FF4949-465A-439F-B111-21BD933B8181"></a><h5 id="STRMS-GUID-C0FF4949-465A-439F-B111-21BD933B8181" class="sect5"><span class="enumeration_section">D.3.2.2 </span>The Destination Database Is the Capture Database
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Complete the following steps to set up Oracle Streams before instantiation when the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> is the capture database:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Configure your network and Oracle Net so that the source database and destination database can communicate with each other. See<a href="../netag/index.html"><span class="italic"> Oracle Database Net Services Administrator's Guide </span></a>for more information.</span></li>
+                           <li class="stepexpand"><span>Ensure that log file shipping from the source database to the destination database is configured. See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680">Preparing for Downstream Capture</a>"</span> for more information.</span></li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the destination database as the Oracle Streams administrator. In this example, the destination database is <code class="codeph">stms.example.com</code>.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Create a database link to the source database. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK orcl.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY <span class="italic">password</span> 
+   USING 'orcl.example.com';
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Run the <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> procedure:</span><div><pre class="oac_no_warn" dir="ltr">DECLARE
+  empty_tbs  DBMS_STREAMS_TABLESPACE_ADM.TABLESPACE_SET; 
+BEGIN
+  DBMS_STREAMS_ADM.PRE_INSTANTIATION_SETUP(
+    maintain_mode           =&gt; 'GLOBAL',
+    tablespace_names        =&gt; empty_tbs,
+    source_database         =&gt; 'orcl.example.com',
+    destination_database    =&gt; 'stms.example.com',
+    perform_actions         =&gt; TRUE,
+    script_name             =&gt; NULL,
+    script_directory_object =&gt; NULL,
+    capture_name            =&gt; 'capture_maint',
+    capture_queue_table     =&gt; 'strmadmin.streams_q_table',
+    capture_queue_name      =&gt; 'strmadmin.streams_q',
+    apply_name              =&gt; 'apply_maint',
+    apply_queue_table       =&gt; 'strmadmin.streams_q',
+    apply_queue_name        =&gt; 'strmadmin.streams_q_table',
+    bi_directional          =&gt; FALSE,
+    include_ddl             =&gt; TRUE,
+    start_processes         =&gt; FALSE,
+    exclude_schemas         =&gt; '*',
+    exclude_flags           =&gt; DBMS_STREAMS_ADM.EXCLUDE_FLAGS_UNSUPPORTED + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DML + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DDL);
+END;
+/
+</pre><p>Notice that the <code class="codeph">propagation_name</code> parameter is omitted because a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> is not necessary when the destination database is the capture database and the downstream <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> use the same <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> at the destination database.
+                                 </p>
+                                 <p>Also, notice that the capture process and apply process will share a queue named <code class="codeph">streams_q</code> at the destination database.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Proceed to <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-A29D9D64-7762-43C6-A424-A3B5ACD23B97">Task 3: Instantiating the Database</a>"</span>.</span></li>
+                        </ol>
+                     </div>
+                  </div><a id="STRMS1274"></a><div class="props_rev_3"><a id="GUID-23085DB8-7AC9-4FB2-A91A-ABCC4CC89B95" name="GUID-23085DB8-7AC9-4FB2-A91A-ABCC4CC89B95"></a><h5 id="STRMS-GUID-23085DB8-7AC9-4FB2-A91A-ABCC4CC89B95" class="sect5"><span class="enumeration_section">D.3.2.3 </span>A Third Database Is the Capture Database
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>This example assumes that the global name of the third database is <code class="codeph">thrd.example.com</code>. Complete the following steps to set up Oracle Streams before instantiation when a third database is the capture database:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Configure your network and Oracle Net so that the source database, <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>, and third database can communicate with each other. See<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=NETAG"><span class="italic"> Oracle Database Net Services Administrator's Guide </span></a>for more information.</span></li>
+                           <li class="stepexpand"><span>Ensure that log file shipping from the source database to the third database is configured. See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-FFAFB8FA-2FE5-431E-84BC-6BAEC68C7680">Preparing for Downstream Capture</a>"</span> for more information.</span></li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the third database as the Oracle Streams administrator. In this example, the third database is <code class="codeph">thrd.example.com</code>.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Create a database link to the source database. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK orcl.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY <span class="italic">password</span> 
+   USING 'orcl.example.com';
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Create a database link to the destination database. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK stms.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY <span class="italic">password</span> 
+   USING 'stms.example.com';
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Run the <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> procedure:</span><div><pre class="oac_no_warn" dir="ltr">DECLARE
+  empty_tbs  DBMS_STREAMS_TABLESPACE_ADM.TABLESPACE_SET; 
+BEGIN
+  DBMS_STREAMS_ADM.PRE_INSTANTIATION_SETUP(
+    maintain_mode           =&gt; 'GLOBAL',
+    tablespace_names        =&gt; empty_tbs,
+    source_database         =&gt; 'orcl.example.com',
+    destination_database    =&gt; 'stms.example.com',
+    perform_actions         =&gt; TRUE,
+    script_name             =&gt; NULL,
+    script_directory_object =&gt; NULL,
+    capture_name            =&gt; 'capture_maint',
+    capture_queue_table     =&gt; 'strmadmin.capture_q_table',
+    capture_queue_name      =&gt; 'strmadmin.capture_q',
+    propagation_name        =&gt; 'prop_maint',
+    apply_name              =&gt; 'apply_maint',
+    apply_queue_table       =&gt; 'strmadmin.apply_q',
+    apply_queue_name        =&gt; 'strmadmin.apply_q_table',
+    bi_directional          =&gt; FALSE,
+    include_ddl             =&gt; TRUE,
+    start_processes         =&gt; FALSE,
+    exclude_schemas         =&gt; '*',
+    exclude_flags           =&gt; DBMS_STREAMS_ADM.EXCLUDE_FLAGS_UNSUPPORTED + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DML + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DDL);
+END;
+/
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Proceed to <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-A29D9D64-7762-43C6-A424-A3B5ACD23B97">Task 3: Instantiating the Database</a>"</span>.</span></li>
+                        </ol>
+                     </div>
+                  </div>
+               </div><a id="STRMS1275"></a><div class="props_rev_3"><a id="GUID-A29D9D64-7762-43C6-A424-A3B5ACD23B97" name="GUID-A29D9D64-7762-43C6-A424-A3B5ACD23B97"></a><h4 id="STRMS-GUID-A29D9D64-7762-43C6-A424-A3B5ACD23B97" class="sect4"><span class="enumeration_section">D.3.3 </span>Task 3: Instantiating the Database
+                  </h4>
+                  <div>
+                     <p><span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-29384588-1739-4530-9600-C2301CC79D11">Deciding Which Utility to Use for Instantiation</a>"</span> discusses different options for instantiating an entire database. Complete the steps in the appropriate section based on the <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> option you are using:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC">Instantiating the Database Using Export/Import</a></p>
+                        </li>
+                        <li>
+                           <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914">Instantiating the Database Using the RMAN DUPLICATE Command</a></p>
+                        </li>
+                        <li>
+                           <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA">Instantiating the Database Using the RMAN CONVERT DATABASE Command</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-A29D9D64-7762-43C6-A424-A3B5ACD23B97__GUID-0FDDF310-2F38-43CD-AB5D-6DD4CEB8B764">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP012"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for more information about performing instantiations
+                        </p>
+                     </div>
+                  </div><a id="STRMS1276"></a><div class="props_rev_3"><a id="GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC" name="GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC"></a><h5 id="STRMS-GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC" class="sect5"><span class="enumeration_section">D.3.3.1 </span>Instantiating the Database Using Export/Import
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Complete the following steps to instantiate an entire database with Data Pump:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the source database as the Oracle Streams administrator.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand" id="GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__CIHCJIEA"><span>Create a directory object to hold the export dump file and export log file. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DIRECTORY dpump_dir AS '/usr/dpump_dir';
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>While connected to the source database as the Oracle Streams administrator, determine the current system change number (SCN) of the source database:</span><div><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON SIZE 1000000
+DECLARE
+  current_scn NUMBER;
+BEGIN
+  current_scn:= DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER;
+      DBMS_OUTPUT.PUT_LINE('Current SCN: ' || current_scn);
+END;
+/
+</pre><p>The returned SCN value is specified for the <code class="codeph">FLASHBACK_SCN</code> Data Pump export parameter in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__CIHDFJBB">4</a>. Specifying the <code class="codeph">FLASHBACK_SCN</code> export parameter, or a similar export parameter, ensures that the export is consistent to a single SCN. In this example, assume that the query returned <code class="codeph">876606</code>.
+                                 </p>
+                                 <p>After you perform this query, ensure that no DDL changes are made to the objects being exported until after the export is complete.</p>
+                              </div>
+                           </li>
+                           <li class="stepexpand" id="GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__CIHDFJBB"><span>On a command line, use Data Pump to export the source database.</span><div>
+                                 <p>Perform the export by connecting as an administrative user who is granted <code class="codeph">EXP_FULL_DATABASE</code> role. This user also must have <code class="codeph">READ</code> and <code class="codeph">WRITE</code> privilege on the directory object created in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__CIHCJIEA">2</a>. This example connects as the Oracle Streams administrator <code class="codeph">strmadmin</code>.
+                                 </p>
+                                 <p>The following example is a Data Pump export command:</p><pre class="oac_no_warn" dir="ltr">expdp strmadmin FULL DIRECTORY=DPUMP_DIR DUMPFILE=orc1.dmp FLASHBACK_SCN=876606
+</pre><div class="infoboxnotealso" id="GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__GUID-391F59C9-FD8D-40B2-A017-EA5CD683BD4A">
+                                    <p class="notep1">See Also:</p>
+                                    <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=SUTIL200"><span class="italic">Oracle Database Utilities </span></a>for information about performing a Data Pump export
+                                    </p>
+                                 </div>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the destination database as the Oracle Streams administrator.</span></li>
+                           <li class="stepexpand" id="GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__CIHIDCCE"><span>Create a directory object to hold the import dump file and import log file. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DIRECTORY dpump_dir AS '/usr/dpump_dir';
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Transfer the Data Pump export dump file <code class="codeph">orc1.dmp</code> to the destination database. You can use the <code class="codeph">DBMS_FILE_TRANSFER</code> package, binary FTP, or some other method to transfer the file to the destination database. After the file transfer, the export dump file should reside in the directory that corresponds to the directory object created in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__CIHIDCCE">6</a>.</span></li>
+                           <li class="stepexpand"><span>On a command line at the destination database, use Data Pump to import the export dump file <code class="codeph">orc1.dmp</code>. Ensure that no changes are made to the database tables until the import is complete. Performing the import automatically sets the <a href="strms_glossary.html#GUID-4387E4F0-4979-48B7-A155-03592511B7FF"><span class="xrefglossterm">instantiation SCN</span></a> for the destination database and all of its objects.</span><div>
+                                 <p>Perform the import by connecting as an administrative user who is granted <code class="codeph">IMP_FULL_DATABASE</code> role. This user also must have <code class="codeph">READ</code> and <code class="codeph">WRITE</code> privilege on the directory object created in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__CIHIDCCE">6</a>. This example connects as the Oracle Streams administrator <code class="codeph">strmadmin</code>.
+                                 </p>
+                                 <p>Ensure that you set the <code class="codeph">STREAMS_CONFIGURATION</code> import parameter to <code class="codeph">n</code>.
+                                 </p>
+                                 <p>The following example is an import command:</p><pre class="oac_no_warn" dir="ltr">impdp strmadmin FULL DIRECTORY=DPUMP_DIR DUMPFILE=orc1.dmp STREAMS_CONFIGURATION=n
+</pre><div class="infoboxnotealso" id="GUID-9F7B776B-905E-4121-AB25-4F78FCFA9FBC__GUID-F8103F2C-A4BD-430E-899B-E0D5F8C216E6">
+                                    <p class="notep1">See Also:</p>
+                                    <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=SUTIL300"><span class="italic">Oracle Database Utilities </span></a>for information about performing a Data Pump import
+                                    </p>
+                                 </div>
+                              </div>
+                           </li>
+                        </ol>
+                     </div>
+                  </div><a id="STRMS1277"></a><div class="props_rev_3"><a id="GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914" name="GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914"></a><h5 id="STRMS-GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914" class="sect5"><span class="enumeration_section">D.3.3.2 </span>Instantiating the Database Using the RMAN DUPLICATE Command
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>If you use the RMAN <code class="codeph">DUPLICATE</code> command for instantiation on the same platform, then complete the following steps:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Create a backup of the source database if one does not exist. RMAN requires a valid backup for duplication. In this example, create a backup of <code class="codeph">orcl.example.com</code> if one does not exist.</span><div>
+                                 <div class="infoboxnote" id="GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__GUID-B22AD41E-D4EF-41A1-8E63-D6F4D8547709">
+                                    <p class="notep1">Note:</p>
+                                    <p>A backup of the source database is not necessary if you use the <code class="codeph">FROM</code> <code class="codeph">ACTIVE</code> <code class="codeph">DATABASE</code> option when you run the RMAN <code class="codeph">DUPLICATE</code> command. For large databases, the <code class="codeph">FROM</code> <code class="codeph">ACTIVE</code> <code class="codeph">DATABASE</code> option requires significant network resources. This example does not use this option.
+                                    </p>
+                                 </div>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect as an administrative user to the source database. In this example, the source database is <code class="codeph">orcl.example.com</code>.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand" id="GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__CHDJDGFE"><span>Determine the until SCN for the RMAN <code class="codeph">DUPLICATE</code> command. For example:</span><div><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON SIZE 1000000
+DECLARE
+  until_scn NUMBER;
+BEGIN
+  until_scn:= DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER;
+      DBMS_OUTPUT.PUT_LINE('Until SCN: ' || until_scn);
+END;
+/
+</pre><p>Make a note of the until SCN value. This example assumes that the until SCN value is <code class="codeph">748045</code>. You will set the <code class="codeph">UNTIL</code> <code class="codeph">SCN</code> option to this value when you use RMAN to duplicate the database in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__CHDHCGGJ">7</a> and as the <a href="strms_glossary.html#GUID-4387E4F0-4979-48B7-A155-03592511B7FF"><span class="xrefglossterm">instantiation SCN</span></a> in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-F7663C4A-7D87-41E7-913A-7F529C2BB5AF">Task 4: Setting Up Oracle Streams After Instantiation</a>"</span>.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand" id="GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__CHDGAACC"><span>Archive the current online redo log. For example:</span><div><pre class="oac_no_warn" dir="ltr">ALTER SYSTEM ARCHIVE LOG CURRENT;
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Prepare your environment for database duplication, which includes preparing the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> as an auxiliary instance for duplication. See the <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=BRADV010"><span class="italic">Oracle Database Backup and Recovery User's Guide </span></a>for more information. </span></li>
+                           <li class="stepexpand"><span>Start the RMAN client, and connect to the database <code class="codeph">orcl.example.com</code> as <code class="codeph">TARGET</code> and to the <code class="codeph">stms.example.com</code> database as <code class="codeph">AUXILIARY</code>. Connect to each database as an administrative user.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=RCMRF114"><span class="italic">Oracle Database Backup and Recovery Reference</span></a> for more information about the RMAN <code class="codeph">CONNECT</code> command.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand" id="GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__CHDHCGGJ"><span>Use the RMAN <code class="codeph">DUPLICATE</code> command with the <code class="codeph">OPEN</code> <code class="codeph">RESTRICTED</code> option to instantiate the source database at the destination database. The <code class="codeph">OPEN</code> <code class="codeph">RESTRICTED</code> option is required. This option enables a restricted session in the duplicate database by issuing the following SQL statement: <code class="codeph">ALTER</code> <code class="codeph">SYSTEM</code> <code class="codeph">ENABLE</code> <code class="codeph">RESTRICTED</code> <code class="codeph">SESSION</code>. RMAN issues this statement immediately before the duplicate database is opened.</span><div>
+                                 <p>You can use the <code class="codeph">UNTIL</code> <code class="codeph">SCN</code> clause to specify an SCN for the duplication. Use the until SCN determined in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__CHDJDGFE">3</a> for this clause. Archived redo logs must be available for the until SCN specified and for higher SCN values. Therefore, Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__CHDGAACC">4</a> archived the redo log containing the until SCN.
+                                 </p>
+                                 <p>Ensure that you use <code class="codeph">TO</code> <span class="italic"><code class="codeph">database_name</code></span> in the <code class="codeph">DUPLICATE</code> command to specify the database name of the duplicate database. In this example, the database name of the duplicate database is <code class="codeph">stms</code>. Therefore, the <code class="codeph">DUPLICATE</code> command for this example includes <code class="codeph">TO</code> <code class="codeph">stms</code>.
+                                 </p>
+                                 <p>The following example is an RMAN <code class="codeph">DUPLICATE</code> command:
+                                 </p><pre class="oac_no_warn" dir="ltr">RMAN&gt; RUN
+      { 
+        SET UNTIL SCN 748045;
+        ALLOCATE AUXILIARY CHANNEL stms DEVICE TYPE sbt; 
+        DUPLICATE TARGET DATABASE TO stms 
+        NOFILENAMECHECK
+        OPEN RESTRICTED;
+      }
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the destination database as a system administrator. In this example, the destination database is <code class="codeph">stms.example.com</code>.</span></li>
+                           <li class="stepexpand"><span>Rename the global name. After an RMAN database instantiation, the destination database has the same global name as the source database, but the destination database must have its original name until the end of the operation. Rename the global name of the destination database back to its original name with the following statement:</span><div><pre class="oac_no_warn" dir="ltr">ALTER DATABASE RENAME GLOBAL_NAME TO stms.example.com;
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>If you are upgrading the database from a prior release to Oracle Database 11<span class="italic">g</span> Release 2 or later, then upgrade the destination database. See the<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=UPGRD"><span class="italic"> Oracle Database Upgrade Guide </span></a>for more information. If you are not upgrading the database, then skip this step and proceed to the next step.</span></li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the destination database as the Oracle Streams administrator.</span></li>
+                           <li class="stepexpand"><span>Create a database link to the source database. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK orcl.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY <span class="italic">password</span> 
+   USING 'orcl.example.com';
+</pre><p>This database link is required because the <code class="codeph">POST_INSTANTIATION_SETUP</code> procedure runs the <code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package at the destination database, and the <code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code> procedure requires the database link.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>If the source database and the capture database are the same database, then while still connected as the Oracle Streams administrator in SQL*Plus to the destination database, drop the database link from the source database to the destination database that was cloned from the source database:</span><div><pre class="oac_no_warn" dir="ltr">DROP DATABASE LINK stms.example.com;
+</pre></div>
+                           </li>
+                        </ol>
+                        <div class="section">
+                           <div class="infoboxnotealso" id="GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__GUID-4286A123-1529-45D0-92A8-3D98E08A2DB6">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=RCMRF126"><span class="italic">Oracle Database Backup and Recovery Reference</span></a> for more information about the RMAN <code class="codeph">DUPLICATE</code> command
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1278"></a><div class="props_rev_3"><a id="GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA" name="GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA"></a><h5 id="STRMS-GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA" class="sect5"><span class="enumeration_section">D.3.3.3 </span>Instantiating the Database Using the RMAN CONVERT DATABASE Command
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>If you use the RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command for instantiation to migrate the database to a different platform, then complete the following steps:
+                           </p>
+                           <ol>
+                              <li>
+                                 <p>Create a backup of the source database if one does not exist. RMAN requires a valid backup. In this example, create a backup of <code class="codeph">orcl.example.com</code> if one does not exist.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>In SQL*Plus, connect to the source database as an administrative user.</p>
+                                 <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Archive the current online redo log. For example:</p><pre class="oac_no_warn" dir="ltr">ALTER SYSTEM ARCHIVE LOG CURRENT;
+</pre></li>
+                              <li>
+                                 <p>Prepare your environment for database conversion, which includes opening the source database in read-only mode. Complete the following steps:</p>
+                                 <ol type="a">
+                                    <li>
+                                       <p>If the source database is open, then shut it down and start it in read-only mode.</p>
+                                    </li>
+                                    <li>
+                                       <p>Run the <code class="codeph">CHECK_DB</code> and <code class="codeph">CHECK_EXTERNAL</code> functions in the <code class="codeph">DBMS_TDB</code> package. Check the results to ensure that the conversion is supported by the RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command.
+                                       </p>
+                                    </li>
+                                 </ol>
+                                 <div class="infoboxnotealso" id="GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA__GUID-CABDB4EC-720A-4CAA-AFAE-B230DDF671EE">
+                                    <p class="notep1">See Also:</p>
+                                    <p><a href="../bradv/rman-transporting-data-across-platforms.html#BRADV05432"><span class="italic">Oracle Database Backup and Recovery User's Guide </span></a>for more information about these steps
+                                    </p>
+                                 </div>
+                              </li>
+                              <li id="GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA__CIHIBJAD">
+                                 <p>Determine the current SCN of the source database:</p><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON SIZE 1000000
+DECLARE
+  current_scn NUMBER;
+BEGIN
+  current_scn:= DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER;
+      DBMS_OUTPUT.PUT_LINE('Current SCN: ' || current_scn);
+END;
+/
+</pre><p>Make a note of the SCN value returned. You will use this number for the <a href="strms_glossary.html#GUID-4387E4F0-4979-48B7-A155-03592511B7FF"><span class="xrefglossterm">instantiation SCN</span></a> in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-F7663C4A-7D87-41E7-913A-7F529C2BB5AF">Task 4: Setting Up Oracle Streams After Instantiation</a>"</span>. For this example, assume that the returned value is&nbsp;<code class="codeph">748044</code>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Start the RMAN client, and connect to the source database <code class="codeph">orcl.example.com</code> as <code class="codeph">TARGET</code> as an administrative user.
+                                 </p>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=RCMRF114"><span class="italic">Oracle Database Backup and Recovery Reference</span></a> for more information about the RMAN <code class="codeph">CONNECT</code> command.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Run the <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command.
+                                 </p>
+                                 <p>Ensure that you use <code class="codeph">NEW</code> <code class="codeph">DATABASE</code> <span class="italic"><code class="codeph">database_name</code></span> in the <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command to specify the database name of the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>. In this example, the database name of the destination database is <code class="codeph">stms</code>. Therefore, the <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command for this example includes <code class="codeph">NEW</code> <code class="codeph">DATABASE</code> <code class="codeph">stms</code>.
+                                 </p>
+                                 <p>The following example is an RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command for a destination database that is running on the <code class="codeph">Linux</code> <code class="codeph">IA</code> <code class="codeph">(64-bit)</code> platform:
+                                 </p><pre class="oac_no_warn" dir="ltr">CONVERT DATABASE NEW DATABASE 'stms'
+          TRANSPORT SCRIPT '/tmp/convertdb/transportscript.sql'     
+          TO PLATFORM 'Linux IA (64-bit)'
+          DB_FILE_NAME_CONVERT = ('/home/oracle/dbs','/tmp/convertdb');
+</pre></li>
+                              <li>
+                                 <p>Transfer the data files, PFILE, and SQL script produced by the RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command to the computer system that is running the destination database.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>On the computer system that is running the destination database, modify the SQL script so that the destination database always opens with restricted session enabled.</p>
+                                 <p>An example script follows with the necessary modifications in bold font:</p><pre class="oac_no_warn" dir="ltr">-- The following commands will create a control file and use it
+-- to open the database.
+-- Data used by Recovery Manager will be lost.
+-- The contents of online logs will be lost and all backups will
+-- be invalidated. Use this only if online logs are damaged.
+ 
+-- After mounting the created controlfile, the following SQL
+-- statement will place the database in the appropriate
+-- protection mode:
+--  ALTER DATABASE SET STANDBY DATABASE TO MAXIMIZE PERFORMANCE
+ 
+STARTUP NOMOUNT PFILE='init_00gd2lak_1_0.ora'
+CREATE CONTROLFILE REUSE SET DATABASE "STMS" RESETLOGS  NOARCHIVELOG
+    MAXLOGFILES 32
+    MAXLOGMEMBERS 2
+    MAXDATAFILES 32
+    MAXINSTANCES 1
+    MAXLOGHISTORY 226
+LOGFILE
+  GROUP 1 '/tmp/convertdb/archlog1'  SIZE 25M,
+  GROUP 2 '/tmp/convertdb/archlog2'  SIZE 25M
+DATAFILE
+  '/tmp/convertdb/systemdf',
+  '/tmp/convertdb/sysauxdf',
+  '/tmp/convertdb/datafile1',
+  '/tmp/convertdb/datafile2',
+  '/tmp/convertdb/datafile3'
+CHARACTER SET WE8DEC
+;
+ 
+<span class="bold">-- NOTE: This ALTER SYSTEM statement is added to enable restricted session.</span>
+
+<span class="bold">ALTER SYSTEM ENABLE RESTRICTED SESSION;</span>
+
+-- Database can now be opened zeroing the online logs.
+ALTER DATABASE OPEN RESETLOGS;
+ 
+-- No tempfile entries found to add.
+--
+ 
+set echo off
+prompt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+prompt * Your database has been created successfully!
+prompt * There are many things to think about for the new database. Here
+prompt * is a checklist to help you stay on track:
+prompt * 1. You may want to redefine the location of the directory objects.
+prompt * 2. You may want to change the internal database identifier (DBID) 
+prompt *    or the global database name for this database. Use the 
+prompt *    NEWDBID Utility (nid).
+prompt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+SHUTDOWN IMMEDIATE 
+<span class="bold">-- NOTE: This startup has the UPGRADE parameter.</span>
+<span class="bold">-- The startup already has restricted session enabled, so no change is needed.</span>
+STARTUP UPGRADE PFILE='init_00gd2lak_1_0.ora'
+@@ ?/rdbms/admin/utlirp.sql 
+SHUTDOWN IMMEDIATE 
+<span class="bold">-- NOTE: The startup below is generated without the RESTRICT clause.</span>
+<span class="bold">-- Add the RESTRICT clause.</span>
+STARTUP <span class="bold">RESTRICT</span> PFILE='init_00gd2lak_1_0.ora'
+-- The following step will recompile all PL/SQL modules.
+-- It may take serveral hours to complete.
+@@ ?/rdbms/admin/utlrp.sql 
+set feedback 6;
+</pre><p>Other changes to the script might be necessary. For example, the data file locations and PFILE location might need to be changed to point to the correct locations on the destination database computer system.</p>
+                              </li>
+                              <li>
+                                 <p>In SQL*Plus, connect to the destination database as a system administrator.</p>
+                              </li>
+                              <li>
+                                 <p>Rename the global name. After an RMAN database instantiation, the destination database has the same global name as the source database, but the destination database must have its original name until the end of the maintenance operation. Rename the global name of the destination database back to its original name with the following statement:</p><pre class="oac_no_warn" dir="ltr">ALTER DATABASE RENAME GLOBAL_NAME TO stms.example.com;
+</pre></li>
+                              <li>
+                                 <p>If you are upgrading the database from a prior release to Oracle Database 11<span class="italic">g</span> Release 2 or later, then upgrade the destination database. See the<a href="../upgrd/index.html"><span class="italic"> Oracle Database Upgrade Guide </span></a>for more information. If you are not upgrading the database, then skip this step and proceed to the next step.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Connect to the destination database as the Oracle Streams administrator using the new global name.</p>
+                              </li>
+                              <li>
+                                 <p>Create a database link to the source database. For example:</p><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK orcl.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY <span class="italic">password</span> 
+   USING 'orcl.example.com';
+</pre><p>This database link is required because the <code class="codeph">POST_INSTANTIATION_SETUP</code> procedure runs the <code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package at the destination database, and the <code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code> procedure requires the database link.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If the source database and the capture database are the same database, then while still connected as the Oracle Streams administrator in SQL*Plus to the destination database, drop the database link from the source database to the destination database that was cloned from the source database:</p><pre class="oac_no_warn" dir="ltr">DROP DATABASE LINK stms.example.com;
+</pre></li>
+                           </ol>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS1279"></a><div class="props_rev_3"><a id="GUID-F7663C4A-7D87-41E7-913A-7F529C2BB5AF" name="GUID-F7663C4A-7D87-41E7-913A-7F529C2BB5AF"></a><h4 id="STRMS-GUID-F7663C4A-7D87-41E7-913A-7F529C2BB5AF" class="sect4"><span class="enumeration_section">D.3.4 </span>Task 4: Setting Up Oracle Streams After Instantiation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To set up Oracle Streams after <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a>, run the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedure. The <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedure must be run at the database where the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> procedure was run in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-6A076D4E-AA77-4881-AA93-33AA111DC690">Task 2: Setting Up Oracle Streams Before Instantiation</a>"</span>.
+                        </p>
+                        <p>When you run the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedure, you can specify that the procedure performs the configuration directly, or that the procedure generates a script that contains the configuration actions. See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-0D1B68DB-740F-49BF-A69A-0D040118FAE0">Deciding Whether to Configure Oracle Streams Directly or Generate a Script</a>"</span>. The examples in this section specify that the procedure performs the configuration directly.
+                        </p>
+                        <p>The parameter values specified in the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">PRE_INSTANTIATION_SETUP</code></a> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedures must match, except for the values of the following parameters: <code class="codeph">perform_actions</code>, <code class="codeph">script_name</code>, <code class="codeph">script_directory_object</code>, and <code class="codeph">start_processes</code>. In this example, all of the parameter values match in the two procedures.
+                        </p>
+                        <p>It is important to set the <code class="codeph">instantiation_scn</code> parameter in the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS831"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedure correctly. Follow these instructions when you set this parameter:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>If RMAN was used for instantiation, then set the <code class="codeph">instantiation_scn</code> parameter to the value determined during instantiation. This value was determined when you completed the instantiation in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914">Instantiating the Database Using the RMAN DUPLICATE Command</a>"</span> or <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA">Instantiating the Database Using the RMAN CONVERT DATABASE Command</a>"</span>.
+                              </p>
+                              <p>The source database and third database examples in this section set the <code class="codeph">instantiation_scn</code> parameter to <code class="codeph">748044</code> for the following reasons:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>If the RMAN <code class="codeph">DUPLICATE</code> command was used for instantiation, then the command duplicates the database up to one less than the SCN value specified in the <code class="codeph">UNTIL</code> <code class="codeph">SCN</code> clause. Therefore, you should subtract one from the until SCN value that you specified when you ran the <code class="codeph">DUPLICATE</code> command in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914__CHDHCGGJ">7</a> in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-25CCF66A-E53D-48AF-B057-F5FE56A12914">Instantiating the Database Using the RMAN DUPLICATE Command</a>"</span>. In this example, the until SCN was set to <code class="codeph">748045</code>. Therefore, the <code class="codeph">instantiation_scn</code> parameter should be set to 748045 - 1, or <code class="codeph">748044</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If the RMAN <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command was used for instantiation, then the <code class="codeph">instantiation_scn</code> parameter should be set to the SCN value determined immediately before running the <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> command. This value was determined in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA__CIHIBJAD">5</a> in <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C1ABCD2F-BEC7-4D5D-BAFF-E844D682E5EA">Instantiating the Database Using the RMAN CONVERT DATABASE Command</a>"</span>.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li>
+                              <p>If Export/Import was used for instantiation, then the <a href="strms_glossary.html#GUID-4387E4F0-4979-48B7-A155-03592511B7FF"><span class="xrefglossterm">instantiation SCN</span></a> was set during import, and the <code class="codeph">instantiation_scn</code> parameter must be set to <code class="codeph">NULL</code>. The <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> example in this section sets the <code class="codeph">instantiation_scn</code> to <code class="codeph">NULL</code> because RMAN cannot be used for database instantiation when the destination database is the capture database.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>The specific instructions for setting up Oracle Streams after instantiation depend on which database is the capture database. Follow the instructions in the appropriate section:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-4E2F2B94-2919-4F3B-9FAE-5B4814D3EAA8">The Source Database Is the Capture Database</a></p>
+                           </li>
+                           <li>
+                              <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C0FF4949-465A-439F-B111-21BD933B8181">The Destination Database Is the Capture Database</a></p>
+                           </li>
+                           <li>
+                              <p><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-23085DB8-7AC9-4FB2-A91A-ABCC4CC89B95">A Third Database Is the Capture Database</a></p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-F7663C4A-7D87-41E7-913A-7F529C2BB5AF__GUID-B91AF598-76E1-4E85-99A5-020B0593EA2B">
+                           <p class="notep1">Note:</p>
+                           <p>When the <code class="codeph">POST_INSTANTIATION_SETUP</code> procedure is running with the <code class="codeph">perform_actions</code> parameter set to <code class="codeph">TRUE</code>, metadata about its configuration actions is recorded in the following data dictionary views: <code class="codeph">DBA_RECOVERABLE_SCRIPT</code>, <code class="codeph">DBA_RECOVERABLE_SCRIPT_PARAMS</code>, <code class="codeph">DBA_RECOVERABLE_SCRIPT_BLOCKS</code>, and <code class="codeph">DBA_RECOVERABLE_SCRIPT_ERRORS</code>. If the procedure stops because it encounters an error, then you can use the <code class="codeph">RECOVER_OPERATION</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to complete the configuration after you correct the conditions that caused the error. These views are not populated if a script is used to configure the <a href="strms_glossary.html#GUID-5BC36291-C075-4244-905A-ACDAB250E825"><span class="xrefglossterm">replication</span></a> environment.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-F7663C4A-7D87-41E7-913A-7F529C2BB5AF__GUID-13D852DB-233F-46DB-8EBC-003FF1E933FB">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-44DAE67C-0DBC-4E71-918F-D8DED0568D1E">Overview of Using Oracle Streams for Upgrade and Maintenance Operations</a>"</span> for information about the capture database
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS865"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">RECOVER_OPERATION</code> procedure
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div><a id="STRMS1280"></a><div class="props_rev_3"><a id="GUID-5B7CB8ED-941C-401F-B5D9-67DCAA494AEC" name="GUID-5B7CB8ED-941C-401F-B5D9-67DCAA494AEC"></a><h5 id="STRMS-GUID-5B7CB8ED-941C-401F-B5D9-67DCAA494AEC" class="sect5"><span class="enumeration_section">D.3.4.1 </span>The Source Database Is the Capture Database
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Complete the following steps to set up Oracle Streams after instantiation when the source database is the capture database:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the source database as the Oracle Streams administrator. In this example, the source database is <code class="codeph">orcl.example.com</code>.</span><div>
+                                 <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Run the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedure:</span><div><pre class="oac_no_warn" dir="ltr">DECLARE
+  empty_tbs  DBMS_STREAMS_TABLESPACE_ADM.TABLESPACE_SET; 
+BEGIN
+  DBMS_STREAMS_ADM.POST_INSTANTIATION_SETUP(
+    maintain_mode           =&gt; 'GLOBAL',
+    tablespace_names        =&gt; empty_tbs,
+    source_database         =&gt; 'orcl.example.com',
+    destination_database    =&gt; 'stms.example.com',
+    perform_actions         =&gt; TRUE,
+    script_name             =&gt; NULL,
+    script_directory_object =&gt; NULL,
+    capture_name            =&gt; 'capture_maint',
+    capture_queue_table     =&gt; 'strmadmin.capture_q_table',
+    capture_queue_name      =&gt; 'strmadmin.capture_q',
+    propagation_name        =&gt; 'prop_maint',
+    apply_name              =&gt; 'apply_maint',
+    apply_queue_table       =&gt; 'strmadmin.apply_q',
+    apply_queue_name        =&gt; 'strmadmin.apply_q_table',
+    bi_directional          =&gt; FALSE,
+    include_ddl             =&gt; TRUE,
+    start_processes         =&gt; FALSE,
+    instantiation_scn       =&gt; 748044, -- NULL if Export/Import instantiation
+    exclude_schemas         =&gt; '*',
+    exclude_flags           =&gt; DBMS_STREAMS_ADM.EXCLUDE_FLAGS_UNSUPPORTED + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DML + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DDL);
+END;
+/
+</pre><p>Ensure that the <code class="codeph">instantiation_scn</code> parameter is set to <code class="codeph">NULL</code> if export/import was used for instantiation instead of RMAN.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Proceed to <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70">Task 5: Finishing the Upgrade or Maintenance Operation and Removing Oracle Streams</a>"</span>.</span></li>
+                        </ol>
+                     </div>
+                  </div><a id="STRMS1281"></a><div class="props_rev_3"><a id="GUID-7941C112-5D04-4D5B-9013-BF6AD490C1F2" name="GUID-7941C112-5D04-4D5B-9013-BF6AD490C1F2"></a><h5 id="STRMS-GUID-7941C112-5D04-4D5B-9013-BF6AD490C1F2" class="sect5"><span class="enumeration_section">D.3.4.2 </span>The Destination Database Is the Capture Database
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Complete the following steps to set up Oracle Streams after instantiation when the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> is the capture database:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the destination database as the Oracle Streams administrator. In this example, the destination database is <code class="codeph">stms.example.com</code>.</span><div>
+                                 <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Run the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedure:</span><div><pre class="oac_no_warn" dir="ltr">DECLARE
+  empty_tbs  DBMS_STREAMS_TABLESPACE_ADM.TABLESPACE_SET; 
+BEGIN
+  DBMS_STREAMS_ADM.POST_INSTANTIATION_SETUP(
+    maintain_mode           =&gt; 'GLOBAL',
+    tablespace_names        =&gt; empty_tbs,
+    source_database         =&gt; 'orcl.example.com',
+    destination_database    =&gt; 'stms.example.com',
+    perform_actions         =&gt; TRUE,
+    script_name             =&gt; NULL,
+    script_directory_object =&gt; NULL,
+    capture_name            =&gt; 'capture_maint',
+    capture_queue_table     =&gt; 'strmadmin.streams_q_table',
+    capture_queue_name      =&gt; 'strmadmin.streams_q',
+    apply_name              =&gt; 'apply_maint',
+    apply_queue_table       =&gt; 'strmadmin.streams_q',
+    apply_queue_name        =&gt; 'strmadmin.streams_q_table',
+    bi_directional          =&gt; FALSE,
+    include_ddl             =&gt; TRUE,
+    start_processes         =&gt; FALSE,
+    instantiation_scn       =&gt; NULL,
+    exclude_schemas         =&gt; '*',
+    exclude_flags           =&gt; DBMS_STREAMS_ADM.EXCLUDE_FLAGS_UNSUPPORTED + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DML + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DDL);
+END;
+/
+</pre><p>Notice that the <code class="codeph">propagation_name</code> parameter is omitted because a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> is not necessary when the destination database is the capture database.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Proceed to <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70">Task 5: Finishing the Upgrade or Maintenance Operation and Removing Oracle Streams</a>"</span>.</span></li>
+                        </ol>
+                     </div>
+                  </div><a id="STRMS1282"></a><div class="props_rev_3"><a id="GUID-064AE020-689D-46CD-83FC-09235F6213C8" name="GUID-064AE020-689D-46CD-83FC-09235F6213C8"></a><h5 id="STRMS-GUID-064AE020-689D-46CD-83FC-09235F6213C8" class="sect5"><span class="enumeration_section">D.3.4.3 </span>A Third Database Is the Capture Database
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>This example assumes that the global name of the third database is <code class="codeph">thrd.example.com</code>. Complete the following steps to set up Oracle Streams after instantiation when a third database is the capture database:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the third database as the Oracle Streams administrator. In this example, the third database is <code class="codeph">thrd.example.com</code>.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Run the <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS830"><code class="codeph">POST_INSTANTIATION_SETUP</code></a> procedure:</span><div><pre class="oac_no_warn" dir="ltr">DECLARE
+  empty_tbs  DBMS_STREAMS_TABLESPACE_ADM.TABLESPACE_SET; 
+BEGIN
+  DBMS_STREAMS_ADM.POST_INSTANTIATION_SETUP(
+    maintain_mode           =&gt; 'GLOBAL',
+    tablespace_names        =&gt; empty_tbs,
+    source_database         =&gt; 'orcl.example.com',
+    destination_database    =&gt; 'stms.example.com',
+    perform_actions         =&gt; TRUE,
+    script_name             =&gt; NULL,
+    script_directory_object =&gt; NULL,
+    capture_name            =&gt; 'capture_maint',
+    capture_queue_table     =&gt; 'strmadmin.capture_q_table',
+    capture_queue_name      =&gt; 'strmadmin.capture_q',
+    propagation_name        =&gt; 'prop_maint',
+    apply_name              =&gt; 'apply_maint',
+    apply_queue_table       =&gt; 'strmadmin.apply_q',
+    apply_queue_name        =&gt; 'strmadmin.apply_q_table',
+    bi_directional          =&gt; FALSE,
+    include_ddl             =&gt; TRUE,
+    start_processes         =&gt; FALSE,
+    instantiation_scn       =&gt; 748044, -- NULL if Export/Import instantiation
+    exclude_schemas         =&gt; '*',
+    exclude_flags           =&gt; DBMS_STREAMS_ADM.EXCLUDE_FLAGS_UNSUPPORTED + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DML + 
+                            DBMS_STREAMS_ADM.EXCLUDE_FLAGS_DDL);
+END;
+/
+</pre><p>Ensure that the <code class="codeph">instantiation_scn</code> parameter is set to <code class="codeph">NULL</code> if export/import was used for instantiation instead of RMAN.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Proceed to <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70">Task 5: Finishing the Upgrade or Maintenance Operation and Removing Oracle Streams</a>"</span>.</span></li>
+                        </ol>
+                     </div>
+                  </div>
+               </div><a id="STRMS1283"></a><div class="props_rev_3"><a id="GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70" name="GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70"></a><h4 id="STRMS-GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70" class="sect4"><span class="enumeration_section">D.3.5 </span>Task 5: Finishing the Upgrade or Maintenance Operation and Removing Oracle Streams
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Complete the following steps to finish the upgrade or maintenance operation and remove Oracle Streams components:</p>
+                        <ol>
+                           <li>
+                              <p>At the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>, disable any imported jobs that modify data that will be replicated from the source database. Query the <code class="codeph">DBA_JOBS</code> data dictionary view to list the jobs.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If you are applying a patch or patch set, then apply the patch or patch set to the destination database. Follow the instructions included with the patch or patch set. If you are not applying a patch or patch set, then skip this step and proceed to the next step.</p>
+                           </li>
+                           <li>
+                              <p>If you are upgrading user-created applications, then, at the destination database, you might need to complete the following steps:</p>
+                              <ol type="a">
+                                 <li>
+                                    <p>Modify the schema objects in the database to support the upgraded user-created applications.</p>
+                                 </li>
+                                 <li>
+                                    <p>Configure one or more <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>s and <a href="strms_glossary.html#GUID-8F26223B-B771-4E5B-9C57-0F748A0904F1"><span class="xrefglossterm">procedure DML handler</span></a>s that modify row LCRs from the source database so that the apply process applies these row LCRs to the modified schema objects correctly. For example, if a column name was changed to support the upgraded user-created applications, then a declarative rule-based transformation should rename the column in a row LCR that involves the column.
+                                    </p>
+                                    <p>See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-E6A4E0F0-E798-4DFD-89BE-0B7D3A3F0EBE">Handling Modifications to Schema Objects</a>"</span>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Configure one or more <a href="strms_glossary.html#GUID-0C5FDC3E-3D80-4ED7-B021-44ECB68C9B54"><span class="xrefglossterm">virtual dependency definition</span></a>s if row LCRs might contain logical dependencies that cannot be detected by the apply process alone.
+                                    </p>
+                                    <p>See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-E84F5264-B576-4B82-9CC4-7241173CBABC">Handling Logical Dependencies</a>"</span>.
+                                    </p>
+                                 </li>
+                              </ol>
+                           </li>
+                           <li>
+                              <p>In SQL*Plus, connect to the destination database as an administrative user.</p>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Use the <code class="codeph">ALTER</code> <code class="codeph">SYSTEM</code> statement to disable the <code class="codeph">RESTRICTED</code> <code class="codeph">SESSION</code>:
+                              </p><pre class="oac_no_warn" dir="ltr">ALTER SYSTEM DISABLE RESTRICTED SESSION;
+</pre></li>
+                           <li>
+                              <p>In SQL*Plus, connect to the destination database as the Oracle Streams administrator.</p>
+                           </li>
+                           <li>
+                              <p>Start the <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>. For example:
+                              </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_maint');
+END;
+/
+</pre></li>
+                           <li>
+                              <p>In SQL*Plus, connect to the capture database as the Oracle Streams administrator.</p>
+                           </li>
+                           <li>
+                              <p>Start the capture process. For example:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+    capture_name  =&gt; 'capture_maint');
+END;
+/
+</pre><p>This step begins the process of replicating changes that were made to the source database during <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> of the destination database.
+                              </p>
+                           </li>
+                           <li id="GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHDGDDG">
+                              <p>Monitor the Oracle Streams environment until the apply process at the destination database has applied most of the changes from the source database.</p>
+                              <p>To determine whether the apply process at the destination database has applied most of the changes from the source database, complete the following steps:</p>
+                              <ol type="a">
+                                 <li id="GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__DAFFABIF">
+                                    <p>Query the enqueue message number of the capture process and the message with the oldest system change number (SCN) for the apply process to see if they are nearly equal.</p>
+                                    <p>For example, if the name of the capture process is <code class="codeph">capture_maint</code>, and the name of the apply process is <code class="codeph">apply_maint</code>, then run the following query at the capture database:
+                                    </p><pre class="oac_no_warn" dir="ltr">COLUMN ENQUEUE_MESSAGE_NUMBER HEADING 'Captured SCN' FORMAT 99999999999
+COLUMN OLDEST_SCN_NUM HEADING 'Oldest Applied SCN' FORMAT 99999999999
+
+SELECT c.ENQUEUE_MESSAGE_NUMBER, a.OLDEST_SCN_NUM
+  FROM V$STREAMS_CAPTURE c, V$STREAMS_APPLY_READER@stms.example.com a
+  WHERE c.CAPTURE_NAME = 'CAPTURE_MAINT'
+    AND a.APPLY_NAME   = 'APPLY_MAINT';
+</pre><p>When the two values returned by this query are nearly equal, most of the changes from the source database have been applied at the destination database, and you can proceed to the next step. At this point in the process, the values returned by this query might never be equal because the source database still allows changes.</p>
+                                    <p>If this query returns no results, then ensure that the <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s in the environment are enabled by querying the <code class="codeph">STATUS</code> column in the <code class="codeph">DBA_CAPTURE</code> view at the capture database and the <code class="codeph">DBA_APPLY</code> view at the destination database. If a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> is used, you can check the status of the propagation by running the query in <span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-B1599124-455A-4716-9DBC-88D64E098FB3">Displaying Information About the Schedules for Propagation Jobs</a>"</span>. 
+                                    </p>
+                                    <p>If an Oracle Streams client is disabled, then try restarting it. If an Oracle Streams client will not restart, then troubleshoot the environment using the information in <a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-AA72B004-1B11-4851-978B-33C1EA401CF9"> Identifying Problems in an Oracle Streams Environment</a>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Query the state of the apply process apply servers at the destination database to determine whether they have finished applying changes.</p>
+                                    <p>For example, if the name of the apply process is <code class="codeph">apply_maint</code>, then run the following query at the source database:
+                                    </p><pre class="oac_no_warn" dir="ltr">COLUMN STATE HEADING 'Apply Server State' FORMAT A20
+ 
+SELECT STATE
+  FROM V$STREAMS_APPLY_SERVER@stms.example.com
+  WHERE APPLY_NAME = 'APPLY_MAINT';
+</pre><p>When the state for all apply servers is <code class="codeph">IDLE</code>, you can proceed to the next step.
+                                    </p>
+                                 </li>
+                              </ol>
+                           </li>
+                           <li>
+                              <p>Connect to the destination database as the Oracle Streams administrator.</p>
+                           </li>
+                           <li id="GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHGFBEE">
+                              <p>Ensure that there are no apply errors by running the following query:</p><pre class="oac_no_warn" dir="ltr">SELECT COUNT(*) FROM DBA_APPLY_ERROR;
+</pre><p>If this query returns zero, then move on to the next step. If this query shows errors in the error queue, then resolve these errors before continuing. See <span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-3C45493C-6DD6-478F-98D7-71A857D17FDD">Managing Apply Errors</a>"</span> for more information.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Disconnect all applications and users from the source database.</p>
+                           </li>
+                           <li>
+                              <p>Connect to the source database as an administrative user.</p>
+                           </li>
+                           <li>
+                              <p>Restrict access to the database. For example:</p><pre class="oac_no_warn" dir="ltr">ALTER SYSTEM ENABLE RESTRICTED SESSION;
+</pre></li>
+                           <li>
+                              <p>While connected as an administrative user in SQL*Plus to the source database, repeat the query you ran in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHDGDDG">10</a><a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__DAFFABIF">10.a</a>. When the two values returned by the query are equal, all of the changes from the source database have been applied at the destination database, and you can move on to the next step.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Connect to the destination database as the Oracle Streams administrator.</p>
+                           </li>
+                           <li>
+                              <p>Repeat the query you ran in Step <a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHGFBEE">12</a>. If this query returns zero, then move on to the next step. If this query shows errors in the error queue, then resolve these errors before continuing. See <span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-3C45493C-6DD6-478F-98D7-71A857D17FDD">Managing Apply Errors</a>"</span> for more information.
+                              </p>
+                           </li>
+                           <li id="GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHDIHDD">
+                              <p>If you performed any actions that created, modified, or deleted job slaves at the source database during the upgrade or maintenance operation, then perform the same actions at the destination database. See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-6E54F924-5300-42C7-B4B7-A6146784A976">Considerations for Job Slaves and PL/SQL Package Subprograms</a>"</span> for more information.
+                              </p>
+                           </li>
+                           <li id="GUID-C86E174C-AFF8-40C4-81FF-BEC9BAB6EB70__CIHFJJJJ">
+                              <p>If you invoked any Oracle-supplied PL/SQL package subprograms at the source database during the upgrade or maintenance operation that modified both user data and dictionary metadata at the same time, then invoke the same subprograms at the destination database. See <span class="q">"<a href="online-upgrade-and-maintenance-with-oracle-streams.html#GUID-6E54F924-5300-42C7-B4B7-A6146784A976">Considerations for Job Slaves and PL/SQL Package Subprograms</a>"</span> for more information.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Remove the Oracle Streams components that are no longer needed from both databases, including the <code class="codeph">ANYDATA</code> queues, <a href="strms_glossary.html#GUID-27DA88A1-EDB9-4AC5-ACD0-BD514172385F"><span class="xrefglossterm">supplemental logging</span></a> specifications, the capture process, the propagation if one exists, and the apply process. Connect as the Oracle Streams administrator in SQL*Plus to the capture database, and run the <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS829"><code class="codeph">CLEANUP_INSTANTIATION_SETUP</code></a> procedure to remove the Oracle Streams components at both databases.
+                              </p>
+                              <p>If the capture database is the source database or a third database, then run the following procedure:</p><pre class="oac_no_warn" dir="ltr">DECLARE
+  empty_tbs  DBMS_STREAMS_TABLESPACE_ADM.TABLESPACE_SET; 
+BEGIN
+  DBMS_STREAMS_ADM.CLEANUP_INSTANTIATION_SETUP(
+    maintain_mode           =&gt; 'GLOBAL',
+    tablespace_names        =&gt; empty_tbs,
+    source_database         =&gt; 'orcl.example.com',
+    destination_database    =&gt; 'stms.example.com',
+    perform_actions         =&gt; TRUE,
+    script_name             =&gt; NULL,
+    script_directory_object =&gt; NULL,
+    capture_name            =&gt; 'capture_maint',
+    capture_queue_table     =&gt; 'strmadmin.capture_q_table',
+    capture_queue_name      =&gt; 'strmadmin.capture_q',
+    propagation_name        =&gt; 'prop_maint',
+    apply_name              =&gt; 'apply_maint',
+    apply_queue_table       =&gt; 'strmadmin.apply_q',
+    apply_queue_name        =&gt; 'strmadmin.apply_q_table',
+    bi_directional          =&gt; FALSE,
+    change_global_name      =&gt; TRUE);
+END;
+/
+</pre><p>If the capture database is the destination database, then run the following procedure:</p><pre class="oac_no_warn" dir="ltr">DECLARE
+  empty_tbs  DBMS_STREAMS_TABLESPACE_ADM.TABLESPACE_SET; 
+BEGIN
+  DBMS_STREAMS_ADM.CLEANUP_INSTANTIATION_SETUP(
+    maintain_mode           =&gt; 'GLOBAL',
+    tablespace_names        =&gt; empty_tbs,
+    source_database         =&gt; 'orcl.example.com',
+    destination_database    =&gt; 'stms.example.com',
+    perform_actions         =&gt; TRUE,
+    script_name             =&gt; NULL,
+    script_directory_object =&gt; NULL,
+    capture_name            =&gt; 'capture_maint',
+    capture_queue_table     =&gt; 'strmadmin.streams_q_table',
+    capture_queue_name      =&gt; 'strmadmin.streams_q',
+    apply_name              =&gt; 'apply_maint',
+    apply_queue_table       =&gt; 'strmadmin.streams_q',
+    apply_queue_name        =&gt; 'strmadmin.streams_q_table',
+    bi_directional          =&gt; FALSE,
+    change_global_name      =&gt; TRUE);
+END;
+/
+</pre><p>Notice that the <code class="codeph">propagation_name</code> parameter is omitted because a propagation is not necessary when the destination database is the capture database.
+                              </p>
+                              <p>Both sample procedures in this step rename the global name of the destination database to <code class="codeph">orc1.example.com</code> because the <code class="codeph">change_global_name</code> parameter is set to <code class="codeph">TRUE</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Shut down the source database. This database should not be opened again.</p>
+                           </li>
+                           <li>
+                              <p>At the destination database, enable any jobs that you disabled earlier.</p>
+                           </li>
+                           <li>
+                              <p>Make the destination database available for applications and users. Redirect any applications and users that were connecting to the source database to the destination database. If necessary, reconfigure your network and Oracle Net so that systems that communicated with the source database now communicate with the destination database. See<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=NETAG"><span class="italic"> Oracle Database Net Services Administrator's Guide </span></a>for more information.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If you no longer need the Oracle Streams administrator at the destination database, then connect as an administrative user in SQL*Plus to the destination database, and run the following statement:</p><pre class="oac_no_warn" dir="ltr">DROP USER strmadmin CASCADE;
+</pre></li>
+                        </ol>
+                        <p>The upgrade or maintenance operation is complete.</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

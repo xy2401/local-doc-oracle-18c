@@ -1,0 +1,1606 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Managing Logical Change Records (LCRs)</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Replication Administrator’s Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Replication Administrator’s Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-replication-administrators-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T23:25:23-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2003, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83780-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="comparing-and-converging-data.html" title="Previous" type="text/html">
+      <link rel="next" href="oracle-streams-replication-best-practices.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.isVersionOf" content="STREP">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="comparing-and-converging-data.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="oracle-streams-replication-best-practices.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Replication Administrator’s Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="administering-oracle-streams.html" property="item" typeof="WebPage"><span property="name">    Administering Oracle Streams Replication </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Managing Logical Change Records (LCRs)</li>
+            </ol>
+            <a id="GUID-2A1F6DF1-EB89-4C14-BD88-C6AE047A2041" name="GUID-2A1F6DF1-EB89-4C14-BD88-C6AE047A2041"></a><a id="STREP009"></a>
+            
+            <h2 id="STREP-GUID-2A1F6DF1-EB89-4C14-BD88-C6AE047A2041" class="sect2"><span class="enumeration_chapter">14 </span> Managing Logical Change Records (LCRs)
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d65499e100" class="indexterm-anchor"></a><a id="d65499e106" class="indexterm-anchor"></a><a id="d65499e110" class="indexterm-anchor"></a>This chapter contains instructions for managing logical change records (LCRs) in an Oracle Streams replication environment.
+               </p>
+               <p>This chapter contains these topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="managing-lcrs.html#GUID-8FC6B9C8-AFD4-43DF-A77B-196FC74D4908">Requirements for Managing LCRs</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-lcrs.html#GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F">Constructing and Enqueuing LCRs</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-lcrs.html#GUID-FF3BD0F4-B038-4BB3-AB09-C2BB21D0D277">Executing LCRs</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-lcrs.html#GUID-DBB33256-5BEF-4FB7-8798-224EF929420A">Managing LCRs Containing LOB Columns</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-lcrs.html#GUID-98CB180E-69C5-4CC7-A4BD-4FD5A9B03F86">Managing LCRs Containing LONG or LONG RAW Columns</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-2A1F6DF1-EB89-4C14-BD88-C6AE047A2041__GUID-1B87799E-F943-4E76-ADA8-4C06B6421494">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS307"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS107"><span class="italic">Oracle Streams Concepts and Administration </span></a>for more information about&nbsp;LCRs
+                  </p>
+               </div>
+            </div><a id="STREP118"></a><div class="props_rev_3"><a id="GUID-8FC6B9C8-AFD4-43DF-A77B-196FC74D4908" name="GUID-8FC6B9C8-AFD4-43DF-A77B-196FC74D4908"></a><h3 id="STREP-GUID-8FC6B9C8-AFD4-43DF-A77B-196FC74D4908" class="sect3"><span class="enumeration_section">14.1 </span>Requirements for Managing LCRs
+               </h3>
+               <div>
+                  <p>This section describes requirements for creating or modifying logical change records (LCRs). You can create an LCR using a constructor for an LCR type, and then enqueue the LCR into an persistent queue portion of an <code class="codeph">ANYDATA</code> queue. Such an LCR is a persistent LCR. 
+                  </p>
+                  <p>Also, you can modify an LCR using an apply handler or a rule-based transformation. You can modify captured LCRs or persistent LCRs.</p>
+                  <p>Ensure that you meet the following requirements when you manage an LCR: </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>If you create or modify a row LCR, then ensure that the <code class="codeph">command_type</code> attribute is consistent with the presence or absence of old column values and the presence or absence of new column values. 
+                        </p>
+                     </li>
+                     <li>
+                        <p>If you create or modify a DDL LCR, then ensure that the <code class="codeph">ddl_text</code> is consistent with the <code class="codeph">base_table_name</code>, <code class="codeph">base_table_owner</code>, <code class="codeph">object_type</code>, <code class="codeph">object_owner</code>, <code class="codeph">object_name</code>, and <code class="codeph">command_type</code> attributes.
+                        </p>
+                     </li>
+                     <li>
+                        <p>The following data types are allowed for columns in a user-constructed row&nbsp;LCR:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">CHAR</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">VARCHAR2</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">NCHAR</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">NVARCHAR2</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">NUMBER</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">DATE</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">BINARY_FLOAT</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">BINARY_DOUBLE</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">RAW</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">TIMESTAMP</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">TIMESTAMP</code> <code class="codeph">WITH</code> <code class="codeph">TIME</code> <code class="codeph">ZONE</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">TIMESTAMP</code> <code class="codeph">WITH</code> <code class="codeph">LOCAL</code> <code class="codeph">TIME</code> <code class="codeph">ZONE</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">INTERVAL</code> <code class="codeph">YEAR</code> <code class="codeph">TO</code> <code class="codeph">MONTH</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">INTERVAL</code> <code class="codeph">DAY</code> <code class="codeph">TO</code> <code class="codeph">SECOND</code></p>
+                           </li>
+                        </ul>
+                        <p>These data types are the only data types allowed for columns in a user-constructed row LCR. However, you can use certain techniques to construct LCRs that contain LOB information. Also, LCRs captured by a capture process support more data types, while LCRs captured by a synchronous capture support fewer data types.</p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-8FC6B9C8-AFD4-43DF-A77B-196FC74D4908__GUID-33BB48B7-B4EB-4338-AC96-764E8616DA11">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS175"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about apply handlers
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-lcrs.html#GUID-DBB33256-5BEF-4FB7-8798-224EF929420A">Managing LCRs Containing LOB Columns</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../strms/toc.htm"><span class="italic">Oracle Streams Concepts and Administration </span></a>for information about <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS136">the data types captured by a capture process</a> or a synchronous capture, and for information about <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS106">rule-based transformations</a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STREP484"></a><div class="props_rev_3"><a id="GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F" name="GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F"></a><h3 id="STREP-GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F" class="sect3"><span class="enumeration_section">14.2 </span>Constructing and Enqueuing LCRs
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Use the following LCR constructors to create LCRs: </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>To create a row LCR that contains a change to a row that resulted from a data manipulation language (DML) statement, use the <code class="codeph">SYS.LCR$_ROW_RECORD</code> constructor. 
+                           </p>
+                        </li>
+                        <li>
+                           <p>To create a DDL LCR that contains a data definition language change, use the <code class="codeph">SYS.LCR$_DDL_RECORD</code> constructor. Ensure that the DDL text specified in the <code class="codeph">ddl_text</code> attribute of each DDL LCR conforms to Oracle SQL syntax.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The following example creates a queue in an Oracle database and an apply process associated with the queue. Next, it creates a PL/SQL procedure that constructs a row LCR based on information passed to it and enqueues the row LCR into the queue. This example assumes that you have configured an Oracle Streams administrator named <code class="codeph">strmadmin</code> and granted this administrator <code class="codeph">DBA</code> role.
+                     </p>
+                     <p>Complete the following steps:</p>
+                     <ol>
+                        <li>
+                           <p>In SQL*Plus, connect to the database as an administrative user.</p>
+                           <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Grant the Oracle Streams administrator <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">DBMS_STREAMS_MESSAGING</code> package. For example:
+                           </p><pre class="oac_no_warn" dir="ltr">GRANT EXECUTE ON DBMS_STREAMS_MESSAGING TO strmadmin;
+</pre><p>Explicit <code class="codeph">EXECUTE</code> privilege on the package is required because a procedure in the package is called within a PL/SQL procedure in Step <a href="managing-lcrs.html#GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F__BABGBHII">9</a>. In this case, granting the privilege through a role is not sufficient.
+                           </p>
+                        </li>
+                        <li>
+                           <p>In SQL*Plus, connect to the database as the Oracle Streams administrator.</p>
+                        </li>
+                        <li id="GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F__i1009990">
+                           <p>Create an <code class="codeph">ANYDATA</code> queue in an Oracle database.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table &nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;=&gt;  'strm04_queue_table',
+&nbsp;&nbsp;&nbsp; storage_clause &nbsp;   &nbsp;&nbsp;=&gt;  NULL,
+&nbsp;&nbsp; &nbsp;queue_name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;=&gt;  'strm04_queue');
+END;
+/
+</pre></li>
+                        <li id="GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F__i1010004">
+                           <p>Create an apply process at the Oracle database to receive messages in the queue. Ensure that the <code class="codeph">apply_captured</code> parameter is set to <code class="codeph">FALSE</code> when you create the apply process, because the apply process will be applying persistent LCRs, not captured LCRs. Also, ensure that the <code class="codeph">apply_user</code> parameter is set to <code class="codeph">hr</code>, because changes will be applied in to the <code class="codeph">hr.regions</code> table, and the apply user must have privileges to make DML changes to this table.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.CREATE_APPLY(
+     queue_name      =&gt; 'strm04_queue',
+     apply_name      =&gt; 'strm04_apply',
+     apply_captured  =&gt; FALSE,
+     apply_user      =&gt; 'hr');
+END;
+/
+</pre></li>
+                        <li>
+                           <p>Create a positive rule set for the apply process and add a rule that applies DML changes to the <code class="codeph">hr.regions</code> table made at the <code class="codeph">dbs1.example.com</code> source database.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name          =&gt;  'hr.regions',
+    streams_type        =&gt;  'apply',
+    streams_name        =&gt;  'strm04_apply',
+    queue_name          =&gt;  'strm04_queue',
+    include_dml         =&gt;  TRUE,
+    include_ddl         =&gt;  FALSE,
+    include_tagged_lcr  =&gt;  FALSE,
+    source_database     =&gt;  'dbs1.example.com',
+    inclusion_rule      =&gt;  TRUE);
+END;
+/
+</pre></li>
+                        <li>
+                           <p>Set the <code class="codeph">disable_on_error</code> parameter for the apply process to <code class="codeph">n</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.SET_PARAMETER(
+    apply_name  =&gt; 'strm04_apply', 
+    parameter   =&gt; 'disable_on_error', 
+    value       =&gt; 'N');
+END;
+/
+</pre></li>
+                        <li>
+                           <p>Start the apply process.</p><pre class="oac_no_warn" dir="ltr">EXEC DBMS_APPLY_ADM.START_APPLY('strm04_apply');
+</pre></li>
+                        <li id="GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F__BABGBHII">
+                           <p><a id="d65499e666" class="indexterm-anchor"></a>Create a procedure called <code class="codeph">construct_row_lcr</code> that constructs a row LCR and enqueues it into the queue created in Step <a href="managing-lcrs.html#GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F__i1009990">4</a>.
+                           </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE PROCEDURE construct_row_lcr(
+                 source_dbname  VARCHAR2,
+                 cmd_type       VARCHAR2,
+                 obj_owner      VARCHAR2,
+                 obj_name       VARCHAR2,
+                 old_vals       SYS.LCR$_ROW_LIST,
+                 new_vals       SYS.LCR$_ROW_LIST) AS
+  row_lcr        SYS.LCR$_ROW_RECORD;
+BEGIN
+  -- Construct the LCR based on information passed to procedure
+  row_lcr := SYS.LCR$_ROW_RECORD.CONSTRUCT(
+    source_database_name  =&gt;  source_dbname,
+    command_type          =&gt;  cmd_type,
+    object_owner          =&gt;  obj_owner,
+    object_name           =&gt;  obj_name,
+    old_values            =&gt;  old_vals,
+    new_values            =&gt;  new_vals);
+  -- Enqueue the created row LCR
+  DBMS_STREAMS_MESSAGING.ENQUEUE(
+    queue_name         =&gt;  'strm04_queue',
+    payload            =&gt;  ANYDATA.ConvertObject(row_lcr));
+END construct_row_lcr;
+/
+</pre><div class="infoboxnote" id="GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F__GUID-9660708D-BD46-4FE9-BDC9-A204F830C733">
+                              <p class="notep1">Note:</p>
+                              <p>The application does not need to specify a transaction identifier or SCN when it creates an LCR because the apply process generates these values and stores them in memory. If a transaction identifier or SCN is specified in the LCR, then the apply process ignores it and assigns a new value.</p>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F__GUID-2E0FAD04-FEAC-4B23-91FB-CF06FCDFD4A0">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS307"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about LCR constructors
+                              </p>
+                           </div>
+                        </li>
+                        <li>
+                           <p>Create and enqueue LCRs using the <code class="codeph">construct_row_lcr</code> procedure created in Step <a href="managing-lcrs.html#GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F__i1010004">5</a>.
+                           </p>
+                           <ol type="a">
+                              <li>
+                                 <p>In SQL*Plus, connect to the database as the Oracle Streams administrator.</p>
+                              </li>
+                              <li>
+                                 <p>Create a row LCR that inserts a row into the <code class="codeph">hr.regions</code> table.
+                                 </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  newunit1  SYS.LCR$_ROW_UNIT;
+  newunit2  SYS.LCR$_ROW_UNIT;
+  newvals   SYS.LCR$_ROW_LIST;
+BEGIN
+  newunit1 := SYS.LCR$_ROW_UNIT(
+    'region_id', 
+    ANYDATA.ConvertNumber(5),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  newunit2 := SYS.LCR$_ROW_UNIT(
+    'region_name', 
+    ANYDATA.ConvertVarchar2('Moon'),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  newvals := SYS.LCR$_ROW_LIST(newunit1,newunit2);
+construct_row_lcr(
+  source_dbname  =&gt;  'dbs1.example.com',
+  cmd_type       =&gt;  'INSERT',
+  obj_owner      =&gt;  'hr',
+  obj_name       =&gt;  'regions',
+  old_vals       =&gt;  NULL,
+  new_vals       =&gt;  newvals);
+END;
+/
+COMMIT;
+</pre></li>
+                              <li>
+                                 <p>In SQL*Plus, connect to the database as the <code class="codeph">hr</code> user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Query the <code class="codeph">hr.regions</code> table to view the applied row change. The row with a <code class="codeph">region_id</code> of <code class="codeph">5</code> should have <code class="codeph">Moon</code> for the <code class="codeph">region_name</code>.
+                                 </p><pre class="oac_no_warn" dir="ltr">SELECT * FROM hr.regions;
+</pre></li>
+                              <li>
+                                 <p>In SQL*Plus, connect to the database as the Oracle Streams administrator.</p>
+                              </li>
+                              <li>
+                                 <p>Create a row LCR that updates a row in the <code class="codeph">hr.regions</code> table.
+                                 </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  oldunit1  SYS.LCR$_ROW_UNIT;
+  oldunit2  SYS.LCR$_ROW_UNIT;
+  oldvals   SYS.LCR$_ROW_LIST;
+  newunit1  SYS.LCR$_ROW_UNIT;
+  newvals   SYS.LCR$_ROW_LIST;
+BEGIN
+  oldunit1 := SYS.LCR$_ROW_UNIT(
+    'region_id', 
+    ANYDATA.ConvertNumber(5),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  oldunit2 := SYS.LCR$_ROW_UNIT(
+    'region_name', 
+    ANYDATA.ConvertVarchar2('Moon'),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  oldvals := SYS.LCR$_ROW_LIST(oldunit1,oldunit2);
+  newunit1 := SYS.LCR$_ROW_UNIT(
+    'region_name', 
+    ANYDATA.ConvertVarchar2('Mars'),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  newvals := SYS.LCR$_ROW_LIST(newunit1);
+construct_row_lcr(
+  source_dbname  =&gt;  'dbs1.example.com',
+  cmd_type       =&gt;  'UPDATE',
+  obj_owner      =&gt;  'hr',
+  obj_name       =&gt;  'regions',
+  old_vals       =&gt;  oldvals,
+  new_vals       =&gt;  newvals);
+END;
+/
+COMMIT;
+</pre></li>
+                              <li>
+                                 <p>In SQL*Plus, connect to the database as the <code class="codeph">hr</code> user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Query the <code class="codeph">hr.regions</code> table to view the applied row change. The row with a <code class="codeph">region_id</code> of <code class="codeph">5</code> should have <code class="codeph">Mars</code> for the <code class="codeph">region_name</code>.
+                                 </p><pre class="oac_no_warn" dir="ltr">SELECT * FROM hr.regions;
+</pre></li>
+                              <li>
+                                 <p>Create a row LCR that deletes a row from the <code class="codeph">hr.regions</code> table.
+                                 </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  oldunit1  SYS.LCR$_ROW_UNIT;
+  oldunit2  SYS.LCR$_ROW_UNIT;
+  oldvals   SYS.LCR$_ROW_LIST;
+BEGIN
+  oldunit1 := SYS.LCR$_ROW_UNIT(
+    'region_id', 
+    ANYDATA.ConvertNumber(5),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  oldunit2 := SYS.LCR$_ROW_UNIT(
+    'region_name',
+    ANYDATA.ConvertVarchar2('Mars'),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  oldvals := SYS.LCR$_ROW_LIST(oldunit1,oldunit2);
+construct_row_lcr(
+  source_dbname  =&gt;  'dbs1.example.com',
+  cmd_type       =&gt;  'DELETE',
+  obj_owner      =&gt;  'hr',
+  obj_name       =&gt;  'regions',
+  old_vals       =&gt;  oldvals,
+  new_vals       =&gt;  NULL);
+END;
+/
+COMMIT;
+</pre></li>
+                              <li>
+                                 <p>In SQL*Plus, connect to the database as the <code class="codeph">hr</code> user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Query the <code class="codeph">hr.regions</code> table to view the applied row change. The row with a <code class="codeph">region_id</code> of <code class="codeph">5</code> should have been deleted.
+                                 </p><pre class="oac_no_warn" dir="ltr">SELECT * FROM hr.regions;</pre></li>
+                           </ol>
+                        </li>
+                     </ol>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREP142"></a><div class="props_rev_3"><a id="GUID-FF3BD0F4-B038-4BB3-AB09-C2BB21D0D277" name="GUID-FF3BD0F4-B038-4BB3-AB09-C2BB21D0D277"></a><h3 id="STREP-GUID-FF3BD0F4-B038-4BB3-AB09-C2BB21D0D277" class="sect3"><span class="enumeration_section">14.3 </span>Executing LCRs
+               </h3>
+               <div>
+                  <p>There are separate <code class="codeph">EXECUTE</code> member procedures for row LCRs and DDL LCRs. These member procedures execute an LCR under the security domain of the current user. When an LCR is executed successfully, the change recorded in the LCR is made to the local database. The following sections describe executing row LCRs and DDL LCRs:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-lcrs.html#GUID-C3D09939-40FB-44E6-9AE2-0AC0B24B3D99">Executing Row LCRs</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-lcrs.html#GUID-54FDBADD-9ED8-417D-9211-4CB87BEF5177">Executing DDL LCRs</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STREP485"></a><div class="props_rev_3"><a id="GUID-C3D09939-40FB-44E6-9AE2-0AC0B24B3D99" name="GUID-C3D09939-40FB-44E6-9AE2-0AC0B24B3D99"></a><h4 id="STREP-GUID-C3D09939-40FB-44E6-9AE2-0AC0B24B3D99" class="sect4"><span class="enumeration_section">14.3.1 </span>Executing Row LCRs
+                  </h4>
+                  <div>
+                     <p>The <code class="codeph">EXECUTE</code> member procedure for row LCRs is a subprogram of the <code class="codeph">LCR$_ROW_RECORD</code> type. When the <code class="codeph">EXECUTE</code> member procedure is run on a row LCR, the row LCR is executed. If the row LCR is executed by an apply process, then any apply process handlers that would be run for the LCR are not run.
+                     </p>
+                     <p>The <code class="codeph">EXECUTE</code> member procedure can be run on a row LCR under any of the following conditions:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The LCR is being processed by an apply handler.</p>
+                        </li>
+                        <li>
+                           <p>The LCR is in a queue and was last enqueued by an apply process, an application, or a user.</p>
+                        </li>
+                        <li>
+                           <p>The LCR has been constructed using the <code class="codeph">LCR$_ROW_RECORD</code> constructor function but has not been enqueued.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The LCR is in the error queue.</p>
+                        </li>
+                     </ul>
+                     <p>When you run the <code class="codeph">EXECUTE</code> member procedure on a row LCR, the <code class="codeph">conflict_resolution</code> parameter controls whether conflict resolution is performed. Specifically, if the <code class="codeph">conflict_resolution</code> parameter is set to <code class="codeph">TRUE</code>, then any conflict resolution defined for the table being changed is used to resolve conflicts resulting from the execution of the LCR. If the <code class="codeph">conflict_resolution</code> parameter is set to <code class="codeph">FALSE</code>, then conflict resolution is not used. If the <code class="codeph">conflict_resolution</code> parameter is not set or is set to <code class="codeph">NULL</code>, then an error is raised.
+                     </p>
+                     <div class="infoboxnote" id="GUID-C3D09939-40FB-44E6-9AE2-0AC0B24B3D99__GUID-0C75E7AA-5EFF-46E0-B061-580689E94ACC">
+                        <p class="notep1">Note:</p>
+                        <p>A custom rule-based transformation should not run the <code class="codeph">EXECUTE</code> member procedure on a row LCR. Doing so could execute the row LCR outside of its transactional context.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-C3D09939-40FB-44E6-9AE2-0AC0B24B3D99__GUID-BE830E65-858B-4554-8A10-6312C25D686D">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../strms/oracle-streams-information-consumption.html#STRMS175"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS368"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about row LCRs and the <code class="codeph">LCR$_ROW_RECORD</code> type
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STREP486"></a><div class="props_rev_3"><a id="GUID-CD6846C9-D901-437A-ADE6-C03E4FE5F491" name="GUID-CD6846C9-D901-437A-ADE6-C03E4FE5F491"></a><h5 id="STREP-GUID-CD6846C9-D901-437A-ADE6-C03E4FE5F491" class="sect5"><span class="enumeration_section">14.3.1.1 </span>Example of Constructing and Executing Row LCRs
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The example in this section creates PL/SQL procedures to insert, update, and delete rows in the <code class="codeph">hr.jobs</code> table by constructing and executing row LCRs. The row LCRs are executed without being enqueued or processed by an apply process. This example assumes that you have configured an Oracle Streams administrator named <code class="codeph">strmadmin</code> and granted this administrator <code class="codeph">DBA</code> role.
+                           </p>
+                           <p>Complete the following steps:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the database as the Oracle Streams administrator.</span><div>
+                                 <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Create a PL/SQL procedure named <code class="codeph">execute_row_lcr</code> that executes a row LCR:</span><div><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE PROCEDURE execute_row_lcr(
+                 source_dbname  VARCHAR2,
+                 cmd_type       VARCHAR2,
+                 obj_owner      VARCHAR2,
+                 obj_name       VARCHAR2,
+                 old_vals       SYS.LCR$_ROW_LIST,
+                 new_vals       SYS.LCR$_ROW_LIST) as
+  xrow_lcr  SYS.LCR$_ROW_RECORD;
+BEGIN
+  -- Construct the row LCR based on information passed to procedure
+  xrow_lcr := SYS.LCR$_ROW_RECORD.CONSTRUCT(
+    source_database_name =&gt; source_dbname,
+    command_type         =&gt; cmd_type,
+    object_owner         =&gt; obj_owner,
+    object_name          =&gt; obj_name,
+    old_values           =&gt; old_vals,
+    new_values           =&gt; new_vals);
+  -- Execute the row LCR
+  xrow_lcr.EXECUTE(FALSE);
+END execute_row_lcr;
+/
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Create a PL/SQL procedure named <code class="codeph">insert_job_lcr</code> that executes a row LCR that inserts a row into the <code class="codeph">hr.jobs</code> table:</span><div><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE PROCEDURE insert_job_lcr(
+                 j_id     VARCHAR2,
+                 j_title  VARCHAR2,
+                 min_sal  NUMBER,
+                 max_sal  NUMBER) AS
+  xrow_lcr   SYS.LCR$_ROW_RECORD;
+  col1_unit  SYS.LCR$_ROW_UNIT;
+  col2_unit  SYS.LCR$_ROW_UNIT;
+  col3_unit  SYS.LCR$_ROW_UNIT;
+  col4_unit  SYS.LCR$_ROW_UNIT;
+  newvals    SYS.LCR$_ROW_LIST;
+BEGIN
+  col1_unit := SYS.LCR$_ROW_UNIT(
+    'job_id', 
+    ANYDATA.ConvertVarchar2(j_id),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  col2_unit := SYS.LCR$_ROW_UNIT(
+    'job_title', 
+    ANYDATA.ConvertVarchar2(j_title),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  col3_unit := SYS.LCR$_ROW_UNIT(
+    'min_salary', 
+    ANYDATA.ConvertNumber(min_sal),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  col4_unit := SYS.LCR$_ROW_UNIT(
+    'max_salary', 
+    ANYDATA.ConvertNumber(max_sal),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  newvals := SYS.LCR$_ROW_LIST(col1_unit,col2_unit,col3_unit,col4_unit);
+  -- Execute the row LCR
+  execute_row_lcr(
+    source_dbname =&gt; 'DB1.EXAMPLE.COM',
+    cmd_type      =&gt; 'INSERT',
+    obj_owner     =&gt; 'HR',
+    obj_name      =&gt; 'JOBS',
+    old_vals      =&gt; NULL,
+    new_vals      =&gt; newvals);  
+END insert_job_lcr;
+/
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Create a PL/SQL procedure named <code class="codeph">update_max_salary_lcr</code> that executes a row LCR that updates the <code class="codeph">max_salary</code> value for a row in the <code class="codeph">hr.jobs</code> table:</span><div><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE PROCEDURE update_max_salary_lcr(
+                 j_id         VARCHAR2,
+                 old_max_sal NUMBER,
+                 new_max_sal NUMBER) AS
+  xrow_lcr      SYS.LCR$_ROW_RECORD;
+  oldcol1_unit  SYS.LCR$_ROW_UNIT;
+  oldcol2_unit  SYS.LCR$_ROW_UNIT;
+  newcol1_unit  SYS.LCR$_ROW_UNIT;
+  oldvals       SYS.LCR$_ROW_LIST;
+  newvals       SYS.LCR$_ROW_LIST;
+BEGIN
+  oldcol1_unit := SYS.LCR$_ROW_UNIT(
+    'job_id', 
+    ANYDATA.ConvertVarchar2(j_id),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  oldcol2_unit := SYS.LCR$_ROW_UNIT(
+    'max_salary', 
+    ANYDATA.ConvertNumber(old_max_sal),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  oldvals := SYS.LCR$_ROW_LIST(oldcol1_unit,oldcol2_unit);
+  newcol1_unit := SYS.LCR$_ROW_UNIT(
+    'max_salary', 
+    ANYDATA.ConvertNumber(new_max_sal),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  newvals := SYS.LCR$_ROW_LIST(newcol1_unit);
+  -- Execute the row LCR
+  execute_row_lcr(
+    source_dbname =&gt; 'DB1.EXAMPLE.COM',
+    cmd_type      =&gt; 'UPDATE',
+    obj_owner     =&gt; 'HR',
+    obj_name      =&gt; 'JOBS',
+    old_vals      =&gt; oldvals,
+    new_vals      =&gt; newvals);  
+END update_max_salary_lcr;
+/
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Create a PL/SQL procedure named <code class="codeph">delete_job_lcr</code> that executes a row LCR that deletes a row from the <code class="codeph">hr.jobs</code> table:</span><div><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE PROCEDURE delete_job_lcr(j_id VARCHAR2) AS
+  xrow_lcr   SYS.LCR$_ROW_RECORD;
+  col1_unit  SYS.LCR$_ROW_UNIT;
+  oldvals    SYS.LCR$_ROW_LIST;
+BEGIN
+  col1_unit := SYS.LCR$_ROW_UNIT(
+    'job_id',
+    ANYDATA.ConvertVarchar2(j_id),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  oldvals := SYS.LCR$_ROW_LIST(col1_unit); 
+  -- Execute the row LCR
+  execute_row_lcr(
+    source_dbname =&gt; 'DB1.EXAMPLE.COM',
+    cmd_type      =&gt; 'DELETE',
+    obj_owner     =&gt; 'HR',
+    obj_name      =&gt; 'JOBS',
+    old_vals      =&gt; oldvals,
+    new_vals      =&gt; NULL);
+END delete_job_lcr;
+/
+</pre></div>
+                           </li>
+                           <li class="stepexpand" id="GUID-CD6846C9-D901-437A-ADE6-C03E4FE5F491__BABBFDEE"><span>Insert a row into the <code class="codeph">hr.jobs</code> table using the <code class="codeph">insert_job_lcr</code> procedure:</span><div><pre class="oac_no_warn" dir="ltr">EXEC insert_job_lcr('BN_CNTR','BEAN COUNTER',5000,10000);
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Select the inserted row in the <code class="codeph">hr.jobs</code> table:</span><div><pre class="oac_no_warn" dir="ltr"><span class="bold">SELECT * FROM hr.jobs WHERE job_id = 'BN_CNTR';</span>
+
+JOB_ID     JOB_TITLE                           MIN_SALARY MAX_SALARY
+---------- ----------------------------------- ---------- ----------
+BN_CNTR    BEAN COUNTER                              5000      10000
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Update the <code class="codeph">max_salary</code> value for the row inserted into the <code class="codeph">hr.jobs</code> table in Step&nbsp;<a href="managing-lcrs.html#GUID-CD6846C9-D901-437A-ADE6-C03E4FE5F491__BABBFDEE">6</a> using the <code class="codeph">update_max_salary_lcr</code> procedure:</span><div><pre class="oac_no_warn" dir="ltr">EXEC update_max_salary_lcr('BN_CNTR',10000,12000);
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Select the updated row in the <code class="codeph">hr.jobs</code> table:</span><div><pre class="oac_no_warn" dir="ltr"><span class="bold">SELECT * FROM hr.jobs WHERE job_id = 'BN_CNTR';</span>
+
+JOB_ID     JOB_TITLE                           MIN_SALARY MAX_SALARY
+---------- ----------------------------------- ---------- ----------
+BN_CNTR    BEAN COUNTER                              5000      12000
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Delete the row inserted into the <code class="codeph">hr.jobs</code> table in Step&nbsp;<a href="managing-lcrs.html#GUID-CD6846C9-D901-437A-ADE6-C03E4FE5F491__BABBFDEE">6</a> using the <code class="codeph">delete_job_lcr</code> procedure:</span><div><pre class="oac_no_warn" dir="ltr">EXEC delete_job_lcr('BN_CNTR');
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Select the deleted row in the <code class="codeph">hr.jobs</code> table:</span><div><pre class="oac_no_warn" dir="ltr"><span class="bold">SELECT * FROM hr.jobs WHERE job_id = 'BN_CNTR';</span>
+
+no rows selected
+</pre></div>
+                           </li>
+                        </ol>
+                     </div>
+                  </div>
+               </div><a id="STREP487"></a><div class="props_rev_3"><a id="GUID-54FDBADD-9ED8-417D-9211-4CB87BEF5177" name="GUID-54FDBADD-9ED8-417D-9211-4CB87BEF5177"></a><h4 id="STREP-GUID-54FDBADD-9ED8-417D-9211-4CB87BEF5177" class="sect4"><span class="enumeration_section">14.3.2 </span>Executing DDL LCRs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The <code class="codeph">EXECUTE</code> member procedure for DDL LCRs is a subprogram of the <code class="codeph">LCR$_DDL_RECORD</code> type. When the <code class="codeph">EXECUTE</code> member procedure is run on a DDL LCR, the LCR is executed, and any apply process handlers that would be run for the LCR are not run. The <code class="codeph">EXECUTE</code> member procedure for DDL LCRs can be invoked only in an apply handler for an apply process.
+                        </p>
+                        <p>All applied DDL LCRs commit automatically. Therefore, if a DDL handler calls the <code class="codeph">EXECUTE</code> member procedure of a DDL LCR, then a commit is performed automatically.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-54FDBADD-9ED8-417D-9211-4CB87BEF5177__GUID-4881C85F-A27A-4C82-80B6-42890E0D0D8C">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS175"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS567"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about DDL LCRs and the <code class="codeph">LCR$_DDL_RECORD</code> type
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STREP488"></a><a id="STREP137"></a><div class="props_rev_3"><a id="GUID-DBB33256-5BEF-4FB7-8798-224EF929420A" name="GUID-DBB33256-5BEF-4FB7-8798-224EF929420A"></a><h3 id="STREP-GUID-DBB33256-5BEF-4FB7-8798-224EF929420A" class="sect3"><span class="enumeration_section">14.4 </span>Managing LCRs Containing LOB Columns
+               </h3>
+               <div>
+                  <p>LOB data types can be present in row LCRs captured by a capture process, but these data types are represented by other data types. LOB data types cannot be present in row LCRs captured by synchronous captures. Certain LOB data types cannot be present in row LCRs constructed by users. <a href="managing-lcrs.html#GUID-DBB33256-5BEF-4FB7-8798-224EF929420A__BABCEIGD" title="This table lists LONG, LONG RAW, and LOB datatypes and, for each type, the datatype used for the row LCR representation of the type, whether the type can be present in a captured LCR, and whether the type can be present in a user-constructed LCR.">Table 14-1</a> shows the LCR representation for these data types and whether these data types can be present in row LCRs. 
+                  </p>
+                  <div class="tblformal" id="GUID-DBB33256-5BEF-4FB7-8798-224EF929420A__BABCEIGD">
+                     <p class="titleintable">Table 14-1 LOB Data Type Representations in Row LCRs</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="LOB Data Type Representations in Row LCRs" summary="This table lists LONG, LONG RAW, and LOB datatypes and, for each type, the datatype used for the row LCR representation of the type, whether the type can be present in a captured LCR, and whether the type can be present in a user-constructed LCR." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="19%" id="d65499e1666">Data Type</th>
+                              <th align="left" valign="bottom" width="19%" id="d65499e1669">Row LCR Representation</th>
+                              <th align="left" valign="bottom" width="21%" id="d65499e1672">Can Be Present in a Row LCR Captured by a Capture Process?</th>
+                              <th align="left" valign="bottom" width="21%" id="d65499e1675">Can Be Present in a Row LCR Captured by a Synchronous Capture?</th>
+                              <th align="left" valign="bottom" width="21%" id="d65499e1678">Can Be Present in a Row LCR Constructed by a User?</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="19%" id="d65499e1683" headers="d65499e1666 ">
+                                 <p>Fixed-width <code class="codeph">CLOB</code></p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d65499e1683 d65499e1669 ">
+                                 <p><code class="codeph">VARCHAR2</code></p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1683 d65499e1672 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1683 d65499e1675 ">
+                                 <p>No</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1683 d65499e1678 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="19%" id="d65499e1702" headers="d65499e1666 ">
+                                 <p>Variable-width <code class="codeph">CLOB</code></p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d65499e1702 d65499e1669 ">
+                                 <p><code class="codeph">RAW</code> in AL16UTF16 character set
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1702 d65499e1672 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1702 d65499e1675 ">
+                                 <p>No</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1702 d65499e1678 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="19%" id="d65499e1722" headers="d65499e1666 ">
+                                 <p><code class="codeph">NCLOB</code></p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d65499e1722 d65499e1669 ">
+                                 <p><code class="codeph">RAW</code> in AL16UTF16 character set
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1722 d65499e1672 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1722 d65499e1675 ">
+                                 <p>No</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1722 d65499e1678 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="19%" id="d65499e1741" headers="d65499e1666 ">
+                                 <p><code class="codeph">BLOB</code></p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d65499e1741 d65499e1669 ">
+                                 <p><code class="codeph">RAW</code></p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1741 d65499e1672 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1741 d65499e1675 ">
+                                 <p>No</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1741 d65499e1678 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="19%" id="d65499e1759" headers="d65499e1666 ">
+                                 <p><code class="codeph">XMLType</code> stored as <code class="codeph">CLOB</code></p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d65499e1759 d65499e1669 ">
+                                 <p><code class="codeph">RAW</code></p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1759 d65499e1672 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1759 d65499e1675 ">
+                                 <p>No</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d65499e1759 d65499e1678 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>The following are general considerations for row changes involving LOB data types in an Oracle Streams environment:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>A row change involving a LOB column can be captured, propagated, and applied as several row LCRs.</p>
+                     </li>
+                     <li>
+                        <p>Rules used to evaluate these row LCRs must be deterministic, so that either all of the row LCRs corresponding to the row change cause a rule in a rule set to evaluate to <code class="codeph">TRUE</code>, or none of them do.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>The following sections contain information about the requirements you must meet when constructing or processing LOB columns, about apply process behavior for LCRs containing LOB columns, and about LOB assembly. There is also an example that constructs and enqueues LCRs containing LOB columns.</p>
+                  <div class="infoboxnote" id="GUID-DBB33256-5BEF-4FB7-8798-224EF929420A__GUID-24921021-415F-4329-8067-7784B2C3AC64">
+                     <p class="notep1">Note:</p>
+                     <p><code class="codeph">XMLType</code> stored as a <code class="codeph">CLOB</code> is deprecated in this release.
+                     </p>
+                  </div>
+                  <p>This section contains the following topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-lcrs.html#GUID-6D0BC1D3-77A1-46AC-86F2-4AE0C931B5F5">Apply Process Behavior for Direct Apply of LCRs Containing LOBs</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-lcrs.html#GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9">LOB Assembly and Custom Apply of LCRs Containing LOB Columns</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-lcrs.html#GUID-5303F21D-2D93-4F40-82AA-DDD0ECE70EAD">Requirements for Constructing and Processing LCRs Containing LOB Columns</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-DBB33256-5BEF-4FB7-8798-224EF929420A__GUID-ABDF752C-7385-4FBA-99DD-120A7FD8B17F">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../adlob/toc.htm"><span class="italic">Oracle Database SecureFiles and Large Objects Developer's Guide </span></a>for more information about LOBs
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STREX1165"><span class="italic">Oracle Streams Extended Examples</span></a> for an example that constructs and enqueues LCRs that contain LOBs
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STREP489"></a><div class="props_rev_3"><a id="GUID-6D0BC1D3-77A1-46AC-86F2-4AE0C931B5F5" name="GUID-6D0BC1D3-77A1-46AC-86F2-4AE0C931B5F5"></a><h4 id="STREP-GUID-6D0BC1D3-77A1-46AC-86F2-4AE0C931B5F5" class="sect4"><span class="enumeration_section">14.4.1 </span>Apply Process Behavior for Direct Apply of LCRs Containing LOBs
+                  </h4>
+                  <div>
+                     <p>An apply process behaves in the following ways when it applies an LCR that contains a LOB column directly (without the use of an apply handler):</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If an LCR whose command type is <code class="codeph">INSERT</code> or <code class="codeph">UPDATE</code> has a new LOB that contains data, and the <code class="codeph">lob_information</code> is not <code class="codeph">DBMS_LCR.LOB_CHUNK</code> or <code class="codeph">DBMS_LCR.LAST_LOB_CHUNK</code>, then the data is applied.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If an LCR whose command type is <code class="codeph">INSERT</code> or <code class="codeph">UPDATE</code> has a new LOB that contains no data, and the <code class="codeph">lob_information</code> is <code class="codeph">DBMS_LCR.EMPTY_LOB</code>, then it is applied as an empty LOB.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If an LCR whose command type is <code class="codeph">INSERT</code> or <code class="codeph">UPDATE</code> has a new LOB that contains no data, and the <code class="codeph">lob_information</code> is <code class="codeph">DBMS_LCR.NULL_LOB</code> or <code class="codeph">DBMS_LCR.INLINE_LOB</code>, then it is applied as a <code class="codeph">NULL</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If an LCR whose command type is <code class="codeph">INSERT</code> or <code class="codeph">UPDATE</code> has a new LOB and the <code class="codeph">lob_information</code> is <code class="codeph">DBMS_LCR.LOB_CHUNK</code> or <code class="codeph">DBMS_LCR.LAST_LOB_CHUNK</code>, then any LOB value is ignored. If the command type is <code class="codeph">INSERT</code>, then an empty LOB is inserted into the column under the assumption that LOB chunks will follow. If the command type is <code class="codeph">UPDATE</code>, then the column value is ignored under the assumption that LOB chunks will follow.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If all of the new columns in an LCR whose command type is <code class="codeph">UPDATE</code> are LOBs whose <code class="codeph">lob_information</code> is <code class="codeph">DBMS_LCR.LOB_CHUNK</code> or <code class="codeph">DBMS_LCR.LAST_LOB_CHUNK</code>, then the update is skipped under the assumption that LOB chunks will follow.
+                           </p>
+                        </li>
+                        <li>
+                           <p>For any LCR whose command type is <code class="codeph">UPDATE</code> or <code class="codeph">DELETE</code>, old LOB values are ignored.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STREP491"></a><a id="STREP492"></a><a id="STREP490"></a><div class="props_rev_3"><a id="GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9" name="GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9"></a><h4 id="STREP-GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9" class="sect4"><span class="enumeration_section">14.4.2 </span>LOB Assembly and Custom Apply of LCRs Containing LOB Columns
+                  </h4>
+                  <div>
+                     <p>A change to a row in a table that does not include any LOB columns results in a single row LCR, but a change to a row that includes one or more LOB columns can result in multiple row LCRs. An apply process that does not send row LCRs that contain LOB columns to an apply handler can apply these row LCRs directly. However, before Oracle Database 10<span class="italic">g</span> Release 2, custom processing of row LCRs that contain LOB columns was complicated because apply handlers had to be configured to process multiple LCRs correctly for a single row change.
+                     </p>
+                     <p>In Oracle Database 10<span class="italic">g</span> Release 2 and later, <span class="bold">LOB assembly</span> simplifies custom processing of row LCRs with LOB columns that were captured by a capture process. LOB assembly automatically combines multiple captured row LCRs resulting from a change to a row with LOB columns into one row LCR. An apply process passes this single row LCR to a DML handler or error handler when LOB assembly is enabled. Also, after LOB assembly, the LOB column values are represented by LOB locators, not by <code class="codeph">VARCHAR2</code> or <code class="codeph">RAW</code> data type values. To enable LOB assembly for a procedure DML or error handler, set the <code class="codeph">assemble_lobs</code> parameter to <code class="codeph">TRUE</code> in the <code class="codeph">DBMS_APPLY_ADM.SET_DML_HANDLER</code> procedure. LOB assembly is always enabled for statement DML handlers.
+                     </p>
+                     <p>If the <code class="codeph">assemble_lobs</code> parameter is set to <code class="codeph">FALSE</code> for a DML or error handler, then LOB assembly is disabled and multiple row LCRs are passed to the handler for a change to a single row with LOB columns. <a href="managing-lcrs.html#GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9__BABHEBFD" title="When LOB columns are updated and LOB assembly is disabled, the table shows the original row change, the first, second, and third set of LCRs, and the final LCR sent for various DML operations.">Table 14-2</a> shows Oracle Streams behavior when LOB assembly is disabled. Specifically, the table shows the LCRs passed to a procedure DML handler or error handler resulting from a change to a single row with LOB columns.
+                     </p>
+                     <div class="tblformal" id="GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9__BABHEBFD">
+                        <p class="titleintable">Table 14-2 Oracle Streams Behavior with LOB Assembly Disabled</p>
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="Oracle Streams Behavior with LOB Assembly Disabled" summary="When LOB columns are updated and LOB assembly is disabled, the table shows the original row change, the first, second, and third set of LCRs, and the final LCR sent for various DML operations." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="22%" id="d65499e2233">Original Row Change</th>
+                                 <th align="left" valign="bottom" width="20%" id="d65499e2236">First Set of LCRs</th>
+                                 <th align="left" valign="bottom" width="21%" id="d65499e2239">Second Set of LCRs</th>
+                                 <th align="left" valign="bottom" width="21%" id="d65499e2242">Third Set of LCRs</th>
+                                 <th align="left" valign="bottom" width="16%" id="d65499e2245">Final LCR</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="22%" id="d65499e2250" headers="d65499e2233 ">
+                                    <p><code class="codeph">INSERT</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="20%" headers="d65499e2250 d65499e2236 ">
+                                    <p>One <code class="codeph">INSERT</code> LCR
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2250 d65499e2239 ">
+                                    <p>One or more <code class="codeph">LOB</code> <code class="codeph">WRITE</code> LCRs
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2250 d65499e2242 ">
+                                    <p>One or more <code class="codeph">LOB</code> <code class="codeph">TRIM</code> LCRs
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="16%" headers="d65499e2250 d65499e2245 ">
+                                    <p><code class="codeph">UPATE</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="22%" id="d65499e2283" headers="d65499e2233 ">
+                                    <p><code class="codeph">UPDATE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="20%" headers="d65499e2283 d65499e2236 ">
+                                    <p>One <code class="codeph">UPDATE</code> LCR
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2283 d65499e2239 ">
+                                    <p>One or more <code class="codeph">LOB</code> <code class="codeph">WRITE</code> LCRs
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2283 d65499e2242 ">
+                                    <p>One or more <code class="codeph">LOB</code> <code class="codeph">TRIM</code> LCRs
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="16%" headers="d65499e2283 d65499e2245 ">
+                                    <p><code class="codeph">UPATE</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="22%" id="d65499e2316" headers="d65499e2233 ">
+                                    <p><code class="codeph">DELETE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="20%" headers="d65499e2316 d65499e2236 ">
+                                    <p>One <code class="codeph">DELETE</code> LCR
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2316 d65499e2239 ">
+                                    <p>N/A</p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2316 d65499e2242 ">
+                                    <p>N/A</p>
+                                 </td>
+                                 <td align="left" valign="top" width="16%" headers="d65499e2316 d65499e2245 ">
+                                    <p>N/A</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="22%" id="d65499e2336" headers="d65499e2233 ">
+                                    <p><code class="codeph">DBMS_LOB.WRITE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="20%" headers="d65499e2336 d65499e2236 ">
+                                    <p>One or more <code class="codeph">LOB</code> <code class="codeph">WRITE</code> LCRs
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2336 d65499e2239 ">
+                                    <p>N/A</p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2336 d65499e2242 ">
+                                    <p>N/A</p>
+                                 </td>
+                                 <td align="left" valign="top" width="16%" headers="d65499e2336 d65499e2245 ">
+                                    <p>N/A</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="22%" id="d65499e2359" headers="d65499e2233 ">
+                                    <p><code class="codeph">DBMS_LOB.TRIM</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="20%" headers="d65499e2359 d65499e2236 ">
+                                    <p>One <code class="codeph">LOB</code> <code class="codeph">TRIM</code> LCR
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2359 d65499e2239 ">
+                                    <p>N/A</p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2359 d65499e2242 ">
+                                    <p>N/A</p>
+                                 </td>
+                                 <td align="left" valign="top" width="16%" headers="d65499e2359 d65499e2245 ">
+                                    <p>N/A</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="22%" id="d65499e2382" headers="d65499e2233 ">
+                                    <p><code class="codeph">DBMS_LOB.ERASE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="20%" headers="d65499e2382 d65499e2236 ">
+                                    <p>One <code class="codeph">LOB</code> <code class="codeph">ERASE</code> LCR
+                                    </p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2382 d65499e2239 ">
+                                    <p>N/A</p>
+                                 </td>
+                                 <td align="left" valign="top" width="21%" headers="d65499e2382 d65499e2242 ">
+                                    <p>N/A</p>
+                                 </td>
+                                 <td align="left" valign="top" width="16%" headers="d65499e2382 d65499e2245 ">
+                                    <p>N/A</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <p><a href="managing-lcrs.html#GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9__BABBJHCA" title="This table shows the types of LCRs sent to a DML or error handler when a row with LOB columns is updated and LOB assembly is enabled. The table shows the original row change and the single LCR sent for various DML operations.">Table 14-3</a> shows Oracle Streams behavior when LOB assembly is enabled. Specifically, the table shows the row LCR passed to a DML handler or error handler resulting from a change to a single row with LOB columns.
+                     </p>
+                     <div class="tblformal" id="GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9__BABBJHCA">
+                        <p class="titleintable">Table 14-3 Oracle Streams Behavior with LOB Assembly Enabled</p>
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="Oracle Streams Behavior with LOB Assembly Enabled" summary="This table shows the types of LCRs sent to a DML or error handler when a row with LOB columns is updated and LOB assembly is enabled. The table shows the original row change and the single LCR sent for various DML operations." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="50%" id="d65499e2420">Original Row Change</th>
+                                 <th align="left" valign="bottom" width="50%" id="d65499e2423">Single LCR</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="50%" id="d65499e2428" headers="d65499e2420 ">
+                                    <p><code class="codeph">INSERT</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="50%" headers="d65499e2428 d65499e2423 ">
+                                    <p><code class="codeph">INSERT</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="50%" id="d65499e2437" headers="d65499e2420 ">
+                                    <p><code class="codeph">UPDATE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="50%" headers="d65499e2437 d65499e2423 ">
+                                    <p><code class="codeph">UPDATE</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="50%" id="d65499e2446" headers="d65499e2420 ">
+                                    <p><code class="codeph">DELETE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="50%" headers="d65499e2446 d65499e2423 ">
+                                    <p><code class="codeph">DELETE</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="50%" id="d65499e2455" headers="d65499e2420 ">
+                                    <p><code class="codeph">DBMS_LOB.WRITE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="50%" headers="d65499e2455 d65499e2423 ">
+                                    <p><code class="codeph">LOB</code> <code class="codeph">WRITE</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="50%" id="d65499e2467" headers="d65499e2420 ">
+                                    <p><code class="codeph">DBMS_LOB.TRIM</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="50%" headers="d65499e2467 d65499e2423 ">
+                                    <p><code class="codeph">LOB</code> <code class="codeph">TRIM</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="50%" id="d65499e2479" headers="d65499e2420 ">
+                                    <p><code class="codeph">DBMS_LOB.ERASE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="50%" headers="d65499e2479 d65499e2423 ">
+                                    <p><code class="codeph">LOB</code> <code class="codeph">ERASE</code></p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <p>When LOB assembly is enabled, a DML or error handler can modify LOB columns in a row LCR. Within the PL/SQL procedure specified as a DML or error handler, the preferred way to perform operations on a LOB is to use a subprogram in the <code class="codeph">DBMS_LOB</code> package. If a row LCR contains a LOB column that is <code class="codeph">NULL</code>, then a new LOB locator must replace the <code class="codeph">NULL</code>. If a row LCR will be applied with the <code class="codeph">EXECUTE</code> member procedure, then use the <code class="codeph">ADD_COLUMN</code>, <code class="codeph">SET_VALUE</code>, and <code class="codeph">SET_VALUES</code> member procedures for row LCRs to make changes to a LOB.
+                     </p>
+                     <p>When LOB assembly is enabled, LOB assembly converts non-<code class="codeph">NULL</code> LOB columns in persistent LCRs into LOB locators. However, LOB assembly does not combine multiple persistent row LCRs into a single row LCR. For example, for persistent row LCRs, LOB assembly does not combine multiple <code class="codeph">LOB</code> <code class="codeph">WRITE</code> row LCRs following an <code class="codeph">INSERT</code> row LCR into a single <code class="codeph">INSERT</code> row LCR.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-EC7B53E6-C9ED-4188-AD9C-5953F76C53A9__GUID-925D4069-2226-4E46-8A9D-638253D6594D">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS175"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about apply handlers
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adlob/toc.htm"><span class="italic">Oracle Database SecureFiles and Large Objects Developer's Guide</span></a> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS600"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about using the <code class="codeph">DBMS_LOB</code> package
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS368"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">ADD_COLUMN</code>, <code class="codeph">SET_VALUE</code>, and <code class="codeph">SET_VALUES</code> member procedures for row LCRs
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STREP493"></a><div class="props_rev_3"><a id="GUID-C96EECED-9650-48A8-9030-91EF12F40F49" name="GUID-C96EECED-9650-48A8-9030-91EF12F40F49"></a><h5 id="STREP-GUID-C96EECED-9650-48A8-9030-91EF12F40F49" class="sect5"><span class="enumeration_section">14.4.2.1 </span>LOB Assembly Considerations
+                     </h5>
+                     <div>
+                        <p>The following are issues to consider when you use LOB assembly:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>To use a DML or error handler to process assembled LOBs at multiple destination databases, LOB assembly must assemble the LOBs separately on each destination database.</p>
+                           </li>
+                           <li>
+                              <p>Row LCRs captured on a database running a release of Oracle before Oracle Database 10<span class="italic">g</span> Release 2 cannot be assembled by LOB assembly.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Row LCRs captured on a database running Oracle Database 10<span class="italic">g</span> Release 2 or later with a compatibility level lower than <code class="codeph">10.2.0</code> cannot be assembled by LOB assembly.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The compatibility level of the database running an apply handler must be <code class="codeph">10.2.0</code> or higher to specify LOB assembly for the apply handler.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Row LCRs from a table containing any <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> columns cannot be assembled by LOB assembly.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <code class="codeph">SET_ENQUEUE_DESTINATION</code> and the <code class="codeph">SET_EXECUTE</code> procedures in the <code class="codeph">DBMS_APPLY_ADM</code> package always operate on original, nonassembled row LCRs. Therefore, for row LCRs that contain LOB columns, the original, nonassembled row LCRs are enqueued or executed, even if these row LCRs are assembled separately for an apply handler at the destination database.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If rule-based transformations were performed on row LCRs that contain LOB columns during capture, propagation, or apply, then an apply handler operates on the transformed row LCRs. If there are <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> columns at a source database, and a rule-based transformation uses the <code class="codeph">CONVERT_LONG_TO_LOB_CHUNK</code> member function for row LCRs to convert them to LOBs, then LOB assembly can be enabled for apply handlers that operate on these row&nbsp;LCRs.
+                              </p>
+                           </li>
+                           <li>
+                              <p>When a row LCR contains one or more <code class="codeph">XMLType</code> columns, any <code class="codeph">XMLType</code> and LOB columns in the row LCR are always assembled, even if the <code class="codeph">assemble_lobs</code> parameter is set to <code class="codeph">FALSE</code> for a DML or error handler.
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnotealso" id="GUID-C96EECED-9650-48A8-9030-91EF12F40F49__GUID-09108AEB-E7B2-43FA-8C31-C581C2281254">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=REFRN10019"><span class="italic">Oracle Database Reference </span></a>and<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=UPGRD005"><span class="italic"> Oracle Database Upgrade Guide</span></a> for more information database compatibility
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS300"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the subprograms in the <code class="codeph">DBMS_APPLY_ADM</code> package
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STREP620"></a><a id="STREP621"></a><a id="STREP622"></a><a id="STREP623"></a><a id="STREP624"></a><a id="STREP494"></a><div class="props_rev_3"><a id="GUID-ECA298EA-B806-4ED4-8FD5-E08F0C7F28C4" name="GUID-ECA298EA-B806-4ED4-8FD5-E08F0C7F28C4"></a><h5 id="STREP-GUID-ECA298EA-B806-4ED4-8FD5-E08F0C7F28C4" class="sect5"><span class="enumeration_section">14.4.2.2 </span>LOB Assembly Example
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>This section contains an example that uses LOB assembly with a procedure DML handler. The example scenario involves a company that shares the <code class="codeph">oe.production_information</code> table at several databases, but only some of these databases are used for the company's online World Wide Web catalog. The company wants to store a photograph of each product in the catalog databases, but, to save space, it does not want to store these photographs at the non catalog databases.
+                           </p>
+                           <p>To accomplish this goal, a procedure DML handler at a catalog destination database can add a column named <code class="codeph">photo</code> of data type <code class="codeph">BLOB</code> to each <code class="codeph">INSERT</code> and <code class="codeph">UPDATE</code> made to the <code class="codeph">product_information</code> table at a source database. The source database does not include the <code class="codeph">photo</code> column in the table. The procedure DML handler is configured to use an existing photograph at the destination for updates and inserts.The company also wants to add a <code class="codeph">product_long_desc</code> to the <code class="codeph">oe.product_information</code> table at all databases. This table already has a <code class="codeph">product_description</code> column that contains short descriptions. The <code class="codeph">product_long_desc</code> column is of <code class="codeph">CLOB</code> data type and contains detailed descriptions. The detailed descriptions are in English, but one of the company databases is used to display the company catalog in Spanish. Therefore, the procedure DML handler updates the <code class="codeph">product_long_desc</code> column so that the long description is in the correct language.
+                           </p>
+                           <p>The following steps configure a procedure DML handler that uses LOB assembly to accomplish the goals described previously:</p>
+                           <dl>
+                              <dt class="dlterm"><a name="GUID-ECA298EA-B806-4ED4-8FD5-E08F0C7F28C4__GUID-0D9C6837-8969-460D-8015-FEECA18DED86">
+                                    <!-- --></a>Step 1&nbsp;&nbsp;&nbsp;Add the photo Column to the product_information Table
+                              </dt>
+                              <dd>
+                                 <p>The following statement adds the <code class="codeph">photo</code> column to the <code class="codeph">product_information</code> table at the destination database:
+                                 </p><pre class="oac_no_warn" dir="ltr">ALTER TABLE oe.product_information ADD(photo BLOB);</pre></dd>
+                              <dt class="dlterm"><a name="GUID-ECA298EA-B806-4ED4-8FD5-E08F0C7F28C4__GUID-EAF78FED-EE62-4FA2-8523-053C137E7AF6">
+                                    <!-- --></a>Step 2&nbsp;&nbsp;&nbsp;Add the product_long_desc Column to the product_information Table
+                              </dt>
+                              <dd>
+                                 <p>The following statement adds the <code class="codeph">product_long_desc</code> column to the <code class="codeph">product_information</code> table at all of the databases in the environment:
+                                 </p><pre class="oac_no_warn" dir="ltr">ALTER TABLE oe.product_information ADD(product_long_desc CLOB);</pre></dd>
+                              <dt class="dlterm"><a name="GUID-ECA298EA-B806-4ED4-8FD5-E08F0C7F28C4__GUID-B74D78B5-A566-4D32-BC81-368F63FA914C">
+                                    <!-- --></a>Step 3&nbsp;&nbsp;&nbsp;Create the PL/SQL Procedure for the Procedure DML Handler
+                              </dt>
+                              <dd>
+                                 <p>This example creates the <code class="codeph">convert_product_information</code> procedure. This procedure will be used for the procedure DML handler. This procedure assumes that the following user-created PL/SQL subprograms exist:
+                                 </p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>The <code class="codeph">get_photo</code> procedure obtains a photo in <code class="codeph">BLOB</code> format from a URL or table based on the <code class="codeph">product_id</code> and updates the <code class="codeph">BLOB</code> locator that has been passed in as an argument.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>The <code class="codeph">get_product_long_desc</code> procedure has an <code class="codeph">IN</code> argument of <code class="codeph">product_id</code> and an <code class="codeph">IN</code> <code class="codeph">OUT</code> argument of <code class="codeph">product_long_desc</code> and translates the <code class="codeph">product_long_desc</code> into Spanish or obtains the Spanish replacement description and updates <code class="codeph">product_long_desc</code>.
+                                       </p>
+                                    </li>
+                                 </ul>
+                                 <p>The following code creates the <code class="codeph">convert_product_information</code> procedure:
+                                 </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE PROCEDURE convert_product_information(in_any IN ANYDATA)
+IS
+  lcr                      SYS.LCR$_ROW_RECORD;
+  rc                       PLS_INTEGER;
+  product_id_anydata       ANYDATA;
+  photo_anydata            ANYDATA;
+  long_desc_anydata        ANYDATA;
+  tmp_photo                BLOB;
+  tmp_product_id           NUMBER;
+  tmp_prod_long_desc       CLOB;
+  tmp_prod_long_desc_src   CLOB;
+  tmp_prod_long_desc_dest  CLOB;
+  t                        PLS_INTEGER;
+BEGIN
+  -- Access LCR
+  rc := in_any.GETOBJECT(lcr);
+  product_id_anydata := lcr.GET_VALUE('OLD', 'PRODUCT_ID');
+  t := product_id_anydata.GETNUMBER(tmp_product_id);
+  IF ((lcr.GET_COMMAND_TYPE = 'INSERT') or (lcr.GET_COMMAND_TYPE = 'UPDATE')) THEN
+    -- If there is no photo column in the lcr then it must be added
+    photo_anydata := lcr.GET_VALUE('NEW', 'PHOTO');
+    -- Check if photo has been sent and if so whether it is NULL
+    IF (photo_anydata is NULL) THEN
+      tmp_photo := NULL;
+      ELSE
+      t := photo_anydata.GETBLOB(tmp_photo);
+    END IF;
+    -- If tmp_photo is NULL then a new temporary LOB must be created and
+    -- updated with the photo if it exists
+    IF (tmp_photo is NULL) THEN
+      DBMS_LOB.CREATETEMPORARY(tmp_photo, TRUE);
+      get_photo(tmp_product_id, tmp_photo);
+    END IF;
+    -- If photo column did not exist then it must be added
+    IF (photo_anydata is NULL) THEN
+      lcr.ADD_COLUMN('NEW', 'PHOTO', ANYDATA.CONVERTBLOB(tmp_photo));
+      -- Else the existing photo column must be set to the new photo
+      ELSE
+        lcr.SET_VALUE('NEW', 'PHOTO', ANYDATA.CONVERTBLOB(tmp_photo));
+    END IF;
+    long_desc_anydata := lcr.GET_VALUE('NEW', 'PRODUCT_LONG_DESC');
+    IF (long_desc_anydata is NULL) THEN
+      tmp_prod_long_desc_src := NULL;
+      ELSE
+      t := long_desc_anydata.GETCLOB(tmp_prod_long_desc_src);
+    END IF;
+    IF (tmp_prod_long_desc_src IS NOT NULL) THEN
+      get_product_long_desc(tmp_product_id, tmp_prod_long_desc);
+    END IF;
+    -- If tmp_prod_long_desc IS NOT NULL, then use it to update the LCR
+    IF (tmp_prod_long_desc IS NOT NULL) THEN
+      lcr.SET_VALUE('NEW', 'PRODUCT_LONG_DESC',
+                    ANYDATA.CONVERTCLOB(tmp_prod_long_desc_dest));
+    END IF;
+  END IF;
+  -- DBMS_LOB operations also are executed 
+  -- Inserts and updates invoke all changes
+  lcr.EXECUTE(TRUE);
+END;
+/</pre></dd>
+                              <dt class="dlterm"><a name="GUID-ECA298EA-B806-4ED4-8FD5-E08F0C7F28C4__GUID-D9058EAF-C05C-496D-91DE-9207F3FC7D45">
+                                    <!-- --></a>Step 4&nbsp;&nbsp;&nbsp;Set the Procedure DML Handler for the Apply Process
+                              </dt>
+                              <dd>
+                                 <p>This step sets the <code class="codeph">convert_product_information</code> procedure as the procedure DML handler at the destination database for <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, and <code class="codeph">LOB_UPDATE</code> operations. Notice that the <code class="codeph">assemble_lobs</code> parameter is set to <code class="codeph">TRUE</code> each time the <code class="codeph">SET_DML_HANDLER</code> procedure is run.
+                                 </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.SET_DML_HANDLER(
+    object_name         =&gt; 'oe.product_information',
+    object_type         =&gt; 'TABLE',
+    operation_name      =&gt; 'INSERT',
+    error_handler       =&gt; FALSE,
+    user_procedure      =&gt; 'strmadmin.convert_product_information',
+    apply_database_link =&gt; NULL,
+    assemble_lobs       =&gt; TRUE);
+  DBMS_APPLY_ADM.SET_DML_HANDLER(
+    object_name         =&gt; 'oe.product_information',
+    object_type         =&gt; 'TABLE',
+    operation_name      =&gt; 'UPDATE',
+    error_handler       =&gt; FALSE,
+    user_procedure      =&gt; 'strmadmin.convert_product_information',
+    apply_database_link =&gt; NULL,
+    assemble_lobs       =&gt; TRUE);
+  DBMS_APPLY_ADM.SET_DML_HANDLER(
+    object_name         =&gt; 'oe.product_information',
+    object_type         =&gt; 'TABLE',
+    operation_name      =&gt; 'LOB_UPDATE',
+    error_handler       =&gt; FALSE,
+    user_procedure      =&gt; 'strmadmin.convert_product_information',
+    apply_database_link =&gt; NULL,
+    assemble_lobs       =&gt; TRUE);
+END;
+/</pre></dd>
+                              <dt class="dlterm"><a name="GUID-ECA298EA-B806-4ED4-8FD5-E08F0C7F28C4__GUID-7F4A17F2-E1CC-4852-B1F8-786B0872358E">
+                                    <!-- --></a>Step 5&nbsp;&nbsp;&nbsp;Query the DBA_APPLY_DML_HANDLERS View
+                              </dt>
+                              <dd>
+                                 <p>To ensure that the procedure DML handler is set properly for the <code class="codeph">oe.product_information</code> table, run the following query:
+                                 </p><pre class="oac_no_warn" dir="ltr">COLUMN OBJECT_OWNER HEADING 'Table|Owner' FORMAT A5
+COLUMN OBJECT_NAME HEADING 'Table Name' FORMAT A20
+COLUMN OPERATION_NAME HEADING 'Operation' FORMAT A10
+COLUMN USER_PROCEDURE HEADING 'Handler Procedure' FORMAT A25
+COLUMN ASSEMBLE_LOBS HEADING 'LOB Assembly?' FORMAT A15
+
+SELECT OBJECT_OWNER, 
+       OBJECT_NAME, 
+       OPERATION_NAME, 
+       USER_PROCEDURE,
+       ASSEMBLE_LOBS
+  FROM DBA_APPLY_DML_HANDLERS;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Table
+Owner Table Name           Operation  Handler Procedure         LOB Assembly?
+----- -------------------- ---------- ------------------------- ---------------
+OE    PRODUCT_INFORMATION  INSERT     "STRMADMIN"."CONVERT_PROD Y
+                                      UCT_INFORMATION"
+ 
+OE    PRODUCT_INFORMATION  UPDATE     "STRMADMIN"."CONVERT_PROD Y
+                                      UCT_INFORMATION"
+ 
+OE    PRODUCT_INFORMATION  LOB_UPDATE "STRMADMIN"."CONVERT_PROD Y
+                                      UCT_INFORMATION"
+</pre><p>Notice that the correct procedure, <code class="codeph">convert_product_information</code>, is used for each operation on the table. Also, notice that each handler uses LOB assembly.
+                                 </p>
+                              </dd>
+                           </dl>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STREP495"></a><div class="props_rev_3"><a id="GUID-5303F21D-2D93-4F40-82AA-DDD0ECE70EAD" name="GUID-5303F21D-2D93-4F40-82AA-DDD0ECE70EAD"></a><h4 id="STREP-GUID-5303F21D-2D93-4F40-82AA-DDD0ECE70EAD" class="sect4"><span class="enumeration_section">14.4.3 </span>Requirements for Constructing and Processing LCRs Containing LOB Columns
+                  </h4>
+                  <div>
+                     <p>If your environment produces row LCRs that contain LOB columns, then you must meet the requirements in the following sections when you construct or process these LCRs:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-lcrs.html#GUID-1215650E-539D-42F4-94D0-E3E4645DC798">Requirements for Constructing and Processing LCRs Without LOB Assembly</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-lcrs.html#GUID-6FE2EC74-7C2E-4057-99F7-3FC646F6F590">Requirements for Apply Handler Processing of LCRs with LOB Assembly</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-lcrs.html#GUID-10744509-0388-4E27-9833-6FA1220C9362">Requirements for Rule-Based Transformation Processing of LCRs with LOBs</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-5303F21D-2D93-4F40-82AA-DDD0ECE70EAD__GUID-101CB52B-76B3-4D6A-88D8-97FB218AB42E">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../strex/logical-change-records-with-lobs-example.html#STREX1165"><span class="italic">Oracle Streams Extended Examples</span></a> for an example that constructs and enqueues LCRs that contain LOBs
+                        </p>
+                     </div>
+                  </div><a id="STREP496"></a><div class="props_rev_3"><a id="GUID-1215650E-539D-42F4-94D0-E3E4645DC798" name="GUID-1215650E-539D-42F4-94D0-E3E4645DC798"></a><h5 id="STREP-GUID-1215650E-539D-42F4-94D0-E3E4645DC798" class="sect5"><span class="enumeration_section">14.4.3.1 </span>Requirements for Constructing and Processing LCRs Without LOB Assembly
+                     </h5>
+                     <div>
+                        <p>The following requirements must be met when you are constructing LCRs with LOB columns and when you are processing LOB columns with a DML or error handler that has LOB assembly disabled:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Do not modify LOB column data in a row LCR with a procedure DML handler or error handler that has LOB assembly disabled. However, you can modify non-LOB columns in row LCRs with a DML or error handler.</p>
+                           </li>
+                           <li>
+                              <p>Do not allow LCRs from a table that contains LOB columns to be processed by an apply handler that is invoked only for specific operations. For example, an apply handler that is invoked only for <code class="codeph">INSERT</code> operations should not process LCRs from a table with one or more LOB columns.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The data portion of the LCR LOB column must be of type <code class="codeph">VARCHAR2</code> or <code class="codeph">RAW</code>. A <code class="codeph">VARCHAR2</code> is interpreted as a <code class="codeph">CLOB</code>, and a <code class="codeph">RAW</code> is interpreted as a <code class="codeph">BLOB</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>A LOB column in a user-constructed row LCR must be either a <code class="codeph">BLOB</code> or a fixed-width <code class="codeph">CLOB</code>. You cannot construct a row LCR with the following types of LOB columns: <code class="codeph">NCLOB</code> or variable-width <code class="codeph">CLOB</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">LOB</code> <code class="codeph">WRITE</code>, <code class="codeph">LOB</code> <code class="codeph">ERASE</code>, and <code class="codeph">LOB</code> <code class="codeph">TRIM</code> are the only valid command types for out-of-line LOBs.
+                              </p>
+                           </li>
+                           <li>
+                              <p>For <code class="codeph">LOB</code> <code class="codeph">WRITE</code>, <code class="codeph">LOB</code> <code class="codeph">ERASE</code>, and <code class="codeph">LOB</code> <code class="codeph">TRIM</code> LCRs, the <code class="codeph">old_values</code> collection should be empty or <code class="codeph">NULL</code>, and <code class="codeph">new_values</code> should not be empty.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <code class="codeph">lob_offset</code> should be a valid value for <code class="codeph">LOB</code> <code class="codeph">WRITE</code> and <code class="codeph">LOB</code> <code class="codeph">ERASE</code> LCRs. For all other command types, <code class="codeph">lob_offset</code> should be <code class="codeph">NULL</code>, under the assumption that LOB chunks for that column will follow.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <code class="codeph">lob_operation_size</code> should be a valid value for <code class="codeph">LOB</code> <code class="codeph">ERASE</code> and   <code class="codeph">LOB</code>&nbsp;<code class="codeph">TRIM</code> LCRs. For all other command types, <code class="codeph">lob_operation_size</code> should be <code class="codeph">NULL</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">LOB</code> <code class="codeph">TRIM</code> and <code class="codeph">LOB</code> <code class="codeph">ERASE</code> are valid command types only for an LCR containing a LOB column with <code class="codeph">lob_information</code> set to <code class="codeph">LAST_LOB_CHUNK</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">LOB</code> <code class="codeph">WRITE</code> is a valid command type only for an LCR containing a LOB column with <code class="codeph">lob_information</code> set to <code class="codeph">LAST_LOB_CHUNK</code> or <code class="codeph">LOB_CHUNK</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>For LOBs with <code class="codeph">lob_information</code> set to <code class="codeph">NULL_LOB</code>, the data portion of the column should be a <code class="codeph">NULL</code> of <code class="codeph">VARCHAR2</code> type (for a <code class="codeph">CLOB</code>) or a <code class="codeph">NULL</code> of <code class="codeph">RAW</code> type (for a <code class="codeph">BLOB</code>). Otherwise, it is interpreted as a non-<code class="codeph">NULL</code> inline LOB column.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Only one LOB column reference with one new chunk is allowed for each <code class="codeph">LOB</code> <code class="codeph">WRITE</code>, <code class="codeph">LOB</code> <code class="codeph">ERASE</code>, and <code class="codeph">LOB</code> <code class="codeph">TRIM</code> LCR.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The new LOB chunk for a <code class="codeph">LOB</code> <code class="codeph">ERASE</code> and a <code class="codeph">LOB</code> <code class="codeph">TRIM</code> LCR should be a <code class="codeph">NULL</code> value encapsulated in an <code class="codeph">ANYDATA</code>.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>An apply process performs all validation of these requirements. If these requirements are not met, then a row LCR containing LOB columns cannot be applied by an apply process nor processed by an apply handler. In this case, the LCR is moved to the error queue with the rest of the LCRs in the same transaction.</p>
+                        <div class="infoboxnotealso" id="GUID-1215650E-539D-42F4-94D0-E3E4645DC798__GUID-2D6F7ADB-B3E5-4107-AECC-D1C7ECDA0772">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="managing-lcrs.html#GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F">Constructing and Enqueuing LCRs</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="../strms/oracle-streams-information-consumption.html#STRMS175"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about apply handlers
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STREP497"></a><div class="props_rev_3"><a id="GUID-6FE2EC74-7C2E-4057-99F7-3FC646F6F590" name="GUID-6FE2EC74-7C2E-4057-99F7-3FC646F6F590"></a><h5 id="STREP-GUID-6FE2EC74-7C2E-4057-99F7-3FC646F6F590" class="sect5"><span class="enumeration_section">14.4.3.2 </span>Requirements for Apply Handler Processing of LCRs with LOB Assembly
+                     </h5>
+                     <div>
+                        <p>The following requirements must be met when you are processing LOB columns with a DML or error handler that has LOB assembly enabled:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Do not use the following row LCR member procedures on LOB columns in row LCRs that contain assembled LOBs:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><code class="codeph">SET_LOB_INFORMATION</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">SET_LOB_OFFSET</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">SET_LOB_OPERATION_SIZE</code></p>
+                                 </li>
+                              </ul>
+                              <p>An error is raised if one of these procedures is used on a LOB column in a row&nbsp;LCR.</p>
+                           </li>
+                           <li>
+                              <p>Row LCRs constructed by LOB assembly cannot be enqueued by a procedure DML handler or error handler. However, even when LOB assembly is enabled for one or more handlers at a destination database, the original, nonassembled row LCRs with LOB columns can be enqueued using the <code class="codeph">SET_ENQUEUE_DESTINATION</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>An apply process performs all validation of these requirements. If these requirements are not met, then a row LCR containing LOB columns cannot be applied by an apply process nor processed by an apply handler. In this case, the LCR is moved to the error queue with the rest of the LCRs in the same transaction. For row LCRs with LOB columns, the original, nonassembled row LCRs are placed in the error queue.</p>
+                        <div class="infoboxnotealso" id="GUID-6FE2EC74-7C2E-4057-99F7-3FC646F6F590__GUID-9C0EF1C6-BB83-4AA5-88B0-F33EA359E2AC">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="../strms/oracle-streams-information-consumption.html#STRMS175"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about apply handlers
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../arpls/index.html"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about <a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS368">member procedures for row LCRs</a> and for information about the <a href="../arpls/DBMS_APPLY_ADM.html#ARPLS595"><code class="codeph">SET_ENQUEUE_DESTINATION</code> procedure</a></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STREP498"></a><div class="props_rev_3"><a id="GUID-10744509-0388-4E27-9833-6FA1220C9362" name="GUID-10744509-0388-4E27-9833-6FA1220C9362"></a><h5 id="STREP-GUID-10744509-0388-4E27-9833-6FA1220C9362" class="sect5"><span class="enumeration_section">14.4.3.3 </span>Requirements for Rule-Based Transformation Processing of LCRs with LOBs
+                     </h5>
+                     <div>
+                        <p>The following requirements must be met when you are processing row LCRs that contain LOB columns with a rule-based transformation:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Do not modify LOB column data in a row LCR with a custom rule-based transformation. However, a custom rule-based transformation can modify non-LOB columns in row&nbsp;LCRs that contain LOB columns.</p>
+                           </li>
+                           <li>
+                              <p>You cannot use the following row LCR member procedures on a LOB column when you are processing a row LCR with a custom rule-based transformation:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><code class="codeph">ADD_COLUMN</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">SET_LOB_INFORMATION</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">SET_LOB_OFFSET</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">SET_LOB_OPERATION_SIZE</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">SET_VALUE</code></p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">SET_VALUES</code></p>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li>
+                              <p>A declarative rule-based transformation created by the <code class="codeph">ADD_COLUMN</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package cannot add a LOB column to a row LCR.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Rule-based transformation functions that are run on row LCRs with LOB columns must be deterministic, so that all row LCRs corresponding to the row change are transformed in the same way.</p>
+                           </li>
+                           <li>
+                              <p>Do not allow LCRs from a table that contains LOB columns to be processed by an a custom rule-based transformation that is invoked only for specific operations. For example, a custom rule-based transformation that is invoked only for <code class="codeph">INSERT</code> operations should not process LCRs from a table with one or more LOB columns.
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-10744509-0388-4E27-9833-6FA1220C9362__GUID-84F8E67A-B4A0-46C2-8430-E63C9B8C6691">
+                           <p class="notep1">Note:</p>
+                           <p>If row LCRs contain LOB columns, then rule-based transformations always operate on the original, nonassembled row&nbsp;LCRs.</p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-10744509-0388-4E27-9833-6FA1220C9362__GUID-2FDAE1F9-6F10-429C-9271-931ED21664C7">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="managing-lcrs.html#GUID-7DE3B8F2-C0FB-41F8-8971-591866C67D3F">Constructing and Enqueuing LCRs</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="../strms/rule-based-transformations.html#STRMS106"><span class="italic">Oracle Streams Concepts and Administration </span></a>for information about rule-based transformations
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS368"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about member procedures for row LCRs
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=SQLRF01208"><span class="italic">Oracle Database SQL Language Reference</span></a> for more information about deterministic functions
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STREP500"></a><div class="props_rev_3"><a id="GUID-98CB180E-69C5-4CC7-A4BD-4FD5A9B03F86" name="GUID-98CB180E-69C5-4CC7-A4BD-4FD5A9B03F86"></a><h3 id="STREP-GUID-98CB180E-69C5-4CC7-A4BD-4FD5A9B03F86" class="sect3"><span class="enumeration_section">14.5 </span>Managing LCRs Containing LONG or LONG RAW Columns
+               </h3>
+               <div>
+                  <p><code class="codeph">LONG</code> and <code class="codeph">LONG</code> <code class="codeph">RAW</code> data types all can be present in row LCRs captured by a capture process, but these data types are represented by the following data types in row LCRs.
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">LONG</code> data type is represented as <code class="codeph">VARCHAR2</code> data type in row LCRs.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">LONG</code> <code class="codeph">RAW</code> data type is represented as <code class="codeph">RAW</code> data type in row LCRs.
+                        </p>
+                     </li>
+                  </ul>
+                  <p><a id="d65499e4098" class="indexterm-anchor"></a><a id="d65499e4104" class="indexterm-anchor"></a>A row change involving a <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> column can be captured, propagated, and applied as several LCRs. If your environment uses LCRs that contain <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> columns, then the data portion of the LCR <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> column must be of type <code class="codeph">VARCHAR2</code> or <code class="codeph">RAW</code>. A <code class="codeph">VARCHAR2</code> is interpreted as a <code class="codeph">LONG</code>, and a <code class="codeph">RAW</code> is interpreted as a <code class="codeph">LONG</code> <code class="codeph">RAW</code>.
+                  </p>
+                  <p>You must meet the following requirements when you are processing row LCRs that contain <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> column data in Oracle Streams:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Do not modify <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> column data in an LCR using a custom rule-based transformation. However, you can use a rule-based transformation to modify non <code class="codeph">LONG</code> and non <code class="codeph">LONG</code> <code class="codeph">RAW</code> columns in row LCRs that contain <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> column data.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Do not use the <code class="codeph">SET_VALUE</code> or <code class="codeph">SET_VALUES</code> row LCR member procedures in a custom rule-based transformation that is processing a row LCR that contains <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> data. Doing so raises the <code class="codeph">ORA-26679</code> error.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Rule-based transformation functions that are run on LCRs that contain <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> columns must be deterministic, so that all LCRs corresponding to the row change are transformed in the same way.
+                        </p>
+                     </li>
+                     <li>
+                        <p>A declarative rule-based transformation created by the <code class="codeph">ADD_COLUMN</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package cannot add a <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> column to a row LCR.
+                        </p>
+                     </li>
+                     <li>
+                        <p>You cannot use a procedure DML handler or error handler to process row LCRs that contain <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> column data.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Rules used to evaluate LCRs that contain <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> columns must be deterministic, so that either all of the LCRs corresponding to the row change cause a rule in a rule set to evaluate to <code class="codeph">TRUE</code>, or none of them do. 
+                        </p>
+                     </li>
+                     <li>
+                        <p>You cannot use an apply process to enqueue LCRs that contain <code class="codeph">LONG</code> or <code class="codeph">LONG</code> <code class="codeph">RAW</code> column data into a destination queue. The <code class="codeph">SET_DESTINATION_QUEUE</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package sets the destination queue for LCRs that satisfy a specified apply process rule.
+                        </p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-98CB180E-69C5-4CC7-A4BD-4FD5A9B03F86__GUID-4960BC4D-BD4D-4F88-9129-662739376DA3">
+                     <p class="notep1">Note:</p>
+                     <p><code class="codeph">LONG</code> and <code class="codeph">LONG</code> <code class="codeph">RAW</code> data types cannot be present in row LCRs captured by synchronous captures or constructed by users.
+                     </p>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-98CB180E-69C5-4CC7-A4BD-4FD5A9B03F86__GUID-B492BB10-5B32-416F-BE01-CA2D56055985">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strms/rule-based-transformations.html#STRMS106"><span class="italic">Oracle Streams Concepts and Administration </span></a>for information about rule-based transformations
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../sqlrf/CREATE-FUNCTION.html#SQLRF01208"><span class="italic">Oracle Database SQL Language Reference</span></a> for more information about deterministic functions
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

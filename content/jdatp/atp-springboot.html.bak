@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Part number: F10051-01 -->
+    <!-- Published date: October 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Autonomous Transaction Processing (ATP), SpringBoot and JDBC</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to connect to an ATP Database using JDBC and Spring.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com"
+          class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Enter user credentials such as URL, username and password. "
+            style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Autonomous
+        Transaction Processing (ATP), SpringBoot and JDBC</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ"
+                  height="32" width="32">Before You Begin</h2>
+              <p>This tutorial shows you how to connect to an ATP Database using
+                JDBC and Spring.</p>
+              <h3>Background</h3>
+              <p>An ATP Database enables convenience and ease of use. It allows
+                autonomous backups and patching, zero downtime scaling, and easy
+                provisioning. </p>
+              <p>The following OBE provides step by step instructions on how to
+                connect to an ATP using SpringBoot, which uses JDBC and UCP. </p>
+              <p>SpringBoot enables you to create standalone Spring based
+                applications that are easy to set up and run. </p>
+              <p>Visit the SpringBoot website for more information: <a href="https://spring.io/projects/spring-boot"
+                  target="_blank">SpringBoot</a></p>
+              <p></p>
+              <p>This application accesses the EMP table in the database, and
+                displays employee names in the table.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>An integrated <span style="font-size:11.0pt;line-height:107%;
+font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">development
+environment
+                    such as Eclipse, Netbeans, IntelliJ, or JDeveloper.</span></li>
+                <li>Access to application code on Github.</li>
+                <li>An Oracle Cloud account (or access to an ATP account).</li>
+                <li>Download the wallet files using your Cloud credentials (or,
+                  client credentials to connect to ATP)</li>
+                <li>An EMP table in the database, populated with data. If
+                  needed, use script on Github to create and populate this
+                  table. </li>
+                <li>spring-boot-1.4.2.jar files, and commons-logging-1.2.jar
+                  files:</li>
+                <p> <strong>Note</strong>: Download the JAR files here:&nbsp;<a
+                    href="https://jar-download.com/artifacts/org.springframework.boot/spring-boot/1.4.2.RELEASE/source-code"
+                    target="_blank"><span style="color: black;"> </span>SpringBoot</a></p>
+                <li>&nbsp;JDBC JAR Files (Release 18.3):</li>
+                <ul>
+                  ojdbc8.jar <br>
+                  ons.jar <br>
+                  oraclepki.jar <br>
+                  osdt_cert.jar <br>
+                  osdt_core.jar <br>
+                  ucp.jar<br>
+                </ul>
+                <p class="MsoListParagraph" style="margin-bottom:0in;margin-bottom:.0001pt;
+mso-add-space:auto;line-height:normal"> <strong>Note</strong>: Download the JAR
+                  files here:<a href="https://www.oracle.com/technetwork/database/application-development/jdbc/downloads/jdbc-ucp-183-5013470.html"
+                    target="_blank"><span style="color: black;"> </span>JDBC
+                    JAR Files</a> <span style="color: #006699;"></span><span class="MsoHyperlink"></span></p>
+                <br>
+                <li>&nbsp;Spring JAR Files (Release 4.3.4):</li>
+                <ul>
+                  spring-aop-4.3.4.RELEASE.jar<br>
+                  spring-beans-4.3.4.RELEASE.jar<br>
+                  spring-boot-1.4.2.RELEASE.jar<br>
+                  spring-context-4.3.4.RELEASE.jar<br>
+                  spring-core-4.3.4.RELEASE.jar<br>
+                  spring-expression-4.3.4.RELEASE.jar<br>
+                  spring-jdbc-4.3.4.RELEASE.jar<br>
+                  spring-tx-4.3.4.RELEASE.jar<br>
+                </ul>
+                <p> <strong>Note</strong>: Download the list of JAR files here:<a
+                    href="https://repo.spring.io/release/org/springframework/spring/4.3.4.RELEASE/"
+                    target="_blank"><span style="color: black;"> </span>Spring
+                    JAR Files</a><span style="color: #006699;"></span> </p>
+                <p></p>
+              </ul>
+              <p> Download application code from <a href="https://github.com/oracle/oracle-db-examples/tree/master/java/jdbc/SpringBootApp/src"
+                  target="_blank">Github</a>.</p>
+            </section>
+            <section>
+              <hr>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="./img/32_1.png"
+                  alt="section 1" class="num_circ" height="32" width="32">Download
+                and install Application and IDE</h2>
+              <ol>
+                <li>Ensure that you have an IDE running. In this example, we are
+                  using Eclipse. </li>
+                <p><strong>Note:</strong> You may also use NetBeans, IntelliJ,
+                  or JDeveloper. </p>
+                <li>Install the application code that you downloaded from
+                  Github.</li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png"
+                  alt="section 2" class="num_circ" height="32" width="32">Open
+                the Java code in an IDE</h2>
+              <ol>
+                <li>Download the application code from Github.</li>
+                <li>Open a new project in Eclipse. Go to <strong>File</strong>.
+                  Click <strong>New</strong>, and then select <strong>Project</strong>.<strong></strong></li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png"
+                  alt="section 3" class="num_circ" height="32" width="32">Place
+                the JAR files in the appropriate directory</h2>
+              <ol>
+                <li>Ensure that the JDBC, Spring and commons-logging JAR files
+                  are present in the classpath/buildpath.</li>
+              </ol>
+              <p> In this example, the JAR files are stored in the following
+                location:
+                D:\ATP_OBE\SpringBoot_JDBC_UCP_JARS\Spring_Boots_Jars\. </p>
+              <figure><img src="./img/jars.png" alt="JAR files required for the application."
+                  class="ScreenShot" style="width: 462px; height: 256px;"> <figcaption><a
+                    href="./files/jars.txt">Description of the illustration
+                    jars.png</a></figcaption> </figure>
+              <br>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_4" role="button" style="text-align: left;"><img src="./img/32_4.png"
+                  alt="section 4" class="num_circ" height="32" width="32">Update
+                the URL and credentials</h2>
+              <ol>
+                <li>Open the <code>HelloAppConfig.xml</code> file.</li>
+                <figure><img src="./img/helloappconfig.png" alt="HelloAppConfig.xml"
+                    class="ScreenShot" style="width: 600px; height: 227px;"> <figcaption><a
+                      href="./files/helloappconfig.txt">Description of the
+                      illustration helloappconfig.png</a></figcaption> </figure>
+                <li>Set the value of DB_URL to the destination on your local
+                  system, where you have downloaded the wallet.</li>
+                <p> DB_URL="<code>jdbc:oracle:thin:@jdbctest_medium?TNS_ADMIN=D:/ATP_OBE/wallet_JDBCTEST</code>"</p>
+                <p> <strong>Note</strong>: The wallet stores all information
+                  related to your database instance.</p>
+                <figure><img src="./img/url.png" alt="This figure shows the credentials that the user has to enter. This includes URL, username and password."
+                    class="ScreenShot" style="width: 611px; height: 140px;"> <figcaption><a
+                      href="./files/url.txt">Description of the illustration
+                      url.png</a></figcaption> </figure>
+                <li>Set the DB_USER to <code>jdbcuser</code>. </li>
+                <li>Enter the DB password. </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_5" role="button" style="text-align: left;"><img src="./img/32_5.png"
+                  alt="section 5" class="num_circ" height="32" width="32">Test
+                the code</h2>
+              <ol>
+                <li>Once you have entered the credentials, go to <strong>Menu</strong>.
+                </li>
+                <li>Navigate to <code>HelloApplication.java</code>.</li>
+                <li>Right click on the file. Select <strong>Run As</strong>.
+                  Then, select '1 Java Application'.</li>
+              </ol>
+              <p> The code will compile and you will be able to view the output
+                under the 'Console'.</p>
+              <p>Once the application is connected to the ATP Database, you will
+                be able to view the data in the table.</p>
+              <figure><img src="./img/final.png" alt="Data present in the EMP table is displayed."
+                  class="ScreenShot" style="width: 624px; height: 271px;"> <figcaption><a
+                    href="./files/final.txt">Description of the illustration
+                    final.png</a></figcaption></figure>
+              <p><br>
+              </p>
+            </section>
+            <hr>
+            <section>
+              <!-- Use the following link for more information -->
+              <h2 id="more_info" role="button" style="text-align: left;"><img src="./img/32_more.png"
+                  alt="more information" class="num_circ" height="32" width="32">Want
+                to Learn More?</h2>
+              <ul>
+                <li><a href="https://www.oracle.com/technetwork/database/application-development/jdbc/documentation/atp-5073445.html"
+                    target="_blank">Java Connectivity with Autonomous Database
+                    (ATP or ADW)</a></li>
+              </ul>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html"
+                target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+  </body>
+</html>

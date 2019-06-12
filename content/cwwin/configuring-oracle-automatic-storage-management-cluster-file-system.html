@@ -1,0 +1,141 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="If you want to install Oracle RAC on Oracle ACFS, you must first create the Oracle home directory in Oracle ACFS.">
+      <meta name="description" content="If you want to install Oracle RAC on Oracle ACFS, you must first create the Oracle home directory in Oracle ACFS.">
+      <title>Configuring Oracle Automatic Storage Management Cluster File System</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Grid Infrastructure Installation and Upgrade Guide">
+      <meta property="og:description" content="If you want to install Oracle RAC on Oracle ACFS, you must first create the Oracle home directory in Oracle ACFS.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Grid Infrastructure Installation and Upgrade Guide for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="grid-infrastructure-installation-and-upgrade-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-11-15T23:27:28-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2012, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83915-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="asmtool-command-line-reference.html" title="Previous" type="text/html">
+      <link rel="next" href="configuring-direct-nfs-client-for-oracle-rac-data-files.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Grid Infrastructure Installation and Upgrade Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="CWWIN">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="asmtool-command-line-reference.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="configuring-direct-nfs-client-for-oracle-rac-data-files.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Grid Infrastructure Installation and Upgrade Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="configuring-storage-for-oracle-asm.html" property="item" typeof="WebPage"><span property="name">Configuring Storage for Oracle Automatic Storage Management</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Configuring Oracle Automatic Storage Management Cluster File System</li>
+            </ol>
+            <a id="GUID-230C5175-8214-4AB9-86D5-4BCC39DF6995" name="GUID-230C5175-8214-4AB9-86D5-4BCC39DF6995"></a>
+            
+            <h2 id="CWWIN-GUID-230C5175-8214-4AB9-86D5-4BCC39DF6995" class="sect2"><span class="enumeration_section">7.7 </span>Configuring Oracle Automatic Storage Management Cluster File System
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>If you want to install Oracle RAC on Oracle ACFS, you must first create the Oracle home directory in Oracle ACFS.</p>
+               <div class="section">You can also create a General Purpose File System configuration of ACFS using ASMCA. Oracle ACFS is installed as part of an Oracle Grid Infrastructure installation (Oracle Clusterware and Oracle Automatic Storage Management). </div>
+               <!-- class="section" -->
+               <div class="p">The compatibility parameters <code class="codeph">COMPATIBLE.ASM</code> and <code class="codeph">COMPATIBLE.ADVM</code> must be set to 11.2 or higher for the disk group to contain an Oracle ADVM volume.
+               </div>
+               <!-- class="section" -->
+               <ol>
+                  <li class="stepexpand"><span>Install Oracle Grid Infrastructure for a cluster (Oracle Clusterware and Oracle ASM).</span></li>
+                  <li class="stepexpand"><span>Go to the <code class="codeph">bin</code> directory in the Grid home, for example:</span><div><pre class="pre codeblock"><code>C:\&gt; cd C:\app\18.0.0\grid\bin</code></pre></div>
+                  </li>
+                  <li class="stepexpand"><span>Ensure that the Oracle Grid Infrastructure installation owner has read and write permissions on the storage mount point you want to use.</span><div>For example, to use the mount point <code>E:\data\acfsmounts\</code><pre class="pre codeblock"><code>C:\..bin&gt; dir /Q E:\data\acfsmounts</code></pre></div>
+                  </li>
+                  <li class="stepexpand"><span>Start ASMCA as the Oracle Installation user for Oracle Grid Infrastructure, for example:</span><div><pre class="pre codeblock"><code>C:\..\bin&gt; asmca</code></pre></div>
+                     <div>The Configure ASM: Disk Groups page is displayed. The Configure ASM: ASM Disk Groups page shows you the Oracle ASM disk group you created during installation. </div>
+                  </li>
+                  <li class="stepexpand"><span>Click the <span class="uicontrol bold">ASM Cluster File Systems</span> tab.</span></li>
+                  <li class="stepexpand"><span>On the ASM Cluster File Systems page, right-click the Data disk, then select <span class="uicontrol bold">Create ACFS for Database Use</span>.</span></li>
+                  <li class="stepexpand"><span>In the Create ACFS for Database window, enter the following information:</span><div>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="bold">Volume Name</span>: Enter the name of the database home. The name must be unique in your enterprise, for example: <code class="codeph">racdb_01</code></p>
+                           </li>
+                           <li>
+                              <p><span class="bold">Mount Point</span>: Enter the directory path or logical drive letter for the mount point. For example: <code>E:\data\acfsmounts\racdb_01</code></p>
+                              <p>Make a note of this mount point for future reference.</p>
+                           </li>
+                           <li>
+                              <p><span class="bold">Size (GB)</span>: Enter in gigabytes the size you want the database home to be. 
+                              </p>
+                           </li>
+                           <li>
+                              <p><span class="bold">Owner Name</span>: Enter the name of the Oracle Installation user you plan to use to install the database. For example: <code class="codeph">oracle1</code></p>
+                           </li>
+                        </ul>
+                        <p>Select <span class="uicontrol bold">Automatically run configuration commands</span> to run ASMCA configuration commands automatically. To use this option, you must provide the Administrator user credentials on the ASMCA Settings page.
+                        </p>
+                     </div>
+                  </li>
+                  <li class="stepexpand"><span>Click <span class="uicontrol bold">OK</span> when you have entered the required information.</span></li>
+                  <li class="stepexpand"><span>If you did not select to run configuration commands automatically, then run the script generated by Oracle ASM Configuration Assistant as the Local Administrator user.</span><div>On an Oracle Clusterware environment, the script registers ACFS as a resource managed by Oracle Clusterware. Registering ACFS as a resource helps Oracle Clusterware to mount the ACFS automatically in the proper order when ACFS is used for an Oracle RAC database home.</div>
+                  </li>
+                  <li class="stepexpand"><span>During Oracle RAC installation, ensure that you or the database administrator who installs Oracle RAC selects for the Oracle home the mount point you provided in the <span class="uicontrol bold">Mount Point</span> field (in the preceding example, this was <code>E:\data\acfsmounts\racdb_01</code>).</span></li>
+               </ol>
+               <div class="section">
+                  <div class="infoboxnotealso" id="GUID-230C5175-8214-4AB9-86D5-4BCC39DF6995__GUID-05E1619B-6FB3-4B72-ACBF-EC62F61111E7">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../ostmg/manage-acfs-advm-asmca.html#OSTMG95491" target="_blank"><span><cite>Oracle Automatic Storage Management Administrator's Guide</cite></span></a> for more information about configuring and managing your storage with Oracle ACFS
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="understanding-oracle-asm-cluster-file-system.html#GUID-4A04ACA0-7975-4C25-8D9A-FE495E80C103" title="Oracle Automatic Storage Management Cluster File System (Oracle ACFS) is a multi-platform, scalable file system, and storage management technology that extends Oracle Automatic Storage Management (Oracle ASM) functionality to support all file types.">Oracle ACFS and Oracle ADVM</a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="configuring-storage-for-oracle-asm.html#GUID-48B060FD-36DC-4D7B-BAD8-C86902C7CF40" title="Identify storage requirements and Oracle Automatic Storage Management (Oracle ASM) disk group options.">Configuring Storage for Oracle Automatic Storage Management</a></p>
+                  </div>
+               </div>
+            </div>
+            
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Simple Single-Source Replication Example</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Extended Examples ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Extended Examples">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-extended-examples.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T22:39:34-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2008, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83782-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="release-changes.html" title="Previous" type="text/html">
+      <link rel="next" href="single-source-heterogeneous-replication-example.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Extended Examples">
+    <meta name="dcterms.isVersionOf" content="STREX">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="release-changes.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="single-source-heterogeneous-replication-example.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Extended Examples </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">   Simple Single-Source Replication Example</li>
+            </ol>
+            <a id="GUID-DB66FEAF-CA42-4F5C-A1EF-213315B7B79F" name="GUID-DB66FEAF-CA42-4F5C-A1EF-213315B7B79F"></a><a id="STREX002"></a>
+            
+            <h2 id="STREX-GUID-DB66FEAF-CA42-4F5C-A1EF-213315B7B79F" class="sect2"><span class="enumeration_chapter">1 </span>   Simple Single-Source Replication Example
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d1197e48" class="indexterm-anchor"></a><a id="d1197e54" class="indexterm-anchor"></a>This chapter illustrates an example of a simple single-source replication environment that can be constructed using Oracle Streams.
+               </p>
+               <p>This chapter contains these topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="simple-single-source-replication-example.html#GUID-83314801-6759-4D33-B62A-B89735D19EA4">Overview of the Simple Single-Source Replication Example</a></p>
+                  </li>
+                  <li>
+                     <p><a href="simple-single-source-replication-example.html#GUID-FEAD1B76-A752-4110-85CB-E29CC369E695">Prerequisites</a></p>
+                  </li>
+                  <li>
+                     <p><a href="simple-single-source-replication-example.html#GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B">Create Queues and Database Links</a></p>
+                  </li>
+                  <li>
+                     <p><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2">Configure Capture, Propagation, and Apply for Changes to One Table</a></p>
+                  </li>
+                  <li>
+                     <p><a href="simple-single-source-replication-example.html#GUID-5D186372-EE7A-4EC9-982A-B89CAB4A7327">Make Changes to the hr.jobs Table and View Results</a></p>
+                  </li>
+               </ul>
+            </div><a id="STREX545"></a><a id="STREX544"></a><div class="props_rev_3"><a id="GUID-83314801-6759-4D33-B62A-B89735D19EA4" name="GUID-83314801-6759-4D33-B62A-B89735D19EA4"></a><h3 id="STREX-GUID-83314801-6759-4D33-B62A-B89735D19EA4" class="sect3"><span class="enumeration_section">1.1 </span>Overview of the Simple Single-Source Replication Example
+               </h3>
+               <div>
+                  <p>The example in this chapter illustrates using Oracle Streams to replicate data in one table between two databases. A capture process captures data manipulation language (DML) and data definition language (DDL) changes made to the <code class="codeph">jobs</code> table in the <code class="codeph">hr</code> schema at the <code class="codeph">str1.example.com</code> Oracle database, and a propagation propagates these changes to the <code class="codeph">str2.example.com</code> Oracle database. Next, an apply process applies these changes at the <code class="codeph">str2.example.com</code> database. This example assumes that the <code class="codeph">hr.jobs</code> table is read-only at the <code class="codeph">str2.example.com</code> database.
+                  </p>
+                  <p><a href="simple-single-source-replication-example.html#GUID-83314801-6759-4D33-B62A-B89735D19EA4__i1006121">Figure 1-1</a> provides an overview of the environment.
+                  </p>
+                  <div class="figure" id="GUID-83314801-6759-4D33-B62A-B89735D19EA4__i1006121">
+                     <p class="titleinfigure">Figure 1-1 Simple Example that Shares Data from a Single Source Database</p><img width="531" src="img/strex035.gif" alt="Description of Figure 1-1 follows" title="Description of Figure 1-1 follows" longdesc="img_text/strex035.html"><br><a href="img_text/strex035.html">Description of "Figure 1-1 Simple Example that Shares Data from a Single Source Database"</a></div>
+                  <!-- class="figure" -->
+               </div>
+            </div><a id="STREX546"></a><div class="props_rev_3"><a id="GUID-FEAD1B76-A752-4110-85CB-E29CC369E695" name="GUID-FEAD1B76-A752-4110-85CB-E29CC369E695"></a><h3 id="STREX-GUID-FEAD1B76-A752-4110-85CB-E29CC369E695" class="sect3"><span class="enumeration_section">1.2 </span>Prerequisites
+               </h3>
+               <div>
+                  <p>The following prerequisites must be completed before you begin the example in this chapter.</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a id="d1197e218" class="indexterm-anchor"></a><a id="d1197e222" class="indexterm-anchor"></a><a id="d1197e224" class="indexterm-anchor"></a>Set the following initialization parameters to the values indicated:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">GLOBAL_NAMES</code>: This parameter must be set to <code class="codeph">TRUE</code> at each database that is participating in your Oracle Streams environment. 
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">COMPATIBLE</code>: This parameter must be set to <code class="codeph">10.2.0</code> or higher at each database that is participating in your Oracle Streams environment. 
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">STREAMS_POOL_SIZE</code>: Optionally set this parameter to an appropriate value for each database in the environment. This parameter specifies the size of the Oracle Streams pool. The Oracle Streams pool stores messages in a buffered queue and is used for internal communications during parallel capture and apply. When the <code class="codeph">MEMORY_TARGET</code>, <code class="codeph">MEMORY_MAX_TARGET</code>, or <code class="codeph">SGA_TARGET</code> initialization parameter is set to a nonzero value, the Oracle Streams pool size is managed automatically.
+                              </p>
+                              <div class="infoboxnotealso" id="GUID-FEAD1B76-A752-4110-85CB-E29CC369E695__GUID-06575CDF-768C-48A7-90AC-AF8B1DBA12A2">
+                                 <p class="notep1">See Also:</p>
+                                 <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP201"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for information about other initialization parameters that are important in an Oracle Streams environment
+                                 </p>
+                              </div>
+                           </li>
+                        </ul>
+                     </li>
+                     <li>
+                        <p><a id="d1197e267" class="indexterm-anchor"></a><a id="d1197e271" class="indexterm-anchor"></a>Any database producing changes that will be captured must be running in <code class="codeph">ARCHIVELOG</code> mode. In this example, changes are produced at <code class="codeph">str1.example.com</code>, and so <code class="codeph">str1.example.com</code> must be running in <code class="codeph">ARCHIVELOG</code> mode.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-FEAD1B76-A752-4110-85CB-E29CC369E695__GUID-3D10271C-7261-41B7-BA3B-606DABFEFC8F">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../admin/managing-archived-redo-log-files.html#ADMIN008"><span class="italic">Oracle Database Administrator's Guide </span></a>for information about running a database in <code class="codeph">ARCHIVELOG</code> mode
+                           </p>
+                        </div>
+                     </li>
+                     <li>
+                        <p>Configure your network and Oracle Net so that the <code class="codeph">str1.example.com</code> database can communicate with the <code class="codeph">str2.example.com</code> database.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-FEAD1B76-A752-4110-85CB-E29CC369E695__GUID-BC1ACED8-D7C0-431F-9AC2-C8E4381595B4">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../netag/index.html"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a></p>
+                        </div>
+                     </li>
+                     <li>
+                        <p>Create an Oracle Streams administrator at each database in the replication environment. In this example, the databases are <code class="codeph">str1.example.com</code> and <code class="codeph">str2.example.com</code>. This example assumes that the user name of the Oracle Streams administrator is <code class="codeph">strmadmin</code>.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-FEAD1B76-A752-4110-85CB-E29CC369E695__GUID-5F50C3E8-00B3-43C5-B0A4-14E5AFE43599">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for instructions about creating an Oracle Streams administrator
+                           </p>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STREX1179"></a><a id="STREX1180"></a><a id="STREX1181"></a><a id="STREX1182"></a><a id="STREX1183"></a><a id="STREX547"></a><div class="props_rev_3"><a id="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B" name="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B"></a><h3 id="STREX-GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B" class="sect3"><span class="enumeration_section">1.3 </span>Create Queues and Database Links
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Complete the following steps to create queues and database links for an Oracle Streams replication environment that includes two Oracle databases.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__GUID-DF996234-1717-4D21-A0EE-AD8AAD3D9BB3">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__CJFDIGFI">"Create the ANYDATA Queue at str1.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__CJFEGIDA">"Create the Database Link at str1.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__CJFCIHDJ">"Set Up the ANYDATA Queue at str2.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__CJFDAHIG">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__GUID-AA817715-DCFE-49FA-BEF4-453C6F54FD8A">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__i1026451">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__GUID-DF996234-1717-4D21-A0EE-AD8AAD3D9BB3">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL streams_setup_simple.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__CJFDIGFI">
+                              <!-- --></a>Create the ANYDATA Queue at str1.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect as the Oracle Streams administrator at the database where you want to capture changes. In this example, that database is <code class="codeph">str1.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT strmadmin@str1.example.com
+
+/*
+</pre><p>Run the <code class="codeph">SET_UP_QUEUE</code> procedure to create a queue named <code class="codeph">streams_queue</code> at <code class="codeph">str1.example.com</code>. This queue will function as the <code class="codeph">ANYDATA</code> queue by holding the captured changes that will be propagated to other databases.
+                           </p>
+                           <p>Running the <code class="codeph">SET_UP_QUEUE</code> procedure performs the following actions:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a queue table named <code class="codeph">streams_queue_table</code>. This queue table is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>) and uses the default storage of this user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates a queue named <code class="codeph">streams_queue</code> owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>).
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Starts the queue.</p>
+                              </li>
+                           </ul>
+                           <p></p><pre class="oac_no_warn" dir="ltr">*/
+
+EXEC DBMS_STREAMS_ADM.SET_UP_QUEUE();
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__CJFEGIDA">
+                              <!-- --></a>Create the Database Link at str1.example.com<span class="bold"></span></dt>
+                        <dd>
+                           <p>Create the database link from the database where changes are captured to the database where changes are propagated. In this example, the database where changes are captured is <code class="codeph">str1.example.com</code>, and these changes are propagated to&nbsp;<code class="codeph">str2.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+CREATE DATABASE LINK str2.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY &amp;password USING 'str2.example.com';
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__CJFCIHDJ">
+                              <!-- --></a>Set Up the ANYDATA Queue at str2.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect as the Oracle Streams administrator at <code class="codeph">str2.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT strmadmin@str2.example.com
+
+/*
+</pre><p>Run the <code class="codeph">SET_UP_QUEUE</code> procedure to create a queue named <code class="codeph">streams_queue</code> at <code class="codeph">str2.example.com</code>. This queue will function as the <code class="codeph">ANYDATA</code> queue by holding the changes that will be applied at this database.
+                           </p>
+                           <p>Running the <code class="codeph">SET_UP_QUEUE</code> procedure performs the following actions:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a queue table named <code class="codeph">streams_queue_table</code>. This queue table is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>) and uses the default storage of this user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates a queue named <code class="codeph">streams_queue</code> owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>).
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Starts the queue.</p>
+                              </li>
+                           </ul>
+                           <p></p><pre class="oac_no_warn" dir="ltr">*/
+
+EXEC  DBMS_STREAMS_ADM.SET_UP_QUEUE();
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-4F75B579-996C-4373-AA2E-56673B7C9A7B__CJFDAHIG">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">streams_setup_simple.out</code> spool file to ensure that all actions finished successfully after this script is completed.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1184"></a><a id="STREX1185"></a><a id="STREX1186"></a><a id="STREX1187"></a><a id="STREX1188"></a><a id="STREX1189"></a><a id="STREX1190"></a><a id="STREX1191"></a><a id="STREX548"></a><div class="props_rev_3"><a id="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2" name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2"></a><h3 id="STREX-GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2" class="sect3"><span class="enumeration_section">1.4 </span>Configure Capture, Propagation, and Apply for Changes to One Table
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Complete the following steps to specify the capture, propagation, and apply definitions for the <code class="codeph">hr.jobs</code> table using the <code class="codeph">DBMS_STEAMS_ADM</code> package.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFCCCAF">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFHCCDB">"Configure Propagation at str1.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFIDGFA">"Configure the Capture Process at str1.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFBBCCJ">"Set the Instantiation SCN for the hr.jobs Table at str2.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFBFHAJ">"Configure the Apply Process at str2.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFFHDEJ">"Start the Apply Process at str2.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFDFGEC">"Start the Capture Process at str1.example.com"</a></span></li>
+                     <li><span><a href="simple-single-source-replication-example.html#GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFHGBIG">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__GUID-AFB261E7-2DF0-44B9-BD0D-9B09F71FAD8C">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl>
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFCCCAF">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL streams_share_jobs.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFHCCDB">
+                              <!-- --></a>Configure Propagation at str1.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">str1.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@str1.example.com
+
+/*
+</pre><p>Configure and schedule propagation of DML and DDL changes to the <code class="codeph">hr.jobs</code> table from the queue at <code class="codeph">str1.example.com</code> to the queue at <code class="codeph">str2.example.com</code>. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_PROPAGATION_RULES(
+&nbsp;&nbsp;&nbsp; table_name              =&gt; 'hr.jobs', 
+&nbsp;&nbsp; &nbsp;streams_name            =&gt; 'str1_to_str2', 
+&nbsp;&nbsp; &nbsp;source_queue_name       =&gt; 'strmadmin.streams_queue',
+&nbsp;&nbsp;&nbsp; destination_queue_name  =&gt; 'strmadmin.streams_queue@str2.example.com',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;        &nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp;         =&gt; TRUE,
+    source_database         =&gt; 'str1.example.com',
+    inclusion_rule          =&gt; TRUE,
+    queue_to_queue          =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFIDGFA">
+                              <!-- --></a>Configure the Capture Process at str1.example.com
+                        </dt>
+                        <dd>
+                           <p>Configure the capture process to capture changes to the <code class="codeph">hr.jobs</code> table at <code class="codeph">str1.example.com</code>. This step specifies that changes to this table are captured by the capture process and enqueued into the specified queue.
+                           </p>
+                           <p>This step also prepares the <code class="codeph">hr.jobs</code> table for instantiation and enables supplemental logging for any primary key, unique key, bitmap index, and foreign key columns in this table. Supplemental logging places additional information in the redo log for changes made to tables. The apply process needs this extra information to perform certain operations, such as unique row identification and conflict resolution. Because <code class="codeph">str1.example.com</code> is the only database where changes are captured in this environment, it is the only database where supplemental logging must be enabled for the <code class="codeph">hr.jobs</code> table.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__GUID-084D7E38-968F-4583-AEB2-C9CA7D7D4C83">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP107"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a></p>
+                           </div><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name     =&gt; 'hr.jobs',   
+    streams_type   =&gt; 'capture',
+    streams_name   =&gt; 'capture_simp',
+    queue_name     =&gt; 'strmadmin.streams_queue',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;=&gt; TRUE,
+    include_ddl &nbsp;&nbsp; =&gt; TRUE,
+    inclusion_rule =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFBBCCJ">
+                              <!-- --></a>Set the Instantiation SCN for the hr.jobs Table at str2.example.com
+                        </dt>
+                        <dd>
+                           <p>This example assumes that the <code class="codeph">hr.jobs</code> table exists at both the <code class="codeph">str1.example.com</code> database and the <code class="codeph">str2.example.com</code> database, and that this table is synchronized at these databases. Because the <code class="codeph">hr.jobs</code> table already exists at <code class="codeph">str2.example.com</code>, this example uses the <code class="codeph">GET_SYSTEM_CHANGE_NUMBER</code> function in the <code class="codeph">DBMS_FLASHBACK</code> package at <code class="codeph">str1.example.com</code> to obtain the current SCN for the source database. This SCN is used at <code class="codeph">str2.example.com</code> to run the <code class="codeph">SET_TABLE_INSTANTIATION_SCN</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. Running this procedure sets the instantiation SCN for the <code class="codeph">hr.jobs</code> table at <code class="codeph">str2.example.com</code>.
+                           </p>
+                           <p>The <code class="codeph">SET_TABLE_INSTANTIATION_SCN</code> procedure controls which LCRs for a table are ignored by an apply process and which LCRs for a table are applied by an apply process. If the commit SCN of an LCR for a table from a source database is less than or equal to the instantiation SCN for that table at a destination database, then the apply process at the destination database discards the LCR. Otherwise, the apply process applies the LCR.
+                           </p>
+                           <p>In this example, both of the apply process at <code class="codeph">str2.example.com</code> will apply transactions to the <code class="codeph">hr.jobs</code> table with SCNs that were committed after SCN obtained in this step.
+                           </p>
+                           <div class="infoboxnote" id="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__GUID-77FF7124-CCFB-477A-AC5E-E7A4B5535B96">
+                              <p class="notep1">Note:</p>
+                              <p>This example assumes that the contents of the <code class="codeph">hr.jobs</code> table at <code class="codeph">str1.example.com</code> and <code class="codeph">str2.example.com</code> are consistent when you complete this step. Ensure that there is no activity on this table while the instantiation SCN is being set. You might want to lock the table at each database while you complete this step to ensure consistency. If the table does not exist at the destination database, then you can use export/import for instantiation.
+                              </p>
+                           </div><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  iscn  NUMBER;         -- Variable to hold instantiation SCN value
+BEGIN
+  iscn := DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER();
+  DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN@STR2.EXAMPLE.COM(
+    source_object_name    =&gt; 'hr.jobs',
+    source_database_name  =&gt; 'str1.example.com',
+    instantiation_scn     =&gt; iscn);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFBFHAJ">
+                              <!-- --></a>Configure the Apply Process at str2.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">str2.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@str2.example.com
+
+/*
+</pre><p>Configure <code class="codeph">str2.example.com</code> to apply changes to the <code class="codeph">hr.jobs</code> table. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name      =&gt; 'hr.jobs',
+&nbsp;&nbsp;&nbsp;&nbsp;streams_type    =&gt; 'apply', 
+    streams_name    =&gt; 'apply_simp',
+&nbsp;&nbsp;&nbsp;&nbsp;queue_name      =&gt; 'strmadmin.streams_queue',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp; =&gt; TRUE,
+    source_database =&gt; 'str1.example.com',
+    inclusion_rule  =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFFHDEJ">
+                              <!-- --></a>Start the Apply Process at str2.example.com
+                        </dt>
+                        <dd>
+                           <p>Set the <code class="codeph">disable_on_error</code> parameter to <code class="codeph">n</code> so that the apply process will not be disabled if it encounters an error, and start the apply process at <code class="codeph">str2.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_APPLY_ADM.SET_PARAMETER(
+    apply_name  =&gt; 'apply_simp', 
+    parameter   =&gt; 'disable_on_error', 
+    value       =&gt; 'N');
+END;
+/
+ 
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_simp');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFDFGEC">
+                              <!-- --></a>Start the Capture Process at str1.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">str1.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@str1.example.com
+
+/*
+</pre><p>Start the capture process at <code class="codeph">str1.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+    capture_name  =&gt; 'capture_simp');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-BAFCD142-C5AB-404E-A927-BE76AF31E3A2__CJFHGBIG">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">streams_share_jobs.out</code> spool file to ensure that all actions finished successfully after this script is completed.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1192"></a><a id="STREX1193"></a><a id="STREX549"></a><div class="props_rev_3"><a id="GUID-5D186372-EE7A-4EC9-982A-B89CAB4A7327" name="GUID-5D186372-EE7A-4EC9-982A-B89CAB4A7327"></a><h3 id="STREX-GUID-5D186372-EE7A-4EC9-982A-B89CAB4A7327" class="sect3"><span class="enumeration_section">1.5 </span>Make Changes to the hr.jobs Table and View Results
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Complete the following steps to make DML and DDL changes to the <code class="codeph">hr.jobs</code> table at <code class="codeph">str1.example.com</code> and then confirm that the changes were captured at <code class="codeph">str1.example.com</code>, propagated from <code class="codeph">str1.example.com</code> to <code class="codeph">str2.example.com</code>, and applied to the <code class="codeph">hr.jobs</code> table at&nbsp;<code class="codeph">str2.example.com</code>.
+                     </p>
+                     <dl>
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-5D186372-EE7A-4EC9-982A-B89CAB4A7327__GUID-1B5E3CEA-0E4F-45E7-863E-B7AEF1191CCF">
+                              <!-- --></a>Make Changes to hr.jobs at str1.example.com
+                        </dt>
+                        <dd>
+                           <p>Make the following changes to the <code class="codeph">hr.jobs</code> table.
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT hr@str1.example.com
+Enter password: <span class="italic">password</span>
+
+UPDATE hr.jobs SET max_salary=9545 WHERE job_id='PR_REP';
+COMMIT;
+
+ALTER TABLE hr.jobs ADD(duties VARCHAR2(4000));</pre></dd>
+                        <dt class="dlterm"><a name="GUID-5D186372-EE7A-4EC9-982A-B89CAB4A7327__GUID-DA62BEB0-44F4-4E70-9A25-65705AA310A9">
+                              <!-- --></a>Query and Describe the hr.jobs Table at str2.example.com
+                        </dt>
+                        <dd>
+                           <p>After some time passes to allow for capture, propagation, and apply of the changes performed in the previous step, run the following query to confirm that the <code class="codeph">UPDATE</code> change was propagated and applied at <code class="codeph">str2.example.com</code>:
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT hr@str2.example.com
+Enter password: <span class="italic">password</span>
+
+SELECT * FROM hr.jobs WHERE job_id='PR_REP';
+</pre><p>The value in the <code class="codeph">max_salary</code> column should be <code class="codeph">9545</code>.
+                           </p>
+                           <p>Next, describe the <code class="codeph">hr.jobs</code> table to confirm that the <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> change was propagated and applied at <code class="codeph">str2.example.com</code>:
+                           </p><pre class="oac_no_warn" dir="ltr">DESC hr.jobs
+</pre><p>The <code class="codeph">duties</code> column should be the last column.
+                           </p>
+                           <p></p>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

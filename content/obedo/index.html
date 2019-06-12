@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Part number: F12252-01 -->
+    <!-- Published date: November 2018 -->
+    <!-- Template date: October 15, 2018 -->
+    <!-- Put the content ID of this OBE between the empty quotation marks for 'content' below -->
+    <meta name="contentid" content="25703">
+    <!-- The title below is displayed on the browser tab, in search results, and in  history. It can be longer than the tutorial title in the <h1> element, below.-->
+    <!-- Use an imperative verb in the title. -->
+    <title>Monitor a Database Operation Using Cloud Control</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to monitor a database operation using Cloud Control.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-12-06T08:42:35+00:00">
+    <meta name="dcterms.title" content="Monitor a Database Operation Using Cloud Control">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBEDO">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="F12252-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <!-- The title below is displayed as the title at the top of the OBE page. It can be shorter than the title in the <title> element, above. -->
+      <!-- Use an imperative verb in the title. -->
+      <h1><img src="img/obe_tag.png" alt="Oracle by Example branding" align="middle">Monitor
+        a Database Operation Using Cloud Control</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p>This 15-minute tutorial shows you how to monitor a database
+                operation using Oracle Enterprise Manager Cloud Control (Cloud
+                Control). </p>
+              <h3>Background</h3>
+              <p>Oracle Database operations are either simple or composite. A
+                simple database operation is a single SQL statement or PL/SQL
+                statement. Cloud Control automatically monitors a simple
+                database operation when it runs in parallel, or when it has
+                consumed at least 5 seconds of CPU time or I/O time in a single
+                execution.</p>
+              <p>A composite database operation typically consists of a
+                combination of multiple SQL and PL/SQL statements. You begin and
+                end a composite database operation using the PL/SQL procedures <code>DBMS_SQL_MONITOR.BEGIN_OPERATION</code>
+                and <code>DBMS_SQL_MONITOR.END_OPERATION</code> respectively.
+                Only one composite database operation can run at a time in a
+                database session.</p>
+              <p>Using Cloud Control, you can monitor database operations while
+                they are executing, and view the details related to the time and
+                resources consumed by them.</p>
+              <h3>What Do You Need?</h3>
+              <p> You must have the following software before you run this
+                tutorial:</p>
+              <ul>
+                <li>Oracle Database 18c Enterprise Edition</li>
+                <li>Oracle Enterprise Manager Cloud Control (Cloud Control) 13c
+                  Release 3</li>
+                <li>An Oracle Database 18c instance configured in Cloud Control</li>
+                <li>The following initialization parameters configured for the
+                  Oracle Database 18c instance:
+                  <ul>
+                    <li><code>STATISTICS_LEVEL</code> initialization parameter
+                      set to <code>TYPICAL</code> (the default value) or <code>ALL</code></li>
+                    <li><code>CONTROL_MANAGEMENT_PACK_ACCESS</code>
+                      initialization parameter set to <code>DIAGNOSTIC+TUNING</code>
+                      (the default value)</li>
+                  </ul>
+                </li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Set Up
+                the Tutorial Environment</h2>
+              <ol>
+                <li>Using SQL*Plus, connect to the Oracle Database 18c instance
+                  as the <code>SYS</code> user. This database instance should
+                  be already configured in Cloud Control.</li>
+                <li>Run the script <a target="_blank" href="files/setup.sql"><code>setup.sql</code></a>
+                  to set up the tutorial environment. The script takes a few
+                  seconds to complete and displays the following message on
+                  completion:<br>
+                  <br>
+                  <code>***** Environment Setup Completed *****</code> <br>
+                  <br>
+                  <b>Note:</b>&nbsp; Do not close the SQL*Plus window.</li>
+              </ol>
+            </section>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Open
+                the Oracle Database 18c Instance Home Page in Cloud Control</h2>
+              <ol>
+                <li>Log in to Cloud Control.</li>
+                <li>Navigate to the home page of the Oracle Database 18c
+                  instance in which you had executed the <code>setup.sql</code>
+                  script. <br>
+                  <br>
+                  <b>Note:</b>&nbsp; Do not close the Cloud Control window.</li>
+              </ol>
+            </section>
+            <section>
+              <hr>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Start
+                a Database Operation</h2>
+              <p> Go to the SQL*Plus window and run the script <a target="_blank" href="files/db_operation.sql"><code>db_operation.sql</code></a>.
+              </p>
+              <p>The <code>db_operation.sql</code> script starts a database
+                operation having the name <code>DBOP_EXAMPLE</code>. The <code>DBOP_EXAMPLE</code> operation is a composite database operation, that is, it contains many SQL statements.<br>
+                <br>
+                <b>Note:</b>&nbsp; Do not wait for the <code>db_operation.sql</code>
+                script to complete and go to the next step of the tutorial. Do
+                not close the SQL*Plus window. </p>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_4" role="button" style="text-align: left;"><img src="img/32_4.png" alt="section 4" class="num_circ" height="32" width="32">Monitor
+                the Database Operation Using Cloud Control</h2>
+              <ol>
+                <li>Go to the Cloud Control window and from the <b>Performance</b>
+                  menu, select <b>Performance Hub</b> and then <b>SQL
+                    Monitoring</b>.
+                  <figure><img src="img/sql-monitoring-menu.png" alt="Description of sql-monitoring-menu.png follows">
+                    <figcaption><a href="files/sql-monitoring-menu.txt">Description
+                        of the illustration sql-monitoring-menu.png</a></figcaption>
+                  </figure>
+                  <b>Note:</b> If the database login page is displayed, then log
+                  in as the <code>SYS</code> user. <br>
+                  <br>
+                  The <b>Monitored SQL Execution</b> page is displayed. <br>
+                  <br>
+                  The <b>Monitored SQL Execution</b> page lists all the SQL
+                  statements, PL/SQL statements, and composite database
+                  operations that are monitored by Cloud Control. You should
+                  also see the <code>DBOP_EXAMPLE</code> operation listed on
+                  top.<br>
+                  <figure><img src="img/monitored-sql-executions-page.png" alt="Description of monitored-sql-executions-page.png follows">
+                    <figcaption><a href="files/monitored-sql-executions-page.txt">Description
+                        of the illustration monitored-sql-executions-page.png</a></figcaption>
+                  </figure>
+                </li>
+                <li>Click the <b>DBOP_EXAMPLE</b> link. <br>
+                  <br>
+                  The <b>Monitored SQL Execution Details</b> page for the <code>DBOP_EXAMPLE</code>
+                  operation is displayed. You may see a different information in
+                  Cloud Control than what is shown in the following image. <br>
+                  <figure><img src="img/monitored-sql-execution-details-page.png" alt="Description of monitored-sql-execution-details-page.png follows">
+                    <figcaption><a href="files/monitored-sql-execution-details-page.txt">Description
+                        of the illustration
+                        monitored-sql-execution-details-page.png</a></figcaption>
+                  </figure>
+                  The <b>Overview</b> section shows the general information,
+                  time and wait statistics, and IO statistics for the <code>DBOP_EXAMPLE</code>
+                  operation. <br>
+                  <br>
+                  The <b>Details</b> section shows two tabs - <b>Activity</b>
+                  tab and <b>Metrics</b> tab. The <b>Activity</b> tab is
+                  selected by default.</li>
+                <li>Click the <b>Metrics</b> tab. <br>
+                  <br>
+                  The <b>Metrics</b> tab shows various metrics for the <code>DBOP_EXAMPLE</code>
+                  operation, such as CPU used, Memory used, IO throughput, and
+                  IO requests.
+                  <figure><img src="img/monitored-sql-execution-details-metrics-tab.png" alt="Description of monitored-sql-execution-details-metrics-tab.png follows">
+                    <figcaption><a href="files/monitored-sql-execution-details-metrics-tab.txt">Description
+                        of the illustration
+                        monitored-sql-execution-details-metrics-tab.png</a></figcaption>
+                  </figure>
+                </li>
+                <li>Click the <b>Activity</b> tab. <br>
+                  <br>
+                  The <b>Activity</b> tab shows a chart containing the CPU time
+                  used by the various SQL statements of the <code>DBOP_EXAMPLE</code>
+                  operation.
+                  <figure><img src="img/monitored-sql-execution-details-activity-tab.png" alt="Description of monitored-sql-execution-details-activity-tab.png follows">
+                    <figcaption><a href="files/monitored-sql-execution-details-activity-tab.txt">Description
+                        of the illustration
+                        monitored-sql-execution-details-activity-tab.png</a></figcaption>
+                  </figure>
+                </li>
+                <li>In the <b>Activity</b> tab, click the SQL ID that is consuming the maximum CPU time, that is, click the largest
+                  rectangular area in the chart or click the corresponding SQL ID in
+                  the legend.<br>
+                  <br>
+                  The <b>SQL Details</b> page for the selected SQL ID is
+                  displayed.<br>
+                  <figure><img src="img/sql-details-page.png" alt="Description of sql-details-page.png follows">
+                    <figcaption><a href="files/sql-details-page.txt">Description
+                        of the illustration sql-details-page.png</a></figcaption>
+                  </figure>
+                  The <b>Text</b> section shows the SQL statement for the
+                  selected SQL ID. <br>
+                  <br>
+                  The <b>Details</b> section shows many tabs. The <b>Statistics</b>
+                  tab is selected by default, and it shows various statistics of
+                  the SQL statement, such as wait statistics, execution
+                  statistics, and shared cursors statistics as shown in the
+                  preceding image. <br>
+                  <br>
+                  The <b>Activity</b> tab shows the CPU usage by the SQL
+                  statement.
+                  <figure><img src="img/sql-details-page-activity-tab.png" alt="Description of sql-details-page-activity-tab.png follows">
+                    <figcaption><a href="files/sql-details-page-activity-tab.txt">Description
+                        of the illustration sql-details-page-activity-tab.png</a></figcaption>
+                  </figure>
+                  The <b>Plan</b> tab shows the execution plan of the SQL
+                  statement.
+                  <figure><img src="img/sql-details-page-plan-tab.png" alt="Description of sql-details-page-plan-tab.png follows">
+                    <figcaption><a href="files/sql-details-page-plan-tab.txt">Description
+                        of the illustration sql-details-page-plan-tab.png</a></figcaption>
+                  </figure>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_5" role="button" style="text-align: left;"><img src="img/32_5.png" alt="section 5" class="num_circ" height="32" width="32">Clean
+                Up the Tutorial Environment</h2>
+              <p>Go to the SQL*Plus window and run the script <a target="_blank" href="files/cleanup.sql"><code>cleanup.sql</code></a>.</p>
+              <p>The <code>cleanup.sql</code> script cleans up the tutorial
+                environment and terminates the SQL*Plus session. The script
+                takes a few seconds to complete and displays the following
+                message on completion:<br>
+                <br>
+                <code>***** Environment Cleanup Completed *****</code></p>
+            </section>
+            <hr>
+            <section>
+              <!-- Include the More Information section only in a standalone tutorial or in the final lab or tutorial in a series (not in a learning path) -->
+              <h2 id="more_info" role="button" style="text-align: left;"><img src="img/32_more.png" alt="more information" class="num_circ" height="32" width="32">Want
+                to Learn More?</h2>
+              <p> <a href="../tdppt/monitoring-real-time-database-operations.html#TDPPT-GUID-CE183666-D270-41B1-8410-8CE968168127" target="_blank">Oracle Database 2 Day + Performance Tuning
+                  Guide</a> </p>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li> <a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+    <!-- OBE Dialog Box code 10/15/2018 -->
+    <!-- DO NOT ALTER THE CODE BELOW   -->
+    <div id="lpModal" class="modal">
+      <!-- Modal hdr and body -->
+      <div id="obe_dialog" class="modal-content">
+        <div class="modal-header"> <a href="#" class="close"> <span class="close">×</span>
+          </a>
+          <h1>Associated Learning Paths</h1>
+        </div>
+        <div id="dialog-content"> </div>
+        <div id="dialog-close" class="closeBtn"> <a href="#" class="close2">
+            <p class="close2"> <span>&nbsp;&nbsp;View&nbsp;&nbsp;</span> </p>
+          </a> </div>
+      </div>
+    </div>
+    <!-- END OBE Dialog Box code -->
+  </body>
+</html>

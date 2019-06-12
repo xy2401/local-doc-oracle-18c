@@ -1,0 +1,1843 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="The DBMS_STREAMS_TABLESPACE_ADM package, one of a set of Oracle Streams packages, provides administrative interfaces for copying tablespaces between databases and moving tablespaces from one database to another.">
+      <meta name="description" content="The DBMS_STREAMS_TABLESPACE_ADM package, one of a set of Oracle Streams packages, provides administrative interfaces for copying tablespaces between databases and moving tablespaces from one database to another.">
+      <title>DBMS_STREAMS_TABLESPACE_ADM</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="PL/SQL Packages and Types Reference">
+      <meta property="og:description" content="The DBMS_STREAMS_TABLESPACE_ADM package, one of a set of Oracle Streams packages, provides administrative interfaces for copying tablespaces between databases and moving tablespaces from one database to another.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="PL/SQL Packages and Types Reference">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-pl-sql-packages-and-types-reference.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2019-03-03T03:45:02-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2019">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83743-03">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="DBMS_STREAMS_MESSAGING.html" title="Previous" type="text/html">
+      <link rel="next" href="DBMS_SYNC_REFRESH.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Database PL/SQL Packages and Types Reference">
+    <meta name="dcterms.isVersionOf" content="ARPLS">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="DBMS_STREAMS_MESSAGING.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="DBMS_SYNC_REFRESH.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">PL/SQL Packages and Types Reference</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> DBMS_STREAMS_TABLESPACE_ADM</li>
+            </ol>
+            <a id="GUID-942FA289-1630-456E-98D9-36927C2E7694" name="GUID-942FA289-1630-456E-98D9-36927C2E7694"></a><a id="ARPLS551"></a><a id="ARPLS551"></a>
+            
+            <h2 id="ARPLS-GUID-942FA289-1630-456E-98D9-36927C2E7694" class="sect2"><span class="enumeration_chapter">170 </span> DBMS_STREAMS_TABLESPACE_ADM
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>The <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> package, one of a set of Oracle Streams packages, provides administrative interfaces for copying tablespaces between databases and moving tablespaces from one database to another.
+               </p>
+               <p><a id="d1091636e88" class="indexterm-anchor"></a>This package uses transportable tablespaces, Data Pump, the <code class="codeph">DBMS_FILE_TRANSFER</code> package, and the <code class="codeph">DBMS_FILE_GROUP</code> package.
+               </p>
+               <p>This chapter contains the following topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                  </li>
+                  <li>
+                     <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-0D53BE12-673B-490B-A638-59D1987338C7" title="Security on this package can be controlled by either granting EXECUTE on this package to selected users or roles, or by granting EXECUTE_CATALOG_ROLE to selected users or roles.">Security Model</a></p>
+                  </li>
+                  <li>
+                     <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732" title="The DBMS_STREAMS_TABLESPACE_ADM package defines RECORD types and TABLE types.">Data Structures</a></p>
+                  </li>
+                  <li>
+                     <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-FA5BFCB5-C8AD-4B13-A5E2-348774BD16DD" title="This table lists the DBMS_STREAMS_TABLESPACE_ADM subprograms and briefly describes them.">Summary of DBMS_STREAMS_TABLESPACE_ADM Subprograms</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-942FA289-1630-456E-98D9-36927C2E7694__GUID-2F09A2E5-67EF-4741-A6B4-A3DC7138D66E">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="../strms/information-provisioning-concepts.html#STRMS159" target="_blank"><span class="italic">Oracle Streams Concepts and Administration </span></a>and<a href="../strep/simple-oracle-streams-replication-configuration.html#STREP056" target="_blank"><span class="italic"> Oracle Streams Replication Administrator's Guide </span></a>for more information about this package and Oracle Streams
+                  </p>
+               </div>
+            </div><a id="ARPLS68830"></a><a id="ARPLS68830"></a><div class="props_rev_3"><a id="GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" name="GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5"></a><h3 id="ARPLS-GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" class="sect3"><span class="enumeration_section">170.1 </span>DBMS_STREAMS_TABLESPACE_ADM Overview
+               </h3>
+               <div>
+                  <p>Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package. </p>
+                  <div class="section">
+                     <p>A <span class="bold">self-contained tablespace</span> has no references from the tablespace pointing outside of the tablespace. For example, if an index in the tablespace is for a table in a different tablespace, then the tablespace is not self-contained. A <span class="bold">simple tablespace</span> is a self-contained tablespace that uses only one datafile. 
+                     </p>
+                     <p>A simple tablespace must be specified in the following procedures:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF" title="This procedure uses Data Pump to import a simple tablespace previously exported using the DBMS_STREAMS_TABLESPACE_ADM package, Data Pump export, or the Recovery Manager (RMAN) TRANSPORT TABLESPACE command.">ATTACH_SIMPLE_TABLESPACE Procedure</a></p>
+                        </li>
+                        <li>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D47F445A-399D-43C0-9F0F-89362B73E02C" title="This procedure clones a simple tablespace. The specified tablespace must be online.">CLONE_SIMPLE_TABLESPACE Procedure</a></p>
+                        </li>
+                        <li>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1" title="This procedure detaches a simple tablespace. The specified tablespace must be online.">DETACH_SIMPLE_TABLESPACE Procedure</a></p>
+                        </li>
+                        <li>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B" title="This procedure copies a simple tablespace from a remote database and attaches it to the current database.">PULL_SIMPLE_TABLESPACE Procedure</a></p>
+                        </li>
+                     </ul>
+                     <p>A <span class="bold">self-contained tablespace set</span> has no references from inside the set of tablespaces pointing outside of the set of tablespaces. For example, if a partitioned table is partially contained in the set of tablespaces, then the set of tablespaces is not self-contained.
+                     </p>
+                     <p>A self-contained tablespace set must be specified in the following procedures:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-160BD734-7627-42AE-81DF-F1871061D7B6" title="This procedure uses Data Pump to import a self-contained tablespace set previously exported using the DBMS_STREAMS_TABLESPACE_ADM package, Data Pump export, or the Recovery Manager (RMAN) TRANSPORT TABLESPACE command.">ATTACH_TABLESPACES Procedure</a></p>
+                        </li>
+                        <li>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B" title="This procedure clones a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online.">CLONE_TABLESPACES Procedure</a></p>
+                        </li>
+                        <li>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B" title="This procedure detaches a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online and any table partitions must not span tablespaces in the tablespace set.">DETACH_TABLESPACES Procedure</a></p>
+                        </li>
+                        <li>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-164D246F-1CBE-464E-849D-DAB3DF382053" title="This procedure copies a set of self-contained tablespaces from a remote database and attaches the tablespaces to the current database.">PULL_TABLESPACES Procedure</a></p>
+                        </li>
+                     </ul>
+                     <p>To determine whether a set of tablespaces is self-contained, use the <code class="codeph">TRANSPORT_SET_CHECK</code> procedure in the Oracle supplied package <code class="codeph">DBMS_TTS</code>.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5__GUID-3AC9785A-E9C6-463A-8811-B14D84692F53">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../admin/managing-tablespaces.html#ADMIN011" target="_blank"><span class="italic">Oracle Database Administrator's Guide </span></a>for more information about self-contained tablespaces and tablespace sets
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="ARPLS73194"></a><a id="ARPLS73194"></a><div class="props_rev_3"><a id="GUID-0D53BE12-673B-490B-A638-59D1987338C7" name="GUID-0D53BE12-673B-490B-A638-59D1987338C7"></a><h3 id="ARPLS-GUID-0D53BE12-673B-490B-A638-59D1987338C7" class="sect3"><span class="enumeration_section">170.2 </span>DBMS_STREAMS_TABLESPACE_ADM Security Model
+               </h3>
+               <div>
+                  <p>Security on this package can be controlled by either granting <code class="codeph">EXECUTE</code> on this package to selected users or roles, or by granting <code class="codeph">EXECUTE_CATALOG_ROLE</code> to selected users or roles.
+                  </p>
+                  <div class="section">
+                     <p>If subprograms in the package are run from within a stored procedure, then the user who runs the subprograms must be granted <code class="codeph">EXECUTE</code> privilege on the package directly. It cannot be granted through a role.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="ARPLS68831"></a><a id="ARPLS68831"></a><div class="props_rev_3"><a id="GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732" name="GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732"></a><h3 id="ARPLS-GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732" class="sect3"><span class="enumeration_section">170.3 </span>DBMS_STREAMS_TABLESPACE_ADM Data Structures
+               </h3>
+               <div>
+                  <p>The <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> package defines <code class="codeph">RECORD</code> types and <code class="codeph">TABLE</code> types.
+                  </p>
+                  <div class="section">
+                     <p class="subhead2" id="GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732__GUID-39BD4B75-14AC-4A08-A804-6311FB324A11">DIRECTORY_OBJECT_SET Table Type</p>
+                     <p>Contains the names of one or more directory objects. Each name must be a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code>.
+                     </p><span class="bold">Syntax</span><pre class="oac_no_warn" dir="ltr">TYPE DIRECTORY_OBJECT_SET IS TABLE OF VARCHAR2(32) 
+  INDEX BY BINARY_INTEGER;</pre></div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2" id="GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732__GUID-78CC4BF8-B405-4307-AA79-0A4763E1A243">FILE Record Type</p>
+                     <p>Contains the directory object associated with a directory and the name of the file in the directory.</p><span class="bold">Syntax</span><pre class="oac_no_warn" dir="ltr">TYPE FILE_SET IS TABLE OF FILE 
+   INDEX BY BINARY_INTEGER;</pre><span class="bold">Fields</span><div class="tblformal" id="GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732__GUID-828F9A60-2E1B-45DE-A9A8-DB34A0930ABC">
+                        <p class="titleintable">Table 170-1 FILE Fields</p>
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="FILE Fields" summary="This table describes fields of the Record type FILE and briefly describes them." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="32%" id="d1091636e605">Field</th>
+                                 <th align="left" valign="bottom" width="68%" id="d1091636e608">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="32%" id="d1091636e613" headers="d1091636e605 ">
+                                    <p><code class="codeph">directory_object</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="68%" headers="d1091636e613 d1091636e608 ">
+                                    <p>The name of a directory object. You must specify the name of a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code>.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="32%" id="d1091636e627" headers="d1091636e605 ">
+                                    <p><code class="codeph">file_name</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="68%" headers="d1091636e627 d1091636e608 ">
+                                    <p>The name of the file in the corresponding directory associated with the directory object</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2" id="GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732__GUID-69BF22AD-282D-46A4-88F8-9F113E3432C1">FILE_SET Table Type</p>
+                     <p>Contains one or more files.</p><span class="bold">Syntax</span><pre class="oac_no_warn" dir="ltr">TYPE FILE_SET IS TABLE OF FILE 
+   INDEX BY BINARY_INTEGER;</pre></div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2" id="GUID-E9B901A6-DB36-43C4-A158-B71CD5C05732__GUID-82E390BD-5033-45FC-8D18-6ADF9B28E4E8">TABLESPACE_SET Table Type</p>
+                     <p>Contains the names of one or more tablespaces.</p><span class="bold">Syntax</span><pre class="oac_no_warn" dir="ltr">TYPE TABLESPACE_SET IS TABLE OF VARCHAR2(32) 
+   INDEX BY BINARY_INTEGER;</pre></div>
+                  <!-- class="section" -->
+               </div>
+               <div class="props_rev_3"><a id="GUID-B57B1286-C1E5-45FC-B40E-66F02017127C" name="GUID-B57B1286-C1E5-45FC-B40E-66F02017127C"></a><h4 id="ARPLS-GUID-B57B1286-C1E5-45FC-B40E-66F02017127C" class="sect4"><span class="enumeration_section">170.3.1 </span>DIRECTORY_OBJECT_SET Table Type
+                  </h4>
+                  <div>
+                     <p>Contains the names of one or more directory objects. Each name must be a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code>.
+                     </p>
+                  </div>
+               </div>
+               <div class="props_rev_3"><a id="GUID-0034E584-FE58-4546-931D-8A2CDAD9047D" name="GUID-0034E584-FE58-4546-931D-8A2CDAD9047D"></a><h4 id="ARPLS-GUID-0034E584-FE58-4546-931D-8A2CDAD9047D" class="sect4"><span class="enumeration_section">170.3.2 </span>FILE Record Type
+                  </h4>
+                  <div>
+                     <p>This record type contains the directory object associated with a directory and the name of the file in the directory.</p>
+                  </div>
+               </div>
+               <div class="props_rev_3"><a id="GUID-332D0C47-6926-4668-A710-5FF606336B4C" name="GUID-332D0C47-6926-4668-A710-5FF606336B4C"></a><h4 id="ARPLS-GUID-332D0C47-6926-4668-A710-5FF606336B4C" class="sect4"><span class="enumeration_section">170.3.3 </span>FILE_SET Table Type
+                  </h4>
+                  <div>
+                     <p>This table type contains one or more files.</p>
+                  </div>
+               </div>
+               <div class="props_rev_3"><a id="GUID-C1B27C6A-BD9E-4B52-AE9D-2198DB9E8A44" name="GUID-C1B27C6A-BD9E-4B52-AE9D-2198DB9E8A44"></a><h4 id="ARPLS-GUID-C1B27C6A-BD9E-4B52-AE9D-2198DB9E8A44" class="sect4"><span class="enumeration_section">170.3.4 </span>TABLESPACE_SET Table Type
+                  </h4>
+                  <div>
+                     <p>This type contains the names of one or more tablespaces.</p>
+                  </div>
+               </div>
+            </div><a id="ARPLS556"></a><a id="ARPLS68841"></a><a id="ARPLS68841"></a><a id="ARPLS556"></a><div class="props_rev_3"><a id="GUID-FA5BFCB5-C8AD-4B13-A5E2-348774BD16DD" name="GUID-FA5BFCB5-C8AD-4B13-A5E2-348774BD16DD"></a><h3 id="ARPLS-GUID-FA5BFCB5-C8AD-4B13-A5E2-348774BD16DD" class="sect3"><span class="enumeration_section">170.4 </span>Summary of DBMS_STREAMS_TABLESPACE_ADM Subprograms
+               </h3>
+               <div>
+                  <p>This table lists the <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> subprograms and briefly describes them.
+                  </p>
+                  <div class="tblformal" id="GUID-FA5BFCB5-C8AD-4B13-A5E2-348774BD16DD__GUID-6DFB50B1-A40F-40C1-8CC2-DF80A8B3C160">
+                     <p class="titleintable">Table 170-2 DBMS_STREAMS_TABLESPACE_ADM Package Subprograms</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="DBMS_STREAMS_TABLESPACE_ADM Package Subprograms" summary="This table lists the DBMS_STREAMS_TABLESPACE_ADM subprograms in alphabetical order and briefly describes them." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="40%" id="d1091636e1112">Subprogram</th>
+                              <th align="left" valign="bottom" width="60%" id="d1091636e1115">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d1091636e1120" headers="d1091636e1112 ">
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF" title="This procedure uses Data Pump to import a simple tablespace previously exported using the DBMS_STREAMS_TABLESPACE_ADM package, Data Pump export, or the Recovery Manager (RMAN) TRANSPORT TABLESPACE command.">ATTACH_SIMPLE_TABLESPACE Procedure</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d1091636e1120 d1091636e1115 ">
+                                 <p>Uses Data Pump to import a simple tablespace previously exported using the <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> package or Data Pump export
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d1091636e1144" headers="d1091636e1112 ">
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-160BD734-7627-42AE-81DF-F1871061D7B6" title="This procedure uses Data Pump to import a self-contained tablespace set previously exported using the DBMS_STREAMS_TABLESPACE_ADM package, Data Pump export, or the Recovery Manager (RMAN) TRANSPORT TABLESPACE command.">ATTACH_TABLESPACES Procedure</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d1091636e1144 d1091636e1115 ">
+                                 <p>Uses Data Pump to import a self-contained tablespace set previously exported using the <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> package, Data Pump export, or the Recovery Manager (RMAN) <code class="codeph">TRANSPORT</code> <code class="codeph">TABLESPACE</code> command
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d1091636e1174" headers="d1091636e1112 ">
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D47F445A-399D-43C0-9F0F-89362B73E02C" title="This procedure clones a simple tablespace. The specified tablespace must be online.">CLONE_SIMPLE_TABLESPACE Procedure</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d1091636e1174 d1091636e1115 ">
+                                 <p>Clones a simple tablespace. The tablespace can later be attached to a database.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d1091636e1186" headers="d1091636e1112 ">
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B" title="This procedure clones a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online.">CLONE_TABLESPACES Procedure</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d1091636e1186 d1091636e1115 ">
+                                 <p>Clones a set of self-contained tablespaces. The tablespaces can later be attached to a database.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d1091636e1198" headers="d1091636e1112 ">
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1" title="This procedure detaches a simple tablespace. The specified tablespace must be online.">DETACH_SIMPLE_TABLESPACE Procedure</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d1091636e1198 d1091636e1115 ">
+                                 <p>Detaches a simple tablespace. The tablespace can later be attached to a database.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d1091636e1210" headers="d1091636e1112 ">
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B" title="This procedure detaches a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online and any table partitions must not span tablespaces in the tablespace set.">DETACH_TABLESPACES Procedure</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d1091636e1210 d1091636e1115 ">
+                                 <p>Detaches a set of self-contained tablespaces. The tablespaces can later be attached to a database.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d1091636e1222" headers="d1091636e1112 ">
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B" title="This procedure copies a simple tablespace from a remote database and attaches it to the current database.">PULL_SIMPLE_TABLESPACE Procedure</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d1091636e1222 d1091636e1115 ">
+                                 <p>Copies a simple tablespace from a remote database and attaches it to the current database</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d1091636e1234" headers="d1091636e1112 ">
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-164D246F-1CBE-464E-849D-DAB3DF382053" title="This procedure copies a set of self-contained tablespaces from a remote database and attaches the tablespaces to the current database.">PULL_TABLESPACES Procedure</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d1091636e1234 d1091636e1115 ">
+                                 <p>Copies a set of self-contained tablespaces from a remote database and attaches the tablespaces to the current database</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-FA5BFCB5-C8AD-4B13-A5E2-348774BD16DD__GUID-6CF700CB-A406-4C4A-9718-2008BDA4D138">
+                        <p class="notep1">Note:</p>
+                        <p>All subprograms commit unless specified otherwise.</p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div><a id="ARPLS855"></a><a id="ARPLS68842"></a><a id="ARPLS68842"></a><a id="ARPLS855"></a><div class="props_rev_3"><a id="GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF" name="GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF"></a><h4 id="ARPLS-GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF" class="sect4"><span class="enumeration_section">170.4.1 </span>ATTACH_SIMPLE_TABLESPACE Procedure
+                  </h4>
+                  <div>
+                     <p>This procedure uses Data Pump to import a simple tablespace previously exported using the <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> package, Data Pump export, or the Recovery Manager (RMAN) <code class="codeph">TRANSPORT</code> <code class="codeph">TABLESPACE</code> command.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3" id="GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF__GUID-4AAD2B15-5CEE-4A5E-83AC-8BE062A3C280">Syntax</p><pre class="oac_no_warn" dir="ltr">DBMS_STREAMS_TABLESPACE_ADM.ATTACH_SIMPLE_TABLESPACE(
+   directory_object      IN  VARCHAR2,
+   tablespace_file_name  IN  VARCHAR2,
+   converted_file_name   IN  VARCHAR2  DEFAULT NULL,
+   datafile_platform     IN  VARCHAR2  DEFAULT NULL,
+   tablespace_name       OUT VARCHAR2);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF__GUID-92250FF8-8FCA-4FAD-9111-5FBB35AAE136">Parameters</p>
+                        <div class="tblformal" id="GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF__GUID-C2C445A9-28AC-4576-8CF0-F7B5340C1AD6">
+                           <p class="titleintable">Table 170-3 ATTACH_SIMPLE_TABLESPACE Procedure Parameters</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="ATTACH_SIMPLE_TABLESPACE Procedure Parameters" summary="This table describes the Parameters of DBMS_STREAMS_TABLESPACE_ADM.ATTACH_SIMPLE_TABLESPACE subprogram." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="31%" id="d1091636e1368">Parameter</th>
+                                    <th align="left" valign="bottom" width="69%" id="d1091636e1371">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e1376" headers="d1091636e1368 ">
+                                       <p><code class="codeph">directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e1376 d1091636e1371 ">
+                                       <p>The directory that contains the Data Pump dump file and the datafile for the tablespace. You must specify the name of a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code>.
+                                       </p>
+                                       <p>The name of the Data Pump export dump file must be the same as the data file name for the tablespace, except with a <code class="codeph">.dmp</code> extension. If the <code class="codeph">converted_file_name</code> is non-<code class="codeph">NULL</code>, specify the dump file produced by the export database, not the file name after conversion.
+                                       </p>
+                                       <p>The Data Pump import log file is written to this directory. The name of the log file is the same as the data file name for the tablespace, except with an <code class="codeph">.alg</code> extension. If a file exists with the same name as the log file in the directory, then the procedure overwrites the file.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e1411" headers="d1091636e1368 ">
+                                       <p><code class="codeph">tablespace_file_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e1411 d1091636e1371 ">
+                                       <p>The name of the datafile for the tablespace being imported.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e1424" headers="d1091636e1368 ">
+                                       <p><code class="codeph">converted_file_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e1424 d1091636e1371 ">
+                                       <p>If the <code class="codeph">datafile_platform</code> parameter is non-<code class="codeph">NULL</code> and is different from the platform of the local import database, then specify a file name for the converted datafile. The datafile is converted to the platform of the local import database and copied to the new file name. The existing datafile is not modified nor deleted.
+                                       </p>
+                                       <p>If non-<code class="codeph">NULL</code> and the <code class="codeph">datafile_platform</code> parameter is <code class="codeph">NULL</code>, then the procedure ignores this parameter.
+                                       </p>
+                                       <p>If non-<code class="codeph">NULL</code> and the <code class="codeph">datafile_platform</code> parameter specifies the same platform as the local import database, then the procedure ignores this parameter.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code> and the <code class="codeph">datafile_platform</code> parameter is non-<code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e1468" headers="d1091636e1368 ">
+                                       <p><code class="codeph">datafile_platform</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e1468 d1091636e1371 ">
+                                       <p>Specify <code class="codeph">NULL</code> if the platform is the same for the export database and the current import database.
+                                       </p>
+                                       <p>Specify the platform for the export database if the platform is different for the export database and the import database.</p>
+                                       <p>You can determine the platform of a database by querying the <code class="codeph">PLATFORM_NAME</code> column in the <code class="codeph">V$DATABASE</code> dynamic performance view. The <code class="codeph">V$TRANSPORTABLE_PLATFORM</code> dynamic performance view lists all platforms that support cross-platform transportable tablespaces.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e1492" headers="d1091636e1368 ">
+                                       <p><code class="codeph">tablespace_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e1492 d1091636e1371 ">
+                                       <p>Contains the name of the attached tablespace. The attached tablespace is read-only. Use an <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> statement to make the tablespace read/write if necessary.
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF__GUID-DCAE9A61-4477-45F9-AF84-177340808FF4">Usage Notes</p>
+                        <p>To run this procedure, a user must meet the following requirements:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have <code class="codeph">IMP_FULL_DATABASE</code> role
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> and <code class="codeph">WRITE</code> privilege on the directory object that contains the Data Pump export dump file and the datafiles for the tablespaces in the set, specified by the <code class="codeph">directory_object</code> parameter
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Automatic Storage Management (ASM) directories cannot be used with this procedure.</p>
+                        <div class="infoboxnotealso" id="GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF__GUID-DD95D4BE-06E0-4F07-A846-91CED92E5163">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="ARPLS856"></a><a id="ARPLS68843"></a><a id="ARPLS68844"></a><a id="ARPLS68845"></a><a id="ARPLS68846"></a><a id="ARPLS68847"></a><a id="ARPLS68843"></a><a id="ARPLS68844"></a><a id="ARPLS68845"></a><a id="ARPLS68846"></a><a id="ARPLS68847"></a><a id="ARPLS856"></a><div class="props_rev_3"><a id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6" name="GUID-160BD734-7627-42AE-81DF-F1871061D7B6"></a><h4 id="ARPLS-GUID-160BD734-7627-42AE-81DF-F1871061D7B6" class="sect4"><span class="enumeration_section">170.4.2 </span>ATTACH_TABLESPACES Procedure
+                  </h4>
+                  <div>
+                     <p>This procedure uses Data Pump to import a self-contained tablespace set previously exported using the <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> package, Data Pump export, or the Recovery Manager (RMAN) <code class="codeph">TRANSPORT</code> <code class="codeph">TABLESPACE</code> command.
+                     </p>
+                     <div class="section">
+                        <p>This procedure is overloaded and consists of the following versions: </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>One version of the procedure uses a Data Pump job name in the <code class="codeph">datapump_job_name</code> parameter. This job performs the Data Pump import to complete the attach operation. In addition, if the platform at the export database is different than the local database platform, then this procedure optionally can create datafiles for the tablespace set that can be used with the local platform.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The other version of the procedure uses a file group that can consist of multiple versions of the tablespace set in a tablespace repository. A tablespace repository is a collection of tablespace sets in a file group repository. When this version of the procedure is run, a Data Pump import is performed. This version of the procedure uses the files in a file group version and can copy the export dump file, export log file, and the datafiles that comprise the tablespace set into the specified directories. The file group and version are specified using the <code class="codeph">file_group_name</code> and <code class="codeph">version_name</code> parameters, respectively. This version of the procedure does not require a datafiles platform specification if the platform at the export database is different than the local database platform. Instead, the tablespace set is migrated automatically to the correct platform when it is attached.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__GUID-CF51544D-93E6-4040-B018-D027B4EE0C31">Syntax</p><pre class="oac_no_warn" dir="ltr">DBMS_STREAMS_TABLESPACE_ADM.ATTACH_TABLESPACES(
+   datapump_job_name          IN OUT VARCHAR2,
+   dump_file                  IN     FILE,
+   tablespace_files           IN     FILE_SET,
+   converted_files            IN     FILE_SET,
+   datafiles_platform         IN     VARCHAR2  DEFAULT NULL,
+   log_file                   IN     FILE      DEFAULT NULL,
+   tablespace_names           OUT    TABLESPACE_SET);
+
+DBMS_STREAMS_TABLESPACE_ADM.ATTACH_TABLESPACES(
+   file_group_name            IN   VARCHAR2,
+   version_name               IN   VARCHAR2  DEFAULT NULL,
+   datafiles_directory_object IN   VARCHAR2  DEFAULT NULL,
+   logfile_directory_object   IN   VARCHAR2  DEFAULT NULL,
+   repository_db_link         IN   VARCHAR2  DEFAULT NULL,
+   tablespace_names           OUT  TABLESPACE_SET);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__GUID-79F4DFDF-2851-4C43-AC1F-F7D85742A4EF">Parameters</p>
+                        <div class="tblformal" id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__GUID-F75D6F67-B694-4370-8BC7-B9E7A782D1AF">
+                           <p class="titleintable">Table 170-4 ATTACH_TABLESPACES Procedure Parameters</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="ATTACH_TABLESPACES Procedure Parameters" summary="This table describes the Parameters of DBMS_STREAMS_TABLESPACE_ADM.ATTACH_TABLESPACES subprogram." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="39%" id="d1091636e1691">Parameter</th>
+                                    <th align="left" valign="bottom" width="61%" id="d1091636e1694">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1699" headers="d1091636e1691 ">
+                                       <p><code class="codeph">data_pump_job_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1699 d1091636e1694 ">
+                                       <p>The Data Pump job name. Specify a Data Pump job name to adhere to naming conventions or to track the job more easily.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the system generates a Data Pump job name.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1712" headers="d1091636e1691 ">
+                                       <p><code class="codeph">dump_file</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1712 d1091636e1694 ">
+                                       <p>The file name of the Data Pump dump file to import.</p>
+                                       <p>If <code class="codeph">NULL</code> or if a file attribute is <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1728" headers="d1091636e1691 ">
+                                       <p><code class="codeph">tablespace_files</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1728 d1091636e1694 ">
+                                       <p>The file set that contains the datafiles for the tablespace set being imported.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1741" headers="d1091636e1691 ">
+                                       <p><code class="codeph">converted_files</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1741 d1091636e1694 ">
+                                       <p>If the <code class="codeph">datafiles_platform</code> parameter is non-<code class="codeph">NULL</code> and is different from the platform for the local import database, then specify a file set with the names of the converted datafiles. The datafiles are converted to the platform of the local import database and copied to the new file names. In this case, the number of files in the specified file set must match the number of files in the file set specified for the <code class="codeph">tablespace_files</code> parameter. The existing datafiles are not modified nor deleted.
+                                       </p>
+                                       <p>If non-<code class="codeph">NULL</code> and the <code class="codeph">datafiles_platform</code> parameter is <code class="codeph">NULL</code>, then the procedure ignores this parameter.
+                                       </p>
+                                       <p>If non-<code class="codeph">NULL</code> and the <code class="codeph">datafiles_platform</code> parameter specifies the same platform as the local import database, then the procedure ignores this parameter.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code> and the <code class="codeph">datafiles_platform</code> parameter is non-<code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1788" headers="d1091636e1691 ">
+                                       <p><code class="codeph">datafiles_platform</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1788 d1091636e1694 ">
+                                       <p>Specify <code class="codeph">NULL</code> if the platform is the same for the export database and the current import database.
+                                       </p>
+                                       <p>Specify the platform for the export database if the platform is different for the export database and the import database.</p>
+                                       <p>You can determine the platform of a database by querying the <code class="codeph">PLATFORM_NAME</code> column in the <code class="codeph">V$DATABASE</code> dynamic performance view. The <code class="codeph">V$TRANSPORTABLE_PLATFORM</code> dynamic performance view lists all platforms that support cross-platform transportable tablespaces.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1812" headers="d1091636e1691 ">
+                                       <p><code class="codeph">log_file</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1812 d1091636e1694 ">
+                                       <p>Specify the log file name for the Data Pump import.</p>
+                                       <p>If <code class="codeph">NULL</code> or if at least one file parameter is <code class="codeph">NULL</code>, then the system generates a log file name with the extension <code class="codeph">.alg</code> and places it in the Data Pump export dump file directory.
+                                       </p>
+                                       <p>If a file exists with the same name as the log file in the directory, then the procedure overwrites the file.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1833" headers="d1091636e1691 ">
+                                       <p><code class="codeph">file_group_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1833 d1091636e1694 ">
+                                       <p>The name of the file group, specified as <span class="italic"><code class="codeph">[schema_name.]file_group_name</code></span>. For example, if the schema is <code class="codeph">hq_dba</code> and the file group name is <code class="codeph">sales</code>, then specify <code class="codeph">hq_dba.sales</code>. If the schema is not specified, then the current user is the default.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1854" headers="d1091636e1691 ">
+                                       <p><code class="codeph">version_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1854 d1091636e1694 ">
+                                       <p>The name of the file group version to attach.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure uses the version with the latest creation time for the file group.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1867" headers="d1091636e1691 ">
+                                       <p><code class="codeph">datafiles_directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1867 d1091636e1694 ">
+                                       <p>The directory object into which the datafiles and Data Pump export dump file are copied. The files are copied from the tablespace repository directories to this directory.</p>
+                                       <p>If non-<code class="codeph">NULL</code>, the attached tablespaces use the files in specified directory. However, the file group version specified in the <code class="codeph">version_name</code> parameter consists of the files in the original directory, not in the directory specified by this <code class="codeph">datafiles_directory_object</code> parameter.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure does not copy the datafiles and dump file.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1891" headers="d1091636e1691 ">
+                                       <p><code class="codeph">logfile_directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1891 d1091636e1694 ">
+                                       <p>The directory object into which the Data Pump import log file is placed. The system generates a log file name with the extension <code class="codeph">.alg</code>.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure places the import log file in the same directory as the dump file.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1907" headers="d1091636e1691 ">
+                                       <p><code class="codeph">repository_db_link</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1907 d1091636e1694 ">
+                                       <p>If the file group is in a different database, then specify the name of the database link to the database that contains the file group. The database link must be accessible to the user who runs the procedure.</p>
+                                       <p>If this parameter is non-<code class="codeph">NULL</code>, then meet the following requirements:
+                                       </p>
+                                       <ul style="list-style-type: disc;">
+                                          <li>
+                                             <p>Each directory object that contains files in the version being attached must exist on both databases.</p>
+                                          </li>
+                                          <li>
+                                             <p>The corresponding directory objects must have the same names on both databases.</p>
+                                          </li>
+                                       </ul>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure does not use a database link, and the procedure uses the file group in the local database.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="39%" id="d1091636e1933" headers="d1091636e1691 ">
+                                       <p><code class="codeph">tablespace_names</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="61%" headers="d1091636e1933 d1091636e1694 ">
+                                       <p>Contains the names of the attached tablespaces. The attached tablespaces are read-only. Use <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> statements to make the tablespaces read/write if necessary.
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__GUID-7E19D67F-9656-4FF5-A76B-88354671EDF2">Usage Notes</p>
+                        <p>The following sections contain usage notes for this procedure:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-160BD734-7627-42AE-81DF-F1871061D7B6__CDEIFIEG">User Requirements</a></p>
+                           </li>
+                           <li>
+                              <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-160BD734-7627-42AE-81DF-F1871061D7B6__CDEBBBJF">Procedures Used to Clone or Detach a Tablespace Set</a></p>
+                           </li>
+                           <li>
+                              <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-160BD734-7627-42AE-81DF-F1871061D7B6__CDEFDFIH">When the Attach Database Is Different Than the Clone or Detach Database</a></p>
+                           </li>
+                           <li>
+                              <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-160BD734-7627-42AE-81DF-F1871061D7B6__CDEGHAAJ">Automatic Storage Management Directories</a></p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnotealso" id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__GUID-C1B65EE4-C7F4-44DB-89EE-5B21C82A478E">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="../strms/information-provisioning-concepts.html#STRMS159" target="_blank"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__CDEIFIEG">User Requirements</p>
+                        <p>To run either version of this procedure, a user must meet the following requirements:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have <code class="codeph">IMP_FULL_DATABASE</code> role
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> and <code class="codeph">WRITE</code> privilege on the directory objects that contain the Data Pump export dump file and the datafiles for the tablespaces in the set, specified by the <code class="codeph">dump_file</code> and <code class="codeph">tablespace_files</code> parameters, or by the <code class="codeph">datafiles_directory_object</code> parameter
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">WRITE</code> privilege on the directory object that will hold the Data Pump import log file, specified by the <code class="codeph">log_file</code> parameter or <code class="codeph">logfile_directory_object</code> parameter if it is non-<code class="codeph">NULL</code></p>
+                           </li>
+                        </ul>
+                        <p>If the Data Pump job version of the procedure is run, then the user must have <code class="codeph">WRITE</code> privilege on the directory objects that will hold the converted datafiles for the tablespaces in the set if platform conversion is necessary. These directory objects are specified by the <code class="codeph">converted_files</code> parameter if it is non-<code class="codeph">NULL</code>.
+                        </p>
+                        <p>If the file group version of the procedure is run, then the user must have the necessary privileges to manage the file group.</p>
+                        <p id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__CDEBBBJF">Procedures Used to Clone or Detach a Tablespace Set</p>
+                        <p>After a tablespace set is cloned or detached using the <code class="codeph">CLONE_TABLESPACES</code> or <code class="codeph">DETACH_TABLESPACES</code> procedure, respectively, the tablespace set can be attached to a database using the <code class="codeph">ATTACH_TABLESPACES</code> procedure. If the Data Pump job version of the <code class="codeph">CLONE_TABLESPACES</code> or <code class="codeph">DETACH_TABLESPACES</code> procedure was used, then use the Data Pump job version of the <code class="codeph">ATTACH_TABLESPACES</code> procedure. If the file group version of the <code class="codeph">CLONE_TABLESPACES</code> or <code class="codeph">DETACH_TABLESPACES</code> procedure was used, then use the file group version of the <code class="codeph">ATTACH_TABLESPACES</code> procedure.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__GUID-9B97B88E-2B3A-4337-B32B-E9FFDD8B5C67">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B" title="This procedure clones a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online.">CLONE_TABLESPACES Procedure</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B" title="This procedure detaches a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online and any table partitions must not span tablespaces in the tablespace set.">DETACH_TABLESPACES Procedure</a></p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__CDEFDFIH">When the Attach Database Is Different Than the Clone or Detach Database</p>
+                        <p>You can attach a tablespace set to a different database than the database from which the tablespace set was cloned or detached. The two databases might or might not share a file system. If the two databases do not share a file system, then you must transfer the dump file and datafiles to the remote system using the <code class="codeph">DBMS_FILE_TRANSFER</code> package, FTP, or some other method. You can attach the tablespace set in one of the following ways depending on the version of the <code class="codeph">ATTACH_TABLESPACES</code> procedure you use:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>If you use the Data Pump job version of the procedure, then specify the relevant files on the file system. The directory object names can be different in the databases.</p>
+                           </li>
+                           <li>
+                              <p>If you use the file group version of the procedure, then you can use the <code class="codeph">repository_db_link</code> parameter to specify the database where tablespace repository resides. The directory objects for the files must exist and must match in the databases.
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnotealso" id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__GUID-9D4AA178-CEA6-4A58-9617-1114D68F8676">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B" title="This procedure clones a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online.">CLONE_TABLESPACES Procedure</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B" title="This procedure detaches a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online and any table partitions must not span tablespaces in the tablespace set.">DETACH_TABLESPACES Procedure</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_FILE_GROUP.html#GUID-F3DCFA0D-F8ED-4152-A291-112D31C22692" title="The DBMS_FILE_GROUP package, one of a set of Oracle Streams packages, provides administrative interfaces for managing file groups, file group versions, and files. A file group repository is a collection of all of the file groups in a database and can contain multiple versions of a particular file group. You can use this package to create and manage file group repositories."> DBMS_FILE_GROUP</a> for more information about file groups
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__CDEGHAAJ">Automatic Storage Management Directories</p>
+                        <p>Automatic Storage Management (ASM) directories can be specified for the directory objects that store datafiles and export dump files, but ASM directories cannot be specified for directory objects that store log files.</p>
+                        <div class="infoboxnotealso" id="GUID-160BD734-7627-42AE-81DF-F1871061D7B6__GUID-EBA6C6AB-BACD-44B7-BC32-6E0816B5EA18">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../sutil/oracle-data-pump-overview.html#SUTIL100" target="_blank"><span class="italic">Oracle Database Utilities</span></a> for information about specifying ASM directories for directory objects
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="ARPLS857"></a><a id="ARPLS68848"></a><a id="ARPLS68848"></a><a id="ARPLS857"></a><div class="props_rev_3"><a id="GUID-D47F445A-399D-43C0-9F0F-89362B73E02C" name="GUID-D47F445A-399D-43C0-9F0F-89362B73E02C"></a><h4 id="ARPLS-GUID-D47F445A-399D-43C0-9F0F-89362B73E02C" class="sect4"><span class="enumeration_section">170.4.3 </span>CLONE_SIMPLE_TABLESPACE Procedure
+                  </h4>
+                  <div>
+                     <p>This procedure clones a simple tablespace. The specified tablespace must be online.</p>
+                     <div class="section">
+                        <p>Specifically, this procedure performs the following actions:</p>
+                        <ol>
+                           <li>
+                              <p>Makes the specified tablespace read-only if it is not read-only</p>
+                           </li>
+                           <li>
+                              <p>Uses Data Pump to export the metadata for the tablespace and places the dump file in the specified directory</p>
+                           </li>
+                           <li>
+                              <p>Places the datafile for the specified tablespace in the specified directory</p>
+                           </li>
+                           <li>
+                              <p>If this procedure made the tablespace read-only, then makes the tablespace read/write </p>
+                           </li>
+                        </ol>
+                        <p>In addition, this procedure optionally can create a datafile for the tablespace that can be used with a platform that is different than the local database platform.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-D47F445A-399D-43C0-9F0F-89362B73E02C__GUID-BE9E702F-E325-461B-9ACA-1C1DC3FE6032">Syntax</p><pre class="oac_no_warn" dir="ltr">DBMS_STREAMS_TABLESPACE_ADM.CLONE_SIMPLE_TABLESPACE(
+   tablespace_name      IN  VARCHAR2,
+   directory_object     IN  VARCHAR2,
+   destination_platform IN  VARCHAR2  DEFAULT NULL,
+   tablespace_file_name OUT VARCHAR2);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-D47F445A-399D-43C0-9F0F-89362B73E02C__GUID-186A0354-4ABB-4CDF-BF9F-6C7282CFACDA">Parameters</p>
+                        <div class="tblformal" id="GUID-D47F445A-399D-43C0-9F0F-89362B73E02C__GUID-7D0E10F5-9230-42AA-A4E2-222468042297">
+                           <p class="titleintable">Table 170-5 CLONE_SIMPLE_TABLESPACE Procedure Parameters</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="CLONE_SIMPLE_TABLESPACE Procedure Parameters" summary="This table describes the Parameters of DBMS_STREAMS_TABLESPACE_ADM.CLONE_SIMPLE_TABLESPACE subprogram." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="31%" id="d1091636e2283">Parameter</th>
+                                    <th align="left" valign="bottom" width="69%" id="d1091636e2286">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e2291" headers="d1091636e2283 ">
+                                       <p><code class="codeph">tablespace_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e2291 d1091636e2286 ">
+                                       <p>The tablespace to be cloned.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e2304" headers="d1091636e2283 ">
+                                       <p><code class="codeph">directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e2304 d1091636e2286 ">
+                                       <p>The directory where the Data Pump export dump file, the Data Pump export log file, and the datafile for the tablespace are placed. You must specify the name of a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code>.
+                                       </p>
+                                       <p>The name of the Data Pump export dump file is the same as the data file name for the tablespace, except with a <code class="codeph">.dmp</code> extension. If a file exists with the same name as the dump file in the directory, then the procedure raises an error.
+                                       </p>
+                                       <p>The name of the log file is the same as the data file name for the tablespace, except with a <code class="codeph">.clg</code> extension. If a file exists with the same name as the log file in the directory, then the procedure overwrites the file.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e2333" headers="d1091636e2283 ">
+                                       <p><code class="codeph">destination_platform</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e2333 d1091636e2286 ">
+                                       <p>Specify <code class="codeph">NULL</code> if the platform is the same for the current export database and the intended import database.
+                                       </p>
+                                       <p>Specify the platform for the intended import database if the platform is different for the export database and the import database. </p>
+                                       <p>You can determine the platform of a database by querying the <code class="codeph">PLATFORM_NAME</code> column in the <code class="codeph">V$DATABASE</code> dynamic performance view. The <code class="codeph">V$TRANSPORTABLE_PLATFORM</code> dynamic performance view lists all platforms that support cross-platform transportable tablespaces.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e2357" headers="d1091636e2283 ">
+                                       <p><code class="codeph">tablespace_file_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e2357 d1091636e2286 ">
+                                       <p>Contains the name of the cloned tablespace datafile. This datafile is placed in the directory specified by the parameter <code class="codeph">directory_object</code>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-D47F445A-399D-43C0-9F0F-89362B73E02C__GUID-75299B86-6F52-4EDD-8960-46EC7C08F384">Usage Notes</p>
+                        <p>To run this procedure, a user must meet the following requirements:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have <code class="codeph">EXP_FULL_DATABASE</code> role
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have access to at least one data dictionary view that contains information about the tablespaces. These views include <code class="codeph">DBA_TABLESPACES</code> and <code class="codeph">USER_TABLESPACES</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">MANAGE</code> <code class="codeph">TABLESPACE</code> or <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> on a tablespace if the tablespace must be made read-only
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> privilege on the directory object for the directory that contains the datafile for the tablespace. The name of this tablespace is specified by the <code class="codeph">tablespace_name</code> parameter. If a directory object does not exist for this directory, then create the directory object and grant the necessary privileges before you run this procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> and <code class="codeph">WRITE</code> privilege on the directory object that will contain the Data Pump export dump file, specified by the <code class="codeph">directory_object</code> parameter
+                              </p>
+                           </li>
+                           <li>
+                              <p>If the file group version of the procedure is run, then the user must have the necessary privileges to manage file group.</p>
+                           </li>
+                        </ul>
+                        <p>After cloning a tablespace using this procedure, you can add the tablespace to a different database using the <code class="codeph">ATTACH_SIMPLE_TABLESPACE</code> procedure. If the database is a remote database and you want to use the <code class="codeph">ATTACH_SIMPLE_TABLESPACE</code> procedure, then you can transfer the dump file and datafile to the remote system using the <code class="codeph">DBMS_FILE_TRANSFER</code> package, FTP, or some other method.
+                        </p>
+                        <p>Automatic Storage Management (ASM) directories cannot be used with this procedure.</p>
+                        <div class="infoboxnotealso" id="GUID-D47F445A-399D-43C0-9F0F-89362B73E02C__GUID-7E931947-F170-4DD9-8CFF-E80568F4629A">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF" title="This procedure uses Data Pump to import a simple tablespace previously exported using the DBMS_STREAMS_TABLESPACE_ADM package, Data Pump export, or the Recovery Manager (RMAN) TRANSPORT TABLESPACE command.">ATTACH_SIMPLE_TABLESPACE Procedure</a> and <a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B" title="This procedure copies a simple tablespace from a remote database and attaches it to the current database.">PULL_SIMPLE_TABLESPACE Procedure</a></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="ARPLS858"></a><a id="ARPLS68849"></a><a id="ARPLS68849"></a><a id="ARPLS858"></a><div class="props_rev_3"><a id="GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B" name="GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B"></a><h4 id="ARPLS-GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B" class="sect4"><span class="enumeration_section">170.4.4 </span>CLONE_TABLESPACES Procedure
+                  </h4>
+                  <div>
+                     <p>This procedure clones a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online.</p>
+                     <div class="section">
+                        <p>Specifically, this procedure performs the following actions:</p>
+                        <ol>
+                           <li>
+                              <p>Makes any read/write tablespace in the specified tablespace set read-only</p>
+                           </li>
+                           <li>
+                              <p>Uses Data Pump to export the metadata for the tablespaces in the tablespace set and places the dump file in the specified directory</p>
+                           </li>
+                           <li>
+                              <p>Places the datafiles that comprise the specified tablespace set in the specified directory</p>
+                           </li>
+                           <li>
+                              <p>If this procedure made a tablespace read-only, then makes the tablespace read/write </p>
+                           </li>
+                        </ol>
+                        <p>This procedure is overloaded and consists of the following versions: </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>One version of the procedure uses a Data Pump job name in the <code class="codeph">datapump_job_name</code> parameter. This job performs the Data Pump export. This version of the procedure completes the clone operation by placing the export dump file, export log file, and the datafiles that comprise the tablespace set in the specified directories, but the files are not added to a file group version. In addition, this version of the procedure optionally can create datafiles for the tablespace set that can be used with a platform that is different than the local database platform.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The other version of the procedure uses a file group that can consist of multiple versions of the tablespace set in a tablespace repository. A tablespace repository is a collection of tablespace sets in a file group repository. When this version of the procedure is run, a Data Pump export is performed, and this version of the procedure completes the clone operation by placing the export dump file, export log file, and the datafiles that comprise the tablespace set in the appropriate file group version. The file group and version are specified using the <code class="codeph">file_group_name</code> and <code class="codeph">version_name</code> parameters, respectively. This version of the procedure does not require a destination platform specification if the destination platform is different. Instead, the tablespace set is migrated automatically to the correct platform when it is attached at the destination database using the file group version of the <code class="codeph">ATTACH_TABLESPACES</code> procedure.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B__GUID-C9F3D00B-C30A-48AA-8AE8-67E7A2B38D75">Syntax</p><pre class="oac_no_warn" dir="ltr">DBMS_STREAMS_TABLESPACE_ADM.CLONE_TABLESPACES(
+   datapump_job_name            IN OUT VARCHAR2,
+   tablespace_names             IN     TABLESPACE_SET,
+   dump_file                    IN     FILE,
+   tablespace_directory_objects IN     DIRECTORY_OBJECT_SET,
+   destination_platform         IN     VARCHAR2  DEFAULT NULL,
+   log_file                     IN     FILE      DEFAULT NULL,
+   tablespace_files             OUT    FILE_SET);
+
+DBMS_STREAMS_TABLESPACE_ADM.CLONE_TABLESPACES(
+   tablespace_names             IN  TABLESPACE_SET,
+   tablespace_directory_object  IN  VARCHAR2  DEFAULT NULL,
+   log_file_directory_object    IN  VARCHAR2  DEFAULT NULL,
+   file_group_name              IN  VARCHAR2,
+   version_name                 IN  VARCHAR2  DEFAULT NULL,
+   repository_db_link           IN  VARCHAR2  DEFAULT NULL);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B__GUID-1C4CA26A-8483-4CC0-971B-62A5D54CE6A8">Parameters</p>
+                        <div class="tblformal" id="GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B__GUID-B40CB2A1-D6B5-45BA-B759-3F5F04A2D752">
+                           <p class="titleintable">Table 170-6 CLONE_TABLESPACES Procedure Parameters</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="CLONE_TABLESPACES Procedure Parameters" summary="This table describes the Parameters of DBMS_STREAMS_TABLESPACE_ADM.CLONE_TABLESPACES subprogram." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="42%" id="d1091636e2626">Parameter</th>
+                                    <th align="left" valign="bottom" width="58%" id="d1091636e2629">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2634" headers="d1091636e2626 ">
+                                       <p><code class="codeph">data_pump_job_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2634 d1091636e2629 ">
+                                       <p>The Data Pump job name. Specify a Data Pump job name to adhere to naming conventions or to track the job more easily.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the system generates a Data Pump job name.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2647" headers="d1091636e2626 ">
+                                       <p><code class="codeph">tablespace_names</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2647 d1091636e2629 ">
+                                       <p>The tablespace set to be cloned.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2660" headers="d1091636e2626 ">
+                                       <p><code class="codeph">dump_file</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2660 d1091636e2629 ">
+                                       <p>The file name of the Data Pump dump file that is exported.</p>
+                                       <p>If <code class="codeph">NULL</code> or if a file attribute is <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                       <p>If the specified file exists, then the procedure raises an error.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2678" headers="d1091636e2626 ">
+                                       <p><code class="codeph">tablespace_directory_objects</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2678 d1091636e2629 ">
+                                       <p>The set of directory objects into which the datafiles for the tablespaces are copied. If multiple directory objects are in the set, then the procedure copies a datafile to each directory object in the set in sequence. In this case, if the end of the directory object set is reached, then datafile copying starts again with the first directory object in the set.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure copies datafiles for the tablespace set to the dump file directory.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2691" headers="d1091636e2626 ">
+                                       <p><code class="codeph">destination_platform</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2691 d1091636e2629 ">
+                                       <p>Specify <code class="codeph">NULL</code> if the platform is the same for the current export database and the intended import database.
+                                       </p>
+                                       <p>Specify the platform for the intended import database if the platform is different for the export database and the import database. </p>
+                                       <p>You can determine the platform of a database by querying the <code class="codeph">PLATFORM_NAME</code> column in the <code class="codeph">V$DATABASE</code> dynamic performance view. The <code class="codeph">V$TRANSPORTABLE_PLATFORM</code> dynamic performance view lists all platforms that support cross-platform transportable tablespaces.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2715" headers="d1091636e2626 ">
+                                       <p><code class="codeph">log_file</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2715 d1091636e2629 ">
+                                       <p>Specify the log file name for the Data Pump export.</p>
+                                       <p>If <code class="codeph">NULL</code> or if at least one file parameter is <code class="codeph">NULL</code>, then the system generates a log file name with the extension <code class="codeph">.clg</code> and places it in the dump file directory.
+                                       </p>
+                                       <p>If a file exists with the same name as the log file in the directory, then the procedure overwrites the file.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2736" headers="d1091636e2626 ">
+                                       <p><code class="codeph">tablespace_directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2736 d1091636e2629 ">
+                                       <p>The directory object into which the data files are copied and Data Pump export dump file is placed. The system generates a dump file name with the extension <code class="codeph">.dmp</code>.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure copies the datafiles to and places the dump file in the default directory object for the version. If the version does not have a default directory object, then the procedure uses the default directory object for the file group.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code> and no default directory object exists for the version or file group, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2757" headers="d1091636e2626 ">
+                                       <p><code class="codeph">log_file_directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2757 d1091636e2629 ">
+                                       <p>The directory object into which the Data Pump export log file is placed. The system generates a log file name with the extension <code class="codeph">.clg</code>.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure uses the directory object specified in <code class="codeph">tablespace_directory_object</code>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2776" headers="d1091636e2626 ">
+                                       <p><code class="codeph">file_group_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2776 d1091636e2629 ">
+                                       <p>The name of the file group, specified as <span class="italic"><code class="codeph">[schema_name.]file_group_name</code></span>. For example, if the schema is <code class="codeph">hq_dba</code> and the file group name is <code class="codeph">sales</code>, then specify <code class="codeph">hq_dba.sales</code>. If the schema is not specified, then the current user is the default.
+                                       </p>
+                                       <p>If the specified file group does not exist, then the procedure creates it.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2799" headers="d1091636e2626 ">
+                                       <p><code class="codeph">version_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2799 d1091636e2629 ">
+                                       <p>The name of the version into which the cloned tablespace set is placed. The specified version name cannot be a positive integer.</p>
+                                       <p>If the specified version does not exist, then the procedure creates it.</p>
+                                       <p>If the specified version exists, then the procedure adds the tablespace set to the version. Only one Data Pump export dump file can exist in a version.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure creates a new version, and the version number can be used to manage the version.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2816" headers="d1091636e2626 ">
+                                       <p><code class="codeph">repository_db_link</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2816 d1091636e2629 ">
+                                       <p>If the file group is in a remote database, then specify the name of the database link to the database that contains the file group. The database link must be accessible to the user who runs the procedure.</p>
+                                       <p>If this parameter is non-<code class="codeph">NULL</code>, then the directory object specified in <code class="codeph">tablespace_directory_object</code> must exist on the local database and on the remote database. If <code class="codeph">tablespace_directory_object</code> is <code class="codeph">NULL</code>, then the default directory object must exist on both databases. The directory object must have the same name on each database and must correspond to the same directory on a shared file system.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure does not use a database link, and the procedure uses the file group in the local database.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="42%" id="d1091636e2844" headers="d1091636e2626 ">
+                                       <p><code class="codeph">tablespace_files</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="58%" headers="d1091636e2844 d1091636e2629 ">
+                                       <p>Contains the datafiles for the cloned tablespace set. These datafiles are placed in the directories specified by the directory objects in the parameter <code class="codeph">tablespace_directory_objects</code>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B__GUID-F48091B6-6383-4715-A46C-4C05533E147E">Usage Notes</p>
+                        <p>To run either version of this procedure, a user must meet the following requirements:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have <code class="codeph">EXP_FULL_DATABASE</code> role
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have access to at least one data dictionary view that contains information about the tablespaces. These views include <code class="codeph">DBA_TABLESPACES</code> and <code class="codeph">USER_TABLESPACES</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">MANAGE</code> <code class="codeph">TABLESPACE</code> or <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> on a tablespace if the tablespace must be made read-only
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> privilege on the directory objects for the directories that contain the datafiles for the tablespace set. The names of these tablespaces are specified by the <code class="codeph">tablespace_names</code> parameter. If a directory object does not exist for one or more of these directories, then create the directory objects and grant the necessary privileges before you run this procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> and <code class="codeph">WRITE</code> privilege on the directory object that will contain the Data Pump export dump file, specified by the <code class="codeph">dump_file</code> parameter or the <code class="codeph">tablespace_directory_object</code> parameter
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">WRITE</code> privilege on the directory objects that will contain the copied datafiles for the tablespaces in the set, specified by the <code class="codeph">tablespace_directory_objects</code> parameter if non-<code class="codeph">NULL</code> or the <code class="codeph">tablespace_directory_object</code> parameter
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">WRITE</code> privilege on the directory object that will contain the Data Pump export log file, specified by the <code class="codeph">log_file</code> parameter if non-<code class="codeph">NULL</code> or the <code class="codeph">log_file_directory_object</code> parameter if non-<code class="codeph">NULL</code></p>
+                           </li>
+                        </ul>
+                        <p>If the file group version of the procedure is run, then the user must have the necessary privileges to manage the file group.</p>
+                        <p>Automatic Storage Management (ASM) directories can be specified for the directory objects that store datafiles and export dump files, but ASM directories cannot be specified for directory objects that store log files.</p>
+                        <p>After cloning a tablespace set using this procedure, you can attach the tablespaces to a different database using the <code class="codeph">ATTACH_TABLESPACES</code> procedure.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-3F77ACC4-E158-427B-9AAF-B1257AF2374B__GUID-27D15897-3A43-4B47-91D5-9395FC8220B2">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-160BD734-7627-42AE-81DF-F1871061D7B6" title="This procedure uses Data Pump to import a self-contained tablespace set previously exported using the DBMS_STREAMS_TABLESPACE_ADM package, Data Pump export, or the Recovery Manager (RMAN) TRANSPORT TABLESPACE command.">ATTACH_TABLESPACES Procedure</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_FILE_GROUP.html#GUID-F3DCFA0D-F8ED-4152-A291-112D31C22692" title="The DBMS_FILE_GROUP package, one of a set of Oracle Streams packages, provides administrative interfaces for managing file groups, file group versions, and files. A file group repository is a collection of all of the file groups in a database and can contain multiple versions of a particular file group. You can use this package to create and manage file group repositories."> DBMS_FILE_GROUP</a> for more information about file groups
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../strms/information-provisioning-concepts.html#STRMS159" target="_blank"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="ARPLS859"></a><a id="ARPLS68850"></a><a id="ARPLS68850"></a><a id="ARPLS859"></a><div class="props_rev_3"><a id="GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1" name="GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1"></a><h4 id="ARPLS-GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1" class="sect4"><span class="enumeration_section">170.4.5 </span>DETACH_SIMPLE_TABLESPACE Procedure
+                  </h4>
+                  <div>
+                     <p>This procedure detaches a simple tablespace. The specified tablespace must be online.</p>
+                     <div class="section">
+                        <p>Specifically, this procedure performs the following actions:</p>
+                        <ol>
+                           <li>
+                              <p>Makes the specified tablespace read-only if it is not read-only</p>
+                           </li>
+                           <li>
+                              <p>Uses Data Pump to export the metadata for the tablespace and places the dump file in the directory that contains the tablespace datafile</p>
+                           </li>
+                           <li>
+                              <p>Drops the tablespace and its contents from the database</p>
+                           </li>
+                        </ol>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1__GUID-D564577C-A62E-43C6-851E-83928E1AC88C">Syntax</p><pre class="oac_no_warn" dir="ltr">DBMS_STREAMS_TABLESPACE_ADM.DETACH_SIMPLE_TABLESPACE(
+   tablespace_name       IN  VARCHAR2,
+   directory_object      OUT VARCHAR2,
+   tablespace_file_name  OUT VARCHAR2);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1__GUID-577080D6-62EF-4F30-9837-072B03AB1037">Parameters</p>
+                        <div class="tblformal" id="GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1__GUID-3AE8A170-FE67-4DDC-A3AF-080E1536CF11">
+                           <p class="titleintable">Table 170-7 DETACH_SIMPLE_TABLESPACE Procedure Parameters</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="DETACH_SIMPLE_TABLESPACE Procedure Parameters" summary="This table describes the Parameters of DBMS_STREAMS_TABLESPACE_ADM.DETACH_SIMPLE_TABLESPACE subprogram." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="31%" id="d1091636e3125">Parameter</th>
+                                    <th align="left" valign="bottom" width="69%" id="d1091636e3128">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e3133" headers="d1091636e3125 ">
+                                       <p><code class="codeph">data_pump_job_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e3133 d1091636e3128 ">
+                                       <p>The Data Pump job name. Specify a Data Pump job name to adhere to naming conventions or to track the job more easily.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the system generates a Data Pump job name.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e3146" headers="d1091636e3125 ">
+                                       <p><code class="codeph">directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e3146 d1091636e3128 ">
+                                       <p>Contains the directory where the Data Pump export dump file and the Data Pump export log file are placed. The procedure uses the directory of the datafile for the tablespace. Therefore, make sure a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code> exists for this directory. 
+                                       </p>
+                                       <p>The name of the Data Pump export dump file is the same as the data file name for the tablespace, except with a <code class="codeph">.dmp</code> extension. If a file exists with the same name as the dump file in the directory, then the procedure raises an error.
+                                       </p>
+                                       <p>The name of the log file is the same as the data file name for the tablespace, except with a <code class="codeph">.dlg</code> extension. If a file exists with the same name as the log file in the directory, then the procedure overwrites the file.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="31%" id="d1091636e3170" headers="d1091636e3125 ">
+                                       <p><code class="codeph">tablespace_file_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="69%" headers="d1091636e3170 d1091636e3128 ">
+                                       <p>Contains the name of the detached tablespace datafile.</p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1__GUID-96BD7129-0C2B-4F67-9F10-6392066F687F">Usage Notes</p>
+                        <p>To run this procedure, a user must meet the following requirements:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have <code class="codeph">EXP_FULL_DATABASE</code> role
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have access to at least one data dictionary view that contains information about the tablespaces. These views include <code class="codeph">DBA_TABLESPACES</code> and <code class="codeph">USER_TABLESPACES</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">DROP</code> <code class="codeph">TABLESPACE</code> privilege
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">MANAGE</code> <code class="codeph">TABLESPACE</code> or <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> on a tablespace if the tablespace must be made read-only
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> and <code class="codeph">WRITE</code> privilege on the directory object for the directory that contains the tablespace datafile. The name of this tablespace is specified by the <code class="codeph">tablespace_name</code> parameter. If a directory object does not exist for this directory, then create the directory object and grant the necessary privileges before you run this procedure. This directory also will contain the Data Pump export dump file generated by this procedure.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>After detaching a tablespace using this procedure, you can add the tablespace to a different database using the <code class="codeph">ATTACH_SIMPLE_TABLESPACE</code> procedure. If the database is a remote database and you want to use the <code class="codeph">ATTACH_SIMPLE_TABLESPACE</code> procedure, then you can transfer the dump file and datafile to the remote system using the <code class="codeph">DBMS_FILE_TRANSFER</code> package, FTP, or some other method. You can use the two <code class="codeph">OUT</code> parameters in this procedure to accomplish the attach or pull operation.
+                        </p>
+                        <p>Automatic Storage Management (ASM) directories cannot be used with this procedure.</p>
+                        <div class="infoboxnote" id="GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1__GUID-4EC39969-C277-48A0-A27A-0C9492256460">
+                           <p class="notep1">Note:</p>
+                           <p>Do not use the <code class="codeph">DETACH_SIMPLE_TABLESPACE</code> procedure on a tablespace if the tablespace is using the Oracle-managed files feature. If you do, then the datafile for the tablespace is dropped automatically when the tablespace is dropped.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-F56C119C-DB8C-4208-90BE-47118AA71AF1__GUID-A7CAD927-3BE8-4AE6-95BC-108CA4DF8ACB">
+                           <p class="notep1">See Also:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-9200A29A-8AE7-4166-8323-7461A8FF26DF" title="This procedure uses Data Pump to import a simple tablespace previously exported using the DBMS_STREAMS_TABLESPACE_ADM package, Data Pump export, or the Recovery Manager (RMAN) TRANSPORT TABLESPACE command.">ATTACH_SIMPLE_TABLESPACE Procedure</a> and <a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B" title="This procedure copies a simple tablespace from a remote database and attaches it to the current database.">PULL_SIMPLE_TABLESPACE Procedure</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="../admin/using-oracle-managed-files.html#ADMIN003" target="_blank"><span class="italic">Oracle Database Administrator's Guide </span></a>for more information about the Oracle-managed files feature
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="ARPLS860"></a><a id="ARPLS68851"></a><a id="ARPLS68851"></a><a id="ARPLS860"></a><div class="props_rev_3"><a id="GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B" name="GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B"></a><h4 id="ARPLS-GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B" class="sect4"><span class="enumeration_section">170.4.6 </span>DETACH_TABLESPACES Procedure
+                  </h4>
+                  <div>
+                     <p>This procedure detaches a set of self-contained tablespaces. All of the tablespaces in the specified tablespace set must be online and any table partitions must not span tablespaces in the tablespace set.</p>
+                     <div class="section">
+                        <p>Specifically, this procedure performs the following actions:</p>
+                        <ol>
+                           <li>
+                              <p>Makes any read/write tablespace in the specified tablespace set read-only</p>
+                           </li>
+                           <li>
+                              <p>Uses Data Pump to export the metadata for the tablespace set and places the dump file in the specified directory</p>
+                           </li>
+                           <li>
+                              <p>Drops the tablespaces in the specified tablespace set and their contents from the database</p>
+                           </li>
+                        </ol>
+                        <p>This procedure does not move or copy the datafiles that comprise the specified tablespace set.</p>
+                        <p>This procedure is overloaded and consists of the following versions: </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>One version of the procedure uses a Data Pump job name in the <code class="codeph">datapump_job_name</code> parameter. This job performs the Data Pump export. This version of the procedure completes the detach operation by placing the export dump file and export log file in the specified directories, but the files are not added to a file group version.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The other version of the procedure uses a file group that can consist of multiple versions of the tablespace set in a tablespace repository. A tablespace repository is a collection of tablespace sets in a file group repository. When this version of the procedure is run, a Data Pump export is performed, and this version of the procedure completes the detach operation by placing the export dump file and export log file in the appropriate file group version. The datafiles that comprise the tablespace set are not moved or copied, but they are referenced in the version that is detached. The file group and version are specified using the <code class="codeph">file_group_name</code> and <code class="codeph">version_name</code> parameters, respectively. Also, if the destination platform is different, then the tablespace set is migrated automatically to the correct platform when it is attached at the destination database using the file group version of the <code class="codeph">ATTACH_TABLESPACES</code> procedure.
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B__GUID-B7CE803E-0A00-4E2E-A8B2-A7CA4F863A3A">
+                           <p class="notep1">Note:</p>
+                           <p>Do not use the <code class="codeph">DETACH_TABLESPACES</code> procedure if any of the tablespaces in the tablespace set are using the Oracle-managed files feature. If you do, then the datafiles for these tablespaces are dropped automatically when the tablespaces are dropped.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B__GUID-780C892E-681D-4764-A3AC-B23CFB074144">Syntax</p><pre class="oac_no_warn" dir="ltr">DBMS_STREAMS_TABLESPACE_ADM.DETACH_TABLESPACES(
+   datapump_job_name         IN OUT VARCHAR2,
+   tablespace_names          IN     TABLESPACE_SET,
+   dump_file                 IN     FILE,
+   log_file                  IN     FILE  DEFAULT NULL,
+   tablespace_files          OUT    FILE_SET);
+
+DBMS_STREAMS_TABLESPACE_ADM.DETACH_TABLESPACES(
+   tablespace_names          IN TABLESPACE_SET,
+   export_directory_object   IN VARCHAR2  DEFAULT NULL,
+   log_file_directory_object IN VARCHAR2  DEFAULT NULL,
+   file_group_name           IN VARCHAR2,
+   version_name              IN VARCHAR2  DEFAULT NULL,
+   repository_db_link        IN VARCHAR2  DEFAULT NULL);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B__GUID-30ED4970-9E84-434D-A48A-4A7EFD2EE1D2">Parameters</p>
+                        <div class="tblformal" id="GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B__GUID-8532176A-5577-4C2B-99D2-1EBE107535DE">
+                           <p class="titleintable">Table 170-8 DETACH_TABLESPACES Procedure Parameters</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="DETACH_TABLESPACES Procedure Parameters" summary="This table describes the Parameters of DBMS_STREAMS_TABLESPACE_ADM.DETACH_TABLESPACES subprogram." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="38%" id="d1091636e3453">Parameter</th>
+                                    <th align="left" valign="bottom" width="62%" id="d1091636e3456">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3461" headers="d1091636e3453 ">
+                                       <p><code class="codeph">data_pump_job_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3461 d1091636e3456 ">
+                                       <p>The Data Pump job name. Specify a Data Pump job name to adhere to naming conventions or to track the job more easily.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the system generates a Data Pump job name.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3474" headers="d1091636e3453 ">
+                                       <p><code class="codeph">tablespace_names</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3474 d1091636e3456 ">
+                                       <p>The tablespace set to be detached.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3487" headers="d1091636e3453 ">
+                                       <p><code class="codeph">dump_file</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3487 d1091636e3456 ">
+                                       <p>The file name of the Data Pump dump file that is exported.</p>
+                                       <p>If <code class="codeph">NULL</code> or if a file attribute is <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                       <p>If the specified file exists, then the procedure raises an error.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3505" headers="d1091636e3453 ">
+                                       <p><code class="codeph">log_file</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3505 d1091636e3456 ">
+                                       <p>Specify the log file name for the Data Pump export.</p>
+                                       <p>If <code class="codeph">NULL</code> or if at least one file parameter is <code class="codeph">NULL</code>, then the system generates a log file name with the extension <code class="codeph">.dlg</code> and places it in the dump file directory.
+                                       </p>
+                                       <p>If a file exists with the same name as the log file in the directory, then the procedure overwrites the file.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3526" headers="d1091636e3453 ">
+                                       <p><code class="codeph">tablespace_files</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3526 d1091636e3456 ">
+                                       <p>Contains the names of the datafiles for the detached tablespace set.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3534" headers="d1091636e3453 ">
+                                       <p><code class="codeph">export_directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3534 d1091636e3456 ">
+                                       <p>The directory object into which the Data Pump export dump file is placed. The system generates a dump file name with the extension <code class="codeph">.dmp</code>.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then procedure places the dump file in the default directory object for the version. If the version does not have a default directory object, then the procedure uses the default directory object for the file group.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code> and no default directory object exists for the version or file group, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3555" headers="d1091636e3453 ">
+                                       <p><code class="codeph">log_file_directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3555 d1091636e3456 ">
+                                       <p>The directory object into which the Data Pump export log file is placed. The system generates a log file name with the extension <code class="codeph">.dlg</code>.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure places the export log file in the same directory as the export dump file.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3571" headers="d1091636e3453 ">
+                                       <p><code class="codeph">file_group_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3571 d1091636e3456 ">
+                                       <p>The name of the file group, specified as <span class="italic"><code class="codeph">[schema_name.]file_group_name</code></span>. For example, if the schema is <code class="codeph">hq_dba</code> and the file group name is <code class="codeph">sales</code>, then specify <code class="codeph">hq_dba.sales</code>. If the schema is not specified, then the current user is the default.
+                                       </p>
+                                       <p>If the specified file group does not exist, then the procedure creates it.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3594" headers="d1091636e3453 ">
+                                       <p><code class="codeph">version_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3594 d1091636e3456 ">
+                                       <p>The name of the version into which the detached tablespace set is placed. The specified version name cannot be a positive integer.</p>
+                                       <p>If the specified version does not exist, then the procedure creates it.</p>
+                                       <p>If the specified version exists, then procedure adds the tablespace set to the version. Only one Data Pump export dump file can exist in a version.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure creates a new version, and the version number can be used to manage the version.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3611" headers="d1091636e3453 ">
+                                       <p><code class="codeph">repository_db_link</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3611 d1091636e3456 ">
+                                       <p>If the file group is in a remote database, then specify the name of the database link to the database that contains the file group. The database link must be accessible to the user who runs the procedure.</p>
+                                       <p>If this parameter is non-<code class="codeph">NULL</code>, then the directory object specified in <code class="codeph">export_directory_object</code> must exist on the local database and on the remote database. If <code class="codeph">export_directory_object</code> is <code class="codeph">NULL</code>, then the default directory object must exist on both databases. The directory object must have the same name on each database and must correspond to the same directory on a shared file system.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure does not use a database link, and the procedure uses the file group in the local database.
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B__GUID-4FE9DE15-D841-480E-BA90-02E3FAFF529D">Usage Notes</p>
+                        <p>To run this either version of this procedure, a user must meet the following requirements:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have <code class="codeph">EXP_FULL_DATABASE</code> role
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have access to at least one data dictionary view that contains information about the tablespaces. These views include <code class="codeph">DBA_TABLESPACES</code> and <code class="codeph">USER_TABLESPACES</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">DROP</code> <code class="codeph">TABLESPACE</code> privilege
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">MANAGE</code> <code class="codeph">TABLESPACE</code> or <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> on a tablespace if the tablespace must be made read-only
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> privilege on the directory objects for the directories that contain the datafiles for the tablespace set. The names of these tablespaces are specified by the <code class="codeph">tablespace_names</code> parameter. If a directory object does not exist for one or more of these directories, then create the directory objects and grant the necessary privileges before you run this procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> and <code class="codeph">WRITE</code> privilege on the directory object that will contain the Data Pump export dump file, specified by the <code class="codeph">dump_file</code> parameter or the <code class="codeph">export_directory_object</code> parameter
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">WRITE</code> privilege on the directory object that will contain the Data Pump export the log file, specified by the <code class="codeph">log_file</code> parameter if non-<code class="codeph">NULL</code> or by the <code class="codeph">log_file_directory_object</code> parameter if non-<code class="codeph">NULL</code></p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>If the file group version of the procedure is run, then the user must have the necessary privileges to manage the file group.</p>
+                        <p>Automatic Storage Management (ASM) directories can be specified for the directory objects that store datafiles and export dump files, but ASM directories cannot be specified for directory objects that store log files.</p>
+                        <p>After detaching a tablespace set using this procedure, you can attach the tablespaces to a different database using the <code class="codeph">ATTACH_TABLESPACES</code> procedure. 
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-04F959B1-77B6-40A7-B6B8-ABA56C3C3B7B__GUID-A8E1F757-F440-4705-8358-7D75CD86B3F1">
+                           <p class="notep1">See Also:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-160BD734-7627-42AE-81DF-F1871061D7B6" title="This procedure uses Data Pump to import a self-contained tablespace set previously exported using the DBMS_STREAMS_TABLESPACE_ADM package, Data Pump export, or the Recovery Manager (RMAN) TRANSPORT TABLESPACE command.">ATTACH_TABLESPACES Procedure</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="DBMS_FILE_GROUP.html#GUID-F3DCFA0D-F8ED-4152-A291-112D31C22692" title="The DBMS_FILE_GROUP package, one of a set of Oracle Streams packages, provides administrative interfaces for managing file groups, file group versions, and files. A file group repository is a collection of all of the file groups in a database and can contain multiple versions of a particular file group. You can use this package to create and manage file group repositories."> DBMS_FILE_GROUP</a> for more information about file groups
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../strms/information-provisioning-concepts.html#STRMS159" target="_blank"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="../admin/using-oracle-managed-files.html#ADMIN003" target="_blank"><span class="italic">Oracle Database Administrator's Guide </span></a>for more information about the Oracle-managed files feature
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="ARPLS861"></a><a id="ARPLS68852"></a><a id="ARPLS68852"></a><a id="ARPLS861"></a><div class="props_rev_3"><a id="GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B" name="GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B"></a><h4 id="ARPLS-GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B" class="sect4"><span class="enumeration_section">170.4.7 </span>PULL_SIMPLE_TABLESPACE Procedure
+                  </h4>
+                  <div>
+                     <p>This procedure copies a simple tablespace from a remote database and attaches it to the current database. </p>
+                     <div class="section">
+                        <p>The specified tablespace at the remote database must be online.</p>
+                        <p>Specifically, this procedure performs the following actions:</p>
+                        <ol>
+                           <li>
+                              <p>Makes the specified tablespace read-only at the remote database if it is not read-only</p>
+                           </li>
+                           <li>
+                              <p>Uses Data Pump to export the metadata for the tablespace</p>
+                           </li>
+                           <li>
+                              <p>Uses a database link and the <code class="codeph">DBMS_FILE_TRANSFER</code> package to transfer the datafile for the tablespace and the log file for the Data Pump export to the current database
+                              </p>
+                           </li>
+                           <li>
+                              <p>Places the datafile for the specified tablespace and the log file for the Data Pump export in the specified directory at the local database</p>
+                           </li>
+                           <li>
+                              <p>If this procedure made the tablespace read-only, then makes the tablespace read/write </p>
+                           </li>
+                           <li>
+                              <p>Uses Data Pump to import the metadata for the tablespace in the local database</p>
+                           </li>
+                        </ol>
+                        <p>In addition, this procedure optionally can create a datafile for the tablespace that can be used with the local platform, if the platform at the remote database is different than the local database platform.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B__GUID-06DD0CA2-E9CC-4D46-961A-6C84FC761689">Syntax</p><pre class="oac_no_warn" dir="ltr">DBMS_STREAMS_TABLESPACE_ADM.PULL_SIMPLE_TABLESPACE(
+   tablespace_name          IN VARCHAR2,
+   database_link            IN VARCHAR2,
+   directory_object         IN VARCHAR2  DEFAULT NULL,
+   conversion_extension     IN VARCHAR2  DEFAULT NULL,
+   convert_directory_object IN VARCHAR2  DEFAULT NULL);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B__GUID-1BAB1232-EB1B-419A-A517-215151A6F0F1">Parameters</p>
+                        <div class="tblformal" id="GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B__GUID-0A2D0F12-F323-40C3-A8F5-9C27890B2673">
+                           <p class="titleintable">Table 170-9 PULL_SIMPLE_TABLESPACE Procedure Parameters</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="PULL_SIMPLE_TABLESPACE Procedure Parameters" summary="This table describes the Parameters of DBMS_STREAMS_TABLESPACE_ADM.PULL_SIMPLE_TABLESPACE subprogram." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="38%" id="d1091636e3924">Parameter</th>
+                                    <th align="left" valign="bottom" width="62%" id="d1091636e3927">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3932" headers="d1091636e3924 ">
+                                       <p><code class="codeph">tablespace_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3932 d1091636e3927 ">
+                                       <p>The tablespace to be pulled.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3945" headers="d1091636e3924 ">
+                                       <p><code class="codeph">database_link</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3945 d1091636e3927 ">
+                                       <p>The name of the database link to the database that contains the tablespace to pull. The database link must be accessible to the user who runs the procedure.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3958" headers="d1091636e3924 ">
+                                       <p><code class="codeph">directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3958 d1091636e3927 ">
+                                       <p>The directory object to which the datafile for the tablespace is copied on the local database. You must specify the name of a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code>.
+                                       </p>
+                                       <p>The Data Pump import log file is written to this directory. The name of the log file is the same as the data file name for the tablespace, except with a <code class="codeph">.plg</code> extension. If a file exists with the same name as the log file in the directory, then the procedure overwrites the file.
+                                       </p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3982" headers="d1091636e3924 ">
+                                       <p><code class="codeph">conversion_extension</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3982 d1091636e3927 ">
+                                       <p>Specify <code class="codeph">NULL</code> if the platform is the same for the remote export database and the current import database.
+                                       </p>
+                                       <p>If the platform is different for the export database and the import database, then specify an extension for the tablespace datafile that is different than the extension for the tablespace datafile at the remote database. In this case, the procedure transfers the datafile to the import database and converts it to be compatible with the current import database platform automatically. After conversion is complete, the original datafile is deleted at the import database.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="38%" id="d1091636e3995" headers="d1091636e3924 ">
+                                       <p><code class="codeph">convert_directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="62%" headers="d1091636e3995 d1091636e3927 ">
+                                       <p>Specify <code class="codeph">NULL</code> if the platform is the same for the remote export database and the current import database.
+                                       </p>
+                                       <p>If the platform is different for the export database and the import database, then specify a directory object in the local export database. The procedure uses the directory object for platform conversion before it transfers the files to the remote database. You must specify the name of a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B__GUID-31DC7A6A-3E39-4AA3-9D90-07B91C938B56">Usage Notes</p>
+                        <p>To run this procedure, a user must meet the following requirements on the remote database:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have the <code class="codeph">EXP_FULL_DATABASE</code> role
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> package
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have access to at least one data dictionary view that contains information about the tablespaces. These views include <code class="codeph">DBA_TABLESPACES</code> and <code class="codeph">USER_TABLESPACES</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">MANAGE</code> <code class="codeph">TABLESPACE</code> or <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> privilege on a tablespace if the tablespace must be made read-only
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> privilege on the directory object for the directory that contains the datafile for the tablespace. The name of this tablespace is specified by the <code class="codeph">tablespace_name</code> parameter. If a directory object does not exist for this directory, then create the directory object and grant the necessary privileges before you run this procedure.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>To run this procedure, a user must meet the following requirements on the local database:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have the roles <code class="codeph">IMP_FULL_DATABASE</code> and <code class="codeph">EXECUTE_CATALOG_ROLE</code></p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">WRITE</code> privilege on the directory object that will contain the Data Pump export the log file, specified by the <code class="codeph">log_file</code> parameter if non-<code class="codeph">NULL</code></p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">WRITE</code> privilege on the directory object that will hold the datafile for the tablespace, specified by the <code class="codeph">directory_object</code> parameter
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Automatic Storage Management (ASM) directories cannot be used with this procedure.</p>
+                        <div class="infoboxnotealso" id="GUID-F5DD9F08-366D-409F-8136-5DC54EF5EE5B__GUID-F3854449-BDEA-41B7-8A06-811A6C298B92">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="ARPLS862"></a><a id="ARPLS68853"></a><a id="ARPLS68853"></a><a id="ARPLS862"></a><div class="props_rev_3"><a id="GUID-164D246F-1CBE-464E-849D-DAB3DF382053" name="GUID-164D246F-1CBE-464E-849D-DAB3DF382053"></a><h4 id="ARPLS-GUID-164D246F-1CBE-464E-849D-DAB3DF382053" class="sect4"><span class="enumeration_section">170.4.8 </span>PULL_TABLESPACES Procedure
+                  </h4>
+                  <div>
+                     <p>This procedure copies a set of self-contained tablespaces from a remote database and attaches the tablespaces to the current database. </p>
+                     <div class="section">
+                        <p>All of the tablespaces in the specified tablespace set at the remote database must be online.</p>
+                        <p>Specifically, this procedure performs the following actions:</p>
+                        <ol>
+                           <li>
+                              <p>Makes any read/write tablespace in the specified tablespace set at the remote database read-only</p>
+                           </li>
+                           <li>
+                              <p>Uses Data Pump to export the metadata for the tablespaces in the tablespace set</p>
+                           </li>
+                           <li>
+                              <p>Uses a database link and the <code class="codeph">DBMS_FILE_TRANSFER</code> package to transfer the datafiles for the tablespace set and the log file for the Data Pump export to the current database
+                              </p>
+                           </li>
+                           <li>
+                              <p>Places the datafiles that comprise the specified tablespace set in the specified directories at the local database</p>
+                           </li>
+                           <li>
+                              <p>Places the log file for the Data Pump export in the specified directory at the local database</p>
+                           </li>
+                           <li>
+                              <p>If this procedure made a tablespace read-only, then makes the tablespace read/write </p>
+                           </li>
+                           <li>
+                              <p>Uses Data Pump to import the metadata for the tablespaces in the tablespace set at the local database</p>
+                           </li>
+                        </ol>
+                        <p>In addition, this procedure optionally can create datafiles for the tablespace set that can be used with the local platform, if the platform at the remote database is different than the local database platform.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-164D246F-1CBE-464E-849D-DAB3DF382053__GUID-126948AA-C7A6-484C-9C9D-F1F39ED61B9A">Syntax</p><pre class="oac_no_warn" dir="ltr">DBMS_STREAMS_TABLESPACE_ADM.PULL_TABLESPACES(
+   datapump_job_name            IN OUT VARCHAR2,
+   database_link                IN     VARCHAR2,
+   tablespace_names             IN     TABLESPACE_SET,
+   tablespace_directory_objects IN     DIRECTORY_OBJECT_SET,
+   log_file                     IN     FILE,
+   conversion_extension         IN     VARCHAR2  DEFAULT NULL,
+   convert_directory_object     IN     VARCHAR2  DEFAULT NULL);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-164D246F-1CBE-464E-849D-DAB3DF382053__GUID-72E80CA9-473E-4C8C-A7B9-2A2600FA29D5">Parameters</p>
+                        <div class="tblformal" id="GUID-164D246F-1CBE-464E-849D-DAB3DF382053__GUID-3F7BFEB1-ED84-4C6F-A526-452A65D30444">
+                           <p class="titleintable">Table 170-10 PULL_TABLESPACES Procedure Parameters</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="PULL_TABLESPACES Procedure Parameters" summary="This table describes the Parameters of DBMS_STREAMS_TABLESPACE_ADM.PULL_TABLESPACES subprogram." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="41%" id="d1091636e4251">Parameter</th>
+                                    <th align="left" valign="bottom" width="59%" id="d1091636e4254">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="41%" id="d1091636e4259" headers="d1091636e4251 ">
+                                       <p><code class="codeph">data_pump_job_name</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="59%" headers="d1091636e4259 d1091636e4254 ">
+                                       <p>The Data Pump job name. Specify a Data Pump job name to adhere to naming conventions or to track the job more easily.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the system generates a Data Pump job name.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="41%" id="d1091636e4272" headers="d1091636e4251 ">
+                                       <p><code class="codeph">database_link</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="59%" headers="d1091636e4272 d1091636e4254 ">
+                                       <p>The name of the database link to the database that contains the tablespace set to pull. The database link must be accessible to the user who runs the procedure.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="41%" id="d1091636e4285" headers="d1091636e4251 ">
+                                       <p><code class="codeph">tablespace_names</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="59%" headers="d1091636e4285 d1091636e4254 ">
+                                       <p>The tablespace set to be pulled.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="41%" id="d1091636e4298" headers="d1091636e4251 ">
+                                       <p><code class="codeph">tablespace_directory_objects</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="59%" headers="d1091636e4298 d1091636e4254 ">
+                                       <p>The set of directory objects to which the datafiles for the tablespaces are copied. If multiple directory objects are in the set, then the procedure copies a datafile to each directory object in the set in sequence. In this case, if the end of the directory object set is reached, then datafile copying starts again with the first directory object in the set.</p>
+                                       <p>If <code class="codeph">NULL</code>, then the procedure raises an error.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="41%" id="d1091636e4311" headers="d1091636e4251 ">
+                                       <p><code class="codeph">log_file</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="59%" headers="d1091636e4311 d1091636e4254 ">
+                                       <p>Specify the log file name for the Data Pump export. </p>
+                                       <p>If <code class="codeph">NULL</code> or if at least one file parameter is <code class="codeph">NULL</code>, then the system generates a log file name with the extension <code class="codeph">.plg</code> and places it in one of the data file directories.
+                                       </p>
+                                       <p>If a file exists with the same name as the log file in the directory, then the procedure overwrites the file.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="41%" id="d1091636e4332" headers="d1091636e4251 ">
+                                       <p><code class="codeph">conversion_extension</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="59%" headers="d1091636e4332 d1091636e4254 ">
+                                       <p>Specify <code class="codeph">NULL</code> if the platform is the same for the remote export database and the current import database.
+                                       </p>
+                                       <p>If the platform is different for the export database and the import database, then specify an extension for the tablespace datafiles that is different than the extension for the tablespace datafiles at the remote database. In this case, the procedure transfers the datafiles to the import database and converts them to be compatible with the current import database platform automatically. After conversion is complete, the original datafiles are deleted at the import database.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="41%" id="d1091636e4345" headers="d1091636e4251 ">
+                                       <p><code class="codeph">convert_directory_object</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="59%" headers="d1091636e4345 d1091636e4254 ">
+                                       <p>Specify <code class="codeph">NULL</code> if the platform is the same for the remote export database and the current import database.
+                                       </p>
+                                       <p>If the platform is different for the export database and the import database, then specify a directory object in the local export database. The procedure uses the directory object for platform conversion before it transfers the files to the remote database. You must specify the name of a directory object created using the SQL statement <code class="codeph">CREATE</code> <code class="codeph">DIRECTORY</code>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-164D246F-1CBE-464E-849D-DAB3DF382053__GUID-6287BBE5-DB85-4C02-85BA-37B8550F7700">Usage Notes</p>
+                        <p>To run this procedure, a user must meet the following requirements on the remote database:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have the <code class="codeph">EXP_FULL_DATABASE</code> role
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">DBMS_STREAMS_TABLESPACE_ADM</code> package
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have access to at least one data dictionary view that contains information about the tablespaces. These views include <code class="codeph">DBA_TABLESPACES</code> and <code class="codeph">USER_TABLESPACES</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">MANAGE</code> <code class="codeph">TABLESPACE</code> or <code class="codeph">ALTER</code> <code class="codeph">TABLESPACE</code> privilege on a tablespace if the tablespace must be made read-only
+                              </p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">READ</code> privilege on the directory objects for the directories that contain the datafiles for the tablespace set. The names of these tablespaces are specified by the <code class="codeph">tablespace_names</code> parameter. If a directory object does not exist for one or more of these directories, then create the directory objects and grant the necessary privileges before you run this procedure.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>To run this procedure, a user must meet the following requirements on the local database:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Have the roles <code class="codeph">IMP_FULL_DATABASE</code> and <code class="codeph">EXECUTE_CATALOG_ROLE</code></p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">WRITE</code> privilege on the directory object that will contain the Data Pump export the log file, specified by the <code class="codeph">log_file</code> parameter if non-<code class="codeph">NULL</code></p>
+                           </li>
+                           <li>
+                              <p>Have <code class="codeph">WRITE</code> privilege on the directory objects that will hold the datafiles for the tablespaces in the set, specified by the <code class="codeph">tablespace_directory_objects</code> parameter
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Automatic Storage Management (ASM) directories can be specified for the directory objects that store datafiles and export dump files, but ASM directories cannot be specified for directory objects that store log files.</p>
+                        <div class="infoboxnotealso" id="GUID-164D246F-1CBE-464E-849D-DAB3DF382053__GUID-B3B0B55C-62EF-43DC-AD44-B15E390D2C7B">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="DBMS_STREAMS_TABLESPACE_ADM.html#GUID-D271D031-3118-4D3A-B7E5-DC97C0B2B8E5" title="Either a simple tablespace or a self-contained tablespace set must be specified in each procedure in this package.">Overview</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

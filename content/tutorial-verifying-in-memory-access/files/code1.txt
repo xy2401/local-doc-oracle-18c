@@ -1,0 +1,32 @@
+SQL_ID    65y7nhppv6gng, child number 0
+-------------------------------------
+SELECT /* PRE_IMPOP */ c.cust_id, c.cust_last_name, c.cust_first_name,
+SUM(s.amount_sold) FROM sh.sales s, sh.customers c WHERE s.cust_id =
+c.cust_id AND c.cust_last_name LIKE 'Aa%' GROUP BY c.cust_id,
+c.cust_last_name, c.cust_first_name ORDER BY c.cust_id
+
+Plan hash value: 4185192085
+
+------------------------------------------------------------------------------------------------------------
+| Id  | Operation                      | Name      | Rows  | Bytes | Cost (%CPU)| Time     | Pstart| Pstop |
+------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT               |           |       |       |   951 (100)|          |       |       |
+|   1 |  SORT GROUP BY                 |           |  3280 |   115K|   951   (2)| 00:00:01 |       |       |
+|*  2 |   HASH JOIN                    |           | 22267 |   782K|   950   (2)| 00:00:01 |       |       |
+|   3 |    JOIN FILTER CREATE          | :BF0000   |   171 |  4446 |   917   (1)| 00:00:01 |       |       |
+|*  4 |     TABLE ACCESS FULL          | CUSTOMERS |   171 |  4446 |   917   (1)| 00:00:01 |       |       |
+|   5 |    JOIN FILTER USE             | :BF0000   |   918K|  8973K|    31  (20)| 00:00:01 |       |       |
+|   6 |     PARTITION RANGE ALL        |           |   918K|  8973K|    31  (20)| 00:00:01 |     1 |    28 |
+|*  7 |      TABLE ACCESS INMEMORY FULL| SALES     |   918K|  8973K|    31  (20)| 00:00:01 |     1 |    28 |
+------------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("S"."CUST_ID"="C"."CUST_ID")
+   4 - filter("C"."CUST_LAST_NAME" LIKE 'Aa%')
+   7 - inmemory(SYS_OP_BLOOM_FILTER(:BF0000,"S"."CUST_ID"))
+       filter(SYS_OP_BLOOM_FILTER(:BF0000,"S"."CUST_ID"))
+
+
+30 rows selected.

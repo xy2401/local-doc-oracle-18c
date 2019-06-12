@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Part number: F12725-01 -->
+    <!-- Published date: December 2018 -->
+    <!-- Template date: October 15, 2018 -->
+    <!-- Put the content ID of this OBE between the empty quotation marks for 'content' below -->
+    <meta name="contentid" content="25764">
+    <!-- The title below is displayed on the browser tab, in search results, and in  history. It can be longer than the tutorial title in the <h1> element, below.-->
+    <!-- Use an imperative verb in the title. -->
+    <title>Perform a Software-Only Installation of Oracle Database</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="This tutorial shows you how to perform a software-only installation of Oracle Database.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-12-13T13:27:34+00:00">
+    <meta name="dcterms.title" content="Perform a software-only installation of Oracle Database">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="TUTORIAL-INSTALL-ORACLE-DATABASE">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="F12725-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <!-- The title below is displayed as the title at the top of the OBE page. It can be shorter than the title in the <title> element, above. -->
+      <!-- Use an imperative verb in the title. -->
+      <h1><img src="img/obe_tag.png" alt="Oracle by Example branding" align="middle">Perform
+        a Software-Only Installation of Oracle Database</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p>This 20-minute tutorial shows you how to download and perform a
+                software-only installation of Oracle Database 18c. </p>
+              <h3>Background</h3>
+              <p> In a software-only installation you install the Oracle
+                Database software but do not create a database as part of the
+                installation process. </p>
+              <!--  <p>Ensure that your system meets the necessary
+                hardware and software requirements for Oracle Database 18c.</p> -->
+              <!-- <p>This is an example of an optional image in the Background
+                section. </p>              <figure><img src="img/sample-arch-image.png" alt="Description of sample-arch-image.png follows">                <figcaption><a href="files/sample-arch-image.txt">Description of                    the illustration [filename]</a></figcaption> </figure> -->
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>A Linux machine with version 6 or later of Oracle Linux or
+                  Red Hat Enterprise Linux.</li>
+                <li>Disk Storage Space: At least 7.5 GB </li>
+                <li>RAM: At least 2 GB</li>
+                <li>Swap space that is equal to the size of the RAM.</li>
+                <li>At least 1 GB of space in the <code>/tmp</code> directory.</li>
+                <li>At least 1024 x 768 display resolution.</li>
+                <li>File Storage: File System or Oracle ASM.
+                  <p> <b>Note:</b> Oracle ASM is installed as part of an Oracle
+                    Grid Infrastructure installation. </p>
+                </li>
+                <li>Access to <a target="_blank" href="../ladbi/index.html">
+                    Oracle Database Installation Guide</a> </li>
+                <li>Access to <a target="_blank" href="https://www.oracle.com/technetwork/database/enterprise-edition/downloads/oracle18c-linux-180000-5022980.html">Oracle
+                    Technology Network</a></li>
+                <li>Access to <a target="_blank" href="https://edelivery.oracle.com/">Oracle
+                    Software Delivery Cloud Portal</a></li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Install
+                Oracle Database Software</h2>
+              <ol>
+                <li>Download the Oracle Database installation image files
+                  (LINUX.X64_180000_db_home.zip ) to a directory of your choice.
+                  For example, you can download the image files to the <code>/tmp</code>
+                  directory.</li>
+                <li>Create the Oracle home directory and extract the image files
+                  that you have downloaded in to this Oracle home directory:
+                  <pre>export ORACLE_HOME=/u01/app/oracle/product/18.0.0/dbhome_1
+$ mkdir -p $ORACLE_HOME                 
+$ chgrp oinstall $ORACLE_HOME
+$ cd $ORACLE_HOME
+$ unzip -q /tmp/LINUX.X64_180000_db_home.zip </pre>
+                </li>
+                <!--       <li>Navigate to the Oracle home directory where you
+                  unzipped the image files</li>                <pre>$ cd ORACLE_HOME</pre> -->
+                <li>Start the Oracle Database Setup Wizard.
+                  <pre>./runInstaller</pre>
+                </li>
+                <li>In the Select Configuration Option screen, select <b>Set Up
+                    Software Only</b> and click <b>Next</b>.
+                  <figure><img src="img/dbinstall_setup_software_only.jpg" alt="Description of the configuration options for installing Oracle Database">
+                    <figcaption><a target="_blank" href="files/dbinstall_setup_software_only.txt">Description
+                        of the configuration options for installing Oracle
+                        Database</a></figcaption> </figure>
+                </li>
+                <li>In the Select Database Installation Option screen, select <b>Single
+                    instance database installation</b> and click <b>Next</b>.</li>
+                <li>In the Select Database Edition screen, select <b>Enterprise
+                    Edition</b> and click <b>Next</b>. </li>
+                <li>In the Specify Installation Location screen, select the
+                  directory for Oracle base, which is <code>/u01/app/oracle</code>
+                  and click <b>Next</b>.
+                  <p>The Oracle base directory contains all Oracle software and
+                    configuration-related files installed by the installation
+                    owner. </p>
+                  <p> The Oracle home directory, <code>/u01/app/oracle/product/18.0.0/dbhome_1</code>
+                    where the Oracle Database Software is installed is
+                    automatically populated based on the Oracle base directory.
+                  </p>
+                </li>
+                <li>In the Create Inventory screen, select the <b>inventory
+                    directory</b> and <b>oraInventory group name</b>. Click <b>Next</b>.
+                  <p> <b>Note:</b> The Create Inventory screen comes up only
+                    when you perform any Oracle software installation for the
+                    very first time, asking you for the inventory directory and
+                    the <code>orainventory</code> group name. The inventory
+                    directory is the same for all Oracle software installations.
+                    This screen is not displayed for subsequent installations of
+                    Oracle Database. </p>
+                </li>
+                <li>In the Privileged Operating System groups screen, select the
+                  system privileges that are required to create a database.
+                  Click <b>Next</b> to start the prerequisite checks.
+                  <figure><img src="img/dbinstall_operating_sytem_groups.jpg" alt="Description of Privileged Operating System Groups">
+                    <figcaption><a target="_blank" href="files/dbinstall_operating_sytem_groups.txt">Description
+                        of Privileged Operating System Groups screen</a></figcaption>
+                  </figure>
+                </li>
+                <li>In the Perform Prerequisite Checks screen, the installer
+                  verifies if the target environment meets the minimum
+                  installation and configuration requirements and reports any
+                  errors.</li>
+                <li>In the Summary screen, verify the details and click <b>Edit</b>
+                  if you want to make any changes.
+                  <p> Click <b>Save Response File</b> to save the response
+                    file. You can use this response file later to perform a
+                    silent installation of Oracle Database. </p>
+                  <p> Click <b>Install</b> to install the software. </p>
+                </li>
+                <li>In the Install Product screen, you can see the installation
+                  in progress. The setup wizard prompts you to execute root
+                  scripts as a <code>root</code> user.
+                  <figure><img src="img/dbinstall_execute_configuration_scripts.jpg" alt="Description of the Execute Configuration Scripts Screen">
+                    <figcaption><a target="_blank" href="files/dbinstall_execute_configuration_scripts.txt">Description
+                        of the Execute Configuration Scripts Screen</a></figcaption>
+                  </figure>
+                </li>
+                <li>Open a terminal window, log in as <code>root</code> and run
+                  the root scripts.
+                  <p>When you run the root scripts, the <code>ORACLE_OWNER</code>
+                    and the <code>ORACLE_HOME</code> environment variables are
+                    set. You are prompted to enter the full path name of the
+                    local bin directory. The script also creates the <code>/etc/oratab</code>
+                    file, which contains information about automatic database
+                    startup and shutdown.</p>
+                  <figure><img src="img/dbinstall_rootscripts_output.jpg" alt="Description of the Configuration Scripts Output Screen">
+                    <figcaption><a target="_blank" href="files/dbinstall_rootscripts_output.txt">Description
+                        of the Configuration Scripts Output Screen</a></figcaption>
+                  </figure>
+                </li>
+                <li>Click <b>Close</b> to complete the installation.</li>
+                <!-- <li>...
+                  <figure><img src="img/sample-image-1.png" alt="Description of sample-image-1.png follows">                    <figcaption><a href="files/sample-image-1.txt">Description                        of the illustration [filename]</a></figcaption> </figure>                  <p>This is a subsequent paragraph in a step.</p>                </li> -->
+                <!-- <li>This is an example of a table:
+                  <table summary="This table demonstrates the use of table, th, tr, and td elements to define a simple table.">                    <tbody>                      <tr>                        <th scope="col">Column Heading 1</th>                        <th scope="col">Column Heading 2</th>                      </tr>                      <tr>                        <td scope="row">Row 1</td>                        <td>Text</td>                      </tr>                      <tr>                        <td scope="row">Row 2</td>                        <td>Text</td>                      </tr>                      <tr>                        <td scope="row">Row 3</td>                        <td>Text</td>                      </tr>                    </tbody>                  </table>                </li> -->
+              </ol>
+            </section>
+            <section>
+              <!-- Include the Next section only in a lab series or tutorial series -->
+              <!-- Don't include this section if you plan to use the tutorials in a learning path -->
+              <h2 id="next" role="button" style="text-align: 
+left;"><img src="img/32_next.png" alt="next step" class="num_circ" height="32" width="32">Next
+
+                Tutorial</h2>
+              <p><a target="_blank" href="https://apexapps.oracle.com/pls/apex/f?p=44785:112:0::::P112_CONTENT_ID:25765">
+                  Enable a Read-Only Oracle Home and Create a Database</a></p>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li> <a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+    <!-- OBE Dialog Box code 10/15/2018 -->
+    <!-- DO NOT ALTER THE CODE BELOW   -->
+    <div id="lpModal" class="modal">
+      <!-- Modal hdr and body -->
+      <div id="obe_dialog" class="modal-content">
+        <div class="modal-header"> <a href="#" class="close"> <span class="close">×</span>
+          </a>
+          <h1>Associated Learning Paths</h1>
+        </div>
+        <div id="dialog-content"> </div>
+        <div id="dialog-close" class="closeBtn"> <a href="#" class="close2">
+            <p class="close2"> <span>&nbsp;&nbsp;View&nbsp;&nbsp;</span> </p>
+          </a> </div>
+      </div>
+    </div>
+    <!-- END OBE Dialog Box code -->
+  </body>
+</html>

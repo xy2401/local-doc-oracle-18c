@@ -1,0 +1,2405 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Rule-Based Application Example</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Extended Examples ">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Extended Examples">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-extended-examples.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T22:39:34-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2008, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83782-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="logical-change-records-with-lobs-example.html" title="Previous" type="text/html">
+      <link rel="next" href="book-index.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Extended Examples">
+    <meta name="dcterms.isVersionOf" content="STREX">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="logical-change-records-with-lobs-example.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="book-index.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Extended Examples </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Rule-Based Application Example </li>
+            </ol>
+            <a id="GUID-36D5D156-B28B-41E3-A702-51E9A772AAD7" name="GUID-36D5D156-B28B-41E3-A702-51E9A772AAD7"></a><a id="STREX017"></a>
+            
+            <h2 id="STREX-GUID-36D5D156-B28B-41E3-A702-51E9A772AAD7" class="sect2"><span class="enumeration_chapter">6 </span> Rule-Based Application Example 
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d13308e48" class="indexterm-anchor"></a><a id="d13308e52" class="indexterm-anchor"></a><a id="d13308e54" class="indexterm-anchor"></a>This chapter illustrates a rule-based application that uses the Oracle rules engine.
+               </p>
+               <p>The examples in this chapter are independent of Oracle Streams. That is, no Oracle Streams capture processes, propagations, apply processes, or messaging clients are clients of the rules engine in these examples, and no queues are used.</p>
+               <p>The following topics describe configuring examples of rules-based applications:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-291FABDE-ADEE-4105-BCC4-355D895BD38C">Overview of the Rule-Based Application</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA">Using Rules on Nontable Data Stored in Explicit Variables</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6">Using Rules on Data in Explicit Variables with Iterative Results</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04">Using Partial Evaluation of Rules on Data in Explicit Variables</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2">Using Rules on Data Stored in a Table</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842">Using Rules on Both Explicit Variables and Table Data</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71">Using Rules on Implicit Variables and Table Data</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E">Using Event Contexts and Implicit Variables with Rules</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E">Dispatching Problems and Checking Results for the Table Examples</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-36D5D156-B28B-41E3-A702-51E9A772AAD7__GUID-4F1CBF9B-C94B-4014-93F8-0C3FFE3AEB85">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strex&amp;id=STRMS"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+               </div>
+            </div><a id="STREX1156"></a><div class="props_rev_3"><a id="GUID-291FABDE-ADEE-4105-BCC4-355D895BD38C" name="GUID-291FABDE-ADEE-4105-BCC4-355D895BD38C"></a><h3 id="STREX-GUID-291FABDE-ADEE-4105-BCC4-355D895BD38C" class="sect3"><span class="enumeration_section">6.1 </span>Overview of the Rule-Based Application
+               </h3>
+               <div>
+                  <p>Each example in this chapter creates a rule-based application that handles customer problems. The application uses rules to determine actions that must be completed based on the problem priority when a new problem is reported. For example, the application assigns each problem to a particular company center based on the problem priority.</p>
+                  <p>The application enforces these rules using the rules engine. An evaluation context named <code class="codeph">evalctx</code> is created to define the information surrounding a support problem. Rules are created based on the requirements described previously, and they are added to a rule set named <code class="codeph">rs</code>.
+                  </p>
+                  <p>The task of assigning problems is done by a user-defined procedure named <code class="codeph">problem_dispatch</code>, which calls the rules engine to evaluate rules in the rule set <code class="codeph">rs</code> and then takes appropriate action based on the rules that evaluate to&nbsp;<code class="codeph">TRUE</code>.
+                  </p>
+               </div>
+            </div><a id="STREX1339"></a><a id="STREX1340"></a><a id="STREX1341"></a><a id="STREX1342"></a><a id="STREX1343"></a><a id="STREX1344"></a><a id="STREX1345"></a><a id="STREX1346"></a><a id="STREX1347"></a><a id="STREX1348"></a><a id="STREX1349"></a><a id="STREX1157"></a><div class="props_rev_3"><a id="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA" name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA"></a><h3 id="STREX-GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA" class="sect3"><span class="enumeration_section">6.2 </span>Using Rules on Nontable Data Stored in Explicit Variables
+               </h3>
+               <div>
+                  <p>This example illustrates how to use rules to evaluate data stored in explicit variables. This example handles customer problems based on priority and uses the following rules for handling customer problems:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Assign all problems with priority greater than 2 to the San Jose Center.</p>
+                     </li>
+                     <li>
+                        <p>Assign all problems with priority less than or equal to 2 to the New York Center.</p>
+                     </li>
+                     <li>
+                        <p>Send an alert to the vice president of support for a problem with priority equal&nbsp;to&nbsp;1.</p>
+                     </li>
+                  </ul>
+                  <p>The evaluation context contains only one explicit variable named <code class="codeph">priority</code>, which refers to the priority of the problem being dispatched. The value for this variable is passed to <code class="codeph">DBMS_RULE.EVALUATE</code> procedure by the <code class="codeph">problem_dispatch</code> procedure.
+                  </p>
+                  <p>Complete the following steps:</p>
+                  <ol>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGICGEA">"Show Output and Spool Results"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGHHFAA">"Create the support User"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGEFJFD">"Grant the support User the Necessary System Privileges on Rules"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGEJBDH">"Create the evalctx Evaluation Context"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGHHDGB">"Create the Rules that Correspond to Problem Priority"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGBDGJJ">"Create the rs Rule Set"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGECBAJ">"Add the Rules to the Rule Set"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGEHJAF">"Query the Data Dictionary"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGCGJGB">"Create the problem_dispatch PL/SQL Procedure"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGFICAG">"Dispatch Sample Problems"</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGHHEAC">"Check the Spool Results"</a></p>
+                     </li>
+                  </ol>
+                  <p></p>
+                  <div class="infoboxnote" id="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__GUID-F7576D09-2FB3-4A28-9986-8C035B620DC8">
+                     <p class="notep1">Note:</p>
+                     <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                  </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__i1112638">
+                     <dt><strong></strong></dt>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGICGEA">
+                           <!-- --></a>Show Output and Spool Results
+                     </dt>
+                     <dd>
+                        <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                        </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL rules_stored_variables.out
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGHHFAA">
+                           <!-- --></a>Create the support User
+                     </dt>
+                     <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT SYSTEM
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+GRANT ALTER SESSION, CREATE CLUSTER, CREATE DATABASE LINK, CREATE SEQUENCE,
+  CREATE SESSION, CREATE SYNONYM, CREATE TABLE, CREATE VIEW, CREATE INDEXTYPE, 
+  CREATE OPERATOR, CREATE PROCEDURE, CREATE TRIGGER, CREATE TYPE
+TO support IDENTIFIED BY &amp;password;
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGEFJFD">
+                           <!-- --></a>Grant the support User the Necessary System Privileges on Rules
+                     </dt>
+                     <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_SET_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_OBJ,
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+END;
+/
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGEJBDH">
+                           <!-- --></a>Create the evalctx Evaluation Context
+                     </dt>
+                     <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT support
+
+SET FEEDBACK 1
+SET NUMWIDTH 10
+SET LINESIZE 80
+SET TRIMSPOOL ON
+SET TAB OFF
+SET PAGESIZE 100
+SET SERVEROUTPUT ON
+DECLARE
+  vt SYS.RE$VARIABLE_TYPE_LIST;
+BEGIN
+  vt := SYS.RE$VARIABLE_TYPE_LIST(
+    SYS.RE$VARIABLE_TYPE('priority', 'NUMBER', NULL, NULL));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name    =&gt; 'evalctx',
+    variable_types             =&gt; vt,
+    evaluation_context_comment =&gt; 'support problem definition');
+END;
+/
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGHHDGB">
+                           <!-- --></a>Create the Rules that Correspond to Problem Priority
+                     </dt>
+                     <dd>
+                        <p>The following code creates one action context for each rule, and one name-value pair in each action context. </p><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  ac  SYS.RE$NV_LIST;
+BEGIN
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('San Jose'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r1',
+    condition      =&gt; ':priority &gt; 2',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Low priority problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('New York'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r2',
+    condition      =&gt; ':priority &lt;= 2',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'High priority problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('ALERT', ANYDATA.CONVERTVARCHAR2('John Doe'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r3',
+    condition      =&gt; ':priority = 1',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Urgent problems');
+END;
+/
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGBDGJJ">
+                           <!-- --></a>Create the rs Rule Set
+                     </dt>
+                     <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name      =&gt; 'rs',
+    evaluation_context =&gt; 'evalctx',
+    rule_set_comment   =&gt; 'support rules');
+END;
+/
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGECBAJ">
+                           <!-- --></a>Add the Rules to the Rule Set
+                     </dt>
+                     <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r1', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r2', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r3', 
+    rule_set_name =&gt; 'rs');
+END;
+/
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGEHJAF">
+                           <!-- --></a>Query the Data Dictionary
+                     </dt>
+                     <dd>
+                        <p>At this point, you can view the evaluation context, rules, and rule set you created in the previous steps.</p><pre class="oac_no_warn" dir="ltr">*/
+
+COLUMN EVALUATION_CONTEXT_NAME HEADING 'Eval Context Name' FORMAT A30
+COLUMN EVALUATION_CONTEXT_COMMENT HEADING 'Eval Context Comment' FORMAT A40
+
+SELECT EVALUATION_CONTEXT_NAME, EVALUATION_CONTEXT_COMMENT
+  FROM USER_EVALUATION_CONTEXTS
+  ORDER BY EVALUATION_CONTEXT_NAME;
+
+SET LONGCHUNKSIZE 4000
+SET LONG 4000
+COLUMN RULE_NAME HEADING 'Rule|Name' FORMAT A5
+COLUMN RULE_CONDITION HEADING 'Rule Condition' FORMAT A35
+COLUMN ACTION_CONTEXT_NAME HEADING 'Action|Context|Name' FORMAT A10
+COLUMN ACTION_CONTEXT_VALUE HEADING 'Action|Context|Value' FORMAT A10
+
+SELECT RULE_NAME, 
+       RULE_CONDITION,
+       AC.NVN_NAME ACTION_CONTEXT_NAME, 
+       AC.NVN_VALUE.ACCESSVARCHAR2() ACTION_CONTEXT_VALUE
+  FROM USER_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  ORDER BY RULE_NAME;
+
+COLUMN RULE_SET_NAME HEADING 'Rule Set Name' FORMAT A20
+COLUMN RULE_SET_EVAL_CONTEXT_OWNER HEADING 'Eval Context|Owner' FORMAT A12
+COLUMN RULE_SET_EVAL_CONTEXT_NAME HEADING 'Eval Context Name' FORMAT A25
+COLUMN RULE_SET_COMMENT HEADING 'Rule Set|Comment' FORMAT A15
+
+SELECT RULE_SET_NAME, 
+       RULE_SET_EVAL_CONTEXT_OWNER,
+       RULE_SET_EVAL_CONTEXT_NAME,
+       RULE_SET_COMMENT
+  FROM USER_RULE_SETS
+  ORDER BY RULE_SET_NAME;
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGCGJGB">
+                           <!-- --></a>Create the problem_dispatch PL/SQL Procedure
+                     </dt>
+                     <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CREATE OR REPLACE PROCEDURE problem_dispatch (priority NUMBER) 
+IS
+    vv        SYS.RE$VARIABLE_VALUE;
+    vvl       SYS.RE$VARIABLE_VALUE_LIST;
+    truehits  SYS.RE$RULE_HIT_LIST;
+    maybehits SYS.RE$RULE_HIT_LIST;
+    ac        SYS.RE$NV_LIST;
+    namearray SYS.RE$NAME_ARRAY;
+    name      VARCHAR2(30);
+    cval      VARCHAR2(100);
+    rnum      INTEGER;
+    i         INTEGER;
+    status    PLS_INTEGER;
+BEGIN
+  vv  := SYS.RE$VARIABLE_VALUE('priority',
+                               ANYDATA.CONVERTNUMBER(priority));
+  vvl := SYS.RE$VARIABLE_VALUE_LIST(vv);
+  truehits := SYS.RE$RULE_HIT_LIST();
+  maybehits := SYS.RE$RULE_HIT_LIST();
+  DBMS_RULE.EVALUATE(
+      rule_set_name        =&gt; 'support.rs',
+      evaluation_context   =&gt; 'evalctx',
+      variable_values      =&gt; vvl,
+      true_rules           =&gt; truehits,
+      maybe_rules          =&gt; maybehits);
+  FOR rnum IN 1..truehits.COUNT LOOP
+    DBMS_OUTPUT.PUT_LINE('Using rule '|| truehits(rnum).rule_name);
+    ac := truehits(rnum).rule_action_context;
+    namearray := ac.GET_ALL_NAMES;
+      FOR i IN 1..namearray.count loop
+        name := namearray(i);
+        status := ac.GET_VALUE(name).GETVARCHAR2(cval);
+        IF (name = 'CENTER') then
+          DBMS_OUTPUT.PUT_LINE('Assigning problem to ' || cval);
+        ELSIF (name = 'ALERT') THEN
+          DBMS_OUTPUT.PUT_LINE('Sending alert to: '|| cval);
+        END IF;
+      END LOOP;
+  END LOOP;
+END;
+/
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGFICAG">
+                           <!-- --></a>Dispatch Sample Problems
+                     </dt>
+                     <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+EXECUTE problem_dispatch(1);
+EXECUTE problem_dispatch(2);
+EXECUTE problem_dispatch(3);
+EXECUTE problem_dispatch(5);
+
+/*</pre></dd>
+                     <dt class="dlterm"><a name="GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGHHEAC">
+                           <!-- --></a>Check the Spool Results
+                     </dt>
+                     <dd>
+                        <p>Check the <code class="codeph">rules_stored_variables.out</code> spool file to ensure that all actions completed successfully after this script completes.
+                        </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                  </dl>
+               </div>
+            </div><a id="STREX1350"></a><a id="STREX1351"></a><a id="STREX1352"></a><a id="STREX1353"></a><a id="STREX1354"></a><a id="STREX1355"></a><a id="STREX1158"></a><div class="props_rev_3"><a id="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6" name="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6"></a><h3 id="STREX-GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6" class="sect3"><span class="enumeration_section">6.3 </span>Using Rules on Data in Explicit Variables with Iterative Results
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This example is the same as the previous example <span class="q">"<a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA">Using Rules on Nontable Data Stored in Explicit Variables</a>"</span>, except that this example returns evaluation results iteratively instead of all at once.
+                     </p>
+                     <p>Complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="rule-based-application-example.html#GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__GUID-6A13170C-5688-4F02-9853-2FC7572C4A00">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGIJCCC">"Ensure That You Have Completed the Preliminary Steps"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGGIAEG">"Replace the problem_dispatch PL/SQL Procedure"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGEEHGG">"Dispatch Sample Problems"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGHGFFI">"Clean Up the Environment (Optional)"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGHCIED">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__GUID-00D260E3-BEEB-4B18-8D04-BC184D2E2449">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__i1112917">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__GUID-6A13170C-5688-4F02-9853-2FC7572C4A00">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL rules_stored_variables_iterative.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGIJCCC">
+                              <!-- --></a>Ensure That You Have Completed the Preliminary Steps
+                        </dt>
+                        <dd>
+                           <p>Ensure that you have completed Steps <a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGICGEA">"Show Output and Spool Results"</a> to <a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGEHJAF">"Query the Data Dictionary"</a> in the <span class="q">"<a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA">Using Rules on Nontable Data Stored in Explicit Variables</a>"</span>. If you have not completed these steps, then complete them before you continue.
+                           </p><pre class="oac_no_warn" dir="ltr">*/ 
+
+PAUSE Press &lt;RETURN&gt; to continue when the preliminary steps have been completed.
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGGIAEG">
+                              <!-- --></a>Replace the problem_dispatch PL/SQL Procedure
+                        </dt>
+                        <dd>
+                           <p>Replace the <code class="codeph">problem_dispatch</code> procedure created in Step <a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGCGJGB">"Create the problem_dispatch PL/SQL Procedure"</a> with the procedure in this step. The difference between the two procedures is that the procedure created in Step <a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA__CEGCGJGB">"Create the problem_dispatch PL/SQL Procedure"</a> returns all evaluation results at once while the procedure in this step returns evaluation results iteratively.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT support
+
+SET SERVEROUTPUT ON
+CREATE OR REPLACE PROCEDURE problem_dispatch (priority NUMBER) 
+IS
+    vv          SYS.RE$VARIABLE_VALUE;
+    vvl         SYS.RE$VARIABLE_VALUE_LIST;
+    truehits    BINARY_INTEGER;
+    maybehits   BINARY_INTEGER;
+    hit         SYS.RE$RULE_HIT;
+    ac          SYS.RE$NV_LIST;
+    namearray   SYS.RE$NAME_ARRAY;
+    name        VARCHAR2(30);
+    cval        VARCHAR2(100);
+    i           INTEGER;
+    status      PLS_INTEGER;
+    iter_closed EXCEPTION;
+    pragma exception_init(iter_closed, -25453);
+BEGIN
+  vv  := SYS.RE$VARIABLE_VALUE('priority',
+                               ANYDATA.CONVERTNUMBER(priority));
+  vvl := SYS.RE$VARIABLE_VALUE_LIST(vv);
+  DBMS_RULE.EVALUATE(
+      rule_set_name        =&gt; 'support.rs',
+      evaluation_context   =&gt; 'evalctx',
+      variable_values      =&gt; vvl,
+      true_rules_iterator  =&gt; truehits,
+      maybe_rules_iterator =&gt; maybehits);
+  LOOP
+    hit := DBMS_RULE.GET_NEXT_HIT(truehits);
+    EXIT WHEN hit IS NULL;
+    DBMS_OUTPUT.PUT_LINE('Using rule '|| hit.rule_name);
+    ac := hit.rule_action_context;
+    namearray := ac.GET_ALL_NAMES;
+      FOR i IN 1..namearray.COUNT LOOP
+        name := namearray(i);
+        status := ac.GET_VALUE(name).GETVARCHAR2(cval);
+        IF (name = 'CENTER') then
+          DBMS_OUTPUT.PUT_LINE('Assigning problem to ' || cval);
+        ELSIF (name = 'ALERT') THEN
+          DBMS_OUTPUT.PUT_LINE('Sending alert to: '|| cval);
+        END IF;
+      END LOOP;
+  END LOOP;
+  -- Close iterators
+  BEGIN
+    DBMS_RULE.CLOSE_ITERATOR(truehits);
+  EXCEPTION
+    WHEN iter_closed THEN
+      NULL;
+  END;
+  BEGIN
+    DBMS_RULE.CLOSE_ITERATOR(maybehits);
+  EXCEPTION
+    WHEN iter_closed THEN
+      NULL;
+  END;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGEEHGG">
+                              <!-- --></a>Dispatch Sample Problems
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+EXECUTE problem_dispatch(1);
+EXECUTE problem_dispatch(2);
+EXECUTE problem_dispatch(3);
+EXECUTE problem_dispatch(5);
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGHGFFI">
+                              <!-- --></a>Clean Up the Environment (Optional)
+                        </dt>
+                        <dd>
+                           <p>You can clean up the sample environment by dropping the <code class="codeph">support</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT SYSTEM
+
+DROP USER support CASCADE;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-583AF5AF-ED96-4C93-AB2E-C006BD4F61F6__CEGHCIED">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">rules_stored_variables_iterative.out</code> spool file to ensure that all actions completed successfully after this script completes.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1356"></a><a id="STREX1357"></a><a id="STREX1358"></a><a id="STREX1359"></a><a id="STREX1360"></a><a id="STREX1361"></a><a id="STREX1362"></a><a id="STREX1363"></a><a id="STREX1364"></a><a id="STREX1365"></a><a id="STREX1366"></a><a id="STREX1367"></a><a id="STREX1159"></a><div class="props_rev_3"><a id="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04" name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04"></a><h3 id="STREX-GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04" class="sect3"><span class="enumeration_section">6.4 </span>Using Partial Evaluation of Rules on Data in Explicit Variables
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This example illustrates how to use partial evaluation when an event causes rules to evaluate to <code class="codeph">MAYBE</code> instead of <code class="codeph">TRUE</code> or <code class="codeph">FALSE</code>. This example handles customer problems based on priority and problem type, and uses the following rules for handling customer problems:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Assign all problems whose problem type is <code class="codeph">HARDWARE</code> to the San Jose Center.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Assign all problems whose problem type is <code class="codeph">SOFTWARE</code> to the New York Center.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Assign all problems whose problem type is <code class="codeph">NULL</code> (unknown) to the Texas Center.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Send an alert to the vice president of support for a problem with priority equal&nbsp;to&nbsp;1.</p>
+                        </li>
+                     </ul>
+                     <p>Problems whose problem type is <code class="codeph">NULL</code> evaluate to <code class="codeph">MAYBE</code>. This example uses partial evaluation to take an action when <code class="codeph">MAYBE</code> rules are returned to the rules engine client. In this case, the action is to assign the problem to the Texas Center.
+                     </p>
+                     <p>The evaluation context contains an explicit variable named <code class="codeph">priority</code>, which refers to the priority of the problem being dispatched. The evaluation context also contains an explicit variable named <code class="codeph">problem_type</code>, which refers to the type of problem being dispatched (either <code class="codeph">HARDWARE</code> or <code class="codeph">SOFTWARE</code>). The values for these variables are passed to <code class="codeph">DBMS_RULE.EVALUATE</code> procedure by the <code class="codeph">problem_dispatch</code> procedure.
+                     </p>
+                     <p>Complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__GUID-3F3643B3-E007-4521-A2C2-485EA7F9162E">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGEJGAH">"Create the support User"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGJIBHJ">"Grant the support User the Necessary System Privileges on Rules"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGGHAAG">"Create the evalctx Evaluation Context"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGHJFIC">"Create the Rules that Correspond to Problem Priority"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGBEEEA">"Create the rs Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGJHHCI">"Add the Rules to the Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGBJBGB">"Query the Data Dictionary"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGFJHFC">"Create the problem_dispatch PL/SQL Procedure"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGDAEDC">"Dispatch Sample Problems"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGGBFAJ">"Clean Up the Environment (Optional)"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGBCCCC">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__GUID-B818F914-7774-4EBA-9FA0-0BF3CECCDA76">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__i1113123">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__GUID-3F3643B3-E007-4521-A2C2-485EA7F9162E">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL rules_stored_variables_partial.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGEJGAH">
+                              <!-- --></a>Create the support User
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT SYSTEM
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+GRANT ALTER SESSION, CREATE CLUSTER, CREATE DATABASE LINK, CREATE SEQUENCE,
+  CREATE SESSION, CREATE SYNONYM, CREATE TABLE, CREATE VIEW, CREATE INDEXTYPE, 
+  CREATE OPERATOR, CREATE PROCEDURE, CREATE TRIGGER, CREATE TYPE
+TO support IDENTIFIED BY &amp;password;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGJIBHJ">
+                              <!-- --></a>Grant the support User the Necessary System Privileges on Rules
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_SET_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_OBJ,
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGGHAAG">
+                              <!-- --></a>Create the evalctx Evaluation Context
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT support
+
+SET FEEDBACK 1
+SET NUMWIDTH 10
+SET LINESIZE 80
+SET TRIMSPOOL ON
+SET TAB OFF
+SET PAGESIZE 100
+SET SERVEROUTPUT ON
+DECLARE
+  vt  SYS.RE$VARIABLE_TYPE_LIST;
+BEGIN
+  vt := SYS.RE$VARIABLE_TYPE_LIST(
+        SYS.RE$VARIABLE_TYPE('priority', 'NUMBER', NULL, NULL),
+        SYS.RE$VARIABLE_TYPE('problem_type', 'VARCHAR2(30)', NULL, NULL));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name    =&gt; 'evalctx',
+    variable_types             =&gt; vt,
+    evaluation_context_comment =&gt; 'support problem definition');
+end;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGHJFIC">
+                              <!-- --></a>Create the Rules that Correspond to Problem Priority
+                        </dt>
+                        <dd>
+                           <p>The following code creates one action context for each rule, and one name-value pair in each action context. </p><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  ac  SYS.RE$NV_LIST;
+begin
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('ALERT', ANYDATA.CONVERTVARCHAR2('John Doe'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r1',
+    condition      =&gt; ':priority = 1',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Urgent problems');
+  ac := sys.re$nv_list(NULL);
+  ac.ADD_PAIR('TRUE CENTER', ANYDATA.CONVERTVARCHAR2('San Jose'));
+  ac.ADD_PAIR('MAYBE CENTER', ANYDATA.CONVERTVARCHAR2('Texas'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name       =&gt; 'r2',
+    condition       =&gt; ':problem_type = ''HARDWARE''',
+    action_context  =&gt; ac,
+    rule_comment    =&gt; 'Hardware problems');
+  ac := sys.re$nv_list(NULL);
+  ac.ADD_PAIR('TRUE CENTER', ANYDATA.CONVERTVARCHAR2('New York'));
+  ac.ADD_PAIR('MAYBE CENTER', ANYDATA.CONVERTVARCHAR2('Texas'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name       =&gt; 'r3',
+    condition       =&gt; ':problem_type = ''SOFTWARE''',
+    action_context  =&gt; ac,
+    rule_comment    =&gt; 'Software problems');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGBEEEA">
+                              <!-- --></a>Create the rs Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name      =&gt; 'rs',
+    evaluation_context =&gt; 'evalctx',
+    rule_set_comment   =&gt; 'support rules');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGJHHCI">
+                              <!-- --></a>Add the Rules to the Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r1', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r2', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r3', 
+    rule_set_name =&gt; 'rs');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGBJBGB">
+                              <!-- --></a>Query the Data Dictionary
+                        </dt>
+                        <dd>
+                           <p>At this point, you can view the evaluation context, rules, and rule set you created in the previous steps.</p><pre class="oac_no_warn" dir="ltr">*/
+
+COLUMN EVALUATION_CONTEXT_NAME HEADING 'Eval Context Name' FORMAT A30
+COLUMN EVALUATION_CONTEXT_COMMENT HEADING 'Eval Context Comment' FORMAT A40
+
+SELECT EVALUATION_CONTEXT_NAME, EVALUATION_CONTEXT_COMMENT
+  FROM USER_EVALUATION_CONTEXTS
+  ORDER BY EVALUATION_CONTEXT_NAME;
+
+SET LONGCHUNKSIZE 4000
+SET LONG 4000
+COLUMN RULE_NAME HEADING 'Rule|Name' FORMAT A5
+COLUMN RULE_CONDITION HEADING 'Rule Condition' FORMAT A35
+COLUMN ACTION_CONTEXT_NAME HEADING 'Action|Context|Name' FORMAT A10
+COLUMN ACTION_CONTEXT_VALUE HEADING 'Action|Context|Value' FORMAT A10
+
+SELECT RULE_NAME, 
+       RULE_CONDITION,
+       AC.NVN_NAME ACTION_CONTEXT_NAME, 
+       AC.NVN_VALUE.ACCESSVARCHAR2() ACTION_CONTEXT_VALUE
+  FROM USER_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  ORDER BY RULE_NAME;
+
+COLUMN RULE_SET_NAME HEADING 'Rule Set Name' FORMAT A20
+COLUMN RULE_SET_EVAL_CONTEXT_OWNER HEADING 'Eval Context|Owner' FORMAT A12
+COLUMN RULE_SET_EVAL_CONTEXT_NAME HEADING 'Eval Context Name' FORMAT A25
+COLUMN RULE_SET_COMMENT HEADING 'Rule Set|Comment' FORMAT A15
+
+SELECT RULE_SET_NAME, 
+       RULE_SET_EVAL_CONTEXT_OWNER,
+       RULE_SET_EVAL_CONTEXT_NAME,
+       RULE_SET_COMMENT
+  FROM USER_RULE_SETS
+  ORDER BY RULE_SET_NAME;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGFJHFC">
+                              <!-- --></a>Create the problem_dispatch PL/SQL Procedure
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CREATE OR REPLACE PROCEDURE problem_dispatch (priority     NUMBER,
+                                              problem_type VARCHAR2 := NULL) 
+IS
+    vvl       SYS.RE$VARIABLE_VALUE_LIST;
+    truehits  SYS.RE$RULE_HIT_LIST;
+    maybehits SYS.RE$RULE_HIT_LIST;
+    ac        SYS.RE$NV_LIST;
+    namearray SYS.RE$NAME_ARRAY;
+    name      VARCHAR2(30);
+    cval      VARCHAR2(100);
+    rnum      INTEGER;
+    i         INTEGER;
+    status    PLS_INTEGER;
+BEGIN
+  IF (problem_type IS NULL) THEN 
+    vvl  := SYS.RE$VARIABLE_VALUE_LIST(
+            SYS.RE$VARIABLE_VALUE('priority',
+                                  ANYDATA.CONVERTNUMBER(priority)));
+  ELSE
+    vvl  := SYS.RE$VARIABLE_VALUE_LIST(
+            SYS.RE$VARIABLE_VALUE('priority',
+                                  ANYDATA.CONVERTNUMBER(priority)),
+            SYS.RE$VARIABLE_VALUE('problem_type',
+                                  ANYDATA.CONVERTVARCHAR2(problem_type)));
+  END IF;
+  truehits := SYS.RE$RULE_HIT_LIST();
+  maybehits := SYS.RE$RULE_HIT_LIST();
+  DBMS_RULE.EVALUATE(
+      rule_set_name        =&gt; 'support.rs',
+      evaluation_context   =&gt; 'evalctx',
+      variable_values      =&gt; vvl,
+      true_rules           =&gt; truehits,
+      maybe_rules          =&gt; maybehits);
+  FOR rnum IN 1..truehits.COUNT LOOP
+    DBMS_OUTPUT.PUT_LINE('Using rule '|| truehits(rnum).rule_name);
+    ac := truehits(rnum).rule_action_context;
+    namearray := ac.GET_ALL_NAMES;
+      FOR i IN 1..namearray.count LOOP
+        name := namearray(i);
+        status := ac.GET_VALUE(name).GETVARCHAR2(cval);
+        IF (name = 'TRUE CENTER') then
+          DBMS_OUTPUT.PUT_LINE('Assigning problem to ' || cval);
+        ELSIF (name = 'ALERT') THEN
+          DBMS_OUTPUT.PUT_LINE('Sending alert to: '|| cval);
+        END IF;
+      END LOOP;
+  END LOOP;
+  FOR rnum IN 1..maybehits.COUNT LOOP
+    DBMS_OUTPUT.PUT_LINE('Using rule '|| maybehits(rnum).rule_name);
+    ac := maybehits(rnum).rule_action_context;
+    namearray := ac.GET_ALL_NAMES;
+      FOR i IN 1..namearray.count loop
+        name := namearray(i);
+        status := ac.GET_VALUE(name).GETVARCHAR2(cval);
+        IF (name = 'MAYBE CENTER') then
+          DBMS_OUTPUT.PUT_LINE('Assigning problem to ' || cval);
+        END IF;
+      END LOOP;
+  END LOOP;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGDAEDC">
+                              <!-- --></a>Dispatch Sample Problems
+                        </dt>
+                        <dd>
+                           <p>The first problem dispatch in this step uses partial evaluation and takes an action based on the partial evaluation. Specifically, the first problem dispatch specifies that the <code class="codeph">priority</code> is <code class="codeph">1</code> and the <code class="codeph">problem_type</code> is <code class="codeph">NULL</code>. In this case, the rules engine returns a <code class="codeph">MAYBE</code> rule for the event, and the <code class="codeph">problem_dispatch</code> procedure assigns the problem to the Texas center.
+                           </p>
+                           <p>The second and third problem dispatches do not use partial evaluation. Each of these problems evaluate to <code class="codeph">TRUE</code> for a rule, and the problem is assigned accordingly by the <code class="codeph">problem_dispatch</code> procedure.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+EXECUTE problem_dispatch(1, NULL);
+EXECUTE problem_dispatch(2, 'HARDWARE');
+EXECUTE problem_dispatch(3, 'SOFTWARE');
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGGBFAJ">
+                              <!-- --></a>Clean Up the Environment (Optional)
+                        </dt>
+                        <dd>
+                           <p>You can clean up the sample environment by dropping the <code class="codeph">support</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT SYSTEM
+
+DROP USER support CASCADE;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-C3DEDEA5-EADC-4488-92E2-E54E3BBDEB04__CEGBCCCC">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">rules_stored_variables_partial.out</code> spool file to ensure that all actions completed successfully after this script completes.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1368"></a><a id="STREX1369"></a><a id="STREX1370"></a><a id="STREX1371"></a><a id="STREX1372"></a><a id="STREX1373"></a><a id="STREX1374"></a><a id="STREX1375"></a><a id="STREX1376"></a><a id="STREX1377"></a><a id="STREX1378"></a><a id="STREX1160"></a><div class="props_rev_3"><a id="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2" name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2"></a><h3 id="STREX-GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2" class="sect3"><span class="enumeration_section">6.5 </span>Using Rules on Data Stored in a Table
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This example illustrates how to use rules to evaluate data stored in a table. This example is similar to the example described in <span class="q">"<a href="rule-based-application-example.html#GUID-C18A66D4-4E5F-4EBB-ADB3-BC7C98A1A6CA">Using Rules on Nontable Data Stored in Explicit Variables</a>"</span>. In both examples, the application routes customer problems based on priority. However, in this example, the problems are stored in a table instead of variables.
+                     </p>
+                     <p>The application uses the <code class="codeph">problems</code> table in the <code class="codeph">support</code> schema, into which customer problems are inserted. This example uses the following rules for handling customer problems:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Assign all problems with priority greater than 2 to the San Jose Center.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems with priority less than or equal to 2 to the New York Center.</p>
+                        </li>
+                        <li>
+                           <p>Send an alert to the vice president of support for a problem with priority equal&nbsp;to&nbsp;1.</p>
+                        </li>
+                     </ul>
+                     <p>The evaluation context consists of the <code class="codeph">problems</code> table. The relevant row of the table, which corresponds to the problem being routed, is passed to the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure as a table value.
+                     </p>
+                     <p>Complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__GUID-1F8AE968-0536-43F8-888F-362315ADE580">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGEDEIE">"Create the support User"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGHHHCJ">"Grant the support User the Necessary System Privileges on Rules"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGIFJJC">"Create the problems Table"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGHGGJC">"Create the evalctx Evaluation Context"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGHCJII">"Create the Rules that Correspond to Problem Priority"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGJFDHH">"Create the rs Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGGABDI">"Add the Rules to the Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGEIJIE">"Create the problem_dispatch PL/SQL Procedure"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGGDBGJ">"Log Problems"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGJICFB">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__GUID-1C0B9202-D3BB-491B-8630-C6C5734F6429">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__i1113466">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__GUID-1F8AE968-0536-43F8-888F-362315ADE580">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL rules_table.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGEDEIE">
+                              <!-- --></a>Create the support User
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT SYSTEM
+
+CREATE TABLESPACE support_tbs1 DATAFILE 'support_tbs1.dbf' 
+  SIZE 5M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+CREATE USER support
+IDENTIFIED BY &amp;password
+  DEFAULT TABLESPACE support_tbs1
+  QUOTA UNLIMITED ON support_tbs1;
+
+GRANT ALTER SESSION, CREATE CLUSTER, CREATE DATABASE LINK, CREATE SEQUENCE,
+  CREATE SESSION, CREATE SYNONYM, CREATE TABLE, CREATE VIEW, CREATE INDEXTYPE, 
+  CREATE OPERATOR, CREATE PROCEDURE, CREATE TRIGGER, CREATE TYPE
+TO support;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGHHHCJ">
+                              <!-- --></a>Grant the support User the Necessary System Privileges on Rules
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_SET_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_OBJ,
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGIFJJC">
+                              <!-- --></a>Create the problems Table
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT support
+
+SET FEEDBACK 1
+SET NUMWIDTH 10
+SET LINESIZE 80
+SET TRIMSPOOL ON
+SET TAB OFF
+SET PAGESIZE 100
+SET SERVEROUTPUT ON
+
+CREATE TABLE problems(
+  probid          NUMBER PRIMARY KEY,
+  custid          NUMBER,
+  priority        NUMBER,
+  description     VARCHAR2(4000),
+  center          VARCHAR2(100));
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGHGGJC">
+                              <!-- --></a>Create the evalctx Evaluation Context
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+DECLARE
+  ta  SYS.RE$TABLE_ALIAS_LIST;
+BEGIN
+  ta := SYS.RE$TABLE_ALIAS_LIST(SYS.RE$TABLE_ALIAS('prob', 'problems'));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name    =&gt; 'evalctx',
+    table_aliases              =&gt; ta,
+    evaluation_context_comment =&gt; 'support problem definition');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGHCJII">
+                              <!-- --></a>Create the Rules that Correspond to Problem Priority
+                        </dt>
+                        <dd>
+                           <p>The following code creates one action context for each rule, and one name-value pair in each action context. </p><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  ac  SYS.RE$NV_LIST;
+BEGIN
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('San Jose'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r1',
+    condition      =&gt; 'prob.priority &gt; 2',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Low priority problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('New York'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r2',
+    condition      =&gt; 'prob.priority &lt;= 2',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'High priority problems');
+  ac := sys.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('ALERT', ANYDATA.CONVERTVARCHAR2('John Doe'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r3',
+    condition      =&gt; 'prob.priority = 1',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Urgent problems');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGJFDHH">
+                              <!-- --></a>Create the rs Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name      =&gt; 'rs',
+    evaluation_context =&gt; 'evalctx',
+    rule_set_comment   =&gt; 'support rules');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGGABDI">
+                              <!-- --></a>Add the Rules to the Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r1', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r2', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r3', 
+    rule_set_name =&gt; 'rs');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGEIJIE">
+                              <!-- --></a>Create the problem_dispatch PL/SQL Procedure
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CREATE OR REPLACE PROCEDURE problem_dispatch 
+IS
+    cursor c IS SELECT probid, rowid FROM problems WHERE center IS NULL;
+    tv        SYS.RE$TABLE_VALUE;
+    tvl       SYS.RE$TABLE_VALUE_LIST;
+    truehits  SYS.RE$RULE_HIT_LIST;
+    maybehits SYS.RE$RULE_HIT_LIST;
+    ac        SYS.RE$NV_LIST;
+    namearray SYS.RE$NAME_ARRAY;
+    name      VARCHAR2(30);
+    cval      VARCHAR2(100);
+    rnum      INTEGER;
+    i         INTEGER;
+    status    PLS_INTEGER;
+BEGIN
+  FOR r IN c LOOP
+    tv  := SYS.RE$TABLE_VALUE('prob', rowidtochar(r.rowid));
+    tvl := SYS.RE$TABLE_VALUE_LIST(tv);
+    truehits := SYS.RE$RULE_HIT_LIST();
+    maybehits := SYS.RE$RULE_HIT_LIST();
+    DBMS_RULE.EVALUATE(
+      rule_set_name        =&gt; 'support.rs',
+      evaluation_context   =&gt; 'evalctx',
+      table_values         =&gt; tvl,
+      true_rules           =&gt; truehits,
+      maybe_rules          =&gt; maybehits);
+    FOR rnum IN 1..truehits.COUNT LOOP
+      DBMS_OUTPUT.PUT_LINE('Using rule '|| truehits(rnum).rule_name);
+      ac := truehits(rnum).rule_action_context;
+      namearray := ac.GET_ALL_NAMES;
+      FOR i IN 1..namearray.COUNT LOOP
+        name := namearray(i);
+        status := ac.GET_VALUE(name).GETVARCHAR2(cval);
+        IF (name = 'CENTER') THEN
+          UPDATE PROBLEMS SET center = cval WHERE rowid = r.rowid;
+          DBMS_OUTPUT.PUT_LINE('Assigning '|| r.probid || ' to ' || cval);
+        ELSIF (name = 'ALERT') THEN
+          DBMS_OUTPUT.PUT_LINE('Alert: '|| cval || ' Problem:' || r.probid);
+        END IF;
+       END LOOP;
+    END LOOP;
+  END LOOP;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGGDBGJ">
+                              <!-- --></a>Log Problems
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+INSERT INTO problems(probid, custid, priority, description)
+  VALUES(10101, 11, 1, 'no dial tone');
+
+INSERT INTO problems(probid, custid, priority, description)
+  VALUES(10102, 21, 2, 'noise on local calls');
+
+INSERT INTO problems(probid, custid, priority, description)
+  VALUES(10103, 31, 3, 'noise on long distance calls');
+
+COMMIT;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__CEGJICFB">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">rules_table.out</code> spool file to ensure that all actions completed successfully after this script completes.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre><div class="infoboxnotealso" id="GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2__GUID-6BFC2E92-CA2D-419D-887E-862C96272BCE">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E">Dispatching Problems and Checking Results for the Table Examples</a>"</span> for the steps to complete to dispatch the problems logged in this example and check the results of the problem dispatch
+                              </p>
+                           </div>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1379"></a><a id="STREX1380"></a><a id="STREX1381"></a><a id="STREX1382"></a><a id="STREX1383"></a><a id="STREX1384"></a><a id="STREX1385"></a><a id="STREX1386"></a><a id="STREX1387"></a><a id="STREX1388"></a><a id="STREX1389"></a><a id="STREX1161"></a><div class="props_rev_3"><a id="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842" name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842"></a><h3 id="STREX-GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842" class="sect3"><span class="enumeration_section">6.6 </span>Using Rules on Both Explicit Variables and Table Data
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This example illustrates how to use rules to evaluate data stored in explicit variables and in a table. The application uses the <code class="codeph">problems</code> table in the <code class="codeph">support</code> schema, into which customer problems are inserted. This example uses the following rules for handling customer problems:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Assign all problems with priority greater than 2 to the San Jose Center.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems with priority equal to 2 to the New York Center.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems with priority equal to 1 to the Tampa Center from 8 AM to 8&nbsp;PM.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems with priority equal to 1 to the Bangalore Center from 8 PM to 8 AM.</p>
+                        </li>
+                        <li>
+                           <p>Send an alert to the vice president of support for a problem with priority equal&nbsp;to&nbsp;1.</p>
+                        </li>
+                     </ul>
+                     <p>The evaluation context consists of the <code class="codeph">problems</code> table. The relevant row of the table, which corresponds to the problem being routed, is passed to the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure as a table value.
+                     </p>
+                     <p>Some of the rules in this example refer to the current time, which is represented as an explicit variable named <code class="codeph">current_time</code>. The current time is treated as additional data in the evaluation context. It is represented as a variable for the following reasons:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>It is not practical to store the current time in a table because it would have to be updated very often.</p>
+                        </li>
+                        <li>
+                           <p>The current time can be accessed by inserting calls to <code class="codeph">SYSDATE</code> in every rule that requires it, but that would cause repeated invocations of the same SQL function <code class="codeph">SYSDATE</code>, which might slow down rule evaluation. Different values of the current time in different rules might lead to incorrect behavior.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__GUID-899A3203-4628-491A-A3A7-0CD54CD71448">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGGIHGG">"Create the support User"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGBBHIG">"Grant the support User the Necessary System Privileges on Rules"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGEBIDH">"Create the problems Table"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGDJAJJ">"Create the evalctx Evaluation Context"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGFBCJA">"Create the Rules that Correspond to Problem Priority"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGDFJDD">"Create the rs Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGCEGDC">"Add the Rules to the Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGBIGHC">"Create the problem_dispatch PL/SQL Procedure"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGCJDJJ">"Log Problems"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGHAHEI">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__GUID-013BF2CF-2314-4BFE-BCB7-66EC033855CA">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__i1113765">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__GUID-899A3203-4628-491A-A3A7-0CD54CD71448">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL rules_var_tab.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGGIHGG">
+                              <!-- --></a>Create the support User
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT SYSTEM
+
+CREATE TABLESPACE support_tbs2 DATAFILE 'support_tbs2.dbf' 
+  SIZE 5M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+CREATE USER support
+IDENTIFIED BY &amp;password
+  DEFAULT TABLESPACE support_tbs2
+  QUOTA UNLIMITED ON support_tbs2;
+
+GRANT ALTER SESSION, CREATE CLUSTER, CREATE DATABASE LINK, CREATE SEQUENCE,
+  CREATE SESSION, CREATE SYNONYM, CREATE TABLE, CREATE VIEW, CREATE INDEXTYPE, 
+  CREATE OPERATOR, CREATE PROCEDURE, CREATE TRIGGER, CREATE TYPE
+TO support;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGBBHIG">
+                              <!-- --></a>Grant the support User the Necessary System Privileges on Rules
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_SET_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_OBJ,
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGEBIDH">
+                              <!-- --></a>Create the problems Table
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT support
+
+SET FEEDBACK 1
+SET NUMWIDTH 10
+SET LINESIZE 80
+SET TRIMSPOOL ON
+SET TAB OFF
+SET PAGESIZE 100
+SET SERVEROUTPUT ON
+
+CREATE TABLE problems(
+  probid          NUMBER PRIMARY KEY,
+  custid          NUMBER,
+  priority        NUMBER,
+  description     VARCHAR2(4000),
+  center          VARCHAR2(100));
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGDJAJJ">
+                              <!-- --></a>Create the evalctx Evaluation Context
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+DECLARE
+  ta SYS.RE$TABLE_ALIAS_LIST;
+  vt SYS.RE$VARIABLE_TYPE_LIST;
+BEGIN
+  ta := SYS.RE$TABLE_ALIAS_LIST(SYS.RE$TABLE_ALIAS('prob', 'problems'));
+  vt := SYS.RE$VARIABLE_TYPE_LIST(
+          SYS.RE$VARIABLE_TYPE('current_time', 'DATE', NULL, NULL));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name    =&gt; 'evalctx',
+    table_aliases              =&gt; ta,
+    variable_types             =&gt; vt,
+    evaluation_context_comment =&gt; 'support problem definition');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGFBCJA">
+                              <!-- --></a>Create the Rules that Correspond to Problem Priority
+                        </dt>
+                        <dd>
+                           <p>The following code creates one action context for each rule, and one name-value pair in each action context. </p><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  ac SYS.RE$NV_LIST;
+BEGIN
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('San Jose'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r1',
+    condition      =&gt; 'prob.priority &gt; 2',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Low priority problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('New York'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r2',
+    condition      =&gt; 'prob.priority = 2',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'High priority problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('ALERT', ANYDATA.CONVERTVARCHAR2('John Doe'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r3',
+    condition      =&gt; 'prob.priority = 1',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Urgent problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('Tampa'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name =&gt; 'r4',
+    condition =&gt; '(prob.priority = 1) and ' ||
+                 '(TO_NUMBER(TO_CHAR(:current_time, ''HH24'')) &gt;= 8) and ' ||
+                 '(TO_NUMBER(TO_CHAR(:current_time, ''HH24'')) &lt;= 20)',
+    action_context =&gt; ac,
+    rule_comment =&gt; 'Urgent daytime problems');
+  ac := sys.RE$NV_LIST(NULL);
+  ac.add_pair('CENTER', ANYDATA.CONVERTVARCHAR2('Bangalore'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name =&gt; 'r5',
+    condition =&gt; '(prob.priority = 1) and ' ||
+                 '((TO_NUMBER(TO_CHAR(:current_time, ''HH24'')) &lt; 8) or ' ||
+                 ' (TO_NUMBER(TO_CHAR(:current_time, ''HH24'')) &gt; 20))',
+    action_context =&gt; ac,
+    rule_comment =&gt; 'Urgent nighttime problems');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGDFJDD">
+                              <!-- --></a>Create the rs Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name      =&gt; 'rs',
+    evaluation_context =&gt; 'evalctx',
+    rule_set_comment   =&gt; 'support rules');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGCEGDC">
+                              <!-- --></a>Add the Rules to the Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r1', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r2', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r3', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r4', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r5', 
+    rule_set_name =&gt; 'rs');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGBIGHC">
+                              <!-- --></a>Create the problem_dispatch PL/SQL Procedure
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CREATE OR REPLACE PROCEDURE problem_dispatch
+IS
+    cursor c  is SELECT probid, rowid FROM PROBLEMS WHERE center IS NULL;
+    tv        SYS.RE$TABLE_VALUE;
+    tvl       SYS.RE$TABLE_VALUE_LIST;
+    vv1       SYS.RE$VARIABLE_VALUE;
+    vvl       SYS.RE$VARIABLE_VALUE_LIST;
+    truehits  SYS.RE$RULE_HIT_LIST;
+    maybehits SYS.RE$RULE_HIT_LIST;
+    ac        SYS.RE$NV_LIST;
+    namearray SYS.RE$NAME_ARRAY;
+    name      VARCHAR2(30);
+    cval      VARCHAR2(100);
+    rnum      INTEGER;
+    i         INTEGER;
+    status    PLS_INTEGER;
+BEGIN
+  FOR r IN c LOOP
+    tv  := sYS.RE$TABLE_VALUE('prob', ROWIDTOCHAR(r.rowid));
+    tvl := SYS.RE$TABLE_VALUE_LIST(tv);
+    vv1 := SYS.RE$VARIABLE_VALUE('current_time',
+                                 ANYDATA.CONVERTDATE(SYSDATE));
+    vvl := SYS.RE$VARIABLE_VALUE_LIST(vv1);
+    truehits := SYS.RE$RULE_HIT_LIST();
+    maybehits := SYS.RE$RULE_HIT_LIST();
+    DBMS_RULE.EVALUATE(
+        rule_set_name        =&gt; 'support.rs',
+        evaluation_context   =&gt; 'evalctx',
+        table_values         =&gt; tvl,
+        variable_values      =&gt; vvl,
+        true_rules           =&gt; truehits,
+        maybe_rules          =&gt; maybehits);
+    FOR rnum IN 1..truehits.COUNT loop
+      DBMS_OUTPUT.PUT_LINE('Using rule '|| truehits(rnum).rule_name);
+      ac := truehits(rnum).rule_action_context;
+      namearray := ac.GET_ALL_NAMES;
+      FOR i in 1..namearray.COUNT LOOP
+        name := namearray(i);
+        status := ac.GET_VALUE(name).GETVARCHAR2(cval);
+        IF (name = 'CENTER') THEN
+          UPDATE problems SET center = cval
+          WHERE rowid = r.rowid;
+          DBMS_OUTPUT.PUT_LINE('Assigning '|| r.probid || ' to ' || cval);
+        ELSIF (name = 'ALERT') THEN
+          DBMS_OUTPUT.PUT_LINE('Alert: '|| cval || ' Problem:' || r.probid);
+        END IF;
+      END LOOP;
+    END LOOP;  
+  END LOOP;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGCJDJJ">
+                              <!-- --></a>Log Problems
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+INSERT INTO problems(probid, custid, priority, description)
+  VALUES(10201, 12, 1, 'no dial tone');
+
+INSERT INTO problems(probid, custid, priority, description)
+  VALUES(10202, 22, 2, 'noise on local calls');
+
+INSERT INTO PROBLEMS(probid, custid, priority, description)
+  VALUES(10203, 32, 3, 'noise on long distance calls');
+
+COMMIT;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__CEGHAHEI">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">rules_var_tab.out</code> spool file to ensure that all actions completed successfully after this script completes.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre><div class="infoboxnotealso" id="GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842__GUID-10939273-A720-4906-8B39-C140454975C5">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E">Dispatching Problems and Checking Results for the Table Examples</a>"</span> for the steps to complete to dispatch the problems logged in this example and check the results of the problem dispatch
+                              </p>
+                           </div>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1390"></a><a id="STREX1391"></a><a id="STREX1392"></a><a id="STREX1393"></a><a id="STREX1394"></a><a id="STREX1395"></a><a id="STREX1396"></a><a id="STREX1397"></a><a id="STREX1398"></a><a id="STREX1399"></a><a id="STREX1400"></a><a id="STREX1401"></a><a id="STREX1162"></a><div class="props_rev_3"><a id="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71" name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71"></a><h3 id="STREX-GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71" class="sect3"><span class="enumeration_section">6.7 </span>Using Rules on Implicit Variables and Table Data
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This example illustrates how to use rules to evaluate implicit variables and data stored in a table. The application uses the <code class="codeph">problems</code> table in the <code class="codeph">support</code> schema, into which customer problems are inserted. This example uses the following rules for handling customer problems:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Assign all problems with priority greater than 2 to the San Jose Center.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems with priority equal to 2 to the New York Center.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems with priority equal to 1 to the Tampa Center from 8 AM to 8&nbsp;PM.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems with priority equal to 1 to the Bangalore Center after 8&nbsp;PM and before 8 AM.</p>
+                        </li>
+                        <li>
+                           <p>Send an alert to the vice president of support for a problem with priority equal&nbsp;to&nbsp;1.</p>
+                        </li>
+                     </ul>
+                     <p>The evaluation context consists of the <code class="codeph">problems</code> table. The relevant row of the table, which corresponds to the problem being routed, is passed to the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure as a table value.
+                     </p>
+                     <p>As in the example illustrated in <span class="q">"<a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842">Using Rules on Both Explicit Variables and Table Data</a>"</span>, the current time is represented as a variable named <code class="codeph">current_time</code>. However, this variable value is not specified during evaluation by the caller. That is, <code class="codeph">current_time</code> is an implicit variable in this example. A PL/SQL function named <code class="codeph">timefunc</code> is specified for <code class="codeph">current_time</code>, and this function is invoked once during evaluation to get its value. 
+                     </p>
+                     <p>Using implicit variables can be useful in other cases if one of the following conditions is true:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The caller does not have access to the variable value.</p>
+                        </li>
+                        <li>
+                           <p>The variable is referenced infrequently in rules. Because it is implicit, its value can be retrieved only when necessary, and does not need to be passed in for every evaluation.</p>
+                        </li>
+                     </ul>
+                     <p>Complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__GUID-B397FCEA-3ADF-494E-8436-D692638BF020">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGGBABD">"Create the support User"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGDEAAA">"Grant the support User the Necessary System Privileges on Rules"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGDBJGG">"Create the problems Table"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGGGHEF">"Create the timefunc Function to Return the Value of current_time"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGBICCJ">"Create the evalctx Evaluation Context"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGHAEAH">"Create the Rules that Correspond to Problem Priority"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGJHECF">"Create the rs Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGJEFCA">"Add the Rules to the Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGDCCEA">"Create the problem_dispatch PL/SQL Procedure"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGEBIIF">"Log Problems"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGGGFBC">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__GUID-DC0EAFDF-D899-4723-A008-8EFB188299D0">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__i1114110">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__GUID-B397FCEA-3ADF-494E-8436-D692638BF020">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL rules_implicit_var.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGGBABD">
+                              <!-- --></a>Create the support User
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT SYSTEM
+
+CREATE TABLESPACE support_tbs3 DATAFILE 'support_tbs3.dbf' 
+  SIZE 5M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+CREATE USER support
+IDENTIFIED BY &amp;password
+  DEFAULT TABLESPACE support_tbs3
+  QUOTA UNLIMITED ON support_tbs3;
+
+GRANT ALTER SESSION, CREATE CLUSTER, CREATE DATABASE LINK, CREATE SEQUENCE,
+  CREATE SESSION, CREATE SYNONYM, CREATE TABLE, CREATE VIEW, CREATE INDEXTYPE, 
+  CREATE OPERATOR, CREATE PROCEDURE, CREATE TRIGGER, CREATE TYPE
+TO support;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGDEAAA">
+                              <!-- --></a>Grant the support User the Necessary System Privileges on Rules
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_SET_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_OBJ,
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGDBJGG">
+                              <!-- --></a>Create the problems Table
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT support
+
+SET FEEDBACK 1
+SET NUMWIDTH 10
+SET LINESIZE 80
+SET TRIMSPOOL ON
+SET TAB OFF
+SET PAGESIZE 100
+SET SERVEROUTPUT ON
+
+CREATE TABLE problems(
+  probid          NUMBER PRIMARY KEY,
+  custid          NUMBER,
+  priority        NUMBER,
+  description     VARCHAR2(4000),
+  center          VARCHAR2(100));
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGGGHEF">
+                              <!-- --></a>Create the timefunc Function to Return the Value of current_time
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CREATE OR REPLACE FUNCTION timefunc(
+  eco    VARCHAR2, 
+  ecn    VARCHAR2, 
+  var    VARCHAR2,
+  evctx  SYS.RE$NV_LIST)
+RETURN SYS.RE$VARIABLE_VALUE
+IS
+BEGIN
+  IF (var = 'CURRENT_TIME') THEN
+    RETURN(SYS.RE$VARIABLE_VALUE('current_time',
+                                 ANYDATA.CONVERTDATE(SYSDATE)));
+  ELSE
+    RETURN(NULL);
+  END IF;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGBICCJ">
+                              <!-- --></a>Create the evalctx Evaluation Context
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+DECLARE
+  ta SYS.RE$TABLE_ALIAS_LIST;
+  vt SYS.RE$VARIABLE_TYPE_LIST;
+BEGIN
+  ta := SYS.RE$TABLE_ALIAS_LIST(SYS.RE$TABLE_ALIAS('prob', 'problems'));
+  vt := SYS.RE$VARIABLE_TYPE_LIST(
+          SYS.RE$VARIABLE_TYPE('current_time', 'DATE', 'timefunc', NULL));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name    =&gt; 'evalctx',
+    table_aliases              =&gt; ta,
+    variable_types             =&gt; vt,
+    evaluation_context_comment =&gt; 'support problem definition');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGHAEAH">
+                              <!-- --></a>Create the Rules that Correspond to Problem Priority
+                        </dt>
+                        <dd>
+                           <p>The following code creates one action context for each rule, and one name-value pair in each action context. </p><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  ac SYS.RE$NV_LIST;
+BEGIN
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('San Jose'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r1',
+    condition      =&gt; 'prob.priority &gt; 2',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Low priority problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('New York'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r2',
+    condition      =&gt; 'prob.priority = 2',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'High priority problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('ALERT', ANYDATA.CONVERTVARCHAR2('John Doe'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'r3',
+    condition      =&gt; 'prob.priority = 1',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Urgent problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('Tampa'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name =&gt; 'r4',
+    condition =&gt; '(prob.priority = 1) and ' ||
+                 '(TO_NUMBER(TO_CHAR(:current_time, ''HH24'')) &gt;= 8) and ' ||
+                 '(TO_NUMBER(TO_CHAR(:current_time, ''HH24'')) &lt;= 20)',
+    action_context =&gt; ac,
+    rule_comment   =&gt; 'Urgent daytime problems');
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.add_pair('CENTER', ANYDATA.CONVERTVARCHAR2('Bangalore'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name =&gt; 'r5',
+    condition =&gt; '(prob.priority = 1) and ' ||
+                 '((TO_NUMBER(TO_CHAR(:current_time, ''HH24'')) &lt; 8) or ' ||
+                 ' (TO_NUMBER(TO_CHAR(:current_time, ''HH24'')) &gt; 20))',
+    action_context =&gt; ac,
+    rule_comment =&gt; 'Urgent nighttime problems');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGJHECF">
+                              <!-- --></a>Create the rs Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name      =&gt; 'rs',
+    evaluation_context =&gt; 'evalctx',
+    rule_set_comment   =&gt; 'support rules');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGJEFCA">
+                              <!-- --></a>Add the Rules to the Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r1', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r2', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r3', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r4', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r5', 
+    rule_set_name =&gt; 'rs');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGDCCEA">
+                              <!-- --></a>Create the problem_dispatch PL/SQL Procedure
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CREATE OR REPLACE PROCEDURE problem_dispatch
+IS
+    cursor c  IS SELECT probid, rowid FROM problems WHERE center IS NULL;
+    tv        SYS.RE$TABLE_VALUE;
+    tvl       SYS.RE$TABLE_VALUE_LIST;
+    truehits  SYS.RE$RULE_HIT_LIST;
+    maybehits SYS.RE$RULE_HIT_LIST;
+    ac        SYS.RE$NV_LIST;
+    namearray SYS.RE$NAME_ARRAY;
+    name      VARCHAR2(30);
+    cval      VARCHAR2(100);
+    rnum      INTEGER;
+    i         INTEGER;
+    status    PLS_INTEGER;
+BEGIN
+  FOR r IN c LOOP
+    tv  := SYS.RE$TABLE_VALUE('prob', rowidtochar(r.rowid));
+    tvl := SYS.RE$TABLE_VALUE_LIST(tv);
+    truehits := SYS.RE$RULE_HIT_LIST();
+    maybehits := SYS.RE$RULE_HIT_LIST();
+    DBMS_RULE.EVALUATE(
+        rule_set_name        =&gt; 'support.rs',
+        evaluation_context   =&gt; 'evalctx',
+        table_values         =&gt; tvl,
+        true_rules           =&gt; truehits,
+        maybe_rules          =&gt; maybehits);
+    FOR rnum IN 1..truehits.COUNT LOOP
+      DBMS_OUTPUT.PUT_LINE('Using rule '|| truehits(rnum).rule_name);
+      ac := truehits(rnum).rule_action_context;
+      namearray := ac.GET_ALL_NAMES;
+      FOR i IN 1..namearray.COUNT LOOP
+        name := namearray(i);
+        status := ac.GET_VALUE(name).GETVARCHAR2(cval);
+        IF (name = 'CENTER') THEN
+          UPDATE problems SET center = cval
+            WHERE rowid = r.rowid;
+          DBMS_OUTPUT.PUT_LINE('Assigning '|| r.probid || ' to ' || cval);
+        ELSIF (name = 'ALERT') THEN
+          DBMS_OUTPUT.PUT_LINE('Alert: '|| cval || ' Problem:' || r.probid);
+        END IF;
+      END LOOP;
+    END LOOP;
+  END LOOP;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGEBIIF">
+                              <!-- --></a>Log Problems
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+INSERT INTO problems(probid, custid, priority, description)
+  VALUES(10301, 13, 1, 'no dial tone');
+
+INSERT INTO problems(probid, custid, priority, description)
+  VALUES(10302, 23, 2, 'noise on local calls');
+
+INSERT INTO problems(probid, custid, priority, description)
+  VALUES(10303, 33, 3, 'noise on long distance calls');
+
+COMMIT;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__CEGGGFBC">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">rules_implicit_var.out</code> spool file to ensure that all actions completed successfully after this script completes.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre><div class="infoboxnotealso" id="GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71__GUID-1BC9629A-EB04-421F-AB57-548B3795C96D">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E">Dispatching Problems and Checking Results for the Table Examples</a>"</span> for the steps to complete to dispatch the problems logged in this example and check the results of the problem dispatch
+                              </p>
+                           </div>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1402"></a><a id="STREX1403"></a><a id="STREX1404"></a><a id="STREX1405"></a><a id="STREX1406"></a><a id="STREX1407"></a><a id="STREX1408"></a><a id="STREX1409"></a><a id="STREX1410"></a><a id="STREX1411"></a><a id="STREX1412"></a><a id="STREX1413"></a><a id="STREX1414"></a><a id="STREX1163"></a><div class="props_rev_3"><a id="GUID-567410F6-7419-437F-940A-D53A3E27B95E" name="GUID-567410F6-7419-437F-940A-D53A3E27B95E"></a><h3 id="STREX-GUID-567410F6-7419-437F-940A-D53A3E27B95E" class="sect3"><span class="enumeration_section">6.8 </span>Using Event Contexts and Implicit Variables with Rules
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>An event context is a varray of type <code class="codeph">SYS.RE$NV_LIST</code> that contains name-value pairs that contain information about the event. This optional information is not directly used or interpreted by the rules engine. Instead, it is passed to client callbacks such as an evaluation function, a variable value function (for implicit variables), or a variable method function.
+                     </p>
+                     <p>In this example, assume every customer has a primary contact person, and the goal is to assign the problem reported by a customer to the support center to which the customer's primary contact person belongs. The customer name is passed in the event context.</p>
+                     <p>This example illustrates how to use event contexts with rules to evaluate implicit variables. Specifically, when an event is evaluated using the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure, the event context is passed to the variable value function for implicit variables in the evaluation context. The name of the variable value function is <code class="codeph">find_contact</code>, and this PL/SQL function returns the contact person based on the name of the company specified in the event context. The rule set is evaluated based on the contact person name and the priority for an event. 
+                     </p>
+                     <p>This example uses the following rules for handling customer problems:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Assign all problems that belong to Jane to the San Jose Center.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems that belong to Fred to the New York Center.</p>
+                        </li>
+                        <li>
+                           <p>Assign all problems whose primary contact is unknown to George at the Texas Center.</p>
+                        </li>
+                        <li>
+                           <p>Send an alert to the vice president of support for a problem with priority equal&nbsp;to&nbsp;1.</p>
+                        </li>
+                     </ul>
+                     <p>Complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__GUID-814892C2-90EA-46C6-A42F-09F90F0F6A78">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGGGCCI">"Create the support User"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGIIFCC">"Grant the support User the Necessary System Privileges on Rules"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGEHGDA">"Create the find_contact Function to Return a Customer's Contact"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGBEJFJ">"Create the evalctx Evaluation Context"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGGHBDI">"Create the Rules that Correspond to Problem Priority and Contact"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGIFGCE">"Create the rs Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGDJBEE">"Add the Rules to the Rule Set"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGBJGGI">"Query the Data Dictionary"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGDJIHE">"Create the problem_dispatch PL/SQL Procedure"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGHBBII">"Dispatch Sample Problems"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGHGCHA">"Clean Up the Environment (Optional)"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGGHFJB">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-567410F6-7419-437F-940A-D53A3E27B95E__GUID-99E5029B-4556-4317-8C55-799D74AC9423">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-567410F6-7419-437F-940A-D53A3E27B95E__i1114466">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__GUID-814892C2-90EA-46C6-A42F-09F90F0F6A78">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL rules_event_context.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGGGCCI">
+                              <!-- --></a>Create the support User
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT SYSTEM
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+GRANT ALTER SESSION, CREATE CLUSTER, CREATE DATABASE LINK, CREATE SEQUENCE,
+  CREATE SESSION, CREATE SYNONYM, CREATE TABLE, CREATE VIEW, CREATE INDEXTYPE, 
+  CREATE OPERATOR, CREATE PROCEDURE, CREATE TRIGGER, CREATE TYPE
+TO support IDENTIFIED BY &amp;support;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGIIFCC">
+                              <!-- --></a>Grant the support User the Necessary System Privileges on Rules
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_SET_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_OBJ,
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ, 
+    grantee      =&gt; 'support', 
+    grant_option =&gt; FALSE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGEHGDA">
+                              <!-- --></a>Create the find_contact Function to Return a Customer's Contact
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT support
+
+SET FEEDBACK 1
+SET NUMWIDTH 10
+SET LINESIZE 80
+SET TRIMSPOOL ON
+SET TAB OFF
+SET PAGESIZE 100
+SET SERVEROUTPUT ON
+CREATE OR REPLACE FUNCTION find_contact(
+  eco       VARCHAR2, 
+  ecn       VARCHAR2, 
+  var       VARCHAR2,
+  evctx     SYS.RE$NV_LIST)
+RETURN SYS.RE$VARIABLE_VALUE IS
+  cust      VARCHAR2(30);
+  contact   VARCHAR2(30);
+  status    PLS_INTEGER;
+BEGIN  
+  IF (var = 'CUSTOMER_CONTACT') THEN
+    status := evctx.GET_VALUE('CUSTOMER').GETVARCHAR2(cust);    
+    IF (cust = 'COMPANY1') THEN     -- COMPANY1's contact person is Jane
+      contact := 'JANE';
+    ELSIF (cust = 'COMPANY2') THEN  -- COMPANY2's contact person is Fred
+      contact := 'FRED';
+    ELSE        -- Assign customers without primary contact person to George
+      contact := 'GEORGE';
+    END IF;
+    RETURN SYS.RE$VARIABLE_VALUE('customer_contact',
+                                 ANYDATA.CONVERTVARCHAR2(contact));
+  ELSE
+    RETURN NULL;
+  END IF;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGBEJFJ">
+                              <!-- --></a>Create the evalctx Evaluation Context
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+DECLARE
+  vt  SYS.RE$VARIABLE_TYPE_LIST;
+BEGIN
+  vt := SYS.RE$VARIABLE_TYPE_LIST(
+        SYS.RE$VARIABLE_TYPE('priority', 'NUMBER', NULL, NULL),
+        SYS.RE$VARIABLE_TYPE('customer_contact', 'VARCHAR2(30)', 
+                             'find_contact', NULL));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name    =&gt; 'evalctx',
+    variable_types             =&gt; vt,
+    evaluation_context_comment =&gt; 'support problem definition');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGGHBDI">
+                              <!-- --></a>Create the Rules that Correspond to Problem Priority and Contact
+                        </dt>
+                        <dd>
+                           <p>The following code creates one action context for each rule, and one name-value pair in each action context. </p><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  ac  SYS.RE$NV_LIST;
+BEGIN
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('San Jose'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name       =&gt; 'r1',
+    condition       =&gt; ':customer_contact = ''JANE''',
+    action_context  =&gt; ac,
+    rule_comment    =&gt; 'Jane''s customer problems');
+  ac := sys.re$nv_list(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('New York'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name       =&gt; 'r2',
+    condition       =&gt; ':customer_contact = ''FRED''',
+    action_context  =&gt; ac,
+    rule_comment    =&gt; 'Fred''s customer problems');
+  ac := sys.re$nv_list(NULL);
+  ac.ADD_PAIR('CENTER', ANYDATA.CONVERTVARCHAR2('Texas'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name       =&gt; 'r3',
+    condition       =&gt; ':customer_contact = ''GEORGE''',
+    action_context  =&gt; ac,
+    rule_comment    =&gt; 'George''s customer problems');
+  ac := sys.re$nv_list(NULL);
+  ac.ADD_PAIR('ALERT', ANYDATA.CONVERTVARCHAR2('John Doe'));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name       =&gt; 'r4',
+    condition       =&gt; ':priority=1',
+    action_context  =&gt; ac,
+    rule_comment    =&gt; 'Urgent problems');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGIFGCE">
+                              <!-- --></a>Create the rs Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name      =&gt; 'rs',
+    evaluation_context =&gt; 'evalctx',
+    rule_set_comment   =&gt; 'support rules');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGDJBEE">
+                              <!-- --></a>Add the Rules to the Rule Set
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r1', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r2', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r3', 
+    rule_set_name =&gt; 'rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name     =&gt; 'r4', 
+    rule_set_name =&gt; 'rs');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGBJGGI">
+                              <!-- --></a>Query the Data Dictionary
+                        </dt>
+                        <dd>
+                           <p>At this point, you can view the evaluation context, rules, and rule set you created in the previous steps.</p><pre class="oac_no_warn" dir="ltr">*/
+
+COLUMN EVALUATION_CONTEXT_NAME HEADING 'Eval Context Name' FORMAT A30
+COLUMN EVALUATION_CONTEXT_COMMENT HEADING 'Eval Context Comment' FORMAT A40
+
+SELECT EVALUATION_CONTEXT_NAME, EVALUATION_CONTEXT_COMMENT
+  FROM USER_EVALUATION_CONTEXTS
+  ORDER BY EVALUATION_CONTEXT_NAME;
+
+SET LONGCHUNKSIZE 4000
+SET LONG 4000
+COLUMN RULE_NAME HEADING 'Rule|Name' FORMAT A5
+COLUMN RULE_CONDITION HEADING 'Rule Condition' FORMAT A35
+COLUMN ACTION_CONTEXT_NAME HEADING 'Action|Context|Name' FORMAT A10
+COLUMN ACTION_CONTEXT_VALUE HEADING 'Action|Context|Value' FORMAT A10
+
+SELECT RULE_NAME, 
+       RULE_CONDITION,
+       AC.NVN_NAME ACTION_CONTEXT_NAME, 
+       AC.NVN_VALUE.ACCESSVARCHAR2() ACTION_CONTEXT_VALUE
+  FROM USER_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  ORDER BY RULE_NAME;
+
+COLUMN RULE_SET_NAME HEADING 'Rule Set Name' FORMAT A20
+COLUMN RULE_SET_EVAL_CONTEXT_OWNER HEADING 'Eval Context|Owner' FORMAT A12
+COLUMN RULE_SET_EVAL_CONTEXT_NAME HEADING 'Eval Context Name' FORMAT A25
+COLUMN RULE_SET_COMMENT HEADING 'Rule Set|Comment' FORMAT A15
+
+SELECT RULE_SET_NAME, 
+       RULE_SET_EVAL_CONTEXT_OWNER,
+       RULE_SET_EVAL_CONTEXT_NAME,
+       RULE_SET_COMMENT
+  FROM USER_RULE_SETS
+  ORDER BY RULE_SET_NAME;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGDJIHE">
+                              <!-- --></a>Create the problem_dispatch PL/SQL Procedure
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CREATE OR REPLACE PROCEDURE problem_dispatch (priority  NUMBER,
+                                              customer  VARCHAR2) 
+IS
+    vvl       SYS.RE$VARIABLE_VALUE_LIST;
+    truehits  SYS.RE$RULE_HIT_LIST;
+    maybehits SYS.RE$RULE_HIT_LIST;
+    ac        SYS.RE$NV_LIST;
+    namearray SYS.RE$NAME_ARRAY;
+    name      VARCHAR2(30);
+    cval      VARCHAR2(100);
+    rnum      INTEGER;
+    i         INTEGER;
+    status    PLS_INTEGER;
+    evctx     SYS.RE$NV_LIST;
+BEGIN
+  vvl  := SYS.RE$VARIABLE_VALUE_LIST(
+            SYS.RE$VARIABLE_VALUE('priority',
+                                  ANYDATA.CONVERTNUMBER(priority)));
+  evctx := SYS.RE$NV_LIST(NULL);
+  evctx.ADD_PAIR('CUSTOMER', ANYDATA.CONVERTVARCHAR2(customer));
+  truehits  := SYS.RE$RULE_HIT_LIST();
+  maybehits := SYS.RE$RULE_HIT_LIST();
+  DBMS_RULE.EVALUATE(
+      rule_set_name        =&gt; 'support.rs',
+      evaluation_context   =&gt; 'evalctx',
+      event_context        =&gt; evctx,
+      variable_values      =&gt; vvl,
+      true_rules           =&gt; truehits,
+      maybe_rules          =&gt; maybehits);
+  FOR rnum IN 1..truehits.COUNT LOOP
+    DBMS_OUTPUT.PUT_LINE('Using rule '|| truehits(rnum).rule_name);
+    ac := truehits(rnum).rule_action_context;
+    namearray := ac.GET_ALL_NAMES;
+      FOR i IN 1..namearray.count LOOP
+        name := namearray(i);
+        status := ac.GET_VALUE(name).GETVARCHAR2(cval);
+        IF (name = 'CENTER') THEN
+          DBMS_OUTPUT.PUT_LINE('Assigning problem to ' || cval);
+        ELSIF (name = 'ALERT') THEN
+          DBMS_OUTPUT.PUT_LINE('Sending alert to: '|| cval);
+        END IF;
+      END LOOP;
+  END LOOP;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGHBBII">
+                              <!-- --></a>Dispatch Sample Problems
+                        </dt>
+                        <dd>
+                           <p>The first problem dispatch in this step uses the event context and the variable value function to determine the contact person for <code class="codeph">COMPANY1</code>. The event context is passed to the <code class="codeph">find_contact</code> variable value function, and this function returns the contact name <code class="codeph">JANE</code>. Therefore, rule <code class="codeph">r1</code> evaluates to <code class="codeph">TRUE</code>. The <code class="codeph">problem_dispatch</code> procedure sends the problem to the San Jose office because <code class="codeph">JANE</code> belongs to that office. In addition, the priority for this event is 1, which causes rule <code class="codeph">r4</code> to evaluate to <code class="codeph">TRUE</code>. As a result, the <code class="codeph">problem_dispatch</code> procedure sends an alert to John Doe.
+                           </p>
+                           <p>The second problem dispatch in this step uses the event context and the variable value function to determine the contact person for <code class="codeph">COMPANY2</code>. The event context is passed to the <code class="codeph">find_contact</code> variable value function, and this function returns the contact name <code class="codeph">FRED</code>. Therefore, rule <code class="codeph">r2</code> evaluates to <code class="codeph">TRUE</code>. The <code class="codeph">problem_dispatch</code> procedure sends the problem to the New York office because <code class="codeph">FRED</code> belongs to that office. 
+                           </p>
+                           <p>The third problem dispatch in this step uses the event context and the variable value function to determine the contact person for <code class="codeph">COMPANY3</code>. This company does not have a dedicated contact person. The event context is passed to the <code class="codeph">find_contact</code> variable value function, and this function returns the contact name <code class="codeph">GEORGE</code>, because <code class="codeph">GEORGE</code> is the default contact when no contact person is found. Therefore, rule <code class="codeph">r3</code> evaluates to <code class="codeph">TRUE</code>. The <code class="codeph">problem_dispatch</code> procedure sends the problem to the Texas office because <code class="codeph">GEORGE</code> belongs to that office. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+EXECUTE problem_dispatch(1, 'COMPANY1');
+EXECUTE problem_dispatch(2, 'COMPANY2');
+EXECUTE problem_dispatch(5, 'COMPANY3');
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGHGCHA">
+                              <!-- --></a>Clean Up the Environment (Optional)
+                        </dt>
+                        <dd>
+                           <p>You can clean up the sample environment by dropping the <code class="codeph">support</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT SYSTEM
+
+DROP USER support CASCADE;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-567410F6-7419-437F-940A-D53A3E27B95E__CEGGHFJB">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">rules_event_context.out</code> spool file to ensure that all actions completed successfully after this script completes.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1415"></a><a id="STREX1416"></a><a id="STREX1417"></a><a id="STREX1418"></a><a id="STREX1419"></a><a id="STREX1164"></a><div class="props_rev_3"><a id="GUID-628C6B4F-E41F-49D1-86D6-F320812D497E" name="GUID-628C6B4F-E41F-49D1-86D6-F320812D497E"></a><h3 id="STREX-GUID-628C6B4F-E41F-49D1-86D6-F320812D497E" class="sect3"><span class="enumeration_section">6.9 </span>Dispatching Problems and Checking Results for the Table Examples
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following sections configure a <code class="codeph">problem_dispatch</code> procedure that updates information in the <code class="codeph">problems</code> table:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="rule-based-application-example.html#GUID-DA02C5EB-E7AA-4327-9769-1D519867F3D2">Using Rules on Data Stored in a Table</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="rule-based-application-example.html#GUID-30B3FDA4-FDEB-4F3D-A9FD-D1F7999AA842">Using Rules on Both Explicit Variables and Table Data</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="rule-based-application-example.html#GUID-F765347F-06E6-4B2F-B502-2A1E313FEC71">Using Rules on Implicit Variables and Table Data</a>"</span></p>
+                        </li>
+                     </ul>
+                     <p>Complete the following steps to dispatch the problems by running the <code class="codeph">problem_dispatch</code> procedure and display the results in the <code class="codeph">problems</code> table:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGDJADE">"Query the Data Dictionary"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGIDIAA">"List the Problems in the problems Table"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGBHCCH">"Dispatch the Problems by Running the problem_dispatch Procedure"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGBCAFC">"List the Problems in the problems Table"</a></span></li>
+                     <li><span><a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGEADIF">"Clean Up the Environment (Optional)"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <dl>
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGDJADE">
+                              <!-- --></a>Query the Data Dictionary
+                        </dt>
+                        <dd>
+                           <p>View the evaluation context, rules, and rule set you created in the example:</p><pre class="oac_no_warn" dir="ltr">CONNECT support
+Enter password: <span class="italic">password</span>
+
+COLUMN EVALUATION_CONTEXT_NAME HEADING 'Eval Context Name' FORMAT A30
+COLUMN EVALUATION_CONTEXT_COMMENT HEADING 'Eval Context Comment' FORMAT A40
+
+SELECT EVALUATION_CONTEXT_NAME, EVALUATION_CONTEXT_COMMENT
+  FROM USER_EVALUATION_CONTEXTS
+  ORDER BY EVALUATION_CONTEXT_NAME;
+
+SET LONGCHUNKSIZE 4000
+SET LONG 4000
+COLUMN RULE_NAME HEADING 'Rule|Name' FORMAT A5
+COLUMN RULE_CONDITION HEADING 'Rule Condition' FORMAT A35
+COLUMN ACTION_CONTEXT_NAME HEADING 'Action|Context|Name' FORMAT A10
+COLUMN ACTION_CONTEXT_VALUE HEADING 'Action|Context|Value' FORMAT A10
+
+SELECT RULE_NAME, 
+       RULE_CONDITION,
+       AC.NVN_NAME ACTION_CONTEXT_NAME, 
+       AC.NVN_VALUE.ACCESSVARCHAR2() ACTION_CONTEXT_VALUE
+  FROM USER_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  ORDER BY RULE_NAME;
+
+COLUMN RULE_SET_NAME HEADING 'Rule Set Name' FORMAT A20
+COLUMN RULE_SET_EVAL_CONTEXT_OWNER HEADING 'Eval Context|Owner' FORMAT A12
+COLUMN RULE_SET_EVAL_CONTEXT_NAME HEADING 'Eval Context Name' FORMAT A25
+COLUMN RULE_SET_COMMENT HEADING 'Rule Set|Comment' FORMAT A15
+
+SELECT RULE_SET_NAME, 
+       RULE_SET_EVAL_CONTEXT_OWNER,
+       RULE_SET_EVAL_CONTEXT_NAME,
+       RULE_SET_COMMENT
+  FROM USER_RULE_SETS
+  ORDER BY RULE_SET_NAME;</pre></dd>
+                        <dt class="dlterm"><a name="GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGIDIAA">
+                              <!-- --></a>List the Problems in the problems Table
+                        </dt>
+                        <dd>
+                           <p>This <code class="codeph">SELECT</code> statement should show the problems logged previously. 
+                           </p><pre class="oac_no_warn" dir="ltr">COLUMN probid HEADING 'Problem ID' FORMAT 99999
+COLUMN custid HEADING 'Customer ID' FORMAT 99
+COLUMN priority HEADING 'Priority' FORMAT 9
+COLUMN description HEADING 'Problem Description' FORMAT A30
+COLUMN center HEADING 'Center' FORMAT A10
+
+SELECT probid, custid, priority, description, center FROM problems
+  ORDER BY probid;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Problem ID Customer ID Priority Problem Description            Center
+---------- ----------- -------- ------------------------------ ----------
+     10301          13        1 no dial tone
+     10302          23        2 noise on local calls
+     10303          33        3 noise on long distance calls
+</pre><p>Notice that the <code class="codeph">Center</code> column is <code class="codeph">NULL</code> for each new row inserted.
+                           </p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGBHCCH">
+                              <!-- --></a>Dispatch the Problems by Running the problem_dispatch Procedure
+                        </dt>
+                        <dd>
+                           <p>Execute the <code class="codeph">problem_dispatch</code> procedure.
+                           </p><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON
+EXECUTE problem_dispatch;</pre></dd>
+                        <dt class="dlterm"><a name="GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGBCAFC">
+                              <!-- --></a>List the Problems in the problems Table
+                        </dt>
+                        <dd>
+                           <p>If the problems were dispatched successfully in Step <a href="rule-based-application-example.html#GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGBHCCH">"Dispatch the Problems by Running the problem_dispatch Procedure"</a>, then this <code class="codeph">SELECT</code> statement should show the center to which each problem was dispatched in the <code class="codeph">Center</code> column.
+                           </p><pre class="oac_no_warn" dir="ltr">SELECT probid, custid, priority, description, center FROM problems
+  ORDER BY probid;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Problem ID Customer ID Priority Problem Description            Center
+---------- ----------- -------- ------------------------------ ----------
+     10201          12        1 no dial tone                   Tampa
+     10202          22        2 noise on local calls           New York
+     10203          32        3 noise on long distance calls   San Jose
+</pre><div class="infoboxnote" id="GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__GUID-8256D510-4863-422A-996D-559380E3DD0E">
+                              <p class="notep1">Note:</p>
+                              <p>The output will vary depending on which example you used to create the <code class="codeph">problem_dispatch</code> procedure.
+                              </p>
+                           </div>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-628C6B4F-E41F-49D1-86D6-F320812D497E__CEGEADIF">
+                              <!-- --></a>Clean Up the Environment (Optional)
+                        </dt>
+                        <dd>
+                           <p>You can clean up the sample environment by dropping the <code class="codeph">support</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT SYSTEM
+Enter password: <span class="italic">password</span>
+
+DROP USER support CASCADE;
+</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

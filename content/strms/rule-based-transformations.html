@@ -1,0 +1,1213 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Rule-Based Transformations</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="how-rules-are-used-in-oracle-streams.html" title="Previous" type="text/html">
+      <link rel="next" href="advanced-oracle-streams-concepts.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="how-rules-are-used-in-oracle-streams.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="advanced-oracle-streams-concepts.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="essential-oracle-streams-concepts.html" property="item" typeof="WebPage"><span property="name">      Essential Oracle Streams Concepts </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Rule-Based Transformations </li>
+            </ol>
+            <a id="GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4" name="GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"></a><a id="STRMS106"></a><a id="STRMS_RULE_BASED_TRANSFORMATIONS"></a>
+            
+            <h2 id="STRMS-GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4" class="sect2"><span class="enumeration_chapter">6 </span> Rule-Based Transformations 
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d47208e127" class="indexterm-anchor"></a><a id="d47208e133" class="indexterm-anchor"></a><a id="d47208e137" class="indexterm-anchor"></a><a id="d47208e139" class="indexterm-anchor"></a>A <span class="bold">rule-based transformation</span> is any modification to a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> when a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> in a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> evaluates to <code class="codeph">TRUE</code>. There are two types of rule-based transformations: declarative and custom.
+               </p>
+               <p>The following topics contain information about rule-based transformations:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="rule-based-transformations.html#GUID-706DC628-4237-41A2-86CA-C9BCCA984052">Declarative Rule-Based Transformations</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-transformations.html#GUID-F7D2443B-A1DE-4496-B629-EB3D636D41A6">Custom Rule-Based Transformations</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-transformations.html#GUID-F86FDDEC-36FA-4E41-AF41-35F451209246">Rule-Based Transformations and Oracle Streams Clients</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-transformations.html#GUID-57430920-685F-4CEA-BBC3-5CB78C54FC61">Transformation Ordering</a></p>
+                  </li>
+                  <li>
+                     <p><a href="rule-based-transformations.html#GUID-088CF510-8DC8-41C1-BB42-1034D9CC1ECC">Considerations for Rule-Based Transformations</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4__GUID-5083721B-49A6-4CFF-ACCB-D16BC5DD6235">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-rule-based-transformations.html#GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2">   Managing Rule-Based Transformations </a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-rule-based-transformations.html#GUID-689DB7FE-545E-4AC3-8A0B-7ED7010FDF82"> Monitoring Rule-Based Transformations</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-AEF9C9AE-9735-4688-925B-5C967BAC783F"> Troubleshooting Rules and Rule-Based Transformations</a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS151"></a><div class="props_rev_3"><a id="GUID-706DC628-4237-41A2-86CA-C9BCCA984052" name="GUID-706DC628-4237-41A2-86CA-C9BCCA984052"></a><h3 id="STRMS-GUID-706DC628-4237-41A2-86CA-C9BCCA984052" class="sect3"><span class="enumeration_section">6.1 </span>Declarative Rule-Based Transformations
+               </h3>
+               <div>
+                  <p><span class="bold">Declarative rule-based transformations</span> cover a set of common transformation scenarios for row LCRs.
+                  </p>
+                  <p>You specify (or declare) such a transformation using one of the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">ADD_COLUMN</code> either adds or removes a declarative transformation that adds a column to a row LCR.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">DELETE_COLUMN</code> either adds or removes a declarative transformation that deletes a column from a row LCR.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">KEEP_COLUMNS</code> either adds or removes a declarative transformation that keeps a list of columns in a row LCR. The transformation removes columns that are not in the list from the row LCR.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">RENAME_COLUMN</code> either adds or removes a declarative transformation that renames a column in a row LCR.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">RENAME_SCHEMA</code> either adds or removes a declarative transformation that renames the schema in a row LCR.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">RENAME_TABLE</code> either adds or removes a declarative transformation that renames the table in a row LCR.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>When you specify a declarative rule-based transformation, you specify the <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> that is associated with it. When the specified rule evaluates to <code class="codeph">TRUE</code> for a row LCR, Oracle Streams performs the declarative transformation internally on the row LCR, without invoking PL/SQL.
+                  </p>
+                  <p>Declarative rule-based transformations provide the following advantages:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Performance is improved because the transformations are run internally without using PL/SQL.</p>
+                     </li>
+                     <li>
+                        <p>Complexity is reduced because custom PL/SQL functions are not required.</p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-706DC628-4237-41A2-86CA-C9BCCA984052__GUID-B3D45145-63BF-4DEF-9694-5F0278E287CF">
+                     <p class="notep1">Note:</p>
+                     <p>Declarative rule-based transformations can transform row LCRs only. These row LCRs can be <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s or <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>s. Therefore, a DML rule must be specified when you run one of the procedures to add a declarative transformation. If a DDL rule is specified, then an error is raised.
+                     </p>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-706DC628-4237-41A2-86CA-C9BCCA984052__GUID-126530BD-4C92-4D26-B333-B34EA2E788E4">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="managing-rule-based-transformations.html#GUID-53C7811D-9311-495A-BA26-4DE5E6D6A3F7">Managing Declarative Rule-Based Transformations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-restrictions.html#GUID-856720FE-344C-4333-91C3-1A1278D1082A">Unsupported Data Types for Declarative Rule-Based Transformations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-326872EA-5C68-4BDA-B0A3-4E191A8E726C">Row LCRs</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../sqlrf/Data-Types.html#SQLRF0021"><span class="italic">Oracle Database SQL Language Reference</span></a> for information about data types
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS160"></a><div class="props_rev_3"><a id="GUID-F7D2443B-A1DE-4496-B629-EB3D636D41A6" name="GUID-F7D2443B-A1DE-4496-B629-EB3D636D41A6"></a><h3 id="STRMS-GUID-F7D2443B-A1DE-4496-B629-EB3D636D41A6" class="sect3"><span class="enumeration_section">6.2 </span>Custom Rule-Based Transformations
+               </h3>
+               <div>
+                  <p><span class="bold">Custom rule-based transformations</span> require a user-defined PL/SQL function to perform the transformation. The function takes as input an <code class="codeph">ANYDATA</code> object containing a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> and returns either an <code class="codeph">ANYDATA</code> object containing the transformed message or an array that contains zero or more <code class="codeph">ANYDATA</code> encapsulations of a message. A custom rule-based transformation function that returns one message is a one-to-one transformation function. A custom rule-based transformation function that can return more than one message in an array is a one-to-many transformation function. One-to-one transformation functions are supported for any type of <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>, but one-to-many transformation functions are supported only for Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es and <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s.
+                  </p>
+                  <p>To specify a custom rule-based transformation, use the <code class="codeph">DBMS_STREAMS_ADM.SET_RULE_TRANSFORM_FUNCTION</code> procedure. You can use a custom rule-based transformation to modify <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s, <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>s, and <a href="strms_glossary.html#GUID-8F1FA1C4-ADB5-4A4D-9374-B50AADB53066"><span class="xrefglossterm">persistent user message</span></a>s.
+                  </p>
+                  <p>For example, a custom rule-based transformation can be used when the data type of a particular column in a table is different at two different databases. The column might be a <code class="codeph">NUMBER</code> column in the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> and a <code class="codeph">VARCHAR2</code> column in the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>. In this case, the transformation takes as input an <code class="codeph">ANYDATA</code> object containing a row LCR with a <code class="codeph">NUMBER</code> data type for a column and returns an <code class="codeph">ANYDATA</code> object containing a row LCR with a <code class="codeph">VARCHAR2</code> data type for the same column.
+                  </p>
+                  <p>Other examples of custom transformations on messages include:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Splitting a column into several columns</p>
+                     </li>
+                     <li>
+                        <p>Combining several columns into one column</p>
+                     </li>
+                     <li>
+                        <p>Modifying the contents of a column</p>
+                     </li>
+                     <li>
+                        <p>Modifying the payload of a user message</p>
+                     </li>
+                  </ul>
+                  <p>Custom rule-based transformations provide the following advantages:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Flexibility is increased because you can use PL/SQL to perform custom transformations.</p>
+                     </li>
+                     <li>
+                        <p>A wider range of messages can be transformed, including DDL LCRs and user messages, as well as row LCRs.</p>
+                     </li>
+                  </ul>
+                  <p>The following considerations apply to custom rule-based transformations:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>When you perform custom rule-based transformations on DDL LCRs, you probably need to modify the DDL text in the DDL LCR to match any other modifications. For example, if the rule-based transformation changes the name of a table in the DDL LCR, then the rule-based transformation should change the table name in the DDL text in the same way.</p>
+                     </li>
+                     <li>
+                        <p>If possible, avoid specifying a custom rule-based transformation for a <a href="strms_glossary.html#GUID-37142187-2A5B-48E7-A1CE-A07D60C60460"><span class="xrefglossterm">global rule</span></a> or <a href="strms_glossary.html#GUID-59A77572-3B32-483A-A816-5938ACA78220"><span class="xrefglossterm">schema rule</span></a> if the transformation pertains to a relatively small number of LCRs that will evaluate to <code class="codeph">TRUE</code> for the <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>. For example, a custom rule-based transformation that operates on a single table can be specified for a schema rule, and this schema can contain hundreds of tables. Specifying such a rule-based transformation has performance implications because extra processing is required for the LCRs that will not be transformed.
+                        </p>
+                        <p>To avoid specifying such a custom rule-based transformation, either you can use a <a href="strms_glossary.html#GUID-8F26223B-B771-4E5B-9C57-0F748A0904F1"><span class="xrefglossterm">procedure DML handler</span></a> to perform the transformation, or you can specify the transformation for a <a href="strms_glossary.html#GUID-4A72ABEB-7CC1-4A46-A4B9-41F722D872A4"><span class="xrefglossterm">table rule</span></a> instead of a global or schema rule. However, replacing a global or schema rule with table rules results in an increase in the total number of rules and additional maintenance when a new table is added.
+                        </p>
+                     </li>
+                     <li>
+                        <p>When a custom rule-based transformation that uses a one-to-one transformation function receives a <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a> or <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>, the transformation can construct a new LCR and return it. Similarly, when a custom rule-based transformation that uses a one-to-many transformation function receives a captured LCR or a persistent LCR, the transformation can construct multiple new LCRs and return them in an array.
+                        </p>
+                        <p>For any LCR constructed and returned by a custom rule-based transformation, the <code class="codeph">source_database_name</code>, <code class="codeph">transaction_id</code>, and <code class="codeph">scn</code> parameter values must match the values in the original LCR. Oracle automatically specifies the values in the original LCR for these parameters, even if an attempt is made to construct LCRs with different values.
+                        </p>
+                     </li>
+                     <li>
+                        <p>A custom rule-based transformation that receives a <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a> can construct a new message and return it. In this case, the returned message can be an LCR constructed by the custom rule-based transformation.
+                        </p>
+                     </li>
+                     <li>
+                        <p>A custom rule-based transformation cannot convert an LCR into a non-LCR message. This restriction applies to captured LCRs and persistent LCRs.</p>
+                     </li>
+                     <li>
+                        <p>A custom rule-based transformation cannot convert a row LCR into a DDL LCR or a DDL LCR into a row LCR. This restriction applies to captured LCRs and persistent LCRs.</p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-F7D2443B-A1DE-4496-B629-EB3D636D41A6__GUID-BC4C4D5E-3FFC-40EF-8BBE-C788B33CCDAB">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="rule-based-transformations.html#GUID-8283FE9A-01E0-4827-A950-959716F7D8F1">Required Privileges for Custom Rule-Based Transformations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-rule-based-transformations.html#GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7">Managing Custom Rule-Based Transformations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-restrictions.html#GUID-93631F0F-334E-4D0F-B944-850806600C11">Unsupported Data Types for Custom Rule-Based Transformations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-E540231B-9063-4F4E-BE79-72349800F720">Types of Messages That Can Be Processed with an Apply Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS591"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for information about the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-8103F390-CBED-42B2-A9FA-7986B7B04885">Logical Change Records (LCRs)</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS444"></a><div class="props_rev_3"><a id="GUID-61025C3F-8400-4301-A381-82854CA6C27B" name="GUID-61025C3F-8400-4301-A381-82854CA6C27B"></a><h4 id="STRMS-GUID-61025C3F-8400-4301-A381-82854CA6C27B" class="sect4"><span class="enumeration_section">6.2.1 </span>Custom Rule-Based Transformations and Action Contexts
+                  </h4>
+                  <div>
+                     <p>You use the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to specify a custom rule-based transformation for a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>. This procedure modifies the <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> of a rule to specify the transformation. A rule action context is optional information associated with a rule that is interpreted by the client of the <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a> after the rule evaluates to <code class="codeph">TRUE</code> for a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>. The client of the rules engine can be a user-created application or an internal feature of Oracle, such as Oracle Streams. The information in an action context is an object of type <code class="codeph">SYS.RE$NV_LIST</code>, which consists of a list of name-value pairs.
+                     </p>
+                     <p><a id="d47208e989" class="indexterm-anchor"></a><a id="d47208e991" class="indexterm-anchor"></a>A custom rule-based transformation in Oracle Streams always consists of the following name-value pair in an action context:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If the function is a one-to-one transformation function, then the name is <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code>. If the function is a one-to-many transformation function, then the name is <code class="codeph">STREAMS$_ARRAY_TRANS_FUNCTION</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The value is an <code class="codeph">ANYDATA</code> instance containing a PL/SQL function name specified as a <code class="codeph">VARCHAR2</code>. This function performs the transformation.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>You can display the existing custom rule-based transformations in a database by querying the <code class="codeph">DBA_STREAMS_TRANSFORM_FUNCTION</code> data dictionary view.
+                     </p>
+                     <p>When a rule in a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> evaluates to <code class="codeph">TRUE</code> for a message in an Oracle Streams environment, and an action context that contains a name-value pair with the name <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> or <code class="codeph">STREAMS$_ARRAY_TRANS_FUNCTION</code> is returned, the PL/SQL function is run, taking the message as an input parameter. Other names in an action context beginning with <code class="codeph">STREAMS$_</code>  are used internally by Oracle and must not be directly added, modified, or removed. Oracle Streams ignores any name-value pair that does not begin with <code class="codeph">STREAMS$_</code> or <code class="codeph">APPLY$_</code>.
+                     </p>
+                     <p>When a rule evaluates to <code class="codeph">FALSE</code> for a message in an Oracle Streams environment, the rule is not returned to the client, and any PL/SQL function appearing in a name-value pair in the action context is not run. Different rules can use the same or different transformations. For example, different transformations can be associated with different operation types, tables, or schemas for which messages are being captured, propagated, applied, or dequeued.
+                     </p>
+                  </div>
+               </div><a id="STRMS445"></a><div class="props_rev_3"><a id="GUID-8283FE9A-01E0-4827-A950-959716F7D8F1" name="GUID-8283FE9A-01E0-4827-A950-959716F7D8F1"></a><h4 id="STRMS-GUID-8283FE9A-01E0-4827-A950-959716F7D8F1" class="sect4"><span class="enumeration_section">6.2.2 </span>Required Privileges for Custom Rule-Based Transformations
+                  </h4>
+                  <div>
+                     <p>The user who calls the transformation function must have <code class="codeph">EXECUTE</code> privilege on the function. The following list describes which user calls the transformation function:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If a transformation is specified for a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> used by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, then the <a href="strms_glossary.html#GUID-33DECAE2-C00F-4805-909D-E9C1C383ECDF"><span class="xrefglossterm">capture user</span></a> for the capture process calls the transformation function.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If a transformation is specified for a rule used by a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, then the capture user for the synchronous capture calls the transformation function.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If a transformation is specified for a rule used by a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, then the owner of the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> for the propagation calls the transformation function.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If a transformation is specified on a rule used by an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, then the <a href="strms_glossary.html#GUID-87C6D214-6D80-452F-87A2-EA39B884189E"><span class="xrefglossterm">apply user</span></a> for the apply process calls the transformation function.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If a transformation is specified on a rule used by a <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>, then the user who invokes the messaging client calls the transformation function.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-8283FE9A-01E0-4827-A950-959716F7D8F1__GUID-47E3E50B-A096-438B-9579-660992B451AB">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="managing-rule-based-transformations.html#GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2">   Managing Rule-Based Transformations </a></p>
+                           </li>
+                           <li>
+                              <p><a href="oracle-streams-information-capture.html#GUID-DADEDB32-7F0F-40F2-A5A5-81327102B00B"> Oracle Streams Information Capture</a></p>
+                           </li>
+                           <li>
+                              <p><a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a></p>
+                           </li>
+                           <li>
+                              <p><a href="oracle-streams-information-consumption.html#GUID-2AB34D95-F1F8-400B-881E-7D2E9B7768B0"> Oracle Streams Information Consumption</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS446"></a><div class="props_rev_3"><a id="GUID-F86FDDEC-36FA-4E41-AF41-35F451209246" name="GUID-F86FDDEC-36FA-4E41-AF41-35F451209246"></a><h3 id="STRMS-GUID-F86FDDEC-36FA-4E41-AF41-35F451209246" class="sect3"><span class="enumeration_section">6.3 </span>Rule-Based Transformations and Oracle Streams Clients
+               </h3>
+               <div>
+                  <p>The following sections provide more information about rule-based transformations and <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="rule-based-transformations.html#GUID-5177DCB1-0EE1-46C7-A17B-5F1A5C622B36">Rule-Based Transformations and Capture Processes</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-transformations.html#GUID-C90A85B2-D41A-4722-8004-F0209765210A">Rule-Based Transformations and Synchronous Captures</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-transformations.html#GUID-CD2B435E-8D79-4428-9401-660F2AFCCE5B">Rule-Based Transformations and Propagations</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-transformations.html#GUID-378E5F02-78BA-4D04-8A1E-3CD3B9B22C9D">Rule-Based Transformations and an Apply Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-transformations.html#GUID-6208C92B-E0AD-4C31-9035-98DABB385F12">Rule-Based Transformations and a Messaging Client</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-transformations.html#GUID-E673D8A6-9BFC-49A5-881C-110C9C1A6A4B">Multiple Rule-Based Transformations</a></p>
+                     </li>
+                  </ul>
+                  <p>The information in this section applies to both declarative and <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>s.
+                  </p>
+                  <div class="infoboxnote" id="GUID-F86FDDEC-36FA-4E41-AF41-35F451209246__GUID-73F479E5-B583-46CB-AF5D-910ED76BF67C">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-rule-based-transformations.html#GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2">   Managing Rule-Based Transformations </a></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-F80AF321-89CA-4130-B22C-7247E18A789A">Rule Action Context</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-E540231B-9063-4F4E-BE79-72349800F720">Types of Messages That Can Be Processed with an Apply Process</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS448"></a><a id="STRMS447"></a><div class="props_rev_3"><a id="GUID-5177DCB1-0EE1-46C7-A17B-5F1A5C622B36" name="GUID-5177DCB1-0EE1-46C7-A17B-5F1A5C622B36"></a><h4 id="STRMS-GUID-5177DCB1-0EE1-46C7-A17B-5F1A5C622B36" class="sect4"><span class="enumeration_section">6.3.1 </span>Rule-Based Transformations and Capture Processes
+                  </h4>
+                  <div>
+                     <p>For a transformation to be performed during capture by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> that is associated with a rule-based transformation in the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for the capture process must evaluate to <code class="codeph">TRUE</code> for a particular change found in the redo log.
+                     </p>
+                     <p>If the transformation is a <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>, then Oracle transforms the <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a> internally when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the message. If the transformation is a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>, then an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> containing a name-value pair with the name <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> or <code class="codeph">STREAMS$_ARRAY_TRANS_FUNCTION</code> is returned to the capture process when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the captured LCR.
+                     </p>
+                     <p>The capture process completes the following steps to perform a rule-based transformation:</p>
+                     <ol>
+                        <li>
+                           <p>Formats the change in the redo log into an LCR.</p>
+                        </li>
+                        <li>
+                           <p>Converts the LCR into an <code class="codeph">ANYDATA</code> object.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Transforms the LCR. If the transformation is a declarative rule-based transformation, then Oracle transforms the <code class="codeph">ANYDATA</code> object internally based on the specifications of the declarative transformation. If the transformation is a custom rule-based transformation, then the <a href="strms_glossary.html#GUID-33DECAE2-C00F-4805-909D-E9C1C383ECDF"><span class="xrefglossterm">capture user</span></a> for the capture process runs the PL/SQL function in the name-value pair to transform the <code class="codeph">ANYDATA</code> object.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Enqueues one or more transformed <code class="codeph">ANYDATA</code> objects into the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> associated with the capture process, or discards the LCR if an array that contains zero elements is returned by the transformation function.
+                           </p>
+                        </li>
+                     </ol>
+                     <p>All actions are performed by the capture user for the capture process. <a href="rule-based-transformations.html#GUID-5177DCB1-0EE1-46C7-A17B-5F1A5C622B36__i1007231">Figure 6-1</a> shows a transformation during capture by a capture process.
+                     </p>
+                     <div class="figure" id="GUID-5177DCB1-0EE1-46C7-A17B-5F1A5C622B36__i1007231">
+                        <p class="titleinfigure">Figure 6-1 Transformation During Capture by a Capture Process</p><img width="202" src="img/strms020.gif" alt="Description of Figure 6-1 follows" title="Description of Figure 6-1 follows" longdesc="img_text/strms020.html"><br><a href="img_text/strms020.html">Description of "Figure 6-1 Transformation During Capture by a Capture Process"</a></div>
+                     <!-- class="figure" -->
+                     <p>For example, if an LCR is transformed during capture by a capture process, then the transformed LCR is enqueued into the queue used by the capture process. Therefore, if such a captured LCR is propagated from the <code class="codeph">dbs1.example.com</code> database to the <code class="codeph">dbs2.example.com</code> and the <code class="codeph">dbs3.example.com</code> databases, then the queues at <code class="codeph">dbs2.example.com</code> and <code class="codeph">dbs3.example.com</code> will contain the transformed LCR after propagation.
+                     </p>
+                     <p>The advantages of performing transformations during capture by a capture process are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Security can be improved if the transformation removes or changes private information, because this private information does not appear in the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> and is not propagated to any <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Space consumption can be reduced, depending on the type of transformation performed. For example, a transformation that reduces the amount of data results in less data to enqueue, propagate, and apply.</p>
+                        </li>
+                        <li>
+                           <p>Transformation overhead is reduced when there are multiple destinations for a transformed LCR, because the transformation is performed only once at the source, not at multiple destinations.</p>
+                        </li>
+                        <li>
+                           <p>A capture process transformation can transform a single message into multiple messages.</p>
+                        </li>
+                     </ul>
+                     <p>The possible disadvantages of performing transformations during capture by a capture process are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The transformation overhead occurs in the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> if the capture process is a <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a>. However, if the capture process is a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a>, then this overhead occurs at the <a href="strms_glossary.html#GUID-BEBC1371-719D-4103-877E-E3FB7B1DBA46"><span class="xrefglossterm">downstream database</span></a>, not at the source database.
+                           </p>
+                        </li>
+                        <li>
+                           <p>All sites receive the transformed LCR.</p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-5177DCB1-0EE1-46C7-A17B-5F1A5C622B36__GUID-07674227-010F-49B6-AEF3-78FCE202E9FA">
+                        <p class="notep1">Note:</p>
+                        <p>A rule-based transformation cannot be used with a capture process to modify or remove a column of a data type that is not supported by Oracle Streams.</p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-5177DCB1-0EE1-46C7-A17B-5F1A5C622B36__GUID-51679AC0-AFA6-485D-BEBB-F97DD49D08CE">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-2AC88043-1B53-4F4E-8B35-4D65F2D3DAD1">Data Types Captured by Capture Processes</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-rule-based-transformations.html#GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2">   Managing Rule-Based Transformations </a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS449"></a><div class="props_rev_3"><a id="GUID-FBE0249E-E6FE-49AC-8FC6-97C49436976D" name="GUID-FBE0249E-E6FE-49AC-8FC6-97C49436976D"></a><h5 id="STRMS-GUID-FBE0249E-E6FE-49AC-8FC6-97C49436976D" class="sect5"><span class="enumeration_section">6.3.1.1 </span>Rule-Based Transformation Errors During Capture by a Capture Process
+                     </h5>
+                     <div>
+                        <p>If an error occurs when the transformation is run during capture by a capture process, then the error is returned to the capture process. The behavior of the capture process depends on the type of transformation being performed and the type of error encountered. The following capture process behaviors are possible:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>If the transformation is a declarative rule-based transformation, and the capture process can ignore the error, then the capture process performs the transformation and captures the change. For example, if a capture process tries to perform a <code class="codeph">DELETE_COLUMN</code> declarative rule-based transformation, and the column specified for deletion does not exist in the row LCR, then the capture process captures the change and continues to run.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If the transformation is a declarative rule-based transformation, and the capture process cannot ignore the error, then the change is not captured, and the capture process becomes disabled. For example, if a capture process tries to perform an <code class="codeph">ADD_COLUMN</code> declarative rule-based transformation, and the column specified for addition already exists in the row LCR, then the change is not captured, and the capture process becomes disabled.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Whenever an error is encountered in a custom rule-based transformation, the change is not captured, and the capture process becomes disabled.</p>
+                           </li>
+                        </ul>
+                        <p>If the capture process becomes disabled, then you must either change or remove the rule-based transformation to avoid the error before the capture process can be enabled.</p>
+                     </div>
+                  </div>
+               </div><a id="STRMS451"></a><a id="STRMS450"></a><div class="props_rev_3"><a id="GUID-C90A85B2-D41A-4722-8004-F0209765210A" name="GUID-C90A85B2-D41A-4722-8004-F0209765210A"></a><h4 id="STRMS-GUID-C90A85B2-D41A-4722-8004-F0209765210A" class="sect4"><span class="enumeration_section">6.3.2 </span>Rule-Based Transformations and Synchronous Captures
+                  </h4>
+                  <div>
+                     <p>For a transformation to be performed during capture by a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> that is associated with a rule-based transformation in the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for the synchronous capture must evaluate to <code class="codeph">TRUE</code> for a particular DML change made to a table.
+                     </p>
+                     <p>If the transformation is a <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>, then Oracle transforms the <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a> internally when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the message. If the transformation is a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>, then an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> containing a name-value pair with the name <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> is returned to the capture process when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the persistent LCR.
+                     </p>
+                     <p>The synchronous capture completes the following steps to perform a rule-based transformation:</p>
+                     <ol>
+                        <li>
+                           <p>Formats the change in the redo log into a row LCR.</p>
+                        </li>
+                        <li>
+                           <p>Converts the row LCR into an <code class="codeph">ANYDATA</code> object.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Transforms the LCR. If the transformation is a declarative rule-based transformation, then Oracle transforms the <code class="codeph">ANYDATA</code> object internally based on the specifications of the declarative transformation. If the transformation is a custom rule-based transformation, then the <a href="strms_glossary.html#GUID-33DECAE2-C00F-4805-909D-E9C1C383ECDF"><span class="xrefglossterm">capture user</span></a> for the synchronous capture runs the PL/SQL function in the name-value pair to transform the <code class="codeph">ANYDATA</code> object.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Enqueues the transformed <code class="codeph">ANYDATA</code> object into the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> associated with the synchronous capture.
+                           </p>
+                        </li>
+                     </ol>
+                     <p>All actions are performed by the capture user for the synchronous capture. <a href="rule-based-transformations.html#GUID-C90A85B2-D41A-4722-8004-F0209765210A__BABFFCHG">Figure 6-2</a> shows a transformation during capture.
+                     </p>
+                     <div class="figure" id="GUID-C90A85B2-D41A-4722-8004-F0209765210A__BABFFCHG">
+                        <p class="titleinfigure">Figure 6-2 Transformation During Capture by a Synchronous Capture</p><img width="213" src="img/strms059.gif" alt="Description of Figure 6-2 follows" title="Description of Figure 6-2 follows" longdesc="img_text/strms059.html"><br><a href="img_text/strms059.html">Description of "Figure 6-2 Transformation During Capture by a Synchronous Capture"</a></div>
+                     <!-- class="figure" -->
+                     <p>For example, if a row LCR is transformed during capture by a synchronous capture, then the transformed row LCR is enqueued into the queue used by the synchronous capture. Therefore, if such a captured LCR is propagated from the <code class="codeph">dbs1.example.com</code> database to the <code class="codeph">dbs2.example.com</code> and the <code class="codeph">dbs3.example.com</code> databases, then the queues at <code class="codeph">dbs2.example.com</code> and <code class="codeph">dbs3.example.com</code> will contain the transformed row LCR after propagation.
+                     </p>
+                     <p>The advantages of performing transformations during capture by a synchronous capture are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Security can be improved if the transformation removes or changes private information, because this private information does not appear in the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> and is not propagated to any <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Space consumption can be reduced, depending on the type of transformation performed. For example, a transformation that reduces the amount of data results in less data to enqueue, propagate, and apply.</p>
+                        </li>
+                        <li>
+                           <p>Transformation overhead is reduced when there are multiple destinations for a transformed row LCR, because the transformation is performed only once at the source, not at multiple destinations.</p>
+                        </li>
+                     </ul>
+                     <p>The possible disadvantages of performing transformations during capture by a synchronous capture are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The transformation overhead occurs in the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>All sites receive the transformed LCR.</p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-C90A85B2-D41A-4722-8004-F0209765210A__GUID-796F10C9-FAC7-4EFA-981A-06C1233F25F6">
+                        <p class="notep1">Note:</p>
+                        <p>A rule-based transformation cannot be used with a synchronous capture to modify or remove a column of a data type that is not supported by Oracle Streams.</p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-C90A85B2-D41A-4722-8004-F0209765210A__GUID-A965F460-BFE2-40CE-A1AF-89378116A1E8">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-DB19CE72-5275-488E-B3CC-A556C4CED4BE">Data Types Captured by Synchronous Capture</a>"</span>.
+                        </p>
+                     </div>
+                  </div><a id="STRMS452"></a><div class="props_rev_3"><a id="GUID-9CAEBEFB-F711-4401-AE7F-F657D666D567" name="GUID-9CAEBEFB-F711-4401-AE7F-F657D666D567"></a><h5 id="STRMS-GUID-9CAEBEFB-F711-4401-AE7F-F657D666D567" class="sect5"><span class="enumeration_section">6.3.2.1 </span>Rule-Based Transformations and Errors During Capture by a Synchronous Capture
+                     </h5>
+                     <div>
+                        <p>If an error occurs when the transformation is run during capture by a synchronous capture, then the error is returned to the synchronous capture. The behavior of the synchronous capture depends on the type of transformation being performed and the type of error encountered. The following synchronous capture behaviors are possible:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>If the transformation is a declarative rule-based transformation, and the synchronous capture can ignore the error, then the synchronous capture performs the transformation and captures the change. For example, if a synchronous capture tries to perform a <code class="codeph">DELETE_COLUMN</code> declarative rule-based transformation, and the column specified for deletion does not exist in the row LCR, then the synchronous capture captures the change.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If the transformation is a declarative rule-based transformation, and the synchronous capture cannot ignore the error, then the change is not captured, and the DML operation aborts. For example, if a synchronous capture tries to perform an <code class="codeph">ADD_COLUMN</code> declarative rule-based transformation, and the column specified for addition already exists in the row LCR, then the change is not captured, and the DML aborts.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Whenever an error is encountered in a custom rule-based transformation, the change is not captured, and the DML aborts.</p>
+                           </li>
+                        </ul>
+                        <p>If the DML aborts because of a rule-based transformation, then you must either change or remove the rule-based transformation to perform the DML operation.</p>
+                     </div>
+                  </div>
+               </div><a id="STRMS454"></a><a id="STRMS453"></a><div class="props_rev_3"><a id="GUID-CD2B435E-8D79-4428-9401-660F2AFCCE5B" name="GUID-CD2B435E-8D79-4428-9401-660F2AFCCE5B"></a><h4 id="STRMS-GUID-CD2B435E-8D79-4428-9401-660F2AFCCE5B" class="sect4"><span class="enumeration_section">6.3.3 </span>Rule-Based Transformations and Propagations
+                  </h4>
+                  <div>
+                     <p>For a transformation to be performed during propagation, a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> that is associated with a rule-based transformation in the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for the <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> must evaluate to <code class="codeph">TRUE</code> for a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> in the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> for the propagation. This message can be a <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>, <a href="strms_glossary.html#GUID-95FF7ACD-11FF-4ACF-8E06-60033BEC621B"><span class="xrefglossterm">buffered LCR</span></a>, <a href="strms_glossary.html#GUID-2587F4F8-8B48-40F7-8541-D039E22291C3"><span class="xrefglossterm">buffered user message</span></a>, <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>, and <a href="strms_glossary.html#GUID-8F1FA1C4-ADB5-4A4D-9374-B50AADB53066"><span class="xrefglossterm">persistent user message</span></a>.
+                     </p>
+                     <p>If the transformation is a <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>, then Oracle transforms the message internally when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the message. If the transformation is a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>, then an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> containing a name-value pair with the name <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> is returned to the propagation when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the message.
+                     </p>
+                     <p>The propagation completes the following steps to perform a rule-based transformation:</p>
+                     <ol>
+                        <li>
+                           <p>Starts dequeuing the message from the source queue.</p>
+                        </li>
+                        <li>
+                           <p>Transforms the message. If the transformation is a declarative rule-based transformation, then Oracle transforms the message internally based on the specifications of the declarative transformation. If the transformation is a custom rule-based transformation, then the source queue owner runs the PL/SQL function in the name-value pair to transform the message.</p>
+                        </li>
+                        <li>
+                           <p>Completes dequeuing the transformed message.</p>
+                        </li>
+                        <li>
+                           <p>Propagates the transformed message to the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>.
+                           </p>
+                        </li>
+                     </ol>
+                     <div class="infoboxnote" id="GUID-CD2B435E-8D79-4428-9401-660F2AFCCE5B__GUID-E3870DAE-865B-468A-93D0-014CF62421E4">
+                        <p class="notep1">Note:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-265C3D8E-63FD-4CF9-8704-A8859FEC80B4">Ways to Consume Information with Oracle Streams</a>"</span></p>
+                     </div>
+                     <p><a href="rule-based-transformations.html#GUID-CD2B435E-8D79-4428-9401-660F2AFCCE5B__i1007273">Figure 6-3</a> shows a transformation during propagation.
+                     </p>
+                     <div class="figure" id="GUID-CD2B435E-8D79-4428-9401-660F2AFCCE5B__i1007273">
+                        <p class="titleinfigure">Figure 6-3 Transformation During Propagation</p><img width="490" src="img/strms019.gif" alt="Description of Figure 6-3 follows" title="Description of Figure 6-3 follows" longdesc="img_text/strms019.html"><br><a href="img_text/strms019.html">Description of "Figure 6-3 Transformation During Propagation"</a></div>
+                     <!-- class="figure" -->
+                     <p>For example, suppose you use a rule-based transformation for a propagation that propagates messages from the <code class="codeph">dbs1.example.com</code> database to the <code class="codeph">dbs2.example.com</code> database, but you do not use a rule-based transformation for a propagation that propagates messages from the <code class="codeph">dbs1.example.com</code> database to the <code class="codeph">dbs3.example.com</code> database.
+                     </p>
+                     <p>In this case, a message in the queue at <code class="codeph">dbs1.example.com</code> can be transformed before it is propagated to <code class="codeph">dbs2.example.com</code>, but the same message can remain in its original form when it is propagated to <code class="codeph">dbs3.example.com</code>. In this case, after propagation, the queue at <code class="codeph">dbs2.example.com</code> contains the transformed message, and the queue at <code class="codeph">dbs3.example.com</code> contains the original message. 
+                     </p>
+                     <p>The advantages of performing transformations during propagation are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Security can be improved if the transformation removes or changes private information before messages are propagated.</p>
+                        </li>
+                        <li>
+                           <p>Some destination queues can receive a transformed message, while other destination queues can receive the original message.</p>
+                        </li>
+                        <li>
+                           <p>Different destinations can receive different variations of the same transformed message.</p>
+                        </li>
+                     </ul>
+                     <p>The possible disadvantages of performing transformations during propagation are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Once a message is transformed, any database to which it is propagated after the first propagation receives the transformed message. For example, if <code class="codeph">dbs2.example.com</code> propagates the message to <code class="codeph">dbs4.example.com</code>, then <code class="codeph">dbs4.example.com</code> receives the transformed message.
+                           </p>
+                        </li>
+                        <li>
+                           <p>When the first propagation in a <a href="strms_glossary.html#GUID-88D760FB-D926-4ED1-83AA-8FAC1C29D421"><span class="xrefglossterm">directed network</span></a> performs the transformation, and a local <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> captured the message, the transformation overhead occurs on the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>. However, if the capture process is a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a>, then this overhead occurs at the <a href="strms_glossary.html#GUID-BEBC1371-719D-4103-877E-E3FB7B1DBA46"><span class="xrefglossterm">downstream database</span></a>, not at the source database.
+                           </p>
+                        </li>
+                        <li>
+                           <p>When the first propagation in a <a href="strms_glossary.html#GUID-88D760FB-D926-4ED1-83AA-8FAC1C29D421"><span class="xrefglossterm">directed network</span></a> performs the transformation, and a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> captured the message, the transformation overhead occurs on the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>. 
+                           </p>
+                        </li>
+                        <li>
+                           <p>The same transformation can be done multiple times on a message when different propagations send the message to multiple <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>s.
+                           </p>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS455"></a><div class="props_rev_3"><a id="GUID-327E8E34-76DE-40A4-8AB1-1492936B7682" name="GUID-327E8E34-76DE-40A4-8AB1-1492936B7682"></a><h5 id="STRMS-GUID-327E8E34-76DE-40A4-8AB1-1492936B7682" class="sect5"><span class="enumeration_section">6.3.3.1 </span>Rule-Based Transformation Errors During Propagation
+                     </h5>
+                     <div>
+                        <p>If an error occurs during the transformation, then the message that caused the error is not dequeued or propagated, and the error is returned to the propagation. Before the message can be propagated, you must change or remove the rule-based transformation to avoid the error.</p>
+                     </div>
+                  </div>
+               </div><a id="STRMS457"></a><a id="STRMS456"></a><div class="props_rev_3"><a id="GUID-378E5F02-78BA-4D04-8A1E-3CD3B9B22C9D" name="GUID-378E5F02-78BA-4D04-8A1E-3CD3B9B22C9D"></a><h4 id="STRMS-GUID-378E5F02-78BA-4D04-8A1E-3CD3B9B22C9D" class="sect4"><span class="enumeration_section">6.3.4 </span>Rule-Based Transformations and an Apply Process
+                  </h4>
+                  <div>
+                     <p>For a transformation to be performed during apply, a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> that is associated with a rule-based transformation in the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for the <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> must evaluate to <code class="codeph">TRUE</code> for a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> in the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> for the apply process. This message can be a <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>, a <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>, or a <a href="strms_glossary.html#GUID-8F1FA1C4-ADB5-4A4D-9374-B50AADB53066"><span class="xrefglossterm">persistent user message</span></a>.
+                     </p>
+                     <p>If the transformation is a <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>, then Oracle transforms the message internally when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the message. If the transformation is a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>, then an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> containing a name-value pair with the name <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> is returned to the apply process when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the message.
+                     </p>
+                     <p>The apply process completes the following steps to perform a rule-based transformation:</p>
+                     <ol>
+                        <li>
+                           <p>Starts to dequeue the message from the queue.</p>
+                        </li>
+                        <li>
+                           <p>Transforms the message. If the transformation is a declarative rule-based transformation, then Oracle transforms the message internally based on the specifications of the declarative transformation. If the transformation is a custom rule-based transformation, then the <a href="strms_glossary.html#GUID-87C6D214-6D80-452F-87A2-EA39B884189E"><span class="xrefglossterm">apply user</span></a> runs the PL/SQL function in the name-value pair to transform the message.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Completes dequeuing the transformed message.</p>
+                        </li>
+                        <li>
+                           <p>Applies the transformed message, which can entail changing database objects at the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> or sending the transformed message to an <a href="strms_glossary.html#GUID-4CEA651A-4197-4731-93D4-315BCB5CBE70"><span class="xrefglossterm">apply handler</span></a>.
+                           </p>
+                        </li>
+                     </ol>
+                     <p>All actions are performed by the apply user. </p>
+                     <div class="infoboxnote" id="GUID-378E5F02-78BA-4D04-8A1E-3CD3B9B22C9D__GUID-BD06866F-9046-4021-9118-D8D241C00F93">
+                        <p class="notep1">Note:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-265C3D8E-63FD-4CF9-8704-A8859FEC80B4">Ways to Consume Information with Oracle Streams</a>"</span></p>
+                     </div>
+                     <p><a href="rule-based-transformations.html#GUID-378E5F02-78BA-4D04-8A1E-3CD3B9B22C9D__i1007317">Figure 6-4</a> shows a transformation during apply.
+                     </p>
+                     <div class="figure" id="GUID-378E5F02-78BA-4D04-8A1E-3CD3B9B22C9D__i1007317">
+                        <p class="titleinfigure">Figure 6-4 Transformation During Apply</p><img width="451" src="img/strms044.gif" alt="Description of Figure 6-4 follows" title="Description of Figure 6-4 follows" longdesc="img_text/strms044.html"><br><a href="img_text/strms044.html">Description of "Figure 6-4 Transformation During Apply"</a></div>
+                     <!-- class="figure" -->
+                     <p>		For example, suppose a message is propagated from the <code class="codeph">dbs1.example.com</code> database to the <code class="codeph">dbs2.example.com</code> database in its original form. When the apply process dequeues the message at <code class="codeph">dbs2.example.com</code>, the message is transformed. 
+                     </p>
+                     <p>The possible advantages of performing transformations during apply are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Any database to which the message is propagated after the first propagation can receive the message in its original form. For example, if <code class="codeph">dbs2.example.com</code> propagates the message to <code class="codeph">dbs4.example.com</code>, then <code class="codeph">dbs4.example.com</code> can receive the original message.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The transformation overhead does not occur on the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> when the source and destination database are different.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The possible disadvantages of performing transformations during apply are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Security might be a concern if the messages contain private information, because all databases to which the messages are propagated receive the original messages.</p>
+                        </li>
+                        <li>
+                           <p>The same transformation can be done multiple times when multiple destination databases need the same transformation.</p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-378E5F02-78BA-4D04-8A1E-3CD3B9B22C9D__GUID-34040D40-C353-4B00-80EA-96B908A8F037">
+                        <p class="notep1">Note:</p>
+                        <p>Before modifying one or more rules for an apply process, you should stop the apply process.</p>
+                     </div>
+                  </div><a id="STRMS458"></a><div class="props_rev_3"><a id="GUID-0170CAA4-899E-4D58-BCB6-07162BE30006" name="GUID-0170CAA4-899E-4D58-BCB6-07162BE30006"></a><h5 id="STRMS-GUID-0170CAA4-899E-4D58-BCB6-07162BE30006" class="sect5"><span class="enumeration_section">6.3.4.1 </span>Rule-Based Transformation Errors During Apply Process Dequeue
+                     </h5>
+                     <div>
+                        <p>If an error occurs when the transformation function is run during apply process dequeue, then the message that caused the error is not dequeued, the transaction containing the message is not applied, the error is returned to the apply process, and the apply process is disabled. Before the apply process can be enabled, you must change or remove the rule-based transformation to avoid the error.</p>
+                     </div>
+                  </div><a id="STRMS459"></a><div class="props_rev_3"><a id="GUID-9D0DDC26-2F1B-4E1C-A1C1-768E51FF6011" name="GUID-9D0DDC26-2F1B-4E1C-A1C1-768E51FF6011"></a><h5 id="STRMS-GUID-9D0DDC26-2F1B-4E1C-A1C1-768E51FF6011" class="sect5"><span class="enumeration_section">6.3.4.2 </span>Apply Errors on Transformed Messages
+                     </h5>
+                     <div>
+                        <p>If an apply error occurs for a transaction in which some of the messages have been transformed by a rule-based transformation, then the transformed messages are moved to the error queue with all of the other messages in the transaction. If you use the <code class="codeph">EXECUTE_ERROR</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package to reexecute a transaction in the error queue that contains transformed messages, then the transformation is not performed on the messages again because the apply process rule set containing the rule is not evaluated again.
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STRMS461"></a><a id="STRMS460"></a><div class="props_rev_3"><a id="GUID-6208C92B-E0AD-4C31-9035-98DABB385F12" name="GUID-6208C92B-E0AD-4C31-9035-98DABB385F12"></a><h4 id="STRMS-GUID-6208C92B-E0AD-4C31-9035-98DABB385F12" class="sect4"><span class="enumeration_section">6.3.5 </span>Rule-Based Transformations and a Messaging Client
+                  </h4>
+                  <div>
+                     <p>For a transformation to be performed during dequeue by a <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>, a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> that is associated with a rule-based transformation in the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for the messaging client must evaluate to <code class="codeph">TRUE</code> for a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> in the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> for the messaging client. 
+                     </p>
+                     <p>If the transformation is a <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>, then Oracle transforms the message internally when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the message. If the transformation is a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>, then an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> containing a name-value pair with the name <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> is returned to the messaging client when the rule in a positive rule set evaluates to <code class="codeph">TRUE</code> for the message.
+                     </p>
+                     <p>The messaging client completes the following steps to perform a rule-based transformation:</p>
+                     <ol>
+                        <li>
+                           <p>Starts to dequeue the message from the queue.</p>
+                        </li>
+                        <li>
+                           <p>Transforms the message. If the transformation is a declarative rule-based transformation, then the message must be a <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>, and Oracle transforms the row LCR internally based on the specifications of the declarative transformation. If the transformation is a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>, then the message can be a persistent LCR or a <a href="strms_glossary.html#GUID-8F1FA1C4-ADB5-4A4D-9374-B50AADB53066"><span class="xrefglossterm">persistent user message</span></a>. The user who invokes the messaging client runs the PL/SQL function in the name-value pair to transform the message during dequeue. 
+                           </p>
+                        </li>
+                        <li>
+                           <p>Completes dequeuing the transformed message.</p>
+                        </li>
+                     </ol>
+                     <p>All actions are performed by the user who invokes the messaging client.</p>
+                     <p><a href="rule-based-transformations.html#GUID-6208C92B-E0AD-4C31-9035-98DABB385F12__i1017765">Figure 6-5</a> shows a transformation during messaging client dequeue.
+                     </p>
+                     <div class="figure" id="GUID-6208C92B-E0AD-4C31-9035-98DABB385F12__i1017765">
+                        <p class="titleinfigure">Figure 6-5 Transformation During Messaging Client Dequeue</p><img width="284" src="img/strms043.gif" alt="Description of Figure 6-5 follows" title="Description of Figure 6-5 follows" longdesc="img_text/strms043.html"><br><a href="img_text/strms043.html">Description of "Figure 6-5 Transformation During Messaging Client Dequeue"</a></div>
+                     <!-- class="figure" -->
+                     <p>		For example, suppose a message is propagated from the <code class="codeph">dbs1.example.com</code> database to the <code class="codeph">dbs2.example.com</code> database in its original form. When the messaging client dequeues the message at <code class="codeph">dbs2.example.com</code>, the message is transformed. 
+                     </p>
+                     <p>One possible advantage of performing transformations during dequeue in a messaging environment is that any database to which the message is propagated after the first propagation can receive the message in its original form. For example, if <code class="codeph">dbs2.example.com</code> propagates the message to <code class="codeph">dbs4.example.com</code>, then <code class="codeph">dbs4.example.com</code> can receive the original message.
+                     </p>
+                     <p>The possible disadvantages of performing transformations during dequeue in a messaging environment are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Security might be a concern if the messages contain private information, because all databases to which the messages are propagated receive the original messages.</p>
+                        </li>
+                        <li>
+                           <p>The same transformation can be done multiple times when multiple <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>s need the same transformation.
+                           </p>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS462"></a><div class="props_rev_3"><a id="GUID-B3A3FBD5-71C1-4D1D-B7A1-1536CA941A6E" name="GUID-B3A3FBD5-71C1-4D1D-B7A1-1536CA941A6E"></a><h5 id="STRMS-GUID-B3A3FBD5-71C1-4D1D-B7A1-1536CA941A6E" class="sect5"><span class="enumeration_section">6.3.5.1 </span>Rule-Based Transformation Errors During Messaging Client Dequeue
+                     </h5>
+                     <div>
+                        <p>If an error occurs when the transformation function is run during messaging client dequeue, then the message that caused the error is not dequeued, and the error is returned to the messaging client. Before the message can be dequeued by the messaging client, you must change or remove the rule-based transformation to avoid the error.</p>
+                     </div>
+                  </div>
+               </div><a id="STRMS463"></a><div class="props_rev_3"><a id="GUID-E673D8A6-9BFC-49A5-881C-110C9C1A6A4B" name="GUID-E673D8A6-9BFC-49A5-881C-110C9C1A6A4B"></a><h4 id="STRMS-GUID-E673D8A6-9BFC-49A5-881C-110C9C1A6A4B" class="sect4"><span class="enumeration_section">6.3.6 </span>Multiple Rule-Based Transformations
+                  </h4>
+                  <div>
+                     <p>You can transform a message during capture, propagation, apply, or dequeue, or during any combination of capture, propagation, apply, and dequeue. For example, if you want to hide sensitive data from all recipients, then you can transform a message during capture. If some recipients require additional custom transformations, then you can transform the previously transformed message during propagation, apply, or dequeue.</p>
+                  </div>
+               </div>
+            </div><a id="STRMS145"></a><div class="props_rev_3"><a id="GUID-57430920-685F-4CEA-BBC3-5CB78C54FC61" name="GUID-57430920-685F-4CEA-BBC3-5CB78C54FC61"></a><h3 id="STRMS-GUID-57430920-685F-4CEA-BBC3-5CB78C54FC61" class="sect3"><span class="enumeration_section">6.4 </span>Transformation Ordering
+               </h3>
+               <div>
+                  <p>In addition to <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>s and <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>s, a <a href="strms_glossary.html#GUID-DD0C1CF9-3357-4464-A102-F4790BD5BD91"><span class="xrefglossterm">row migration</span></a> is an internal transformation that takes place when a <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a> evaluates to <code class="codeph">TRUE</code>. If all three types of transformations are specified for a single <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>, then Oracle Database performs the transformations in the following order when the rule evaluates to <code class="codeph">TRUE</code>:
+                  </p>
+                  <ol>
+                     <li>
+                        <p>Row migration</p>
+                     </li>
+                     <li>
+                        <p>Declarative rule-based transformation</p>
+                     </li>
+                     <li>
+                        <p>Custom rule-based transformation</p>
+                     </li>
+                  </ol>
+               </div><a id="STRMS464"></a><div class="props_rev_3"><a id="GUID-868762DD-E5B9-40D7-9530-1B338B728A2E" name="GUID-868762DD-E5B9-40D7-9530-1B338B728A2E"></a><h4 id="STRMS-GUID-868762DD-E5B9-40D7-9530-1B338B728A2E" class="sect4"><span class="enumeration_section">6.4.1 </span>Declarative Rule-Based Transformation Ordering
+                  </h4>
+                  <div>
+                     <p>If more than one <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a> is specified for a single <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>, then Oracle must perform the transformations in a particular order. You can use the default ordering for declarative transformations, or you can specify the order.
+                     </p>
+                     <p>This section contains the following topics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="rule-based-transformations.html#GUID-D441B97E-A150-4F1B-83D8-7E888D1DF4C9">Default Declarative Transformation Ordering</a></p>
+                        </li>
+                        <li>
+                           <p><a href="rule-based-transformations.html#GUID-8B7D9C29-8EE3-46A1-A718-46934568AD2E">User-Specified Declarative Transformation Ordering</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS465"></a><div class="props_rev_3"><a id="GUID-D441B97E-A150-4F1B-83D8-7E888D1DF4C9" name="GUID-D441B97E-A150-4F1B-83D8-7E888D1DF4C9"></a><h5 id="STRMS-GUID-D441B97E-A150-4F1B-83D8-7E888D1DF4C9" class="sect5"><span class="enumeration_section">6.4.1.1 </span>Default Declarative Transformation Ordering
+                     </h5>
+                     <div>
+                        <p>By default, Oracle Database performs declarative transformations in the following order when the rule evaluates to <code class="codeph">TRUE</code>:
+                        </p>
+                        <ol>
+                           <li>
+                              <p>Keep columns</p>
+                           </li>
+                           <li>
+                              <p>Delete column</p>
+                           </li>
+                           <li>
+                              <p>Rename column</p>
+                           </li>
+                           <li>
+                              <p>Add column</p>
+                           </li>
+                           <li>
+                              <p>Rename table</p>
+                           </li>
+                           <li>
+                              <p>Rename schema</p>
+                           </li>
+                        </ol>
+                        <p>The results of a declarative transformation are used in each subsequent declarative transformation. For example, suppose the following declarative transformations are specified for a single rule:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Delete column <code class="codeph">address</code></p>
+                           </li>
+                           <li>
+                              <p>Add column <code class="codeph">address</code></p>
+                           </li>
+                        </ul>
+                        <p>Assuming column <code class="codeph">address</code> exists in a row LCR, both declarative transformations should be performed in this case because column <code class="codeph">address</code> is deleted from the row LCR before column <code class="codeph">address</code> is added back to the row LCR. The following table shows the transformation ordering for this example.
+                        </p>
+                        <div class="tblformal" id="GUID-D441B97E-A150-4F1B-83D8-7E888D1DF4C9__GUID-C5865F0B-1A62-4E6F-B5A4-DFA2911C669E">
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Transformation ordering for delete column transformation and add column transformation" width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="13%" id="d47208e4469">Step Number</th>
+                                    <th align="left" valign="bottom" width="24%" id="d47208e4472">Transformation Type</th>
+                                    <th align="left" valign="bottom" width="41%" id="d47208e4475">Transformation Details</th>
+                                    <th align="left" valign="bottom" width="22%" id="d47208e4478">Transformation Performed?</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4483" headers="d47208e4469 ">
+                                       <p>1</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4483 d47208e4472 ">
+                                       <p>Keep columns</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4483 d47208e4475 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4483 d47208e4478 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4496" headers="d47208e4469 ">
+                                       <p>2</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4496 d47208e4472 ">
+                                       <p>Delete column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4496 d47208e4475 ">
+                                       <p>Delete column <code class="codeph">address</code> from row LCR
+                                       </p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4496 d47208e4478 ">
+                                       <p>Yes</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4512" headers="d47208e4469 ">
+                                       <p>3</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4512 d47208e4472 ">
+                                       <p>Rename column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4512 d47208e4475 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4512 d47208e4478 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4525" headers="d47208e4469 ">
+                                       <p>4</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4525 d47208e4472 ">
+                                       <p>Add column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4525 d47208e4475 ">
+                                       <p>Add column <code class="codeph">address</code> to row LCR
+                                       </p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4525 d47208e4478 ">
+                                       <p>Yes</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4541" headers="d47208e4469 ">
+                                       <p>5</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4541 d47208e4472 ">
+                                       <p>Rename table</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4541 d47208e4475 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4541 d47208e4478 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4554" headers="d47208e4469 ">
+                                       <p>6</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4554 d47208e4472 ">
+                                       <p>Rename schema</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4554 d47208e4475 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4554 d47208e4478 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                        <p>Another scenario might rename a table and then rename a schema. For example, suppose the following declarative transformations are specified for a single rule:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Rename table <code class="codeph">john.customers</code> to <code class="codeph">sue.clients</code></p>
+                           </li>
+                           <li>
+                              <p>Rename schema <code class="codeph">sue</code> to <code class="codeph">mary</code></p>
+                           </li>
+                        </ul>
+                        <p>Notice that the rename table transformation also renames the schema for the table. In this case, both transformations should be performed and, after both transformations, the table name becomes <code class="codeph">mary.clients</code>. The following table shows the transformation ordering for this example.
+                        </p>
+                        <div class="tblformal" id="GUID-D441B97E-A150-4F1B-83D8-7E888D1DF4C9__GUID-F6D8F98B-5E92-4DB0-9B0E-A8466CC028A3">
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Transformation ordering for rename table transformation and rename schema transformation where both transformations are performed" width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="13%" id="d47208e4600">Step Number</th>
+                                    <th align="left" valign="bottom" width="24%" id="d47208e4603">Transformation Type</th>
+                                    <th align="left" valign="bottom" width="41%" id="d47208e4606">Transformation Details</th>
+                                    <th align="left" valign="bottom" width="22%" id="d47208e4609">Transformation Performed?</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4614" headers="d47208e4600 ">
+                                       <p>1</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4614 d47208e4603 ">
+                                       <p>Keep columns</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4614 d47208e4606 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4614 d47208e4609 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4627" headers="d47208e4600 ">
+                                       <p>2</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4627 d47208e4603 ">
+                                       <p>Delete column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4627 d47208e4606 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4627 d47208e4609 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4640" headers="d47208e4600 ">
+                                       <p>3</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4640 d47208e4603 ">
+                                       <p>Rename column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4640 d47208e4606 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4640 d47208e4609 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4653" headers="d47208e4600 ">
+                                       <p>4</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4653 d47208e4603 ">
+                                       <p>Add column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4653 d47208e4606 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4653 d47208e4609 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4666" headers="d47208e4600 ">
+                                       <p>5</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4666 d47208e4603 ">
+                                       <p>Rename table</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4666 d47208e4606 ">
+                                       <p>Rename table <code class="codeph">john.customers</code> to <code class="codeph">sue.clients</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4666 d47208e4609 ">
+                                       <p>Yes</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4684" headers="d47208e4600 ">
+                                       <p>6</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4684 d47208e4603 ">
+                                       <p>Rename schema</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4684 d47208e4606 ">
+                                       <p>Rename schema <code class="codeph">sue</code> to <code class="codeph">mary</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4684 d47208e4609 ">
+                                       <p>Yes</p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                        <p>Consider a similar scenario in which the following declarative transformations are specified for a single rule:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Rename table <code class="codeph">john.customers</code> to <code class="codeph">sue.clients</code></p>
+                           </li>
+                           <li>
+                              <p>Rename schema <code class="codeph">john</code> to <code class="codeph">mary</code></p>
+                           </li>
+                        </ul>
+                        <p>In this case, the first transformation is performed, but the second one is not. After the first transformation, the table name is <code class="codeph">sue.clients</code>. The second transformation is not performed because the schema of the table is now <code class="codeph">sue</code>, not <code class="codeph">john</code>. The following table shows the transformation ordering for this example.
+                        </p>
+                        <div class="tblformal" id="GUID-D441B97E-A150-4F1B-83D8-7E888D1DF4C9__GUID-51AD75AB-C8ED-4902-8B19-9584DAFD95E1">
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Transformation ordering for rename table transformation and rename schema transformation where only the rename table transformation is performed" width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="13%" id="d47208e4742">Step Number</th>
+                                    <th align="left" valign="bottom" width="24%" id="d47208e4745">Transformation Type</th>
+                                    <th align="left" valign="bottom" width="41%" id="d47208e4748">Transformation Details</th>
+                                    <th align="left" valign="bottom" width="22%" id="d47208e4751">Transformation Performed?</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4756" headers="d47208e4742 ">
+                                       <p>1</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4756 d47208e4745 ">
+                                       <p>Keep columns</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4756 d47208e4748 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4756 d47208e4751 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4769" headers="d47208e4742 ">
+                                       <p>2</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4769 d47208e4745 ">
+                                       <p>Delete column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4769 d47208e4748 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4769 d47208e4751 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4782" headers="d47208e4742 ">
+                                       <p>3</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4782 d47208e4745 ">
+                                       <p>Rename column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4782 d47208e4748 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4782 d47208e4751 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4795" headers="d47208e4742 ">
+                                       <p>4</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4795 d47208e4745 ">
+                                       <p>Add column</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4795 d47208e4748 ">
+                                       <p>-</p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4795 d47208e4751 ">
+                                       <p>-</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4808" headers="d47208e4742 ">
+                                       <p>5</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4808 d47208e4745 ">
+                                       <p>Rename table</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4808 d47208e4748 ">
+                                       <p>Rename table <code class="codeph">john.customers</code> to <code class="codeph">sue.clients</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4808 d47208e4751 ">
+                                       <p>Yes</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="13%" id="d47208e4826" headers="d47208e4742 ">
+                                       <p>6</p>
+                                    </td>
+                                    <td align="left" valign="top" width="24%" headers="d47208e4826 d47208e4745 ">
+                                       <p>Rename schema</p>
+                                    </td>
+                                    <td align="left" valign="top" width="41%" headers="d47208e4826 d47208e4748 ">
+                                       <p>Rename schema <code class="codeph">john</code> to <code class="codeph">mary</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="22%" headers="d47208e4826 d47208e4751 ">
+                                       <p>No</p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                        <p>The rename schema transformation is not performed, but it does not result in an error. In this case, the row LCR is transformed by the rename table transformation, and a row LCR with the table name <code class="codeph">sue.clients</code> is returned.
+                        </p>
+                     </div>
+                  </div><a id="STRMS466"></a><div class="props_rev_3"><a id="GUID-8B7D9C29-8EE3-46A1-A718-46934568AD2E" name="GUID-8B7D9C29-8EE3-46A1-A718-46934568AD2E"></a><h5 id="STRMS-GUID-8B7D9C29-8EE3-46A1-A718-46934568AD2E" class="sect5"><span class="enumeration_section">6.4.1.2 </span>User-Specified Declarative Transformation Ordering
+                     </h5>
+                     <div>
+                        <p>If you do not want to use the default declarative rule-based transformation ordering for a particular rule, then you can specify step numbers for each declarative transformation specified for the rule. If you specify a step number for one or more declarative transformations for a particular rule, then the declarative transformations for the rule behave in the following way:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Declarative transformations are performed in order of increasing step number.</p>
+                           </li>
+                           <li>
+                              <p>The default step number for a declarative transformation is <code class="codeph">0</code> (zero). A declarative transformation uses this default if no step number is specified for it explicitly.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If two or more declarative transformations have the same step number, then these declarative transformations follow the default ordering described in <span class="q">"<a href="rule-based-transformations.html#GUID-D441B97E-A150-4F1B-83D8-7E888D1DF4C9">Default Declarative Transformation Ordering</a>"</span>.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>For example, you can reverse the default ordering for declarative transformations by specifying the following step numbers for transformations associated with a particular rule:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Keep columns with step number 6</p>
+                           </li>
+                           <li>
+                              <p>Delete column with step number 5</p>
+                           </li>
+                           <li>
+                              <p>Rename column with step number 4</p>
+                           </li>
+                           <li>
+                              <p>Add column with step number 3</p>
+                           </li>
+                           <li>
+                              <p>Rename table with step number 2</p>
+                           </li>
+                           <li>
+                              <p>Rename schema with step number 1</p>
+                           </li>
+                        </ul>
+                        <p>With this ordering specified, rename schema transformations are performed first, and delete column transformations are performed last.</p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS467"></a><div class="props_rev_3"><a id="GUID-088CF510-8DC8-41C1-BB42-1034D9CC1ECC" name="GUID-088CF510-8DC8-41C1-BB42-1034D9CC1ECC"></a><h3 id="STRMS-GUID-088CF510-8DC8-41C1-BB42-1034D9CC1ECC" class="sect3"><span class="enumeration_section">6.5 </span>Considerations for Rule-Based Transformations
+               </h3>
+               <div>
+                  <p>The following considerations apply to both <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>s and <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>s:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>For a rule-based transformation to be performed by an <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>, the <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> must be in the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for the Oracle Streams client. If the rule is in the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for the Oracle Streams client, then the Oracle Streams client ignores the rule-based transformation.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Rule-based transformations are different from transformations performed using the <code class="codeph">DBMS_TRANSFORM</code> package. This document does not discuss transformations performed with the <code class="codeph">DBMS_TRANSFORM</code> package.
+                        </p>
+                     </li>
+                     <li>
+                        <p>If a large percentage of row LCRs will be transformed in your environment, or if you must make expensive transformations on row LCRs, then consider making these modifications within a <a href="strms_glossary.html#GUID-50EF781B-7997-4C30-BE4B-1D3BC501FB24"><span class="xrefglossterm">DML handler</span></a> instead, because DML handlers can execute in parallel when apply parallelism is greater than 1.
+                        </p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-088CF510-8DC8-41C1-BB42-1034D9CC1ECC__GUID-37549DBB-F574-45A2-AF92-2E1F9F413464">
+                     <p class="notep1">Note:</p>
+                     <p><a href="../adque/aq-administrative-interface.html#ADQUE0800"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>and<a href="../arpls/DBMS_TRANSFORM.html#ARPLS061"><span class="italic"> Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">DBMS_TRANSFORM</code> package
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

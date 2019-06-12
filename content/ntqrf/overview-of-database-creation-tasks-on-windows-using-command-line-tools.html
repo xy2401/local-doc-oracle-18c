@@ -1,0 +1,870 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">
+      <meta name="description" content="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">
+      <title>Overview of Database Creation Tasks on Windows Using Command-Line Tools</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Administrator's Reference ">
+      <meta property="og:description" content="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Administrator's Reference for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="administrators-reference-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-02T05:05:35-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83889-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="overview-of-database-creation-on-windows-using-oracle-database-configuration-assistant.html" title="Previous" type="text/html">
+      <link rel="next" href="about-administering-an-oracle-database-instance-using-oradim.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Administrator's Reference Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="NTQRF">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="overview-of-database-creation-on-windows-using-oracle-database-configuration-assistant.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="about-administering-an-oracle-database-instance-using-oradim.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Administrator's Reference </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="postinstallation-database-creation-on-windows.html" property="item" typeof="WebPage"><span property="name">Postinstallation Database Creation on Windows</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Overview of Database Creation Tasks on Windows Using Command-Line Tools</li>
+            </ol>
+            <a id="GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" name="GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80"></a><a id="NTQRF474"></a><a id="NTQRF134"></a><a id="NTQRF135"></a><a id="NTQRF136"></a><a id="NTQRF133"></a>
+            
+            <h2 id="NTQRF-GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" class="sect2">Overview of Database Creation Tasks on Windows Using Command-Line Tools</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs. </p>
+               <p>You can choose to create database creation scripts using Oracle Database Configuration Assistant.</p>
+               <p>The following are the types of Database creation tasks:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>Copy an existing database and delete the old database.</p>
+                  </li>
+                  <li>
+                     <p>Copy an existing database and keep the old database.</p>
+                  </li>
+                  <li>
+                     <p>Create a new database when no database exists on your system.</p>
+                  </li>
+               </ul>
+               <div class="section">
+                  <p class="subhead1">Manual Database Creation Tasks</p>
+               </div>
+               <!-- class="section" -->
+               <div class="section">
+                  <p>Use Manual Database Creation Tasks to understand the manual tasks involved in creating a new database for each of these database creation categories. Each step is explained in detail in the following subsections.</p>
+                  <div class="tblformalwide" id="GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80__G1015865">
+                     <p class="titleintable">Table 4-1 Manual Database Creation Tasks</p>
+                     <table cellpadding="4" cellspacing="0" class="FormalWide" title="Manual Database Creation Tasks" summary="Rows are tasks. For each task, the first column describes the task, and the other three columns indicate whether the task is necessary or not for different database creation situations." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="28%" id="d11606e89">Task</th>
+                              <th align="left" valign="bottom" width="23%" id="d11606e92">Copy existing database and delete old database</th>
+                              <th align="left" valign="bottom" width="21%" id="d11606e95">Copy existing database and keep old database</th>
+                              <th align="left" valign="bottom" width="28%" id="d11606e98">Create new database when no database exists on system</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e103" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-13BA4E56-3B71-47DE-B43C-AF173502794B" title="You are required to export an existing database only if you intend to copy its contents to a new database.">About Exporting an Existing Database</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e103 d11606e92 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e103 d11606e95 ">Note 1</td>
+                              <td align="left" valign="top" width="28%" headers="d11606e103 d11606e98 ">
+                                 <p>Not applicable</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e119" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-F86698F7-0DBF-4EB1-B6FA-09FF2E9A357E" title="Deleting database files is required only when you copy an existing database to a new database to replace the old database.">Deleting Database Files</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e119 d11606e92 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e119 d11606e95 ">
+                                 <p>No</p>
+                              </td>
+                              <td align="left" valign="top" width="28%" headers="d11606e119 d11606e98 ">
+                                 <p>Not applicable</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e136" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-0A6E458D-19C0-4BD6-906D-3C20CDC443A9" title="Describes how to modify the initialization parameter file.">Modifying the Initialization Parameter File</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e136 d11606e92 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e136 d11606e95 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="28%" headers="d11606e136 d11606e98 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e153" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-3675A123-8E05-4646-B3D5-EA61334420C0" title="Learn how to start an instance without mounting a database.">Starting an Oracle Database Instance</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e153 d11606e92 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e153 d11606e95 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="28%" headers="d11606e153 d11606e98 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e170" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-2E9384AB-DE00-4F1A-9940-FCD465A35F98" title="Learn how to create and start an Oracle Database service.">About Creating and Starting an Oracle Database Service</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e170 d11606e92 ">
+                                 <p>No</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e170 d11606e95 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="28%" headers="d11606e170 d11606e98 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e187" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13" title="The CREATE DATABASE statement is a SQL statement that creates the database.">Adding the CREATE DATABASE Statement in a Script</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e187 d11606e92 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e187 d11606e95 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="28%" headers="d11606e187 d11606e98 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e207" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-1E2BC9AD-DA6A-4E47-9D19-5F4479759D05" title="Use this procedure to run the CREATE DATABASE script.">Running the CREATE DATABASE Script</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e207 d11606e92 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e207 d11606e95 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="28%" headers="d11606e207 d11606e98 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e224" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-DCD850D6-0059-4202-BEE5-7E973E5763A9" title="Learn how to use Data Pump Import or Import.">About Importing a Database</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e224 d11606e92 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e224 d11606e95 ">Note 2</td>
+                              <td align="left" valign="top" width="28%" headers="d11606e224 d11606e98 ">
+                                 <p>Not applicable</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e240" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-E7747FAF-4477-40A1-8CC9-40022890C643" title="If this is the first database on your computer or if you intend to make the new database the default database, then you must make a change in the registry.">Updating ORACLE_SID in the Registry</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e240 d11606e92 ">
+                                 <p>No</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e240 d11606e95 ">
+                                 <p>Only if you change the default <span class="italic"><code class="codeph">SID</code></span></p>
+                              </td>
+                              <td align="left" valign="top" width="28%" headers="d11606e240 d11606e98 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="28%" id="d11606e260" headers="d11606e89 "><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438" title="Use this procedure to prevent data loss.">Backing Up the New Database</a></td>
+                              <td align="left" valign="top" width="23%" headers="d11606e260 d11606e92 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="21%" headers="d11606e260 d11606e95 ">
+                                 <p>Yes</p>
+                              </td>
+                              <td align="left" valign="top" width="28%" headers="d11606e260 d11606e98 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="infoboxnote" id="GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80__GUID-C0582ABE-FE3C-42E5-8197-0A35A7AF9D7E">
+                     <p class="notep1">Note:</p> If you copy data from an existing database to the new database, select Yes; otherwise, No. Also, if you import tables and other objects from the existing database, select Yes; otherwise, No.
+                  </div>
+               </div>
+               <!-- class="section" -->
+               <div class="section">
+                  <p>An example in the following sections demonstrates how to create a database. In this example, the existing database is the starter database with a <span class="italic"><code class="codeph">SID</code></span> of <code class="codeph">orcl</code> located in directory <code>C</code>:\<span class="variable">app</span>\<span class="variable">username</span>\<code>oradata\orcl</code>. Copy <code>orcl</code> to a new database with a database name and <code>SID</code> of <code>prod</code> located in the directory <code>C:</code><span class="variable">\app\username</span><code>\oradata\prod</code>. Then, delete the starter database <code class="codeph">orcl</code>.
+                  </p>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-13BA4E56-3B71-47DE-B43C-AF173502794B">About Exporting an Existing Database</a><br>You are required to export an existing database only if you intend to copy its contents to a new database.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-F86698F7-0DBF-4EB1-B6FA-09FF2E9A357E">Deleting Database Files</a><br>Deleting database files is required only when you copy an existing database to a new database to replace the old database. 
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-0A6E458D-19C0-4BD6-906D-3C20CDC443A9">Modifying the Initialization Parameter File</a><br>Describes how to modify the initialization parameter file.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-2E9384AB-DE00-4F1A-9940-FCD465A35F98">About Creating and Starting an Oracle Database Service</a><br>Learn how to create and start an Oracle Database service.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-3675A123-8E05-4646-B3D5-EA61334420C0">Starting an Oracle Database Instance</a><br>Learn how to start an instance without mounting a database.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13">Adding the CREATE DATABASE Statement in a Script</a><br>The <code class="codeph">CREATE DATABASE</code> statement is a SQL statement that creates the database. 
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-1E2BC9AD-DA6A-4E47-9D19-5F4479759D05">Running the CREATE DATABASE Script</a><br>Use this procedure to run the CREATE DATABASE script.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-DCD850D6-0059-4202-BEE5-7E973E5763A9">About Importing a Database</a><br>Learn how to use Data Pump Import or Import.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-E7747FAF-4477-40A1-8CC9-40022890C643">Updating ORACLE_SID in the Registry</a><br>If this is the first database on your computer or if you intend to make the new database the default database, then you must make a change in the registry.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-0EC88CC9-E852-4C84-A7B7-315F09E04E51">Creating the ORACLE_SID Parameter</a><br>If you do not yet have the parameter <code class="codeph">ORACLE_SID</code>, because this is the first database on your system, then you must create it.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438">Backing Up the New Database</a><br>Use this procedure to prevent data loss.
+                  </li>
+               </ul>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="postinstallation-database-creation-on-windows.html#GUID-2EC2C9F6-FCC3-4A49-B1AB-66FAB06E67A0" title="Learn how to create a database after installing Oracle Database, using either Oracle Database Configuration Assistant or command-line tools.">Postinstallation Database Creation on Windows</a></p>
+                  </div>
+               </div>
+            </div>
+            <a id="NTQRF138"></a><div class="props_rev_3"><a id="GUID-13BA4E56-3B71-47DE-B43C-AF173502794B" name="GUID-13BA4E56-3B71-47DE-B43C-AF173502794B"></a><h3 id="NTQRF-GUID-13BA4E56-3B71-47DE-B43C-AF173502794B" class="sect3">About Exporting an Existing Database</h3>
+               <div>
+                  <p>You are required to export an existing database only if you intend to copy its contents to a new database.</p>
+                  <p>If you are working with data from an earlier Oracle release, then you can use Export for this task. If you are using Oracle Database 10<span class="italic">g</span> Release 1 (10.1) or later data, then Oracle recommends that you use Data Pump Export because it supports new Oracle Database 10<span class="italic">g</span> Release 1 (10.1) or later features, such as floating points.
+                  </p>
+                  <p>Although you can start Data Pump Export or Export in either the parameter mode or an interactive mode, Oracle recommends parameter mode. Interactive mode provides less functionality than the parameter mode and exists for backward compatibility only.</p>
+                  <p>The syntax for Data Pump Export parameter mode is:</p><pre class="oac_no_warn" dir="ltr"><a id="d11606e499" class="indexterm-anchor"></a><a id="d11606e501" class="indexterm-anchor"></a>C:\&gt; expdp SYSTEM DUMPFILE=myexp.dmp FULL=y LOGFILE=myexp.log
+Password: <span class="italic">password</span>
+</pre><p>The syntax for Data Pump Export interactive mode is:</p><pre class="oac_no_warn" dir="ltr"><a id="d11606e512" class="indexterm-anchor"></a>C:\&gt; expdp SYSTEM<span class="italic"> </span>
+Password: <span class="italic">password</span>
+</pre><p>Enter only the command <code class="codeph">expdp</code> <code class="codeph">SYSTEM</code><span class="italic"><code class="codeph"> </code></span>to begin an interactive session and let Data Pump Export prompt you for information it needs. 
+                  </p>
+                  <div class="infoboxnote" id="GUID-13BA4E56-3B71-47DE-B43C-AF173502794B__GUID-2FE7EBBF-471A-4D16-A7FC-4CCC216799AF">
+                     <p class="notep1">Note:</p>
+                     <p>If you use the parameter mode, then Data Pump Export considers the file names and the directory names to be invalid if they contain one or more blank spaces. The workaround is to enclose the full path in the <code class="codeph">DUMPFILE=</code> parameter in triple quotation marks. For example:
+                     </p>
+                     <p><code class="codeph">DUMPFILE="""C:\program files\export.dmp"""</code> 
+                     </p>
+                     <p>If Data Pump Export is used in an interactive mode, then the file name or the directory name can contain a space without quotation marks.</p>
+                  </div>
+                  <p>The syntax for Export parameter mode is:</p><pre class="oac_no_warn" dir="ltr"><a id="d11606e549" class="indexterm-anchor"></a><a id="d11606e553" class="indexterm-anchor"></a>C:\&gt; exp SYSTEM FILE=myexp.dmp FULL=y LOG=myexp.log
+Password: <span class="italic">password</span>
+</pre><p>The syntax for the Export interactive mode is:</p><pre class="oac_no_warn" dir="ltr">C:\&gt; exp SYSTEM
+Password: <span class="italic">password</span>
+</pre><p>Enter only the command <code class="codeph">exp</code> <code class="codeph">SYSTEM</code><span class="italic"><code class="codeph"> </code></span>to begin an interactive session and let Export prompt you for information it needs. 
+                  </p>
+                  <div class="infoboxnote" id="GUID-13BA4E56-3B71-47DE-B43C-AF173502794B__GUID-C583478A-61A7-47F3-B247-2ACAF9D8BF9D">
+                     <p class="notep1">Note:</p>
+                     <p>If you use the parameter mode, then Export considers the file names and the directory names to be invalid if they contain one or more blank spaces. The workaround is to enclose the full path in the <code class="codeph">FILE=</code> parameter in triple quotation marks. For example:
+                     </p>
+                     <p><code class="codeph">FILE="""C:\program files\export.dmp"""</code> 
+                     </p>
+                     <p>If Export is used in an interactive mode, then the file name or the directory name can contain a space without quotation marks.</p>
+                  </div>
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-EDEF0E1D-3FBD-4590-B460-817DE4DE358E">Exporting All Data from an Existing Database</a><br>Describes how to export all data from an existing database to a new database.
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-13BA4E56-3B71-47DE-B43C-AF173502794B__GUID-AC1DB90B-55EA-4CEC-8461-11A07C51744C">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../sutil/oracle-data-pump-export-utility.html#SUTIL200" target="_blank"><span class="italic">Oracle Database Utilities</span></a> for more information about using Data Pump Export or Export
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="NTQRF475"></a><div class="props_rev_3"><a id="GUID-EDEF0E1D-3FBD-4590-B460-817DE4DE358E" name="GUID-EDEF0E1D-3FBD-4590-B460-817DE4DE358E"></a><h4 id="NTQRF-GUID-EDEF0E1D-3FBD-4590-B460-817DE4DE358E" class="sect4">Exporting All Data from an Existing Database</h4>
+                  <div>
+                     <p>Describes how to export all data from an existing database to a new database.</p>
+                     <div class="section">
+                        <p>To export:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Set <code class="codeph">ORACLE_SID</code> to the database service of the database whose contents you intend to export. For example, if the database you intend to export is the starter database <code class="codeph">orcl</code>, then enter the following at the command prompt. Note that there are no spaces around the equal sign (<code class="codeph">=</code>) character.</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; set ORACLE_SID=orcl
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>If the existing database is Oracle Database 10<span class="italic">g</span> Release 1 (10.1) or later, then start Data Pump Export from the command prompt:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; expdp SYSTEM DUMPFILE=myexp.dmp FULL=y LOG=myexp.log
+Password: <span class="italic">password</span>
+</pre><p>You now have a full database export of the starter database <code class="codeph">orcl</code> in the file <code class="codeph">myexp.dmp</code>. All messages from Data Pump Export are logged in file <code class="codeph">myexp.log</code>.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>If the existing database is earlier than Oracle Database 10<span class="italic">g</span> Release 1 (10.1), then start Export from the command prompt:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; exp SYSTEM FILE=myexp.dmp FULL=y LOG=myexp.log
+Password: <span class="italic">password</span>
+</pre><p>You now have a full database export of the starter database <code class="codeph">orcl</code> in the file <code class="codeph">myexp.dmp</code>. All messages from Export are logged in the file <code class="codeph">myexp.log</code>.
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-13BA4E56-3B71-47DE-B43C-AF173502794B" title="You are required to export an existing database only if you intend to copy its contents to a new database.">About Exporting an Existing Database</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div><a id="NTQRF139"></a><div class="props_rev_3"><a id="GUID-F86698F7-0DBF-4EB1-B6FA-09FF2E9A357E" name="GUID-F86698F7-0DBF-4EB1-B6FA-09FF2E9A357E"></a><h3 id="NTQRF-GUID-F86698F7-0DBF-4EB1-B6FA-09FF2E9A357E" class="sect3">Deleting Database Files</h3>
+               <div>
+                  <p>Deleting database files is required only when you copy an existing database to a new database to replace the old database. </p>
+                  <div class="section">
+                     <p>In the following example, you delete the database files of the starter database <code class="codeph">orcl</code>.
+                     </p>
+                     <p>To delete database files:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Shut down starter database <code class="codeph">orcl</code> at the command prompt:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; oradim -SHUTDOWN -SID orcl -SHUTTYPE inst -SHUTMODE immediate
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>Delete the following files from the directory <code>C:\app</code>\<span class="variable">username</span>\<code>oradata\orcl</code>:</span><div><pre class="pre codeblock"><code>control01.ctl
+control02.ctl
+control03.ctl
+index01.dbf
+drsys01.dbf
+cwmlite01.dbf
+example01.dbf
+system01.dbf
+temp01.dbf
+tools01.dbf
+undotbs01.dbf
+user01.dbf
+xdb01.dbf
+redo01.log
+redo02.log
+redo03.log</code></pre></div>
+                     </li>
+                  </ol>
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF140"></a><div class="props_rev_3"><a id="GUID-0A6E458D-19C0-4BD6-906D-3C20CDC443A9" name="GUID-0A6E458D-19C0-4BD6-906D-3C20CDC443A9"></a><h3 id="NTQRF-GUID-0A6E458D-19C0-4BD6-906D-3C20CDC443A9" class="sect3">Modifying the Initialization Parameter File</h3>
+               <div>
+                  <p>Describes how to modify the initialization parameter file.</p>
+                  <div class="section">
+                     <p>To use the starter database <code class="codeph">orcl</code> as the basis for your new database:
+                     </p>
+                     <ol>
+                        <li>
+                           <p>Copy <span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\admin\orcl\pfile\init.ora</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Place the copy in <span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\admin\prod\pfile\init.ora</code>. 
+                           </p>
+                        </li>
+                        <li>
+                           <p>Modify the file by performing the following tasks:</p>
+                           <div class="infoboxnote" id="GUID-0A6E458D-19C0-4BD6-906D-3C20CDC443A9__GUID-AF45A273-4253-4DCC-ACAB-65B54A6227EE">
+                              <p class="notep1">Note:</p>
+                              <p>Starting with Oracle9<span class="italic">i</span> Release 2 (9.2), nesting of quotation marks using the backslash (\) escape character is no longer supported. This affects how Oracle Database interprets the parameter values in your initialization parameter file. For example, if you specified <code class="codeph">CONTROL_FILES = "ctlfile\'1.ora"</code> in releases before release 9.2, the file name was interpreted as <code class="codeph">ctlfile'1.ora</code>. Starting with release 9.2, the file name will be interpreted as <code class="codeph">ctlfile\'1.ora</code>.
+                              </p>
+                              <p>Oracle highly recommends modifying your parameter files to remove such references and other methods of nesting quotation marks in the initialization parameter values.</p>
+                           </div>
+                           <ol type="a">
+                              <li>
+                                 <p>If you do not have an existing database on your system, then you cannot copy an existing initialization parameter file to use as the basis for your new initialization parameter file. However, you can use the sample initialization parameter file <code class="codeph">initsmpl.ora</code> provided in:
+                                 </p><pre class="oac_no_warn" dir="ltr"><span class="italic">ORACLE_HOME</span>\admin\sample\pfile
+</pre><p>This is the basis for the initialization parameter file for the database <code class="codeph">prod</code>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If you use the <code class="codeph">initsmpl.ora</code> file as the basis for the initialization parameter file, then the following parameters must be set to the indicated values, otherwise you cannot start database <code class="codeph">prod</code>:
+                                 </p>
+                                 <p><code class="codeph">DB_NAME=prod.domain</code> 
+                                 </p>
+                                 <p>The parameter <code class="codeph">DB_NAME</code> indicates the database name and must match the name used in the <code class="codeph">CREATE DATABASE</code> statement. Give a unique database name to each database. You can use eight characters for a database name. The name is not required to match the <span class="italic"><code class="codeph">SID</code></span> of the database service.
+                                 </p>
+                                 <p><code class="codeph">INSTANCE_NAME=prod.domain</code> 
+                                 </p>
+                                 <p><code class="codeph">SERVICE_NAMES=prod.domain</code> 
+                                 </p>
+                                 <p><code class="codeph">CONTROL_FILES = (</code> <code class="codeph">"C:\app\</code><span class="italic"><code class="codeph">username</code></span><code class="codeph">\oradata\prod\control01.ctl",</code>   <code class="codeph">"C:\app\</code><span class="italic"><code class="codeph">username</code></span><code class="codeph">\oradata\prod\control02.ctl",</code>   <code class="codeph">"C:\app\</code><span class="italic"><code class="codeph">username</code></span><code class="codeph">\oradata\prod\control03.ctl")</code> 
+                                 </p>
+                                 <p>The parameter <code class="codeph">CONTROL_FILES</code> lists the database control files. You do not have to control files on your file system at this point, because control files are created when you run the <code class="codeph">CREATE DATABASE</code> statement. Ensure that you specify the complete path and the file name, including the drive letter.
+                                 </p>
+                                 <p><code class="codeph">DB_FILES=100</code> 
+                                 </p>
+                                 <p>Modifying the initialization parameter <code class="codeph">DB_FILES</code> is not required, but it is recommended to optimize performance. Set this parameter to the same number as the value of the <code class="codeph">MAXDATAFILES</code> option of the <code class="codeph">CREATE DATABASE</code> statement. The value of <code class="codeph">100</code> is used for this example.
+                                 </p>
+                                 <p>The <code class="codeph">DIAGNOSTIC_DEST</code> initialization parameter sets the location of the Automatic Diagnostic Repository (ADR), which is a directory structure stored outside of the database. The ADR is used in problem diagnostics.
+                                 </p>
+                                 <p>Use <code class="codeph">DIAGNOSTIC_DEST =</code>  <span class="italic"><code class="codeph">ORACLE_HOME\log</code></span> if the environment variable <code class="codeph">ORACLE_BASE</code> is not set.
+                                 </p>
+                                 <p>Use <code class="codeph">DIAGNOSTIC_DEST =</code>  <span class="italic"><code class="codeph">ORACLE_BASE</code></span> variable if the environment variable <code class="codeph">ORACLE_BASE</code> is set.
+                                 </p>
+                                 <div class="infoboxnotealso" id="GUID-0A6E458D-19C0-4BD6-906D-3C20CDC443A9__GUID-E329CE6C-8A1B-4D91-9A64-329F12CF77E2">
+                                    <p class="notep1">See Also:</p>
+                                    <ul style="list-style-type: disc;">
+                                       <li>
+                                          <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/ntqrf&amp;id=NTDBI7450" target="_blank"><span class="italic">Oracle Database Installation Guide for Microsoft Windows</span></a> for information about ADR
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p><a href="../refrn/initialization-parameters.html#REFRN001" target="_blank"><span class="italic">Oracle Database Reference</span></a> for information about other initialization parameters that you can add or modify
+                                          </p>
+                                       </li>
+                                    </ul>
+                                 </div>
+                              </li>
+                           </ol>
+                        </li>
+                     </ol>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13" title="The CREATE DATABASE statement is a SQL statement that creates the database.">Adding the CREATE DATABASE Statement in a Script</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2"><a id="GUID-2E9384AB-DE00-4F1A-9940-FCD465A35F98" name="GUID-2E9384AB-DE00-4F1A-9940-FCD465A35F98"></a><h3 id="NTQRF-GUID-2E9384AB-DE00-4F1A-9940-FCD465A35F98" class="sect3">About Creating and Starting an Oracle Database Service</h3>
+               <div>
+                  <p>Learn how to create and start an Oracle Database service.</p>
+                  <p>Perform either of the following steps:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Copy an existing database to a new database and keep the old database</p>
+                     </li>
+                     <li>
+                        <p>Create a new database when you have no other database to copy</p>
+                     </li>
+                  </ul>
+                  <p>Before you create the database, first create a Windows service to run the database. This service is the Oracle Database process, <code class="codeph">oracle.exe</code>, installed in the form of a Windows service.
+                  </p>
+                  <p>Use ORADIM to create the service.</p>
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-DD0E5227-8ECB-4826-B9EC-C06A26F2878C">Creating and Starting an Oracle Database Service</a><br>Learn how to create and start an Oracle Database service.
+                     </li>
+                     <li class="ulchildlink"><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-A50C446C-3B9A-42B9-80CF-C95E2C28FBC4">Access to Oracle Wallets in a File System for Oracle Database Services</a><br>Discusses about accessing Oracle Wallets.
+                     </li>
+                  </ul>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="about-administering-an-oracle-database-instance-using-oradim.html#GUID-862FBD9C-EB31-4C58-9D81-567110FE8DA5" title="ORADIM is a command-line tool that is available with Oracle Database.">About Administering an Oracle Database Instance Using ORADIM</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div><a id="NTQRF476"></a><div class="props_rev_3"><a id="GUID-DD0E5227-8ECB-4826-B9EC-C06A26F2878C" name="GUID-DD0E5227-8ECB-4826-B9EC-C06A26F2878C"></a><h4 id="NTQRF-GUID-DD0E5227-8ECB-4826-B9EC-C06A26F2878C" class="sect4">Creating and Starting an Oracle Database Service</h4>
+                  <div>
+                     <p>Learn how to create and start an Oracle Database service.</p>
+                     <div class="section">
+                        <p>To create and start an Oracle Database service:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Run ORADIM from the command prompt:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; oradim -NEW -SID prod -STARTMODE manual
+-PFILE "C:\app\username\admin\prod\pfile\init.ora"
+</pre><p>Note that the previously created initialization parameter file is specified, with complete path, including drive name. You can check if the service is started in the Services window of the Control Panel. ORADIM automatically creates Oracle Database services under the Oracle Home User account. If the Oracle Home User account is a Windows Local User Account or a Windows Domain User Account, then ORADIM prompts for its password.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Set the value of <code class="codeph">ORACLE_SID</code> to <code class="codeph">prod</code>. Note that there are no spaces around the equal sign (=) character:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; set ORACLE_SID=prod
+</pre></div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-2E9384AB-DE00-4F1A-9940-FCD465A35F98" title="Learn how to create and start an Oracle Database service.">About Creating and Starting an Oracle Database Service</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF668"></a><div class="props_rev_3"><a id="GUID-A50C446C-3B9A-42B9-80CF-C95E2C28FBC4" name="GUID-A50C446C-3B9A-42B9-80CF-C95E2C28FBC4"></a><h4 id="NTQRF-GUID-A50C446C-3B9A-42B9-80CF-C95E2C28FBC4" class="sect4">Access to Oracle Wallets in a File System for Oracle Database Services</h4>
+                  <div>
+                     <p>Discusses about accessing Oracle Wallets.</p>
+                     <p>When an Oracle wallet is created in the file system, only the user creating the wallet is granted access to that wallet by wallet creation tools. Therefore, Oracle Database services (running as the Windows User Account) might not be able to access the wallet unless you explicitly grant access to the wallet using Windows tools.</p>
+                  </div>
+                  <div>
+                     <div class="relinfo">
+                        <p><strong>Related Topics</strong></p>
+                        <ul>
+                           <li><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-01201183-C8D4-4B9C-9D68-B8E5646F5CEC" title="As Oracle Database services now run under a standard Windows User Account, a file might not be accessible by Oracle Database services unless the file system Access Control Lists (ACLs) grant access to the file.">About Setting File System ACLs Manually</a></li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-2E9384AB-DE00-4F1A-9940-FCD465A35F98" title="Learn how to create and start an Oracle Database service.">About Creating and Starting an Oracle Database Service</a></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NTQRF142"></a><div class="props_rev_3"><a id="GUID-3675A123-8E05-4646-B3D5-EA61334420C0" name="GUID-3675A123-8E05-4646-B3D5-EA61334420C0"></a><h3 id="NTQRF-GUID-3675A123-8E05-4646-B3D5-EA61334420C0" class="sect3">Starting an Oracle Database Instance</h3>
+               <div>
+                  <p>Learn how to start an instance without mounting a database.</p>
+                  <div class="section">
+                     <p><a id="d11606e1423" class="indexterm-anchor"></a>Start an instance without mounting a database.
+                     </p><pre class="oac_no_warn" dir="ltr">SQL&gt; STARTUP NOMOUNT
+</pre><p>You must not specify the <code class="codeph">PFILE</code> clause in this example, because the initialization parameter file is stored in the default location. At this point, there is no database. Only the System Global Area (SGA) is created and the background processes are started in preparation for the creation of a new database.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF143"></a><div class="props_rev_3"><a id="GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13" name="GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13"></a><h3 id="NTQRF-GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13" class="sect3">Adding the CREATE DATABASE Statement in a Script</h3>
+               <div>
+                  <p>The <code class="codeph">CREATE DATABASE</code> statement is a SQL statement that creates the database. 
+                  </p>
+                  <div class="section">
+                     <p>A script containing this statement can be used anytime you create a database.</p>
+                     <p>The <code class="codeph">CREATE DATABASE</code> statement has the following parameters:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">MAXDATAFILES</code> - default value: 32, maximum value: 65534
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">MAXLOGFILES</code> - default value: 32, maximum value: 255
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The <code class="codeph">CHARACTER SET</code> parameter determines the database character set of the new database. The default value is US7ASCII, however the recommended value is AL32UTF8. AL32UTF8 is the Oracle implementation of the Unicode Standard character set in UTF-8 encoding form. Unicode is suitable for storing text in practically any written language of the world.
+                     </p>
+                     <p>When you run the <code class="codeph">CREATE DATABASE</code> statement, Oracle Database performs several operations depending upon the clauses that you specified in the <code class="codeph">CREATE DATABASE</code> statement or the initialization parameters that you have set.
+                     </p>
+                     <div class="infoboxnote" id="GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13__GUID-23812CF2-AC2F-4685-8B1A-813B31377FA5">
+                        <p class="notep1">Note:</p>
+                        <p><a id="d11606e1537" class="indexterm-anchor"></a>Oracle Managed Files is a feature that works with the <code class="codeph">CREATE DATABASE</code> statement to simplify administration of Oracle Database. Oracle Managed Files eliminates the requirement to directly manage operating system files comprising an Oracle Database server, because you specify operations in terms of database objects rather than file names. 
+                        </p>
+                     </div>
+                     <p>To create the database <code class="codeph">prod</code>, copy and save the following statement in a file named <span class="italic"><code class="codeph">script_name</code></span><code class="codeph">.sql</code>:
+                     </p><pre class="oac_no_warn" dir="ltr">CREATE DATABASE prod
+USER SYS IDENTIFIED BY <span class="italic">sys_password</span>
+USER SYSTEM IDENTIFIED BY <span class="italic">system_password</span>
+MAXLOGFILES 5
+MAXDATAFILES 100
+DATAFILE 'C:\app\<span class="italic"><code class="codeph">username</code></span>\oradata\prod\system01.dbf' SIZE 325M REUSE
+AUTOEXTEND ON NEXT 10240K MAXSIZE UNLIMITED
+UNDO TABLESPACE "UNDOTBS" DATAFILE 'app\<span class="italic"><code class="codeph">username</code></span>\oradata\prod\undotbs01.dbf'
+SIZE 200M REUSE AUTOEXTEND ON NEXT 5120K MAXSIZE UNLIMITED
+CHARACTER SET AL32UTF8
+logfile 'C:\app\<span class="italic">username</span>\oradata\prod\redo01.log' size 100M reuse,
+        'C:\app\<span class="italic">username</span>\oradata\prod\redo02.log' size 100M reuse,
+        'C:\app\<span class="italic">username</span>\oradata\prod\redo03.log' size 100M reuse
+<span><cite>Oracle Database Installation Guide for Microsoft Windows</cite></span>EXTENT MANAGEMENT LOCAL;
+</pre></div>
+                  <!-- class="section" -->
+                  <div class="section"></div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13__GUID-1F19DE9D-3C2C-4BB4-A671-39F1B9AF6CC2">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../admin/using-oracle-managed-files.html#ADMIN003" target="_blank"><span class="italic">Oracle Database Administrator's Guide</span></a> for more information about using Oracle Managed Files
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../ntdbi/about-character-set-selection-during-installation.html#NTDBI-GUID-70B091B3-C67A-4AFD-9F60-75046171592D" target="_blank"><span><cite>Oracle Database Installation Guide for Microsoft Windows</cite></span></a> for more information about recommended database character sets
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF144"></a><div class="props_rev_3"><a id="GUID-1E2BC9AD-DA6A-4E47-9D19-5F4479759D05" name="GUID-1E2BC9AD-DA6A-4E47-9D19-5F4479759D05"></a><h3 id="NTQRF-GUID-1E2BC9AD-DA6A-4E47-9D19-5F4479759D05" class="sect3">Running the CREATE DATABASE Script</h3>
+               <div>
+                  <p>Use this procedure to run the CREATE DATABASE script.</p>
+                  <div class="section">
+                     <p>To use the SQL script to create a database:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Verify that the service is started in the Control Panel. In this example, the service name is <code class="codeph">OracleServicePROD</code>, and its status column must display <code class="codeph">Started</code>. If not, then select the service name and select <span class="bold">Start</span>.</span><div>
+                           <p>You can also check the status of the service by entering the following at the command prompt:</p><pre class="oac_no_warn" dir="ltr">C:\&gt; <a id="d11606e1683" class="indexterm-anchor"></a>net START
+</pre><p>A list of all the Windows services currently running on the system appears. If <code class="codeph">OracleServicePROD</code> is missing from the list, then enter:
+                           </p><pre class="oac_no_warn" dir="ltr">C:\&gt; net START OracleServicePROD
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>Make <code class="codeph">PROD</code> the current <span class="italic"><code class="codeph">SID</code></span>: </span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; set ORACLE_SID=PROD
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>Add <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">\bin</code> to your <code class="codeph">PATH</code> environment variable:</span><div><pre class="oac_no_warn" dir="ltr">set PATH=<span class="italic">ORACLE_BASE</span>\<span class="italic">ORACLE_HOME</span>\bin;%PATH%
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>Start SQL*Plus from the command prompt, and connect to the database as SYSDBA:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; sqlplus /NOLOG
+SQL&gt; CONNECT / AS SYSDBA 
+</pre><p>The message <code class="codeph">connected</code> appears.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Turn on spooling to save messages:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; SPOOL <span class="italic">script_name</span>.log
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>Run the script <span class="italic"><code class="codeph">script_name</code></span><code class="codeph">.sql</code> that you created in <cite>Adding the CREATE DATABASE Statement in a Script</cite>.</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; C:\app\username\product\12.2.0\dbhome_1\rdbms\admin\<span class="italic">script_name</span>.sql;
+</pre><p>If the database is successfully created, then the instance is started and the following message appears numerous times: <code class="codeph">Statement</code> <code class="codeph">processed</code></p>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B2F891CB-33FE-474E-AF2D-ED46A6081F13" title="The CREATE DATABASE statement is a SQL statement that creates the database.">Adding the CREATE DATABASE Statement in a Script</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NTQRF145"></a><div class="props_rev_3"><a id="GUID-DCD850D6-0059-4202-BEE5-7E973E5763A9" name="GUID-DCD850D6-0059-4202-BEE5-7E973E5763A9"></a><h3 id="NTQRF-GUID-DCD850D6-0059-4202-BEE5-7E973E5763A9" class="sect3">About Importing a Database</h3>
+               <div>
+                  <p>Learn how to use Data Pump Import or Import.</p>
+                  <p>You can use Data Pump Import (for Oracle Database 10<span class="italic">g</span> Release 1 (10.1) or later data) or Import (for earlier data) to import the full export created into the new database. Although you can start Data Pump Import or Import using either the parameter mode or the interactive mode, Oracle recommends the parameter mode because it provides more functionality. Interactive mode exists solely for backward compatibility.
+                  </p>
+                  <p>The syntax for Data Pump Import parameter mode is:</p><pre class="oac_no_warn" dir="ltr"><a id="d11606e1862" class="indexterm-anchor"></a><a id="d11606e1866" class="indexterm-anchor"></a>C:\&gt; impdp SYSTEM DUMPFILE=myexp.dmp FULL=y LOG=myexp.log
+Password: <span class="italic">password</span>
+</pre><p>The syntax for Data Pump Import interactive mode is:</p><pre class="oac_no_warn" dir="ltr">C:\&gt; impdp SYSTEM 
+Password: <span class="italic">password</span>
+</pre><p>Enter only <code class="codeph">impdp</code> <code class="codeph">SYSTEM</code> to begin an interactive session and let Data Pump Import prompt you for information it needs.
+                  </p>
+                  <div class="infoboxnote" id="GUID-DCD850D6-0059-4202-BEE5-7E973E5763A9__GUID-D778D9FE-D5E2-4273-964C-8FE7B6902B93">
+                     <p class="notep1">Note:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If you use the parameter mode, then Data Pump Import considers the file names and the directory names to be invalid if they contain one or more blank spaces. The workaround is to enclose the full path in the <code class="codeph">DUMPFILE=</code> parameter in triple quotation marks. For example:
+                           </p>
+                           <p><code class="codeph">DUMPFILE="""C:\program files\export.dmp"""</code> 
+                           </p>
+                           <p>If you use Data Pump Import in an interactive mode, then the file name or the directory name can contain a space without the quotation marks.</p>
+                        </li>
+                        <li>
+                           <p>If the original database from which the export file was generated contains a tablespace that is not in the new database, then Import tries to create that tablespace with associated data files.</p>
+                           <p>The easy solution is to ensure that both the databases contain the same tablespaces. Data files are not required to be identical. Only the tablespace names are important.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-13BA4E56-3B71-47DE-B43C-AF173502794B" title="You are required to export an existing database only if you intend to copy its contents to a new database.">About Exporting an Existing Database</a></li>
+                     </ul>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-DCD850D6-0059-4202-BEE5-7E973E5763A9__GUID-AEA82321-4E92-4FF4-A4CF-C55DBF982BE1">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../sutil/datapump-import-utility.html#SUTIL300" target="_blank"><span class="italic">Oracle Database Utilities</span></a> for more information about using Data Pump Import or Import
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NTQRF146"></a><div class="props_rev_3"><a id="GUID-E7747FAF-4477-40A1-8CC9-40022890C643" name="GUID-E7747FAF-4477-40A1-8CC9-40022890C643"></a><h3 id="NTQRF-GUID-E7747FAF-4477-40A1-8CC9-40022890C643" class="sect3">Updating ORACLE_SID in the Registry</h3>
+               <div>
+                  <p>If this is the first database on your computer or if you intend to make the new database the default database, then you must make a change in the registry.</p>
+                  <div class="section">
+                     <p>Perform the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Start Registry Editor at the command prompt:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; regedit</pre><pre class="oac_no_warn" dir="ltr"></pre><p>The Registry Editor window appears.</p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Select the subkey <code class="codeph">\HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE\HOME0</code> for the first Oracle home on your computer. For subsequent installations to different Oracle homes on the same computer, the path is <code class="codeph">\HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE\HOME</code><span class="italic"><code class="codeph">ID</code></span> where ID is the unique number identifying the Oracle home.</span></li>
+                     <li class="stepexpand"><span>Locate the parameter <code class="codeph">ORACLE_SID</code> on the right side of the Registry Editor window.</span></li>
+                     <li class="stepexpand"><span>Double-click the parameter name and change the data to the new <span class="italic"><code class="codeph">SID</code></span>, which is <code class="codeph">prod</code> in this example.</span></li>
+                  </ol>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="configuration-parameters-and-registry.html#GUID-23CCB7C4-B192-4F5D-AFD6-6F2061DA2D87">Configuration Parameters and the Registry</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NTQRF667"></a><div class="props_rev_3"><a id="GUID-0EC88CC9-E852-4C84-A7B7-315F09E04E51" name="GUID-0EC88CC9-E852-4C84-A7B7-315F09E04E51"></a><h3 id="NTQRF-GUID-0EC88CC9-E852-4C84-A7B7-315F09E04E51" class="sect3">Creating the ORACLE_SID Parameter</h3>
+               <div>
+                  <p>If you do not yet have the parameter <code class="codeph">ORACLE_SID</code>, because this is the first database on your system, then you must create it.
+                  </p>
+                  <div class="section">
+                     <p><a id="d11606e2110" class="indexterm-anchor"></a>To create the parameter <code class="codeph">ORACLE_SID</code>:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Select <span class="bold">New</span> from the <span class="bold">Edit</span> menu.</span></li>
+                     <li class="stepexpand"><span>Select <span class="bold">Expandable String Value</span> from the menu list.</span></li>
+                     <li class="stepexpand"><span>A <span class="bold">New Value #1</span> expandable string value name is created on the right pane of the Registry Editor window of data type <code class="codeph">REG_EXPAND_SZ</code>.</span></li>
+                     <li class="stepexpand"><span>Right-click the parameter, select <span class="bold">Rename</span> to rename it to <code class="codeph">ORACLE_SID</code> and press <span class="bold">Enter</span>.</span></li>
+                     <li class="stepexpand"><span>Double-click the <code class="codeph">ORACLE_SID</code> entry to change the value data to the new <span class="italic"><code class="codeph">SID</code></span>.</span><div>
+                           <p>An Edit String dialog box appears:</p>
+                           <div class="figure" id="GUID-0EC88CC9-E852-4C84-A7B7-315F09E04E51__GUID-CC578F7D-F4D3-4965-8722-3AE8F7472753"><img src="img/stringre.gif" alt="Description of stringre.gif follows" title="Description of stringre.gif follows" longdesc="img_text/stringre.html"><br><a href="img_text/stringre.html">Description of the illustration stringre.gif</a></div>
+                           <!-- class="figure" -->
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Enter <span class="bold">PROD</span> in the <span class="bold">Value data</span> field.</span></li>
+                     <li class="stepexpand"><span>Click <span class="bold">OK</span>.</span><div>
+                           <p>Registry Editor adds parameter <code class="codeph">ORACLE_SID</code>.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Select <span class="bold">Exit</span> from the <span class="bold">File</span> menu.</span><div>
+                           <p>Registry Editor exits.</p>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF147"></a><div class="props_rev_3"><a id="GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438" name="GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438"></a><h3 id="NTQRF-GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438" class="sect3">Backing Up the New Database</h3>
+               <div>
+                  <p>Use this procedure to prevent data loss.</p>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438__GUID-84DE455C-4FA8-4494-BE6E-86170529A368">
+                        <p class="notep1">Note:</p>
+                        <p>If anything goes wrong while operating the new database without a backup, then you must repeat the database creation procedure. Back up your database now to prevent loss of data. </p>
+                     </div>
+                     <p>To back up the new database:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Shut down the database instance and stop the service:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; oradim -SHUTDOWN -SID prod -SHUTTYPE srvc,inst -SHUTMODE immediate</pre><div class="infoboxnote" id="GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438__GUID-3EA57048-F049-43D8-84CE-E32CFDD4F91F">
+                              <p class="notep1">Note:</p>
+                              <p>Although <code class="codeph">ORADIM</code> returns the prompt immediately, you must wait for the database and the service to stop completely before continuing to Step 2. Wait until the Control Panel indicates service <code class="codeph">OracleServicePROD</code> has stopped. If you do not do this, then the backup is useless because it was taken while data was being written to data files.
+                              </p>
+                           </div>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Back up database files using the tool of your choice. </span><div>
+                           <p>Database files consist of the initialization parameter file, control files, online redo log files, and data files.</p>
+                           <p>When the backup is complete, you can start the database again, create users and objects, if necessary, make any other changes, and use the database.</p>
+                           <p>Back up the database after making any significant changes, such as switching into the archiving mode or adding a tablespace or a data file.</p>
+                           <div class="infoboxnotealso" id="GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438__GUID-63E9BAD8-ACC4-4DA7-9204-148E008F9217">
+                              <p class="notep1">See Also:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="../cncpt/concepts-for-database-administrators.html#CNCPT031" target="_blank"><span class="italic">Oracle Database Concepts</span></a></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../bradv/introduction-backup-recovery.html#BRADV8001" target="_blank"><span class="italic">Oracle Database Backup and Recovery User's Guide</span></a></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../admqs/performing-backup-and-recovery.html#ADMQS009" target="_blank"><span class="italic">Oracle Database 2 Day DBA</span></a></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </li>
+                  </ol>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-2A3E5D6A-F9F2-4E44-B067-7E7928C28438__GUID-7BFFAAC8-E1B9-435D-B9BF-CBDC88C55F21">
+                        <p class="notep1">Note:</p>
+                        <p>Do not store database files on a compressed drive. This can result in write errors and a decreased performance.</p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-database-creation-tasks-on-windows-using-command-line-tools.html#GUID-B16F2CD7-5FD4-4FB5-A93D-7FA4DC6AFA80" title="Learn how to create a new database manually. As part of its database software files, Oracle Database provides a sample initialization parameter file, which can you can edit to suit your needs.">Overview of Database Creation Tasks on Windows Using Command-Line Tools</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,965 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">
+      <meta name="description" content="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">
+      <title>Guidelines for Indexes and Table Clusters</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="SQL Tuning Guide ">
+      <meta property="og:description" content="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="SQL Tuning Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="sql-tuning-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2019-01-11T12:42:59-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2013, 2019">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84296-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="migrating-stored-outlines.html" title="Previous" type="text/html">
+      <link rel="next" href="glossary.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="SQL Tuning Guide">
+    <meta name="dcterms.isVersionOf" content="TGSQL">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="migrating-stored-outlines.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="glossary.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">SQL Tuning Guide </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Guidelines for Indexes and Table Clusters</li>
+            </ol>
+            <a id="GUID-B91B623E-2634-4292-B17E-827F38545AEB" name="GUID-B91B623E-2634-4292-B17E-827F38545AEB"></a><a id="TGSQL850"></a>
+            
+            <h2 id="TGSQL-GUID-B91B623E-2634-4292-B17E-827F38545AEB" class="sect2"><span class="enumeration_chapter">A </span>Guidelines for Indexes and Table Clusters
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance. </p>
+               <p>This appendix contains the following sections:</p>
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320">Guidelines for Tuning Index Performance</a><br>Indexes are not a performance cure-all. You must consider carefully when and how to use them.
+                  </li>
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-F4481059-3D32-4E37-831C-9706DAE06452">Guidelines for Using Function-Based Indexes for Performance</a><br>A function-based index includes columns that are either transformed by a function, such as the <code class="codeph">UPPER</code> function, or included in an expression, such as <code class="codeph">col1</code> + <code class="codeph">col2</code>.
+                  </li>
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-BC4A0137-4260-4E36-B02C-BA1DF1946F84">Guidelines for Using Partitioned Indexes for Performance</a><br>Similar to partitioned tables, partitioned indexes improve manageability, availability, performance, and scalability. They can be partitioned independently (global indexes) or automatically linked to the table partitioning method (local indexes).
+                  </li>
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-32B3DB6D-C0B2-4B6C-84AB-C3F3E2E4FD2E">Guidelines for Using Index-Organized Tables for Performance</a><br>An index-organized table differs from an ordinary table because the data for the table is held in its associated index. 
+                  </li>
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-9CFAA4E7-2362-4FC4-BE8D-CCF56B9E30D3">Guidelines for Using Bitmap Indexes for Performance</a><br>Bitmap indexes can substantially improve performance of specific queries.
+                  </li>
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-E5CD8444-8E98-45EC-BD1D-C107CF83DB12">Guidelines for Using Bitmap Join Indexes for Performance</a><br>In addition to a bitmap index on a single table, you can create a bitmap join index, which is a bitmap index for the join of two or more tables.
+                  </li>
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-57C614A5-8965-4D21-BD1A-9C43368C70AD">Guidelines for Using Domain Indexes for Performance</a><br>Domain indexes are built using the indexing logic supplied by a user-defined indextype. An <span class="bold">indextype</span> is an object that specifies the routines that manage a domain (application-specific) index.
+                  </li>
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-11BFEF17-A270-4BB9-8A12-B379008A50CF">Guidelines for Using Table Clusters</a><br>A <span class="bold">table cluster</span> is a group of one or more tables that are physically stored together because they share common columns and usually appear together in SQL statements.
+                  </li>
+                  <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-9ADE6A47-5EF1-4BB0-BABA-4CB942CE95CF">Guidelines for Using Hash Clusters for Performance</a><br>Hash clusters group table data by applying a hash function to each row's cluster key value.
+                  </li>
+               </ul>
+            </div>
+            <a id="TGSQL851"></a><div class="props_rev_3"><a id="GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" name="GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320"></a><h3 id="TGSQL-GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" class="sect3"><span class="enumeration_section">A.1 </span>Guidelines for Tuning Index Performance
+               </h3>
+               <div>
+                  <p>Indexes are not a performance cure-all. You must consider carefully when and how to use them.</p>
+                  <p>This section contains the following topics:</p>
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-235575E9-0ED5-41FD-8BAE-D2A92461B540">Guidelines for Tuning the Logical Structure</a><br>Index maintenance can present a significant CPU and I/O resource demand in any write-intensive application. 
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-E10E7752-D40D-4C9E-9B6B-25847CAB857F">Guidelines for Using SQL Access Advisor</a><br>SQL Access Advisor is an alternative to manually determining which indexes are required. 
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-D0C426D3-02CF-48AF-8033-6D9C58A26ED2">Guidelines for Choosing Columns and Expressions to Index</a><br>A key is a column or expression on which you can build an index.
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-25634EC4-E4FA-48E9-A03C-AB5BDA59DE42">Guidelines for Choosing Composite Indexes</a><br>A composite index, also called a concatenated index, is an index on multiple columns in a table.
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-24581C36-9A5C-4425-903B-C8EA7F26E746">Guidelines for Writing SQL Statements That Use Indexes</a><br>The optimizer may not choose an access path that uses an index.
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-8FE08EDD-6603-442E-9964-F5B1B9225C81">Guidelines for Writing SQL Statements That Avoid Using Indexes</a><br>In some cases, you might want to prevent a SQL statement from using an index access path. For example, you know that the index is not very selective and a full table scan would be more efficient.
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-FC12F317-3A26-41AA-BBD0-C4AD870FB3EB">Guidelines for Avoiding Index Serialization on a Sequence-Generated Key</a><br>A classic index contention problem is caused by the insertion of a primary key generated by a sequence.
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-FF0D644D-5208-42C6-92CE-63BB0081487F">Guidelines for Re-Creating Indexes</a><br>You might want to re-create an index to compact it and minimize fragmented space, or to change the index's storage characteristics.
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-5D74EB79-7DF3-4DFD-809F-886626EC1C2B">Guidelines for Compacting Indexes</a><br>You can coalesce leaf blocks of an index by using the <code class="codeph">ALTER INDEX</code> statement with the <code class="codeph">COALESCE</code> option. 
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-52A634C3-35A2-40EB-961F-CE1607885261">Guidelines for Using Nonunique Indexes to Enforce Uniqueness</a><br>You can use an existing nonunique index on a table to enforce uniqueness, either for <code class="codeph">UNIQUE</code> constraints or the unique aspect of a <code class="codeph">PRIMARY KEY</code> constraint.
+                     </li>
+                     <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-979175CB-6A92-4B09-8367-94C6560DBCA2">Guidelines for Using Enabled Novalidated Constraints</a><br>An enabled novalidated constraint behaves similarly to an enabled validated constraint for new data.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="TGSQL852"></a><div class="props_rev_3"><a id="GUID-235575E9-0ED5-41FD-8BAE-D2A92461B540" name="GUID-235575E9-0ED5-41FD-8BAE-D2A92461B540"></a><h4 id="TGSQL-GUID-235575E9-0ED5-41FD-8BAE-D2A92461B540" class="sect4"><span class="enumeration_section">A.1.1 </span>Guidelines for Tuning the Logical Structure
+                  </h4>
+                  <div>
+                     <p>Index maintenance can present a significant CPU and I/O resource demand in any write-intensive application. </p>
+                     <p>Although query optimization helps avoid the use of nonselective indexes within query execution, the SQL engine must continue to maintain all indexes defined against a table, regardless of whether queries use them. Therefore, do not build indexes unless necessary.</p>
+                     <p>To maintain optimal performance, drop indexes that an application is not using. You can find indexes that are not being used by using the <code class="codeph">ALTER INDEX MONITORING USAGE</code> functionality over a period that is representative of your workload. This monitoring feature records whether an index has been used. Make sure you are monitoring a representative workload to avoid dropping an index which is used, but not by the workload you sampled. 
+                     </p>
+                     <p>Also, indexes within an application sometimes have uses that are not immediately apparent from a survey of statement execution plans. An example of this is a foreign key index on a parent table, which prevents share locks from being taken out on a child table.</p>
+                     <p>If you are deciding whether to create new indexes to tune statements, then you can also use the <code class="codeph">EXPLAIN PLAN</code> statement to determine whether the optimizer chooses to use these indexes when the application is run. If you create new indexes to tune a statement that is currently parsed, then Oracle Database invalidates the statement.
+                     </p>
+                     <p>When the statement is next parsed, the optimizer automatically chooses a new execution plan that could potentially use the new index. If you create new indexes on a remote database to tune a distributed statement, then the optimizer considers these indexes when the statement is next parsed.</p>
+                     <p>Creating an index to tune one statement can affect the optimizer's choice of execution plans for other statements. For example, if you create an index to be used by one statement, then the optimizer can choose to use that index for other statements in the application as well. For this reason, reexamine the application's performance and execution plans, and rerun the SQL trace facility after you have tuned those statements that you initially identified for tuning.</p>
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-235575E9-0ED5-41FD-8BAE-D2A92461B540__GUID-16ABD276-681D-4D95-B872-25427A0EB670">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../adfns/data-integrity.html#ADFNS00602" target="_blank"><span><cite>Oracle Database Development Guide</cite></span></a> to learn about foreign keys
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../sqlrf/ALTER-INDEX.html#SQLRF00805" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for syntax and semantics of the <code class="codeph">ALTER INDEX MONITORING USAGE</code> statement
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL853"></a><div class="props_rev_3"><a id="GUID-E10E7752-D40D-4C9E-9B6B-25847CAB857F" name="GUID-E10E7752-D40D-4C9E-9B6B-25847CAB857F"></a><h4 id="TGSQL-GUID-E10E7752-D40D-4C9E-9B6B-25847CAB857F" class="sect4"><span class="enumeration_section">A.1.2 </span>Guidelines for Using SQL Access Advisor
+                  </h4>
+                  <div>
+                     <p>SQL Access Advisor is an alternative to manually determining which indexes are required. </p>
+                     <div class="section">
+                        <p>SQL Access Advisor recommends a set of indexes when invoked from Oracle Enterprise Manager Cloud Control (Cloud Control) or run through the <code class="codeph">DBMS_ADVISOR</code> package APIs. SQL Access Advisor either recommends using a workload or it generates a hypothetical workload for a specified schema.
+                        </p>
+                        <p>Various workload sources are available, such as the current contents of the SQL cache, a user-defined set of SQL statements, or a SQL tuning set. Given a workload, SQL Access Advisor generates a set of recommendations from which you can select the indexes to be implemented. SQL Access Advisor provides an implementation script that can be executed manually or automatically through Cloud Control. </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-E10E7752-D40D-4C9E-9B6B-25847CAB857F__GUID-F4A34E99-88C5-4D0E-8A3D-58FCE453DABC">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="sql-access-advisor.html#GUID-10DCBE78-9330-4713-AD79-5C7E73EACD33" title="SQL Access Advisor accepts input from several sources, including SQL tuning sets, and then issues recommendations.">About SQL Access Advisor</a>"</span></p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL854"></a><div class="props_rev_3"><a id="GUID-D0C426D3-02CF-48AF-8033-6D9C58A26ED2" name="GUID-D0C426D3-02CF-48AF-8033-6D9C58A26ED2"></a><h4 id="TGSQL-GUID-D0C426D3-02CF-48AF-8033-6D9C58A26ED2" class="sect4"><span class="enumeration_section">A.1.3 </span>Guidelines for Choosing Columns and Expressions to Index
+                  </h4>
+                  <div>
+                     <p>A key is a column or expression on which you can build an index.</p>
+                     <div class="section">
+                        <p>Follow these guidelines for choosing keys to index:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Consider indexing keys that appear frequently in <code class="codeph">WHERE</code> clauses.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Consider indexing keys that frequently join tables in SQL statements.</p>
+                           </li>
+                           <li>
+                              <p>Choose index keys that are highly selective. The selectivity of an index is the percentage of rows in a table having the same value for the indexed key. An index selectivity is optimal if few rows have the same value.</p>
+                              <div class="infoboxnote" id="GUID-D0C426D3-02CF-48AF-8033-6D9C58A26ED2__GUID-F6AE1827-5BB4-4166-9B7B-117DA5562C29">
+                                 <p class="notep1">Note:</p>
+                                 <p>Oracle Database automatically creates indexes, or uses existing indexes, on the keys and expressions of unique and primary keys that you define with integrity constraints.</p>
+                              </div>
+                              <p>Indexing low selectivity columns can be helpful when the data distribution is skewed so that one or two values occur much less often than other values. </p>
+                           </li>
+                           <li>
+                              <p>Do not use standard B-tree indexes on keys or expressions with few distinct values. Such keys or expressions are usually unselective and therefore do not optimize performance unless the frequently selected key values appear less frequently than the other key values. You can use bitmap indexes effectively in such cases, unless the index is modified frequently, as in a high concurrency OLTP application.</p>
+                           </li>
+                           <li>
+                              <p>Do not index frequently modified columns. <code class="codeph">UPDATE</code> statements that modify indexed columns and <code class="codeph">INSERT</code> and <code class="codeph">DELETE</code> statements that modify indexed tables take longer than if there were no index. Such SQL statements must modify data in indexes and data in tables. They also create additional undo and redo.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Do not index keys that appear only in <code class="codeph">WHERE</code> clauses with functions or operators. A <code class="codeph">WHERE</code> clause that uses a function, other than <code class="codeph">MIN</code> or <code class="codeph">MAX</code>, or an operator with an indexed key does not make available the access path that uses the index except with function-based indexes.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Consider indexing foreign keys of referential integrity constraints in cases in which many concurrent <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, and <code class="codeph">DELETE</code> statements access the parent and child tables. Such an index allows <code class="codeph">UPDATE</code>s and <code class="codeph">DELETE</code>s on the parent table without share locking the child table. 
+                              </p>
+                           </li>
+                           <li>
+                              <p>When choosing to index a key, consider whether the performance gain for queries is worth the performance loss for <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, and <code class="codeph">DELETE</code> statements and the use of the space required to store the index. You might want to experiment by comparing the processing times of the SQL statements with and without indexes. You can measure processing time with the SQL trace facility. 
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-D0C426D3-02CF-48AF-8033-6D9C58A26ED2__GUID-BF79D34A-EBAD-42BD-B990-8BB057DAD4CD">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../cncpt/data-concurrency-and-consistency.html#GUID-261F98F8-F7B4-49A9-9BE8-11F2B1F4609B" target="_blank"><span><cite>Oracle Database Concepts</cite></span></a> for more information about the effects of foreign keys on locking
+                        </p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL855"></a><div class="props_rev_3"><a id="GUID-25634EC4-E4FA-48E9-A03C-AB5BDA59DE42" name="GUID-25634EC4-E4FA-48E9-A03C-AB5BDA59DE42"></a><h4 id="TGSQL-GUID-25634EC4-E4FA-48E9-A03C-AB5BDA59DE42" class="sect4"><span class="enumeration_section">A.1.4 </span>Guidelines for Choosing Composite Indexes
+                  </h4>
+                  <div>
+                     <p>A composite index, also called a concatenated index, is an index on multiple columns in a table.</p>
+                     <div class="section">
+                        <p>Composite indexes can provide additional advantages over single-column indexes:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Improved selectivity</p>
+                              <p>Sometimes you can combine two or more columns or expressions, each with low selectivity, to form a composite index with higher selectivity.</p>
+                           </li>
+                           <li>
+                              <p>Reduced I/O</p>
+                              <p>If all columns selected by a query are in a composite index, then Oracle Database can return these values from the index without accessing the table.</p>
+                           </li>
+                        </ul>
+                        <p>A SQL statement can use an access path involving a composite index when the statement contains constructs that use a leading portion of the index. </p>
+                        <div class="infoboxnote" id="GUID-25634EC4-E4FA-48E9-A03C-AB5BDA59DE42__GUID-91ACA515-7F37-4A67-B52F-7E3B62FB58DB">
+                           <p class="notep1">Note:</p>
+                           <p>This is no longer the case with index skip scans.</p>
+                        </div>
+                        <p>A leading portion of an index is a set of one or more columns that were specified first and consecutively in the list of columns in the <code class="codeph">CREATE</code> <code class="codeph">INDEX</code> statement that created the index. Consider this <code class="codeph">CREATE</code> <code class="codeph">INDEX</code> statement:
+                        </p><pre class="pre codeblock"><code>CREATE INDEX comp_ind 
+ON table1(x, y, z);
+</code></pre><ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">x</code>, <code class="codeph">xy</code>, and <code class="codeph">xyz</code> combinations of columns are leading portions of the index
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">yz</code>, <code class="codeph">y</code>, and <code class="codeph">z</code> combinations of columns are <span class="italic">not</span> leading portions of the index
+                              </p>
+                           </li>
+                        </ul>
+                        <p>This section contains the following topics:</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <ul class="ullinks">
+                        <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-BAEA8E49-E267-4038-9165-8E1C8F4ACE07">Guidelines for Choosing Keys for Composite Indexes</a><br>The effectiveness of a composite index depends on whether you choose the correct columns as keys.
+                        </li>
+                        <li class="ulchildlink"><a href="guidelines-for-indexes-and-table-clusters.html#GUID-6E6EC05B-F4F6-4128-8AFB-569323E59A0E">Guidelines for Ordering Keys for Composite Indexes</a><br>In a composite index, the order of the keys can affect query performance.
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-25634EC4-E4FA-48E9-A03C-AB5BDA59DE42__GUID-59C1F42D-B1A9-4F5F-9903-F4AA334937A3">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="optimizer-access-paths.html#GUID-B7C62F0F-EB7C-422C-919D-D86456A74A60" title="An index skip scan occurs when the initial column of a composite index is "skipped" or not specified in the query.">Index Skip Scans</a>"</span></p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  <a id="TGSQL856"></a><div class="props_rev_3"><a id="GUID-BAEA8E49-E267-4038-9165-8E1C8F4ACE07" name="GUID-BAEA8E49-E267-4038-9165-8E1C8F4ACE07"></a><h5 id="TGSQL-GUID-BAEA8E49-E267-4038-9165-8E1C8F4ACE07" class="sect5"><span class="enumeration_section">A.1.4.1 </span>Guidelines for Choosing Keys for Composite Indexes
+                     </h5>
+                     <div>
+                        <p>The effectiveness of a composite index depends on whether you choose the correct columns as keys.</p>
+                        <div class="section">
+                           <p>Follow these guidelines for choosing keys for composite indexes:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Consider creating a composite index on keys that appear together frequently in <code class="codeph">WHERE</code> clause conditions combined with <code class="codeph">AND</code> operators, especially if their combined selectivity is better than the selectivity of either key individually.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If several queries select the same set of keys based on one or more key values, then consider creating a composite index containing all these keys.</p>
+                              </li>
+                           </ul>
+                           <p>Consider the guidelines associated with the general performance advantages and trade-offs of indexes described in the previous sections. </p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                     <div>
+                        <div class="familylinks">
+                           <div class="parentlink">
+                              <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-25634EC4-E4FA-48E9-A03C-AB5BDA59DE42" title="A composite index, also called a concatenated index, is an index on multiple columns in a table.">Guidelines for Choosing Composite Indexes</a></p>
+                           </div>
+                        </div>
+                     </div>
+                     
+                  </div><a id="TGSQL857"></a><div class="props_rev_3"><a id="GUID-6E6EC05B-F4F6-4128-8AFB-569323E59A0E" name="GUID-6E6EC05B-F4F6-4128-8AFB-569323E59A0E"></a><h5 id="TGSQL-GUID-6E6EC05B-F4F6-4128-8AFB-569323E59A0E" class="sect5"><span class="enumeration_section">A.1.4.2 </span>Guidelines for Ordering Keys for Composite Indexes
+                     </h5>
+                     <div>
+                        <p>In a composite index, the order of the keys can affect query performance.</p>
+                        <div class="section">
+                           <p>Follow these guidelines for ordering keys in composite indexes:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Create the index so the keys used in <code class="codeph">WHERE</code> clauses comprise a leading portion.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If some keys appear in <code class="codeph">WHERE</code> clauses more frequently, then create the index so that the more frequently selected keys comprise a leading portion to allow the statements that use only these keys to use the index.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If all keys appear in <code class="codeph">WHERE</code> clauses equally often, but the data is physically ordered on one of the keys, then place this key first in the composite index.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                     <div>
+                        <div class="familylinks">
+                           <div class="parentlink">
+                              <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-25634EC4-E4FA-48E9-A03C-AB5BDA59DE42" title="A composite index, also called a concatenated index, is an index on multiple columns in a table.">Guidelines for Choosing Composite Indexes</a></p>
+                           </div>
+                        </div>
+                     </div>
+                     
+                  </div>
+               </div><a id="TGSQL858"></a><div class="props_rev_3"><a id="GUID-24581C36-9A5C-4425-903B-C8EA7F26E746" name="GUID-24581C36-9A5C-4425-903B-C8EA7F26E746"></a><h4 id="TGSQL-GUID-24581C36-9A5C-4425-903B-C8EA7F26E746" class="sect4"><span class="enumeration_section">A.1.5 </span>Guidelines for Writing SQL Statements That Use Indexes
+                  </h4>
+                  <div>
+                     <p>The optimizer may not choose an access path that uses an index.</p>
+                     <div class="section">
+                        <p>The optimizer chooses an access path only if it contains a construct that makes the access path available. To give the query optimizer the option of using an index access path, ensure that the statement contains a construct that makes such an access path available.</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL859"></a><div class="props_rev_3"><a id="GUID-8FE08EDD-6603-442E-9964-F5B1B9225C81" name="GUID-8FE08EDD-6603-442E-9964-F5B1B9225C81"></a><h4 id="TGSQL-GUID-8FE08EDD-6603-442E-9964-F5B1B9225C81" class="sect4"><span class="enumeration_section">A.1.6 </span>Guidelines for Writing SQL Statements That Avoid Using Indexes
+                  </h4>
+                  <div>
+                     <p>In some cases, you might want to prevent a SQL statement from using an index access path. For example, you know that the index is not very selective and a full table scan would be more efficient.</p>
+                     <div class="section">
+                        <p>If the statement contains a construct that makes such an index access path available, then you can force the optimizer to use a full table scan through one of the following methods:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Use the <code class="codeph">NO_INDEX</code> hint to give the query optimizer maximum flexibility while disallowing the use of a certain index.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Use the <code class="codeph">FULL</code> hint to instruct the optimizer to choose a full table scan instead of an index scan.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Use the <code class="codeph">INDEX</code> or <code class="codeph">INDEX_COMBINE</code> hints to instruct the optimizer to use one index or a set of listed indexes instead of another. 
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Parallel execution uses indexes effectively. It does not perform parallel index range scans, but it does perform parallel index lookups for parallel nested loops join execution. If an index is very selective (few rows correspond to each index entry), then a sequential index lookup might be better than a parallel table scan.</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-8FE08EDD-6603-442E-9964-F5B1B9225C81__GUID-7E2AE995-6D35-4614-A600-FF1E495C74C4">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="influencing-the-optimizer.html#GUID-8758EF88-1CC6-41BD-8581-246702414D1D" title="Optimizer defaults are adequate for most operations, but not all.">Influencing the Optimizer</a>"</span> for more information about the <code class="codeph">NO_INDEX</code>, <code class="codeph">FULL</code>, <code class="codeph">INDEX</code>, and <code class="codeph">INDEX_COMBINE</code> and hints
+                        </p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+               <div class="sect3"><a id="GUID-FC12F317-3A26-41AA-BBD0-C4AD870FB3EB" name="GUID-FC12F317-3A26-41AA-BBD0-C4AD870FB3EB"></a><h4 id="TGSQL-GUID-FC12F317-3A26-41AA-BBD0-C4AD870FB3EB" class="sect4"><span class="enumeration_section">A.1.7 </span>Guidelines for Avoiding Index Serialization on a Sequence-Generated Key
+                  </h4>
+                  <div>
+                     <p>A classic index contention problem is caused by the insertion of a primary key generated by a sequence.</p>
+                     <p>Applications often use a sequence to generate primary keys. Insertions into the index on a primary key are subject to contention because they all need to access the same index block. This contention is acute in Oracle RAC because this index block must be accessed by all instances, which requires a block transfer using Cache Fusion.</p>
+                     <p>Starting in <span>Oracle Database 18c</span>, you can create a sequence with the <code class="codeph">SCALE</code> attribute. This feature eliminates index block contention among Oracle RAC nodes. When you specify <code class="codeph">SCALE</code>, the database prefixes the sequence with a numeric offset. The offset is of the form <span class="italic">iii</span>||<span class="italic">sss</span>||, where the variables signify the following:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="italic">iii</span> denotes a three digit instance offset given by (<span class="italic">instance_id</span> % 100) + 100
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic">sss</span> denotes a three digits session offset given by (<span class="italic">session_id</span> % 1000)
+                           </p>
+                        </li>
+                        <li>
+                           <p>|| is the concatenation operator</p>
+                        </li>
+                     </ul>
+                     <p>Using this technique, sessions in different Oracle RAC instances do not generate keys that occupy adjacent slots in the same index block. </p>
+                     <div class="example" id="GUID-FC12F317-3A26-41AA-BBD0-C4AD870FB3EB__GUID-8221235B-BA58-48DD-A8A3-F074DF63DB10">
+                        <p class="titleinexample">Example A-1 Creating a Scalable Sequence</p>
+                        <p>In this example, you create a scalable sequence key, which you use to populate the primary key of a <code class="codeph">deptable</code>:
+                        </p><pre class="pre codeblock"><code>DROP TABLE deptable;
+DROP SEQUENCE my_seq;
+DROP TRIGGER my_trig;
+
+CREATE TABLE deptable (ID NUMBER(10) NOT NULL, DESCR VARCHAR2(10));
+
+ALTER TABLE deptable ADD (CONSTRAINT deptable_pk PRIMARY KEY (ID));
+
+CREATE SEQUENCE my_seq START WITH 1 MAXVALUE 100 SCALE EXTEND;
+
+CREATE OR REPLACE TRIGGER my_trig 
+  BEFORE INSERT ON deptable 
+  FOR EACH ROW
+BEGIN
+  SELECT my_seq.NEXTVAL
+  INTO   :new.id
+  FROM   DUAL;
+END;
+/
+
+INSERT INTO deptable(descr) VALUES (1,'id value');
+COMMIT;</code></pre><p>A query of the table indicates that session 43 of instance 1 inserted the row:</p><pre class="pre codeblock"><code>SQL&gt; SELECT * FROM deptable;
+
+ID         DESCR
+---------- ----------
+ 101043001 id value
+</code></pre><p>An insert from session 25 of instance 4 produces the following value:</p><pre class="pre codeblock"><code>SQL&gt; SELECT * FROM deptable;
+
+ID         DESCR
+---------- ----------
+ 104025002 id value
+</code></pre></div>
+                     <!-- class="example" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-FC12F317-3A26-41AA-BBD0-C4AD870FB3EB__GUID-59A834F6-AB30-4B67-B6E4-18EB8429D136">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../sqlrf/CREATE-SEQUENCE.html#SQLRF-GUID-E9C78A8C-615A-4757-B2A8-5E6EFB130571" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for <code class="codeph">CREATE SEQUENCE</code> semantics and syntax
+                        </p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL860"></a><div class="props_rev_3"><a id="GUID-FF0D644D-5208-42C6-92CE-63BB0081487F" name="GUID-FF0D644D-5208-42C6-92CE-63BB0081487F"></a><h4 id="TGSQL-GUID-FF0D644D-5208-42C6-92CE-63BB0081487F" class="sect4"><span class="enumeration_section">A.1.8 </span>Guidelines for Re-Creating Indexes
+                  </h4>
+                  <div>
+                     <p>You might want to re-create an index to compact it and minimize fragmented space, or to change the index's storage characteristics.</p>
+                     <div class="section">
+                        <p>When creating a new index that is a subset of an existing index, or when rebuilding an existing index with new storage characteristics, Oracle Database might use the existing index instead of the base table to improve the performance of the index build. However, in some cases using the base table instead of the existing index is beneficial. Consider an index on a table on which a lot of DML has been performed. Because of the DML, the size of the index can increase to the point where each block is only 50% full, or even less. If the index refers to most of the columns in the table, then the index could actually be larger than the table. In this case, it is faster to use the base table rather than the index to re-create the index. </p>
+                        <p>To reorganize or compact an existing index or to change its storage characteristics, use the <code class="codeph">ALTER INDEX . . . REBUILD</code> statement. The <code class="codeph">REBUILD</code> statement uses the existing index as the basis for the new one. All index storage statements are supported, such as <code class="codeph">STORAGE</code> (for extent allocation), <code class="codeph">TABLESPACE</code> (to move the index to a new tablespace), and <code class="codeph">INITRANS</code> (to change the initial number of entries). 
+                        </p>
+                        <p>Usually, <code class="codeph">ALTER INDEX . . . REBUILD</code> is faster than dropping and re-creating an index, because this statement uses the fast full scan feature. It reads all the index blocks using multiblock I/O, then discards the branch blocks. A further advantage of this approach is that the old index is still available for queries while the rebuild is in progress. 
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-FF0D644D-5208-42C6-92CE-63BB0081487F__GUID-E1D9CD12-C3CE-4F6A-8817-6BD567957318">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../sqlrf/SQL-Statements-ADMINISTER-KEY-MANAGEMENT-to-ALTER-JAVA.html#SQLRF008" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a><span class="italic"> </span>for more information about the <code class="codeph">CREATE INDEX</code> and <code class="codeph">ALTER INDEX</code> statements and restrictions on rebuilding indexes
+                        </p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL861"></a><div class="props_rev_3"><a id="GUID-5D74EB79-7DF3-4DFD-809F-886626EC1C2B" name="GUID-5D74EB79-7DF3-4DFD-809F-886626EC1C2B"></a><h4 id="TGSQL-GUID-5D74EB79-7DF3-4DFD-809F-886626EC1C2B" class="sect4"><span class="enumeration_section">A.1.9 </span>Guidelines for Compacting Indexes
+                  </h4>
+                  <div>
+                     <p>You can coalesce leaf blocks of an index by using the <code class="codeph">ALTER INDEX</code> statement with the <code class="codeph">COALESCE</code> option. 
+                     </p>
+                     <p>This option enables you to combine leaf levels of an index to free blocks for reuse. You can also rebuild the index online. </p>
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-5D74EB79-7DF3-4DFD-809F-886626EC1C2B__GUID-327BB0C9-CB22-448B-87EC-86311DD7676D">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../sqlrf/CREATE-INDEX.html#SQLRF01209" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> and <a href="../admin/managing-indexes.html#GUID-D459FCD6-D729-4F3A-96AD-E147FC37956A" target="_blank"><span><cite>Oracle Database Administrator’s Guide</cite></span></a> for more information about the syntax for this statement
+                        </p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL862"></a><div class="props_rev_3"><a id="GUID-52A634C3-35A2-40EB-961F-CE1607885261" name="GUID-52A634C3-35A2-40EB-961F-CE1607885261"></a><h4 id="TGSQL-GUID-52A634C3-35A2-40EB-961F-CE1607885261" class="sect4"><span class="enumeration_section">A.1.10 </span>Guidelines for Using Nonunique Indexes to Enforce Uniqueness
+                  </h4>
+                  <div>
+                     <p>You can use an existing nonunique index on a table to enforce uniqueness, either for <code class="codeph">UNIQUE</code> constraints or the unique aspect of a <code class="codeph">PRIMARY KEY</code> constraint.
+                     </p>
+                     <div class="section">
+                        <p>The advantage of this approach is that the index remains available and valid when the constraint is disabled. Therefore, enabling a disabled <code class="codeph">UNIQUE</code> or <code class="codeph">PRIMARY KEY</code> constraint does not require rebuilding the unique index associated with the constraint. This technique can yield significant time savings on enable operations for large tables.
+                        </p>
+                        <p>Using a nonunique index to enforce uniqueness also enables you to eliminate redundant indexes. You do not need a unique index on a primary key column if that column is included as the prefix of a composite index. You can use the existing index to enable and enforce the constraint. You also save significant space by not duplicating the index. However, if the existing index is partitioned, then the partitioning key of the index must also be a subset of the <code class="codeph">UNIQUE</code> key; otherwise, Oracle Database creates an additional unique index to enforce the constraint.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL863"></a><div class="props_rev_3"><a id="GUID-979175CB-6A92-4B09-8367-94C6560DBCA2" name="GUID-979175CB-6A92-4B09-8367-94C6560DBCA2"></a><h4 id="TGSQL-GUID-979175CB-6A92-4B09-8367-94C6560DBCA2" class="sect4"><span class="enumeration_section">A.1.11 </span>Guidelines for Using Enabled Novalidated Constraints
+                  </h4>
+                  <div>
+                     <p>An enabled novalidated constraint behaves similarly to an enabled validated constraint for new data.</p>
+                     <div class="section">
+                        <p>Placing a constraint in the enabled novalidated state signifies that any new data entered into the table must conform to the constraint. Existing data is not checked. By placing a constraint in the enabled novalidated state, you enable the constraint without locking the table. </p>
+                        <p>If you change a constraint from disabled to enabled, then the table must be locked. No new DML, queries, or DDL can occur, because no mechanism can ensure that operations on the table conform to the constraint during the enable operation. The enabled novalidated state prevents users from performing operations on the table that violate the constraint.</p>
+                        <p>The database can validate an enabled novalidated constraint with a parallel, consistent-read query of the table to determine whether any data violates the constraint. The database performs no locking, so the enable operation does not block readers or writers. In addition, the database can validate enabled novalidated constraints in parallel. The database can validate multiple constraints at the same time and check the validity of each constraint using parallel query. </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-979175CB-6A92-4B09-8367-94C6560DBCA2__GUID-6A2EAAB5-7891-47FF-8AA8-A145A52B28DE">To create tables with constraints and indexes:</p>
+                        <ol>
+                           <li>
+                              <p>Create the tables with the constraints. </p>
+                              <p><code class="codeph">NOT NULL</code> constraints can be unnamed and should be created enabled and validated. Name all other constraints (<code class="codeph">CHECK</code>, <code class="codeph">UNIQUE</code>, <code class="codeph">PRIMARY KEY</code>, and <code class="codeph">FOREIGN KEY</code>) and create them disabled. 
+                              </p>
+                              <div class="infoboxnote" id="GUID-979175CB-6A92-4B09-8367-94C6560DBCA2__GUID-874B04ED-1543-4E1B-81C6-227439CC92EB">
+                                 <p class="notep1">Note:</p>
+                                 <p>By default, constraints are created in the <code class="codeph">ENABLED</code> state.
+                                 </p>
+                              </div>
+                           </li>
+                           <li>
+                              <p>Load old data into the tables. </p>
+                           </li>
+                           <li>
+                              <p>Create all indexes, including indexes needed for constraints. </p>
+                           </li>
+                           <li>
+                              <p>Enable novalidate all constraints. Do this to primary keys before foreign keys. </p>
+                           </li>
+                           <li>
+                              <p>Allow users to query and modify data. </p>
+                           </li>
+                           <li>
+                              <p>With a separate <code class="codeph">ALTER TABLE</code> statement for each constraint, validate all constraints. Do this to primary keys before foreign keys. For example, 
+                              </p><pre class="pre codeblock"><code>CREATE TABLE t (a NUMBER CONSTRAINT apk PRIMARY KEY DISABLE, b NUMBER NOT NULL);
+CREATE TABLE x (c NUMBER CONSTRAINT afk REFERENCES t DISABLE);</code></pre><p>Now load data into table <code class="codeph">t</code>.
+                              </p><pre class="pre codeblock"><code>CREATE UNIQUE INDEX tai ON t (a); 
+CREATE INDEX tci ON x (c); 
+ALTER TABLE t MODIFY CONSTRAINT apk ENABLE NOVALIDATE;
+ALTER TABLE x MODIFY CONSTRAINT afk ENABLE NOVALIDATE;</code></pre><p>At this point, users can start performing <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, <code class="codeph">DELETE</code>, and <code class="codeph">SELECT</code> operations on table <code class="codeph">t</code>. 
+                              </p><pre class="pre codeblock"><code>ALTER TABLE t ENABLE CONSTRAINT apk;
+ALTER TABLE x ENABLE CONSTRAINT afk;</code></pre><p>Now the constraints are enabled and validated. </p>
+                              <div class="infoboxnotealso" id="GUID-979175CB-6A92-4B09-8367-94C6560DBCA2__GUID-8399BA37-7A89-458C-91E7-B53072842F6E">
+                                 <p class="notep1">See Also:</p>
+                                 <p><a href="../cncpt/data-integrity.html#CNCPT021" target="_blank"><span><cite>Oracle Database Concepts</cite></span></a> for an overview of integrity constraints
+                                 </p>
+                              </div>
+                           </li>
+                        </ol>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-8E9D24AC-AB53-4197-BD8C-AAF08537C320" title="Indexes are not a performance cure-all. You must consider carefully when and how to use them.">Guidelines for Tuning Index Performance</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div><a id="TGSQL864"></a><div class="props_rev_3"><a id="GUID-F4481059-3D32-4E37-831C-9706DAE06452" name="GUID-F4481059-3D32-4E37-831C-9706DAE06452"></a><h3 id="TGSQL-GUID-F4481059-3D32-4E37-831C-9706DAE06452" class="sect3"><span class="enumeration_section">A.2 </span>Guidelines for Using Function-Based Indexes for Performance
+               </h3>
+               <div>
+                  <p>A function-based index includes columns that are either transformed by a function, such as the <code class="codeph">UPPER</code> function, or included in an expression, such as <code class="codeph">col1</code> + <code class="codeph">col2</code>.
+                  </p>
+                  <div class="section">
+                     <p>A function-based index is useful when frequently executed SQL statements include transformed columns, or columns in expressions, in a <code class="codeph">WHERE</code> or <code class="codeph">ORDER BY</code> clause. If you define a function-based index on the transformed column or expression, then the database can use the index when that function or expression appears in a <code class="codeph">WHERE</code> clause or an <code class="codeph">ORDER BY</code> clause. In this way, the database can avoid calculating the expression when processing <code class="codeph">SELECT</code> and <code class="codeph">DELETE</code> statements. 
+                     </p>
+                     <p>Oracle Database treats descending indexes as function-based indexes. The columns marked <code class="codeph">DESC</code> are sorted in descending order. 
+                     </p>
+                     <p>For example, function-based indexes defined with the <code class="codeph">UPPER(<span class="codeinlineitalic">column_name</span>)</code> or <code class="codeph">LOWER(<span class="codeinlineitalic">column_name</span>)</code> keywords allow case-insensitive searches. Assume that you create an index on the following statement:
+                     </p><pre class="pre codeblock"><code>CREATE INDEX uppercase_idx ON employees (UPPER(last_name));
+</code></pre><p>The preceding index facilitates processing queries such as:</p><pre class="pre codeblock"><code>SELECT * 
+FROM   employees
+WHERE  UPPER(last_name) = 'MARKSON';</code></pre></div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-F4481059-3D32-4E37-831C-9706DAE06452__GUID-F66DEEBE-B18F-48B3-B1B6-EA56C2A01095">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../adfns/indexes.html#GUID-44AD4D28-A056-4977-B2F7-AC1BC50EDC87" target="_blank"><span><cite>Oracle Database Development Guide</cite></span></a> and <a href="../admin/managing-indexes.html#GUID-EF5392C6-C38A-4206-BD47-353AD7793557" target="_blank"><span><cite>Oracle Database Administrator’s Guide</cite></span></a> for more information about using function-based indexes
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../sqlrf/SQL-Statements-CREATE-LIBRARY-to-CREATE-SCHEMA.html#SQLRF012" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for more information about the <code class="codeph">CREATE INDEX</code> statement
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="TGSQL865"></a><div class="props_rev_3"><a id="GUID-BC4A0137-4260-4E36-B02C-BA1DF1946F84" name="GUID-BC4A0137-4260-4E36-B02C-BA1DF1946F84"></a><h3 id="TGSQL-GUID-BC4A0137-4260-4E36-B02C-BA1DF1946F84" class="sect3"><span class="enumeration_section">A.3 </span>Guidelines for Using Partitioned Indexes for Performance
+               </h3>
+               <div>
+                  <p>Similar to partitioned tables, partitioned indexes improve manageability, availability, performance, and scalability. They can be partitioned independently (global indexes) or automatically linked to the table partitioning method (local indexes).</p>
+                  <div class="section">
+                     <p>Oracle Database supports both range and hash-partitioned global indexes. In a range-partitioned global index, each index partition contains values defined by a partition bound. In a hash-partitioned global index, each partition contains values determined by the Oracle Database hash function.</p>
+                     <p>The hash method can improve performance of indexes where a small number leaf blocks in the index have high contention in multiuser OLTP environment. In some OLTP applications, index insertions happen only at the right edge of the index. This situation could occur when the index is defined on monotonically increasing columns. In such situations, the right edge of the index becomes a hot spot because of contention for index pages, buffers, latches for update, and additional index maintenance activity, which results in performance degradation.</p>
+                     <p>With hash partitioned global indexes index entries are hashed to different partitions based on partitioning key and the number of partitions. This spreads out contention over number of defined partitions, resulting in increased throughput. Hash-partitioned global indexes would benefit TPC-H refresh functions that are executed as massive PDMLs into huge fact tables because contention for buffer latches would be spread out over multiple partitions.</p>
+                     <p>With hash partitioning, an index entry is mapped to a particular index partition based on the hash value generated by Oracle Database. The syntax to create hash-partitioned global index is very similar to hash-partitioned table. Queries involving equality and <code class="codeph">IN</code> predicates on index partitioning key can efficiently use global hash partitioned index to answer queries quickly.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-BC4A0137-4260-4E36-B02C-BA1DF1946F84__GUID-F5CBD46D-717E-488D-90EF-F77CA4EE0F77">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../cncpt/tables-and-table-clusters.html#CNCPT010" target="_blank"><span><cite>Oracle Database Concepts</cite></span></a> and <a href="../admin/managing-tables.html#ADMIN01506" target="_blank"><span><cite>Oracle Database Administrator’s Guide</cite></span></a> for more information about global indexes tables
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="TGSQL866"></a><div class="props_rev_3"><a id="GUID-32B3DB6D-C0B2-4B6C-84AB-C3F3E2E4FD2E" name="GUID-32B3DB6D-C0B2-4B6C-84AB-C3F3E2E4FD2E"></a><h3 id="TGSQL-GUID-32B3DB6D-C0B2-4B6C-84AB-C3F3E2E4FD2E" class="sect3"><span class="enumeration_section">A.4 </span>Guidelines for Using Index-Organized Tables for Performance
+               </h3>
+               <div>
+                  <p>An index-organized table differs from an ordinary table because the data for the table is held in its associated index. </p>
+                  <div class="section">
+                     <p>Changes to the table data, such as adding new rows, updating rows, or deleting rows, result only in updating the index. Because data rows are stored in the index, index-organized tables provide faster key-based access to table data for queries that involve exact match or range search or both.</p>
+                     <p>A parent/child relationship is an example of a situation that may warrant an index-organized table. For example, a <code class="codeph">members</code> table has a child table containing phone numbers. Phone numbers for a member are changed and added over time. In a heap-organized table, rows are inserted in data blocks where they fit. However, when you query the <code class="codeph">members</code> table, you always retrieve the phone numbers from the child table. To make the retrieval more efficient, you can store the phone numbers in an index-organized table so that phone records for a given member are inserted near each other in the data blocks.
+                     </p>
+                     <p>In some circumstances, an index-organized table may provide a performance advantage over a heap-organized table. For example, if a query requires fewer blocks in the cache, then the database uses the buffer cache more efficiently. If fewer distinct blocks are needed for a query, then a single physical I/O may retrieve all necessary data, requiring a smaller amount of I/O for each query.</p>
+                     <p>Global hash-partitioned indexes are supported for index-organized tables and can provide performance benefits in a multiuser OLTP environment. Index-organized tables are useful when you must store related pieces of data together or physically store data in a specific order. </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-32B3DB6D-C0B2-4B6C-84AB-C3F3E2E4FD2E__GUID-05DBADCB-0E1B-42DA-9257-C16E7EF2BF6F">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=CNCPT010" target="_blank"><span><cite>Oracle Database Concepts</cite></span></a> for an overview of index-organized tables
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=ADMIN01506" target="_blank"><span><cite>Oracle Database Administrator’s Guide</cite></span></a> to learn how to manage index-organized tables
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="TGSQL867"></a><div class="props_rev_3"><a id="GUID-9CFAA4E7-2362-4FC4-BE8D-CCF56B9E30D3" name="GUID-9CFAA4E7-2362-4FC4-BE8D-CCF56B9E30D3"></a><h3 id="TGSQL-GUID-9CFAA4E7-2362-4FC4-BE8D-CCF56B9E30D3" class="sect3"><span class="enumeration_section">A.5 </span>Guidelines for Using Bitmap Indexes for Performance
+               </h3>
+               <div>
+                  <p>Bitmap indexes can substantially improve performance of specific queries.</p>
+                  <div class="section">
+                     <p>In general, queries perform best that have all of the following characteristics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The <code class="codeph">WHERE</code> clause contains multiple predicates on low- or medium-cardinality columns.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The individual predicates on these low- or medium-cardinality columns select many rows.</p>
+                        </li>
+                        <li>
+                           <p>The bitmap indexes used in the queries have been created on some or all of these low-cardinality or medium-cardinality columns.</p>
+                        </li>
+                        <li>
+                           <p>The tables in the queries contain many rows.</p>
+                        </li>
+                     </ul>
+                     <p>You can use multiple bitmap indexes to evaluate the conditions on a single table. Bitmap indexes are thus highly advantageous for complex <span class="italic">ad hoc</span> queries that contain lengthy <code class="codeph">WHERE</code> clauses. Bitmap indexes can also provide optimal performance for aggregate queries and for optimizing joins in star schemas. 
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-9CFAA4E7-2362-4FC4-BE8D-CCF56B9E30D3__GUID-DE824C72-4B8D-438B-AA7A-9C4A2B0F6359">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=CNCPT010" target="_blank"><span><cite>Oracle Database Concepts</cite></span></a> for an overview of bitmap indexes
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=DWHSG9041" target="_blank"><span><cite>Oracle Database Data Warehousing Guide</cite></span></a> to learn how to use bitmap indexing in your application
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="TGSQL868"></a><div class="props_rev_3"><a id="GUID-E5CD8444-8E98-45EC-BD1D-C107CF83DB12" name="GUID-E5CD8444-8E98-45EC-BD1D-C107CF83DB12"></a><h3 id="TGSQL-GUID-E5CD8444-8E98-45EC-BD1D-C107CF83DB12" class="sect3"><span class="enumeration_section">A.6 </span>Guidelines for Using Bitmap Join Indexes for Performance
+               </h3>
+               <div>
+                  <p>In addition to a bitmap index on a single table, you can create a bitmap join index, which is a bitmap index for the join of two or more tables.</p>
+                  <div class="section">
+                     <p>A bitmap join index is a space-saving way to reduce the volume of data that must be joined by performing restrictions in advance. For each value in a column of a table, a bitmap join index stores the rowids of corresponding rows in another table. In a data warehouse, the join condition is an inner equijoin between the primary key columns of the dimension tables and the foreign key columns in the fact table.</p>
+                     <p>Bitmap join indexes are more efficient in storage than materialized join views, an alternative for materializing joins in advance. Materialized join views do not compress the rowids of the fact tables.</p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-E5CD8444-8E98-45EC-BD1D-C107CF83DB12__GUID-89AC10FC-FD14-40A3-8973-1E7682A0CF97">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=DWHSG9047" target="_blank"><span><cite>Oracle Database Data Warehousing Guide</cite></span></a> for examples and restrictions of bitmap join indexes
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="TGSQL869"></a><div class="props_rev_3"><a id="GUID-57C614A5-8965-4D21-BD1A-9C43368C70AD" name="GUID-57C614A5-8965-4D21-BD1A-9C43368C70AD"></a><h3 id="TGSQL-GUID-57C614A5-8965-4D21-BD1A-9C43368C70AD" class="sect3"><span class="enumeration_section">A.7 </span>Guidelines for Using Domain Indexes for Performance
+               </h3>
+               <div>
+                  <p>Domain indexes are built using the indexing logic supplied by a user-defined indextype. An <span class="bold">indextype</span> is an object that specifies the routines that manage a domain (application-specific) index.
+                  </p>
+                  <div class="section">
+                     <p>An indextype provides an efficient mechanism to access data that satisfy certain operator predicates. Typically, the user-defined indextype is part of an Oracle Database option, like the Oracle Spatial and Graph option.</p>
+                     <p>The cartridge determines the parameters you can specify in creating and maintaining the domain index. Similarly, the performance and storage characteristics of the domain index are presented in the specific cartridge documentation. </p>
+                     <p>Refer to the appropriate cartridge documentation for information such as the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Which data types can be indexed? </p>
+                        </li>
+                        <li>
+                           <p>Which indextypes are provided? </p>
+                        </li>
+                        <li>
+                           <p>Which operators does the indextype support? </p>
+                        </li>
+                        <li>
+                           <p>How can the domain index be created and maintained? </p>
+                        </li>
+                        <li>
+                           <p>What is the most efficient way to use the operator in queries?</p>
+                        </li>
+                        <li>
+                           <p>What are the performance characteristics? </p>
+                           <div class="infoboxnote" id="GUID-57C614A5-8965-4D21-BD1A-9C43368C70AD__GUID-7599AE24-5B5A-40C0-9BF7-F76F58864185">
+                              <p class="notep1">Note:</p>
+                              <p>You can also create index types with the <code class="codeph">CREATE INDEXTYPE</code> statement. 
+                              </p>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-57C614A5-8965-4D21-BD1A-9C43368C70AD__GUID-08E55398-8C8B-42B9-8516-90E09BA0A04B">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=GUID-07129836-0DAE-4BCC-B290-942C456AE2EA" target="_blank"><span><cite>Oracle Spatial and Graph Developer's Guide</cite></span></a> to learn more about indexing spatial data
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-11BFEF17-A270-4BB9-8A12-B379008A50CF" name="GUID-11BFEF17-A270-4BB9-8A12-B379008A50CF"></a><h3 id="TGSQL-GUID-11BFEF17-A270-4BB9-8A12-B379008A50CF" class="sect3"><span class="enumeration_section">A.8 </span>Guidelines for Using Table Clusters
+               </h3>
+               <div>
+                  <p>A <span class="bold">table cluster</span> is a group of one or more tables that are physically stored together because they share common columns and usually appear together in SQL statements.
+                  </p>
+                  <div class="section">Because the database physically stores related rows together, disk access time improves. To create a table cluster, use the <code class="codeph">CREATE CLUSTER</code> statement.
+                     <p>Consider clustering tables in the following circumstances:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The application frequently accesses the tables in join statements.</p>
+                        </li>
+                        <li>
+                           <p>In master-detail tables, the application often selects a master record and then the corresponding detail records. </p>
+                           <p>Detail records are stored in the same data blocks as the master record, so they are likely still to be in memory when you select them, requiring Oracle Database to perform less I/O.</p>
+                        </li>
+                        <li>
+                           <p>The application often selects many detail records of the same master.</p>
+                           <p>In this case, consider storing a detail table alone in a cluster. This measure improves the performance of queries that select detail records of the same master, but does not decrease the performance of a full table scan on the master table. An alternative is to use an index organized table.</p>
+                        </li>
+                     </ul>
+                     <p>Avoid clustering tables in the following circumstances:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The application joins the tables only occasionally or modifies their common column values frequently. </p>
+                           <p>Modifying a row's cluster key value takes longer than modifying the value in an nonclustered table, because Oracle Database might need to migrate the modified row to another block to maintain the cluster.</p>
+                        </li>
+                        <li>
+                           <p>The application often performs full table scans of only one of the tables. </p>
+                           <p>A full table scan of a clustered table can take longer than a full table scan of an nonclustered table. Oracle Database is likely to read more blocks because the tables are stored together.</p>
+                        </li>
+                        <li>
+                           <p>The data from all tables with the same cluster key value exceeds more than one or two data blocks. </p>
+                           <p>To access a row in a clustered table, Oracle Database reads all blocks containing rows with that value. If these rows take up multiple blocks, then accessing a single row could require more reads than accessing the same row in a nonclustered table.</p>
+                        </li>
+                        <li>
+                           <p>The number of rows for each cluster key value varies significantly. </p>
+                           <p>This causes waste of space for the low cardinality key value. It causes collisions for the high cardinality key values. Collisions degrade performance.</p>
+                        </li>
+                     </ul>
+                     <p>Consider the benefits and drawbacks of clusters for the application. For example, you might decide that the performance gain for join statements outweighs the performance loss for statements that modify cluster key values. You might want to experiment and compare processing times with the tables both clustered and stored separately. </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-11BFEF17-A270-4BB9-8A12-B379008A50CF__GUID-061EE5F1-1164-46A8-A14E-5391B0CC0655">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=GUID-04AADD81-E5C2-498B-B857-DF2A37DD3520" target="_blank"><span><cite>Oracle Database Concepts</cite></span></a> for more information about table clusters
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=GUID-2EB6D65C-3DD8-4C92-A8B4-C05197B6CF2D" target="_blank"><span><cite>Oracle Database Administrator’s Guide</cite></span></a> for more information about creating table clusters
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="TGSQL871"></a><div class="props_rev_3"><a id="GUID-9ADE6A47-5EF1-4BB0-BABA-4CB942CE95CF" name="GUID-9ADE6A47-5EF1-4BB0-BABA-4CB942CE95CF"></a><h3 id="TGSQL-GUID-9ADE6A47-5EF1-4BB0-BABA-4CB942CE95CF" class="sect3"><span class="enumeration_section">A.9 </span>Guidelines for Using Hash Clusters for Performance
+               </h3>
+               <div>
+                  <p>Hash clusters group table data by applying a hash function to each row's cluster key value.</p>
+                  <div class="section">
+                     <p>All rows with the same cluster key value are stored together on disk. Consider the benefits and drawbacks of hash clusters for the application. You might want to experiment and compare processing times with a particular table in a hash cluster and alone with an index.</p>
+                     <p>Follow these guidelines for choosing when to use hash clusters:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Use hash clusters to store tables accessed frequently by SQL statements with <code class="codeph">WHERE</code> clauses, if the <code class="codeph">WHERE</code> clauses contain equality conditions that use the same column or combination of columns. Designate this column or combination of columns as the cluster key.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Store a table in a hash cluster if you can determine how much space is required to hold all rows with a given cluster key value, including rows to be inserted immediately and rows to be inserted in the future.</p>
+                        </li>
+                        <li>
+                           <p>Use sorted hash clusters, where rows corresponding to each value of the hash function are sorted on a specific columns in ascending order, when the database can improve response time on operations with this sorted clustered data. </p>
+                        </li>
+                        <li>
+                           <p>Do not store a table in a hash cluster in the following cases:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The application often performs full table scans.</p>
+                              </li>
+                              <li>
+                                 <p>You must allocate a great deal of space to the hash cluster in anticipation of the table growing. </p>
+                              </li>
+                           </ul>
+                           <p>Full table scans must read all blocks allocated to the hash cluster, even though some blocks might contain few rows. Storing the table alone reduces the number of blocks read by full table scans.</p>
+                        </li>
+                        <li>
+                           <p>Do not store a table in a hash cluster if the application frequently modifies the cluster key values. Modifying a row's cluster key value can take longer than modifying the value in an nonclustered table, because Oracle Database might need to migrate the modified row to another block to maintain the cluster.</p>
+                        </li>
+                     </ul>
+                     <p>If hashing is appropriate for the table based on the considerations in this list, then storing a single table in a hash cluster can be useful. This is true regardless of whether the table is joined frequently with other tables.</p>
+                     <div class="infoboxnotealso" id="GUID-9ADE6A47-5EF1-4BB0-BABA-4CB942CE95CF__GUID-7F1C75D2-1E57-4C19-BA78-3659BCE322B9">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=ADMIN019" target="_blank"><span><cite>Oracle Database Administrator’s Guide</cite></span></a> to learn how to manage hash clusters
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=SQLRF01201" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> to learn about the <code class="codeph">CREATE CLUSTER</code> statement
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <p></p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="guidelines-for-indexes-and-table-clusters.html#GUID-B91B623E-2634-4292-B17E-827F38545AEB" title="This appendix provides an overview of data access methods using indexes and clusters that can enhance or degrade performance.">Guidelines for Indexes and Table Clusters</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

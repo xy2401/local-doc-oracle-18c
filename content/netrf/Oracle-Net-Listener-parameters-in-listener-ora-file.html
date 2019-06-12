@@ -1,0 +1,1827 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Oracle Net Listener Parameters in the listener.ora File</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Net Services Reference ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Net Services Reference">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="net-services-reference.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-07-10T00:04:44-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83751-06">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="local-naming-parameters-in-tnsnames-ora-file.html" title="Previous" type="text/html">
+      <link rel="next" href="Oracle-Connection-Manager-parameters.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Net Services Reference">
+    <meta name="dcterms.isVersionOf" content="NETRF">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="local-naming-parameters-in-tnsnames-ora-file.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="Oracle-Connection-Manager-parameters.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Net Services Reference </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="part-II-configuration-parameters.html" property="item" typeof="WebPage"><span property="name">Configuration Parameters </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Oracle Net Listener Parameters in the listener.ora File </li>
+            </ol>
+            <a id="GUID-F9FA0DF5-2FAF-45CA-B6A1-F0166C7BFE54" name="GUID-F9FA0DF5-2FAF-45CA-B6A1-F0166C7BFE54"></a><a id="NETRF008"></a>
+            
+            <h2 id="NETRF-GUID-F9FA0DF5-2FAF-45CA-B6A1-F0166C7BFE54" class="sect2"><span class="enumeration_chapter">7 </span> Oracle Net Listener Parameters in the listener.ora File 
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>This chapter provides a complete listing of the <code class="codeph">listener.ora</code> file configuration parameters. 
+               </p>
+               <p>This chapter contains the following topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-48EFDD31-694F-4426-9951-D59EE6DFD276">Overview of Oracle Net Listener Configuration File</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-0997093A-6725-4876-ADC0-E94132E07887">Protocol Address Parameters</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-71286659-3065-4C14-9C6F-83F952EEE642">Connection Rate Limiter Parameters</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-42DA4C62-1CA2-433B-BD71-7C4E1A0E5244">Control Parameters</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-FA408B01-4964-49E8-98AA-9A09146DA543">ADR Diagnostic Parameters for Oracle Net Listener</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-CC23074B-1BAC-4F6E-9338-DB9FBC31B944">Non-ADR Diagnostic Parameters for Oracle Net Listener</a></p>
+                  </li>
+                  <li>
+                     <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-55CB5D8E-45BE-4C52-8628-D6C7A4F966F4">Class of Secure Transports Parameters</a></p>
+                  </li>
+               </ul>
+            </div><a id="NETRF1441"></a><a id="NETRF292"></a><div class="sect2"><a id="GUID-48EFDD31-694F-4426-9951-D59EE6DFD276" name="GUID-48EFDD31-694F-4426-9951-D59EE6DFD276"></a><h3 id="NETRF-GUID-48EFDD31-694F-4426-9951-D59EE6DFD276" class="sect3"><span class="enumeration_section">7.1 </span>Overview of Oracle Net Listener Configuration File
+               </h3>
+               <div>
+                  <p>Oracle Net Listener configuration, stored in the <code class="codeph">listener.ora</code> file, consists of the following elements:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Name of the listener</p>
+                     </li>
+                     <li>
+                        <p>Protocol addresses that the listener is accepting connection requests on</p>
+                     </li>
+                     <li>
+                        <p>Valid nodes that the listener allows to register with the database</p>
+                     </li>
+                     <li>
+                        <p>Database services</p>
+                     </li>
+                     <li>
+                        <p>Control parameters</p>
+                     </li>
+                  </ul>
+                  <p>Dynamic <a href="glossary.html#GUID-7EA87148-2A3E-4ED8-8093-CEB55CBDD36E"><span class="xrefglossterm">service registration</span></a>, eliminates the need for static configuration of supported services. However, static service configuration is required if you plan to use Oracle Enterprise Manager Cloud Control.
+                  </p>
+                  <p>By default, the <code class="codeph">listener.ora</code> file is located in the <code class="codeph">ORACLE_HOME/network/admin</code> directory. The <code class="codeph">listener.ora</code> file can also be stored the following locations:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The directory specified by the <code class="codeph">TNS_ADMIN</code> environment variable or registry value.
+                        </p>
+                     </li>
+                     <li>
+                        <p>On Linux and UNIX operating systems, it is the global configuration directory. For example, on the Oracle Solaris operating system, the directory is <code class="codeph">/var/opt/oracle</code>. 
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-48EFDD31-694F-4426-9951-D59EE6DFD276__GUID-790E84ED-2DC5-421B-AE98-C7DE6A1B37D9">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="../gsmug/global-data-services-admin.html#GSMUG-GUID-3A51492C-6214-4585-8609-56962180A12A" target="_blank"><span class="italic">Oracle Database Global Data Services Concepts and Administration Guide</span></a> for information about management of global services
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Oracle operating system-specific documentation</p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li>
+                        <p>In the read-only Oracle home mode, the <code class="codeph">listener.ora</code> file default location is <code class="codeph"><span class="variable">ORACLE_BASE_HOME</span>/network/admin</code>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>In the read-only Oracle home mode, the parameters that default to <code class="codeph">ORACLE_HOME</code> location change to default to <code class="codeph"><span class="variable"></span>ORACLE_BASE_HOME</code> location. 
+                        </p>
+                     </li>
+                  </ul>
+                  <p><a id="d27519e234" class="indexterm-anchor"></a><a id="d27519e236" class="indexterm-anchor"></a>It is possible to configure multiple listeners, each with a unique name, in one <code class="codeph">listener.ora</code> file. Multiple listener configurations are possible because each of the top-level configuration parameters has a suffix of the listener name or is the listener name itself. 
+                  </p>
+                  <div class="infoboxnote" id="GUID-48EFDD31-694F-4426-9951-D59EE6DFD276__GUID-279177D6-2847-4F32-A1A4-C9FA05ABC50D">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>It is often useful to configure multiple listeners in one <code class="codeph">listener.ora</code> file. However, Oracle recommends running only one listener for each node in most customer environments.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Oracle Net Services supports the IFILE parameter in the <code class="codeph">listener.ora</code> file, with up to three levels of nesting. The parameter is added manually to the file. The following is an example of the syntax:
+                           </p><pre class="oac_no_warn" dir="ltr">IFILE=/tmp/listener_em.ora
+IFILE=/tmp/listener_cust1.ora
+IFILE=/tmp/listener_cust2.ora 
+</pre><p>Refer to <a href="../refrn/IFILE.html#REFRN10070" target="_blank"><span class="italic">Oracle Database Reference</span></a> for additional information. 
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-48EFDD31-694F-4426-9951-D59EE6DFD276__CCHCIJFE">Example 7-1</a> shows a <code class="codeph">listener.ora</code> file for a listener named <code class="codeph">LISTENER</code>, which is the default name of the listener.
+                  </p>
+                  <div class="example" id="GUID-48EFDD31-694F-4426-9951-D59EE6DFD276__CCHCIJFE">
+                     <p class="titleinexample">Example 7-1 listener.ora File</p><pre class="oac_no_warn" dir="ltr">LISTENER=
+  (DESCRIPTION=
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=sale-server)(PORT=1521))
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))))</pre><pre class="oac_no_warn" dir="ltr"></pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="NETRF294"></a><div class="sect2"><a id="GUID-0997093A-6725-4876-ADC0-E94132E07887" name="GUID-0997093A-6725-4876-ADC0-E94132E07887"></a><h3 id="NETRF-GUID-0997093A-6725-4876-ADC0-E94132E07887" class="sect3"><span class="enumeration_section">7.2 </span>Protocol Address Parameters
+               </h3>
+               <div>
+                  <p>The <span class="bold"><a href="glossary.html#GUID-BF964893-B7E6-4B88-94C3-97A3526E48E3"><span class="xrefglossterm">protocol address</span></a></span> section of the <code class="codeph">listener.ora</code> file defines the protocol addresses on which the listener is accepting connection requests. This section describes the most common parameters used in protocol addresses. The <code class="codeph">ADDRESS_LIST</code> parameter is also supported.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-0997093A-6725-4876-ADC0-E94132E07887__GUID-655A8B24-1174-4DE8-A12C-AD86D50E1968">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="protocol-address-configuration.html#GUID-07C3D3AE-48BC-4975-AD1F-D55D1665DB6A" title="The listener and Oracle Connection Manager are identified by protocol addresses.">Protocol Address Configuration</a> for additional information about the <code class="codeph">ADDRESS_LIST</code> parameter
+                     </p>
+                  </div>
+                  <p>This section lists and describes the following parameters:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-2126EC11-28BA-41A4-87E1-BDC9889649D4">ADDRESS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-A371BDB9-CC3D-4154-BAD7-426C78AF99AD">DESCRIPTION</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-EEEA9164-9D08-4163-9985-59D6A24E1A31">Firewall</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-B8384B45-B042-456F-BD0F-E73CBDE03E9B">IP</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-FF87387C-1779-4CC3-932A-79BB01391C28">QUEUESIZE</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-F4D5AD89-618C-42C3-B675-39EE1B1674A8">RECV_BUF_SIZE </a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-7364539B-C764-4BD7-B981-B52F26AD5823">SEND_BUF_SIZE</a></p>
+                     </li>
+                  </ul>
+               </div><a id="NETRF1442"></a><a id="NETRF2231"></a><a id="NETRF1443"></a><a id="NETRF296"></a><div class="sect3"><a id="GUID-2126EC11-28BA-41A4-87E1-BDC9889649D4" name="GUID-2126EC11-28BA-41A4-87E1-BDC9889649D4"></a><h4 id="NETRF-GUID-2126EC11-28BA-41A4-87E1-BDC9889649D4" class="sect4"><span class="enumeration_section">7.2.1 </span>ADDRESS
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify a single listener protocol address. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Put this parameter under the <code class="codeph">DESCRIPTION</code> parameter.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr"><span class="italic">listener_name</span>=
+ (DESCRIPTION=
+  (ADDRESS_LIST=
+   (ADDRESS=(PROTOCOL=tcp)(HOST=hr-server)(PORT=1521))
+   (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521))))</pre><div class="infoboxnotealso" id="GUID-2126EC11-28BA-41A4-87E1-BDC9889649D4__GUID-23D4504B-75A6-4080-AFD3-D6AF4CCF200F">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="protocol-address-configuration.html#GUID-07C3D3AE-48BC-4975-AD1F-D55D1665DB6A" title="The listener and Oracle Connection Manager are identified by protocol addresses.">Protocol Address Configuration</a> for descriptions of the correct parameters to use for each type of support protocol
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="NETRF1444"></a><a id="NETRF1445"></a><a id="NETRF295"></a><div class="sect3"><a id="GUID-A371BDB9-CC3D-4154-BAD7-426C78AF99AD" name="GUID-A371BDB9-CC3D-4154-BAD7-426C78AF99AD"></a><h4 id="NETRF-GUID-A371BDB9-CC3D-4154-BAD7-426C78AF99AD" class="sect4"><span class="enumeration_section">7.2.2 </span>DESCRIPTION
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To contain listener protocol addresses.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr"><span class="italic">listener_name</span>=
+ (DESCRIPTION=
+  (ADDRESS_LIST=
+    (ADDRESS=(PROTOCOL=tcp)(HOST=hr-server)(PORT=1521))
+    (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521))))</pre></div>
+               </div>
+               <div class="sect3"><a id="GUID-EEEA9164-9D08-4163-9985-59D6A24E1A31" name="GUID-EEEA9164-9D08-4163-9985-59D6A24E1A31"></a><h4 id="NETRF-GUID-EEEA9164-9D08-4163-9985-59D6A24E1A31" class="sect4"><span class="enumeration_section">7.2.3 </span>Firewall
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                        <p>It can be set in endpoint to enable firewall functionality.</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="relinfo">
+                        <p><strong>Related Topics</strong></p>
+                        <ul>
+                           <li><a href="../netag/configuring-and-administering-oracle-net-listener.html#NETAG-GUID-FD3EC78A-3430-4DB7-8222-8C0DB2B326AD" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="NETRF1446"></a><a id="NETRF2232"></a><a id="NETRF1447"></a><a id="NETRF1448"></a><a id="NETRF1449"></a><a id="NETRF432"></a><div class="sect3"><a id="GUID-B8384B45-B042-456F-BD0F-E73CBDE03E9B" name="GUID-B8384B45-B042-456F-BD0F-E73CBDE03E9B"></a><h4 id="NETRF-GUID-B8384B45-B042-456F-BD0F-E73CBDE03E9B" class="sect4"><span class="enumeration_section">7.2.4 </span>IP
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To determine which IP address the listener listens on when a host name is specified. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is only applicable when the <code class="codeph">HOST</code> parameter specifies a host name.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">first</code> 
+                           </p>
+                           <p>Listen on the first IP address returned by the DNS resolution of the host name. If the user wants the listener to listen on the first IP to which the specified host name resolves, then the address must be qualified with <code class="codeph">(IP=first)</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">v4_only</code></p>
+                           <p>Listen only on IPv4 addresses.</p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">v6_only</code></p>
+                           <p>Listen only on IPv6 addresses.</p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This feature is disabled by default.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr"><span class="italic">listener_name</span>=
+ (DESCRIPTION=
+  (ADDRESS=(PROTOCOL=tcp)(HOST=rancode1-vip)(PORT=1522)(IP=v6_only))</pre></div>
+               </div><a id="NETRF1450"></a><a id="NETRF1452"></a><a id="NETRF1451"></a><a id="NETRF1453"></a><a id="NETRF297"></a><div class="sect3"><a id="GUID-FF87387C-1779-4CC3-932A-79BB01391C28" name="GUID-FF87387C-1779-4CC3-932A-79BB01391C28"></a><h4 id="NETRF-GUID-FF87387C-1779-4CC3-932A-79BB01391C28" class="sect4"><span class="enumeration_section">7.2.5 </span>QUEUESIZE
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the number of concurrent connection requests that the listener can accept on a TCP/IP or IPC listening endpoint (protocol address).</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The number of concurrent connection requests is dependent on the platform and listener usage scenarios. If the listener is heavily-loaded, then set the parameter to a higher number.</p>
+                     <p>Put this parameter at the end of the protocol address with its value set to the expected number of concurrent connection requests.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The default number of concurrent connection requests is operating system specific. </p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr"><span class="italic">listener_name</span>=
+ (DESCRIPTION=
+  (ADDRESS=(PROTOCOL=tcp)(HOST=hr-server)(PORT=1521)(QUEUESIZE=20)))</pre><div class="infoboxnotealso" id="GUID-FF87387C-1779-4CC3-932A-79BB01391C28__GUID-F115C61E-1696-4B8A-AAB9-9C3B9664E24A">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../netag/configuring-and-administering-oracle-net-listener.html#NETAG0101" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a> for additional information about configuring this parameter
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="NETRF1454"></a><a id="NETRF2233"></a><a id="NETRF1455"></a><a id="NETRF1457"></a><a id="NETRF298"></a><div class="sect3"><a id="GUID-F4D5AD89-618C-42C3-B675-39EE1B1674A8" name="GUID-F4D5AD89-618C-42C3-B675-39EE1B1674A8"></a><h4 id="NETRF-GUID-F4D5AD89-618C-42C3-B675-39EE1B1674A8" class="sect4"><span class="enumeration_section">7.2.6 </span>RECV_BUF_SIZE 
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify, in bytes, the buffer space for receive operations of sessions. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Put this parameter under the <code class="codeph">DESCRIPTION</code> parameter or at the end of the protocol address with its value set to the expected number of bytes.
+                     </p>
+                     <p>This parameter is supported by the TCP/IP, TCP/IP with SSL, and SDP protocols.</p>
+                     <div class="infoboxnote" id="GUID-F4D5AD89-618C-42C3-B675-39EE1B1674A8__GUID-6930063C-272E-4144-A804-687BC01AE2BE">
+                        <p class="notep1">Note:</p>
+                        <p>Additional protocols might support this parameter on certain operating systems. Refer to the operating system-specific documentation for information about additional protocols that support this parameter.</p>
+                     </div>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The default value for this parameter is operating system specific. The default for the Linux operating system is 87380 bytes.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr"><span class="italic">listener_name</span>=
+  (DESCRIPTION=
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521)
+        (RECV_BUF_SIZE=11784))
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc)
+        (RECV_BUF_SIZE=11784))))
+<span class="italic">listener_name</span>=
+  (DESCRIPTION=
+    (ADDRESS_LIST=
+      (RECV_BUF_SIZE=11784))
+      (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521)
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))))</pre><div class="infoboxnotealso" id="GUID-F4D5AD89-618C-42C3-B675-39EE1B1674A8__GUID-152A764F-157C-4607-AD14-8BBAE622071E">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../netag/optimizing-performance.html#NETAG0142" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a> for additional information about configuring this parameter
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="NETRF1458"></a><a id="NETRF2234"></a><a id="NETRF1459"></a><a id="NETRF1461"></a><a id="NETRF299"></a><div class="sect3"><a id="GUID-7364539B-C764-4BD7-B981-B52F26AD5823" name="GUID-7364539B-C764-4BD7-B981-B52F26AD5823"></a><h4 id="NETRF-GUID-7364539B-C764-4BD7-B981-B52F26AD5823" class="sect4"><span class="enumeration_section">7.2.7 </span>SEND_BUF_SIZE
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify, in bytes, the buffer space for send operations of sessions. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Put this parameter under the <code class="codeph">DESCRIPTION</code> parameter or at the end of the protocol address.
+                     </p>
+                     <p>This parameter is supported by the TCP/IP, TCP/IP with SSL, and SDP protocols.</p>
+                     <div class="infoboxnote" id="GUID-7364539B-C764-4BD7-B981-B52F26AD5823__GUID-9E6FC01E-3BD6-4B4C-82EA-ECA5618DD0BA">
+                        <p class="notep1">Note:</p>
+                        <p>Additional protocols might support this parameter on certain operating systems. Refer to operating system-specific documentation for additional information about additional protocols that support this parameter.</p>
+                     </div>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The default value for this parameter is operating system specific. The default for the Linux operating system is 16 KB.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr"><span class="italic">listener_name</span>=
+  (DESCRIPTION=
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521)
+       (SEND_BUF_SIZE=11280))
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc)
+       (SEND_BUF_SIZE=11280))))
+<span class="italic">listener_name</span>=
+  (DESCRIPTION=
+    (SEND_BUF_SIZE=11280)
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521)
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))))</pre><div class="infoboxnotealso" id="GUID-7364539B-C764-4BD7-B981-B52F26AD5823__GUID-3CE44603-B205-4883-A4AC-85AB21230D85">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../netag/optimizing-performance.html#NETAG0142" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a> for additional information about configuring this parameter
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NETRF424"></a><div class="sect2"><a id="GUID-71286659-3065-4C14-9C6F-83F952EEE642" name="GUID-71286659-3065-4C14-9C6F-83F952EEE642"></a><h3 id="NETRF-GUID-71286659-3065-4C14-9C6F-83F952EEE642" class="sect3"><span class="enumeration_section">7.3 </span>Connection Rate Limiter Parameters
+               </h3>
+               <div>
+                  <p>The connection rate limiter feature in Oracle Net Listener enables a database administrator to limit the number of new connections handled by the listener. When this feature is enabled, Oracle Net Listener imposes a user-specified maximum limit on the number of new connections handled by the listener every second.</p>
+                  <p>Depending on the configuration, the rate can be applied to a collection of endpoints, or to a specific endpoint.</p>
+                  <p>This feature is controlled through the following <code class="codeph">listener.ora</code> configuration parameters:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-1D032391-CBBC-4861-87D6-E4CE37353E22">CONNECTION_RATE_listener name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-F302BF91-64F2-4CE8-A3C7-9FDB5BA6DCF8">RATE_LIMIT</a></p>
+                     </li>
+                  </ul>
+               </div><a id="NETRF1482"></a><a id="NETRF2235"></a><a id="NETRF1483"></a><a id="NETRF425"></a><div class="sect3"><a id="GUID-1D032391-CBBC-4861-87D6-E4CE37353E22" name="GUID-1D032391-CBBC-4861-87D6-E4CE37353E22"></a><h4 id="NETRF-GUID-1D032391-CBBC-4861-87D6-E4CE37353E22" class="sect4"><span class="enumeration_section">7.3.1 </span>CONNECTION_RATE_<span class="italic">listener name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify a global rate that is enforced across all listening endpoints that are rate-limited. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When this parameter is specified, it overrides any endpoint-level numeric rate values that might be specified.</p>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">CONNECTION_RATE_<span class="italic">listener_name</span>=<span class="italic">number_of_connections_per_second</span></pre></div>
+               </div><a id="NETRF1484"></a><a id="NETRF2236"></a><a id="NETRF1485"></a><a id="NETRF1486"></a><a id="NETRF426"></a><div class="sect3"><a id="GUID-F302BF91-64F2-4CE8-A3C7-9FDB5BA6DCF8" name="GUID-F302BF91-64F2-4CE8-A3C7-9FDB5BA6DCF8"></a><h4 id="NETRF-GUID-F302BF91-64F2-4CE8-A3C7-9FDB5BA6DCF8" class="sect4"><span class="enumeration_section">7.3.2 </span>RATE_LIMIT
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To indicate that a particular listening endpoint is rate limited. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The parameter is specified in the <code class="codeph">ADDRESS</code> section of the listener endpoint configuration.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LISTENER=
+   (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=1521)(RATE_LIMIT=yes))
+</pre><ul style="list-style-type: disc;">
+                        <li>
+                           <p>bug 17734748</p>
+                           <p>When the <code class="codeph">RATE_LIMIT</code> parameter is set to <code class="codeph">yes</code> for an endpoint, that endpoint is included in the enforcement of the global rate configured by the  <code class="codeph">CONNECTION_RATE_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter. The global rate limit is enforced individually at each endpoint that has <code class="codeph">RATE_LIMIT</code> set to <code class="codeph">yes</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Dynamic endpoints for listeners managed by Oracle Clusterware have the  <code class="codeph">RATE_LIMIT</code> parameter set to <code class="codeph">yes</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>When the <code class="codeph">RATE_LIMIT</code> parameter is set to a value greater than <code class="codeph">0</code>, then the rate limit is enforced at that endpoint level.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The following examples use the <code class="codeph">CONNECTION_RATE_</code><span class="italic"><code class="codeph">listener name</code></span> and <code class="codeph">RATE_LIMIT</code> parameters.
+                     </p>
+                     <p>Example 1</p><pre class="oac_no_warn" dir="ltr">CONNECTION_RATE_LISTENER=10
+
+LISTENER= 
+  (ADDRESS_LIST=
+   (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=1521)(RATE_LIMIT=yes))
+   (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=1522)(RATE_LIMIT=yes))
+   (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=1523)))
+</pre><p>In the preceding example, the global rate of new connections is enforced separately for each endpoint. Connections through port 1521 are limited at 10 every second, and the connections through port 1522 are also separately limited at 10 every second. Connections through port 1523 are not limited.</p>
+                     <p>Example 2</p><pre class="oac_no_warn" dir="ltr">LISTENER= (ADDRESS_LIST=
+   (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=1521)(RATE_LIMIT=5))
+   (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=1522)(RATE_LIMIT=10))
+   (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=1523))
+   )
+</pre><p>In the preceding example, the connection rates are enforced at the endpoint level. A maximum of 5 connections are processed through port 1521 every second. The limit for connections through port 1522 is 10 every second. Connections through port 1523 are not limited.</p>
+                     <div class="infoboxnote" id="GUID-F302BF91-64F2-4CE8-A3C7-9FDB5BA6DCF8__GUID-9F0CDB86-E3B2-438D-8B22-B48947DBC1C0">
+                        <p class="notep1">Note:</p>
+                        <p>The global <code class="codeph">CONNECTON_RATE_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter is not specified in the preceding configuration. If it is specified, then the limits on ports 1521 and 1522 are ignored, and the global value is used instead.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NETRF309"></a><div class="sect2"><a id="GUID-42DA4C62-1CA2-433B-BD71-7C4E1A0E5244" name="GUID-42DA4C62-1CA2-433B-BD71-7C4E1A0E5244"></a><h3 id="NETRF-GUID-42DA4C62-1CA2-433B-BD71-7C4E1A0E5244" class="sect3"><span class="enumeration_section">7.4 </span>Control Parameters
+               </h3>
+               <div>
+                  <p>This section describes the following parameters that control the behavior of the listener:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-8629592E-6EF4-48A3-82DD-DCD49EC1C503">ADMIN_RESTRICTIONS_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-1E981272-3DB9-4CB2-AF97-35D0800E5780">ALLOW_MULTIPLE_REDIRECTS_listener_name </a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-3BE4520C-CECC-4593-B876-28397FEE84FC">ENABLE_EXADIRECT_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-84F0CF5E-9B88-4B73-BA02-FE0D9B0C90F6">CRS_NOTIFICATION_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-A4D33895-810F-4698-806D-E3E1E730DB8F">DEDICATED_THROUGH_BROKER_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-A8D6AED3-2A99-420E-A65D-45F4990B5644">DEFAULT_SERVICE_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-140AC8D3-091C-4129-B2E6-0A4773590C14">INBOUND_CONNECT_TIMEOUT_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-04F577EE-5344-4203-ADC9-E11663BEF155">LOCAL_REGISTRATION_ADDRESS_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-EC44A2C5-8AB2-478C-844C-495EAD5E44D6">MAX_ALL_CONNECTIONS_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-F9C1B2D7-CDE5-45F2-BC53-F3DD637E5C98">MAX_REG_CONNECTIONS_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-C3C10141-6ED7-47FE-A5E3-3BA97F536006">REGISTRATION_EXCLUDED_NODES_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-E6EF1923-D176-4069-8185-D9CE63B5BE82">REGISTRATION_INVITED_NODES_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-CC11C1C6-484E-4C75-9AF6-4E4D850ED715">REMOTE_REGISTRATION_ADDRESS_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-8D677A7B-6156-4719-B865-53CA0866CA8B">SAVE_CONFIG_ON_STOP_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-6CBE2E2F-912F-4DA2-A137-7B2EE72990BA">SSL_CLIENT_AUTHENTICATION</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-A60AFD07-BDF5-459D-9C09-AEDCD5F99CA5">SSL_VERSION</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-C4D5E31B-9D5F-42A9-AEAB-417BA54A021C">SUBSCRIBE_FOR_NODE_DOWN_EVENT_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-5055BBB9-26E5-465D-B79A-A712FADF3595">USE_SID_AS_SERVICE_listener_name </a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-54624961-0C3F-4EE0-8D3F-943A1188284E">VALID_NODE_CHECKING_REGISTRATION_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-FEC811A4-836E-4E0C-88B9-9D410DE07E95">WALLET_LOCATION </a></p>
+                     </li>
+                  </ul>
+               </div><a id="NETRF1487"></a><a id="NETRF2237"></a><a id="NETRF1488"></a><a id="NETRF1489"></a><a id="NETRF310"></a><div class="sect3"><a id="GUID-8629592E-6EF4-48A3-82DD-DCD49EC1C503" name="GUID-8629592E-6EF4-48A3-82DD-DCD49EC1C503"></a><h4 id="NETRF-GUID-8629592E-6EF4-48A3-82DD-DCD49EC1C503" class="sect4"><span class="enumeration_section">7.4.1 </span>ADMIN_RESTRICTIONS_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To restrict runtime administration of the listener.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Setting <code class="codeph">ADMIN_RESTRICTIONS_</code><span class="italic"><code class="codeph">listener_name</code></span><code class="codeph">=on</code> disables the runtime modification of parameters in <code class="codeph">listener.ora</code>. That is, the listener refuses to accept <a href="Listener-Control-utility.html#GUID-287F06EC-2A68-4899-9E71-3C81B8DB1597">SET</a> commands that alter its parameters. To change any of the parameters in <code class="codeph">listener.ora</code>, including <code class="codeph">ADMIN_RESTRICTIONS_</code><span class="italic"><code class="codeph">listener_name</code></span> itself, modify the <code class="codeph">listener.ora</code> file manually and reload its parameters using the <a href="Listener-Control-utility.html#GUID-1BE648E7-3AB8-4DE2-97DA-E136DF6F4280">RELOAD</a> command for the new changes to take effect without explicitly stopping and restarting the listener. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default </p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>off</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">ADMIN_RESTRICTIONS_listener=on</pre></div>
+               </div>
+               <div class="sect3"><a id="GUID-1E981272-3DB9-4CB2-AF97-35D0800E5780" name="GUID-1E981272-3DB9-4CB2-AF97-35D0800E5780"></a><h4 id="NETRF-GUID-1E981272-3DB9-4CB2-AF97-35D0800E5780" class="sect4"><span class="enumeration_section">7.4.2 </span>ALLOW_MULTIPLE_REDIRECTS_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To support multiple redirects of the client.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter should only be set on the SCAN listener on the Oracle Public Cloud. When set to <code class="codeph">on</code>, multiple redirects of the client are allowed.
+                     </p>
+                     <p>Do not set this parameter for a node listener if that is used as a SCAN listener.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                        <p>off</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                        <p><code class="codeph">on | off</code></p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Example</p><pre class="oac_no_warn" dir="ltr">ALLOW_MULTIPLE_REDIRECTS_listener=on</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-3BE4520C-CECC-4593-B876-28397FEE84FC" name="GUID-3BE4520C-CECC-4593-B876-28397FEE84FC"></a><h4 id="NETRF-GUID-3BE4520C-CECC-4593-B876-28397FEE84FC" class="sect4"><span class="enumeration_section">7.4.3 </span>ENABLE_EXADIRECT_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                        <p>To enable Exadirect protocol.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>The parameter enables Exadirect support.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                        <p><code class="codeph">Off</code></p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                        <p><code class="codeph">on | off</code></p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-3BE4520C-CECC-4593-B876-28397FEE84FC__GUID-6C05B286-08D7-4392-8362-667935438FA3">
+                        <p class="titleinexample">Example 7-2 Example</p>
+                        <p><code class="codeph">ENABLE_EXADIRECT_listener=on</code></p>
+                     </div>
+                     <!-- class="example" -->
+                  </div>
+               </div><a id="NETRF1490"></a><a id="NETRF2238"></a><a id="NETRF1491"></a><a id="NETRF1492"></a><a id="NETRF433"></a><div class="sect3"><a id="GUID-84F0CF5E-9B88-4B73-BA02-FE0D9B0C90F6" name="GUID-84F0CF5E-9B88-4B73-BA02-FE0D9B0C90F6"></a><h4 id="NETRF-GUID-84F0CF5E-9B88-4B73-BA02-FE0D9B0C90F6" class="sect4"><span class="enumeration_section">7.4.4 </span>CRS_NOTIFICATION_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To set notification. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>By default, the Oracle Net listener notifies Cluster Ready Services (CRS) when it is started or stopped. These notifications allow CRS to manage the listener in an Oracle Real Application Clusters environment. This behavior can be prevented by setting the <code class="codeph">CRS_NOTIFICATION_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter to <code class="codeph">off</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>on</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">on | off</pre></div>
+               </div><a id="NETRF2102"></a><a id="NETRF2103"></a><a id="NETRF2105"></a><a id="NETRF2104"></a><a id="NETRF2101"></a><div class="sect3"><a id="GUID-A4D33895-810F-4698-806D-E3E1E730DB8F" name="GUID-A4D33895-810F-4698-806D-E3E1E730DB8F"></a><h4 id="NETRF-GUID-A4D33895-810F-4698-806D-E3E1E730DB8F" class="sect4"><span class="enumeration_section">7.4.5 </span>DEDICATED_THROUGH_BROKER_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <p>Bug 14644490</p>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To enable the server to spawn a thread or process when a connection to the database is requested through the listener.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>off</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">on | off</pre><div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">DEDICATED_THROUGH_BROKER_listener=on</pre></div>
+               </div><a id="NETRF1493"></a><a id="NETRF2239"></a><a id="NETRF1494"></a><a id="NETRF1495"></a><a id="NETRF311"></a><div class="sect3"><a id="GUID-A8D6AED3-2A99-420E-A65D-45F4990B5644" name="GUID-A8D6AED3-2A99-420E-A65D-45F4990B5644"></a><h4 id="NETRF-GUID-A8D6AED3-2A99-420E-A65D-45F4990B5644" class="sect4"><span class="enumeration_section">7.4.6 </span>DEFAULT_SERVICE_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To enable users to connect to the database without having to specify a service name from the client side.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>In Oracle Database 12<span class="italic">c</span>, when a client tries to connect to the database the connection request passes through the listener. The listener may be servicing several different databases. If a service name is configured in this parameter, then users may not necessarily need to specify a service name in the connect syntax. If a user specifies a service name, then the listener connects the user to that specific database, otherwise the listener connects to the service name specified by the <code class="codeph">DEFAULT_SERVICE_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter. For container databases, the client must explicitly specify the service name.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-A8D6AED3-2A99-420E-A65D-45F4990B5644__GUID-3F8418B8-829F-4C13-A589-B2AFFFC32356">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../netag/configuring-naming-methods.html#NETAG255" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a> for additional information about the Easy Connect naming method
+                        </p>
+                     </div>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>There is no default value for the <code class="codeph">DEFAULT_SERVICE_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter. If this parameter is not configured and a user does not specify a fully-qualified service name in the connect syntax, then the connection attempt fails. This parameter only accepts one value.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">DEFAULT_SERVICE_listener=sales.us.example.com</pre></div>
+               </div><a id="NETRF1496"></a><a id="NETRF2240"></a><a id="NETRF1497"></a><a id="NETRF1498"></a><a id="NETRF312"></a><div class="sect3"><a id="GUID-140AC8D3-091C-4129-B2E6-0A4773590C14" name="GUID-140AC8D3-091C-4129-B2E6-0A4773590C14"></a><h4 id="NETRF-GUID-140AC8D3-091C-4129-B2E6-0A4773590C14" class="sect4"><span class="enumeration_section">7.4.7 </span>INBOUND_CONNECT_TIMEOUT_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the time, in seconds, for the client to complete its connect request to the listener after the network connection had been established. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>If the listener does not receive the client request in the time specified, then it terminates the connection. In addition, the listener logs the IP address of the client and an <a id="d27519e2299" class="indexterm-anchor"></a><a id="d27519e2301" class="indexterm-anchor"></a><code class="codeph">ORA-12525:TNS: listener has not received client's request in time allowed</code> error message to the <code class="codeph">listener.log</code> file. 
+                     </p>
+                     <p>To protect both the listener and the database server, Oracle recommends setting this parameter in combination with the <a href="parameters-for-the-sqlnet-ora-file.html#GUID-E83FEC2B-52E7-4513-83D8-830F9D745099">SQLNET.INBOUND_CONNECT_TIMEOUT</a> parameter in the <code class="codeph">sqlnet.ora</code> file. When specifying values for these parameters, consider the following recommendations:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Set both parameters to an initial low value. </p>
+                        </li>
+                        <li>
+                           <p>Set the value of the <code class="codeph">INBOUND_CONNECT_TIMEOUT_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter to a lower value than the <code class="codeph">SQLNET.INBOUND_CONNECT_TIMEOUT</code> parameter. 
+                           </p>
+                        </li>
+                     </ul>
+                     <p>For example, you can set the <code class="codeph">INBOUND_CONNECT_TIMEOUT_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter to 2 seconds and the <code class="codeph">INBOUND_CONNECT_TIMEOUT</code> parameter to 3 seconds. If clients are unable to complete connections within the specified time due to system or network delays that are normal for the particular environment, then increment the time as needed.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>60 seconds</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">INBOUND_CONNECT_TIMEOUT_listener=2</pre></div>
+               </div>
+               <div class="sect3"><a id="GUID-04F577EE-5344-4203-ADC9-E11663BEF155" name="GUID-04F577EE-5344-4203-ADC9-E11663BEF155"></a><h4 id="NETRF-GUID-04F577EE-5344-4203-ADC9-E11663BEF155" class="sect4"><span class="enumeration_section">7.4.8 </span>LOCAL_REGISTRATION_ADDRESS_listener_name
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                        <p>To secure registration requests through dedicated secure registration endpoints for local listeners. Service ACLs are accepted by listener only if <code class="codeph">LOCAL_REGISTRATION_ADDRESS_</code><span class="italic">lsnr alias</span> is configured. The parameter specifies the group that is allowed to send ACLs.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>The local registration endpoint accepts local registration connections from the specified group. All local registration requests coming on normal listening endpoints are redirected to the local registration endpoint. If the registrar is not a part of the group, then it cannot connect to the endpoint.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                        <p><code class="codeph">OFF</code></p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                        <p><code class="codeph">ON, OFF, or IPC endpoint address with group</code></p>
+                        <p>When set to ON, listener defaults the group to <code class="codeph">oinstall</code> on UNIX and <code class="codeph">ORA_INSTALL</code> on Windows.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-04F577EE-5344-4203-ADC9-E11663BEF155__GUID-354414D5-18E8-48E9-BAEF-C3EBDD40E10E">
+                        <p class="titleinexample">Example 7-3 Example</p><pre class="pre codeblock"><code>LOCAL_REGISTRATION_ADDRESS_<span class="italic">lsnr_alias</span> = (address=(protocol=ipc)(group=xyz)) LOCAL_REGISTRATION_ADDRESS_<span class="italic">lsnr_alias</span> =ON </code></pre></div>
+                     <!-- class="example" -->
+                  </div>
+                  <div>
+                     <div class="relinfo">
+                        <p><strong>Related Topics</strong></p>
+                        <ul>
+                           <li><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-EEEA9164-9D08-4163-9985-59D6A24E1A31">Firewall</a></li>
+                           <li><a href="../arpls/DBMS_SFW_ACL_ADMIN.html#ARPLS-GUID-2969DEEF-B3D7-450B-B688-96E41AAD229E" target="_blank">DBMS_SFW_ACL_ADMIN</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="NETRF2134"></a><a id="NETRF2241"></a><a id="NETRF2136"></a><a id="NETRF2135"></a><a id="NETRF2133"></a><div class="sect3"><a id="GUID-EC44A2C5-8AB2-478C-844C-495EAD5E44D6" name="GUID-EC44A2C5-8AB2-478C-844C-495EAD5E44D6"></a><h4 id="NETRF-GUID-EC44A2C5-8AB2-478C-844C-495EAD5E44D6" class="sect4"><span class="enumeration_section">7.4.9 </span>MAX_ALL_CONNECTIONS<span class="italic">_listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the maximum number of concurrent registration and client connection sessions that can be supported by Oracle Net Listener. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This number includes registration connections from databases, and ongoing client connection establishment requests. After a connection is established, the clients do not maintain a connection to the listener. This limit only applies to client connections that are in the initial connection establishment phase from a listener perspective.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Operating system-specific</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">MAX_ALL_CONNECTIONS_listener=40
+</pre></div>
+               </div><a id="NETRF2131"></a><a id="NETRF2137"></a><a id="NETRF2132"></a><a id="NETRF2130"></a><div class="sect3"><a id="GUID-F9C1B2D7-CDE5-45F2-BC53-F3DD637E5C98" name="GUID-F9C1B2D7-CDE5-45F2-BC53-F3DD637E5C98"></a><h4 id="NETRF-GUID-F9C1B2D7-CDE5-45F2-BC53-F3DD637E5C98" class="sect4"><span class="enumeration_section">7.4.10 </span>MAX_REG_CONNECTIONS<span class="italic">_listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the maximum number of concurrent registration connection sessions that can be supported by Oracle Net Listener.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>512</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">MAX_REG_CONNECTIONS_listener=20
+</pre></div>
+               </div><a id="NETRF1987"></a><a id="NETRF1989"></a><a id="NETRF1988"></a><a id="NETRF1990"></a><a id="NETRF1986"></a><div class="sect3"><a id="GUID-C3C10141-6ED7-47FE-A5E3-3BA97F536006" name="GUID-C3C10141-6ED7-47FE-A5E3-3BA97F536006"></a><h4 id="NETRF-GUID-C3C10141-6ED7-47FE-A5E3-3BA97F536006" class="sect4"><span class="enumeration_section">7.4.11 </span>REGISTRATION_EXCLUDED_NODES_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the list of nodes that cannot register with the listener. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The list can include host names or CIDR notation for IPv4 and IPv6 addresses. The wildcard format (<code class="codeph">*</code>) is supported for IPv4 addresses. The presence of a host name in the list results in the inclusion of all IP addresses mapped to the host name. The host name should be consistent with the public network interface. 
+                     </p>
+                     <p>If the <code class="codeph">REGISTRATION_INVITED_NODES_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter and the <code class="codeph">REGISTRATION_EXCLUDED_NODES</code><span class="italic"><code class="codeph">_listener_name</code></span> parameter are set, then the <code class="codeph">REGISTRATION_EXCLUDED_NODES_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter is ignored.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Valid nodes and subnet IP addresses or names.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">REGISTRATION_EXCLUDED_NODES_listener = (10.1.26.*, 10.16.40.0/24, \
+                                       2001:DB8:3eff:fe38, node2)</pre></div>
+               </div><a id="NETRF1992"></a><a id="NETRF1994"></a><a id="NETRF1993"></a><a id="NETRF1995"></a><a id="NETRF1991"></a><div class="sect3"><a id="GUID-E6EF1923-D176-4069-8185-D9CE63B5BE82" name="GUID-E6EF1923-D176-4069-8185-D9CE63B5BE82"></a><h4 id="NETRF-GUID-E6EF1923-D176-4069-8185-D9CE63B5BE82" class="sect4"><span class="enumeration_section">7.4.12 </span>REGISTRATION_INVITED_NODES_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the list of node that can register with the listener. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The list can include host names or CIDR notation for IPv4 and IPv6 addresses. The wildcard format (<code class="codeph">*</code>) is supported for IPv4 addresses. The presence of a host name in the list results in the inclusion of all IP addresses mapped to the host name. The host name should be consistent with the public network interface.
+                     </p>
+                     <p>If the <code class="codeph">REGISTRATION_INVITED_NODES_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter and the <code class="codeph">REGISTRATION_EXCLUDED_NODES</code><span class="italic"><code class="codeph">_listener_name</code></span> parameter are set, then the <code class="codeph">REGISTRATION_EXCLUDED_NODES_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter is ignored.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Valid nodes and subnet IP addresses or names.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">REGISTRATION_INVITED_NODES_listener = (10.1.35.*, 10.1.34.0/24, \
+                                      2001:DB8:fe38:7303, node1)</pre></div>
+               </div><a id="NETRF2109"></a><a id="NETRF2242"></a><a id="NETRF2110"></a><a id="NETRF2111"></a><a id="NETRF2112"></a><a id="NETRF2108"></a><div class="sect3"><a id="GUID-CC11C1C6-484E-4C75-9AF6-4E4D850ED715" name="GUID-CC11C1C6-484E-4C75-9AF6-4E4D850ED715"></a><h4 id="NETRF-GUID-CC11C1C6-484E-4C75-9AF6-4E4D850ED715" class="sect4"><span class="enumeration_section">7.4.13 </span>REMOTE_REGISTRATION_ADDRESS_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To secure registration requests through dedicated secure registration endpoints for SCAN listeners. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The registration endpoint is on a private network within the cluster. All remote registration requests coming in on normal listening endpoints are redirected to the registration endpoint. Any system which is not a part of the cluster cannot connect to the endpoint. This feature is not supported when <code class="codeph">ADMIN_RESTRICTIONS_</code><span class="italic"><code class="codeph">listener_name</code></span> is set to <code class="codeph">ON</code> as the Cluster Ready Services agent configures the <code class="codeph">remote_registration_address</code> dynamically at run time.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is configured internally in the SCAN listener to restrict registrations to the private network. The value of this parameter should not be modified or specified explicitly. The only supported explicit setting is for turning this feature off by setting the value to <code class="codeph">OFF</code>. The value is <code class="codeph">OFF</code> in non-SCAN listeners. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">off</code></p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">REMOTE_REGISTRATION_ADDRESS_listener=off</pre></div>
+               </div><a id="NETRF1501"></a><a id="NETRF2243"></a><a id="NETRF1502"></a><a id="NETRF1503"></a><a id="NETRF1504"></a><a id="NETRF317"></a><div class="sect3"><a id="GUID-8D677A7B-6156-4719-B865-53CA0866CA8B" name="GUID-8D677A7B-6156-4719-B865-53CA0866CA8B"></a><h4 id="NETRF-GUID-8D677A7B-6156-4719-B865-53CA0866CA8B" class="sect4"><span class="enumeration_section">7.4.14 </span>SAVE_CONFIG_ON_STOP_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify whether runtime configuration changes are saved to the <code class="codeph">listener.ora</code> file.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When you set the parameter to <code class="codeph">true</code>, any parameters that were modified while the listener was running using the Listener Control utility <a href="Listener-Control-utility.html#GUID-287F06EC-2A68-4899-9E71-3C81B8DB1597">SET</a> command are saved to the <code class="codeph">listener.ora</code> file when the <a href="Listener-Control-utility.html#GUID-B6D0FE95-047C-4641-82D6-187DD269E1BA">STOP</a> command is issued. When you set the parameter to <code class="codeph">false</code>, the Listener Control utility does not save the runtime configuration changes to the <code class="codeph">listener.ora</code> file.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>false</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">true | false</pre><div class="section">
+                        <p class="subhead3">Example </p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">SAVE_CONFIG_ON_STOP_listener=true</pre></div>
+               </div><a id="NETRF1505"></a><a id="NETRF1508"></a><a id="NETRF1506"></a><a id="NETRF1507"></a><a id="NETRF1509"></a><a id="NETRF318"></a><div class="sect3"><a id="GUID-6CBE2E2F-912F-4DA2-A137-7B2EE72990BA" name="GUID-6CBE2E2F-912F-4DA2-A137-7B2EE72990BA"></a><h4 id="NETRF-GUID-6CBE2E2F-912F-4DA2-A137-7B2EE72990BA" class="sect4"><span class="enumeration_section">7.4.15 </span>SSL_CLIENT_AUTHENTICATION
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p> To specify whether a client is authenticated using the <span class="bold"><a href="glossary.html#GUID-F5E98969-D056-4872-8897-83215C220417"><span class="xrefglossterm">Secure Sockets Layer (SSL)</span></a></span>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The database server authenticates the client. Therefore, this value should be set to <code class="codeph">false.</code> If this parameter is set to <code class="codeph">true</code>, then the listener attempts to authenticate the client, which can result in a failure.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>true</p>
+                     <div class="section">
+                        <p class="subhead3">Values </p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">true | false</pre><div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">SSL_CLIENT_AUTHENTICATION=false</pre><div class="infoboxnotealso" id="GUID-6CBE2E2F-912F-4DA2-A137-7B2EE72990BA__GUID-9DB5A6EE-42A6-4894-BF98-C4315490B299">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../dbseg/kerberos-ssl-and-radius-authentication-parameters.html#DBSEG9808" target="_blank"><span class="italic">Oracle Database Security Guide</span></a></p>
+                     </div>
+                  </div>
+               </div>
+               <div class="sect3"><a id="GUID-A60AFD07-BDF5-459D-9C09-AEDCD5F99CA5" name="GUID-A60AFD07-BDF5-459D-9C09-AEDCD5F99CA5"></a><h4 id="NETRF-GUID-A60AFD07-BDF5-459D-9C09-AEDCD5F99CA5" class="sect4"><span class="enumeration_section">7.4.16 </span>SSL_VERSION
+                  </h4>
+                  <div>
+                     <div class="section" id="GUID-A60AFD07-BDF5-459D-9C09-AEDCD5F99CA5__PURPOSE-C0A82FBD">
+                        <p class="subhead3">Purpose</p>
+                        <p>To limit allowable SSL or TLS versions used for connections. </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section" id="GUID-A60AFD07-BDF5-459D-9C09-AEDCD5F99CA5__USAGENOTES-C0A83417">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>Clients and database servers must use a compatible version. This parameter should only be used when absolutely necessary for backward compatibility. The current default uses TLS version 1.2 which is the version required for multiple security compliance requirements.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">1.2</pre><div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">undetermined | 3.0 | 1.0| 1.1 | 1.2</pre><p>If you want to specify one version or another version, then use “or”. The following values are permitted:</p><pre class="oac_no_warn" dir="ltr">1.0 or 3.0 | 1.2 or 3.0 | 1.1 or 1.0 | 1.2 or 1.0 | 1.2 or 1.1 | 1.1 or 1.0 or 3.0 |
+1.2 or 1.0 or 3.0 | 1.2 or 1.1 or 1.0 | 1.2 or 1.1 or 3.0 |1.2 or 1.1 or 1.0 or 3.0</pre><div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">SSL_VERSION=1.2</pre><p>The remaining version numbers correspond to the TLS versions, such as, TLSv1.0, TLSv1.1, and TLSv1.2.</p>
+                     <div class="infoboxnotealso" id="GUID-A60AFD07-BDF5-459D-9C09-AEDCD5F99CA5__GUID-38F8A5CF-C605-4BA3-911F-18FB9B50F29D">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../dbseg/kerberos-ssl-and-radius-authentication-parameters.html#DBSEG9807" target="_blank"><span class="italic">Oracle Database Security Guide</span></a></p>
+                     </div>
+                  </div>
+               </div><a id="NETRF1513"></a><a id="NETRF2244"></a><a id="NETRF1514"></a><a id="NETRF1515"></a><a id="NETRF434"></a><div class="sect3"><a id="GUID-C4D5E31B-9D5F-42A9-AEAB-417BA54A021C" name="GUID-C4D5E31B-9D5F-42A9-AEAB-417BA54A021C"></a><h4 id="NETRF-GUID-C4D5E31B-9D5F-42A9-AEAB-417BA54A021C" class="sect4"><span class="enumeration_section">7.4.17 </span>SUBSCRIBE_FOR_NODE_DOWN_EVENT_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To subscribe to Oracle Notification Service (ONS) notifications for downed events. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>By default, the listener subscribes to the ONS node down event on startup, if ONS is available. This subscription enables the listener to remove the affected service when it receives node down event notification from ONS. The listener uses asynchronous subscription for the event notification. Alter this behavior by setting <code class="codeph">SUBSCRIBE_FOR_NODE_DOWN_EVENT_</code><span class="italic"><code class="codeph">listener_name</code></span><code class="codeph">=off</code> in <code class="codeph">listener.ora</code>.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>on</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">on | off</pre></div>
+               </div><a id="NETRF2091"></a><a id="NETRF2245"></a><a id="NETRF2092"></a><a id="NETRF2093"></a><a id="NETRF2090"></a><div class="sect3"><a id="GUID-5055BBB9-26E5-465D-B79A-A712FADF3595" name="GUID-5055BBB9-26E5-465D-B79A-A712FADF3595"></a><h4 id="NETRF-GUID-5055BBB9-26E5-465D-B79A-A712FADF3595" class="sect4"><span class="enumeration_section">7.4.18 </span>USE_SID_AS_SERVICE_<span class="italic">listener_name</span> 
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To enable the system identifier (SID) in the connect descriptor to be interpreted as a service name when a user attempts a database connection. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Database clients with earlier releases of Oracle Database that have hard-coded connect descriptors can use this parameter to connect to a container or pluggable database. </p>
+                     <p>When the database is an Oracle Database 12<span class="italic">c</span> container database, the client must specify a service name in order to connect to it. Setting this parameter to <code class="codeph">on</code> instructs the listener to use the SID in the connect descriptor as a service name and connect the client to the specified database. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>off</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">USE_SID_AS_SERVICE_listener=on</pre></div>
+               </div><a id="NETRF1997"></a><a id="NETRF2246"></a><a id="NETRF1998"></a><a id="NETRF1999"></a><a id="NETRF2000"></a><a id="NETRF1996"></a><div class="sect3"><a id="GUID-54624961-0C3F-4EE0-8D3F-943A1188284E" name="GUID-54624961-0C3F-4EE0-8D3F-943A1188284E"></a><h4 id="NETRF-GUID-54624961-0C3F-4EE0-8D3F-943A1188284E" class="sect4"><span class="enumeration_section">7.4.19 </span>VALID_NODE_CHECKING_REGISTRATION_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To determine whether valid node checking registration is performed, or the subnet is allowed. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When set to <code class="codeph">on</code>, valid node checking registration is performed at the listener for any incoming registration request, and only local IP addresses are allowed. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>on</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">off | 0</code> to specify valid node checking registration is off, and no checking is performed.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">on | 1 | local</code> to specify valid node checking registration is on, and all local IP addresses can register. If a list of invited nodes is set, then all IP addresses, host names, or subnets in the list as well as local IP addresses are allowed.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">subnet | 2</code> to specify valid node checking registration is on, and all machines in the local subnets are allowed to register. If a list of invited nodes is set, then all nodes in the local subnets as well as all IP addresses, host names and subnets in the list are allowed. 
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">VALID_NODE_CHECKING_REGISTRATION_listener=on</pre></div>
+               </div><a id="NETRF1516"></a><a id="NETRF2247"></a><a id="NETRF1517"></a><a id="NETRF2001"></a><a id="NETRF1518"></a><a id="NETRF1519"></a><a id="NETRF1521"></a><a id="NETRF326"></a><div class="sect3"><a id="GUID-FEC811A4-836E-4E0C-88B9-9D410DE07E95" name="GUID-FEC811A4-836E-4E0C-88B9-9D410DE07E95"></a><h4 id="NETRF-GUID-FEC811A4-836E-4E0C-88B9-9D410DE07E95" class="sect4"><span class="enumeration_section">7.4.20 </span>WALLET_LOCATION 
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><a id="d27519e3708" class="indexterm-anchor"></a><a id="d27519e3710" class="indexterm-anchor"></a><a id="d27519e3716" class="indexterm-anchor"></a>To specify the location of wallets. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Wallets are certificates, keys, and trustpoints processed by SSL that allow for secure connections.</p>
+                     <p>The key/value pair for Microsoft certificate store (MCS) omits the <code class="codeph">METHOD_DATA</code> parameter because MCS does not use wallets. Instead, Oracle PKI (public key infrastructure) applications obtain certificates, trustpoints and private keys directly from the user's profile.
+                     </p>
+                     <p>If an Oracle wallet is stored in the Microsoft Windows registry and the wallet's <code class="codeph">key</code> (<code class="codeph">KEY)</code> is <code class="codeph">SALESAPP</code>, then the storage location of the encrypted wallet is <code class="codeph">HKEY_CURRENT_USER\SOFTWARE\ORACLE\WALLETS\SALESAPP\EWALLET.P12</code>. The storage location of the decrypted wallet is <code class="codeph">HKEY_CURRENT_USER\SOFTWARE\ORACLE\WALLETS\SALESAPP\CWALLET.SSO.</code> 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-FEC811A4-836E-4E0C-88B9-9D410DE07E95__BGBJACCC" title="Wallet syntax depending on operating system">Table 7-1</a> shows the syntax for the WALLET_LOCATION parameter based on wallet storage location.
+                     </p>
+                     <div class="tblformal" id="GUID-FEC811A4-836E-4E0C-88B9-9D410DE07E95__BGBJACCC">
+                        <p class="titleintable">Table 7-1 Syntax for WALLET_LOCATION</p>
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="Syntax for WALLET_LOCATION" summary="Wallet syntax depending on operating system" width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="48%" id="d27519e3769">Wallet Location</th>
+                                 <th align="left" valign="bottom" width="52%" id="d27519e3772">Syntax</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="48%" id="d27519e3777" headers="d27519e3769 ">
+                                    <p>Oracle wallets on file system</p>
+                                 </td>
+                                 <td align="left" valign="top" width="52%" headers="d27519e3777 d27519e3772 "><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+  (SOURCE=
+    (METHOD=<span class="italic">file</span>)
+    (METHOD_DATA=
+       (DIRECTORY=<span class="italic">directory</span>)
+       [(PKCS11=TRUE/FALSE)]))</pre></td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="48%" id="d27519e3790" headers="d27519e3769 ">
+                                    <p>Microsoft certificate store</p>
+                                 </td>
+                                 <td align="left" valign="top" width="52%" headers="d27519e3790 d27519e3772 "><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+  (SOURCE=
+     (METHOD=mcs))</pre></td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="48%" id="d27519e3797" headers="d27519e3769 ">
+                                    <p>Oracle wallets in the Microsoft Windows registry</p>
+                                 </td>
+                                 <td align="left" valign="top" width="52%" headers="d27519e3797 d27519e3772 "><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+      (METHOD=reg)
+      (METHOD_DATA=
+         (KEY=<span class="italic">registry_key</span>)))</pre></td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="48%" id="d27519e3807" headers="d27519e3769 ">
+                                    <p>Entrust wallets</p>
+                                 </td>
+                                 <td align="left" valign="top" width="52%" headers="d27519e3807 d27519e3772 "><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+      (METHOD=entr)
+      (METHOD_DATA=
+         (PROFILE=<span class="italic">file</span>.epf)
+         (INIFILE=<span class="italic">file</span>.ini)))</pre></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Additional Parameters</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The following additional parameters are available for <code class="codeph">WALLET_LOCATION</code>:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">SOURCE</code>: Type of storage for wallets and storage location.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">METHOD</code>: Type of storage.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">METHOD_DATA</code>: Storage location.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DIRECTORY</code>: Location of Oracle wallets on file system.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">KEY</code>: Wallet type and location in the Microsoft Windows registry.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">PROFILE</code>: Entrust profile file (<code class="codeph">.epf</code>).
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">INIFILE</code>: Entrust initialization file (<code class="codeph">.ini</code>).
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>None</p>
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Oracle wallets on file system:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=  
+  (SOURCE=
+      (METHOD=file)
+      (METHOD_DATA=  
+         (DIRECTORY=/etc/oracle/wallets/databases)))
+</pre><p>Microsoft certificate store:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+     (METHOD=mcs))
+   </pre><p>Oracle Wallets in the Microsoft Windows registry:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+     (METHOD=REG)
+     (METHOD_DATA=
+        (KEY=SALESAPP)))</pre><p></p>
+                     <p>Entrust Wallets:</p><pre class="oac_no_warn" dir="ltr">WALLET_LOCATION=
+   (SOURCE=
+     (METHOD=entr)
+     (METHOD_DATA=
+       (PROFILE=/etc/oracle/wallets/test.epf)
+       (INIFILE=/etc/oracle/wallets/test.ini)))<a id="d27519e3896" class="indexterm-anchor"></a><a id="d27519e3900" class="indexterm-anchor"></a><a id="d27519e3904" class="indexterm-anchor"></a><a id="d27519e3908" class="indexterm-anchor"></a></pre><div class="infoboxnotealso" id="GUID-FEC811A4-836E-4E0C-88B9-9D410DE07E95__GUID-2D07AD41-3F7A-4ED2-ADA5-80FCD6393509">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../dbimi/using-oracle-wallet-manager.html#DBIMI160" target="_blank"><span class="italic">Oracle Database Enterprise User Security Administrator's Guide</span></a></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NETRF400"></a><div class="sect2"><a id="GUID-FA408B01-4964-49E8-98AA-9A09146DA543" name="GUID-FA408B01-4964-49E8-98AA-9A09146DA543"></a><h3 id="NETRF-GUID-FA408B01-4964-49E8-98AA-9A09146DA543" class="sect3"><span class="enumeration_section">7.5 </span>ADR Diagnostic Parameters for Oracle Net Listener
+               </h3>
+               <div>
+                  <p>Since Oracle Database 11<span class="italic">g</span>, Oracle Database includes an advanced fault diagnosability infrastructure for preventing, detecting, diagnosing, and resolving problems. The problems are critical errors such as those caused by database code bugs, metadata corruption, and customer data corruption.
+                  </p>
+                  <p>When a critical error occurs, it is assigned an incident number, and diagnostic data for the error, such as traces and dumps, are immediately captured and tagged with the incident number. The data is then stored in the <a id="d27519e3978" class="indexterm-anchor"></a><a id="d27519e3982" class="indexterm-anchor"></a><a id="d27519e3986" class="indexterm-anchor"></a><a href="glossary.html#GUID-4E8722BB-B669-45B8-91A6-741AD9580997"><span class="xrefglossterm">Automatic Diagnostic Repository (ADR)</span></a>, a file-based repository outside the database.
+                  </p>
+                  <p>This section includes the parameters used when ADR is enabled. Non-ADR parameters listed in the <code class="codeph">listener.ora</code> file are ignored when ADR is enabled. <span class="q">"<a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-CC23074B-1BAC-4F6E-9338-DB9FBC31B944">Non-ADR Diagnostic Parameters for Oracle Net Listener</a>"</span> includes those used when ADR is disabled. ADR is enabled by default. 
+                  </p>
+                  <p>The following <code class="codeph">listener.ora</code> parameters are used when ADR is enabled (when <code class="codeph">DIAG_ADR_ENABLED</code> is set to <code class="codeph">on</code>):
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-BA85B853-C040-4B01-9387-0CA1827E028B">ADR_BASE_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-0A3FD609-A3D3-4C30-93D3-2A1B59635C0F">DIAG_ADR_ENABLED_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-156A6EE7-4E36-4510-AD53-226DD1403EB5">LOGGING_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-15FEE266-2017-4E4C-AFBB-CF104D18D32E">TRACE_LEVEL_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-5B956056-03AE-419E-93C3-3F970986825F">TRACE_TIMESTAMP_listener_name</a></p>
+                     </li>
+                  </ul>
+               </div><a id="NETRF1523"></a><a id="NETRF1524"></a><a id="NETRF1525"></a><a id="NETRF1526"></a><a id="NETRF420"></a><div class="sect3"><a id="GUID-BA85B853-C040-4B01-9387-0CA1827E028B" name="GUID-BA85B853-C040-4B01-9387-0CA1827E028B"></a><h4 id="NETRF-GUID-BA85B853-C040-4B01-9387-0CA1827E028B" class="sect4"><span class="enumeration_section">7.5.1 </span>ADR_BASE_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the base directory that stores tracing and logging incidents when ADR is enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The default is <code class="codeph">ORACLE_BASE</code>, or <code class="codeph">ORACLE_HOME/log</code> if <code class="codeph">ORACLE_BASE</code> is not defined.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Any valid directory path to a directory with write permission.</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">ADR_BASE_listener=/oracle/network/trace</pre></div>
+               </div><a id="NETRF1528"></a><a id="NETRF1529"></a><a id="NETRF1530"></a><a id="NETRF1531"></a><a id="NETRF1532"></a><a id="NETRF1913"></a><div class="sect3"><a id="GUID-0A3FD609-A3D3-4C30-93D3-2A1B59635C0F" name="GUID-0A3FD609-A3D3-4C30-93D3-2A1B59635C0F"></a><h4 id="NETRF-GUID-0A3FD609-A3D3-4C30-93D3-2A1B59635C0F" class="sect4"><span class="enumeration_section">7.5.2 </span>DIAG_ADR_ENABLED_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To indicate whether ADR tracing is enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When the <code class="codeph">DIAG_ADR_ENABLED_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter is set to <code class="codeph">on</code>, then ADR file tracing is used. When the <code class="codeph">DIAG_ADR_ENABLED_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter is set to <code class="codeph">off</code>, then non-ADR file tracing is used.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>on</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">on</code> | <code class="codeph">off</code></p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">DIAG_ADR_ENABLED_listener=on</pre></div>
+               </div><a id="NETRF1534"></a><a id="NETRF2248"></a><a id="NETRF1535"></a><a id="NETRF1536"></a><a id="NETRF1537"></a><a id="NETRF1914"></a><div class="sect3"><a id="GUID-156A6EE7-4E36-4510-AD53-226DD1403EB5" name="GUID-156A6EE7-4E36-4510-AD53-226DD1403EB5"></a><h4 id="NETRF-GUID-156A6EE7-4E36-4510-AD53-226DD1403EB5" class="sect4"><span class="enumeration_section">7.5.3 </span>LOGGING_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To turn logging on or off. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is also applicable when non-ADR tracing is used.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>on</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><code class="codeph">on</code> | <code class="codeph">off</code></p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LOGGING_listener=on</pre></div>
+               </div><a id="NETRF1539"></a><a id="NETRF2249"></a><a id="NETRF1540"></a><a id="NETRF1541"></a><a id="NETRF1542"></a><a id="NETRF1915"></a><div class="sect3"><a id="GUID-15FEE266-2017-4E4C-AFBB-CF104D18D32E" name="GUID-15FEE266-2017-4E4C-AFBB-CF104D18D32E"></a><h4 id="NETRF-GUID-15FEE266-2017-4E4C-AFBB-CF104D18D32E" class="sect4"><span class="enumeration_section">7.5.4 </span>TRACE_LEVEL_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To turn listener tracing on, at a specific level, or off. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is also applicable when non-ADR tracing is used.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>off | 0</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">off</code> or <code class="codeph">0</code> for no trace output
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">user</code> or <code class="codeph">4</code> for user trace information
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">admin</code> or <code class="codeph">10</code> for administration trace information
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">support</code> or <code class="codeph">16</code> for Oracle Support Services trace information
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_LEVEL_listener=admin</pre></div>
+               </div><a id="NETRF1544"></a><a id="NETRF2250"></a><a id="NETRF1545"></a><a id="NETRF1546"></a><a id="NETRF1547"></a><a id="NETRF1916"></a><div class="sect3"><a id="GUID-5B956056-03AE-419E-93C3-3F970986825F" name="GUID-5B956056-03AE-419E-93C3-3F970986825F"></a><h4 id="NETRF-GUID-5B956056-03AE-419E-93C3-3F970986825F" class="sect4"><span class="enumeration_section">7.5.5 </span>TRACE_TIMESTAMP_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To add a time stamp in the form of <code class="codeph">dd-mmm-yyyy hh:mi:ss:mil</code> to every trace event in the trace file for the listener. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>This parameter is used with the <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-15FEE266-2017-4E4C-AFBB-CF104D18D32E">TRACE_LEVEL_listener_name</a> parameter. This parameter is also applicable when non-ADR tracing is used.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default </p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>on</p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">on</code> | <code class="codeph">true</code> 
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">off</code> | <code class="codeph">false</code></p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_TIMESTAMP_listener=true</pre></div>
+               </div>
+            </div><a id="NETRF421"></a><div class="sect2"><a id="GUID-CC23074B-1BAC-4F6E-9338-DB9FBC31B944" name="GUID-CC23074B-1BAC-4F6E-9338-DB9FBC31B944"></a><h3 id="NETRF-GUID-CC23074B-1BAC-4F6E-9338-DB9FBC31B944" class="sect3"><span class="enumeration_section">7.6 </span>Non-ADR Diagnostic Parameters for Oracle Net Listener
+               </h3>
+               <div>
+                  <p>This section lists the parameters used when ADR is disabled. <span class="q">"<a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-FA408B01-4964-49E8-98AA-9A09146DA543">ADR Diagnostic Parameters for Oracle Net Listener</a>"</span> <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-FA408B01-4964-49E8-98AA-9A09146DA543">ADR Diagnostic Parameters for Oracle Net Listener</a> includes the parameters when ADR is enabled.
+                  </p>
+                  <div class="infoboxnote" id="GUID-CC23074B-1BAC-4F6E-9338-DB9FBC31B944__GUID-BE848AFE-2BD6-48D3-9803-C3E67D86AA6C">
+                     <p class="notep1">Note:</p>
+                     <p>The default value of <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-0A3FD609-A3D3-4C30-93D3-2A1B59635C0F">DIAG_ADR_ENABLED_listener_name</a> is <code class="codeph">on</code>. Therefore, the <code class="codeph">DIAG_ADR_ENABLED_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter <span class="italic">must</span> explicitly be set to <code class="codeph">off</code> to use non-ADR tracing.
+                     </p>
+                  </div>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-9FDCECED-B988-42FE-BAC7-565EB0A91757">LOG_DIRECTORY_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-F2ACB776-67B4-4E73-8BBF-562C48E47B07">LOG_FILE_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-15F51B03-9476-4AD3-A871-5C7095E90C1A">TRACE_DIRECTORY_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-7A868FAB-5C75-43B6-BCF0-D3915BEA2753">TRACE_FILE_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-C4BDB016-B4BD-4CB7-A2CC-DA6E4C87A574">TRACE_FILELEN_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-1B6FE96B-AC7B-442B-9726-20B4F7DB46C9">TRACE_FILENO_listener_name</a></p>
+                     </li>
+                  </ul>
+               </div><a id="NETRF1549"></a><a id="NETRF2251"></a><a id="NETRF1550"></a><a id="NETRF1551"></a><a id="NETRF1917"></a><div class="sect3"><a id="GUID-9FDCECED-B988-42FE-BAC7-565EB0A91757" name="GUID-9FDCECED-B988-42FE-BAC7-565EB0A91757"></a><h4 id="NETRF-GUID-9FDCECED-B988-42FE-BAC7-565EB0A91757" class="sect4"><span class="enumeration_section">7.6.1 </span>LOG_DIRECTORY_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the destination directory of the listener log file. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Use this parameter when ADR is not enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default </p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">ORACLE_HOME/network/log</pre><div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LOG_DIRECTORY_listener=/oracle/network/admin/log</pre></div>
+               </div><a id="NETRF1553"></a><a id="NETRF2252"></a><a id="NETRF1554"></a><a id="NETRF1555"></a><a id="NETRF1918"></a><div class="sect3"><a id="GUID-F2ACB776-67B4-4E73-8BBF-562C48E47B07" name="GUID-F2ACB776-67B4-4E73-8BBF-562C48E47B07"></a><h4 id="NETRF-GUID-F2ACB776-67B4-4E73-8BBF-562C48E47B07" class="sect4"><span class="enumeration_section">7.6.2 </span>LOG_FILE_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the name of the log file for the listener. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Use this parameter when ADR is not enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">listener.log</pre><div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LOG_FILE_listener=list.log</pre></div>
+               </div><a id="NETRF1557"></a><a id="NETRF2253"></a><a id="NETRF1558"></a><a id="NETRF1559"></a><a id="NETRF1919"></a><div class="sect3"><a id="GUID-15F51B03-9476-4AD3-A871-5C7095E90C1A" name="GUID-15F51B03-9476-4AD3-A871-5C7095E90C1A"></a><h4 id="NETRF-GUID-15F51B03-9476-4AD3-A871-5C7095E90C1A" class="sect4"><span class="enumeration_section">7.6.3 </span>TRACE_DIRECTORY_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the destination directory of the listener trace file. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Use this parameter when ADR is not enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">ORACLE_HOME/network/trace</pre><div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_DIRECTORY_listener=/oracle/network/admin/trace</pre></div>
+               </div><a id="NETRF1561"></a><a id="NETRF2254"></a><a id="NETRF1562"></a><a id="NETRF1563"></a><a id="NETRF1920"></a><div class="sect3"><a id="GUID-7A868FAB-5C75-43B6-BCF0-D3915BEA2753" name="GUID-7A868FAB-5C75-43B6-BCF0-D3915BEA2753"></a><h4 id="NETRF-GUID-7A868FAB-5C75-43B6-BCF0-D3915BEA2753" class="sect4"><span class="enumeration_section">7.6.4 </span>TRACE_FILE_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the name of the trace file for the listener. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Use this parameter when ADR is not enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">listener.trc</pre><div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_FILE_listener=list.trc</pre></div>
+               </div>
+               <div class="sect3"><a id="GUID-ED571C5D-3E4E-403A-ABFB-EB15AA3AB88A" name="GUID-ED571C5D-3E4E-403A-ABFB-EB15AA3AB88A"></a><h4 id="NETRF-GUID-ED571C5D-3E4E-403A-ABFB-EB15AA3AB88A" class="sect4"><span class="enumeration_section">7.6.5 </span>TRACE_FILEAGE_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                        <p>To specify the maximum age of listener trace files in minutes.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>When the age limit is reached, the trace information is written to the next file. The number of files is specified with the <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-1B6FE96B-AC7B-442B-9726-20B4F7DB46C9">TRACE_FILENO_listener_name</a> parameter. Use this parameter when ADR is not enabled.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                        <p>Unlimited</p>
+                        <p>This is the same as setting the parameter to <code class="codeph">0</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-ED571C5D-3E4E-403A-ABFB-EB15AA3AB88A__GUID-CA4CA009-F479-47BC-AB39-D2774D43FFA8">
+                        <p class="titleinexample">Example 7-4 Example</p>
+                        <p><code class="codeph">TRACE_FILEAGE_listener=60</code></p>
+                     </div>
+                     <!-- class="example" -->
+                  </div>
+               </div><a id="NETRF1565"></a><a id="NETRF2255"></a><a id="NETRF1566"></a><a id="NETRF1567"></a><a id="NETRF1921"></a><div class="sect3"><a id="GUID-C4BDB016-B4BD-4CB7-A2CC-DA6E4C87A574" name="GUID-C4BDB016-B4BD-4CB7-A2CC-DA6E4C87A574"></a><h4 id="NETRF-GUID-C4BDB016-B4BD-4CB7-A2CC-DA6E4C87A574" class="sect4"><span class="enumeration_section">7.6.6 </span>TRACE_FILELEN_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><a id="d27519e5295" class="indexterm-anchor"></a><a id="d27519e5297" class="indexterm-anchor"></a><a id="d27519e5303" class="indexterm-anchor"></a>To specify the size of the listener trace files in kilobytes (KB). 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When the size is met, the trace information is written to the next file. The number of files is specified using the <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-1B6FE96B-AC7B-442B-9726-20B4F7DB46C9">TRACE_FILENO_listener_name</a> parameter. Use this parameter when ADR is not enabled.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Unlimited</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_FILELEN_listener=100</pre></div>
+               </div><a id="NETRF1569"></a><a id="NETRF2256"></a><a id="NETRF1570"></a><a id="NETRF1571"></a><a id="NETRF1922"></a><div class="sect3"><a id="GUID-1B6FE96B-AC7B-442B-9726-20B4F7DB46C9" name="GUID-1B6FE96B-AC7B-442B-9726-20B4F7DB46C9"></a><h4 id="NETRF-GUID-1B6FE96B-AC7B-442B-9726-20B4F7DB46C9" class="sect4"><span class="enumeration_section">7.6.7 </span>TRACE_FILENO_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p><a id="d27519e5393" class="indexterm-anchor"></a><a id="d27519e5395" class="indexterm-anchor"></a><a id="d27519e5401" class="indexterm-anchor"></a>To specify the number of trace files for listener tracing. 
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>When this parameter is set along with the <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-C4BDB016-B4BD-4CB7-A2CC-DA6E4C87A574">TRACE_FILELEN_listener_name</a> parameter, trace files are used in a cyclical fashion. The first file is filled first, then the second file, and so on. When the last file has been filled, the first file is re-used, and so on.
+                     </p>
+                     <p>The trace file names are distinguished from one another by their sequence number. For example, if the default trace file of <code class="codeph">listener.trc</code> is used, and this parameter is set to 3, then the trace files would be named <code class="codeph">listener1.trc</code>, <code class="codeph">listener2.trc</code> and <code class="codeph">listener3.trc</code>.
+                     </p>
+                     <p>In addition, trace events in the trace files are preceded by the sequence number of the file. Use this parameter when ADR is not enabled.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>1</p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">TRACE_FILENO_listener=3</pre></div>
+               </div>
+            </div><a id="NETRF0081"></a><div class="sect2"><a id="GUID-55CB5D8E-45BE-4C52-8628-D6C7A4F966F4" name="GUID-55CB5D8E-45BE-4C52-8628-D6C7A4F966F4"></a><h3 id="NETRF-GUID-55CB5D8E-45BE-4C52-8628-D6C7A4F966F4" class="sect3"><span class="enumeration_section">7.7 </span>Class of Secure Transports Parameters
+               </h3>
+               <div>
+                  <p>The <a id="d27519e5498" class="indexterm-anchor"></a><a id="d27519e5500" class="indexterm-anchor"></a><a id="d27519e5504" class="indexterm-anchor"></a>class of secure transports (COST) parameters specify a list of transports that are considered secure for administration and registration of a particular listener. The COST parameters identify which transports are considered secure for that installation and whether the administration of a listener requires secure transports. Configuring these parameters is optional.
+                  </p>
+                  <p>The following are the COST parameters:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-36BF3C5D-CBDB-4960-9117-B889A1E96F46">DYNAMIC_REGISTRATION_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-70D56244-F449-4E5B-80B4-92C2DC1AE86D">SECURE_CONTROL_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-326E13CA-38B7-4227-A80C-6DEC78CA2CD5">SECURE_REGISTER_listener_name</a></p>
+                     </li>
+                     <li>
+                        <p><a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-B8D160C2-48BB-468B-A00E-4F3427CD8948">SECURE_PROTOCOL_listener_name</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-55CB5D8E-45BE-4C52-8628-D6C7A4F966F4__GUID-5A07717B-ADCB-4140-BF52-7C6526339250">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../netag/configuring-and-administering-oracle-net-listener.html#NETAG0102" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a> for additional information about COST parameters and listener security
+                     </p>
+                  </div>
+               </div><a id="NETRF1584"></a><a id="NETRF2257"></a><a id="NETRF1586"></a><a id="NETRF1585"></a><a id="NETRF2113"></a><a id="NETRF331"></a><div class="sect3"><a id="GUID-36BF3C5D-CBDB-4960-9117-B889A1E96F46" name="GUID-36BF3C5D-CBDB-4960-9117-B889A1E96F46"></a><h4 id="NETRF-GUID-36BF3C5D-CBDB-4960-9117-B889A1E96F46" class="sect4"><span class="enumeration_section">7.7.1 </span>DYNAMIC_REGISTRATION_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To enable or disable dynamic registration. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>Static registrations are not affected by this parameter.</p>
+                     <div class="section">
+                        <p class="subhead3">Default</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>The default value is <code class="codeph">on</code>. Unless this parameter is explicitly set to <code class="codeph">off</code>, all registration connections are accepted.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Values</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">on</code>: The listener accepts dynamic registration.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">off</code>: The listener refuses dynamic registration.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">DYNAMIC_REGISTRATION_<span class="italic">listener_name</span>=on</pre></div>
+               </div><a id="NETRF1572"></a><a id="NETRF2258"></a><a id="NETRF1573"></a><a id="NETRF1923"></a><a id="NETRF327"></a><div class="sect3"><a id="GUID-70D56244-F449-4E5B-80B4-92C2DC1AE86D" name="GUID-70D56244-F449-4E5B-80B4-92C2DC1AE86D"></a><h4 id="NETRF-GUID-70D56244-F449-4E5B-80B4-92C2DC1AE86D" class="sect4"><span class="enumeration_section">7.7.2 </span>SECURE_CONTROL_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p> To specify the transports on which control commands are to be serviced. </p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>If the <code class="codeph">SECURE_CONTROL_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter is configured with a list of transport names, then the control commands are serviced only if the connection is one of the listed transports. Connections arriving by other transport protocols are refused. The following is an example:
+                     </p><pre class="oac_no_warn" dir="ltr">SECURE_CONTROL_listener1 = (TCPS,IPC)
+</pre><p>In the preceding example, administration requests are accepted only on TCPS and IPC transports.</p>
+                     <p>If no values are entered for this parameter, then the listener accepts any connection on any endpoint.</p>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">SECURE_CONTROL_<span class="italic">listener_name</span> = 
+[(]transport1[,transport2, ....,transport<span class="italic">n</span>)]
+</pre><p>In the preceding syntax, <code class="codeph">transport1</code>, <code class="codeph">transport2</code>, and <code class="codeph">transport</code><span class="italic"><code class="codeph">n</code></span> are valid, installed transport protocol names.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LISTENER1=
+ (DESCRIPTION=
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521))
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))
+      (ADDRESS=(PROTOCOL=tcps)(HOST=sales-server)(PORT=1522))))
+  SECURE_CONTROL_LISTENER1=tcps
+</pre></div>
+               </div><a id="NETRF1576"></a><a id="NETRF2259"></a><a id="NETRF1577"></a><a id="NETRF1924"></a><a id="NETRF328"></a><div class="sect3"><a id="GUID-326E13CA-38B7-4227-A80C-6DEC78CA2CD5" name="GUID-326E13CA-38B7-4227-A80C-6DEC78CA2CD5"></a><h4 id="NETRF-GUID-326E13CA-38B7-4227-A80C-6DEC78CA2CD5" class="sect4"><span class="enumeration_section">7.7.3 </span>SECURE_REGISTER_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the transports on which registration requests are to be accepted.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>If the <code class="codeph">SECURE_REGISTER_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter is configured with a list of transport names, then only the connections arriving on the specified transports are able to register the service with the listener. Connections arriving by other transport protocols are refused. The following is an example:
+                     </p><pre class="oac_no_warn" dir="ltr">SECURE_REGISTER_listener1 = (TCPS,IPC)
+</pre><p>In the preceding example, registration requests are accepted only on TCPS and IPC transports.</p>
+                     <p>If no values are entered for this parameter, then the listener accepts registration requests from any transport.</p>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">SECURE_REGISTER_<span class="italic">listener_name</span> = 
+[(]transport1[,transport2, ....,transport<span class="italic">n</span>)]
+</pre><p>In the preceding example, <code class="codeph">transport1</code>, <code class="codeph">transport2</code>, and <code class="codeph">transport</code><span class="italic"><code class="codeph">n</code></span> are valid, installed transport protocol names.
+                     </p>
+                     <p>If this parameter and <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-70D56244-F449-4E5B-80B4-92C2DC1AE86D">SECURE_CONTROL_listener_name</a> are configured, then they override the <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-B8D160C2-48BB-468B-A00E-4F3427CD8948">SECURE_PROTOCOL_listener_name</a> parameter.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LISTENER1=
+ (DESCRIPTION=
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521))
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))
+      (ADDRESS=(PROTOCOL=tcps)(HOST=sales-server)(PORT=1522))))
+  SECURE_REGISTER_listener1=tcps
+</pre></div>
+               </div><a id="NETRF1580"></a><a id="NETRF2260"></a><a id="NETRF1581"></a><a id="NETRF1925"></a><a id="NETRF329"></a><div class="sect3"><a id="GUID-B8D160C2-48BB-468B-A00E-4F3427CD8948" name="GUID-B8D160C2-48BB-468B-A00E-4F3427CD8948"></a><h4 id="NETRF-GUID-B8D160C2-48BB-468B-A00E-4F3427CD8948" class="sect4"><span class="enumeration_section">7.7.4 </span>SECURE_PROTOCOL_<span class="italic">listener_name</span></h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Purpose</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>To specify the transports on which administration and registration requests are accepted.</p>
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                     </div>
+                     <!-- class="section" -->
+                     <p>If this parameter is configured with a list of transport names, then the control commands and service registration can happen only if the connection belongs to the list of transports.</p>
+                     <p>If this parameter is not present and neither <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-70D56244-F449-4E5B-80B4-92C2DC1AE86D">SECURE_CONTROL_listener_name</a> or <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-326E13CA-38B7-4227-A80C-6DEC78CA2CD5">SECURE_REGISTER_listener_name</a> are configured, then all supported transports accept control and registration requests.
+                     </p>
+                     <p>If the <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-70D56244-F449-4E5B-80B4-92C2DC1AE86D">SECURE_CONTROL_listener_name</a> and <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-326E13CA-38B7-4227-A80C-6DEC78CA2CD5">SECURE_REGISTER_listener_name</a> parameters are configured, then they override the <code class="codeph">SECURE_PROTOCOL_</code><span class="italic"><code class="codeph">listener_name</code></span> parameter.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">SECURE_PROTOCOL_<span class="italic">listener_name</span> = 
+[(]transport1[,transport2, ....,transport<span class="italic">n</span>)]
+</pre><p>In the preceding syntax, <code class="codeph">transport1</code>, <code class="codeph">transport2</code>, and <code class="codeph">transport</code><span class="italic"><code class="codeph">n</code></span> are valid, installed transport protocol names.
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">Example</p>
+                     </div>
+                     <!-- class="section" --><pre class="oac_no_warn" dir="ltr">LISTENER1=
+ (DESCRIPTION=
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521))
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))
+      (ADDRESS=(PROTOCOL=tcps)(HOST=sales-server)(PORT=1522))))
+  SECURE_PROTOCOL_listener1=tcps
+</pre></div>
+               </div><a id="NETRF1587"></a><a id="NETRF1588"></a><a id="NETRF330"></a><div class="sect3"><a id="GUID-DB6E6689-08A0-4653-B932-98F554A5D15E" name="GUID-DB6E6689-08A0-4653-B932-98F554A5D15E"></a><h4 id="NETRF-GUID-DB6E6689-08A0-4653-B932-98F554A5D15E" class="sect4"><span class="enumeration_section">7.7.5 </span>Using COST Parameters in Combination
+                  </h4>
+                  <div>
+                     <p>COST parameters can also be used in combination to further control which transports accept service registration and control commands.</p>
+                     <p>In <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-DB6E6689-08A0-4653-B932-98F554A5D15E__BGBCFAGG">Example 7-5</a>, control commands are accepted only on the IPC channel and the TCPS transport, and service registrations are accepted only on an IPC channel.
+                     </p>
+                     <div class="example" id="GUID-DB6E6689-08A0-4653-B932-98F554A5D15E__BGBCFAGG">
+                        <p class="titleinexample">Example 7-5 Combining COST Parameters</p><pre class="oac_no_warn" dir="ltr">LISTENER1=
+ (DESCRIPTION=
+   (ADDRESS_LIST=
+     (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521))
+     (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))
+     (ADDRESS=(PROTOCOL=tcps)(HOST=sales-server)(PORT=1522))))
+  SECURE_CONTROL_listener1=(tcps,ipc)
+  SECURE_REGISTER_listener1=ipc
+</pre></div>
+                     <!-- class="example" -->
+                     <p>In <a href="Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-DB6E6689-08A0-4653-B932-98F554A5D15E__BGBFJHBH">Example 7-6</a>, control commands are accepted only on the TCPS transport, and service registrations are accepted only on the IPC channel.
+                     </p>
+                     <div class="example" id="GUID-DB6E6689-08A0-4653-B932-98F554A5D15E__BGBFJHBH">
+                        <p class="titleinexample">Example 7-6 Combining COST Parameters</p><pre class="oac_no_warn" dir="ltr">LISTENER1=
+ (DESCRIPTION=
+   (ADDRESS_LIST=
+     (ADDRESS=(PROTOCOL=tcp)(HOST=sales-server)(PORT=1521))
+     (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))
+     (ADDRESS=(PROTOCOL=tcps)(HOST=sales-server)(PORT=1522))))
+  SECURE_CONTROL_listener1=tcps
+  SECURE_PROTOCOL_listener1=ipc</pre></div>
+                     <!-- class="example" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

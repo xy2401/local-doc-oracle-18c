@@ -1,0 +1,359 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Use of character sets with SODA for C is discussed. This applies only to the encoding of JSON documents. (Non-JSON documents are always stored in a SODA collection using BLOB content, which is treated only as a sequence of bytes, not characters.)">
+      <meta name="description" content="Use of character sets with SODA for C is discussed. This applies only to the encoding of JSON documents. (Non-JSON documents are always stored in a SODA collection using BLOB content, which is treated only as a sequence of bytes, not characters.)">
+      <title>Character-Set Considerations for SODA for C</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="SODA for C Developers Guide">
+      <meta property="og:description" content="Use of character sets with SODA for C is discussed. This applies only to the encoding of JSON documents. (Non-JSON documents are always stored in a SODA collection using BLOB content, which is treated only as a sequence of bytes, not characters.)">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="SODA for C Developers Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="oracle-database-soda-c-developers-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2019-02-25T09:40:03-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2018, 2019">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84721-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="using-soda-c.html" title="Previous" type="text/html">
+      <link rel="next" href="multithreading-soda-c-applications.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Oracle® Database SODA for C Developer's Guide">
+    <meta name="dcterms.isVersionOf" content="ADSDC">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="using-soda-c.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="multithreading-soda-c-applications.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">SODA for C Developers Guide</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Character-Set Considerations
+        for SODA for C</li>
+            </ol>
+            <a id="GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD" name="GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD"></a>
+            
+            <h2 id="ADSDC-GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD" class="sect2"><span class="enumeration_chapter">4 </span>Character-Set Considerations
+        for SODA for C
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Use of character sets with SODA for C is discussed. This applies only to
+        the encoding of JSON documents. (Non-JSON documents are always stored in a SODA collection
+        using <code class="codeph">BLOB</code> content, which is treated only as a sequence of bytes, not
+        characters.)
+               </p>
+               <div class="section">
+                  <p class="subhead1" id="GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD__GUID-AB22C98A-B7E8-4ACE-99EB-AE7E590D2FFE">SODA for C and
+                Character-Set Encodings for JSON Data: Client and Database</p>
+                  <p>SODA for C involves two kinds of JSON-data character-set encodings: client-side and
+                database. </p>
+                  <p>By the standard defining JSON, JSON data is encoded
+                with a <span class="italic">Unicode</span> character set; that is, <span class="italic">JSON data is Unicode data, by
+                    definition</span>. But on the client side SODA for C relaxes the restriction that
+                JSON data must be Unicode; you can use data that has other encodings but otherwise
+                has JSON syntax.
+                  </p>
+                  <p>On the <span class="italic">client</span> side: 
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The non-Unicode encodings that you can use with a
+                        SODA for C client are all of those allowed by Oracle Call Interface (OCI),
+                        with the exception of EBCDIC: you <span class="italic">cannot</span> use an EBCDIC character set
+                        for SODA documents.
+                        </p>
+                     </li>
+                     <li>
+                        <p>The Unicode encodings that you can use with a SODA
+                        for C client are UTF-8, UTF-16 LE (little-endian), and UTF-16 BE
+                        (big-endian). These correspond to Oracle Database character sets AL32UTF8,
+                        AL32UTF16, and AL32UTF16LE, respectively. You <span class="italic">cannot</span> use UTF-32 — it
+                        is not an OCI client-side encoding. 
+                        </p>
+                     </li>
+                  </ul>
+                  <p>On the <span class="italic">database</span> side (that is, for the content column of a
+                collection):
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Oracle recommends that you use AL32UTF8, which implements Unicode UTF-8, as the <span class="italic">database character set</span>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>The encoding used for JSON data in the content
+                        column of a collection depends on the SQL type:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">VARCHAR2</code> — The documents are
+                                encoded as AL32UTF8. <code class="codeph">VARCHAR2</code> data is always stored
+                                in the database character set.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">BLOB</code> — The documents are
+                                encoded as UTF-8, UTF-16 BE, or UTF-16 LE. Which of these Unicode
+                                encodings is used depends on how the input documents were encoded on
+                                the client side, as is explained in <a href="character-set-considerations-soda-c.html#GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD__WRITINGJSONDOCUMENTSTOTHEDATABASEFR-332830C3">Writing JSON Documents To the Database From the Client</a>.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">CLOB</code> — The documents are
+                                encoded as UCS-2. A <code class="codeph">CLOB</code> instance is encoded as
+                                UCS-2 whenever the database character set is multibyte (as is
+                                AL32UTF8).
+                              </p>
+                           </li>
+                        </ul>
+                     </li>
+                  </ul>
+                  <p>If client-side and database-side encodings are the same (they are both
+                Unicode) then no conversion is needed from one to the other. </p>
+                  <p>But
+                if they differ then SODA automatically converts from one character set to the other.
+                If a character used in a document on the client side has no corresponding Unicode
+                character then conversion to the database character set when writing the document is
+                    <span class="italic">lossy</span>. Similarly, if a character used in a document on the database side
+                has no corresponding character in the client-side character set then conversion when
+                reading the document is <span class="italic">lossy</span>.
+                  </p>
+                  <p>For example:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Suppose that your client-side encoding is JA16SJIS,
+                        and the content column for your SODA collection is configured to store JSON
+                        data using SQL data type <code class="codeph">VARCHAR2</code>. When you write data to
+                        your collection SODA automatically converts it from JA16SJIS to the database
+                        character set (AL32UTF8). 
+                        </p>
+                     </li>
+                     <li>
+                        <p>Suppose that your client-side encoding is
+                        AL16UTF16LE, and your collection is configured to store JSON data using SQL
+                        data type <code class="codeph">BLOB</code>. Because data type <code class="codeph">BLOB</code>
+                        supports encoding AL16UTF16LE, no conversion is needed.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>By default, the character set used by OCI is defined by environment
+                variable <code class="codeph">NLS_LANG</code>. You can override this for a given OCI client
+                using OCI function <code class="codeph">OCIEnvNlsCreate()</code> with parameter
+                    <code class="codeph">charset</code>. 
+                  </p>
+                  <p>In particular, you can use
+                    <code class="codeph">OCIEnvNlsCreate()</code> to create an environment handle that defines
+                the character set used by a given client as <code class="codeph">OCI_UTF16ID</code> (UTF-16),
+                which <span class="italic">cannot</span> be set from <code class="codeph">NLS_LANG</code>. Character set
+                    <code class="codeph">OCI_UTF16ID</code> designates a UTF-16 encoding whose endianness
+                (big-endian or little-endian) depends on the platform where the client is run.
+                  </p>
+                  <p>When a document is written to the database from a client application, or
+                a document is read from the database to a client application, the application tells
+                OCI what client-side encoding to use for the document. It does this by way of
+                parameter <code class="codeph"><span class="bold">docFlags</span></code>, which is passed to either a
+                document-handle creation function or a convenience function for writing content into
+                a document without providing a document handle. That is, parameter
+                    <code class="codeph">docFlags</code> controls the encoding of documents on the client
+                side.
+                  </p>
+               </div>
+               <!-- class="section" -->
+               <div class="section" id="GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD__WRITINGJSONDOCUMENTSTOTHEDATABASEFR-332830C3">
+                  <p class="subhead1" id="GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD__WRITINGJSONDOCUMENTSTOTHEDATABASEFR-3327EAB2">Writing JSON Documents To the
+                Database From the Client</p>
+                  <p>SODA for C functions that create a
+                document handle are named with prefix <code class="codeph">OCISodaDocCreate</code>. They all
+                accept parameter <code class="codeph">docFlags</code>. 
+                  </p>
+                  <p>SODA for C also
+                provides convenience functions for writing JSON content to the database without
+                providing a document handle. These functions are named with suffix
+                    <code class="codeph">WithCtnt</code> (standing for “with content”). They also accept
+                parameter <code class="codeph">docflags</code>.
+                  </p>
+                  <p>For writing, parameter
+                    <code class="codeph">docFlags</code> can have either of these values:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph"><span class="bold">OCI_DEFAULT</span></code> — Use the
+                        character set defined by the environment handle, or by environment variable
+                            <code class="codeph">NLS_LANG</code>, if not set for the handle.
+                        </p>
+                        <p>You <span class="italic">must</span> supply document content in the encoding that is specified
+                        by the environment handle or <code class="codeph">NLS_LANG</code>. Otherwise, the
+                        result of a write operation is unpredictable. 
+                        </p>
+                        <p>The
+                        character set can be any that is valid for OCI (Unicode or non-Unicode),
+                        with the exception of EBCDIC. (If it is OCI_UTF16 then you must supply the
+                        document with a UTF 16 encoding whose endianness matches the endianness of
+                        the platform where the client runs.)</p>
+                        <p>If you write a document that is not
+                        encoded as Unicode to a <code class="codeph">BLOB</code> column using
+                            <code class="codeph">OCI_DEFAULT</code> then SODA converts the content to UTF-8
+                        before writing.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph"><span class="bold">OCI_SODA_DETECT_JSON_ENC</span></code> —
+                        Automatically detect the encoding of the document content as UTF-8, UTF-16
+                        LE (little-endian), or UTF-16 BE (big-endian)
+                        </p>
+                        <p>You
+                            <span class="italic">must</span> supply document content in one of those encodings.
+                        Otherwise, the result of a write operation is
+                    unpredictable.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>Use cases for working with JSON data on the client side:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>To work in a <span class="italic">non-Unicode</span> encoding or in a
+                            <span class="italic">single Unicode</span> encoding, use
+                    <code class="codeph">OCI_DEFAULT</code>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>To work in a mix of Unicode encodings (UTF-8,
+                        UTF-16 LE, UTF-16 BE) in the same application, use
+                            <code class="codeph">OCI_SODA_DETECT_JSON_ENC</code>. (With
+                            <code class="codeph">OCI_DEFAULT</code>, documents are assumed to be in the single
+                        encoding specified by the environment handle or
+                        <code class="codeph">NLS_LANG</code>.)
+                        </p>
+                     </li>
+                     <li>
+                        <p>To work in a UTF-16 encoding that has a different
+                        endianness from that of the client-side platform, use
+                            <code class="codeph">OCI_SODA_DETECT_JSON_ENC</code>.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>If the client-side character set differs from the character set of
+                the content column in the database, SODA converts the document, when writing, to the
+                character set of the content column. To avoid any such conversion, use
+                    <code class="codeph">BLOB</code> as the content data type (<code class="codeph">BLOB</code> is the
+                default), and&nbsp;supply the content with encoding UTF-8 or UTF-16 (BE or LE). If you do
+                this then it does not matter which value (<code class="codeph">OCI_DEFAULT</code> or
+                    <code class="codeph">OCI_SODA_DETECT_JSON_ENC</code>) you use for parameter
+                    <code class="codeph">docFlags</code>.
+                  </p>
+               </div>
+               <!-- class="section" -->
+               <div class="section">
+                  <p class="subhead1" id="GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD__GUID-7563835E-5E2F-4C45-AC5D-7EB6D94DBD63">Reading JSON
+                Documents From the Database To the Client</p>
+                  <p>SODA for C functions
+                (such as <code class="codeph">OCISodaFindOneWithKey()</code>) that read content into a
+                client-side document also provide parameter <code class="codeph">docFlags</code>, which you use
+                to specify the client-side encoding to use for the retrieved content.
+                  </p>
+                  <p>For reading, parameter <code class="codeph">docFlags</code> can have any of these
+                values:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph"><span class="bold">OCI_DEFAULT</span></code> — Use the
+                        character set defined by the environment handle, or by environment variable
+                            <code class="codeph">NLS_LANG</code>, if not set for the handle. (This is the same
+                        as for document writes to the database.)
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph"><span class="bold">OCI_SODA_AS_STORED</span></code> — Use the
+                        same encoding used to store the document in the database. This value is
+                        valid only for use with a collection that uses <code class="codeph">BLOB</code>
+                        storage; otherwise, an error is raised.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph"><span class="bold">OCI_SODA_AS_AL32UTF8</span></code> — Use
+                        UTF-8 as the encoding.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>If the client-side character set differs from the character set of
+                the content column in the database, SODA converts the document, when reading, to the
+                character set specified for the client. To avoid any such conversion, use
+                    <code class="codeph">BLOB</code> as the content data type (<code class="codeph">BLOB</code> is the
+                default), and&nbsp;use <code class="codeph">OCI_SODA_AS_STORED</code> for parameter
+                    <code class="codeph">docFlags</code>.
+                  </p>
+               </div>
+               <!-- class="section" -->
+               <div class="section">
+                  <div class="infoboxnotealso" id="GUID-8EDB34C6-3336-47FE-B280-1F3707ABEFBD__GUID-3F97218C-D58E-44D5-A4B6-FEAB38D11116">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../lnoci/binding-and-defining-in-oci.html#LNOCI-GUID-1EC425D9-4DC2-4A94-95E4-13DD7BFE3A28" target="_blank"><span><cite>Oracle Call Interface Programmer's Guide</cite></span></a> for
+                            information about setting the OCI client character set
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../lnoci/oci-programming-basics.html#LNOCI-GUID-09672717-CAFD-41D3-9D11-9139B6FB460C" target="_blank"><span><cite>Oracle Call Interface Programmer's Guide</cite></span></a> for
+                            information about OCI support for globalization
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../nlspg/overview-of-globalization-support.html#NLSPG-GUID-4530259E-9CA6-4FC3-A024-3EB6C2D90DAE" target="_blank"><span><cite>Oracle Database Globalization Support Guide</cite></span></a> for complete information about Oracle
+                            Database support for globalization
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../adjsn/json-character-sets-and-encoding.html#ADJSN-GUID-2BD7911A-0201-4BEC-906E-D174267B438A" target="_blank"><span><cite>Oracle Database JSON Developer’s Guide</cite></span></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/adsdc&amp;id=unicode_org" target="_blank">Unicode.org</a> for
+                            information about Unicode
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/adsdc&amp;id=tools_ietf_rfc4627" target="_blank">IETF
+                                RFC4627</a> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/adsdc&amp;id=ecma_404" target="_blank">ECMA 404</a> for the
+                            JSON Data Interchange Format
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="section" -->
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

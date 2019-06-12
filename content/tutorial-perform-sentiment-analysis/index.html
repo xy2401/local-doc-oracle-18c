@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Part number: E97018-01 -->
+        <!-- Published date: July 2018 -->
+        <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+        <!-- Template date: 10/18/17 -->
+        <meta content="text/html; charset=utf-8" http-equiv="content-type">
+		<meta name="contentid" content="24186">
+        <title>Performing Sentiment Analysis with the CTX_DOC Package</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="robots" content="INDEX, FOLLOW">
+        <meta name="description" content="Learn how to use the procedures in the CTX_DOC package to perform sentiment analysis with Oracle Text.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/obe-lite.css">
+        <script src="js/jquery-1.11.0.min.js"></script>
+        <script src="js/jquery-ui-1.10.4.custom.js"></script>
+        <script src="js/jquery.tocify.jd.js"></script>
+        <script src="js/leftnav.js"></script>
+    
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-07-09T19:34:34+00:00">
+    <meta name="dcterms.title" content="Performing Sentiment Analysis with the CTX_DOC Package">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="TUTORIAL-PERFORM-SENTIMENT-ANALYSIS">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E97018-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+    <body>
+        <header>
+            <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo">
+              <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a>
+            </div>
+        </header>
+        <!--end header-->
+
+        <div id="content">
+
+            <h1><img src="./img/obe_tag.png" align="middle" alt="Oracle by Example branding">Performing Sentiment Analysis with the CTX_DOC Package</h1>
+            <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+                <div class="navbackwide border-right"><!-- --></div>
+                <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+                <div id="sidebar"><!-- -->
+                    <div class="left-nav-tut"><!-- -->
+                        <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+                        <div id="navbar" class="left-nav-w"><!-- -->
+                            <div id="toc" class="tocify"><!-- --></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="bookContainer">
+                    <article>
+                        <section>
+                            <h2><img src="./img/32_begin.png" alt="section 0" height="32" width="32" class="num_circ">Before You Begin</h2>
+                            <p>This 15-minute tutorial shows you how to perform sentiment analysis by using the procedures in the <code>CTX_DOC</code> package.</p>
+							<h3>Background</h3>
+                            <p>After generating classification rules, you create a document set. A document set contains product reviews in individual documents. You use the procedures in the <code>CTX_DOC</code> package to perform sentiment analysis on a document. You can determine either a single sentiment score for an entire document or individual sentiment scores for each topic in a document. In this tutorial, you determine sentiment scores for the documents and for the 'camera' topic in a document.</p> 
+                            <h3>What Do You Need?</h3>
+                            <ul>
+                                <li>Oracle Database 18c</li>
+                                <li>Oracle SQL Developer 17.3.2</li>
+                            </ul>
+                        </section>
+
+                        <!-- ========================================================================================================================= -->
+                        <section>
+                            <hr>
+                            <h2 id="section_1" role="button" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" height="32" width="32" class="num_circ">Create the Document Set</h2>
+                            <ol>
+								<li>Connect to <strong>myuser</strong> by using your <strong>myuser_conn</strong> connection. After the connection is established, a SQL worksheet opens and you use it to run SQL commands.</li>
+                                <li>Create the review table with <code>id</code> and <code>review_text</code> columns.<pre><code>CREATE TABLE camera_reviews (id NUMBER PRIMARY KEY, review_text VARCHAR2(2000));</code></pre></li>
+                                <li>Populate the table with product reviews.<pre><code>INSERT INTO camera_reviews VALUES(1,'This camera is decent, but there are better options available in the market.');
+INSERT INTO camera_reviews VALUES(2,'The camera is fantastic in low light conditions!');
+INSERT INTO camera_reviews VALUES(3,'The battery life of this camera is terrible!');
+INSERT INTO camera_reviews VALUES(4,'Another fantastic camera!');
+INSERT INTO camera_reviews VALUES(5,'What a terrible camera!');
+INSERT INTO camera_reviews VALUES(6,'Camera is not great, but it is OK for the price.');</code></pre></li>
+                                <li>Create a <code>CONTEXT</code> index with the <code>NOPOPULATE</code> argument on the document set in the <code>camera_reviews</code> table.<pre><code>CREATE INDEX camera_revidx on camera_reviews(review_text) indextype IS 
+CTXSYS.CONTEXT PARAMETERS('nopopulate');</code></pre></li>
+                            </ol>
+                        </section>
+                        <hr>
+                        <section>
+                            <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" height="32" width="32" class="num_circ">Generate Sentiment Scores for the 'camera' Topic</h2>
+                            <ol>
+                                <li>Generate the sentiment score for the second document. The result is a positive sentiment score.<pre><code>SELECT CTX_DOC.SENTIMENT_AGGREGATE('camera_revidx','2','camera','clsfier') 
+AS sentiment_score FROM dual;</code></pre>
+<figure><img src="./img/second_sentiment_score.png" alt="Second sentiment score" class="ScreenShot">
+                                        <figcaption><a href="files/second_sentiment_score.txt">Description of the illustration second_sentiment_score.png</a></figcaption>
+										</figure>
+								</li>
+								<li>Generate the sentiment score for the third document. The result is a negative sentiment score.<pre><code>SELECT CTX_DOC.SENTIMENT_AGGREGATE('camera_revidx','3','camera','clsfier') 
+AS sentiment_score FROM dual;</code></pre>
+<figure><img src="./img/third_sentiment_score.png" alt="Third sentiment score" class="ScreenShot">
+                                        <figcaption><a href="files/third_sentiment_score.txt">Description of the illustration third_sentiment_score.png</a></figcaption>
+										</figure>
+								</li>
+								<li>Generate the sentiment score for the sixth document. The result is a neutral sentiment score.<pre><code>SELECT CTX_DOC.SENTIMENT_AGGREGATE('camera_revidx','6','camera','clsfier') 
+AS sentiment_score FROM dual;</code></pre>
+<figure><img src="./img/sixth_sentiment_score.png" alt="Sixth sentiment score" class="ScreenShot">
+                                        <figcaption><a href="files/sixth_sentiment_score.txt">Description of the illustration sixth_sentiment_score.png</a></figcaption>
+                                    </figure>								
+								</li>
+                            </ol>
+                        </section>
+                        <hr>
+						<section>
+                            <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" height="32" width="32" class="num_circ">Generate Document Scores</h2>
+                            <ol>
+                                <li>Generate the consolidated sentiment score for the second document. The result is a positive sentiment score.<pre><code>SELECT CTX_DOC.SENTIMENT_AGGREGATE('camera_revidx','2',NULL,'clsfier') 
+AS document_score FROM dual;</code></pre>
+<figure><img src="./img/second_document_score.png" alt="Second document score" class="ScreenShot">
+                                        <figcaption><a href="files/second_document_score.txt">Description of the illustration second_document_score.png</a></figcaption>
+										</figure>
+								</li>
+								<li>Generate the consolidated sentiment score for the third document. The result is a negative sentiment score.<pre><code>SELECT CTX_DOC.SENTIMENT_AGGREGATE('camera_revidx','3',NULL,'clsfier') 
+AS document_score FROM dual;</code></pre>
+<figure><img src="./img/third_document_score.png" alt="Third document score" class="ScreenShot">
+                                        <figcaption><a href="files/third_document_score.txt">Description of the illustration third_document_score.png</a></figcaption>
+										</figure>
+								</li>
+								<li>Generate the consolidated sentiment score for the sixth document. The result is a neutral sentiment score.<pre><code>SELECT CTX_DOC.SENTIMENT_AGGREGATE('camera_revidx','6',NULL,'clsfier') 
+AS document_score FROM dual;</code></pre>
+<figure><img src="./img/sixth_document_score.png" alt="Sixth document score" class="ScreenShot">
+                                        <figcaption><a href="files/sixth_document_score.txt">Description of the illustration sixth_document_score.png</a></figcaption>
+										</figure>										
+								</li>
+                            </ol>
+                        </section>
+                        <hr>
+                        <section>
+                            <!-- Include the More Information section only in a single or the final lab or tutorial in a series -->
+                            <h2 id="more_info" role="button" style="text-align: left;"><img src="./img/32_more.png" alt="more information" height="32" width="32" class="num_circ">Want to Learn More?</h2>
+                            <ul>
+                                <li><a href="../ccapp/performing-sentiment-analysis-using-oracle-text.html#CCAPP-GUID-12014209-8E70-49A8-BD75-86A9C4D401F6" target="_blank">Performing Sentiment Analysis Using Oracle Text</a></li>
+                            </ul>
+                        </section>
+                        <hr>
+                    </article>
+                </div>
+                <br class="clearfloat">
+            </div>
+        </div>
+        <!--close main--> 
+        <!--end content-->
+        <div class="footer-container ">
+            <div style="max-width: 994px; padding:10px 0 0 17px;">
+                <footer class="footer-list">
+                    <ul>
+                        <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About Oracle</a> </li>
+                        <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal Notices</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms of Use</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your Privacy Rights</a> </li>
+                        <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en">Copyright © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+                    </ul>
+                </footer>
+            </div>
+            <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+        </div>
+		<!-- OBE Dialog Box code 5/31/2018 -->
+        <div id="lpModal" class="modal">
+            <!-- Modal hdr and body -->
+            <div id="obe_dialog" class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close">  
+                        <span class="close">&times;</span>
+                    </a>
+                    <h1>Associated Learning Paths</h1>
+                </div>
+                <div id="dialog-content">
+                </div>
+                <div id="dialog-close" class="closeBtn">
+                    <a href="#" class="close2">  
+                        <p class="close2"> 
+                            <span>&nbsp;&nbsp;Got It! &nbsp;</span> 
+                        </p>
+                    </a>  
+                </div>
+            </div>   
+        </div>
+    </body>
+</html>

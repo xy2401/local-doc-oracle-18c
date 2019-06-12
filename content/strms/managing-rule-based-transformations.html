@@ -1,0 +1,739 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Managing Rule-Based Transformations</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="managing-rules.html" title="Previous" type="text/html">
+      <link rel="next" href="using-oracle-streams-to-record-table-changes.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="managing-rules.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="using-oracle-streams-to-record-table-changes.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="oracle-streams-administration.html" property="item" typeof="WebPage"><span property="name">    Oracle Streams Administration </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">   Managing Rule-Based Transformations </li>
+            </ol>
+            <a id="GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2" name="GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2"></a><a id="STRMS154"></a>
+            
+            <h2 id="STRMS-GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2" class="sect2"><span class="enumeration_chapter">19 </span>   Managing Rule-Based Transformations 
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d88288e125" class="indexterm-anchor"></a><a id="d88288e131" class="indexterm-anchor"></a>In Oracle Streams, a rule-based transformation is any modification to a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> that results when a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> in a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> evaluates to <code class="codeph">TRUE</code>. There are two types of rule-based transformations: declarative and custom.
+               </p>
+               <p>The following sections describe managing rule-based transformations:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="managing-rule-based-transformations.html#GUID-53C7811D-9311-495A-BA26-4DE5E6D6A3F7">Managing Declarative Rule-Based Transformations</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-rule-based-transformations.html#GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7">Managing Custom Rule-Based Transformations</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2__GUID-A2299B5D-EBF3-4294-BE6C-D7D9C41C58B9">
+                  <p class="notep1">Note:</p>
+                  <p>A transformation specified for a rule is performed only if the rule is in a positive rule set. If the rule is in the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>, then these <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s ignore the rule-based transformation.
+                  </p>
+               </div>
+               <div class="infoboxnotealso" id="GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2__GUID-8F94F328-0C9F-471A-A541-62C9B7FB79B8">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS828"></a><div class="props_rev_3"><a id="GUID-53C7811D-9311-495A-BA26-4DE5E6D6A3F7" name="GUID-53C7811D-9311-495A-BA26-4DE5E6D6A3F7"></a><h3 id="STRMS-GUID-53C7811D-9311-495A-BA26-4DE5E6D6A3F7" class="sect3"><span class="enumeration_section">19.1 </span>Managing Declarative Rule-Based Transformations
+               </h3>
+               <div>
+                  <p>You can use the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package to manage <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>s: <code class="codeph">ADD_COLUMN</code>, <code class="codeph">DELETE_COLUMN</code>, <code class="codeph">KEEP_COLUMNS</code>, <code class="codeph">RENAME_COLUMN</code>, <code class="codeph">RENAME_SCHEMA</code>, and <code class="codeph">RENAME_TABLE</code>.
+                  </p>
+                  <p>This section provides instructions for completing the following tasks:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-rule-based-transformations.html#GUID-C40F1304-C87E-4D7E-9016-56D393FFD969">Adding Declarative Rule-Based Transformations</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rule-based-transformations.html#GUID-ABF7423A-B5B4-4D47-AC48-BD622740E86C">Overwriting an Existing Declarative Rule-Based Transformation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rule-based-transformations.html#GUID-83AB68DC-C62F-4DB5-B781-8AE50DCA5B2A">Removing Declarative Rule-Based Transformations</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS829"></a><div class="props_rev_3"><a id="GUID-C40F1304-C87E-4D7E-9016-56D393FFD969" name="GUID-C40F1304-C87E-4D7E-9016-56D393FFD969"></a><h4 id="STRMS-GUID-C40F1304-C87E-4D7E-9016-56D393FFD969" class="sect4"><span class="enumeration_section">19.1.1 </span>Adding Declarative Rule-Based Transformations
+                  </h4>
+                  <div>
+                     <p>The following topics contain examples that add <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>s to DML <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-rule-based-transformations.html#GUID-29324329-D650-4D28-8580-91D617220666">Adding a Declarative Rule-Based Transformation that Adds a Column</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-rule-based-transformations.html#GUID-CFB86013-4EAC-4B09-824A-C9E14D628692">Adding a Declarative Rule-Based Transformation that Renames a Table</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-C40F1304-C87E-4D7E-9016-56D393FFD969__GUID-48958B48-F57F-43CE-B720-CD2CA2F1EA52">
+                        <p class="notep1">Note:</p>
+                        <p>Declarative rule-based transformations can be specified for DML rules only. They cannot be specified for DDL rules.</p>
+                     </div>
+                  </div><a id="STRMS831"></a><div class="props_rev_3"><a id="GUID-CFB86013-4EAC-4B09-824A-C9E14D628692" name="GUID-CFB86013-4EAC-4B09-824A-C9E14D628692"></a><h5 id="STRMS-GUID-CFB86013-4EAC-4B09-824A-C9E14D628692" class="sect5"><span class="enumeration_section">19.1.1.1 </span>Adding a Declarative Rule-Based Transformation that Renames a Table
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Use the <code class="codeph">RENAME_TABLE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add a declarative rule-based transformation that renames a table in a row LCR. For example, the following procedure adds a declarative rule-based transformation to the <code class="codeph">jobs12</code> rule in the <code class="codeph">strmadmin</code> schema:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.RENAME_TABLE(
+    rule_name       =&gt; 'strmadmin.jobs12',
+    from_table_name =&gt; 'hr.jobs',
+    to_table_name   =&gt; 'hr.assignments', 
+    step_number     =&gt; 0,
+    operation       =&gt; 'ADD');
+END;
+/
+</pre><p>The declarative rule-based transformation added by this procedure renames the table <code class="codeph">hr.jobs</code> to <code class="codeph">hr.assignments</code> in a row LCR when the rule <code class="codeph">jobs12</code> evaluates to <code class="codeph">TRUE</code> for the row&nbsp;LCR. If more than one declarative rule-based transformation is specified for the <code class="codeph">jobs12</code> rule, then this transformation follows default transformation ordering because the <code class="codeph">step_number</code> parameter is set to <code class="codeph">0</code> (zero). In addition, the <code class="codeph">operation</code> parameter is set to <code class="codeph">ADD</code> to indicate that the transformation is being added to the rule, not removed from it.
+                           </p>
+                           <p>The <code class="codeph">RENAME_TABLE</code> procedure can also add a transformation that renames the schema in addition to the table. For example, in the previous example, to specify that the schema should be renamed to <code class="codeph">oe</code>, specify <code class="codeph">oe.assignments</code> for the <code class="codeph">to_table_name</code> parameter.
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS832"></a><div class="props_rev_3"><a id="GUID-29324329-D650-4D28-8580-91D617220666" name="GUID-29324329-D650-4D28-8580-91D617220666"></a><h5 id="STRMS-GUID-29324329-D650-4D28-8580-91D617220666" class="sect5"><span class="enumeration_section">19.1.1.2 </span>Adding a Declarative Rule-Based Transformation that Adds a Column
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Use the <code class="codeph">ADD_COLUMN</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add a declarative rule-based transformation that adds a column to a row in a row LCR. For example, the following procedure adds a declarative rule-based transformation to the <code class="codeph">employees35</code> rule in the <code class="codeph">strmadmin</code> schema:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.ADD_COLUMN(
+    rule_name    =&gt; 'employees35',
+    table_name   =&gt; 'hr.employees',
+    column_name  =&gt; 'birth_date', 
+    column_value =&gt; ANYDATA.ConvertDate(NULL),
+    value_type   =&gt; 'NEW',
+    step_number  =&gt; 0,
+    operation    =&gt; 'ADD');
+END;
+/
+</pre><p>The declarative rule-based transformation added by this procedure adds a <code class="codeph">birth_date</code> column of data type <code class="codeph">DATE</code> to an <code class="codeph">hr.employees</code> table row in a row LCR when the rule <code class="codeph">employees35</code> evaluates to <code class="codeph">TRUE</code> for the row&nbsp;LCR. 
+                           </p>
+                           <p>Notice that the <code class="codeph">ANYDATA.ConvertDate</code> function specifies the column type and the column value. In this example, the added column value is <code class="codeph">NULL</code>, but a valid date can also be specified. Use the appropriate <code class="codeph">ANYDATA</code> function for the column being added. For example, if the data type of the column being added is <code class="codeph">NUMBER</code>, then use the <code class="codeph">ANYDATA.ConvertNumber</code> function.
+                           </p>
+                           <p>The <code class="codeph">value_type</code> parameter is set to <code class="codeph">NEW</code> to indicate that the column is added to the new values in a row LCR. You can also specify <code class="codeph">OLD</code> to add the column to the old values.
+                           </p>
+                           <p>If more than one declarative rule-based transformation is specified for the <code class="codeph">employees35</code> rule, then the transformation follows default transformation ordering because the <code class="codeph">step_number</code> parameter is set to <code class="codeph">0</code> (zero). In addition, the <code class="codeph">operation</code> parameter is set to <code class="codeph">ADD</code> to indicate that the transformation is being added, not removed.
+                           </p>
+                           <div class="infoboxnote" id="GUID-29324329-D650-4D28-8580-91D617220666__GUID-FF8B74E1-5B6D-4076-9898-E8B1D685E48E">
+                              <p class="notep1">Note:</p>
+                              <p>The <code class="codeph">ADD_COLUMN</code> procedure is overloaded. A <code class="codeph">column_function</code> parameter can specify that the current system date or time stamp is the value for the added column. The <code class="codeph">column_value</code> and <code class="codeph">column_function</code> parameters are mutually exclusive.
+                              </p>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-29324329-D650-4D28-8580-91D617220666__GUID-8126765A-D5A7-43C3-BD53-ACAB8EB1BE80">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS077"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about <code class="codeph">AnyData</code> type functions
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS833"></a><div class="props_rev_3"><a id="GUID-ABF7423A-B5B4-4D47-AC48-BD622740E86C" name="GUID-ABF7423A-B5B4-4D47-AC48-BD622740E86C"></a><h4 id="STRMS-GUID-ABF7423A-B5B4-4D47-AC48-BD622740E86C" class="sect4"><span class="enumeration_section">19.1.2 </span>Overwriting an Existing Declarative Rule-Based Transformation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>When the <code class="codeph">operation</code> parameter is set to <code class="codeph">ADD</code> in a procedure that adds a <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>, an existing declarative rule-based transformation is overwritten if the parameters in the following list match the existing transformation parameters:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">ADD_COLUMN</code> procedure: <code class="codeph">rule_name</code>, <code class="codeph">table_name</code>, <code class="codeph">column_name</code>, and <code class="codeph">step_number</code> parameters
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">DELETE_COLUMN</code> procedure: <code class="codeph">rule_name</code>, <code class="codeph">table_name</code>, <code class="codeph">column_name</code>, and <code class="codeph">step_number</code> parameters
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">KEEP_COLUMNS</code> procedure: <code class="codeph">rule_name</code>, <code class="codeph">table_name</code>, <code class="codeph">column_list</code>, and <code class="codeph">step_number</code> parameters, or <code class="codeph">rule_name</code>, <code class="codeph">table_name</code>, <code class="codeph">column_table</code>, and <code class="codeph">step_number</code> parameters (The <code class="codeph">column_list</code> and <code class="codeph">column_table</code> parameters are mutually exclusive.)
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">RENAME_COLUMN</code> procedure: <code class="codeph">rule_name</code>, <code class="codeph">table_name</code>, <code class="codeph">from_column_name</code>, and <code class="codeph">step_number</code> parameters
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">RENAME_SCHEMA</code> procedure: <code class="codeph">rule_name</code>, <code class="codeph">from_schema_name</code>, and <code class="codeph">step_number</code> parameters
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">RENAME_TABLE</code> procedure: <code class="codeph">rule_name</code>, <code class="codeph">from_table_name</code>, and <code class="codeph">step_number</code> parameters
+                              </p>
+                           </li>
+                        </ul>
+                        <p>For example, suppose an existing declarative rule-based transformation was creating by running the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.RENAME_COLUMN(
+    rule_name         =&gt; 'departments33',
+    table_name        =&gt; 'hr.departments',
+    from_column_name  =&gt; 'manager_id', 
+    to_column_name    =&gt; 'lead_id',
+    value_type        =&gt; 'NEW',
+    step_number       =&gt; 0,
+    operation         =&gt; 'ADD');
+END;
+/
+</pre><p>Running the following procedure overwrites this existing declarative rule-based transformation:</p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.RENAME_COLUMN(
+    rule_name         =&gt; 'departments33',
+    table_name        =&gt; 'hr.departments',
+    from_column_name  =&gt; 'manager_id', 
+    to_column_name    =&gt; 'lead_id',
+    value_type        =&gt; '*',
+    step_number       =&gt; 0,
+    operation         =&gt; 'ADD');
+END;
+/
+</pre><p>In this case, the <code class="codeph">value_type</code> parameter in the declarative rule-based transformation was changed from <code class="codeph">NEW</code> to <code class="codeph">*</code>. That is, in the original transformation, only new values were renamed in row LCRs, but, in the new transformation, both old and new values are renamed in row LCRs.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS836"></a><div class="props_rev_3"><a id="GUID-83AB68DC-C62F-4DB5-B781-8AE50DCA5B2A" name="GUID-83AB68DC-C62F-4DB5-B781-8AE50DCA5B2A"></a><h4 id="STRMS-GUID-83AB68DC-C62F-4DB5-B781-8AE50DCA5B2A" class="sect4"><span class="enumeration_section">19.1.3 </span>Removing Declarative Rule-Based Transformations
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To remove a <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a> from a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>, use the same procedure used to add the transformation, but specify <code class="codeph">REMOVE</code> for the <code class="codeph">operation</code> parameter. For example, to remove the transformation added in <span class="q">"<a href="managing-rule-based-transformations.html#GUID-CFB86013-4EAC-4B09-824A-C9E14D628692">Adding a Declarative Rule-Based Transformation that Renames a Table</a>"</span>, run the following procedure:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.RENAME_TABLE(
+    rule_name       =&gt; 'strmadmin.jobs12',
+    from_table_name =&gt; 'hr.jobs',
+    to_table_name   =&gt; 'hr.assignments', 
+    step_number     =&gt; 0,
+    operation       =&gt; 'REMOVE');
+END;
+/
+</pre><p>When the <code class="codeph">operation</code> parameter is set to <code class="codeph">REMOVE</code> in any of the declarative transformation procedures listed in <span class="q">"<a href="managing-rule-based-transformations.html#GUID-53C7811D-9311-495A-BA26-4DE5E6D6A3F7">Managing Declarative Rule-Based Transformations</a>"</span>, the other parameters in the procedure are optional, excluding the <code class="codeph">rule_name</code> parameter. If these optional parameters are set to <code class="codeph">NULL</code>, then they become wildcards.
+                        </p>
+                        <p>The <code class="codeph">RENAME_TABLE</code> procedure in the previous example behaves in the following way when one or more of the optional parameters are set to <code class="codeph">NULL</code>:
+                        </p>
+                        <div class="tblformal" id="GUID-83AB68DC-C62F-4DB5-B781-8AE50DCA5B2A__GUID-926C9EED-2F8B-4914-8C73-480854D20B11">
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Displays the behavior of the RENAME_TABLE procedure when various optional parameters are set to NULL" width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="20%" id="d88288e1444">from_table_name Parameter</th>
+                                    <th align="left" valign="bottom" width="20%" id="d88288e1447">to_table_name Parameter</th>
+                                    <th align="left" valign="bottom" width="20%" id="d88288e1450">step_number Parameter</th>
+                                    <th align="left" valign="bottom" width="39%" id="d88288e1453">Result</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="20%" id="d88288e1458" headers="d88288e1444 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1458 d88288e1447 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1458 d88288e1450 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="39%" headers="d88288e1458 d88288e1453 ">
+                                       <p>Remove all rename table transformations for the specified rule</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="20%" id="d88288e1474" headers="d88288e1444 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1474 d88288e1447 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1474 d88288e1450 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="39%" headers="d88288e1474 d88288e1453 ">
+                                       <p>Remove all rename table transformations with the specified <code class="codeph">from_table_name</code> for the specified rule
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="20%" id="d88288e1494" headers="d88288e1444 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1494 d88288e1447 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1494 d88288e1450 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="39%" headers="d88288e1494 d88288e1453 ">
+                                       <p>Remove all rename table transformations with the specified <code class="codeph">to_table_name</code> for the specified rule
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="20%" id="d88288e1514" headers="d88288e1444 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1514 d88288e1447 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1514 d88288e1450 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="39%" headers="d88288e1514 d88288e1453 ">
+                                       <p>Remove all rename table transformations with the specified <code class="codeph">step_number</code> for the specified rule
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="20%" id="d88288e1534" headers="d88288e1444 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1534 d88288e1447 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1534 d88288e1450 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="39%" headers="d88288e1534 d88288e1453 ">
+                                       <p>Remove all rename table transformations with the specified <code class="codeph">from_table_name</code> and <code class="codeph">to_table_name</code> for the specified rule
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="20%" id="d88288e1558" headers="d88288e1444 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1558 d88288e1447 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1558 d88288e1450 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="39%" headers="d88288e1558 d88288e1453 ">
+                                       <p>Remove all rename table transformations with the specified <code class="codeph">to_table_name</code> and <code class="codeph">step_number</code> for the specified rule
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="20%" id="d88288e1582" headers="d88288e1444 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1582 d88288e1447 ">
+                                       <p><code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="20%" headers="d88288e1582 d88288e1450 ">
+                                       <p>non-<code class="codeph">NULL</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="39%" headers="d88288e1582 d88288e1453 ">
+                                       <p>Remove all rename table transformations with the specified <code class="codeph">from_table_name</code> and <code class="codeph">step_number</code> for the specified rule
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                        <p>The other declarative transformation procedures work in a similar way when optional parameters are set to <code class="codeph">NULL</code> and the operation parameter is set to <code class="codeph">REMOVE</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS838"></a><a id="STRMS_MANAGING_CUSTOM_TRANSFORMATIONS"></a><div class="props_rev_3"><a id="GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7" name="GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7"></a><h3 id="STRMS-GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7" class="sect3"><span class="enumeration_section">19.2 </span>Managing Custom Rule-Based Transformations
+               </h3>
+               <div>
+                  <p>Use the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to set or unset a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a> for a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>. This procedure modifies the rule <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> to specify the custom rule-based transformation.
+                  </p>
+                  <p>This section provides instructions for completing the following tasks:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-rule-based-transformations.html#GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F">Creating a Custom Rule-Based Transformation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rule-based-transformations.html#GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7">Altering a Custom Rule-Based Transformation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rule-based-transformations.html#GUID-0D549C28-3232-4B3A-886C-08A2E250F234">Unsetting a Custom Rule-Based Transformation</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7__GUID-87C67E1F-E8C3-4BE9-B720-BD7DB7295F6A">
+                     <p class="notep1">Note:</p>
+                     <p>Do not modify <code class="codeph">LONG</code>, <code class="codeph">LONG</code> <code class="codeph">RAW</code>, LOB, or <code class="codeph">XMLType</code> column data in an LCR with a custom rule-based transformation.
+                     </p>
+                  </div>
+                  <div class="infoboxnote" id="GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7__GUID-2D181487-B2FE-49D4-85A6-30A607E8C088">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>There is no automatic locking mechanism for a rule action context. Therefore, ensure that an action context is not updated by two or more sessions at the same time.</p>
+                        </li>
+                        <li>
+                           <p>When you perform custom rule-based transformations on DDL LCRs, you probably need to modify the DDL text in the DDL LCR to match any other modification. For example, if the transformation changes the name of a table in the DDL LCR, then the transformation should change the table name in the DDL text in the same way.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS839"></a><div class="props_rev_3"><a id="GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F" name="GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F"></a><h4 id="STRMS-GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F" class="sect4"><span class="enumeration_section">19.2.1 </span>Creating a Custom Rule-Based Transformation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a> function always operates on one <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>, but it can return one message or many messages. A custom rule-based transformation function that returns one message is a one-to-one transformation function. A one-to-one transformation function must have the following signature:
+                        </p><pre class="oac_no_warn" dir="ltr">FUNCTION <span class="italic">user_function</span> (
+   <span class="italic">parameter_name</span>   IN  ANYDATA)
+RETURN ANYDATA;
+</pre><p>Here, <span class="italic"><code class="codeph">user_function</code></span> stands for the name of the function and <span class="italic"><code class="codeph">parameter_name</code></span> stands for the name of the parameter passed to the function. The parameter passed to the function is an <code class="codeph">ANYDATA</code> encapsulation of a message, and the function must return an <code class="codeph">ANYDATA</code> encapsulation of a message.
+                        </p>
+                        <p>A custom rule-based transformation function that can return more than one message is a one-to-many transformation function. A one-to-many transformation function must have the following signature:</p><pre class="oac_no_warn" dir="ltr">FUNCTION <span class="italic">user_function</span> (
+   <span class="italic">parameter_name</span>   IN  ANYDATA)
+RETURN STREAMS$_ANYDATA_ARRAY;
+</pre><p>Here, <span class="italic"><code class="codeph">user_function</code></span> stands for the name of the function and <span class="italic"><code class="codeph">parameter_name</code></span> stands for the name of the parameter passed to the function. The parameter passed to the function is an <code class="codeph">ANYDATA</code> encapsulation of a message, and the function must return an array that contains zero or more <code class="codeph">ANYDATA</code> encapsulations of a message. If the array contains zero <code class="codeph">ANYDATA</code> encapsulations of a message, then the original message is discarded. One-to-many transformation functions are supported only for Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es and <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s.
+                        </p>
+                        <p>The <code class="codeph">STREAMS$_ANYDATA_ARRAY</code> type is an Oracle-supplied type that has the following definition:
+                        </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE TYPE SYS.STREAMS$_ANYDATA_ARRAY
+   AS VARRAY(2147483647) of SYS.ANYDATA
+/
+</pre><p>The following steps outline the general procedure for creating a custom rule-based transformation that uses a one-to-one function:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the database as an administrative user or as the user who will own the PL/SQL function. For this example, connect as <code class="codeph">hr</code> user.</span><div>
+                              <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand" id="GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F__BABJDFJA"><span>Create a PL/SQL function that performs the transformation.</span><div>
+                              <div class="infoboxnote" id="GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F__GUID-51ECE306-05D4-4340-A153-DDCD1232FECA">
+                                 <p class="notep1">Note:</p>
+                                 <p>Ensure that the transformation function is deterministic. A deterministic function always returns the same value for any given set of input argument values, now and in the future. Also, ensure that the transformation function does not raise any exceptions. Exceptions can cause a capture process, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, or <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> to become disabled, and you will need to correct the transformation function before the capture process, propagation, or apply process can proceed. Exceptions raised by a custom rule-based transformation for a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> aborts the DML statement that caused the exception. Exceptions raised by a custom rule-based transformation for a <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> can prevent the messaging client from dequeuing messages.
+                                 </p>
+                              </div>
+                              <p><a id="d88288e2075" class="indexterm-anchor"></a><a id="d88288e2077" class="indexterm-anchor"></a><a id="d88288e2079" class="indexterm-anchor"></a><a id="d88288e2083" class="indexterm-anchor"></a><a id="d88288e2085" class="indexterm-anchor"></a>The following example creates a function called <code class="codeph">executive_to_management</code> in the <code class="codeph">hr</code> schema that changes the value in the <code class="codeph">department_name</code> column of the <code class="codeph">departments</code> table from <code class="codeph">Executive</code> to <code class="codeph">Management</code>. Such a transformation might be necessary if one branch in a company uses a different name for this department.
+                              </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE FUNCTION hr.executive_to_management(in_any IN ANYDATA) 
+RETURN ANYDATA
+IS
+  lcr SYS.LCR$_ROW_RECORD;
+  rc  NUMBER;
+  ob_owner VARCHAR2(30);
+  ob_name VARCHAR2(30);
+  dep_value_anydata ANYDATA;
+  dep_value_varchar2 VARCHAR2(30);
+BEGIN
+  -- Get the type of object
+  -- Check if the object type is SYS.LCR$_ROW_RECORD
+  IF in_any.GETTYPENAME='SYS.LCR$_ROW_RECORD' THEN
+    -- Put the row LCR into lcr
+    rc := in_any.GETOBJECT(lcr);
+    -- Get the object owner and name
+    ob_owner := lcr.GET_OBJECT_OWNER();
+    ob_name := lcr.GET_OBJECT_NAME();
+    -- Check for the hr.departments table
+    IF ob_owner = 'HR' AND ob_name = 'DEPARTMENTS' THEN
+      -- Get the old value of the department_name column in the LCR
+      dep_value_anydata := lcr.GET_VALUE('old','DEPARTMENT_NAME');
+      IF dep_value_anydata IS NOT NULL THEN
+        -- Put the column value into dep_value_varchar2
+        rc := dep_value_anydata.GETVARCHAR2(dep_value_varchar2);
+        -- Change a value of Executive in the column to Management
+        IF (dep_value_varchar2 = 'Executive') THEN
+          lcr.SET_VALUE('OLD','DEPARTMENT_NAME',
+            ANYDATA.CONVERTVARCHAR2('Management'));
+        END IF;
+      END IF;
+      -- Get the new value of the department_name column in the LCR
+      dep_value_anydata := lcr.GET_VALUE('new', 'DEPARTMENT_NAME', 'n');
+      IF dep_value_anydata IS NOT NULL THEN
+        -- Put the column value into dep_value_varchar2
+        rc := dep_value_anydata.GETVARCHAR2(dep_value_varchar2);
+        -- Change a value of Executive in the column to Management
+        IF (dep_value_varchar2 = 'Executive') THEN
+          lcr.SET_VALUE('new','DEPARTMENT_NAME',
+            ANYDATA.CONVERTVARCHAR2('Management'));
+        END IF;
+      END IF;
+    END IF;
+    RETURN ANYDATA.CONVERTOBJECT(lcr);
+  END IF;
+RETURN in_any;
+END;
+/
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Grant the Oracle Streams administrator <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">hr.executive_to_management</code> function.</span><div><pre class="oac_no_warn" dir="ltr">GRANT EXECUTE ON hr.executive_to_management TO strmadmin;
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Connect to the database as the Oracle Streams administrator.</span></li>
+                        <li class="stepexpand"><span>Create <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a>s for DML operations on the <code class="codeph">hr.departments</code> table. The subset rules will use the transformation created in Step <a href="managing-rule-based-transformations.html#GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F__BABJDFJA">2</a>.</span><div>
+                              <p>Subset rules are not required to use custom rule-based transformations. This example uses subset rules to illustrate an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> with more than one name-value pair. This example creates subset rules for an apply process on a database named <code class="codeph">dbs1.example.com</code>. These rules evaluate to <code class="codeph">TRUE</code> when an LCR contains a DML change to a row with a <code class="codeph">location_id</code> of <code class="codeph">1700</code> in the <code class="codeph">hr.departments</code> table. This example assumes that an <code class="codeph">ANYDATA</code> queue named <code class="codeph">streams_queue</code> already exists in the database.
+                              </p>
+                              <p>To create these rules, run the following <code class="codeph">ADD_SUBSET_RULES</code> procedure:
+                              </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.ADD_SUBSET_RULES(
+&nbsp;&nbsp; &nbsp;table_name               =&gt;  'hr.departments',
+&nbsp;&nbsp;  dml_condition            =&gt;  'location_id=1700',
+   &nbsp;streams_type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt;  'apply',
+&nbsp;&nbsp;&nbsp; streams_name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;=&gt;  'strm01_apply',
+&nbsp;&nbsp; &nbsp;queue_name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt;  'streams_queue',
+    include_tagged_lcr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt;  FALSE,
+    source_database          =&gt;  'dbs1.example.com');
+END;
+/
+</pre><div class="infoboxnote" id="GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F__GUID-CFCEAC3F-7199-480A-BB77-8049CC2D9B7E">
+                                 <p class="notep1">Note:</p>
+                                 <p></p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>To create the rule and the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, the Oracle Streams administrator must have <code class="codeph">CREATE_RULE_SET_OBJ</code> (or&nbsp;<code class="codeph">CREATE_ANYRULE_SET_OBJ</code>) and <code class="codeph">CREATE_RULE_OBJ</code> (or&nbsp;<code class="codeph">CREATE_ANY_RULE_OBJ</code>) system privileges. You grant these privileges using the <code class="codeph">GRANT_SYSTEM_PRIVILEGE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>This example creates the rule using the <code class="codeph">DBMS_STREAMS_ADM</code> package. Alternatively, you can create a rule, add it to a rule set, and specify a custom rule-based transformation using the <code class="codeph">DBMS_RULE_ADM</code> package.<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREX102"><span class="italic"> Oracle Streams Extended Examples </span></a>contains an example of this procedure.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>The <code class="codeph">ADD_SUBSET_RULES</code> procedure adds the subset rules to the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for the apply process.
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span><a id="d88288e2230" class="indexterm-anchor"></a><a id="d88288e2236" class="indexterm-anchor"></a><a id="d88288e2242" class="indexterm-anchor"></a>Determine the names of the system-created <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s by running the following query:</span><div><pre class="oac_no_warn" dir="ltr">SELECT RULE_NAME, SUBSETTING_OPERATION FROM DBA_STREAMS_RULES 
+  WHERE OBJECT_NAME='DEPARTMENTS' AND DML_CONDITION='location_id=1700';
+</pre><p>This query displays output similar to the following:</p><pre class="oac_no_warn" dir="ltr">RULE_NAME                      SUBSET
+------------------------------ ------
+DEPARTMENTS5                   INSERT
+DEPARTMENTS6                   UPDATE
+DEPARTMENTS7                   DELETE
+</pre><div class="infoboxnote" id="GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F__GUID-F3C4982D-35D1-40EF-A714-2C17556F1BE5">
+                                 <p class="notep1">Note:</p>
+                                 <p>You can also obtain this information using the <code class="codeph">OUT</code> parameters when you run <code class="codeph">ADD_SUBSET_RULES</code>.
+                                 </p>
+                              </div>
+                              <p>Because these are subset rules, two of them contain a non-<code class="codeph">NULL</code> action context that performs an internal transformation:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The rule with a subsetting condition of <code class="codeph">INSERT</code> contains an internal transformation that converts updates into inserts if the update changes the value of the <code class="codeph">location_id</code> column to <code class="codeph">1700</code> from some other value. The internal transformation does not affect inserts.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The rule with a subsetting condition of <code class="codeph">DELETE</code> contains an internal transformation that converts updates into deletes if the update changes the value of the <code class="codeph">location_id</code> column from <code class="codeph">1700</code> to a different value. The internal transformation does not affect deletes.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <p>In this example, you can confirm that the rules <code class="codeph">DEPARTMENTS5</code> and <code class="codeph">DEPARTMENTS7</code> have a non-<code class="codeph">NULL</code> action context, and that the rule <code class="codeph">DEPARTMENTS6</code> has a <code class="codeph">NULL</code> action context, by running the following query:
+                              </p><pre class="oac_no_warn" dir="ltr">COLUMN RULE_NAME HEADING 'Rule Name' FORMAT A13
+COLUMN ACTION_CONTEXT_NAME HEADING 'Action Context Name' FORMAT A27
+COLUMN ACTION_CONTEXT_VALUE HEADING 'Action Context Value' FORMAT A30
+
+SELECT 
+    RULE_NAME,
+    AC.NVN_NAME ACTION_CONTEXT_NAME, 
+    AC.NVN_VALUE.ACCESSVARCHAR2() ACTION_CONTEXT_VALUE
+  FROM DBA_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  WHERE RULE_NAME IN ('DEPARTMENTS5','DEPARTMENTS6','DEPARTMENTS7');
+</pre><p>This query displays output similar to the following:</p><pre class="oac_no_warn" dir="ltr">Rule Name     Action Context Name         Action Context Value
+------------- --------------------------- ------------------------------
+DEPARTMENTS5  STREAMS$_ROW_SUBSET         INSERT
+DEPARTMENTS7  STREAMS$_ROW_SUBSET         DELETE
+</pre><p>The <code class="codeph">DEPARTMENTS6</code> rule does not appear in the output because its action context is <code class="codeph">NULL</code>.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span><a id="d88288e2330" class="indexterm-anchor"></a><a id="d88288e2336" class="indexterm-anchor"></a><a id="d88288e2338" class="indexterm-anchor"></a><a id="d88288e2342" class="indexterm-anchor"></a>Set the custom rule-based transformation for each subset rule by running the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure. This step runs this procedure for each rule and specifies <code class="codeph">hr.executive_to_management</code> as the transformation function. Ensure that no other users are modifying the action context at the same time.</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_RULE_TRANSFORM_FUNCTION(
+    rule_name           =&gt; 'departments5',
+    transform_function  =&gt; 'hr.executive_to_management');
+  DBMS_STREAMS_ADM.SET_RULE_TRANSFORM_FUNCTION(
+    rule_name           =&gt; 'departments6',
+    transform_function  =&gt; 'hr.executive_to_management');
+  DBMS_STREAMS_ADM.SET_RULE_TRANSFORM_FUNCTION(
+    rule_name           =&gt; 'departments7',
+    transform_function  =&gt; 'hr.executive_to_management');    
+END;
+/
+</pre><p>Specifically, this procedure adds a name-value pair to each rule action context that specifies the name <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> and a value that is an <code class="codeph">ANYDATA</code> instance containing the name of the PL/SQL function that performs the transformation. In this case, the transformation function is <code class="codeph">hr.executive_to_management</code>.
+                              </p>
+                              <div class="infoboxnote" id="GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F__GUID-34577363-22EF-4A04-BBEC-95C26C3E989D">
+                                 <p class="notep1">Note:</p>
+                                 <p>The <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> does not verify that the specified transformation function exists. If the function does not exist, then an error is raised when an Oracle Streams process or job tries to invoke the transformation function.
+                                 </p>
+                              </div>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <p>Now, if you run the query that displays the name-value pairs in the action context for these rules, each rule, including the <code class="codeph">DEPARTMENTS6</code> rule, shows the name-value pair for the custom rule-based transformation:
+                        </p><pre class="oac_no_warn" dir="ltr">SELECT 
+    RULE_NAME,
+    AC.NVN_NAME ACTION_CONTEXT_NAME, 
+    AC.NVN_VALUE.ACCESSVARCHAR2() ACTION_CONTEXT_VALUE
+  FROM DBA_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  WHERE RULE_NAME IN ('DEPARTMENTS5','DEPARTMENTS6','DEPARTMENTS7');
+</pre><p>This query displays output similar to the following:</p><pre class="oac_no_warn" dir="ltr">Rule Name     Action Context Name         Action Context Value
+------------- --------------------------- ------------------------------
+DEPARTMENTS5  STREAMS$_ROW_SUBSET         INSERT
+DEPARTMENTS5  STREAMS$_TRANSFORM_FUNCTION "HR"."EXECUTIVE_TO_MANAGEMENT"
+DEPARTMENTS6  STREAMS$_TRANSFORM_FUNCTION "HR"."EXECUTIVE_TO_MANAGEMENT"
+DEPARTMENTS7  STREAMS$_ROW_SUBSET         DELETE
+DEPARTMENTS7  STREAMS$_TRANSFORM_FUNCTION "HR"."EXECUTIVE_TO_MANAGEMENT"
+</pre><p>You can also view transformation functions using the <code class="codeph">DBA_STREAMS_TRANSFORM_FUNCTION</code> data dictionary view.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F__GUID-16D0087E-7231-4296-865B-DEB558DB66ED">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS591">the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code></a> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS319">the rule types</a> used in this example
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS840"></a><div class="props_rev_3"><a id="GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7" name="GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7"></a><h4 id="STRMS-GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7" class="sect4"><span class="enumeration_section">19.2.2 </span>Altering a Custom Rule-Based Transformation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To alter a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>, you can either edit the transformation function or run the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure to specify a different transformation function. This example runs the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure to specify a different transformation function. The <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure modifies the <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> of a specified <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> to run a different transformation function. If you edit the transformation function itself, then you do not need to run this procedure.
+                        </p>
+                        <p>This example alters a custom rule-based transformation for rule <code class="codeph">DEPARTMENTS5</code> by changing the transformation function from <code class="codeph">hr.execute_to_management</code> to <code class="codeph">hr.executive_to_lead</code>. The <code class="codeph">hr.execute_to_management</code> rule-based transformation was added to the <code class="codeph">DEPARTMENTS5</code> rule in the example in <span class="q">"<a href="managing-rule-based-transformations.html#GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F">Creating a Custom Rule-Based Transformation</a>"</span>.
+                        </p>
+                        <p>In Oracle Streams, <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a>s use name-value pairs in an action context to perform internal transformations that convert <code class="codeph">UPDATE</code> operations into <code class="codeph">INSERT</code> and <code class="codeph">DELETE</code> operations in some situations. Such a conversion is called a <a href="strms_glossary.html#GUID-DD0C1CF9-3357-4464-A102-F4790BD5BD91"><span class="xrefglossterm">row migration</span></a>. The <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure preserves the name-value pairs that perform row migrations.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7__GUID-CA1AFB67-9070-4370-946C-4D10BD3F9CE8">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-35868ADC-C131-4988-9139-FC9B0EEA145D">Row Migration and Subset Rules</a>"</span> for more information about row migration
+                           </p>
+                        </div>
+                        <p>Complete the following steps to alter a custom rule-based transformation:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand" id="GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7__BABHIBDI"><span>You can view all of the name-value pairs in the action context of a rule by performing the following query:</span><div><pre class="oac_no_warn" dir="ltr">COLUMN ACTION_CONTEXT_NAME HEADING 'Action Context Name' FORMAT A30
+COLUMN ACTION_CONTEXT_VALUE HEADING 'Action Context Value' FORMAT A30
+
+SELECT 
+    AC.NVN_NAME ACTION_CONTEXT_NAME, 
+    AC.NVN_VALUE.ACCESSVARCHAR2() ACTION_CONTEXT_VALUE
+  FROM DBA_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  WHERE RULE_NAME = 'DEPARTMENTS5';
+</pre><p>This query displays output similar to the following:</p><pre class="oac_no_warn" dir="ltr">Action Context Name            Action Context Value
+------------------------------ ------------------------------
+STREAMS$_ROW_SUBSET            INSERT
+STREAMS$_TRANSFORM_FUNCTION    "HR"."EXECUTIVE_TO_MANAGEMENT"
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span><a id="d88288e2643" class="indexterm-anchor"></a><a id="d88288e2649" class="indexterm-anchor"></a><a id="d88288e2651" class="indexterm-anchor"></a><a id="d88288e2655" class="indexterm-anchor"></a><a id="d88288e2661" class="indexterm-anchor"></a><a id="d88288e2663" class="indexterm-anchor"></a><a id="d88288e2669" class="indexterm-anchor"></a><a id="d88288e2671" class="indexterm-anchor"></a><a id="d88288e2675" class="indexterm-anchor"></a>Run the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure to set the transformation function to <code class="codeph">executive_to_lead</code> for the <code class="codeph">DEPARTMENTS5</code> rule. In this example, it is assumed that the new transformation function is <code class="codeph">hr.executive_to_lead</code> and that the <code class="codeph">strmadmin</code> user has <code class="codeph">EXECUTE</code> privilege&nbsp;on it.</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_RULE_TRANSFORM_FUNCTION(
+    rule_name           =&gt; 'departments5',
+    transform_function  =&gt; 'hr.executive_to_lead');
+END;
+/  
+</pre><p>To ensure that the transformation function was altered properly, you can rerun the query in Step <a href="managing-rule-based-transformations.html#GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7__BABHIBDI">1</a>. You should alter the action context for the <code class="codeph">DEPARTMENTS6</code> and <code class="codeph">DEPARTMENTS7</code> rules in a similar way to keep the three subset rules consistent.
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnote" id="GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7__GUID-55C46F8F-85C0-4E73-9C29-42C9569F75B5">
+                           <p class="notep1">Note:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> does not verify that the specified transformation function exists. If the function does not exist, then an error is raised when an Oracle Streams process or job tries to invoke the transformation function.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If a custom rule-based transformation function is modified at the same time that an <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a> tries to access it, then an error might be raised.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS843"></a><div class="props_rev_3"><a id="GUID-0D549C28-3232-4B3A-886C-08A2E250F234" name="GUID-0D549C28-3232-4B3A-886C-08A2E250F234"></a><h4 id="STRMS-GUID-0D549C28-3232-4B3A-886C-08A2E250F234" class="sect4"><span class="enumeration_section">19.2.3 </span>Unsetting a Custom Rule-Based Transformation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To unset a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a> from a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>, run the <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure and specify <code class="codeph">NULL</code> for the transformation function. Specifying <code class="codeph">NULL</code> unsets the name-value pair that specifies the custom rule-based transformation in the rule <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a>. This example unsets a custom rule-based transformation for rule <code class="codeph">DEPARTMENTS5</code>. This transformation was added to the <code class="codeph">DEPARTMENTS5</code> rule in the example in <span class="q">"<a href="managing-rule-based-transformations.html#GUID-FB394F6A-1FD4-47E6-B8DD-C24F369AB70F">Creating a Custom Rule-Based Transformation</a>"</span>.
+                        </p>
+                        <p>In Oracle Streams, <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a>s use name-value pairs in an action context to perform internal transformations that convert <code class="codeph">UPDATE</code> operations into <code class="codeph">INSERT</code> and <code class="codeph">DELETE</code> operations in some situations. Such a conversion is called a <a href="strms_glossary.html#GUID-DD0C1CF9-3357-4464-A102-F4790BD5BD91"><span class="xrefglossterm">row migration</span></a>. The <code class="codeph">SET_RULE_TRANSFORM_FUNCTION</code> procedure preserves the name-value pairs that perform row migrations.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-0D549C28-3232-4B3A-886C-08A2E250F234__GUID-6489805C-085D-40CA-8D92-297F832D4288">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-35868ADC-C131-4988-9139-FC9B0EEA145D">Row Migration and Subset Rules</a>"</span> for more information about row migration
+                           </p>
+                        </div>
+                        <p>Run the following procedure to unset the custom rule-based transformation for rule <code class="codeph">DEPARTMENTS5</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_RULE_TRANSFORM_FUNCTION(
+    rule_name           =&gt; 'departments5',
+    transform_function  =&gt; NULL);
+END;
+/
+</pre><p>To ensure that the transformation function was unset, you can run the query in Step <a href="managing-rule-based-transformations.html#GUID-278A22FD-A0A8-4C16-9F67-BBAB368675E7__BABHIBDI">1</a>. You should alter the action context for the <code class="codeph">DEPARTMENTS6</code> and <code class="codeph">DEPARTMENTS7</code> rules in a similar way to keep the three subset rules consistent.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-0D549C28-3232-4B3A-886C-08A2E250F234__GUID-4B3B8D4A-42F7-4C8F-9AF0-AC50E4DB6212">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-35868ADC-C131-4988-9139-FC9B0EEA145D">Row Migration and Subset Rules</a>"</span> for more information about row migration
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

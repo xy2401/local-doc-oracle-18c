@@ -1,0 +1,237 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Combined Capture and Apply Optimization</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="advanced-rule-concepts.html" title="Previous" type="text/html">
+      <link rel="next" href="oracle-streams-high-availability-environments.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="advanced-rule-concepts.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="oracle-streams-high-availability-environments.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="advanced-oracle-streams-concepts.html" property="item" typeof="WebPage"><span property="name">    Advanced Oracle Streams Concepts </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Combined Capture and Apply Optimization</li>
+            </ol>
+            <a id="GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F" name="GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F"></a><a id="STRMS171"></a>
+            
+            <h2 id="STRMS-GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F" class="sect2"><span class="enumeration_chapter">12 </span> Combined Capture and Apply Optimization
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>The following topics contain information about the combined capture and apply optimization:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="combined-capture-and-apply-optimization.html#GUID-F38DDB87-967F-4C51-A0C4-974055853918">Combined Capture and Apply Requirements</a></p>
+                  </li>
+                  <li>
+                     <p><a href="combined-capture-and-apply-optimization.html#GUID-B710D435-BB87-4A4F-B73F-FE954F61AFF5">How to Use Combined Capture and Apply</a></p>
+                  </li>
+                  <li>
+                     <p><a href="combined-capture-and-apply-optimization.html#GUID-D3E2DEDC-72B0-4FD7-A4A8-7E7531DD75BE">How to Determine Whether Combined Capture and Apply Is Being Used</a></p>
+                  </li>
+                  <li>
+                     <p><a href="combined-capture-and-apply-optimization.html#GUID-B10C0F22-89C7-41B0-BDDC-A818F198A897">Combined Capture and Apply and Point-in-Time Recovery</a></p>
+                  </li>
+               </ul>
+            </div><a id="STRMS573"></a><div class="props_rev_3"><a id="GUID-A1231679-4AF1-469A-AF49-F1E12E8D1B51" name="GUID-A1231679-4AF1-469A-AF49-F1E12E8D1B51"></a><h3 id="STRMS-GUID-A1231679-4AF1-469A-AF49-F1E12E8D1B51" class="sect3"><span class="enumeration_section">12.1 </span>About Combined Capture and Apply Optimization
+               </h3>
+               <div>
+                  <p><a id="d67538e274" class="indexterm-anchor"></a><a id="d67538e276" class="indexterm-anchor"></a><a id="d67538e280" class="indexterm-anchor"></a><a id="d67538e284" class="indexterm-anchor"></a>For improved efficiency, a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> can create a propagation sender to transmit logical change records (<a href="strms_glossary.html#GUID-43A45807-D91D-43A2-89C8-8DEBCEF70770"><span class="xrefglossterm">LCR</span></a>s) directly to a propagation receiver under specific conditions. The propagation receiver enqueues the LCRs into the <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a> portion of the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>, and an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> dequeues the LCRs. This optimization is called combined capture and apply.
+                  </p>
+               </div>
+            </div><a id="STRMS574"></a><div class="props_rev_3"><a id="GUID-F38DDB87-967F-4C51-A0C4-974055853918" name="GUID-F38DDB87-967F-4C51-A0C4-974055853918"></a><h3 id="STRMS-GUID-F38DDB87-967F-4C51-A0C4-974055853918" class="sect3"><span class="enumeration_section">12.2 </span>Combined Capture and Apply Requirements
+               </h3>
+               <div>
+                  <p>Combined capture and apply can be used when the capture process and apply process run on the same database instance or on different databases.</p>
+                  <p>When the capture process and apply process run on the same database instance, combined capture and apply is possible only if all of the following conditions are met:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The capture process and apply process must use the same <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>The queue must have a single publisher, and it must be the capture process.</p>
+                     </li>
+                  </ul>
+                  <p>When the capture process and apply process run on different databases, or on different instances in the same database, combined capture and apply is possible only if all of the following conditions are met:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The capture process's queue must have a single publisher, and it must be the capture process.</p>
+                     </li>
+                     <li>
+                        <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> must be configured between the capture process's queue and the apply process's queue. There can be no intermediate queues (no directed network).
+                        </p>
+                     </li>
+                     <li>
+                        <p>Each apply process that applies changes from the same source database must use a different queue.</p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-F38DDB87-967F-4C51-A0C4-974055853918__GUID-3B41EFE3-8BB0-4544-B11E-EFF0C58A320D">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Combined capture and apply is not possible with <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Combined capture and apply is not possible when an Oracle Database 10<span class="italic">g</span> or earlier database is part of the configuration.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The combined capture and apply requirements are different in Oracle Database 11<span class="italic">g</span> Release 2 (11.2) and later and Oracle Database 11<span class="italic">g</span> Release 1 (11.1). If a database in a combined capture and apply optimization is an Oracle Database 11<span class="italic">g</span> Release 1 (11.1) database, then the Oracle Database 11<span class="italic">g</span> Release 1 (11.1) requirements must be met. See <span class="italic">Oracle Streams Concepts and Administration</span> for Oracle Database 11<span class="italic">g</span> Release 1 (11.1) for information about these requirements.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-F38DDB87-967F-4C51-A0C4-974055853918__GUID-D5DD38C1-0B1A-4D22-A06C-1D4A17E000C1">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-84DD3325-51A9-46D7-8BE0-81E48893DFAB">Implicit Capture with an Oracle Streams Capture Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1">Persistent Queues and Buffered Queues</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-DF1C98B2-618D-40E9-B0F7-C146E0193DDD">Directed Networks</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-40F2B660-C0DA-4DE4-BBC6-D8C47BE535ED">Implicit Consumption with an Apply Process</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS575"></a><div class="props_rev_3"><a id="GUID-B710D435-BB87-4A4F-B73F-FE954F61AFF5" name="GUID-B710D435-BB87-4A4F-B73F-FE954F61AFF5"></a><h3 id="STRMS-GUID-B710D435-BB87-4A4F-B73F-FE954F61AFF5" class="sect3"><span class="enumeration_section">12.3 </span>How to Use Combined Capture and Apply
+               </h3>
+               <div>
+                  <p>After you meet the requirements for combined capture and apply, you do not need to perform any other configuration tasks to use it. The capture process automatically detects that combined capture and apply is possible when it is started. After it creates a propagation sender to establish a connection with the propagation receiver, the propagation sender sends captured LCRs directly to the propagation receiver.</p>
+                  <p>If combined capture and apply is used, and you change the configuration so that it no longer meets the requirements of combined capture and apply, then the capture process detects this change and restarts. After the capture process restarts, it no longer uses combined capture and apply.</p>
+                  <p>If combined capture and apply is not used, and you change the configuration so that it meets the requirements of combined capture and apply, then combined capture and apply is used automatically when the capture process is restarted. In this case, you must restart the capture process manually. It is not restarted automatically.</p>
+                  <div class="infoboxnotealso" id="GUID-B710D435-BB87-4A4F-B73F-FE954F61AFF5__GUID-723F88A3-6981-498F-BFF1-DBED505037DB">
+                     <p class="notep1">See Also:</p>
+                     <p><span class="q">"<a href="combined-capture-and-apply-optimization.html#GUID-F38DDB87-967F-4C51-A0C4-974055853918">Combined Capture and Apply Requirements</a>"</span></p>
+                  </div>
+               </div>
+            </div><a id="STRMS576"></a><div class="props_rev_3"><a id="GUID-D3E2DEDC-72B0-4FD7-A4A8-7E7531DD75BE" name="GUID-D3E2DEDC-72B0-4FD7-A4A8-7E7531DD75BE"></a><h3 id="STRMS-GUID-D3E2DEDC-72B0-4FD7-A4A8-7E7531DD75BE" class="sect3"><span class="enumeration_section">12.4 </span>How to Determine Whether Combined Capture and Apply Is Being Used
+               </h3>
+               <div>
+                  <p>Check the following dynamic performance views to determine whether combined capture and apply is used:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>For the capture process, combined capture and apply is used when the <code class="codeph">OPTIMIZATION</code> column is greater than zero in the <code class="codeph">V$STREAMS_CAPTURE</code> view.
+                        </p>
+                     </li>
+                     <li>
+                        <p>For the apply process, combined capture and apply is used when the <code class="codeph">PROXY_SID</code> column is not <code class="codeph">NULL</code> in the <code class="codeph">V$STREAMS_APPLY_READER</code> view.
+                        </p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-D3E2DEDC-72B0-4FD7-A4A8-7E7531DD75BE__GUID-D171A3F0-A8AF-4F28-B191-F4A75B241BAD">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-EFBDD862-0102-4BA7-80BC-60A80F3FBF3F">Determining Which Capture Processes Use Combined Capture and Apply</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-AE887E67-64FF-454C-BF92-CCCEA459842F">Determining Which Apply Processes Use Combined Capture and Apply</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-6EFCAFE0-E325-4C9F-B9A7-5F9493344DFC">Capture Process States</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference</span></a> for information about data dictionary views
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS578"></a><div class="props_rev_3"><a id="GUID-B10C0F22-89C7-41B0-BDDC-A818F198A897" name="GUID-B10C0F22-89C7-41B0-BDDC-A818F198A897"></a><h3 id="STRMS-GUID-B10C0F22-89C7-41B0-BDDC-A818F198A897" class="sect3"><span class="enumeration_section">12.5 </span>Combined Capture and Apply and Point-in-Time Recovery
+               </h3>
+               <div>
+                  <p>When you use combined capture and apply in a single-source replication environment, the Oracle Streams clients handle point-in-time recovery of the destination database automatically. The Oracle Streams client include the capture process, propagation, and apply process that form the combined capture and apply optimization.</p>
+                  <p>In a single-source replication environment that uses combined capture and apply, complete these general steps to perform point-in-time recovery on the destination database:</p>
+                  <ol>
+                     <li>
+                        <p>Stop the capture process and apply process, and disable the propagation.</p>
+                     </li>
+                     <li>
+                        <p>Perform the point-in-time recovery on the destination database.</p>
+                     </li>
+                     <li>
+                        <p>Ensure that the capture process has access to the archived redo log files for the previous point in time.</p>
+                     </li>
+                     <li>
+                        <p>Start the apply process.</p>
+                     </li>
+                     <li>
+                        <p>Enable the propagation.</p>
+                     </li>
+                     <li>
+                        <p>Start the capture process.</p>
+                     </li>
+                  </ol>
+                  <p>When you follow these steps, the capture process determines its start SCN automatically, and no other steps are required.</p>
+                  <div class="infoboxnotealso" id="GUID-B10C0F22-89C7-41B0-BDDC-A818F198A897__GUID-2112CE2D-EFC7-4905-8609-F44FFCA9D745">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP121"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about performing point-in-time recovery in an Oracle Streams replication environment
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

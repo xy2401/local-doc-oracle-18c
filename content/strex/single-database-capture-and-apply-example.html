@@ -1,0 +1,699 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Single-Database Capture and Apply&nbsp;Example</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Extended Examples ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Extended Examples">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-extended-examples.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T22:39:34-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2008, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83782-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="n-way-replication-example.html" title="Previous" type="text/html">
+      <link rel="next" href="logical-change-records-with-lobs-example.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Extended Examples">
+    <meta name="dcterms.isVersionOf" content="STREX">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="n-way-replication-example.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="logical-change-records-with-lobs-example.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Extended Examples </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Single-Database Capture and Apply&nbsp;Example</li>
+            </ol>
+            <a id="GUID-4EE6FF64-2207-4E7B-847E-323C3F9875E7" name="GUID-4EE6FF64-2207-4E7B-847E-323C3F9875E7"></a><a id="STREX016"></a>
+            
+            <h2 id="STREX-GUID-4EE6FF64-2207-4E7B-847E-323C3F9875E7" class="sect2"><span class="enumeration_chapter">4 </span> Single-Database Capture and Apply&nbsp;Example
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d11385e48" class="indexterm-anchor"></a><a id="d11385e54" class="indexterm-anchor"></a>This chapter illustrates an example of a single database that captures changes to a table with a capture process, reenqueues the captured changes into a queue, and then uses a procedure DML handler during apply to insert a subset of the changes into a different table.
+               </p>
+               <p>The following topics describe configuring an example single-database capture and apply example:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="single-database-capture-and-apply-example.html#GUID-6B4F6501-D2F4-4B3D-A56B-C27561654167">Overview of the Single-Database Capture and Apply Example</a></p>
+                  </li>
+                  <li>
+                     <p><a href="single-database-capture-and-apply-example.html#GUID-9480D186-A1CE-4B5B-8A0F-B3EFA64A5C7A">Prerequisites</a></p>
+                  </li>
+                  <li>
+                     <p><a href="single-database-capture-and-apply-example.html#GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749">Set Up the Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E">Configure Capture and Apply</a></p>
+                  </li>
+                  <li>
+                     <p><a href="single-database-capture-and-apply-example.html#GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30">Make DML Changes, Query for Results, and Dequeue Messages</a></p>
+                  </li>
+               </ul>
+            </div><a id="STREX1151"></a><a id="STREX1150"></a><div class="props_rev_3"><a id="GUID-6B4F6501-D2F4-4B3D-A56B-C27561654167" name="GUID-6B4F6501-D2F4-4B3D-A56B-C27561654167"></a><h3 id="STREX-GUID-6B4F6501-D2F4-4B3D-A56B-C27561654167" class="sect3"><span class="enumeration_section">4.1 </span>Overview of the Single-Database Capture and Apply Example
+               </h3>
+               <div>
+                  <p>The example in this chapter illustrates using Oracle Streams to capture and apply data manipulation language (DML) changes at a single database named <code class="codeph">cpap.example.com</code>. Specifically, this example captures DML changes to the <code class="codeph">employees</code> table in the <code class="codeph">hr</code> schema, placing row logical change records (LCRs) into a queue named <code class="codeph">streams_queue</code>. Next, an apply process dequeues these row LCRs from the same queue, reenqueues them into this queue, and sends them to a procedure DML handler. 
+                  </p>
+                  <p>When the row LCRs are captured, they reside in the buffered queue and cannot be dequeued explicitly. After the row LCRs are reenqueued during apply, they are available for explicit dequeue by an application. This example does not create the application that dequeues these row LCRs.</p>
+                  <p>This example illustrates a procedure DML handler that inserts records of deleted employees into an <code class="codeph">emp_del</code> table in the <code class="codeph">hr</code> schema. This example assumes that the <code class="codeph">emp_del</code> table is used to retain the records of all deleted employees. The procedure DML handler is used to determine whether each row LCR contains a <code class="codeph">DELETE</code> statement. When the procedure DML handler finds a row LCR containing a <code class="codeph">DELETE</code> statement, it converts the <code class="codeph">DELETE</code> into an <code class="codeph">INSERT</code> on the <code class="codeph">emp_del</code> table and then inserts the row.
+                  </p>
+                  <p><a href="single-database-capture-and-apply-example.html#GUID-6B4F6501-D2F4-4B3D-A56B-C27561654167__i1006120">Figure 4-1</a> provides an overview of the environment.
+                  </p>
+                  <div class="figure" id="GUID-6B4F6501-D2F4-4B3D-A56B-C27561654167__i1006120">
+                     <p class="titleinfigure">Figure 4-1 Single Database Capture and Apply Example</p><img width="444" src="img/strex036.gif" alt="Description of Figure 4-1 follows" title="Description of Figure 4-1 follows" longdesc="img_text/strex036.html"><br><a href="img_text/strex036.html">Description of "Figure 4-1 Single Database Capture and Apply Example"</a></div>
+                  <!-- class="figure" -->
+                  <div class="infoboxnotealso" id="GUID-6B4F6501-D2F4-4B3D-A56B-C27561654167__GUID-C8D9DAC2-200D-4078-8CEB-FB94A2517DA7">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../strms/toc.htm"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                  </div>
+               </div>
+            </div><a id="STREX1152"></a><div class="props_rev_3"><a id="GUID-9480D186-A1CE-4B5B-8A0F-B3EFA64A5C7A" name="GUID-9480D186-A1CE-4B5B-8A0F-B3EFA64A5C7A"></a><h3 id="STREX-GUID-9480D186-A1CE-4B5B-8A0F-B3EFA64A5C7A" class="sect3"><span class="enumeration_section">4.2 </span>Prerequisites
+               </h3>
+               <div>
+                  <p>The following prerequisites must be completed before you begin the example in this chapter.</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Optionally set the <code class="codeph">STREAMS_POOL_SIZE</code> initialization parameter to an appropriate value. This parameter specifies the size of the Oracle Streams pool. The Oracle Streams pool stores messages in a buffered queue and is used for internal communications during parallel capture and apply. When the <code class="codeph">MEMORY_TARGET</code>, <code class="codeph">MEMORY_MAX_TARGET</code>, or <code class="codeph">SGA_TARGET</code> initialization parameter is set to a nonzero value, the Oracle Streams pool size is managed automatically.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-9480D186-A1CE-4B5B-8A0F-B3EFA64A5C7A__GUID-956A8A42-F9BB-4D71-ADC8-54B6D31905E1">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP201"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about setting initialization parameters that are relevant to Oracle Streams
+                           </p>
+                        </div>
+                     </li>
+                     <li>
+                        <p><a id="d11385e265" class="indexterm-anchor"></a><a id="d11385e269" class="indexterm-anchor"></a>Set the database to run in <code class="codeph">ARCHIVELOG</code> mode. Any database producing changes that will be captured must run in <code class="codeph">ARCHIVELOG</code> mode.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-9480D186-A1CE-4B5B-8A0F-B3EFA64A5C7A__GUID-B4FF47F2-34E9-4FD9-BAFA-32362DBF3E68">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../admin/managing-archived-redo-log-files.html#ADMIN008"><span class="italic">Oracle Database Administrator's Guide </span></a>for information about running a database in <code class="codeph">ARCHIVELOG</code> mode
+                           </p>
+                        </div>
+                     </li>
+                     <li>
+                        <p>Create an Oracle Streams administrator at the database. This example assumes that the user name of the Oracle Streams administrator is <code class="codeph">strmadmin</code>.
+                        </p>
+                        <p>This example executes a subprogram in an Oracle Streams packages within a stored procedure. Specifically, the <code class="codeph">emp_dq</code> procedure created in Step <a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGBDCGF">"Create a Procedure to Dequeue the Messages"</a> runs the <code class="codeph">DEQUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_MESSAGING</code> package. Therefore, the Oracle Streams administrator must be granted <code class="codeph">EXECUTE</code> privilege explicitly on the package. In this case, <code class="codeph">EXECUTE</code> privilege cannot be granted through a role. The <code class="codeph">DBMS_STREAMS_AUTH.GRANT_ADMIN_PRIVILEGE</code> procedure grants <code class="codeph">EXECUTE</code> on all Oracle Streams packages, as well as other privileges relevant to Oracle Streams. You can either grant the <code class="codeph">EXECUTE</code> privilege on the package directly, or use the <code class="codeph">GRANT_ADMIN_PRIVILEGE</code> procedure to grant it.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-9480D186-A1CE-4B5B-8A0F-B3EFA64A5C7A__GUID-59BB6FF1-B312-40A2-BD66-1130F9FE45BF">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strex&amp;id=STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an Oracle Streams administrator
+                           </p>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STREX1308"></a><a id="STREX1309"></a><a id="STREX1310"></a><a id="STREX1311"></a><a id="STREX1312"></a><a id="STREX1153"></a><div class="props_rev_3"><a id="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749" name="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749"></a><h3 id="STREX-GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749" class="sect3"><span class="enumeration_section">4.3 </span>Set Up the Environment
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Complete the following steps to create the <code class="codeph">hr.emp_del</code> table, set up the Oracle Streams administrator, and create the queue.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__GUID-2D8EE2ED-74FC-4D8D-94A4-B10644F221E9">"Set Up the Environment"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__BCGFEIJC">"Create the hr.emp_del Table"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__BCGCFFDF">"Grant Additional Privileges to the Oracle Streams Administrator"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__BCGBBCJI">"Create the ANYDATA Queue at cpap.example.com"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__BCGCAGAA">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__GUID-86265338-FEB7-4A2E-A9C0-63F4DD2BF50A">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to the database.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__i1048981">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__GUID-2D8EE2ED-74FC-4D8D-94A4-B10644F221E9">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL streams_setup_capapp.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__BCGFEIJC">
+                              <!-- --></a>Create the hr.emp_del Table
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">cpap.example.com</code> as the <code class="codeph">hr</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT hr@cpap.example.com
+
+/*
+</pre><p>Create the <code class="codeph">hr.emp_del</code> table. The columns in the <code class="codeph">emp_del</code> table is the same as the columns in the <code class="codeph">employees</code> table, except for one added <code class="codeph">timestamp</code> column that will record the date when a row is inserted into the <code class="codeph">emp_del</code> table.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CREATE TABLE emp_del( 
+  employee_id    NUMBER(6), 
+  first_name     VARCHAR2(20), 
+  last_name      VARCHAR2(25), 
+  email          VARCHAR2(25), 
+  phone_number   VARCHAR2(20), 
+  hire_date      DATE, 
+  job_id         VARCHAR2(10), 
+  salary         NUMBER(8,2), 
+  commission_pct NUMBER(2,2), 
+  manager_id     NUMBER(6), 
+  department_id  NUMBER(4),
+  timestamp      DATE);
+
+CREATE UNIQUE INDEX emp_del_id_pk ON emp_del (employee_id);
+
+ALTER TABLE emp_del ADD (CONSTRAINT emp_del_id_pk PRIMARY KEY (employee_id));
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__BCGCFFDF">
+                              <!-- --></a>Grant Additional Privileges to the Oracle Streams Administrator
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">cpap.example.com</code> as <code class="codeph">SYSTEM</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT SYSTEM@cpap.example.com
+
+/*
+</pre><p>Grant the Oracle Streams administrator all privileges on the <code class="codeph">emp_del</code> table, because the Oracle Streams administrator will be the apply user and must be able to insert records into this table. Alternatively, you can alter the apply process to specify that <code class="codeph">hr</code> is the apply user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+GRANT ALL ON hr.emp_del TO STRMADMIN;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__BCGBBCJI">
+                              <!-- --></a>Create the ANYDATA Queue at cpap.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">cpap.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT strmadmin@cpap.example.com
+
+/*
+</pre><p>Run the <code class="codeph">SET_UP_QUEUE</code> procedure to create a queue named <code class="codeph">streams_queue</code> at <code class="codeph">cpap.example.com</code>. This queue is an <code class="codeph">ANYDATA</code> queue that will stage the captured changes to be dequeued by an apply process and the user-constructed changes to be dequeued by a dequeue procedure.
+                           </p>
+                           <p>Running the <code class="codeph">SET_UP_QUEUE</code> procedure performs the following actions:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a queue table named <code class="codeph">streams_queue_table</code>. This queue table is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>) and uses the default storage of this user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates a queue named <code class="codeph">streams_queue</code> owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>).
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Starts the queue.</p>
+                              </li>
+                           </ul>
+                           <p></p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table &nbsp;=&gt; 'strmadmin.streams_queue_table',
+&nbsp;&nbsp;&nbsp; queue_name &nbsp;&nbsp;=&gt; 'strmadmin.streams_queue');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3FCD1EFD-9BEC-41BC-9798-6330D9802749__BCGCAGAA">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">streams_setup_capapp.out</code> spool file to ensure that all actions finished successfully after this script is completed.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1313"></a><a id="STREX1314"></a><a id="STREX1315"></a><a id="STREX1316"></a><a id="STREX1317"></a><a id="STREX1318"></a><a id="STREX1319"></a><a id="STREX1320"></a><a id="STREX1321"></a><a id="STREX1322"></a><a id="STREX1323"></a><a id="STREX1154"></a><div class="props_rev_3"><a id="GUID-8765465E-9016-489F-A997-984B0710967E" name="GUID-8765465E-9016-489F-A997-984B0710967E"></a><h3 id="STREX-GUID-8765465E-9016-489F-A997-984B0710967E" class="sect3"><span class="enumeration_section">4.4 </span>Configure Capture and Apply
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Complete the following steps to capture changes to the <code class="codeph">hr.employees</code> table and apply these changes on single database in a customized way using a procedure DML handler.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__GUID-47780D35-8C00-4E51-9E8A-1CDCF530CF9C">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGIIGJG">"Configure the Capture Process at cpap.example.com"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGCHEJI">"Set the Instantiation SCN for the hr.employees Table"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGIBEIF">"Create the Procedure DML Handler handler Procedure"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGEJIFC">"Set the Procedure DML Handler for the hr.employees Table"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGHAFHC">"Create a Messaging Client for the Queue"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGDJEEC">"Configure the Apply Process at cpap.example.com"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGBDCGF">"Create a Procedure to Dequeue the Messages"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGIBCGB">"Start the Apply Process at cpap.example.com"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGEFIAC">"Start the Capture Process at cpap.example.com"</a></span></li>
+                     <li><span><a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGEHBBB">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-8765465E-9016-489F-A997-984B0710967E__GUID-F2E08DC2-24F0-4434-B4D7-FBBDA3D6F926">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect the database.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-8765465E-9016-489F-A997-984B0710967E__i1049180">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__GUID-47780D35-8C00-4E51-9E8A-1CDCF530CF9C">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL streams_config_capapp.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGIIGJG">
+                              <!-- --></a>Configure the Capture Process at cpap.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">cpap.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@cpap.example.com
+
+/*
+</pre><p>Configure the capture process to capture DML changes to the <code class="codeph">hr.employees</code> table at <code class="codeph">cpap.example.com</code>. This step creates the capture process and adds a rule to its positive rule set that instructs the capture process to capture DML changes to this table. This step also prepares the <code class="codeph">hr.employees</code> table for instantiation and enables supplemental logging for any primary key, unique key, bitmap index, and foreign key columns in the table.
+                           </p>
+                           <p>Supplemental logging places additional information in the redo log for changes made to tables. The apply process needs this extra information to perform some operations, such as unique row identification.</p>
+                           <div class="infoboxnotealso" id="GUID-8765465E-9016-489F-A997-984B0710967E__GUID-A5FBD385-4FAA-4968-BC46-B4EB2E724FD7">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strex&amp;id=STREP107"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a></p>
+                           </div><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name     =&gt; 'hr.employees',   
+    streams_type   =&gt; 'capture',
+    streams_name   =&gt; 'capture_emp',
+    queue_name     =&gt; 'strmadmin.streams_queue',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;=&gt;  TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp; =&gt;  FALSE,
+    inclusion_rule =&gt;  TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGCHEJI">
+                              <!-- --></a>Set the Instantiation SCN for the hr.employees Table
+                        </dt>
+                        <dd>
+                           <p>Because this example captures and applies changes in a single database, no instantiation is necessary. However, the apply process at the <code class="codeph">cpap.example.com</code> database still must be instructed to apply changes that were made to the <code class="codeph">hr.employees</code> table after a specific system change number (SCN).
+                           </p>
+                           <p>This example uses the <code class="codeph">GET_SYSTEM_CHANGE_NUMBER</code> function in the <code class="codeph">DBMS_FLASHBACK</code> package to obtain the current SCN for the database. This SCN is used to run the <code class="codeph">SET_TABLE_INSTANTIATION_SCN</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package.
+                           </p>
+                           <p>The <code class="codeph">SET_TABLE_INSTANTIATION_SCN</code> procedure controls which LCRs for a table are ignored by an apply process and which LCRs for a table are applied by an apply process. If the commit SCN of an LCR for a table from a source database is less than or equal to the instantiation SCN for that table at a destination database, then the apply process at the destination database discards the LCR. Otherwise, the apply process applies the LCR. In this example, the <code class="codeph">cpap.example.com</code> database is both the source database and the destination database.
+                           </p>
+                           <p>The apply process will apply transactions to the <code class="codeph">hr.employees</code> table with SCNs that were committed after SCN obtained in this step.
+                           </p>
+                           <div class="infoboxnote" id="GUID-8765465E-9016-489F-A997-984B0710967E__GUID-AB7D4F2B-79F4-4C52-82B1-3C7EAA985ACC">
+                              <p class="notep1">Note:</p>
+                              <p>The <code class="codeph">hr.employees</code> table also must be prepared for instantiation. This preparation was done automatically when the capture process was configured with a rule to capture DML changes to the <code class="codeph">hr.employees</code> table in Step <a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGIIGJG">"Configure the Capture Process at cpap.example.com"</a>.
+                              </p>
+                           </div><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  iscn  NUMBER;         -- Variable to hold instantiation SCN value
+BEGIN
+  iscn := DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER();
+  DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN(
+    source_object_name    =&gt; 'hr.employees',
+    source_database_name  =&gt; 'cpap.example.com',
+    instantiation_scn     =&gt; iscn);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGIBEIF">
+                              <!-- --></a>Create the Procedure DML Handler handler Procedure
+                        </dt>
+                        <dd>
+                           <p>This step creates the <code class="codeph">emp_dml_handler</code> procedure. This procedure will be the procedure DML handler for <code class="codeph">DELETE</code> changes to the <code class="codeph">hr.employees</code> table. It converts any row LCR containing a <code class="codeph">DELETE</code> command type into an <code class="codeph">INSERT</code> row LCR and then inserts the converted row LCR into the <code class="codeph">hr.emp_del</code> table by executing the row&nbsp;LCR.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CREATE OR REPLACE PROCEDURE emp_dml_handler(in_any IN ANYDATA) IS
+  lcr          SYS.LCR$_ROW_RECORD;
+  rc           PLS_INTEGER;
+  command      VARCHAR2(30);
+  old_values   SYS.LCR$_ROW_LIST;
+BEGIN    
+  -- Access the LCR
+  rc := in_any.GETOBJECT(lcr);
+  -- Get the object command type
+  command := lcr.GET_COMMAND_TYPE();
+  -- Check for DELETE command on the hr.employees table
+  IF command = 'DELETE' THEN
+    -- Set the command_type in the row LCR to INSERT
+    lcr.SET_COMMAND_TYPE('INSERT');
+    -- Set the object_name in the row LCR to EMP_DEL
+    lcr.SET_OBJECT_NAME('EMP_DEL');
+    -- Get the old values in the row LCR
+    old_values := lcr.GET_VALUES('old');
+    -- Set the old values in the row LCR to the new values in the row LCR
+    lcr.SET_VALUES('new', old_values);
+    -- Set the old values in the row LCR to NULL
+    lcr.SET_VALUES('old', NULL);
+    -- Add a SYSDATE value for the timestamp column
+    lcr.ADD_COLUMN('new', 'TIMESTAMP', ANYDATA.ConvertDate(SYSDATE));
+    -- Apply the row LCR as an INSERT into the hr.emp_del table
+    lcr.EXECUTE(TRUE);
+  END IF;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGEJIFC">
+                              <!-- --></a>Set the Procedure DML Handler for the hr.employees Table
+                        </dt>
+                        <dd>
+                           <p>Set the procedure DML handler for the <code class="codeph">hr.employees</code> table to the procedure created in Step&nbsp;<a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGIBEIF">"Create the Procedure DML Handler handler Procedure"</a>. Notice that the <code class="codeph">operation_name</code> parameter is set to <code class="codeph">DEFAULT</code> so that the procedure DML handler is used for each possible operation on the table, including <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, and <code class="codeph">DELETE</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">
+*/
+
+BEGIN
+  DBMS_APPLY_ADM.SET_DML_HANDLER(
+    object_name         =&gt; 'hr.employees',
+    object_type         =&gt; 'TABLE',
+    operation_name      =&gt; 'DEFAULT',
+    error_handler       =&gt; FALSE,
+    user_procedure      =&gt; 'strmadmin.emp_dml_handler',
+    apply_database_link =&gt; NULL,
+    apply_name          =&gt; NULL);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGHAFHC">
+                              <!-- --></a>Create a Messaging Client for the Queue
+                        </dt>
+                        <dd>
+                           <p>Create a messaging client that can be used by an application to dequeue the reenqueued messages. A messaging client must be specified before the messages can be reenqueued into the queue.</p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name     =&gt; 'hr.employees',   
+    streams_type   =&gt; 'dequeue',
+    streams_name   =&gt; 'hr',
+    queue_name     =&gt; 'strmadmin.streams_queue',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;=&gt;  TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp; =&gt;  FALSE,
+    inclusion_rule =&gt;  TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGDJEEC">
+                              <!-- --></a>Configure the Apply Process at cpap.example.com
+                        </dt>
+                        <dd>
+                           <p>Create an apply process to apply DML changes to the <code class="codeph">hr.employees</code> table. Although the procedure DML handler for the apply process causes deleted employees to be inserted into the <code class="codeph">emp_del</code> table, this rule specifies the <code class="codeph">employees</code> table, because the row LCRs in the queue contain changes to the <code class="codeph">employees</code> table, not the <code class="codeph">emp_del</code> table. When you run the <code class="codeph">ADD_TABLE_RULES</code> procedure to create the apply process, the out parameter <code class="codeph">dml_rule_name</code> contains the name of the DML rule created. This rule name is then passed to the <code class="codeph">SET_ENQUEUE_DESTINATION</code> procedure.
+                           </p>
+                           <p>The <code class="codeph">SET_ENQUEUE_DESTINATION</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package specifies that any apply process using the DML rule generated by <code class="codeph">ADD_TABLE_RULES</code> will enqueue messages that satisfy this rule into <code class="codeph">streams_queue</code>. In this case, the DML rule is for row LCRs with DML changes to the <code class="codeph">hr.employees</code> table. A local queue other than the apply process queue can be specified if appropriate.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+	  emp_rule_name_dml  VARCHAR2(30);
+	  emp_rule_name_ddl  VARCHAR2(30);
+BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name      =&gt; 'hr.employees',
+    streams_type    =&gt; 'apply', 
+    streams_name    =&gt; 'apply_emp',
+    queue_name      =&gt; 'strmadmin.streams_queue',
+    include_dml     =&gt;  TRUE,
+    include_ddl     =&gt;  FALSE,
+    source_database =&gt; 'cpap.example.com',
+    dml_rule_name   =&gt; emp_rule_name_dml,
+    ddl_rule_name   =&gt; emp_rule_name_ddl);
+  DBMS_APPLY_ADM.SET_ENQUEUE_DESTINATION(
+    rule_name               =&gt;  emp_rule_name_dml,
+    destination_queue_name  =&gt;  'strmadmin.streams_queue');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGBDCGF">
+                              <!-- --></a>Create a Procedure to Dequeue the Messages
+                        </dt>
+                        <dd>
+                           <p>The <code class="codeph">emp_dq</code> procedure created in this step can be used to dequeue the messages that are reenqueued by the apply process. In Step <a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGDJEEC">"Configure the Apply Process at cpap.example.com"</a>, the <code class="codeph">SET_ENQUEUE_DESTINATION</code> procedure was used to instruct the apply process to enqueue row LCRs containing changes to the <code class="codeph">hr.employees</code> table into <code class="codeph">streams_queue</code>. When the <code class="codeph">emp_dq</code> procedure is executed, it dequeues each row LCR in the queue and displays the type of command in the row LCR, either <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, or <code class="codeph">DELETE</code>. Any information in the row LCRs can be accessed and displayed, not just the command type.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-8765465E-9016-489F-A997-984B0710967E__GUID-E2F5289D-F2E4-4991-9EEE-E43E97C82010">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../strms/monitoring-oracle-streams-apply-processes.html#STRMS143"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about displaying information in LCRs
+                              </p>
+                           </div><pre class="oac_no_warn" dir="ltr">*/
+
+CREATE OR REPLACE PROCEDURE emp_dq (consumer IN VARCHAR2) AS
+  msg            ANYDATA;
+  row_lcr        SYS.LCR$_ROW_RECORD;
+  num_var        pls_integer;
+  more_messages  BOOLEAN := TRUE;
+  navigation     VARCHAR2(30);
+BEGIN
+  navigation := 'FIRST MESSAGE';
+  WHILE (more_messages) LOOP
+    BEGIN
+      DBMS_STREAMS_MESSAGING.DEQUEUE(
+        queue_name   =&gt; 'strmadmin.streams_queue',
+        streams_name =&gt; consumer,
+        payload      =&gt; msg,
+        navigation   =&gt; navigation,
+        wait         =&gt; DBMS_STREAMS_MESSAGING.NO_WAIT);
+      IF msg.GETTYPENAME() = 'SYS.LCR$_ROW_RECORD' THEN
+        num_var := msg.GetObject(row_lcr);   
+        DBMS_OUTPUT.PUT_LINE(row_lcr.GET_COMMAND_TYPE || ' row LCR dequeued');
+      END IF;
+      navigation := 'NEXT MESSAGE';
+    COMMIT;
+    EXCEPTION WHEN SYS.DBMS_STREAMS_MESSAGING.ENDOFCURTRANS THEN
+                navigation := 'NEXT TRANSACTION';
+              WHEN DBMS_STREAMS_MESSAGING.NOMOREMSGS THEN
+                more_messages := FALSE;
+                DBMS_OUTPUT.PUT_LINE('No more messages.');
+              WHEN OTHERS THEN
+                RAISE; 
+    END;
+  END LOOP;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGIBCGB">
+                              <!-- --></a>Start the Apply Process at cpap.example.com
+                        </dt>
+                        <dd>
+                           <p>Set the <code class="codeph">disable_on_error</code> parameter to <code class="codeph">n</code> so that the apply process will not be disabled if it encounters an error, and start the apply process at <code class="codeph">cpap.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_APPLY_ADM.SET_PARAMETER(
+    apply_name  =&gt; 'apply_emp', 
+    parameter   =&gt; 'disable_on_error', 
+    value       =&gt; 'N');
+END;
+/
+ 
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_emp');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGEFIAC">
+                              <!-- --></a>Start the Capture Process at cpap.example.com
+                        </dt>
+                        <dd>
+                           <p>Start the capture process at <code class="codeph">cpap.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+    capture_name  =&gt; 'capture_emp');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-8765465E-9016-489F-A997-984B0710967E__BCGEHBBB">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">streams_config_capapp.out</code> spool file to ensure that all actions finished successfully after this script is completed.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1324"></a><a id="STREX1325"></a><a id="STREX1326"></a><a id="STREX1327"></a><a id="STREX1155"></a><div class="props_rev_3"><a id="GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30" name="GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30"></a><h3 id="STREX-GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30" class="sect3"><span class="enumeration_section">4.5 </span>Make DML Changes, Query for Results, and Dequeue Messages
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Complete the following steps to confirm that apply process is configured correctly, make DML changes to the <code class="codeph">hr.employees</code> table, query for the resulting inserts into the <code class="codeph">hr.emp_del</code> table and the reenqueued messages in the <code class="codeph">streams_queue_table</code>, and dequeue the messages that were reenqueued by the apply process:
+                     </p>
+                     <ol>
+                        <li>
+                           <p><a href="single-database-capture-and-apply-example.html#GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGEJEHA">"Confirm the Rule Action Context"</a></p>
+                        </li>
+                        <li>
+                           <p><a href="single-database-capture-and-apply-example.html#GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGFIAAD">"Perform an INSERT, UPDATE, and DELETE on hr.employees"</a></p>
+                        </li>
+                        <li>
+                           <p><a href="single-database-capture-and-apply-example.html#GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGEAGAB">"Query the hr.emp_del Table and the streams_queue_table"</a></p>
+                        </li>
+                        <li>
+                           <p><a href="single-database-capture-and-apply-example.html#GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGFEDFH">"Dequeue Messages Reenqueued by the Procedure DML Handler"</a></p>
+                        </li>
+                     </ol>
+                     <dl>
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGEJEHA">
+                              <!-- --></a>Confirm the Rule Action Context
+                        </dt>
+                        <dd>
+                           <p>Step <a href="single-database-capture-and-apply-example.html#GUID-8765465E-9016-489F-A997-984B0710967E__BCGDJEEC">"Configure the Apply Process at cpap.example.com"</a> creates an apply process rule that specifies a destination queue into which LCRs that satisfy the rule are enqueued. In this case, LCRs that satisfy the rule are row LCRs with changes to the <code class="codeph">hr.employees</code> table.
+                           </p>
+                           <p>Complete the following steps to confirm that the rule specifies a destination queue:</p>
+                           <ol>
+                              <li id="GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGDGHJG">
+                                 <p>Run the following query to determine the name of the rule for DML changes to the <code class="codeph">hr.employees</code> table used by the apply process <code class="codeph">apply_emp</code>:
+                                 </p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin@cpap.example.com
+Enter password: <span class="italic">password</span>
+
+SELECT RULE_OWNER, RULE_NAME FROM DBA_STREAMS_RULES 
+  WHERE STREAMS_NAME = 'APPLY_EMP' AND
+        STREAMS_TYPE = 'APPLY' AND
+        SCHEMA_NAME  = 'HR' AND
+        OBJECT_NAME  = 'EMPLOYEES' AND
+        RULE_TYPE    = 'DML'
+  ORDER BY RULE_NAME;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">RULE_OWNER                     RULE_NAME
+------------------------------ ------------------------------
+STRMADMIN                      EMPLOYEES3</pre><p></p>
+                              </li>
+                              <li>
+                                 <p>View the action context for the rule returned by the query in Step <a href="single-database-capture-and-apply-example.html#GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGDGHJG">1</a>:
+                                 </p><pre class="oac_no_warn" dir="ltr">COLUMN RULE_OWNER HEADING 'Rule Owner' FORMAT A15
+COLUMN DESTINATION_QUEUE_NAME HEADING 'Destination Queue' FORMAT A30
+
+SELECT RULE_OWNER, DESTINATION_QUEUE_NAME
+  FROM DBA_APPLY_ENQUEUE
+  WHERE RULE_NAME = 'EMPLOYEES3'
+  ORDER BY DESTINATION_QUEUE_NAME;
+</pre><p>Ensure that you substitute the rule name returned in Step <a href="single-database-capture-and-apply-example.html#GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGDGHJG">1</a> in the <code class="codeph">WHERE</code> clause. Your output looks similar to the following:
+                                 </p><pre class="oac_no_warn" dir="ltr">Rule Owner      Destination Queue
+--------------- ------------------------------
+STRMADMIN       "STRMADMIN"."STREAMS_QUEUE"
+</pre><p>The output should show that LCRs that satisfy the apply process rule are enqueued into <code class="codeph">streams_queue</code>.
+                                 </p>
+                              </li>
+                           </ol>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGFIAAD">
+                              <!-- --></a>Perform an INSERT, UPDATE, and DELETE on hr.employees
+                        </dt>
+                        <dd>
+                           <p>Make the following DML changes to the <code class="codeph">hr.employees</code> table.
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT hr@cpap.example.com
+Enter password: <span class="italic">password</span>
+
+INSERT INTO hr.employees VALUES(207, 'JOHN', 'SMITH', 'JSMITH@EXAMPLE.COM', 
+  NULL, '07-JUN-94', 'AC_ACCOUNT', 777, NULL, NULL, 110);
+COMMIT;
+
+UPDATE hr.employees SET salary=5999 WHERE employee_id=207;
+COMMIT;
+
+DELETE FROM hr.employees WHERE employee_id=207;
+COMMIT;</pre></dd>
+                        <dt class="dlterm"><a name="GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGEAGAB">
+                              <!-- --></a>Query the hr.emp_del Table and the streams_queue_table
+                        </dt>
+                        <dd>
+                           <p>After some time passes to allow for capture and apply of the changes performed in the previous step, run the following queries to see the results:</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin@cpap.example.com
+Enter password: <span class="italic">password</span>
+
+SELECT employee_id, first_name, last_name, timestamp 
+  FROM hr.emp_del ORDER BY employee_id;
+
+SELECT MSG_ID, MSG_STATE, CONSUMER_NAME 
+  FROM AQ$STREAMS_QUEUE_TABLE ORDER BY MSG_ID;
+</pre><p>When you run the first query, you should see a record for the employee with an <code class="codeph">employee_id</code> of <code class="codeph">207</code>. This employee was deleted in the previous step. When you run the second query, you should see the reenqueued messages resulting from all of the changes in the previous step, and the <code class="codeph">MSG_STATE</code> should be <code class="codeph">READY</code> for these messages.
+                           </p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGFEDFH">
+                              <!-- --></a>Dequeue Messages Reenqueued by the Procedure DML Handler
+                        </dt>
+                        <dd>
+                           <p>Use the <code class="codeph">emp_dq</code> procedure to dequeue the messages that were reenqueued by the procedure DML handler.
+                           </p><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON SIZE 100000
+
+EXEC emp_dq('HR');
+</pre><p>For each row changed by a DML statement, one line is returned, and each line states the command type of the change (either <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, or <code class="codeph">DELETE</code>). If you repeat the query on the queue table in Step <a href="single-database-capture-and-apply-example.html#GUID-1D30F68C-0356-411B-B9F8-3B5EDEE38B30__BCGEAGAB">"Query the hr.emp_del Table and the streams_queue_table"</a> after the messages are dequeued, then the dequeued messages should have been consumed. That is, either the <code class="codeph">MSG_STATE</code> should be <code class="codeph">PROCESSED</code> for these messages, or the messages should no longer be in the queue.
+                           </p><pre class="oac_no_warn" dir="ltr">SELECT MSG_ID, MSG_STATE, CONSUMER_NAME 
+  FROM AQ$STREAMS_QUEUE_TABLE ORDER BY MSG_ID;
+</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

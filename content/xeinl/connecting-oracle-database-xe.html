@@ -1,0 +1,129 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Connecting to Oracle Database XE</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Installation Guide">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Installation Guide for Linux x86-64">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-express-edition-installation-guide-linux.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-12-07T09:23:36-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2005, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E90411-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="setting-oracle-database-xe-environment-variables.html" title="Previous" type="text/html">
+      <link rel="next" href="starting-and-stopping-oracle-database.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Database Express Edition Installation Guide for Linux">
+    <meta name="dcterms.isVersionOf" content="XEINL">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="setting-oracle-database-xe-environment-variables.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="starting-and-stopping-oracle-database.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Installation Guide</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Connecting to Oracle Database XE</li>
+            </ol>
+            <a id="GUID-2B8DA341-692C-4FE7-9DE0-13C615D4D34B" name="GUID-2B8DA341-692C-4FE7-9DE0-13C615D4D34B"></a>
+            
+            <h2 id="XEINL-GUID-2B8DA341-692C-4FE7-9DE0-13C615D4D34B" class="sect2"><span class="enumeration_chapter">6 </span>Connecting to Oracle Database XE
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <div class="section">
+                  <p class="subhead1" id="GUID-2B8DA341-692C-4FE7-9DE0-13C615D4D34B__GUID-798B9137-739D-4349-A92B-3C27C37A0B81">Connecting using <code class="codeph">SQL*Net</code></p>
+                  <p>The database listener for your XE database is started with a configuration that can be viewed using the command :</p><pre class="oac_no_warn" dir="ltr">lsnrctl status</pre><pre class="oac_no_warn" dir="ltr">Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=dbhost.example.com)(PORT=1521)))
+STATUS of the LISTENER
+------------------------
+Alias                     LISTENER
+Version                   TNSLSNR for Linux: Version 18.0.0.0.0 - Production
+Trace Level               off
+Security                  ON: Local OS Authentication
+SNMP                      OFF
+Default Service           XE
+Listener Parameter File   /opt/oracle/product/18c/dbhomeXE/network/admin/listener.ora
+Listener Log File         /opt/oracle/diag/tnslsnr/dbhost/listener/alert/log.xml
+Listening Endpoints Summary...
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=dbhost.example.com)(PORT=1521)))
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=EXTPROC1521)))
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=tcps)(HOST=dbhost.example.com)(PORT=5500))(Security=(my_wallet_directory=/opt/oracle/admin/XE/xdb_wallet))(Presentation=HTTP)(Session=RAW))
+Services Summary...
+Service "77f81bd10c818208e053410cc40aef5a" has 1 instance(s).
+  Instance "XE", status READY, has 1 handler(s) for this service...
+Service "XE" has 1 instance(s).
+  Instance "XE", status READY, has 1 handler(s) for this service...
+Service "XEXDB" has 1 instance(s).
+  Instance "XE", status READY, has 1 handler(s) for this service...
+Service "xepdb1" has 1 instance(s).
+  Instance "XE", status READY, has 1 handler(s) for this service...
+The command completed successfully</pre><p>For example, you can connect to the database from a client computer with <code class="codeph">SQL*plus</code> using the connect identifier:
+                  </p><pre class="oac_no_warn" dir="ltr">sqlplus system@"dbhost.example/XE"</pre><p>The <code class="codeph">XE</code> services are defined in the configuration in <code>/opt/oracle/product/18c/dbhomeXE/network/admin/tnsnames.ora</code> file.
+                  </p>
+               </div>
+               <!-- class="section" -->
+               <div class="section">
+                  <p class="subhead1" id="GUID-2B8DA341-692C-4FE7-9DE0-13C615D4D34B__GUID-308972E3-CE55-471C-8025-E7581EF697DE">Connecting to Oracle Using Easy Connect Naming Method</p>
+                  <div class="p">You can connect to the database using the following Easy Connect strings: 
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Multitenant container database: <span class="italic">host</span>[<span class="italic">:port</span>]
+                           </p>
+                        </li>
+                        <li>
+                           <p>Pluggable database:  <span class="italic">host</span>[:<span class="italic">port</span>]/<span class="italic">service_name</span></p>
+                           <p>XEPDB1 is the service name defined for the first PDB created by default. If your PDB has another name, you must provide the service name for that PDB. </p>
+                           <p>Specifying the port is optional when the listener is setup with the default port 1521. You must specify the port if other port number is used.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="section" -->
+               <div class="infoboxnotealso" id="GUID-2B8DA341-692C-4FE7-9DE0-13C615D4D34B__GUID-5CFC2DB0-3805-445D-ADB1-F1A9E2E2C366">
+                  <p class="notep1">See Also:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="../admqs/configuring-the-network-environment.html#ADMQS-GUID-C6DD213A-D37E-4905-983D-F9DCA8AE286A" target="_blank"><span class="italic">2 Day DBA</span></a> for more information about the listener and network configuration
+                        </p>
+                     </li>
+                  </ul><a href="../adfns/connection_strategies.html#ADFNS-GUID-90D1249D-38B8-47BF-9829-BA0146BD814A" target="_blank"><span class="italic">Oracle Database Development Guide</span></a> for more information about connection strategies for database applications
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

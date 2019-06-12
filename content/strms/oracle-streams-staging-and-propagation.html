@@ -1,0 +1,571 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Oracle Streams Staging and Propagation</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="oracle-streams-information-capture.html" title="Previous" type="text/html">
+      <link rel="next" href="oracle-streams-information-consumption.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="oracle-streams-information-capture.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="oracle-streams-information-consumption.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="essential-oracle-streams-concepts.html" property="item" typeof="WebPage"><span property="name">      Essential Oracle Streams Concepts </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Oracle Streams Staging and Propagation</li>
+            </ol>
+            <a id="GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F" name="GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F"></a><a id="STRMS003"></a><a id="STRMS_STAGING_AND_PROPAGATION"></a>
+            
+            <h2 id="STRMS-GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F" class="sect2"><span class="enumeration_chapter">3 </span> Oracle Streams Staging and Propagation
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d24163e127" class="indexterm-anchor"></a><a id="d24163e131" class="indexterm-anchor"></a><a id="d24163e135" class="indexterm-anchor"></a><a id="d24163e137" class="indexterm-anchor"></a>The following topics contain conceptual information about staging <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s in <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s and propagating messages from one queue to another:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="oracle-streams-staging-and-propagation.html#GUID-FE609A2B-DF7F-4BCC-979A-362C664C5292">Introduction to Message Staging and Propagation</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-staging-and-propagation.html#GUID-9341B7DE-2218-4290-ACC3-8D27931864B6">Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F__GUID-2F1B4957-ECA3-4B92-83ED-6541CD3DC35F">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29"> Managing Staging and Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6">Monitoring Queues and Messaging</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2">Monitoring Oracle Streams Propagations and Propagation Jobs</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-propagation.html#GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08"> Troubleshooting Propagation</a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS347"></a><div class="props_rev_3"><a id="GUID-FE609A2B-DF7F-4BCC-979A-362C664C5292" name="GUID-FE609A2B-DF7F-4BCC-979A-362C664C5292"></a><h3 id="STRMS-GUID-FE609A2B-DF7F-4BCC-979A-362C664C5292" class="sect3"><span class="enumeration_section">3.1 </span>Introduction to Message Staging and Propagation
+               </h3>
+               <div>
+                  <p>Oracle Streams uses <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s to stage <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s. Staged messages can be consumed or propagated, or both. Staged messages can be consumed by an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, a <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>, or a user application. A running apply process implicitly dequeues messages, but messaging clients and user applications explicitly dequeue messages. Even after a message is consumed, it can remain in the queue if you also have configured an Oracle Streams <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> to propagate, or send, the message to one or more other queues or if message retention is specified for the queue. Message retention applies to messages captured by a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> or enqueued explicitly, but it does not apply to messages captured by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-FE609A2B-DF7F-4BCC-979A-362C664C5292__GUID-DD193843-11D0-4F49-BFE0-979DAF6F9A0E">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29"> Managing Staging and Propagation</a></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6">Monitoring Queues and Messaging</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2">Monitoring Oracle Streams Propagations and Propagation Jobs</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-propagation.html#GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08"> Troubleshooting Propagation</a></p>
+                        </li>
+                        <li>
+                           <p><a href="../adque/toc.htm"><span class="italic">Oracle Database Advanced Queuing User's Guide</span></a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS348"></a><div class="props_rev_3"><a id="GUID-9341B7DE-2218-4290-ACC3-8D27931864B6" name="GUID-9341B7DE-2218-4290-ACC3-8D27931864B6"></a><h3 id="STRMS-GUID-9341B7DE-2218-4290-ACC3-8D27931864B6" class="sect3"><span class="enumeration_section">3.2 </span>Queues
+               </h3>
+               <div>
+                  <p>A queue is an abstract storage unit used by a messaging system to store messages. This section includes the following topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-staging-and-propagation.html#GUID-EB547B35-BD86-4D35-8C86-9448B771678A">ANYDATA Queues and Typed Queues</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-staging-and-propagation.html#GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1">Persistent Queues and Buffered Queues</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-9341B7DE-2218-4290-ACC3-8D27931864B6__GUID-977B960D-80A7-4007-ABDA-3D6415BE6997">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-868E73A3-D956-460B-ACBF-B9796CEB3889">Managing Queues</a></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-restrictions.html#GUID-EF156077-A1CA-4C85-B0ED-9105F6382D7D">Queue Restrictions</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-queue-concepts.html#GUID-86636A79-0F8C-4C96-AF05-E10FC7AA1707"> Advanced Queue Concepts</a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS111"></a><div class="props_rev_3"><a id="GUID-EB547B35-BD86-4D35-8C86-9448B771678A" name="GUID-EB547B35-BD86-4D35-8C86-9448B771678A"></a><h4 id="STRMS-GUID-EB547B35-BD86-4D35-8C86-9448B771678A" class="sect4"><span class="enumeration_section">3.2.1 </span>ANYDATA Queues and Typed Queues
+                  </h4>
+                  <div>
+                     <p>A queue of <code class="codeph">ANYDATA</code> type can stage messages of almost any type and is called an <a href="strms_glossary.html#GUID-6A60BF27-6419-4518-800F-9C17D952DF46"><span class="xrefglossterm">ANYDATA queue</span></a>. A <a href="strms_glossary.html#GUID-A1B782A4-0767-457D-8CFD-D8ABF546A71D"><span class="xrefglossterm">typed queue</span></a> can stage messages of a specific type. <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s always use <code class="codeph">ANYDATA</code> queues.
+                     </p>
+                     <p>In an Oracle Streams replication environment, logical change records (LCRs) must be staged in <code class="codeph">ANYDATA</code> queues. In an Oracle Streams messaging environment, both <code class="codeph">ANYDATA</code> queues and <a href="strms_glossary.html#GUID-A1B782A4-0767-457D-8CFD-D8ABF546A71D"><span class="xrefglossterm">typed queue</span></a>s can stage messages. Publishing applications can enqueue messages into a single queue, and subscribing applications can dequeue these messages.
+                     </p>
+                     <p>Two types of messages can be encapsulated into an <code class="codeph">ANYDATA</code> object and staged in an <code class="codeph">ANYDATA</code> queue: <a href="strms_glossary.html#GUID-43A45807-D91D-43A2-89C8-8DEBCEF70770"><span class="xrefglossterm">LCR</span></a>s and <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a>s. An LCR is an object that contains information about a change to a database object. A user message is a message of a user-defined type created by users or applications. Both types of messages can be used for information sharing within a single database or between databases.
+                     </p>
+                     <p><code class="codeph">ANYDATA</code> queues can stage <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a>s whose payloads are of <code class="codeph">ANYDATA</code> type. An <code class="codeph">ANYDATA</code> payload can be a wrapper for payloads of different data types.
+                     </p>
+                     <p>By using <code class="codeph">ANYDATA</code> wrappers for <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> payloads, publishing applications can enqueue messages of different types into a single queue, and subscribing applications can dequeue these messages, either explicitly using a <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> or an application, or implicitly using an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>. If the subscribing application is remote, then the messages can be propagated to the remote site, and the subscribing application can dequeue the messages from a local queue in the remote database. Alternatively, a remote subscribing application can dequeue messages directly from the source queue using a variety of standard protocols, such as PL/SQL and OCI.
+                     </p>
+                     <p>You can wrap almost any type of payload in an <code class="codeph">ANYDATA</code> payload. To do this, you use the <code class="codeph">Convert</code><span class="italic"><code class="codeph">data_type</code></span> static functions of the <code class="codeph">ANYDATA</code> type, where <span class="italic"><code class="codeph">data_type</code></span> is the type of object to wrap. These functions take the object as input and return an <code class="codeph">ANYDATA</code> object.
+                     </p>
+                     <p>Oracle Streams includes the features of Oracle Database Advanced Queuing (AQ), which supports all the standard features of message queuing systems, including multiconsumer queues, publish and subscribe, content-based routing, internet propagation, transformations, and gateways to other messaging subsystems.</p>
+                     <div class="infoboxnotealso" id="GUID-EB547B35-BD86-4D35-8C86-9448B771678A__GUID-EE377B50-3119-4B0B-AF9F-EEEB2BFE6B5A">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-restrictions.html#GUID-EF156077-A1CA-4C85-B0ED-9105F6382D7D">Queue Restrictions</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADQUE2100"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for more information relating to <code class="codeph">ANYDATA</code> queues, such as wrapping payloads in an <code class="codeph">ANYDATA</code> wrapper, programmatic environments for enqueuing messages into and dequeuing messages from an <code class="codeph">ANYDATA</code> queue, propagation, and user-defined types 
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS077"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">ANYDATA</code> type
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS134"></a><div class="props_rev_3"><a id="GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1" name="GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1"></a><h4 id="STRMS-GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1" class="sect4"><span class="enumeration_section">3.2.2 </span>Persistent Queues and Buffered Queues
+                  </h4>
+                  <div>
+                     <p>Oracle Streams supports the following <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> modes:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="bold">Persistent messaging:</span> Messages are always stored on disk in a database table called a <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a>. This type of storage is sometimes called <span class="bold">persistent queue</span> storage.
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="bold">Buffered messaging:</span> Messages are stored in memory but can spill to a queue table under certain conditions. This type of storage is sometimes called <span class="bold">buffered queue</span> storage. The memory includes <a href="strms_glossary.html#GUID-34E20CD1-AD4B-4B77-9F96-717397CFC1C4"><span class="xrefglossterm">Oracle Streams pool</span></a> memory that is associated with a queue that contains messages that were captured by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> or enqueued by applications.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Buffered queues enable Oracle to optimize messages by buffering them in the System Global Area (SGA) instead of always storing them in a queue table. Buffered messaging provides better performance, but it does not support some messaging features, such as message retention. Message retention lets you specify the amount of time a message is retained in the queue table after being dequeued.</p>
+                     <p>If the size of the Oracle Streams pool is not managed automatically, then you should increase the size of the Oracle Streams pool by 10 MB for each buffered queue in a database. Buffered queues improve performance, but some of the information in a buffered queue can be lost if the instance containing the buffered queue shuts down normally or abnormally. Oracle Streams automatically recovers from these cases, assuming full database recovery is performed on the instance.</p>
+                     <p>Messages in a buffered queue can spill from memory into the queue table if they have been staged in the buffered queue for a period of time without being dequeued, or if there is not enough space in memory to hold all of the messages. Messages that spill from memory are stored in the appropriate <code class="codeph">AQ$_</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">_p</code> table, where <span class="italic"><code class="codeph">queue_table_name</code></span> is the name of the queue table for the queue. Also, for each spilled message, information is stored in the <code class="codeph">AQ$_</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">_d</code> table about any <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es that are eligible for processing the message.
+                     </p>
+                     <p>LCRs that were captured by a capture process are always stored in a buffered queue, but LCRs that were captured by a synchronous capture are always stored in a persistent queue. Other types of messages might or might not be stored in a buffered queue. When an application enqueues a message, the enqueue operation specifies whether the enqueued message is stored in the buffered queue or in the persistent queue. The <code class="codeph">delivery_mode</code> attribute in the <code class="codeph">enqueue_options</code> parameter of the <code class="codeph">DBMS_AQ.ENQUEUE</code> procedure determines whether a message is stored in the buffered queue or the persistent queue. Specifically, if the <code class="codeph">delivery_mode</code> attribute is the default <code class="codeph">PERSISTENT</code>, then the message is enqueued into the persistent queue. If it is set to <code class="codeph">BUFFERED</code>, then the message is enqueued as the buffered queue. When a transaction is moved to the error queue, all messages in the transaction always are stored in a queue table, not in a buffered queue.
+                     </p>
+                     <div class="infoboxnote" id="GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1__GUID-B9336014-DCF7-464C-BB74-9267EED7F8BF">
+                        <p class="notep1">Note:</p>
+                        <p><a id="d24163e1088" class="indexterm-anchor"></a><a id="d24163e1092" class="indexterm-anchor"></a>Although buffered and persistent messages can be stored in the same queue, it is sometimes more convenient to think of a queue having a buffered portion and a persistent portion, referred to here as "buffered queue" and "persistent queue." Also, both <code class="codeph">ANYDATA</code> queues and typed queues can include both a buffered queue and a persistent queue.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1__GUID-36004BEB-F555-43AD-9E3A-D09A2B403FBE">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP202"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring the Oracle Streams pool
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADQUE0102"><span class="italic">Oracle Database Advanced Queuing User's Guide</span></a> for detailed conceptual information about buffered messaging and for information about using buffered messaging
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS349"></a><div class="props_rev_3"><a id="GUID-35407BB7-CBAA-4E30-98B7-AC33A1107CCE" name="GUID-35407BB7-CBAA-4E30-98B7-AC33A1107CCE"></a><h5 id="STRMS-GUID-35407BB7-CBAA-4E30-98B7-AC33A1107CCE" class="sect5"><span class="enumeration_section">3.2.2.1 </span>Queues and Oracle Streams Clients
+                     </h5>
+                     <div>
+                        <p><a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s always use <code class="codeph">ANYDATA</code> queues. The following sections discuss how queues interact with <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="oracle-streams-staging-and-propagation.html#GUID-CADD131D-6EB2-45E0-9F5E-53EB54650D23">Queues and Capture Processes</a></p>
+                           </li>
+                           <li>
+                              <p><a href="oracle-streams-staging-and-propagation.html#GUID-0FE86B4D-4974-41D2-B8FB-2DDD936808B7">Queues and Synchronous Capture</a></p>
+                           </li>
+                           <li>
+                              <p><a href="oracle-streams-staging-and-propagation.html#GUID-8BDE583B-9CCE-47C9-A608-AC9C8E3BF8E9">Queues and Propagations</a></p>
+                           </li>
+                           <li>
+                              <p><a href="oracle-streams-staging-and-propagation.html#GUID-50AA22C4-B9E6-4A7D-B497-705DE754DD10">Queues and Apply Processes</a></p>
+                           </li>
+                           <li>
+                              <p><a href="oracle-streams-staging-and-propagation.html#GUID-7CB2B897-AB0E-4912-965C-3C3520F96BEF">Queues and Messaging Clients</a></p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnotealso" id="GUID-35407BB7-CBAA-4E30-98B7-AC33A1107CCE__GUID-4BF430FF-66ED-44E3-8178-3CCAB047EFF1">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1">Persistent Queues and Buffered Queues</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADQUE0102"><span class="italic">Oracle Database Advanced Queuing User's Guide</span></a> for detailed conceptual information about buffered messaging and for information about using buffered messaging
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div><a id="STRMS350"></a><div class="props_rev_3"><a id="GUID-CADD131D-6EB2-45E0-9F5E-53EB54650D23" name="GUID-CADD131D-6EB2-45E0-9F5E-53EB54650D23"></a><h6 id="STRMS-GUID-CADD131D-6EB2-45E0-9F5E-53EB54650D23" class="sect6"><span class="enumeration_section">3.2.2.1.1 </span>Queues and Capture Processes
+                        </h6>
+                        <div>
+                           <p>A capture processes can only enqueue LCRs into a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a>. LCRs enqueued into a buffered queue by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> can be dequeued only by an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>. Captured LCRs cannot be dequeued by applications or users.
+                           </p>
+                        </div>
+                     </div><a id="STRMS351"></a><div class="props_rev_3"><a id="GUID-0FE86B4D-4974-41D2-B8FB-2DDD936808B7" name="GUID-0FE86B4D-4974-41D2-B8FB-2DDD936808B7"></a><h6 id="STRMS-GUID-0FE86B4D-4974-41D2-B8FB-2DDD936808B7" class="sect6"><span class="enumeration_section">3.2.2.1.2 </span>Queues and Synchronous Capture
+                        </h6>
+                        <div>
+                           <p>A synchronous capture can only enqueue LCRs into a <a href="strms_glossary.html#GUID-8D447372-AA6C-4326-8A8F-2E13F9350AF1"><span class="xrefglossterm">persistent queue</span></a>. LCRs captured by synchronous capture can be dequeued by apply processes, messaging clients, applications, and users.
+                           </p>
+                        </div>
+                     </div><a id="STRMS352"></a><div class="props_rev_3"><a id="GUID-8BDE583B-9CCE-47C9-A608-AC9C8E3BF8E9" name="GUID-8BDE583B-9CCE-47C9-A608-AC9C8E3BF8E9"></a><h6 id="STRMS-GUID-8BDE583B-9CCE-47C9-A608-AC9C8E3BF8E9" class="sect6"><span class="enumeration_section">3.2.2.1.3 </span>Queues and Propagations
+                        </h6>
+                        <div>
+                           <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> propagates any messages in its <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> that satisfy its <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s. These messages can be stored in a buffered queue or in a persistent queue. A propagation can propagate both types of messages if the messages satisfy the rule sets used by the propagation.
+                           </p>
+                        </div>
+                     </div><a id="STRMS353"></a><div class="props_rev_3"><a id="GUID-50AA22C4-B9E6-4A7D-B497-705DE754DD10" name="GUID-50AA22C4-B9E6-4A7D-B497-705DE754DD10"></a><h6 id="STRMS-GUID-50AA22C4-B9E6-4A7D-B497-705DE754DD10" class="sect6"><span class="enumeration_section">3.2.2.1.4 </span>Queues and Apply Processes
+                        </h6>
+                        <div>
+                           <p>A single apply process can either dequeue messages from a buffered queue or a persistent queue, but not both. Apply processes can dequeue and process <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s in a buffered queue. To dequeue captured LCRs, the <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> must be configured with the <code class="codeph">apply_captured</code> parameter set to <code class="codeph">TRUE</code>. Apply processes cannot dequeue <a href="strms_glossary.html#GUID-95FF7ACD-11FF-4ACF-8E06-60033BEC621B"><span class="xrefglossterm">buffered LCR</span></a>s or <a href="strms_glossary.html#GUID-2587F4F8-8B48-40F7-8541-D039E22291C3"><span class="xrefglossterm">buffered user message</span></a>s. To dequeue <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>s or <a href="strms_glossary.html#GUID-8F1FA1C4-ADB5-4A4D-9374-B50AADB53066"><span class="xrefglossterm">persistent user message</span></a>s, the apply process must be configured with the <code class="codeph">apply_captured</code> parameter set to <code class="codeph">FALSE</code>. 
+                           </p>
+                        </div>
+                     </div><a id="STRMS354"></a><div class="props_rev_3"><a id="GUID-7CB2B897-AB0E-4912-965C-3C3520F96BEF" name="GUID-7CB2B897-AB0E-4912-965C-3C3520F96BEF"></a><h6 id="STRMS-GUID-7CB2B897-AB0E-4912-965C-3C3520F96BEF" class="sect6"><span class="enumeration_section">3.2.2.1.5 </span>Queues and Messaging Clients
+                        </h6>
+                        <div>
+                           <p>A <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>s can only dequeue messages from a persistent queue. In addition, the <code class="codeph">DBMS_STREAMS_MESSAGING</code> package cannot be used to enqueue messages into or dequeue messages from a buffered queue.
+                           </p>
+                           <div class="infoboxnote" id="GUID-7CB2B897-AB0E-4912-965C-3C3520F96BEF__GUID-41DA105A-DF7D-44DA-B4D1-8FF84CA8D8AB">
+                              <p class="notep1">Note:</p>
+                              <p>The <code class="codeph">DBMS_AQ</code> and <code class="codeph">DBMS_AQADM</code> packages support buffered messaging.
+                              </p>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-7CB2B897-AB0E-4912-965C-3C3520F96BEF__GUID-33415FDC-2FD1-4827-9940-44C835B3F2D3">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../adque/aq-introduction.html#ADQUE0102"><span class="italic">Oracle Database Advanced Queuing User's Guide</span></a> for more information about using the <code class="codeph">DBMS_AQ</code> and <code class="codeph">DBMS_AQADM</code> packages
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS356"></a><a id="STRMS355"></a><div class="props_rev_3"><a id="GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F" name="GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F"></a><h3 id="STRMS-GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F" class="sect3"><span class="enumeration_section">3.3 </span>Message Propagation Between Queues
+               </h3>
+               <div>
+                  <p>You can use Oracle Streams to configure <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> propagation between two <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s. These queues can reside in the same database or in different databases. Oracle Streams uses Oracle Scheduler jobs to propagate messages.
+                  </p>
+                  <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> is always between a <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> and a <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>. Although propagation is always between two queues, a single queue can participate in many propagations. That is, a single source queue can propagate messages to multiple destination queues, and a single destination queue can receive messages from multiple source queues. Also, a single queue can be a destination queue for some propagations and a source queue for other propagations. However, only one propagation is allowed between a particular source queue and a particular destination queue.
+                  </p>
+                  <p><a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F__i1006142">Figure 3-1</a> shows propagation from a source queue to a destination queue.
+                  </p>
+                  <div class="figure" id="GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F__i1006142">
+                     <p class="titleinfigure">Figure 3-1 Propagation from a Source Queue to a Destination Queue</p><img width="250" src="img/strms008.gif" alt="Description of Figure 3-1 follows" title="Description of Figure 3-1 follows" longdesc="img_text/strms008.html"><br><a href="img_text/strms008.html">Description of "Figure 3-1 Propagation from a Source Queue to a Destination Queue"</a></div>
+                  <!-- class="figure" -->
+                  <p>You can create, alter, and drop a propagation, and you can define propagation <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s that control which messages are propagated. The user who owns the source queue is the user who propagates messages, and this user must have the necessary privileges to propagate messages. These privileges include the following:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">EXECUTE</code> privilege on the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s used by the propagation
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">EXECUTE</code> privilege on all <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a> functions used in the rule sets
+                        </p>
+                     </li>
+                     <li>
+                        <p>Enqueue privilege on the destination queue if the destination queue is in the same database</p>
+                     </li>
+                  </ul>
+                  <p>If the propagation propagates messages to a destination queue in a remote database, then the owner of the source queue must be able to use the database link used by the propagation, and the user to which the database link connects at the remote database must have enqueue privilege on the destination queue.</p>
+                  <p>A propagation can propagate all of the messages in a source queue to a destination queue, or a propagation can propagate only a subset of the messages. A single propagation can propagate messages in both the <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a> portion and <a href="strms_glossary.html#GUID-8D447372-AA6C-4326-8A8F-2E13F9350AF1"><span class="xrefglossterm">persistent queue</span></a> portion of a queue. Also, a single propagation can propagate <a href="strms_glossary.html#GUID-43A45807-D91D-43A2-89C8-8DEBCEF70770"><span class="xrefglossterm">LCR</span></a>s and <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a>s. You can use <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s to control which messages in the source queue are propagated to the destination queue and which messages are discarded.
+                  </p>
+                  <p>Depending on how you set up your Oracle Streams environment, changes could be sent back to the site where they originated. You must ensure that your environment is configured to avoid cycling a change in an endless loop. You can use Oracle Streams <a href="strms_glossary.html#GUID-D667D798-F9C9-437F-92AB-8C04FAD19B64"><span class="xrefglossterm">tag</span></a>s to avoid such a <a href="strms_glossary.html#GUID-5C087DA9-D741-4181-A570-9190EE8A10C7"><span class="xrefglossterm">change cycling</span></a> loop.
+                  </p>
+                  <p>The following sections describe propagations in more detail:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-staging-and-propagation.html#GUID-082CC03D-5077-41DF-B93F-CA514FCE8DBD">Propagation Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-staging-and-propagation.html#GUID-0789FE44-E2AE-4D2D-9BBD-FA637BCA3A58">Queue-to-Queue Propagations</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-staging-and-propagation.html#GUID-F0DD211D-9507-46FD-8C19-60A8D7CF8EE7">Ensured Message Delivery</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-staging-and-propagation.html#GUID-DF1C98B2-618D-40E9-B0F7-C146E0193DDD">Directed Networks</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F__GUID-BA21975A-F022-42D6-99E4-6156A1B47618">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-138AAD67-94D5-4475-91EF-5EE7A78B4F49">Managing Oracle Streams Propagations and Propagation Jobs</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-propagation-concepts.html#GUID-7FA5EEFC-B496-4CAA-8CF1-8319A895DFA5"> Advanced Propagation Concepts</a></p>
+                        </li>
+                        <li>
+                           <p><a href="../adque/toc.htm"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for detailed information about the propagation infrastructure in&nbsp;Oracle Streams AQ
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP008"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for more information about Oracle Streams tags
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS357"></a><div class="props_rev_3"><a id="GUID-082CC03D-5077-41DF-B93F-CA514FCE8DBD" name="GUID-082CC03D-5077-41DF-B93F-CA514FCE8DBD"></a><h4 id="STRMS-GUID-082CC03D-5077-41DF-B93F-CA514FCE8DBD" class="sect4"><span class="enumeration_section">3.3.1 </span>Propagation Rules
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> either propagates or discards <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s based on <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s that you define. For <a href="strms_glossary.html#GUID-43A45807-D91D-43A2-89C8-8DEBCEF70770"><span class="xrefglossterm">LCR</span></a>s, each rule specifies the database objects and types of changes for which the rule evaluates to <code class="codeph">TRUE</code>. For <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a>s, you can create rules to control propagation behavior for specific types of messages. You can place these rules in a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> or a <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> used by the propagation.
+                     </p>
+                     <p>If a rule evaluates to <code class="codeph">TRUE</code> for a message, and the rule is in the positive rule set for a propagation, then the propagation propagates the change. If a rule evaluates to <code class="codeph">TRUE</code> for a message, and the rule is in the negative rule set for a propagation, then the propagation discards the change. If a propagation has both a positive and a negative rule set, then the negative rule set is always evaluated first.
+                     </p>
+                     <p>You can specify propagation rules for LCRs at the following levels:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>A table rule propagates or discards either row changes resulting from DML changes or DDL changes to a particular table. Subset rules are table rules that include a subset of the row changes to a particular table.</p>
+                        </li>
+                        <li>
+                           <p>A schema rule propagates or discards either row changes resulting from DML changes or DDL changes to the database objects in a particular schema.</p>
+                        </li>
+                        <li>
+                           <p>A global rule propagates or discards either all row changes resulting from DML changes or all DDL changes in the source <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>A queue subscriber that specifies a condition causes the system to generate a rule. The rule sets for all subscribers to a queue are combined into a single system-generated rule set to make subscription more efficient.</p>
+                     <div class="infoboxnotealso" id="GUID-082CC03D-5077-41DF-B93F-CA514FCE8DBD__GUID-1F0EF289-3ECD-436D-88E6-E9289E26C3C5">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="advanced-rule-concepts.html#GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D"> Advanced Rule Concepts</a></p>
+                           </li>
+                           <li>
+                              <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                           </li>
+                           <li>
+                              <p><a href="managing-rules.html#GUID-AB9D9589-CD21-4EED-959B-72CA569334F3"> Managing Rules</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS155"></a><div class="props_rev_3"><a id="GUID-0789FE44-E2AE-4D2D-9BBD-FA637BCA3A58" name="GUID-0789FE44-E2AE-4D2D-9BBD-FA637BCA3A58"></a><h4 id="STRMS-GUID-0789FE44-E2AE-4D2D-9BBD-FA637BCA3A58" class="sect4"><span class="enumeration_section">3.3.2 </span>Queue-to-Queue Propagations
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> can be queue-to-queue or queue-to-database link (queue-to-dblink). A queue-to-queue propagation always has its own exclusive <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a> to propagate <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s from the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> to the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>. Because each propagation job has its own <a href="strms_glossary.html#GUID-AC57AF6F-D7A0-4128-8CE8-C0F434AF7C9E"><span class="xrefglossterm">propagation schedule</span></a>, the propagation schedule of each queue-to-queue propagation can be managed separately. Even when multiple queue-to-queue propagations use the same database link, you can enable, disable, or set the propagation schedule for each queue-to-queue propagation separately. Propagation jobs are described in detail later in this chapter.
+                     </p>
+                     <p>A single database link can be used by multiple queue-to-queue propagations. The database link must be created with the service name specified as the global name of the database that contains the destination queue.</p>
+                     <p>In contrast, a queue-to-dblink propagation shares a propagation job with other queue-to-dblink propagations from the same source queue that use the same database link. Therefore, these propagations share the same propagation schedule, and any change to the propagation schedule affects all of the queue-to-dblink propagations from the same source queue that use the database link.</p>
+                     <div class="infoboxnotealso" id="GUID-0789FE44-E2AE-4D2D-9BBD-FA637BCA3A58__GUID-3E709FC5-1884-4F74-A966-534CF4B48617">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="how-oracle-streams-works-with-other-database-components.html#GUID-9060FEE1-EBE2-4A9A-956D-4C83EE226997">Queues and Oracle Real Application Clusters</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="advanced-propagation-concepts.html#GUID-73673B79-2BC2-41B0-84C2-D55CDB2848AA">Propagation Jobs</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="managing-staging-and-propagation.html#GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29"> Managing Staging and Propagation</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS358"></a><div class="props_rev_3"><a id="GUID-F0DD211D-9507-46FD-8C19-60A8D7CF8EE7" name="GUID-F0DD211D-9507-46FD-8C19-60A8D7CF8EE7"></a><h4 id="STRMS-GUID-F0DD211D-9507-46FD-8C19-60A8D7CF8EE7" class="sect4"><span class="enumeration_section">3.3.3 </span>Ensured Message Delivery
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a> is propagated successfully to a destination queue when both of the following actions are completed:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> is processed by all relevant <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es associated with the destination queue.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The message is propagated successfully from the source queue to all of its relevant destination queues.</p>
+                        </li>
+                     </ul>
+                     <p>Any other type of message is propagated successfully to a <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> when the enqueue into the destination queue is committed. Other types of messages include <a href="strms_glossary.html#GUID-95FF7ACD-11FF-4ACF-8E06-60033BEC621B"><span class="xrefglossterm">buffered LCR</span></a>s, <a href="strms_glossary.html#GUID-2587F4F8-8B48-40F7-8541-D039E22291C3"><span class="xrefglossterm">buffered user message</span></a>s, <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>s, and <a href="strms_glossary.html#GUID-2587F4F8-8B48-40F7-8541-D039E22291C3"><span class="xrefglossterm">buffered user message</span></a>s.
+                     </p>
+                     <p>When a message is successfully propagated between two queues, the destination queue acknowledges successful propagation of the message. If the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> is configured to propagate a message to multiple destination queues, then the message remains in the source queue until each destination queue has sent confirmation of message propagation to the source queue. When each destination queue acknowledges successful propagation of the message, and all local consumers in the source queue database have consumed the message, the source queue can drop the message.
+                     </p>
+                     <p>This confirmation system ensures that messages are always propagated from the source queue to the destination queue, but, in some configurations, the source queue can become larger than an optimal size. When a source queue increases, it uses more System Global Area (SGA) memory and might use more disk space.</p>
+                     <p>There are two common reasons for a source queue to become larger:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If a message cannot be propagated to a specified destination queue for some reason (such as a network problem), then the message remains in the source queue until the destination queue becomes available. This situation could cause the source queue to become large. So, you should monitor your queues regularly to detect problems early.</p>
+                        </li>
+                        <li>
+                           <p>Suppose a source queue is propagating messages captured by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> or <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> to multiple destination queues, and one or more <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>s acknowledge successful propagation of messages much more slowly than the other queues. In this case, the source queue can grow because the slower destination databases create a backlog of messages that have already been acknowledged by the faster destination databases. In such an environment, consider creating more than one capture process or synchronous capture to capture changes at the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>. Doing so lets you use one source queue for the slower destination databases and another source queue for the faster destination databases.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-F0DD211D-9507-46FD-8C19-60A8D7CF8EE7__GUID-97D5031E-D625-4C71-8BA9-95A85BF9F80B">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="oracle-streams-information-capture.html#GUID-DADEDB32-7F0F-40F2-A5A5-81327102B00B"> Oracle Streams Information Capture</a></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6">Monitoring Queues and Messaging</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS359"></a><a id="STRMS105"></a><div class="props_rev_3"><a id="GUID-DF1C98B2-618D-40E9-B0F7-C146E0193DDD" name="GUID-DF1C98B2-618D-40E9-B0F7-C146E0193DDD"></a><h4 id="STRMS-GUID-DF1C98B2-618D-40E9-B0F7-C146E0193DDD" class="sect4"><span class="enumeration_section">3.3.4 </span>Directed Networks
+                  </h4>
+                  <div>
+                     <p>A <span class="bold">directed network</span> is one in which propagated <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s pass through one or more intermediate databases before arriving at a <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>. A message might or might not be processed by an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> at an intermediate database. Using Oracle Streams, you can choose which messages are propagated to each destination database, and you can specify the route that messages will traverse on their way to a destination database. <a href="oracle-streams-staging-and-propagation.html#GUID-DF1C98B2-618D-40E9-B0F7-C146E0193DDD__i1006311">Figure 3-2</a> shows an example of a directed networks environment.
+                     </p>
+                     <div class="figure" id="GUID-DF1C98B2-618D-40E9-B0F7-C146E0193DDD__i1006311">
+                        <p class="titleinfigure">Figure 3-2 Example Directed Networks Environment</p><img width="470" src="img/strms007.gif" alt="Description of Figure 3-2 follows" title="Description of Figure 3-2 follows" longdesc="img_text/strms007.html"><br><a href="img_text/strms007.html">Description of "Figure 3-2 Example Directed Networks Environment"</a></div>
+                     <!-- class="figure" -->
+                     <p>The advantage of using a directed network is that a <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> does not need to have a physical network connection with a destination database. So, if you want messages to propagate from one database to another, but there is no direct network connection between the computers running these databases, then you can still propagate the messages without reconfiguring your network, if one or more intermediate databases connect the source database to the destination database.
+                     </p>
+                     <p>If you use directed networks, and an intermediate site goes down for an extended period of time or is removed, then you might need to reconfigure the network and the Oracle Streams environment.</p>
+                  </div><a id="STRMS360"></a><div class="props_rev_3"><a id="GUID-6D8D8A82-0FE1-4ED3-8B92-0B5A0CE97E0E" name="GUID-6D8D8A82-0FE1-4ED3-8B92-0B5A0CE97E0E"></a><h5 id="STRMS-GUID-6D8D8A82-0FE1-4ED3-8B92-0B5A0CE97E0E" class="sect5"><span class="enumeration_section">3.3.4.1 </span>Queue Forwarding and Apply Forwarding
+                     </h5>
+                     <div>
+                        <p>An intermediate database in a directed network can propagate messages using either queue forwarding or apply forwarding. <span class="bold">Queue forwarding</span> means that the messages being forwarded at an intermediate database are the messages received by the intermediate database. The source database for a message is the database where the message originated. 
+                        </p>
+                        <p><span class="bold">Apply forwarding</span> means that the messages being forwarded at an intermediate database are first processed by an apply process. These messages are then recaptured by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> or a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> at the intermediate database and forwarded. When you use apply forwarding, the intermediate database becomes the new source database for the messages. Either a capture process recaptures the messages from the redo log generated at the intermediate database, or a synchronous capture configured at the intermediate database recaptures the messages.
+                        </p>
+                        <p>Consider the following differences between queue forwarding and apply forwarding when you plan your Oracle Streams environment:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>With queue forwarding, a message is propagated through the directed network without being changed, assuming there are no capture or propagation transformations. With apply forwarding, messages are applied and recaptured at intermediate databases and can be changed by <a href="strms_glossary.html#GUID-F4E03593-314E-4D6D-8D2A-FF26B08AAA20"><span class="xrefglossterm">conflict resolution</span></a>, <a href="strms_glossary.html#GUID-4CEA651A-4197-4731-93D4-315BCB5CBE70"><span class="xrefglossterm">apply handler</span></a>s, or apply transformations.
+                              </p>
+                           </li>
+                           <li>
+                              <p>With queue forwarding, a destination database must have a separate apply process to apply messages from each source database. With apply forwarding, fewer apply processes might be required at a destination database because recapturing of messages at intermediate databases can result in fewer source databases when changes reach a destination database.</p>
+                           </li>
+                           <li>
+                              <p>With queue forwarding, one or more intermediate databases are in place between a source database and a destination database. With apply forwarding, because messages are recaptured at intermediate databases, the source database for a message can be the same as the intermediate database connected directly with the destination database.</p>
+                           </li>
+                        </ul>
+                        <p>A single Oracle Streams environment can use a combination of queue forwarding and apply forwarding.</p>
+                     </div><a id="STRMS361"></a><div class="props_rev_3"><a id="GUID-8689431B-7002-47AA-A424-B85EED99F16D" name="GUID-8689431B-7002-47AA-A424-B85EED99F16D"></a><h6 id="STRMS-GUID-8689431B-7002-47AA-A424-B85EED99F16D" class="sect6"><span class="enumeration_section">3.3.4.1.1 </span>Advantages of Queue Forwarding
+                        </h6>
+                        <div>
+                           <p>Queue forwarding has the following advantages compared with apply forwarding:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Performance might be improved because a message is captured only once. </p>
+                              </li>
+                              <li>
+                                 <p>Less time might be required to propagate a message from the database where the message originated to the destination database, because the messages are not applied and recaptured at one or more intermediate databases. In other words, latency might be lower with queue forwarding.</p>
+                              </li>
+                              <li>
+                                 <p>The origin of a message can be determined easily by running the <code class="codeph">GET_SOURCE_DATABASE_NAME</code> member procedure on the LCR contained in the message. If you use apply forwarding, then determining the origin of a message requires the use of Oracle Streams <a href="strms_glossary.html#GUID-D667D798-F9C9-437F-92AB-8C04FAD19B64"><span class="xrefglossterm">tag</span></a>s and apply handlers. 
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Parallel apply might scale better and provide more throughput when separate apply processes are used because there are fewer dependencies, and because there are multiple apply coordinators and apply reader processes to perform the work.</p>
+                              </li>
+                              <li>
+                                 <p>If one intermediate database goes down, then you can reroute the queues and reset the <a href="strms_glossary.html#GUID-531018E6-B24E-4835-A4F5-179E2E427906"><span class="xrefglossterm">start SCN</span></a> at the capture site to reconfigure end-to-end capture, propagation, and apply. 
+                                 </p>
+                                 <p>If you use apply forwarding, then substantially more work might be required to reconfigure end-to-end capture, propagation, and apply of messages, because the destination database(s) downstream from the unavailable intermediate database were using the SCN information of this intermediate database. Without this SCN information, the destination databases cannot apply the changes properly.</p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div><a id="STRMS362"></a><div class="props_rev_3"><a id="GUID-CC57EE51-3156-4ADD-8BC7-878E26ED7D18" name="GUID-CC57EE51-3156-4ADD-8BC7-878E26ED7D18"></a><h6 id="STRMS-GUID-CC57EE51-3156-4ADD-8BC7-878E26ED7D18" class="sect6"><span class="enumeration_section">3.3.4.1.2 </span>Advantages of Apply Forwarding
+                        </h6>
+                        <div>
+                           <p>Apply forwarding has the following advantages compared with queue forwarding:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>An Oracle Streams environment might be easier to configure because each database can apply changes only from databases directly connected to it, rather than from multiple remote source databases.</p>
+                              </li>
+                              <li>
+                                 <p>In a large Oracle Streams environment where intermediate databases apply changes, the environment might be easier to monitor and manage because fewer apply processes might be required. An intermediate database that applies changes must have one apply process for each source database from which it receives changes. In an apply forwarding environment, the source databases of an intermediate database are only the databases to which it is directly connected. In a queue forwarding environment, the source databases of an intermediate database are all of the other source databases in the environment, whether they are directly connected to the intermediate database or not.</p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnotealso" id="GUID-CC57EE51-3156-4ADD-8BC7-878E26ED7D18__GUID-79718E8C-94C4-4B00-A684-D77D2DA1D3DC">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="oracle-streams-information-consumption.html#GUID-2AB34D95-F1F8-400B-881E-7D2E9B7768B0"> Oracle Streams Information Consumption</a></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../strex/single-source-heterogeneous-replication-example.html#STREX003"><span class="italic">Oracle Streams Extended Examples</span></a> for an example of an environment that uses queue forwarding
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../strep/oracle-streams-tags.html#STREP111"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for an example of an environment that uses apply forwarding
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

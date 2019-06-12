@@ -1,0 +1,1409 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us" class="user's guide">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>SQL Statement Support in Oracle Database Provider for DRDA</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="User's Guide">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="User's Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = user's guide)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="provider-drda-users-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-05-14T06:41:05-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2011, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83925-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="PLSQL-packages-used.html" title="Previous" type="text/html">
+      <link rel="next" href="scripts-to-create-and-maintain-database-provider-for-DRDA.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Provider for DRDA User's Guide">
+    <meta name="dcterms.isVersionOf" content="DRDAS">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="PLSQL-packages-used.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="scripts-to-create-and-maintain-database-provider-for-DRDA.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">User's Guide</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">SQL Statement Support in Oracle Database Provider for DRDA</li>
+            </ol>
+            <a id="GUID-985D4184-603F-4540-B875-D1DB43508DC7" name="GUID-985D4184-603F-4540-B875-D1DB43508DC7"></a>
+            
+            <h2 id="DRDAS-GUID-985D4184-603F-4540-B875-D1DB43508DC7" class="sect2"><span class="enumeration_chapter">14 </span>SQL Statement Support in Oracle Database Provider for DRDA
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Oracle Database Provider for DRDA supports the use of native DB2 SQL clauses.</p>
+            </div>
+            <div class="props_rev_3"><a id="GUID-99699727-A5F9-42EF-9EE1-26B696332B9C" name="GUID-99699727-A5F9-42EF-9EE1-26B696332B9C"></a><h3 id="DRDAS-GUID-99699727-A5F9-42EF-9EE1-26B696332B9C" class="sect3">Overview of SQL Statement Support</h3>
+               <div>
+                  <p>Oracle Database Provider for DRDA transforms parts of the third-party native SQL statements before sending them for processing on the Oracle Database. In this release, Oracle Database Provider for DRDA is made compatible with Oracle Database Release 11<span class="italic">g</span>, which does not have a native understanding of many clauses not supported by Oracle's version of SQL because it does not support SQL Translation. When using SQL Translation, this affects the data and content of SQL requests received by the translator.
+                  </p>
+                  <p>Because the Translator never gets the <code class="codeph">WITH UR</code> clause, the translation of the statement and the subsequent result set may not be what the user expects.
+                  </p>
+                  <p>For this reason, this release of Oracle Database Provider for DRDA encompasses some translations functions.</p>
+                  <div class="example" id="GUID-99699727-A5F9-42EF-9EE1-26B696332B9C__GUID-0587E664-274F-4E5D-8295-D481D3ECAEA4">
+                     <p class="titleinexample">Example 14-1 Removing Clauses from SQL Statements </p>
+                     <p>If a user enters the following SQL line on the client:</p><pre class="oac_no_warn" dir="ltr">SELECT * FROM EMPLOYEES WITH UR
+</pre><p>Oracle Database Provider for DRDA strips out the clause <code class="codeph">WITH UR</code>, so if the user is using a Translator, it receives the following line of SQL:
+                     </p><pre class="oac_no_warn" dir="ltr">SELECT * FROM EMPLOYEEES
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div>
+            <div class="props_rev_3"><a id="GUID-ACC8A214-41F7-43B0-8E6C-2D01CF92B02E" name="GUID-ACC8A214-41F7-43B0-8E6C-2D01CF92B02E"></a><h3 id="DRDAS-GUID-ACC8A214-41F7-43B0-8E6C-2D01CF92B02E" class="sect3">SQL Clause Restrictions</h3>
+               <div>
+                  <p>There are some restrictions on SQL statements that are supported for conversion by Oracle Database Provider for DRDA. </p>
+                  <p>When describing SQL statements, keep in mind the following notation.</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Use of <code class="codeph">(..)</code>, parantheses, enclose the applicable SQL statement context. For example, <code class="codeph">(SELECT)</code> means that the clause applies to a <code class="codeph">SELECT</code> statement.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Use of <code class="codeph">{..}</code>, curly brackets, indicates an optional constant.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Use of <code class="codeph">&lt;..&gt;</code> indicates an optional variable.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>SQL language restrictions are arranged in following groups.</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Internally Processed SQL Statements</p>
+                     </li>
+                     <li>
+                        <p>Removed SQL Clauses that Retain Semantic Effect</p>
+                     </li>
+                     <li>
+                        <p>Ignored SQL Clauses</p>
+                     </li>
+                     <li>
+                        <p>Translated SQL Clauses</p>
+                     </li>
+                  </ul>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="SQL-statement-support.html#GUID-6B2372E5-94CA-4DF2-8FB1-8036C1E267B4">Internally Processed SQL Statements</a></li>
+                        <li><a href="SQL-statement-support.html#GUID-63FA9C9B-1B9D-4797-AC27-E161FC8375B0">Removed SQL Clauses that Retain Semantic Effect</a></li>
+                        <li><a href="SQL-statement-support.html#GUID-821ADF8A-CE71-4A6B-87FB-368555953EE0">Ignored SQL Clauses</a></li>
+                        <li><a href="SQL-statement-support.html#GUID-3755C382-5D57-4609-8936-489CE8DAF5E2">Translated SQL Clauses</a></li>
+                     </ul>
+                  </div>
+               </div>
+               
+               <div class="props_rev_3"><a id="GUID-6B2372E5-94CA-4DF2-8FB1-8036C1E267B4" name="GUID-6B2372E5-94CA-4DF2-8FB1-8036C1E267B4"></a><h4 id="DRDAS-GUID-6B2372E5-94CA-4DF2-8FB1-8036C1E267B4" class="sect4">Internally Processed SQL Statements</h4>
+                  <div>
+                     <div class="section">
+                        <p>The following clauses are processed internally.</p><pre class="oac_no_warn" dir="ltr">GRANT {ALL, BIND, COPY, EXECUTE, DROP, SET} ON PACKAGE &lt;collid&gt;.&lt;pkgnam&gt; TO &lt;authid&gt;
+
+GRANT {ALL, BIND, COPY, EXECUTE, DROP, SET} ON PACKAGE &lt;collid&gt;.&lt;pkgnam&gt; TO &lt;authid&gt; WITH GRANT OPTION
+
+GRANT {ALL, BIND, COPY, EXECUTE, DROP, SET} ON PROGRAM &lt;collid&gt;.&lt;pkgnam&gt; TO &lt;authid&gt;
+
+GRANT {ALL, BIND, COPY, EXECUTE, DROP, SET} ON PROGRAM &lt;collid&gt;.&lt;pkgnam&gt; TO &lt;authid&gt; WITH GRANT OPTION
+
+REVOKE {ALL, BIND, COPY, EXECUTE, DROP, SET} ON PACKAGE &lt;collid&gt;.&lt;pkgnam&gt; FROM &lt;authid&gt;
+
+REVOKE {ALL, BIND, COPY, EXECUTE, DROP, SET} ON PROGRAM &lt;collid&gt;.&lt;pkgnam&gt; FROM &lt;authid&gt;
+
+DROP PACKAGE &lt;collid&gt;.&lt;pkgnam&gt; VERSION &lt;vsn&gt;
+
+DROP PACKAGE &lt;collid&gt;.&lt;pkgnam&gt;
+
+FREE LOCATOR :H
+
+HOLD LOCATOR :H</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+               <div class="props_rev_3"><a id="GUID-63FA9C9B-1B9D-4797-AC27-E161FC8375B0" name="GUID-63FA9C9B-1B9D-4797-AC27-E161FC8375B0"></a><h4 id="DRDAS-GUID-63FA9C9B-1B9D-4797-AC27-E161FC8375B0" class="sect4">Removed SQL Clauses that Retain Semantic Effect</h4>
+                  <div>
+                     <div class="section">
+                        <p>The following SQL clauses are removed from SQL statements. This should be noted because they have a semantic effect.</p><pre class="oac_no_warn" dir="ltr">(SELECT) FOR READ ONLY
+
+(SELECT) FOR FETCH ONLY
+
+(DECLARE) WITH HOLD
+
+(DECLARE) WITHOUT HOLD
+
+(DECLARE) WITH ROWSET POSITIONING
+
+(DECLARE) WITHOUT ROWSET POSITIONING
+
+(DECLARE) NO SCROLL
+
+(DECLARE) SCROLL
+
+(CALL) WITH RETURN CLIENT
+
+(CALL) WITH RETURN CALLER
+
+(CALL) &lt;:hostvar&gt; USING DESCRIPTOR &lt;:hostvar&gt;
+
+(SAVEPOINT) {UNIQUE} ON ROLLBACK RETAIN CURSORS
+
+(SAVEPOINT) ON ROLLBACK RETAIN LOCKS
+
+(INSERT) FOR &lt;literal&gt;|&lt;bind-variable&gt; ROWS
+
+(INSERT) FOR MULTIPLE ROWS
+
+(INSERT) NOT ATOMIC CONTINUE ON SQLEXCEPTION</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+               <div class="props_rev_3"><a id="GUID-821ADF8A-CE71-4A6B-87FB-368555953EE0" name="GUID-821ADF8A-CE71-4A6B-87FB-368555953EE0"></a><h4 id="DRDAS-GUID-821ADF8A-CE71-4A6B-87FB-368555953EE0" class="sect4">Ignored SQL Clauses</h4>
+                  <div>
+                     <div class="section">
+                        <p>These clauses are removed and ignored during translation.</p><pre class="oac_no_warn" dir="ltr">WITH RR
+
+WITH RR USE AND KEEP {EXCLUSIVE|UPDATE|SHARE} LOCKS
+
+WITH RS
+
+WITH RS USE AND KEEP {EXCLUSIVE|UPDATE|SHARE} LOCKS
+
+WITH CS
+
+WITH CS KEEP LOCKS
+
+WITH UR
+
+WITH NC</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+               <div class="props_rev_3"><a id="GUID-3755C382-5D57-4609-8936-489CE8DAF5E2" name="GUID-3755C382-5D57-4609-8936-489CE8DAF5E2"></a><h4 id="DRDAS-GUID-3755C382-5D57-4609-8936-489CE8DAF5E2" class="sect4">Translated SQL Clauses</h4>
+                  <div>
+                     <div class="section">
+                        <p>The following SQL clauses are translated into an alternative syntax; this may have a semantic effect.</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The original clause <code class="codeph">WHERE CURRENT OF &lt;cursorname&gt;</code> becomes <code class="codeph">WHERE ROWID = :N</code>. <code class="codeph">N</code> is a number.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The original <code class="codeph">=</code> becomes <code class="codeph">'' IS NULL</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The original <code class="codeph">!=</code> becomes <code class="codeph">'' IS NOT NULL</code>.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+            <div class="props_rev_3"><a id="GUID-5D215D34-E5B2-4CE7-A347-AD629E333E13" name="GUID-5D215D34-E5B2-4CE7-A347-AD629E333E13"></a><h3 id="DRDAS-GUID-5D215D34-E5B2-4CE7-A347-AD629E333E13" class="sect3">Support for Special Registers</h3>
+               <div>
+                  <p>DB2 uses a concept known as <span class="italic"><span class="bold">special registers</span></span>; they may be thought of as environment variables within a SQL context. Oracle Database provides limited native support for special registers.
+                  </p>
+               </div>
+               <div class="props_rev_3"><a id="GUID-05D56B23-9A54-424D-AADE-02EBF612992F" name="GUID-05D56B23-9A54-424D-AADE-02EBF612992F"></a><h4 id="DRDAS-GUID-05D56B23-9A54-424D-AADE-02EBF612992F" class="sect4">Retrieving Values from Special Registers</h4>
+                  <div>
+                     <div class="example" id="GUID-05D56B23-9A54-424D-AADE-02EBF612992F__GUID-A4587630-9932-4739-BB94-ED01AA7FDDE6">
+                        <p class="titleinexample">Example 14-2 Retrieving values from special registers</p>
+                        <p>When a user enters the following statement on the client:</p><pre class="oac_no_warn" dir="ltr">SELECT CURRENT CLIENT_ACCTNG FROM SYSIBM.SYSDUMMY1;
+</pre><p>Oracle Database Provider for DRDA parses the preceding statement, and replaces the clause <code class="codeph">CURRENT CLIENT_ACCTNG</code> by the clause <code class="codeph">SYS_CONTEXT('DRDAAS_CTX_NAME','CLIENT_ACCTNG')</code>, as follows:
+                        </p><pre class="oac_no_warn" dir="ltr">SELECT SYS_CONTEXT('DRDAAS_CTX_NAME','CLIENT_ACCTNG') FROM SYSIBM.SYSDUMMY1;
+</pre><p>Therefore, if a translator expects a <code class="codeph">CURRENT CLIENT_ACCTNG</code> clause, it will receive an altered query.
+                        </p>
+                     </div>
+                     <!-- class="example" -->
+                  </div>
+               </div>
+               <div class="props_rev_3"><a id="GUID-25D1A5B1-784D-4075-A11C-2CEF82E93BA6" name="GUID-25D1A5B1-784D-4075-A11C-2CEF82E93BA6"></a><h4 id="DRDAS-GUID-25D1A5B1-784D-4075-A11C-2CEF82E93BA6" class="sect4">Setting Special Registers</h4>
+                  <div>
+                     <div class="example" id="GUID-25D1A5B1-784D-4075-A11C-2CEF82E93BA6__GUID-942D0BF6-586D-4B71-A297-07D802E015F5">
+                        <p class="titleinexample">Example 14-3 Setting special registers</p>
+                        <p>When a user enters the following statement on the client:</p><pre class="oac_no_warn" dir="ltr">SET CLIENT_ACCTNG = 'abc';
+</pre><p>Oracle Database Provider for DRDA sets the value of the <code class="codeph">CLIENT_ACCTNG</code> register to the string <code class="codeph">abc</code> by replacing the clause <code class="codeph">CLIENT_ACCTNG = 'abc'</code> by clause <code class="codeph">SYS_CONTEXT('DRDAAS_CTX_NAME','CLIENT_ACCTNG')</code>, as follows:
+                        </p><pre class="oac_no_warn" dir="ltr">SET SYS_CONTEXT('DRDAAS_CTX_NAME','CLIENT_ACCTNG') = 'abc';
+</pre><p>Therefore, if a translator expects a <code class="codeph">CURRENT CLIENT_ACCTNG</code> clause, it will receive an altered statement.
+                        </p>
+                     </div>
+                     <!-- class="example" -->
+                  </div>
+               </div>
+               <div class="props_rev_3"><a id="GUID-9CB3F4D0-BF44-4249-A976-98E18B359E40" name="GUID-9CB3F4D0-BF44-4249-A976-98E18B359E40"></a><h4 id="DRDAS-GUID-9CB3F4D0-BF44-4249-A976-98E18B359E40" class="sect4">Special Registers Supported by Oracle Database Provider for DRDA</h4>
+                  <div>
+                     <p>Oracle Database Provider for DRDA supports the following registers.</p>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-F293B395-2C9A-453D-B292-4E950119EC81" name="GUID-F293B395-2C9A-453D-B292-4E950119EC81"></a><h5 id="DRDAS-GUID-F293B395-2C9A-453D-B292-4E950119EC81" class="sect5">APPLICATION ENCODING SCHEME</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT APPLICATION ENCODING SCHEME</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','APPLICATION_ENCODING_SCHEME')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-E7FAC8AD-C8D7-44ED-98D3-CDE67CF613B7" name="GUID-E7FAC8AD-C8D7-44ED-98D3-CDE67CF613B7"></a><h5 id="DRDAS-GUID-E7FAC8AD-C8D7-44ED-98D3-CDE67CF613B7" class="sect5">CLIENT_ACCTNG</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT CLIENT_ACCTNG CLIENT ACCTNG</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','CLIENT_ACCTNG')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code> and <code class="codeph">CLIENT_INFO</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">CLIENT_INFO</code> in <code class="codeph">V$SESSION</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Notes</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>See MVS and DDF Accounting Information, as defined by IBM and DB2, documented in the <code class="codeph">DSNDQMDA</code> macro.
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-595978E0-B119-448D-9037-123E3E9CCA06" name="GUID-595978E0-B119-448D-9037-123E3E9CCA06"></a><h5 id="DRDAS-GUID-595978E0-B119-448D-9037-123E3E9CCA06" class="sect5">CLIENT_APPLNAME</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT CLIENT_APPLNAME CLIENT APPLNAME</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','CLIENT_APPLNAME')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code> and <code class="codeph">CLIENT_IDENTIFIER</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">CLIENT_IDENTIFIER</code> in <code class="codeph">V$SESSION</code></p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-7CC9B4AF-3F75-4115-99B7-1AD795F1271F" name="GUID-7CC9B4AF-3F75-4115-99B7-1AD795F1271F"></a><h5 id="DRDAS-GUID-7CC9B4AF-3F75-4115-99B7-1AD795F1271F" class="sect5">CLIENT_PROGRAMID</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT CLIENT_PROGRAMID</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','CLIENT_PROGRAMID')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-DD7AF816-E4F5-49E8-99AA-702BBE47AF42" name="GUID-DD7AF816-E4F5-49E8-99AA-702BBE47AF42"></a><h5 id="DRDAS-GUID-DD7AF816-E4F5-49E8-99AA-702BBE47AF42" class="sect5">CLIENT_USERID</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT CLIENT_USERID CLIENT USERID</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','CLIENT_USERID')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-46096CFA-E115-494F-B8E5-9819B626C21A" name="GUID-46096CFA-E115-494F-B8E5-9819B626C21A"></a><h5 id="DRDAS-GUID-46096CFA-E115-494F-B8E5-9819B626C21A" class="sect5">CLIENT_WRKSTNNAME</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT CLIENT_WRKSTNNAME CLIENT WRKSTNNAME</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','CLIENT_WRKSTNNAME')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-4E44E27A-34F2-4E54-9049-EF36590CA8F0" name="GUID-4E44E27A-34F2-4E54-9049-EF36590CA8F0"></a><h5 id="DRDAS-GUID-4E44E27A-34F2-4E54-9049-EF36590CA8F0" class="sect5">DATE</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT DATE CURRENT_DATE</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT DATE</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-1E465BF2-013A-4FA3-A85C-22FB40125717" name="GUID-1E465BF2-013A-4FA3-A85C-22FB40125717"></a><h5 id="DRDAS-GUID-1E465BF2-013A-4FA3-A85C-22FB40125717" class="sect5">DBPARTITIONNUM</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT DBPARTITIONNUM</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','DBPARTITIONNUM')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-31B47827-5C3C-420C-8B74-9C3D71889FCC" name="GUID-31B47827-5C3C-420C-8B74-9C3D71889FCC"></a><h5 id="DRDAS-GUID-31B47827-5C3C-420C-8B74-9C3D71889FCC" class="sect5">DEBUG MODE</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT DEBUG MODE</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','DEBUG_MODE')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-1835C517-7813-412E-8133-CA8F4D260F44" name="GUID-1835C517-7813-412E-8133-CA8F4D260F44"></a><h5 id="DRDAS-GUID-1835C517-7813-412E-8133-CA8F4D260F44" class="sect5">DECFLOAT ROUNDING MODE</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT DECFLOAT ROUNDING MODE</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','DECFLOAT_ROUNDING_MODE')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-6E21A908-08E3-4173-ADD4-7E3D22DB7585" name="GUID-6E21A908-08E3-4173-ADD4-7E3D22DB7585"></a><h5 id="DRDAS-GUID-6E21A908-08E3-4173-ADD4-7E3D22DB7585" class="sect5">DEFAULT TRANSFORM GROUP</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT DEFAULT TRANSFORM GROUP</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','DEFAULT_TRANSFORM_GROUP')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-A69E5C29-94FE-45D4-AFBD-AEE73FA53C5E" name="GUID-A69E5C29-94FE-45D4-AFBD-AEE73FA53C5E"></a><h5 id="DRDAS-GUID-A69E5C29-94FE-45D4-AFBD-AEE73FA53C5E" class="sect5">DEGREE</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT 	DEGREE</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','DEGREE')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-88915F4F-3DC4-4248-9AFA-14E1BB81D8F8" name="GUID-88915F4F-3DC4-4248-9AFA-14E1BB81D8F8"></a><h5 id="DRDAS-GUID-88915F4F-3DC4-4248-9AFA-14E1BB81D8F8" class="sect5">EXPLAIN MODE</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT EXPLAIN MODE</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','EXPLAIN_MODE')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-DD9CD4F7-2741-4F6D-98AB-D997DDCF6348" name="GUID-DD9CD4F7-2741-4F6D-98AB-D997DDCF6348"></a><h5 id="DRDAS-GUID-DD9CD4F7-2741-4F6D-98AB-D997DDCF6348" class="sect5">EXPLAIN SNAPSHOT</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT EXPLAIN SNAPSHOT</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','EXPLAIN_SNAPSHOT')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-1A2D618E-4FBB-4A20-B2F5-3392B43FDF8C" name="GUID-1A2D618E-4FBB-4A20-B2F5-3392B43FDF8C"></a><h5 id="DRDAS-GUID-1A2D618E-4FBB-4A20-B2F5-3392B43FDF8C" class="sect5">FEDERATED ASYNCHRONY</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT FEDERATED ASYNCHRONY</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','FEDERATED_ASYNCHRONY')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-19A8E5D7-1770-4FF0-9EAF-1B0CF27F49A5" name="GUID-19A8E5D7-1770-4FF0-9EAF-1B0CF27F49A5"></a><h5 id="DRDAS-GUID-19A8E5D7-1770-4FF0-9EAF-1B0CF27F49A5" class="sect5">IMPLICIT XMLPARSE OPTION</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT IMPLICIT XMLPARSE OPTION</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','IMPLICIT_XMLPARSE_OPTION')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-EA2B31EB-860D-4CCA-8987-3ACD9571A6EC" name="GUID-EA2B31EB-860D-4CCA-8987-3ACD9571A6EC"></a><h5 id="DRDAS-GUID-EA2B31EB-860D-4CCA-8987-3ACD9571A6EC" class="sect5">ISOLATION</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT ISOLATION</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','ISOLATION')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-3D092DF1-4C8A-4C95-A540-AFFE78910B90" name="GUID-3D092DF1-4C8A-4C95-A540-AFFE78910B90"></a><h5 id="DRDAS-GUID-3D092DF1-4C8A-4C95-A540-AFFE78910B90" class="sect5">LOCK TIMEOUT</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT LOCK TIMEOUT</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','LOCK_TIMEOUT')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-15D0C73B-EBCA-4FF0-8F9B-9B868CFB30AD" name="GUID-15D0C73B-EBCA-4FF0-8F9B-9B868CFB30AD"></a><h5 id="DRDAS-GUID-15D0C73B-EBCA-4FF0-8F9B-9B868CFB30AD" class="sect5">LOCALE LC_TYPE</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT LOCALE LC_TYPE CURRENT_LC_TYPE</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','LC_TYPE')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-06B7C7FD-7D47-433B-800E-5D922E2EBA2F" name="GUID-06B7C7FD-7D47-433B-800E-5D922E2EBA2F"></a><h5 id="DRDAS-GUID-06B7C7FD-7D47-433B-800E-5D922E2EBA2F" class="sect5">MAINTAINED TABLE TYPES FOR OPTIMIZATION</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT MAINTAINED TABLE TYPES FOR OPTIMIZATION</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','MAINTAINED_TYPES')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-3332A142-83B8-4432-86A2-096DA93186DA" name="GUID-3332A142-83B8-4432-86A2-096DA93186DA"></a><h5 id="DRDAS-GUID-3332A142-83B8-4432-86A2-096DA93186DA" class="sect5">MEMBER</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT MEMBER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','MEMBER')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-265CD631-46EF-4142-A20A-8272F07CFE62" name="GUID-265CD631-46EF-4142-A20A-8272F07CFE62"></a><h5 id="DRDAS-GUID-265CD631-46EF-4142-A20A-8272F07CFE62" class="sect5">OPTIMIZATION HINT</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT OPTIMIZATION HINT</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','OPTIMIZATION_HINT')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-A6A580DC-BCC2-4D9C-B1D4-295FB115950B" name="GUID-A6A580DC-BCC2-4D9C-B1D4-295FB115950B"></a><h5 id="DRDAS-GUID-A6A580DC-BCC2-4D9C-B1D4-295FB115950B" class="sect5">PACKAGE PATH</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT PACKAGE PATH</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','PACKAGE_PATH')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-DED612DE-3948-4C3E-9C31-9B5E74E833BC" name="GUID-DED612DE-3948-4C3E-9C31-9B5E74E833BC"></a><h5 id="DRDAS-GUID-DED612DE-3948-4C3E-9C31-9B5E74E833BC" class="sect5">PACKAGESET</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT PACKAGESET</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','PACKAGESET')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-2E1B5800-D392-4F77-A38C-D68CFFC2AED6" name="GUID-2E1B5800-D392-4F77-A38C-D68CFFC2AED6"></a><h5 id="DRDAS-GUID-2E1B5800-D392-4F77-A38C-D68CFFC2AED6" class="sect5">PATH</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT PATH CURRENT_PATH CURRENT FUNCTION PATH</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','PATH')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-289B3FB1-6D45-43AB-9BED-957F22DF1166" name="GUID-289B3FB1-6D45-43AB-9BED-957F22DF1166"></a><h5 id="DRDAS-GUID-289B3FB1-6D45-43AB-9BED-957F22DF1166" class="sect5">PRECISION</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT PRECISION</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','PRECISION')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-33EC78EA-5B9B-4C40-A813-3C44EA746B08" name="GUID-33EC78EA-5B9B-4C40-A813-3C44EA746B08"></a><h5 id="DRDAS-GUID-33EC78EA-5B9B-4C40-A813-3C44EA746B08" class="sect5">QUERY ACCELERATION</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT QUERY ACCELERATION</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','QUERY_ACCELERATION')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-D303A7A7-93B3-4E78-995B-65AE493AC0CE" name="GUID-D303A7A7-93B3-4E78-995B-65AE493AC0CE"></a><h5 id="DRDAS-GUID-D303A7A7-93B3-4E78-995B-65AE493AC0CE" class="sect5">QUERY OPTIMIZATION</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT QUERY OPTIMIZATION</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','QUERY_OPTIMIZATION')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-8CA22DB7-AC46-46E9-AA58-B2F12A5E1369" name="GUID-8CA22DB7-AC46-46E9-AA58-B2F12A5E1369"></a><h5 id="DRDAS-GUID-8CA22DB7-AC46-46E9-AA58-B2F12A5E1369" class="sect5">REFRESH AGE</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT REFRESH AGE</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','REFRESH_AGE')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-D8E28399-41DB-4151-ADEB-7314D75A5EC8" name="GUID-D8E28399-41DB-4151-ADEB-7314D75A5EC8"></a><h5 id="DRDAS-GUID-D8E28399-41DB-4151-ADEB-7314D75A5EC8" class="sect5">ROUTINE VERSION</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT ROUTINE VERSION</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','ROUTINE_VERSION')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-CA4A28C4-C299-4AC4-9FBE-AFEC142381A7" name="GUID-CA4A28C4-C299-4AC4-9FBE-AFEC142381A7"></a><h5 id="DRDAS-GUID-CA4A28C4-C299-4AC4-9FBE-AFEC142381A7" class="sect5">RULES</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT RULES</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','RULES')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-37851810-A786-47CE-8180-2A830A1B6D7E" name="GUID-37851810-A786-47CE-8180-2A830A1B6D7E"></a><h5 id="DRDAS-GUID-37851810-A786-47CE-8180-2A830A1B6D7E" class="sect5">SCHEMA</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT SCHEMA CURRENT_SCHEMA</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('USERENV','CURRENT_SCHEMA')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-4608F21A-209F-44C1-8C79-4BDE3B79CC43" name="GUID-4608F21A-209F-44C1-8C79-4BDE3B79CC43"></a><h5 id="DRDAS-GUID-4608F21A-209F-44C1-8C79-4BDE3B79CC43" class="sect5">SERVER</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT SERVER CURRENT_SERVER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','SERVER')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-CB194906-A884-4AF0-ACAA-0E31849C7D34" name="GUID-CB194906-A884-4AF0-ACAA-0E31849C7D34"></a><h5 id="DRDAS-GUID-CB194906-A884-4AF0-ACAA-0E31849C7D34" class="sect5">SQL_CCFLAGS</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT SQL_CCFLAGS</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYS_CONTEXT('DRDAAS','SQL_CCFLAGS')</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-8CB4C402-3C07-4535-BB45-5A69C5E897E6" name="GUID-8CB4C402-3C07-4535-BB45-5A69C5E897E6"></a><h5 id="DRDAS-GUID-8CB4C402-3C07-4535-BB45-5A69C5E897E6" class="sect5">SQLID</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT SQLID USER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">USER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT</code><code class="codeph">('DRDAAS', 'CURRENT_SQLID')</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-79E5BF31-AAB1-4490-9BB2-1AE7F96B4569" name="GUID-79E5BF31-AAB1-4490-9BB2-1AE7F96B4569"></a><h5 id="DRDAS-GUID-79E5BF31-AAB1-4490-9BB2-1AE7F96B4569" class="sect5">TIMESTAMP</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT TIMESTAMP CURRENT_TIMESTAMP</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT TIMESTAMP</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-100E42CB-A3C9-440A-A5EC-3935AA9E707E" name="GUID-100E42CB-A3C9-440A-A5EC-3935AA9E707E"></a><h5 id="DRDAS-GUID-100E42CB-A3C9-440A-A5EC-3935AA9E707E" class="sect5">USER</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">CURRENT USER CURRENT_USER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">USER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-D0B17BF1-23A6-4247-AFE5-D434E981DF50" name="GUID-D0B17BF1-23A6-4247-AFE5-D434E981DF50"></a><h5 id="DRDAS-GUID-D0B17BF1-23A6-4247-AFE5-D434E981DF50" class="sect5">SESSION_USER</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SESSION_USER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">USER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-1A89741D-2A6E-4023-B29C-DE6D9026C22F" name="GUID-1A89741D-2A6E-4023-B29C-DE6D9026C22F"></a><h5 id="DRDAS-GUID-1A89741D-2A6E-4023-B29C-DE6D9026C22F" class="sect5">SYSTEM_USER</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">SYSTE_USER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">USER</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be set</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+                  <div class="props_rev_3"><a id="GUID-1716B26D-6991-46F5-98B7-C0AD6636ECF2" name="GUID-1716B26D-6991-46F5-98B7-C0AD6636ECF2"></a><h5 id="DRDAS-GUID-1716B26D-6991-46F5-98B7-C0AD6636ECF2" class="sect5">ENCRYPTION PASSWORD</h5>
+                     <div>
+                        <div class="section"><pre class="oac_no_warn" dir="ltr">ENCRYPTION PASSWORD</pre></div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Query</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Cannot be queried</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Set</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>Updates <code class="codeph">SYS_CONTEXT('DRDAAS','ENCRYPTION_PASSWORD')</code></p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p class="subhead3">Semantics</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <p>No effect</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

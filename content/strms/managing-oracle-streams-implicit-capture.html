@@ -1,0 +1,1911 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Managing Oracle Streams Implicit Capture</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="introduction-to-oracle-streams-administration.html" title="Previous" type="text/html">
+      <link rel="next" href="managing-staging-and-propagation.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="introduction-to-oracle-streams-administration.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="managing-staging-and-propagation.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="oracle-streams-administration.html" property="item" typeof="WebPage"><span property="name">    Oracle Streams Administration </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">     Managing Oracle Streams Implicit Capture</li>
+            </ol>
+            <a id="GUID-90617FF2-BB08-4FAF-BF19-8A65E146231E" name="GUID-90617FF2-BB08-4FAF-BF19-8A65E146231E"></a><a id="STRMS116"></a>
+            
+            <h2 id="STRMS-GUID-90617FF2-BB08-4FAF-BF19-8A65E146231E" class="sect2"><span class="enumeration_chapter">15 </span>     Managing Oracle Streams Implicit Capture
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d69940e125" class="indexterm-anchor"></a>Both <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es and <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s perform <a href="strms_glossary.html#GUID-04C4D4DA-E8A9-443C-BA48-5D89A435D642"><span class="xrefglossterm">implicit capture</span></a>. This chapter contains instructions for managing implicit capture.
+               </p>
+               <p>The following topics describe managing Oracle Streams implicit capture:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="managing-oracle-streams-implicit-capture.html#GUID-0D7FEE0E-48E4-43E2-AFBB-DF89D37A94B7">Managing a Capture Process</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-oracle-streams-implicit-capture.html#GUID-9B578DC0-B8F6-4097-B1A8-1ACC3800BB41">Managing a Synchronous Capture</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-oracle-streams-implicit-capture.html#GUID-DFD1EF15-C0C3-4314-8C5D-1D8C3AF8F228">Managing Extra Attributes in Captured LCRs</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964">Switching From a Capture Process to a Synchronous Capture</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9">Switching from a Synchronous Capture to a Capture Process</a></p>
+                  </li>
+               </ul>
+               <p>Each task described in this chapter should be completed by an Oracle Streams administrator that has been granted the appropriate privileges, unless specified otherwise.</p>
+               <div class="infoboxnotealso" id="GUID-90617FF2-BB08-4FAF-BF19-8A65E146231E__GUID-CDC00E37-D9CB-4208-B601-F17D264D707C">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-information-capture.html#GUID-DADEDB32-7F0F-40F2-A5A5-81327102B00B"> Oracle Streams Information Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an Oracle Streams administrator
+                        </p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-B7863B6C-DD48-4399-98DA-B784494493E2"> Monitoring Oracle Streams Implicit Capture </a>"</span></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-FEBDFF33-DBD9-442E-B767-D421074F4A54"> Troubleshooting Implicit Capture</a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS619"></a><a id="STRMS_MANAGING_CAPTURE"></a><div class="props_rev_3"><a id="GUID-0D7FEE0E-48E4-43E2-AFBB-DF89D37A94B7" name="GUID-0D7FEE0E-48E4-43E2-AFBB-DF89D37A94B7"></a><h3 id="STRMS-GUID-0D7FEE0E-48E4-43E2-AFBB-DF89D37A94B7" class="sect3"><span class="enumeration_section">15.1 </span>Managing a Capture Process
+               </h3>
+               <div>
+                  <p>A <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> captures changes in a redo log, reformats each captured change into a <a href="strms_glossary.html#GUID-BEE35017-AD49-4CA8-AFCF-5AB6898BE94D"><span class="xrefglossterm">logical change record (LCR)</span></a>, and enqueues the LCR into an <code class="codeph">ANYDATA</code> queue.
+                  </p>
+                  <p>The following topics describe managing a capture process:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-6A359154-0CB1-4FE8-B9CE-741887C4DAB8">Starting a Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-870CED1C-52EE-4D90-AC6A-157A9EC97F32">Stopping a Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-E6D89DE4-29C6-41C9-B941-55BC49986245">Managing the Rule Set for a Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-44B88D46-C551-4C17-A1A0-B68842A87C44">Setting a Capture Process Parameter</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-0B184E90-BA1A-4E7F-8FA9-19AD3B5F8777">Setting the Capture User for a Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-11ED8644-A53C-4866-8665-080B3D10DEAB">Managing the Checkpoint Retention Time for a Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-CC88A424-C377-4A0C-99D1-83DC6813812E">Adding an Archived Redo Log File to a Capture Process Explicitly</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-49C32950-7969-4069-9407-04225E018ACB">Setting the First SCN for an Existing Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-4E8A3ECC-D209-4DAA-90FF-B599128BC27B">Setting the Start SCN for an Existing Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-A386157A-FF1C-4875-A171-B8485AC62321">Specifying Whether Downstream Capture Uses a Database Link</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-FB323A45-29EF-49B2-BC07-4A7F812ABC69">Dropping a Capture Process</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-0D7FEE0E-48E4-43E2-AFBB-DF89D37A94B7__GUID-56F1CB0C-B527-42B3-9DE4-3246D1141039">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-84DD3325-51A9-46D7-8BE0-81E48893DFAB">Implicit Capture with an Oracle Streams Capture Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring a capture process
+                           </p>
+                        </li>
+                        <li>
+                           <p>The Oracle Enterprise Manager Cloud Control online help for instructions on managing a capture process with Oracle Enterprise Manager Cloud Control</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS217"></a><div class="props_rev_3"><a id="GUID-6A359154-0CB1-4FE8-B9CE-741887C4DAB8" name="GUID-6A359154-0CB1-4FE8-B9CE-741887C4DAB8"></a><h4 id="STRMS-GUID-6A359154-0CB1-4FE8-B9CE-741887C4DAB8" class="sect4"><span class="enumeration_section">15.1.1 </span>Starting a Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You run the <code class="codeph">START_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to start an existing <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>. For example, the following procedure starts a capture process named <code class="codeph">strm01_capture</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+ &nbsp;&nbsp;&nbsp;capture_name =&gt; 'strm01_capture');
+END;
+/
+</pre><div class="infoboxnote" id="GUID-6A359154-0CB1-4FE8-B9CE-741887C4DAB8__GUID-C322E5C6-E14B-4B3E-9BC4-937E0159BA11">
+                           <p class="notep1">Note:</p>
+                           <p>If a new capture process will use a new <a href="strms_glossary.html#GUID-7CDF80A6-1AF5-4B03-8460-EA3DE828DE2A"><span class="xrefglossterm">LogMiner data dictionary</span></a>, then, when you first start the new capture process, some time might be required to populate the new LogMiner data dictionary. A new LogMiner data dictionary is created if a non-<code class="codeph">NULL</code> first SCN value was specified when the capture process was created.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-6A359154-0CB1-4FE8-B9CE-741887C4DAB8__GUID-C889AF92-FF2C-4BD7-B40A-75A4A79B55E3">
+                           <p class="notep1">See Also:</p>
+                           <p>The Oracle Enterprise Manager Cloud Control online help for instructions about starting a capture process with Oracle Enterprise Manager Cloud Control</p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS620"></a><div class="props_rev_3"><a id="GUID-870CED1C-52EE-4D90-AC6A-157A9EC97F32" name="GUID-870CED1C-52EE-4D90-AC6A-157A9EC97F32"></a><h4 id="STRMS-GUID-870CED1C-52EE-4D90-AC6A-157A9EC97F32" class="sect4"><span class="enumeration_section">15.1.2 </span>Stopping a Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You run the <code class="codeph">STOP_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to stop an existing <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>. For example, the following procedure stops a capture process named <code class="codeph">strm01_capture</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.STOP_CAPTURE(
+ &nbsp;&nbsp;&nbsp;capture_name =&gt; 'strm01_capture');
+END;
+/
+</pre><div class="infoboxnotealso" id="GUID-870CED1C-52EE-4D90-AC6A-157A9EC97F32__GUID-1BB1F437-FCA3-4CC6-A42D-8DADA34B1882">
+                           <p class="notep1">See Also:</p>
+                           <p>The Oracle Enterprise Manager Cloud Control online help for instructions about stopping a capture process with Oracle Enterprise Manager Cloud Control</p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS621"></a><div class="props_rev_3"><a id="GUID-E6D89DE4-29C6-41C9-B941-55BC49986245" name="GUID-E6D89DE4-29C6-41C9-B941-55BC49986245"></a><h4 id="STRMS-GUID-E6D89DE4-29C6-41C9-B941-55BC49986245" class="sect4"><span class="enumeration_section">15.1.3 </span>Managing the Rule Set for a Capture Process
+                  </h4>
+                  <div>
+                     <p>This section contains instructions for completing the following tasks:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-D322629C-4B4F-4AD7-9522-59BB6A5033B0">Specifying a Rule Set for a Capture Process</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-932E4CC3-9031-4C66-9DB8-31C123214324">Adding Rules to a Rule Set for a Capture Process</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-BAA404C5-7780-4597-A377-6390BC0FFF79">Removing a Rule from a Rule Set for a Capture Process</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-8F589938-DA57-4308-BE54-7811E527AF9A">Removing a Rule Set for a Capture Process</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-E6D89DE4-29C6-41C9-B941-55BC49986245__GUID-02383715-DB74-431A-A148-69BBC9F49398">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                           </li>
+                           <li>
+                              <p><a href="advanced-rule-concepts.html#GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D"> Advanced Rule Concepts</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS622"></a><div class="props_rev_3"><a id="GUID-D322629C-4B4F-4AD7-9522-59BB6A5033B0" name="GUID-D322629C-4B4F-4AD7-9522-59BB6A5033B0"></a><h5 id="STRMS-GUID-D322629C-4B4F-4AD7-9522-59BB6A5033B0" class="sect5"><span class="enumeration_section">15.1.3.1 </span>Specifying a Rule Set for a Capture Process
+                     </h5>
+                     <div>
+                        <p>You can specify one <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> and one <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>. The capture process captures a change if it evaluates to <code class="codeph">TRUE</code> for at least one <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> in the positive rule set and evaluates to <code class="codeph">FALSE</code> for all the rules in the negative rule set. The negative rule set is evaluated before the positive rule set.
+                        </p>
+                     </div><a id="STRMS623"></a><div class="props_rev_3"><a id="GUID-EBA7B39D-86A1-47F8-A827-8F2236363C34" name="GUID-EBA7B39D-86A1-47F8-A827-8F2236363C34"></a><h6 id="STRMS-GUID-EBA7B39D-86A1-47F8-A827-8F2236363C34" class="sect6"><span class="enumeration_section">15.1.3.1.1 </span>Specifying a Positive Rule Set for a Capture Process
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>You specify an existing <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> as the positive rule set for an existing capture process using the <code class="codeph">rule_set_name</code> parameter in the <code class="codeph">ALTER_CAPTURE</code> procedure. This procedure is in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. 
+                              </p>
+                              <p>For example, the following procedure sets the positive rule set for a capture process named <code class="codeph">strm01_capture</code> to <code class="codeph">strm02_rule_set</code>.
+                              </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name  =&gt; 'strm01_capture',
+    rule_set_name =&gt; 'strmadmin.strm02_rule_set');
+END;
+/</pre></div>
+                           <!-- class="section" -->
+                        </div>
+                     </div><a id="STRMS624"></a><div class="props_rev_3"><a id="GUID-4A86AE2D-9824-409D-A55F-EB7525F1E958" name="GUID-4A86AE2D-9824-409D-A55F-EB7525F1E958"></a><h6 id="STRMS-GUID-4A86AE2D-9824-409D-A55F-EB7525F1E958" class="sect6"><span class="enumeration_section">15.1.3.1.2 </span>Specifying a Negative Rule Set for a Capture Process
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>You specify an existing rule set as the negative rule set for an existing capture process using the <code class="codeph">negative_rule_set_name</code> parameter in the <code class="codeph">ALTER_CAPTURE</code> procedure. This procedure is in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. 
+                              </p>
+                              <p>For example, the following procedure sets the negative rule set for a capture process named <code class="codeph">strm01_capture</code> to <code class="codeph">strm03_rule_set</code>.
+                              </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name           =&gt; 'strm01_capture',
+    negative_rule_set_name =&gt; 'strmadmin.strm03_rule_set');
+END;
+/</pre></div>
+                           <!-- class="section" -->
+                        </div>
+                     </div>
+                  </div><a id="STRMS625"></a><div class="props_rev_3"><a id="GUID-932E4CC3-9031-4C66-9DB8-31C123214324" name="GUID-932E4CC3-9031-4C66-9DB8-31C123214324"></a><h5 id="STRMS-GUID-932E4CC3-9031-4C66-9DB8-31C123214324" class="sect5"><span class="enumeration_section">15.1.3.2 </span>Adding Rules to a Rule Set for a Capture Process
+                     </h5>
+                     <div>
+                        <p>To add <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s to a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> for an existing <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, you can run one of the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package and specify the existing capture process:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS308"><code class="codeph">ADD_TABLE_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS329"><code class="codeph">ADD_SUBSET_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS309"><code class="codeph">ADD_SCHEMA_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS310"><code class="codeph">ADD_GLOBAL_RULES</code></a></p>
+                           </li>
+                        </ul>
+                        <p>Excluding the <code class="codeph">ADD_SUBSET_RULES</code> procedure, these procedures can add rules to the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> or <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for a capture process. The <code class="codeph">ADD_SUBSET_RULES</code> procedure can add rules only to the positive rule set for a capture process.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-932E4CC3-9031-4C66-9DB8-31C123214324__GUID-42F014CC-36F9-4FB3-8A4F-91B911B37914">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-979FB5C9-7EE7-4E0B-9D28-15696A78DC89">System-Created Rules</a>"</span></p>
+                        </div>
+                     </div><a id="STRMS626"></a><div class="props_rev_3"><a id="GUID-3216923E-48B2-4CEE-8B10-5FD9E4E2322A" name="GUID-3216923E-48B2-4CEE-8B10-5FD9E4E2322A"></a><h6 id="STRMS-GUID-3216923E-48B2-4CEE-8B10-5FD9E4E2322A" class="sect6"><span class="enumeration_section">15.1.3.2.1 </span>Adding Rules to the Positive Rule Set for a Capture Process
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>The following example runs the <code class="codeph">ADD_TABLE_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add rules to the positive rule set of a capture process named <code class="codeph">strm01_capture</code>:
+                              </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name      =&gt;  'hr.departments',
+    streams_type    =&gt;  'capture',
+    streams_name    =&gt;  'strm01_capture',
+    queue_name      =&gt;  'strmadmin.streams_queue',
+    include_dml     =&gt;  TRUE,
+    include_ddl     =&gt;  TRUE,
+    inclusion_rule  =&gt;  TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                           </div>
+                           <!-- class="section" -->
+                           <div class="section">
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Creates two rules. One rule evaluates to <code class="codeph">TRUE</code> for DML changes to the <code class="codeph">hr.departments</code> table, and the other rule evaluates to <code class="codeph">TRUE</code> for DDL changes to the <code class="codeph">hr.departments</code> table. The rule names are system generated.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Adds the two rules to the positive rule set associated with the capture process because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Prepares the <code class="codeph">hr.departments</code> table for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> by running the <code class="codeph">PREPARE_TABLE_INSTANTIATION</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Enables <a href="strms_glossary.html#GUID-27DA88A1-EDB9-4AC5-ACD0-BD514172385F"><span class="xrefglossterm">supplemental logging</span></a> for any primary key, unique key, bitmap index, and foreign key columns in the <code class="codeph">hr.departments</code> table. When the <code class="codeph">PREPARE_TABLE_INSTANTIATION</code> procedure is run, the default value (<code class="codeph">keys</code>) is specified for the <code class="codeph">supplemental_logging</code> parameter.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <p>If the capture process is performing downstream capture, then the table is prepared for instantiation and supplemental logging is enabled for key columns only if the <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> uses a database link to the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>. If a downstream capture process does not use a database link to the source database, then the table must be prepared for instantiation manually and supplemental logging must be enabled manually.
+                              </p>
+                           </div>
+                           <!-- class="section" -->
+                        </div>
+                     </div><a id="STRMS627"></a><div class="props_rev_3"><a id="GUID-3A22FA10-0389-4CF9-9C27-1D30F4F32AD9" name="GUID-3A22FA10-0389-4CF9-9C27-1D30F4F32AD9"></a><h6 id="STRMS-GUID-3A22FA10-0389-4CF9-9C27-1D30F4F32AD9" class="sect6"><span class="enumeration_section">15.1.3.2.2 </span>Adding Rules to the Negative Rule Set for a Capture Process
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>The following example runs the <code class="codeph">ADD_TABLE_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add rules to the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> of a capture process named <code class="codeph">strm01_capture</code>:
+                              </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name      =&gt;  'hr.job_history',
+    streams_type    =&gt;  'capture',
+    streams_name    =&gt;  'strm01_capture',
+    queue_name      =&gt;  'strmadmin.streams_queue',
+    include_dml &nbsp;   =&gt;  TRUE,
+    include_ddl     =&gt;  TRUE,
+    inclusion_rule  =&gt;  FALSE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                           </div>
+                           <!-- class="section" -->
+                           <div class="section">
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Creates two rules. One rule evaluates to <code class="codeph">TRUE</code> for DML changes to the <code class="codeph">hr.job_history</code> table, and the other rule evaluates to <code class="codeph">TRUE</code> for DDL changes to the <code class="codeph">hr.job_history</code> table. The rule names are system generated.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Adds the two rules to the negative rule set associated with the capture process, because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">FALSE</code>.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                           <!-- class="section" -->
+                        </div>
+                     </div>
+                  </div><a id="STRMS628"></a><div class="props_rev_3"><a id="GUID-BAA404C5-7780-4597-A377-6390BC0FFF79" name="GUID-BAA404C5-7780-4597-A377-6390BC0FFF79"></a><h5 id="STRMS-GUID-BAA404C5-7780-4597-A377-6390BC0FFF79" class="sect5"><span class="enumeration_section">15.1.3.3 </span>Removing a Rule from a Rule Set for a Capture Process
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You remove a rule from the rule set for a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> if you no longer want the capture process to capture the changes specified in the rule. For example, assume that the <code class="codeph">departments3</code> rule specifies that DML changes to the <code class="codeph">hr.departments</code> table be captured. If you no longer want a capture process to capture changes to the <code class="codeph">hr.departments</code> table, then remove the <code class="codeph">departments3</code> rule from its rule set.
+                           </p>
+                           <p>You remove a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> from a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> for an existing <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> by running the <code class="codeph">REMOVE_RULE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package. For example, the following procedure removes a rule named <code class="codeph">departments3</code> from the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> of a capture process named <code class="codeph">strm01_capture</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.REMOVE_RULE(
+    rule_name        =&gt; 'departments3',
+    streams_type     =&gt; 'capture',
+    streams_name     =&gt; 'strm01_capture',
+    drop_unused_rule&nbsp;=&gt; TRUE,
+    inclusion_rule   =&gt; TRUE);
+END;
+/
+</pre><p>In this example, the <code class="codeph">drop_unused_rule</code> parameter in the <code class="codeph">REMOVE_RULE</code> procedure is set to <code class="codeph">TRUE</code>, which is the default setting. Therefore, if the rule being removed is not in any other rule set, then it will be dropped from the database. If the <code class="codeph">drop_unused_rule</code> parameter is set to <code class="codeph">FALSE</code>, then the rule is removed from the rule set, but it is not dropped from the database.
+                           </p>
+                           <p>If the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">FALSE</code>, then the <code class="codeph">REMOVE_RULE</code> procedure removes the rule from the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for the capture process, not the positive rule set.
+                           </p>
+                           <p>To remove all of the rules in a rule set for the capture process, specify <code class="codeph">NULL</code> for the <code class="codeph">rule_name</code> parameter when you run the <code class="codeph">REMOVE_RULE</code> procedure.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-BAA404C5-7780-4597-A377-6390BC0FFF79__GUID-299FCCA6-375D-49F3-A43A-ACE53D77BBA6">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-594815E2-3F64-4BC2-92D1-EE7A7C4CA88E">Oracle Streams Client with One or More Empty Rule Sets</a>"</span></p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS629"></a><div class="props_rev_3"><a id="GUID-8F589938-DA57-4308-BE54-7811E527AF9A" name="GUID-8F589938-DA57-4308-BE54-7811E527AF9A"></a><h5 id="STRMS-GUID-8F589938-DA57-4308-BE54-7811E527AF9A" class="sect5"><span class="enumeration_section">15.1.3.4 </span>Removing a Rule Set for a Capture Process
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You remove a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> from an existing <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> using the <code class="codeph">ALTER_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. This procedure can remove the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a>, <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a>, or both. Specify <code class="codeph">TRUE</code> for the <code class="codeph">remove_rule_set</code> parameter to remove the positive rule set for the capture process. Specify <code class="codeph">TRUE</code> for the <code class="codeph">remove_negative_rule_set</code> parameter to remove the negative rule set for the capture process.
+                           </p>
+                           <p>For example, the following procedure removes both the positive and negative rule set from a capture process named <code class="codeph">strm01_capture</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name             =&gt; 'strm01_capture',
+    remove_rule_set          =&gt; TRUE,
+    remove_negative_rule_set =&gt; TRUE);
+END;
+/</pre><div class="infoboxnote" id="GUID-8F589938-DA57-4308-BE54-7811E527AF9A__GUID-713A1E5C-FEA1-4ABD-9995-54ACD39FA168">
+                              <p class="notep1">Note:</p>
+                              <p>If a capture process does not have a positive or negative rule set, then the capture process captures all supported changes to all objects in the database, excluding database objects in the <code class="codeph">SYS</code>, <code class="codeph">SYSTEM</code>, and <code class="codeph">CTXSYS</code> schemas.
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS630"></a><div class="props_rev_3"><a id="GUID-44B88D46-C551-4C17-A1A0-B68842A87C44" name="GUID-44B88D46-C551-4C17-A1A0-B68842A87C44"></a><h4 id="STRMS-GUID-44B88D46-C551-4C17-A1A0-B68842A87C44" class="sect4"><span class="enumeration_section">15.1.4 </span>Setting a Capture Process Parameter
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Set a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> parameter using the <code class="codeph">SET_PARAMETER</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. Capture process parameters control the way a capture process operates.
+                        </p>
+                        <p>For example, the following procedure sets the <code class="codeph">parallelism</code> parameter for a capture process named <code class="codeph">strm01_capture</code> to <code class="codeph">4</code>.
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.SET_PARAMETER(
+    capture_name =&gt; 'strm01_capture',
+    parameter    =&gt; 'parallelism',
+    value        =&gt; '4');
+END;
+/</pre><div class="infoboxnote" id="GUID-44B88D46-C551-4C17-A1A0-B68842A87C44__GUID-3B5078A0-A2D1-46AD-A095-82DDD84B69DB">
+                           <p class="notep1">Note:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Setting the <code class="codeph">parallelism</code> parameter automatically stops and restarts a capture process.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">value</code> parameter is always entered as a <code class="codeph">VARCHAR2</code> value, even if the parameter value is a number.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If the <code class="codeph">value</code> parameter is set to <code class="codeph">NULL</code> or is not specified, then the parameter is set to its default value.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-44B88D46-C551-4C17-A1A0-B68842A87C44__GUID-D8B7B682-F80F-4AAB-AB32-964C3F613248">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The Oracle Enterprise Manager Cloud Control online help for instructions about setting capture process parameters with Oracle Enterprise Manager Cloud Control</p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-00C97579-1532-4535-8CB3-A4CDF5A99097">Capture Process Subcomponents</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">DBMS_CAPTURE_ADM.SET_PARAMETER</code> procedure in the<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS306"><span class="italic"> Oracle Database PL/SQL Packages and Types Reference </span></a>for detailed information about the capture process parameters
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS631"></a><div class="props_rev_3"><a id="GUID-0B184E90-BA1A-4E7F-8FA9-19AD3B5F8777" name="GUID-0B184E90-BA1A-4E7F-8FA9-19AD3B5F8777"></a><h4 id="STRMS-GUID-0B184E90-BA1A-4E7F-8FA9-19AD3B5F8777" class="sect4"><span class="enumeration_section">15.1.5 </span>Setting the Capture User for a Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The <a href="strms_glossary.html#GUID-33DECAE2-C00F-4805-909D-E9C1C383ECDF"><span class="xrefglossterm">capture user</span></a> is the user who captures all DML changes and DDL changes that satisfy the <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s. Set the capture user for a capture process using the <code class="codeph">capture_user</code> parameter in the <code class="codeph">ALTER_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. 
+                        </p>
+                        <p>To change the capture user, the user who invokes the <code class="codeph">ALTER_CAPTURE</code> procedure must be granted <code class="codeph">DBA</code> role. Only the <code class="codeph">SYS</code> user can set the <code class="codeph">capture_user</code> to <code class="codeph">SYS</code>.
+                        </p>
+                        <p>For example, the following procedure sets the capture user for a capture process named <code class="codeph">strm01_capture</code> to <code class="codeph">hr</code>.
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name =&gt; 'strm01_capture',
+    capture_user =&gt; 'hr');
+END;
+/
+</pre><p>Running this procedure grants the new capture user enqueue privilege on the queue used by the capture process and configures the user as a <a href="strms_glossary.html#GUID-B70AC3A1-F93B-445D-9BD1-342A94A9EDDE"><span class="xrefglossterm">secure queue</span></a> user of the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>. In addition, ensure that the capture user has the following privileges:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">EXECUTE</code> privilege on the rule sets used by the capture process
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">EXECUTE</code> privilege on all <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a> functions used in the rule set
+                              </p>
+                           </li>
+                        </ul>
+                        <p>These privileges can be granted to the capture user directly or through roles.</p>
+                        <p>In addition, the capture user must be granted <code class="codeph">EXECUTE</code> privilege on all packages, including Oracle-supplied packages, that are invoked in rule-based transformations run by the capture process. These privileges must be granted directly to the capture user. They cannot be granted through roles.
+                        </p>
+                        <div class="infoboxnote" id="GUID-0B184E90-BA1A-4E7F-8FA9-19AD3B5F8777__GUID-391F812B-DAA2-4B93-AE4D-1264335F9674">
+                           <p class="notep1">Note:</p>
+                           <p>If Oracle Database Vault is installed, then the user who changes the capture user must be granted the <code class="codeph">BECOME</code> <code class="codeph">USER</code> system privilege. Granting this privilege to the user is not required if Oracle Database Vault is not installed. You can revoke the <code class="codeph">BECOME</code> <code class="codeph">USER</code> system privilege from the user after capture user is changed, if necessary.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS632"></a><div class="props_rev_3"><a id="GUID-11ED8644-A53C-4866-8665-080B3D10DEAB" name="GUID-11ED8644-A53C-4866-8665-080B3D10DEAB"></a><h4 id="STRMS-GUID-11ED8644-A53C-4866-8665-080B3D10DEAB" class="sect4"><span class="enumeration_section">15.1.6 </span>Managing the Checkpoint Retention Time for a Capture Process
+                  </h4>
+                  <div>
+                     <p>The <a href="strms_glossary.html#GUID-07D72E57-F76E-4662-A979-005E31144604"><span class="xrefglossterm">checkpoint retention time</span></a> is the amount of time that a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> retains <a href="strms_glossary.html#GUID-357F8B1F-3C6F-4B39-B050-184C23046A8C"><span class="xrefglossterm">checkpoint</span></a>s before purging them automatically.
+                     </p>
+                     <p>Set the checkpoint retention time for a capture process using <code class="codeph">checkpoint_retention_time</code> parameter in the <code class="codeph">ALTER_CAPTURE</code> procedure of the <code class="codeph">DBMS_CAPTURE_ADM</code> package.
+                     </p>
+                     <p>This section contains these topics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-62E2BDF5-FAC1-4DFF-9DD5-BEA5B320EE64">Setting the Checkpoint Retention Time for a Capture Process to a New Value</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-9A5CA55A-8C90-4C8E-ADC0-C58AEC6CE90D">Setting the Checkpoint Retention Time for a Capture Process to Infinite</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-11ED8644-A53C-4866-8665-080B3D10DEAB__GUID-29407EF6-ED78-46A0-99EA-56FFA8FBA612">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-47B0ADDC-A715-4F7A-8C29-241FC4EAD12C">Capture Process Checkpoints</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS633"></a><div class="props_rev_3"><a id="GUID-62E2BDF5-FAC1-4DFF-9DD5-BEA5B320EE64" name="GUID-62E2BDF5-FAC1-4DFF-9DD5-BEA5B320EE64"></a><h5 id="STRMS-GUID-62E2BDF5-FAC1-4DFF-9DD5-BEA5B320EE64" class="sect5"><span class="enumeration_section">15.1.6.1 </span>Setting the Checkpoint Retention Time for a Capture Process to a New Value
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>When you set the checkpoint retention time, you can specify partial days with decimal values. For example, run the following procedure to specify that a capture process named <code class="codeph">strm01_capture</code> should purge checkpoints automatically every ten days and twelve hours:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name              =&gt; 'strm01_capture',
+    checkpoint_retention_time =&gt; 10.5);
+END;
+/</pre></div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS634"></a><div class="props_rev_3"><a id="GUID-9A5CA55A-8C90-4C8E-ADC0-C58AEC6CE90D" name="GUID-9A5CA55A-8C90-4C8E-ADC0-C58AEC6CE90D"></a><h5 id="STRMS-GUID-9A5CA55A-8C90-4C8E-ADC0-C58AEC6CE90D" class="sect5"><span class="enumeration_section">15.1.6.2 </span>Setting the Checkpoint Retention Time for a Capture Process to Infinite
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To specify that a capture process should not purge checkpoints automatically, set the checkpoint retention time to <code class="codeph">DBMS_CAPTURE_ADM.INFINITE</code>. For example, the following procedure sets the checkpoint retention time for a name <code class="codeph">strm01_capture</code> to infinite:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name              =&gt; 'strm01_capture',
+    checkpoint_retention_time =&gt; DBMS_CAPTURE_ADM.INFINITE);
+END;
+/</pre></div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS635"></a><div class="props_rev_3"><a id="GUID-CC88A424-C377-4A0C-99D1-83DC6813812E" name="GUID-CC88A424-C377-4A0C-99D1-83DC6813812E"></a><h4 id="STRMS-GUID-CC88A424-C377-4A0C-99D1-83DC6813812E" class="sect4"><span class="enumeration_section">15.1.7 </span>Adding an Archived Redo Log File to a Capture Process Explicitly
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can add an archived redo log file to a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> manually using the following statement:
+                        </p><pre class="oac_no_warn" dir="ltr">ALTER DATABASE REGISTER LOGICAL LOGFILE 
+   <span class="italic">file_name</span> FOR <span class="italic">capture_process</span>;
+</pre><p>Here, <span class="italic"><code class="codeph">file_name</code></span> is the name of the archived redo log file being added, and <span class="italic"><code class="codeph">capture_process</code></span> is the name of the capture process that will use the redo log file at the <a href="strms_glossary.html#GUID-BEBC1371-719D-4103-877E-E3FB7B1DBA46"><span class="xrefglossterm">downstream database</span></a>. The <span class="italic"><code class="codeph">capture_process</code></span> is equivalent to the <span class="italic"><code class="codeph">logminer_session_name</code></span> and must be specified. The redo log file must be present at the site running capture process.
+                        </p>
+                        <p>For example, to add the <code class="codeph">/usr/log_files/1_3_486574859.dbf</code> archived redo log file to a capture process named <code class="codeph">strm03_capture</code>, issue the following statement:
+                        </p><pre class="oac_no_warn" dir="ltr">ALTER DATABASE REGISTER LOGICAL LOGFILE '/usr/log_files/1_3_486574859.dbf' 
+  FOR 'strm03_capture';
+</pre><div class="infoboxnotealso" id="GUID-CC88A424-C377-4A0C-99D1-83DC6813812E__GUID-F26F3C13-68D7-4987-B430-0F86D0CEE56D">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=SQLRF00802"><span class="italic">Oracle Database SQL Language Reference </span></a>for more information about the <code class="codeph">ALTER</code> <code class="codeph">DATABASE</code> statement and<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=SBYDB"><span class="italic"> Oracle Data Guard Concepts and Administration </span></a>for more information registering redo log files
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS636"></a><a id="STRMS_CAPTURE_SETTING_FIRST_SCN"></a><div class="props_rev_3"><a id="GUID-49C32950-7969-4069-9407-04225E018ACB" name="GUID-49C32950-7969-4069-9407-04225E018ACB"></a><h4 id="STRMS-GUID-49C32950-7969-4069-9407-04225E018ACB" class="sect4"><span class="enumeration_section">15.1.8 </span>Setting the First SCN for an Existing Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can set the <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> for an existing <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>.
+                        </p>
+                        <p>The specified first SCN must meet the following requirements:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>It must be greater than the current first SCN for the capture process.</p>
+                           </li>
+                           <li>
+                              <p>It must be less than or equal to the current <a href="strms_glossary.html#GUID-474E76AE-5246-43C3-9B05-F4C00CD1A6BD"><span class="xrefglossterm">applied SCN</span></a> for the capture process. However, this requirement does not apply if the current applied SCN for the capture process is zero.
+                              </p>
+                           </li>
+                           <li>
+                              <p>It must be less than or equal to the <a href="strms_glossary.html#GUID-C3EC3C70-C86C-4F1F-8DDA-8C972D0EEFC2"><span class="xrefglossterm">required checkpoint SCN</span></a> for the capture process.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>You can determine the current first SCN, applied SCN, and required checkpoint SCN for each capture process in a database using the following query:</p><pre class="oac_no_warn" dir="ltr">SELECT CAPTURE_NAME, FIRST_SCN, APPLIED_SCN, REQUIRED_CHECKPOINT_SCN
+   FROM DBA_CAPTURE;
+</pre><p>When you reset a first SCN for a capture process, information below the new first SCN setting is purged from the <a href="strms_glossary.html#GUID-7CDF80A6-1AF5-4B03-8460-EA3DE828DE2A"><span class="xrefglossterm">LogMiner data dictionary</span></a> for the capture process automatically. Therefore, after the first SCN is reset for a capture process, the <a href="strms_glossary.html#GUID-531018E6-B24E-4835-A4F5-179E2E427906"><span class="xrefglossterm">start SCN</span></a> for the capture process cannot be set lower than the new first SCN. Also, redo log files that contain information before the new first SCN setting will never be needed by the capture process.
+                        </p>
+                        <p>For example, the following procedure sets the first SCN for a capture process named <code class="codeph">strm01_capture</code> to <code class="codeph">351232</code> using the <code class="codeph">ALTER_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name =&gt; 'strm01_capture',
+    first_scn    =&gt; 351232);
+END;
+/
+</pre><div class="infoboxnote" id="GUID-49C32950-7969-4069-9407-04225E018ACB__GUID-D4B6D508-9593-49C6-8756-B82C2F2AC65F">
+                           <p class="notep1">Note:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>If the specified first SCN is higher than the current start SCN for the capture process, then the start SCN is set automatically to the new value of the first SCN.</p>
+                              </li>
+                              <li>
+                                 <p>If you must capture changes in the redo log from a point in time in the past, then you can create a capture process and specify a first SCN that corresponds to a previous data dictionary build in the redo log. The <code class="codeph">BUILD</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package performs a data dictionary build in the redo log.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>You can query the <code class="codeph">DBA_LOGMNR_PURGED_LOG</code> data dictionary view to determine which redo log files will never be needed by any capture process.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-49C32950-7969-4069-9407-04225E018ACB__GUID-63E0BAB2-7F3A-4BA1-827C-7D47E2924860">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-28AC1D5E-5E27-4734-8339-F8B5FC3F7F2C">SCN Values Related to a Capture Process</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-657B8E26-C99D-403E-BF74-B15E122F0734">The LogMiner Data Dictionary for a Capture Process</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-0D2F70A7-744F-471E-AFFD-E4870A41152C">Displaying SCN Values for Each Redo Log File Used by Each Capture Process</a>"</span> for a query that determines which redo log files are no longer needed
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS638"></a><div class="props_rev_3"><a id="GUID-4E8A3ECC-D209-4DAA-90FF-B599128BC27B" name="GUID-4E8A3ECC-D209-4DAA-90FF-B599128BC27B"></a><h4 id="STRMS-GUID-4E8A3ECC-D209-4DAA-90FF-B599128BC27B" class="sect4"><span class="enumeration_section">15.1.9 </span>Setting the Start SCN for an Existing Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can set the <a href="strms_glossary.html#GUID-531018E6-B24E-4835-A4F5-179E2E427906"><span class="xrefglossterm">start SCN</span></a> for an existing <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>. Typically, you reset the start SCN for a capture process if point-in-time recovery must be performed on one of the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>s that receive changes from the capture process.
+                        </p>
+                        <p>The specified start SCN must be greater than or equal to the <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> for the capture process. When you reset a start SCN for a capture process, ensure that the required redo log files are available to the capture process.
+                        </p>
+                        <p>You can determine the first SCN for each capture process in a database using the following query:</p><pre class="oac_no_warn" dir="ltr">SELECT CAPTURE_NAME, FIRST_SCN FROM DBA_CAPTURE;
+</pre><p>For example, to set the start SCN for a capture process named <code class="codeph">strm01_capture</code> to <code class="codeph">750338</code>, complete the following steps:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Stop the capture process. See <span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-870CED1C-52EE-4D90-AC6A-157A9EC97F32">Stopping a Capture Process</a>"</span> for more information.</span></li>
+                        <li class="stepexpand"><span>Run the <code class="codeph">ALTER_CAPTURE</code> procedure to set the start SCN:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name =&gt; 'strm01_capture',
+    start_scn    =&gt; 750338);
+END;
+/
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Start the capture process. See <span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-6A359154-0CB1-4FE8-B9CE-741887C4DAB8">Starting a Capture Process</a>"</span> for more information.</span></li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnotealso" id="GUID-4E8A3ECC-D209-4DAA-90FF-B599128BC27B__GUID-850FA4F0-D423-40FB-BEE6-6995AD543B7F">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-28AC1D5E-5E27-4734-8339-F8B5FC3F7F2C">SCN Values Related to a Capture Process</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP121"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for information about performing database point-in-time recovery on a destination database in an Oracle Streams environment
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS640"></a><div class="props_rev_3"><a id="GUID-A386157A-FF1C-4875-A171-B8485AC62321" name="GUID-A386157A-FF1C-4875-A171-B8485AC62321"></a><h4 id="STRMS-GUID-A386157A-FF1C-4875-A171-B8485AC62321" class="sect4"><span class="enumeration_section">15.1.10 </span>Specifying Whether Downstream Capture Uses a Database Link
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You specify whether an existing <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> uses a database link to the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> for administrative purposes using the <code class="codeph">ALTER_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. Set the <code class="codeph">use_database_link</code> parameter to <code class="codeph">TRUE</code> to specify that the downstream capture process uses a database link, or you set the <code class="codeph">use_database_link</code> parameter to <code class="codeph">FALSE</code> to specify that the downstream capture process does not use a database link.
+                        </p>
+                        <p>If you want a capture process that is not using a database link currently to begin using a database link, then specify <code class="codeph">TRUE</code> for the <code class="codeph">use_database_link</code> parameter. In this case, a database link with the same name as the global name as the source database must exist at the <a href="strms_glossary.html#GUID-BEBC1371-719D-4103-877E-E3FB7B1DBA46"><span class="xrefglossterm">downstream database</span></a>. 
+                        </p>
+                        <p>If you want a capture process that is using a database link currently to stop using a database link, then specify <code class="codeph">FALSE</code> for the <code class="codeph">use_database_link</code> parameter. In this case, some administration must be performed manually after you alter the capture process. For example, if you add new capture process <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s using the <code class="codeph">DBMS_STREAMS_ADM</code> package, then you must prepare the objects relating to the rules for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> manually at the source database.
+                        </p>
+                        <p>If you specify <code class="codeph">NULL</code> for the <code class="codeph">use_database_link</code> parameter, then the current value of this parameter for the capture process is not changed.
+                        </p>
+                        <p>To create a database link to the source database <code class="codeph">dbs1.example.com</code> and specify that this capture process uses the database link, complete the following steps:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the downstream database as the Oracle Streams administrator.</span><div>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create the database link to the source database. Ensure that the database link connects to the Oracle Streams administrator at the source database. For example:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK dbs1.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY <span class="italic">password</span> 
+   USING 'dbs1.example.com';
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Alter the capture process to use the database link. For example:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_CAPTURE(
+    capture_name       =&gt; 'strm05_capture',
+    use_database_link  =&gt; TRUE);
+END;
+/
+</pre></div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnotealso" id="GUID-A386157A-FF1C-4875-A171-B8485AC62321__GUID-D03F8CC5-8223-4638-8F20-77E1EA341A64">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-5C1059F3-DA6E-4B0A-8179-D5304423656E">Local Capture and Downstream Capture</a>"</span></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS641"></a><div class="props_rev_3"><a id="GUID-FB323A45-29EF-49B2-BC07-4A7F812ABC69" name="GUID-FB323A45-29EF-49B2-BC07-4A7F812ABC69"></a><h4 id="STRMS-GUID-FB323A45-29EF-49B2-BC07-4A7F812ABC69" class="sect4"><span class="enumeration_section">15.1.11 </span>Dropping a Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You run the <code class="codeph">DROP_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to drop an existing <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>. For example, the following procedure drops a capture process named <code class="codeph">strm02_capture</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.DROP_CAPTURE(
+    capture_name          =&gt; 'strm02_capture',
+    drop_unused_rule_sets =&gt; TRUE);
+END;
+/
+</pre><p>Because the <code class="codeph">drop_unused_rule_sets</code> parameter is set to <code class="codeph">TRUE</code>, this procedure also drops any <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s used by the <code class="codeph">strm02_capture</code> capture process, unless a rule set is used by another <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>. If the <code class="codeph">drop_unused_rule_sets</code> parameter is set to <code class="codeph">TRUE</code>, then both the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> and <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for the capture process might be dropped. If this procedure drops a rule set, then it also drops any <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s in the rule set that are not in another rule set.
+                        </p>
+                        <div class="infoboxnote" id="GUID-FB323A45-29EF-49B2-BC07-4A7F812ABC69__GUID-92A47C6A-3031-45C9-B004-A8D7464B9AD8">
+                           <p class="notep1">Note:</p>
+                           <p>The status of a capture process must be <code class="codeph">DISABLED</code> or <code class="codeph">ABORTED</code> before it can be dropped. You cannot drop an <code class="codeph">ENABLED</code> capture process.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS643"></a><div class="props_rev_3"><a id="GUID-9B578DC0-B8F6-4097-B1A8-1ACC3800BB41" name="GUID-9B578DC0-B8F6-4097-B1A8-1ACC3800BB41"></a><h3 id="STRMS-GUID-9B578DC0-B8F6-4097-B1A8-1ACC3800BB41" class="sect3"><span class="enumeration_section">15.2 </span>Managing a Synchronous Capture
+               </h3>
+               <div>
+                  <p>A <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> uses an internal mechanism to capture data manipulation language (DML) changes made to tables. A synchronous capture reformats each captured change into a <a href="strms_glossary.html#GUID-BEE35017-AD49-4CA8-AFCF-5AB6898BE94D"><span class="xrefglossterm">logical change record (LCR)</span></a>, and enqueues the LCR into an <code class="codeph">ANYDATA</code> queue.
+                  </p>
+                  <p>This section contains these topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-2460A263-381A-4E89-B22E-264932ACE94C">Managing the Rule Set for a Synchronous Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-FB1BFB50-C12C-4C20-821B-0CDA2A381A51">Setting the Capture User for a Synchronous Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-807F4E72-F4C1-46BB-A13E-7AC609ADD8A5">Dropping a Synchronous Capture</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-9B578DC0-B8F6-4097-B1A8-1ACC3800BB41__GUID-8D0FF05D-205D-4FD4-B123-7090813EEA6E">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-9C81303F-69B5-4817-AB1D-493972C4F096">Implicit Capture with Synchronous Capture</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-667ADD9A-6516-49B1-9616-C2BC5A0131DE">Monitoring a Synchronous Capture</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP641"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for an example that configures a replication environment that uses synchronous capture
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS644"></a><div class="props_rev_3"><a id="GUID-2460A263-381A-4E89-B22E-264932ACE94C" name="GUID-2460A263-381A-4E89-B22E-264932ACE94C"></a><h4 id="STRMS-GUID-2460A263-381A-4E89-B22E-264932ACE94C" class="sect4"><span class="enumeration_section">15.2.1 </span>Managing the Rule Set for a Synchronous Capture
+                  </h4>
+                  <div>
+                     <p>This section contains instructions for completing the following tasks:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-FB9ACA46-3461-407D-B590-AE6403B7ECCE">Specifying a Rule Set for a Synchronous Capture</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-84E7C9C3-AED9-4D0C-ACA3-D2D1F371B49A">Adding Rules to a Rule Set for a Synchronous Capture</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-oracle-streams-implicit-capture.html#GUID-7589C49A-7650-408E-B2B7-CE35273FA72B">Removing a Rule from a Rule Set for a Synchronous Capture</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-2460A263-381A-4E89-B22E-264932ACE94C__GUID-24DC4232-2523-4E8B-82CD-1DB6E45E8B3E">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                           </li>
+                           <li>
+                              <p><a href="advanced-rule-concepts.html#GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D"> Advanced Rule Concepts</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS645"></a><div class="props_rev_3"><a id="GUID-FB9ACA46-3461-407D-B590-AE6403B7ECCE" name="GUID-FB9ACA46-3461-407D-B590-AE6403B7ECCE"></a><h5 id="STRMS-GUID-FB9ACA46-3461-407D-B590-AE6403B7ECCE" class="sect5"><span class="enumeration_section">15.2.1.1 </span>Specifying a Rule Set for a Synchronous Capture
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You can specify one <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>. The synchronous capture captures a change if it evaluates to <code class="codeph">TRUE</code> for at least one <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> in the positive rule set.
+                           </p>
+                           <p>You specify an existing <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> as the positive rule set for an existing synchronous capture using the <code class="codeph">rule_set_name</code> parameter in the <code class="codeph">ALTER_SYNC_CAPTURE</code> procedure. This procedure is in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. 
+                           </p>
+                           <p>For example, the following procedure sets the positive rule set for a synchronous capture named <code class="codeph">sync_capture</code> to <code class="codeph">sync_rule_set</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_SYNC_CAPTURE(
+    capture_name  =&gt; 'sync_capture',
+    rule_set_name =&gt; 'strmadmin.sync_rule_set');
+END;
+/
+</pre><div class="infoboxnote" id="GUID-FB9ACA46-3461-407D-B590-AE6403B7ECCE__GUID-EDA1D87B-97B9-447B-A354-6905348B9492">
+                              <p class="notep1">Note:</p>
+                              <p>You cannot remove the rule set for a synchronous capture.</p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS646"></a><div class="props_rev_3"><a id="GUID-84E7C9C3-AED9-4D0C-ACA3-D2D1F371B49A" name="GUID-84E7C9C3-AED9-4D0C-ACA3-D2D1F371B49A"></a><h5 id="STRMS-GUID-84E7C9C3-AED9-4D0C-ACA3-D2D1F371B49A" class="sect5"><span class="enumeration_section">15.2.1.2 </span>Adding Rules to a Rule Set for a Synchronous Capture
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To add <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s to a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> for an existing <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, you can run one of the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package and specify the existing synchronous capture:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS308"><code class="codeph">ADD_TABLE_RULES</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS329"><code class="codeph">ADD_SUBSET_RULES</code></a></p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnotealso" id="GUID-84E7C9C3-AED9-4D0C-ACA3-D2D1F371B49A__GUID-95288463-3829-4F8F-A1B8-C0142076EDE7">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-979FB5C9-7EE7-4E0B-9D28-15696A78DC89">System-Created Rules</a>"</span></p>
+                           </div>
+                           <p>The following example runs the <code class="codeph">ADD_TABLE_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add rules to the positive rule set of a synchronous capture named <code class="codeph">sync_capture</code>:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name      =&gt;  'hr.departments',
+    streams_type    =&gt;  'sync_capture',
+    streams_name    =&gt;  'sync_capture',
+    queue_name      =&gt;  'strmadmin.streams_queue',
+    include_dml     =&gt;  TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates one rule which evaluates to <code class="codeph">TRUE</code> for DML changes to the <code class="codeph">hr.departments</code> table. The rule name is system generated.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Adds the rule to the positive rule set associated with the synchronous capture.</p>
+                              </li>
+                              <li>
+                                 <p>Prepares the <code class="codeph">hr.departments</code> table for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> by running the <code class="codeph">PREPARE_SYNC_INSTANTIATION</code> function in the <code class="codeph">DBMS_CAPTURE_ADM</code> package.
+                                 </p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnote" id="GUID-84E7C9C3-AED9-4D0C-ACA3-D2D1F371B49A__GUID-3D042EE0-F734-4599-9644-D698074AA55D">
+                              <p class="notep1">Note:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>A synchronous capture captures changes to a table only if the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure was used to add the rule or rules for the table to the synchronous capture rule set. Synchronous capture does not capture changes to a table if a table or subset rule is added to its rule set using the <code class="codeph">ADD_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package. In addition, a synchronous capture ignores all non-table and non-subset rules in its rule set, including global and schema rules.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>When the <code class="codeph">ADD_TABLE_RULES</code> or the <code class="codeph">ADD_SUBSET_RULES</code> procedure adds rules to a synchronous capture rule set, the procedure must obtain an exclusive lock on the specified table. If there are outstanding transactions on the specified table, then the procedure waits until it can obtain a lock.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS647"></a><div class="props_rev_3"><a id="GUID-7589C49A-7650-408E-B2B7-CE35273FA72B" name="GUID-7589C49A-7650-408E-B2B7-CE35273FA72B"></a><h5 id="STRMS-GUID-7589C49A-7650-408E-B2B7-CE35273FA72B" class="sect5"><span class="enumeration_section">15.2.1.3 </span>Removing a Rule from a Rule Set for a Synchronous Capture
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You remove a rule from the rule set for a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> if you no longer want the synchronous capture to capture the changes specified in the rule. For example, assume that the <code class="codeph">departments3</code> rule specifies that DML changes to the <code class="codeph">hr.departments</code> table be captured. If you no longer want a synchronous capture to capture changes to the <code class="codeph">hr.departments</code> table, then remove the <code class="codeph">departments3</code> rule from its rule set.
+                           </p>
+                           <p>You remove a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> from a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> for an existing synchronous capture by running the <code class="codeph">REMOVE_RULE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package. For example, the following procedure removes a rule named <code class="codeph">departments3</code> from the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> of a synchronous capture named <code class="codeph">sync_capture</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.REMOVE_RULE(
+    rule_name        =&gt; 'departments3',
+    streams_type     =&gt; 'sync_capture',
+    streams_name     =&gt; 'sync_capture',
+    drop_unused_rule&nbsp;=&gt; TRUE);
+END;
+/
+</pre><p>In this example, the <code class="codeph">drop_unused_rule</code> parameter in the <code class="codeph">REMOVE_RULE</code> procedure is set to <code class="codeph">TRUE</code>, which is the default setting. Therefore, if the rule being removed is not in any other rule set, then it will be dropped from the database. If the <code class="codeph">drop_unused_rule</code> parameter is set to <code class="codeph">FALSE</code>, then the rule is removed from the rule set, but it is not dropped from the database.
+                           </p>
+                           <p>To remove all of the rules in a rule set for the synchronous capture, specify <code class="codeph">NULL</code> for the <code class="codeph">rule_name</code> parameter when you run the <code class="codeph">REMOVE_RULE</code> procedure.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-7589C49A-7650-408E-B2B7-CE35273FA72B__GUID-5D4DDA52-9460-4E14-A123-7AD4E3EF7645">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-594815E2-3F64-4BC2-92D1-EE7A7C4CA88E">Oracle Streams Client with One or More Empty Rule Sets</a>"</span></p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS648"></a><div class="props_rev_3"><a id="GUID-FB1BFB50-C12C-4C20-821B-0CDA2A381A51" name="GUID-FB1BFB50-C12C-4C20-821B-0CDA2A381A51"></a><h4 id="STRMS-GUID-FB1BFB50-C12C-4C20-821B-0CDA2A381A51" class="sect4"><span class="enumeration_section">15.2.2 </span>Setting the Capture User for a Synchronous Capture
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The <a href="strms_glossary.html#GUID-33DECAE2-C00F-4805-909D-E9C1C383ECDF"><span class="xrefglossterm">capture user</span></a> is the user who captures all DML changes that satisfy the <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>. Set the capture user for a synchronous capture using the <code class="codeph">capture_user</code> parameter in the <code class="codeph">ALTER_SYNC_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. 
+                        </p>
+                        <p>To change the capture user, the user who invokes the <code class="codeph">ALTER_SYNC_CAPTURE</code> procedure must be granted <code class="codeph">DBA</code> role. Only the <code class="codeph">SYS</code> user can set the <code class="codeph">capture_user</code> to <code class="codeph">SYS</code>.
+                        </p>
+                        <p>For example, the following procedure sets the capture user for a synchronous capture named <code class="codeph">sync_capture</code> to <code class="codeph">hr</code>.
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.ALTER_SYNC_CAPTURE(
+    capture_name =&gt; 'sync_capture',
+    capture_user =&gt; 'hr');
+END;
+/
+</pre><p>Running this procedure grants the new capture user enqueue privilege on the queue used by the synchronous capture and configures the user as a <a href="strms_glossary.html#GUID-B70AC3A1-F93B-445D-9BD1-342A94A9EDDE"><span class="xrefglossterm">secure queue</span></a> user of the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>. In addition, ensure that the capture user has the following privileges:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">EXECUTE</code> privilege on the rule set used by the synchronous capture
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">EXECUTE</code> privilege on all <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a> functions used in the rule set
+                              </p>
+                           </li>
+                        </ul>
+                        <p>These privileges can be granted to the capture user directly or through roles.</p>
+                        <p>In addition, the capture user must be granted <code class="codeph">EXECUTE</code> privilege on all packages, including Oracle-supplied packages, that are invoked in rule-based transformations run by the synchronous capture. These privileges must be granted directly to the capture user. They cannot be granted through roles.
+                        </p>
+                        <div class="infoboxnote" id="GUID-FB1BFB50-C12C-4C20-821B-0CDA2A381A51__GUID-D6C0D83B-B9A6-4B97-A7BE-19304352B759">
+                           <p class="notep1">Note:</p>
+                           <p>If Oracle Database Vault is installed, then the user who changes the capture user must be granted the <code class="codeph">BECOME</code> <code class="codeph">USER</code> system privilege. Granting this privilege to the user is not required if Oracle Database Vault is not installed. You can revoke the <code class="codeph">BECOME</code> <code class="codeph">USER</code> system privilege from the user after capture user is changed, if necessary.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS649"></a><div class="props_rev_3"><a id="GUID-807F4E72-F4C1-46BB-A13E-7AC609ADD8A5" name="GUID-807F4E72-F4C1-46BB-A13E-7AC609ADD8A5"></a><h4 id="STRMS-GUID-807F4E72-F4C1-46BB-A13E-7AC609ADD8A5" class="sect4"><span class="enumeration_section">15.2.3 </span>Dropping a Synchronous Capture
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You run the <code class="codeph">DROP_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to drop an existing <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>. For example, the following procedure drops a synchronous capture named <code class="codeph">sync_capture</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.DROP_CAPTURE(
+    capture_name          =&gt; 'sync_capture',
+    drop_unused_rule_sets =&gt; TRUE);
+END;
+/
+</pre><p>Because the <code class="codeph">drop_unused_rule_sets</code> parameter is set to <code class="codeph">TRUE</code>, this procedure also drops any <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s used by the <code class="codeph">sync_capture</code> synchronous capture, unless a rule set is used by another <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>. If the <code class="codeph">drop_unused_rule_sets</code> parameter is set to <code class="codeph">TRUE</code>, then the rule set for the synchronous capture might be dropped. If this procedure drops a rule set, then it also drops any <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s in the rule set that are not in another rule set.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS650"></a><div class="props_rev_3"><a id="GUID-DFD1EF15-C0C3-4314-8C5D-1D8C3AF8F228" name="GUID-DFD1EF15-C0C3-4314-8C5D-1D8C3AF8F228"></a><h3 id="STRMS-GUID-DFD1EF15-C0C3-4314-8C5D-1D8C3AF8F228" class="sect3"><span class="enumeration_section">15.3 </span>Managing Extra Attributes in Captured LCRs
+               </h3>
+               <div>
+                  <p>You can use the <code class="codeph">INCLUDE_EXTRA_ATTRIBUTE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to instruct a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> or a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> to capture one or more extra attributes. You can also use this procedure to instruct a capture process or synchronous capture to exclude an extra attribute that it is capturing currently.
+                  </p>
+                  <p>The extra attributes are the following:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">row_id</code> (row LCRs only)
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">serial#</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">session#</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">thread#</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">tx_name</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">username</code></p>
+                     </li>
+                  </ul>
+                  <p>This section contains instructions for completing the following tasks:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-0FC66F82-7BC7-459D-BF11-347D2312715B">Including Extra Attributes in Implicitly Captured LCRs</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-E36ABDF5-10D1-4A5C-A8B6-BAFE2152427D">Excluding Extra Attributes from Implicitly Captured LCRs</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-DFD1EF15-C0C3-4314-8C5D-1D8C3AF8F228__GUID-8A1A285F-E6D7-4230-8209-B7CF31D40723">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-7CAA1711-DC69-469A-A54B-30629C3FCE2F">Extra Information in LCRs</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-C49D27E4-F401-4D91-82E7-6DD23D46006C">Viewing the Extra Attributes Captured by Implicit Capture</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS522"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">INCLUDE_EXTRA_ATTRIBUTE</code> procedure
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS651"></a><div class="props_rev_3"><a id="GUID-0FC66F82-7BC7-459D-BF11-347D2312715B" name="GUID-0FC66F82-7BC7-459D-BF11-347D2312715B"></a><h4 id="STRMS-GUID-0FC66F82-7BC7-459D-BF11-347D2312715B" class="sect4"><span class="enumeration_section">15.3.1 </span>Including Extra Attributes in Implicitly Captured LCRs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To include an extra attribute in the LCRs captured by a capture process or synchronous capture, run the <code class="codeph">INCLUDE_EXTRA_ATTRIBUTES</code> procedure, and set the <code class="codeph">include</code> parameter to <code class="codeph">TRUE</code>. For example, to instruct a capture process or synchronous capture named <code class="codeph">strm01_capture</code> to include the transaction name in each LCR that it captures, run the following procedure:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.INCLUDE_EXTRA_ATTRIBUTE(
+    capture_name   =&gt; 'strm01_capture',
+    attribute_name =&gt; 'tx_name',
+    include        =&gt; TRUE);
+END;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS652"></a><div class="props_rev_3"><a id="GUID-E36ABDF5-10D1-4A5C-A8B6-BAFE2152427D" name="GUID-E36ABDF5-10D1-4A5C-A8B6-BAFE2152427D"></a><h4 id="STRMS-GUID-E36ABDF5-10D1-4A5C-A8B6-BAFE2152427D" class="sect4"><span class="enumeration_section">15.3.2 </span>Excluding Extra Attributes from Implicitly Captured LCRs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To exclude an extra attribute from the LCRs captured by a capture process or synchronous capture, run the <code class="codeph">INCLUDE_EXTRA_ATTRIBUTES</code> procedure, and set the <code class="codeph">include</code> parameter to <code class="codeph">FALSE</code>. For example, to instruct a capture process or synchronous capture named <code class="codeph">strm01_capture</code> to exclude the transaction name from each LCR that it captures, run the following procedure:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.INCLUDE_EXTRA_ATTRIBUTE(
+    capture_name   =&gt; 'strm01_capture',
+    attribute_name =&gt; 'tx_name',
+    include        =&gt; FALSE);
+END;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS654"></a><a id="STRMS653"></a><div class="props_rev_3"><a id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964" name="GUID-345BC947-F268-46EF-9AFA-C3FA86636964"></a><h3 id="STRMS-GUID-345BC947-F268-46EF-9AFA-C3FA86636964" class="sect3"><span class="enumeration_section">15.4 </span>Switching From a Capture Process to a Synchronous Capture
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section describes how to switch from a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> to a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>. Typically, a synchronous capture is used to capture data manipulation language (DML) changes to a relatively small number of tables. You might decide to make this switch if you are currently capturing changes to a small number of tables with a capture process instead of a synchronous capture.
+                     </p>
+                     <p>You should not switch from a capture process to a synchronous capture if any of the following conditions are true:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Instead of capturing the changes made to a small number of tables, the capture process is capturing changes made to an entire database, one or more schemas, or a large number of tables, and you want to continue to capture these changes.</p>
+                        </li>
+                        <li>
+                           <p>The capture process is capturing data definition language (DDL) changes, and you want to continue to capture DDL changes. A synchronous capture cannot capture DDL changes.</p>
+                        </li>
+                        <li>
+                           <p>The capture process uses a <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a>, and you want to continue to use a negative rule set. A synchronous capture cannot use negative rule set.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The capture process is a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a>. Downstream capture is not possible with a synchronous capture.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>This section uses an example to describe how to switch from a capture process to a synchronous capture. <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHIHIGH" title="This table shows each Streams component in the environment before the switch from a capture process to a synchronous capture and after the switch.">Table 15-1</a> shows the Oracle Streams components in the sample environment before the switch and after the switch.
+                     </p>
+                     <div class="tblformal" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHIHIGH">
+                        <p class="titleintable">Table 15-1 Sample Switch From a Capture Process to a Synchronous Capture</p>
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="Sample Switch From a Capture Process to a Synchronous Capture" summary="This table shows each Streams component in the environment before the switch from a capture process to a synchronous capture and after the switch." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="33%" id="d69940e6520">Oracle Streams Component</th>
+                                 <th align="left" valign="bottom" width="33%" id="d69940e6523">Before Switch</th>
+                                 <th align="left" valign="bottom" width="33%" id="d69940e6526">After Switch</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6531" headers="d69940e6520 ">
+                                    <p>Capture Process</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6531 d69940e6523 ">
+                                    <p><code class="codeph">cap_proc</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6531 d69940e6526 ">
+                                    <p>None</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6542" headers="d69940e6520 ">
+                                    <p>Capture Process Rule Set</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6542 d69940e6523 ">
+                                    <p><code class="codeph">cap_rules</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6542 d69940e6526 ">
+                                    <p>None</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6553" headers="d69940e6520 ">
+                                    <p>Synchronous Capture</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6553 d69940e6523 ">
+                                    <p>None</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6553 d69940e6526 ">
+                                    <p><code class="codeph">sync_cap</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6564" headers="d69940e6520 ">
+                                    <p>Synchronous Capture Rule Set</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6564 d69940e6523 ">
+                                    <p>None</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6564 d69940e6526 ">
+                                    <p><code class="codeph">cap_rules</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6575" headers="d69940e6520 ">
+                                    <p>Propagation</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6575 d69940e6523 ">
+                                    <p><code class="codeph">cap_proc_prop</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6575 d69940e6526 ">
+                                    <p><code class="codeph">sync_cap_prop</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6587" headers="d69940e6520 ">
+                                    <p>Propagation Rule Set</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6587 d69940e6523 ">
+                                    <p><code class="codeph">prop_rules</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6587 d69940e6526 ">
+                                    <p><code class="codeph">prop_rules</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6599" headers="d69940e6520 ">
+                                    <p>Source Queue</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6599 d69940e6523 ">
+                                    <p><code class="codeph">cap_proc_source</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6599 d69940e6526 ">
+                                    <p><code class="codeph">sync_cap_source</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6611" headers="d69940e6520 ">
+                                    <p>Destination Queue</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6611 d69940e6523 ">
+                                    <p><code class="codeph">cap_proc_dest</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6611 d69940e6526 ">
+                                    <p><code class="codeph">sync_cap_dest</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6623" headers="d69940e6520 ">
+                                    <p>Apply Process</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6623 d69940e6523 ">
+                                    <p><code class="codeph">apply_cap_proc</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6623 d69940e6526 ">
+                                    <p><code class="codeph">apply_sync_cap</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e6635" headers="d69940e6520 ">
+                                    <p>Apply Process Rule Set</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6635 d69940e6523 ">
+                                    <p><code class="codeph">apply_rules</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e6635 d69940e6526 ">
+                                    <p><code class="codeph">apply_rules</code></p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <p>In <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHIHIGH" title="This table shows each Streams component in the environment before the switch from a capture process to a synchronous capture and after the switch.">Table 15-1</a>, notice that the Oracle Streams environment uses the same <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s before the switch and after the switch. Also, for the example in this section, assume that the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> is <code class="codeph">db1.example.com</code> and the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> is <code class="codeph">db2.example.com</code>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__GUID-70EE3BE2-EA0D-4AE2-A1CE-6C39C815A8C8">
+                        <p class="notep1">Note:</p>
+                        <p>The example in this section assumes that the Oracle Streams environment only involves two databases. If you are using a <a href="strms_glossary.html#GUID-88D760FB-D926-4ED1-83AA-8FAC1C29D421"><span class="xrefglossterm">directed network</span></a> to send changes through multiple databases, then you might need to configure additional <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s and <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s for the new synchronous capture stream of changes, and you might need to drop additional propagations and queues that were used by the capture process stream.
+                        </p>
+                     </div>
+                     <p>To switch from a capture process to a synchronous capture, complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the source database as the Oracle Streams administrator.</span><div>
+                           <p>This example assumes that the Oracle Streams administrator is <code class="codeph">strmadmin</code> at each database. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an Oracle Streams administrator.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHCJGAE"><span>Stop the capture process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.STOP_CAPTURE(
+ &nbsp;&nbsp;&nbsp;capture_name =&gt; 'cap_proc');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the destination database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHDHCEA"><span>Create a commit-time queue for the <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> that will apply the changes that were captured by the synchronous capture.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table =&gt; 'strmadmin.sync_cap_dest_qt',
+    queue_name  =&gt; 'strmadmin.sync_cap_dest');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHEAFFI"><span>Create an apply process that applies the changes in the queue created in Step&nbsp;<a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHDHCEA">4</a>. Ensure that the <code class="codeph">apply_captured</code> parameter is set to <code class="codeph">FALSE</code>. Also, ensure that the <code class="codeph">rule_set_name</code> parameter specifies the rule set used by the existing apply process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.CREATE_APPLY(
+    queue_name     =&gt; 'strmadmin.sync_cap_dest',
+    apply_name     =&gt; 'apply_sync_cap',
+    rule_set_name  =&gt; 'strmadmin.apply_rules',
+    apply_captured =&gt; FALSE);
+END;
+/
+</pre><p>Ensure that the apply process is configured properly for your environment. Specifically, ensure that the new apply process is configured properly regarding the following items:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Apply user</p>
+                              </li>
+                              <li>
+                                 <p>Apply handlers</p>
+                              </li>
+                              <li>
+                                 <p>Apply tag</p>
+                              </li>
+                           </ul>
+                           <p>If appropriate, then ensure that the new apply process is configured in the same way as the existing apply process regarding these items.</p>
+                           <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP206"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an apply process.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the source database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHCAEBI"><span>Create a <a href="strms_glossary.html#GUID-D132C636-4C14-4AFC-BBCE-9C042FD6A0CC"><span class="xrefglossterm">commit-time queue</span></a> for the synchronous capture.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table =&gt; 'strmadmin.sync_cap_source_qt',
+    queue_name  =&gt; 'strmadmin.sync_cap_source');
+END;
+/
+</pre><p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP205"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring queues.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Create a propagation that sends changes from the queue created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHCAEBI">7</a> to the queue created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHDHCEA">4</a>. Ensure that the <code class="codeph">rule_set_name</code> parameter specifies the rule set used by the existing propagation.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.CREATE_PROPAGATION(
+    propagation_name   =&gt; 'sync_cap_prop',
+    source_queue       =&gt; 'strmadmin.sync_cap_source',
+    destination_queue  =&gt; 'strmadmin.sync_cap_dest',
+    destination_dblink =&gt; 'db2.example.com',
+    rule_set_name      =&gt; 'strmadmin.prop_rules');
+END;
+/
+</pre><p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP205"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating propagations.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Create a synchronous capture. Ensure that the <code class="codeph">queue_name</code> parameter specifies the queue created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHCAEBI">7</a>. Also, ensure that the <code class="codeph">rule_set_name</code> parameter specifies the rule set used by the existing capture process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.CREATE_SYNC_CAPTURE(
+    queue_name    =&gt; 'strmadmin.sync_cap_source',
+    capture_name  =&gt; 'sync_cap',
+    rule_set_name =&gt; 'strmadmin.capture_rules');
+END;
+/
+</pre><p>The specified rule set must only contain rules that were created using the <code class="codeph">ADD_TABLE_RULES</code> and <code class="codeph">ADD_SUBSET_RULES</code> procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package. If the current capture process rule set contains other types of rules, then create a rule set for the synchronous capture and use the <code class="codeph">ADD_TABLE_RULES</code> and <code class="codeph">ADD_SUBSET_RULES</code> procedures to add rules to the new rule set.
+                           </p>
+                           <p>In addition, a synchronous capture cannot have a negative rule set. If the current capture process has a negative rule set, and you want the synchronous capture to behave the same as the capture process, then add rules to the positive synchronous capture rule set that result in the same behavior.</p>
+                           <p>If the existing capture process uses a capture user that is not the Oracle Streams administrator, then ensure that you use the <code class="codeph">capture_user</code> parameter in the <code class="codeph">CREATE_SYNC_CAPTURE</code> procedure to specify the correct capture user for the new synchronous capture.
+                           </p>
+                           <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP208"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring synchronous capture.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Verify that the tables that are configured for synchronous capture are the same as the ones configured for the existing capture process by running the following query:</span><div><pre class="oac_no_warn" dir="ltr">SELECT * FROM DBA_SYNC_CAPTURE_TABLES ORDER BY TABLE_OWNER, TABLE_NAME;
+</pre><p>If any table is missing or not enabled, then use the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure to add the table.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHEJAHF"><span>Prepare the replicated tables for instantiation. The replicated tables are the tables for which the synchronous capture captures changes.</span><div>
+                           <p>For example, if the synchronous capture captures changes to the <code class="codeph">hr.employees</code> and <code class="codeph">hr.departments</code> tables, then run the following function:
+                           </p><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON
+DECLARE
+  tables       DBMS_UTILITY.UNCL_ARRAY;
+  prepare_scn  NUMBER;
+  BEGIN
+    tables(1) := 'hr.departments';
+    tables(2) := 'hr.employees';
+    prepare_scn := DBMS_CAPTURE_ADM.PREPARE_SYNC_INSTANTIATION(
+                      table_names =&gt; tables);
+  DBMS_OUTPUT.PUT_LINE('Prepare SCN = ' || prepare_scn);
+END;
+/
+</pre><p>The returned prepare system change number (SCN) is used in steps later in this procedure. This example assumes that the prepare SCN is <code class="codeph">2700000</code>.
+                           </p>
+                           <p>All of the replicated tables must be included in one call to the <code class="codeph">PREPARE_SYNC_INSTANTIATION</code> function.
+                           </p>
+                           <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP114"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about preparing database objects for instantiation.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the destination database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHEEIII"><span>Set the apply process that applies changes from the capture process to stop applying changes when it reaches the SCN returned in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHEJAHF">11</a> plus 1.</span><div>
+                           <p>For example, if the prepare SCN is <code class="codeph">2700000</code>, then run the following procedure to set the <code class="codeph">maximum_scn</code> parameter to <code class="codeph">2700001</code> (2700000 + 1).:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.SET_PARAMETER(
+    apply_name   =&gt; 'apply_cap_proc',
+    parameter    =&gt; 'maximum_scn',
+    value        =&gt; '2700001');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the source database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand"><span>Start the capture process that you stopped in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHCJGAE">2</a>.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+ &nbsp;&nbsp;&nbsp;capture_name =&gt; 'cap_proc');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the destination database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand"><span>Wait until the apply process that applies changes that were captured by the capture process has reached the SCN specified in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHEEIII">13</a>. When this event occurs, the apply process is automatically disabled with error ORA-26717 to indicate the SCN limit has reached.</span><div>
+                           <p>To determine if the apply process has reached this point, query the <code class="codeph">DBA_APPLY</code> view. In this example, run the following query:
+                           </p><pre class="oac_no_warn" dir="ltr">SELECT 1 FROM DBA_APPLY 
+   WHERE STATUS       = 'DISABLED' AND
+         ERROR_NUMBER = 26717 AND 
+         APPLY_NAME   = 'APPLY_CAP_PROC';
+</pre><p>Do not proceed to the next step until this query returns a row.</p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Set the <a href="strms_glossary.html#GUID-4387E4F0-4979-48B7-A155-03592511B7FF"><span class="xrefglossterm">instantiation SCN</span></a> for the replicated tables to the SCN value the SCN returned in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHEJAHF">11</a>.</span><div>
+                           <p>In this example, run the following procedures:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN(
+    source_object_name    =&gt; 'hr.employees',
+    source_database_name  =&gt; 'db1.example.com',
+    instantiation_scn     =&gt; 2700000);
+END;
+/
+
+BEGIN
+  DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN(
+    source_object_name    =&gt; 'hr.departments',
+    source_database_name  =&gt; 'db1.example.com',
+    instantiation_scn     =&gt; 2700000);
+END;
+/
+</pre><p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP117"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about setting the instantiation SCN.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Start the apply process that you created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHEAFFI">5</a>.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name =&gt; 'apply_sync_cap');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHJBHJJ"><span>Drop the apply process that applied changes that were captured by the capture process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.DROP_APPLY(
+    apply_name =&gt; 'apply_cap_proc');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>If it is no longer needed, then drop the queue that was used by the apply process that you dropped in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHJBHJJ">20</a>.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.REMOVE_QUEUE(
+    queue_name  =&gt; 'strmadmin.cap_proc_dest',
+    drop_unused_queue_table =&gt; TRUE);
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the source database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand"><span>Stop the capture process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.STOP_CAPTURE(
+    capture_name =&gt; 'cap_proc');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHFGHHI"><span>Drop the capture process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.DROP_CAPTURE(
+    capture_name =&gt; 'cap_proc');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHDDIFG"><span>Drop the propagation that sent changes that were captured by the capture process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.DROP_PROPAGATION(
+    propagation_name =&gt; 'cap_proc_prop');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>If it is no longer needed, then drop the queue that was used by the capture process and propagation that you dropped in Steps <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHFGHHI">24</a> and <a href="managing-oracle-streams-implicit-capture.html#GUID-345BC947-F268-46EF-9AFA-C3FA86636964__BEHDDIFG">25</a>.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.REMOVE_QUEUE(
+    queue_name  =&gt; 'strmadmin.cap_proc_source',
+    drop_unused_queue_table =&gt; TRUE);
+END;
+/
+</pre></div>
+                     </li>
+                  </ol>
+                  <div class="section">
+                     <p>If you have a bi-directional <a href="strms_glossary.html#GUID-5BC36291-C075-4244-905A-ACDAB250E825"><span class="xrefglossterm">replication</span></a> environment, then you can perform these steps independently to switch from a capture process to synchronous capture in both directions.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-345BC947-F268-46EF-9AFA-C3FA86636964__GUID-10CB0CD8-D42A-422B-B747-4B9D8067D882">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="oracle-streams-information-capture.html#GUID-DADEDB32-7F0F-40F2-A5A5-81327102B00B"> Oracle Streams Information Capture</a></p>
+                           </li>
+                           <li>
+                              <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STRMS656"></a><a id="STRMS655"></a><div class="props_rev_3"><a id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9" name="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9"></a><h3 id="STRMS-GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9" class="sect3"><span class="enumeration_section">15.5 </span>Switching from a Synchronous Capture to a Capture Process
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section describes how to switch from a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> to a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>. You might decide to make this switch for one or more of the following reasons:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>You are currently capturing changes to a small number of tables but want to expand your environment to capture changes to a large number of tables, one or more schemas, or an entire database.</p>
+                        </li>
+                        <li>
+                           <p>You want to use a <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> during change capture.
+                           </p>
+                        </li>
+                        <li>
+                           <p>You want to capture data definition language (DDL) changes to database objects.</p>
+                        </li>
+                     </ul>
+                     <p>This section uses an example to describe how to switch from a synchronous capture to a capture process. <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHJGHCH" title="This table shows each Streams component in the environment before the switch from a synchronous capture to a capture process and after the switch.">Table 15-2</a> shows the Oracle Streams components in the sample environment before the switch and after the switch.
+                     </p>
+                     <div class="tblformal" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHJGHCH">
+                        <p class="titleintable">Table 15-2 Sample Switch From a Synchronous Capture to a Capture Process</p>
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="Sample Switch From a Synchronous Capture to a Capture Process" summary="This table shows each Streams component in the environment before the switch from a synchronous capture to a capture process and after the switch." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="33%" id="d69940e7263">Oracle Streams Component</th>
+                                 <th align="left" valign="bottom" width="33%" id="d69940e7266">Before Switch</th>
+                                 <th align="left" valign="bottom" width="33%" id="d69940e7269">After Switch</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7274" headers="d69940e7263 ">
+                                    <p>Synchronous Capture</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7274 d69940e7266 ">
+                                    <p><code class="codeph">sync_proc</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7274 d69940e7269 ">
+                                    <p>None</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7285" headers="d69940e7263 ">
+                                    <p>Synchronous Capture Rule Set</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7285 d69940e7266 ">
+                                    <p><code class="codeph">cap_rules</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7285 d69940e7269 ">
+                                    <p>None</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7296" headers="d69940e7263 ">
+                                    <p>Capture Process</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7296 d69940e7266 ">
+                                    <p>None</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7296 d69940e7269 ">
+                                    <p><code class="codeph">cap_proc</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7307" headers="d69940e7263 ">
+                                    <p>Capture Process Rule Set</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7307 d69940e7266 ">
+                                    <p>None</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7307 d69940e7269 ">
+                                    <p><code class="codeph">cap_rules</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7318" headers="d69940e7263 ">
+                                    <p>Propagation</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7318 d69940e7266 ">
+                                    <p><code class="codeph">sync_cap_prop</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7318 d69940e7269 ">
+                                    <p><code class="codeph">cap_proc_prop</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7330" headers="d69940e7263 ">
+                                    <p>Propagation Rule Set</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7330 d69940e7266 ">
+                                    <p><code class="codeph">prop_rules</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7330 d69940e7269 ">
+                                    <p><code class="codeph">prop_rules</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7342" headers="d69940e7263 ">
+                                    <p>Source Queue</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7342 d69940e7266 ">
+                                    <p><code class="codeph">sync_cap_source</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7342 d69940e7269 ">
+                                    <p><code class="codeph">cap_proc_source</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7354" headers="d69940e7263 ">
+                                    <p>Destination Queue</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7354 d69940e7266 ">
+                                    <p><code class="codeph">sync_cap_dest</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7354 d69940e7269 ">
+                                    <p><code class="codeph">cap_proc_dest</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7366" headers="d69940e7263 ">
+                                    <p>Apply Process</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7366 d69940e7266 ">
+                                    <p><code class="codeph">apply_sync_cap</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7366 d69940e7269 ">
+                                    <p><code class="codeph">apply_cap_proc</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="33%" id="d69940e7378" headers="d69940e7263 ">
+                                    <p>Apply Process Rule Set</p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7378 d69940e7266 ">
+                                    <p><code class="codeph">apply_rules</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="33%" headers="d69940e7378 d69940e7269 ">
+                                    <p><code class="codeph">apply_rules</code></p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <p>In <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHJGHCH" title="This table shows each Streams component in the environment before the switch from a synchronous capture to a capture process and after the switch.">Table 15-2</a>, notice that the Oracle Streams environment uses the same <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s before the switch and after the switch. Also, for the example in this section, assume that the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> is <code class="codeph">db1.example.com</code> and the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> is <code class="codeph">db2.example.com</code>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__GUID-1AE85E53-8736-42FD-985D-FF7BA6EB2D52">
+                        <p class="notep1">Note:</p>
+                        <p>The example in this section assumes that the Oracle Streams environment only involves two databases. If you are using a <a href="strms_glossary.html#GUID-88D760FB-D926-4ED1-83AA-8FAC1C29D421"><span class="xrefglossterm">directed network</span></a> to send changes through multiple databases, then you might need to configure additional <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s and <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>s for the new capture process stream of changes, and you might need to drop additional propagations and queues that were used by the synchronous capture stream.
+                        </p>
+                     </div>
+                     <p>To switch from a synchronous capture to a capture process, complete the following steps:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Ensure that the source database is running in <code class="codeph">ARCHIVELOG</code> mode. See <span class="q">"<a href="advanced-capture-process-concepts.html#GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD">ARCHIVELOG Mode and a Capture Process</a>"</span> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN008"><span class="italic">Oracle Database Administrator's Guide</span></a> for more information.</span></li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the destination database as the Oracle Streams administrator.</span><div>
+                           <p>This example assumes that the Oracle Streams administrator is <code class="codeph">strmadmin</code> at each database. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an Oracle Streams administrator.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHCEIDH"><span>Create the queue for the <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> that will apply the changes that were captured by the capture process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table =&gt; 'strmadmin.cap_proc_dest_qt',
+    queue_name  =&gt; 'strmadmin.cap_proc_dest');
+END;
+/
+</pre><p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP205"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring queues.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHJJGIA"><span>Create an apply process that applies the changes in the queue created in Step&nbsp;<a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHCEIDH">3</a>. Ensure that the <code class="codeph">apply_captured</code> parameter is set to <code class="codeph">TRUE</code>. Also, ensure that the <code class="codeph">rule_set_name</code> parameter specifies the rule set used by the existing apply process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.CREATE_APPLY(
+    queue_name     =&gt; 'strmadmin.cap_proc_dest',
+    apply_name     =&gt; 'apply_cap_proc',
+    rule_set_name  =&gt; 'strmadmin.apply_rules',
+    apply_captured =&gt; TRUE);
+END;
+/
+</pre><p>Ensure that the apply process is configured properly for your environment. Specifically, ensure that the new apply process is configured properly regarding the following items:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Apply user</p>
+                              </li>
+                              <li>
+                                 <p>Apply handlers</p>
+                              </li>
+                              <li>
+                                 <p>Apply tag</p>
+                              </li>
+                           </ul>
+                           <p>If appropriate, then ensure that the new apply process is configured in the same way as the existing apply process regarding these items.</p>
+                           <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP206"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an apply process.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Stop the apply process that applies changes captured by the synchronous capture.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.STOP_APPLY(
+    apply_name =&gt; 'apply_sync_cap');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the source database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHGECBB"><span>Create the queue for the capture process.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table =&gt; 'strmadmin.cap_proc_source_qt',
+    queue_name  =&gt; 'strmadmin.cap_proc_source');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>Create a propagation that sends changes from the queue created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHGECBB">7</a> to the queue created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHCEIDH">3</a>. Ensure that the <code class="codeph">rule_set_name</code> parameter specifies the rule set used by the existing propagation.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.CREATE_PROPAGATION(
+    propagation_name   =&gt; 'cap_proc_prop',
+    source_queue       =&gt; 'strmadmin.cap_proc_source',
+    destination_queue  =&gt; 'strmadmin.cap_proc_dest',
+    destination_dblink =&gt; 'db2.example.com',
+    rule_set_name      =&gt; 'strmadmin.prop_rules');
+END;
+/
+</pre><p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP205"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating propagations.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHHHBJF"><span>Create a capture process. Ensure that the parameters are set properly in the <code class="codeph">CREATE_CAPTURE</code> procedure:</span><div>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Set the <code class="codeph">queue_name</code> parameter to the queue created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHGECBB">7</a>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Set the <code class="codeph">rule_set_name</code> parameter to the rule set used by the existing synchronous capture.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If the existing synchronous capture uses a capture user that is not the Oracle Streams administrator, then set the <code class="codeph">capture_user</code> parameter to the correct capture user for the new capture process.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.CREATE_CAPTURE(
+    queue_name    =&gt; 'strmadmin.cap_proc_source',
+    capture_name  =&gt; 'cap_proc',
+    rule_set_name =&gt; 'strmadmin.cap_rules');
+END;
+/
+</pre><p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about configuring a capture process.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Prepare the replicated tables for instantiation. The replicated tables are the tables for which the capture process captures changes.</span><div>
+                           <p>For example, if the capture process captures changes to the <code class="codeph">hr.employees</code> and <code class="codeph">hr.departments</code> tables, then run the following procedures:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.PREPARE_TABLE_INSTANTIATION(
+    table_name           =&gt; 'hr.employees',
+    supplemental_logging =&gt; 'keys');
+END;
+/
+
+BEGIN
+  DBMS_CAPTURE_ADM.PREPARE_TABLE_INSTANTIATION(
+    table_name           =&gt; 'hr.departments',
+    supplemental_logging =&gt; 'keys');
+END;
+/
+</pre><p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP114"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about preparing database objects for instantiation.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Lock all of the replicated tables in <code class="codeph">SHARE</code> <code class="codeph">MODE</code>.</span><div>
+                           <p>In this example, run the following SQL statement:</p><pre class="oac_no_warn" dir="ltr">LOCK TABLE hr.employees, hr.departments IN SHARE MODE;
+</pre></div>
+                     </li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHBECFJ"><span>Determine the current system change number (SCN) by running the following query:</span><div><pre class="oac_no_warn" dir="ltr">SELECT CURRENT_SCN FROM V$DATABASE;
+</pre><p>The returned switch SCN is used in later steps in this procedure. This example assumes that the switch SCN is <code class="codeph">2700000</code>.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Run a <code class="codeph">COMMIT</code> statement to release the lock on the replicated tables:</span><div><pre class="oac_no_warn" dir="ltr">COMMIT;
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the destination database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHGHEIH"><span>Set the apply process that applies changes from the synchronous capture to stop applying changes when it reaches the SCN returned in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHBECFJ">12</a> plus 1.</span><div>
+                           <p>For example, if the switch SCN is <code class="codeph">2700000</code>, then run the following procedure to set the <code class="codeph">maximum_scn</code> parameter to <code class="codeph">2700001</code> (2700000 + 1):
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.SET_PARAMETER(
+    apply_name   =&gt; 'apply_sync_cap',
+    parameter    =&gt; 'maximum_scn',
+    value        =&gt; '2700001');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>Start the apply process that applies changes from the synchronous capture.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name =&gt; 'apply_sync_cap');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>Wait until the apply process that applies changes that were captured by the synchronous capture has reached the SCN specified in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHGHEIH">15</a>. When this event occurs, the apply process is automatically disabled with error ORA-26717 to indicate the SCN limit has reached.</span><div>
+                           <p>To determine if the apply process has reached this point, query the <code class="codeph">DBA_APPLY</code> view. In this example, run the following query:
+                           </p><pre class="oac_no_warn" dir="ltr">SELECT 1 FROM DBA_APPLY 
+   WHERE STATUS       = 'DISABLED' AND
+         ERROR_NUMBER = 26717 AND 
+         APPLY_NAME   = 'APPLY_SYNC_CAP';
+</pre><p>Do not proceed to the next step until this query returns a row.</p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Set the <a href="strms_glossary.html#GUID-4387E4F0-4979-48B7-A155-03592511B7FF"><span class="xrefglossterm">instantiation SCN</span></a> for the replicated tables to the SCN value returned in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHBECFJ">12</a>.</span><div>
+                           <p>In this example, run the following procedures:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN(
+    source_object_name    =&gt; 'hr.employees',
+    source_database_name  =&gt; 'db1.example.com',
+    instantiation_scn     =&gt; 2700000);
+END;
+/
+
+BEGIN
+  DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN(
+    source_object_name    =&gt; 'hr.departments',
+    source_database_name  =&gt; 'db1.example.com',
+    instantiation_scn     =&gt; 2700000);
+END;
+/
+</pre><p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP117"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about setting the instantiation SCN.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Start the apply process that you created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHJJGIA">4</a>.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name =&gt; 'apply_cap_proc');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHHDBFE"><span>Drop the apply process that applied changes that were captured by the synchronous capture.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_APPLY_ADM.DROP_APPLY(
+    apply_name =&gt; 'apply_sync_cap');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>If it is no longer needed, then drop the queue that was used by the apply process that you dropped in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHHDBFE">20</a>.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.REMOVE_QUEUE(
+    queue_name              =&gt; 'strmadmin.sync_cap_dest',
+    drop_unused_queue_table =&gt; TRUE);
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, log in to the source database as the Oracle Streams administrator.</span></li>
+                     <li class="stepexpand"><span>Start the capture process that you created in Step <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHHHBJF">9</a>.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+    capture_name =&gt; 'cap_proc');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHHAABI"><span>Drop the synchronous capture.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.DROP_CAPTURE(
+    capture_name =&gt; 'sync_cap');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHGGDIJ"><span>Drop the propagation that sent changes that were captured by the synchronous capture.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.DROP_PROPAGATION(
+    propagation_name =&gt; 'sync_cap_prop');
+END;
+/
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>If it is no longer needed, then drop the queue that was used by the synchronous capture and propagation that you dropped in Steps <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHHAABI">24</a> and <a href="managing-oracle-streams-implicit-capture.html#GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__BEHGGDIJ">25</a>.</span><div>
+                           <p>In this example, run the following procedure:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.REMOVE_QUEUE(
+    queue_name              =&gt; 'strmadmin.sync_cap_source',
+    drop_unused_queue_table =&gt; TRUE);
+END;
+/
+</pre></div>
+                     </li>
+                  </ol>
+                  <div class="section">
+                     <p>If you have a bi-directional <a href="strms_glossary.html#GUID-5BC36291-C075-4244-905A-ACDAB250E825"><span class="xrefglossterm">replication</span></a> environment, then you can perform these steps independently to switch from a synchronous capture to a capture process in both directions.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-42A2D3A3-5FF1-4A38-A883-62B3EF67DDC9__GUID-F098F4C9-B136-4C22-8AF1-B7ED4E84646D">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="oracle-streams-information-capture.html#GUID-DADEDB32-7F0F-40F2-A5A5-81327102B00B"> Oracle Streams Information Capture</a></p>
+                           </li>
+                           <li>
+                              <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

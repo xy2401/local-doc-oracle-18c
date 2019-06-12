@@ -1,0 +1,102 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Starting with Oracle Database 12c release 2 (12.2), you can run the Parallel Upgrade Utility with the -T option to set tables to READ ONLY.">
+      <meta name="description" content="Starting with Oracle Database 12c release 2 (12.2), you can run the Parallel Upgrade Utility with the -T option to set tables to READ ONLY.">
+      <title>About Upgrading Tables Dependent on Oracle-Maintained Types</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Database Upgrade Guide">
+      <meta property="og:description" content="Starting with Oracle Database 12c release 2 (12.2), you can run the Parallel Upgrade Utility with the -T option to set tables to READ ONLY.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Database Upgrade Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-upgrade-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-11-27T11:59:18-08:00">
+      <meta name="dcterms.title" content="Database Upgrade Guide">
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E88788-06">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="oracle-update-batching-batch-size-disabled.html" title="Previous" type="text/html">
+      <link rel="next" href="case-insensitive-passwords-ora-1017-invalid-username-password.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.isVersionOf" content="UPGRD">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="oracle-update-batching-batch-size-disabled.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="case-insensitive-passwords-ora-1017-invalid-username-password.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Database Upgrade Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="changes-oracle-database-earlier-releases.html" property="item" typeof="WebPage"><span property="name"> Changes for Earlier Releases of Oracle Database </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="behavior-changes-oracle-database-12c-122.html" property="item" typeof="WebPage"><span property="name">Behavior Changes in Oracle Database 12c Release 2 (12.2.0.1)</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">About Upgrading Tables Dependent on Oracle-Maintained Types</li>
+            </ol>
+            <a id="GUID-8CCB0CF2-09A6-4B95-8EDA-4E0B515CC6A6" name="GUID-8CCB0CF2-09A6-4B95-8EDA-4E0B515CC6A6"></a>
+            
+            <h2 id="UPGRD-GUID-8CCB0CF2-09A6-4B95-8EDA-4E0B515CC6A6" class="sect2">About Upgrading Tables Dependent on Oracle-Maintained Types</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Starting with Oracle Database 12<span class="italic">c</span> release 2 (12.2), you can run the Parallel Upgrade Utility with the <code class="codeph">-T</code> option to set tables to READ ONLY.
+               </p>
+               <p>When you run the Parallel Upgrade Utility with the <code class="codeph">-T</code> option, any tablespaces that do not contain Oracle Maintained objects are set to READ ONLY. Setting these tables to READ ONLY can reduce the amount of data that you need to back up before upgrading the database.
+               </p>
+               <p>If your database has user tables that depend on Oracle Maintained types (for example, AQ queue tables), then you must upgrade these tables manually after upgrade. </p>
+               <p>After the upgrade is complete, to upgrade tables dependent on Oracle-Maintained types, run the script <code>utluptabdata.sql</code> to carry out ALTER TABLE UPGRADE commands on tables in tablespaces set to READ ONLY during the upgrade.
+               </p>
+               <p>Starting with Oracle Database 12<span class="italic">c</span> release 2, the ALTER TYPE statement behavior is also changed. If a dependent table is in an accessible tablespace, then it is automatically upgraded to the new version of the type. If the dependent table is in a READ ONLY tablespace, then it is not automatically upgraded. Run the <code>utluptabdata.sql</code> script to upgrade those tables set to READ ONLY tablespace states during the upgrade. You only need to run the <code>utluptabdata.sql</code> script when you run the Parallel Upgrade Utility with the <code class="codeph">-T</code> option to run the upgrade.
+               </p>
+               <div class="infoboxnote" id="GUID-8CCB0CF2-09A6-4B95-8EDA-4E0B515CC6A6__GUID-BE033873-F843-419B-AD7D-B5C6F4F8E1A3">
+                  <p class="notep1">Note:</p>
+                  <p>When tablespaces are set to <code class="codeph">READ ONLY</code>, this setting prevents updates on all tables in the tablespace, regardless of a user‘s update privilege level. For example, users connecting as SYSDBA are prevented from changing their application data.
+                  </p>
+               </div>
+            </div>
+            <div>
+               <div class="relinfo">
+                  <p><strong>Related Topics</strong></p>
+                  <ul>
+                     <li><a href="required-tasks-complete-upgrading-oracle-database.html#GUID-B57B8AF5-C22C-4CE7-8D9D-AAA00B9FF3E3">Upgrading Tables Dependent on Oracle-Maintained Types</a></li>
+                     <li><a href="database-preparation-tasks-to-complete-before-upgrades.html#GUID-E10096D0-36E3-41AF-9381-D74089FC6E17">Running Upgrades with Read-Only Tablespaces</a></li>
+                  </ul>
+               </div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="behavior-changes-oracle-database-12c-122.html#GUID-2E7494A9-18C5-483D-95C6-7A13ECF879DF" title="Review for descriptions of Oracle Database 12c release 1 (12.1) changes.">Behavior Changes in Oracle Database 12c Release 2 (12.2.0.1)</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

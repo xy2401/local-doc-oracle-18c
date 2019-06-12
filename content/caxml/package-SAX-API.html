@@ -1,0 +1,1267 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Package SAX for XML C APIs</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="XML C API Reference">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="XML C API Reference">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="xml-c-api-reference.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T04:10:27-08:00">
+      <meta name="dcterms.title" content="XML C API Reference">
+      <meta name="dcterms.dateCopyrighted" content="2001, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83819-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="package-Range-API.html" title="Previous" type="text/html">
+      <link rel="next" href="package-Schema-API.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.isVersionOf" content="CAXML">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="package-Range-API.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="package-Schema-API.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">XML C API Reference</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Package SAX for XML C APIs</li>
+            </ol>
+            <a id="GUID-2D73A7A7-B7FA-4B99-9B74-B1A188B522B2" name="GUID-2D73A7A7-B7FA-4B99-9B74-B1A188B522B2"></a><a id="CAXML5908"></a>
+            
+            <h2 id="CAXML-GUID-2D73A7A7-B7FA-4B99-9B74-B1A188B522B2" class="sect2"><span class="enumeration_chapter">7 </span>Package SAX for XML C APIs
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>SAX is a standard interface for event-based XML parsing, developed collaboratively by the members of the XML-DEV mailing list. To use SAX, an <code class="codeph">xmlsaxcb</code> structure is initialized with function pointers and passed to one of the <code class="codeph">XmlLoadSax</code> calls. A pointer to a user-defined context structure is also provided, and will be passed to each SAX function.
+               </p>
+               <p>For event-based schema validation APIs, refer to <a href="package-Event-API.html#GUID-1B7D2ADE-1922-4A18-8C6B-DF59B6B3CAF8">Package Event APIs for C</a>.
+               </p>
+               <p>The following table summarizes the methods available through the <code class="codeph">SAX</code> interface for XML C APIs.
+               </p>
+               <div class="tblformal" id="GUID-2D73A7A7-B7FA-4B99-9B74-B1A188B522B2__SUMMARYSAX">
+                  <p class="titleintable">Table 7-1 Summary of SAX Methods for XML C Implementation</p>
+                  <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of SAX Methods for XML C Implementation" summary="First column lists interfaces; second column provides a brief description of these interfaces." width="100%" frame="hsides" border="1" rules="rows">
+                     <thead>
+                        <tr align="left" valign="top">
+                           <th align="left" valign="bottom" width="37%" id="d90132e65">Function</th>
+                           <th align="left" valign="bottom" width="63%" id="d90132e68">Summary</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e73" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-8D4F4B76-B6BD-4B96-96E3-AD5CE288E2B8">XmlSaxAttributeDecl()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e73 d90132e68 ">
+                              <p>Receives SAX notification of an attribute's declaration.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e82" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-F5F07AF3-818E-46B6-8201-A4FD212AA95F">XmlSaxCDATA()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e82 d90132e68 ">
+                              <p>Receives SAX notification of <code class="codeph">CDATA</code>. Oracle extension.
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e94" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-119B0F18-87E5-4754-BE4C-E0043436A9C8">XmlSaxCharacters()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e94 d90132e68 ">
+                              <p>Receives SAX notification of character data</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e103" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-9EBD76EE-2ECA-4F2D-BB3E-E747C367D780">XmlSaxComment()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e103 d90132e68 ">
+                              <p>Receives SAX notification of a comment.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e112" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-4554D744-1575-46AF-956F-AE037EFA2AE6">XmlSaxElementDecl()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e112 d90132e68 ">
+                              <p>Receives SAX notification of an element's declaration. Oracle extension.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e121" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-D54A83F2-A3CD-459C-A22F-066EBE88FC34">XmlSaxEndDocument()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e121 d90132e68 ">
+                              <p>Receives SAX end-of-document notification.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e130" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-9F161C87-7121-4D79-B2AA-7C0E522B6202">XmlSaxEndElement()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e130 d90132e68 ">
+                              <p>Receives SAX end-of-element notification.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e139" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-941D0879-E550-438B-9ED1-E6107B7F9420">XmlSaxNotationDecl()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e139 d90132e68 ">
+                              <p>Receives SAX notification of a notation declaration.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e148" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-2B14CFBD-853F-475A-B196-69A6DA3F091E">XmlSaxPI()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e148 d90132e68 ">
+                              <p>Receives SAX notification of a processing instruction.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e157" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-92A86DFE-DDA6-48E4-B574-CD20690A020E">XmlSaxParsedEntityDecl()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e157 d90132e68 ">
+                              <p>Receives SAX notification of a parsed entity declaration. Oracle extension.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e166" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-7A3096AF-CBCA-47E0-9230-0E948259F16D">XmlSaxStartDocument()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e166 d90132e68 ">
+                              <p>Receives SAX start-of-document notification.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e176" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-A398BD6A-744A-4338-A19C-1D1FE70AD3A1">XmlSaxStartElement()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e176 d90132e68 ">
+                              <p>Receives SAX start-of-element notification.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e185" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-5AC14F8E-90FA-48A5-BB67-F9F7CE5D0C78">XmlSaxStartElementNS()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e185 d90132e68 ">
+                              <p>Receives SAX namespace-aware start-of-element notification.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e194" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-81D77B2B-8DB0-4E5B-862D-46ECEA41B4BE">XmlSaxUnparsedEntityDecl()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e194 d90132e68 ">
+                              <p>Receives SAX notification of an unparsed entity declaration.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e203" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-328B677E-4081-40DA-9CB4-9205FD832FEE">XmlSaxWhitespace()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e203 d90132e68 ">
+                              <p>Receives SAX notification of ignorable (whitespace) data.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="37%" id="d90132e212" headers="d90132e65 ">
+                              <p><a href="package-SAX-API.html#GUID-BBF07511-8918-483B-88EA-935FF49EF36D">XmlSaxXmlDecl()</a></p>
+                           </td>
+                           <td align="left" valign="top" width="63%" headers="d90132e212 d90132e68 ">
+                              <p>Receives SAX notification of an XML declaration. Oracle extension.</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <!-- class="inftblhruleinformal" -->
+            </div><a id="CAXML5912"></a><a id="CAXML5913"></a><a id="CAXML5911"></a><div class="props_rev_3"><a id="GUID-8D4F4B76-B6BD-4B96-96E3-AD5CE288E2B8" name="GUID-8D4F4B76-B6BD-4B96-96E3-AD5CE288E2B8"></a><h3 id="CAXML-GUID-8D4F4B76-B6BD-4B96-96E3-AD5CE288E2B8" class="sect3"><span class="enumeration_section">7.1 </span>XmlSaxAttributeDecl()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks an element declaration in the DTD. The element's name and content will be in the data encoding. Note that an attribute may be declared before the element it belongs to!</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxAttributeDecl(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *elem, 
+&nbsp;&nbsp;&nbsp;oratext *attr, 
+&nbsp;&nbsp;&nbsp;oratext *body);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-8D4F4B76-B6BD-4B96-96E3-AD5CE288E2B8__GUID-385C1A55-E908-488A-8F48-90195342B231">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e278">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e281">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e284">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e289" headers="d90132e278 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e289 d90132e281 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e289 d90132e284 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e299" headers="d90132e278 "><pre class="oac_no_warn" dir="ltr">elem</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e299 d90132e281 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e299 d90132e284 ">
+                                 <p>element for which the attribute is declared; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e309" headers="d90132e278 "><pre class="oac_no_warn" dir="ltr">attr</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e309 d90132e281 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e309 d90132e284 ">
+                                 <p>attribute's name; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e319" headers="d90132e278 "><pre class="oac_no_warn" dir="ltr">body</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e319 d90132e281 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e319 d90132e284 ">
+                                 <p>body of an attribute declaration</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-8D4F4B76-B6BD-4B96-96E3-AD5CE288E2B8__GUID-F2B4C64B-BBFB-4AD8-AF5D-34F66C799CFA">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-8D4F4B76-B6BD-4B96-96E3-AD5CE288E2B8">XmlSaxAttributeDecl()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5915"></a><a id="CAXML5914"></a><div class="props_rev_3"><a id="GUID-54AC0B85-5E5D-4BBC-A6C5-8AB08AB1C662" name="GUID-54AC0B85-5E5D-4BBC-A6C5-8AB08AB1C662"></a><h3 id="CAXML-GUID-54AC0B85-5E5D-4BBC-A6C5-8AB08AB1C662" class="sect3"><span class="enumeration_section">7.2 </span>XmlSaxBeginGen()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This call creates an XML generation context from the specified XML meta context. This context is uded by the SAX calls to generate an incremental XML document.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">void *XmlSaxBeginGen(
+&nbsp;&nbsp;&nbsp;XmlCtx *xctx);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-54AC0B85-5E5D-4BBC-A6C5-8AB08AB1C662__GUID-1F73D2D3-A2DA-4F5C-9158-ECB4F1DA1319">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e401">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e404">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e407">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e412" headers="d90132e401 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e412 d90132e404 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e412 d90132e407 ">
+                                 <p>the XML meta contextt</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div>
+            </div><a id="CAXML5917"></a><a id="CAXML5918"></a><a id="CAXML5916"></a><div class="props_rev_3"><a id="GUID-F5F07AF3-818E-46B6-8201-A4FD212AA95F" name="GUID-F5F07AF3-818E-46B6-8201-A4FD212AA95F"></a><h3 id="CAXML-GUID-F5F07AF3-818E-46B6-8201-A4FD212AA95F" class="sect3"><span class="enumeration_section">7.3 </span>XmlSaxCDATA()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event handles <code class="codeph">CDATA</code>, as distinct from <code class="codeph">Text</code>. If no <code class="codeph">XmlSaxCDATA</code> callback is provided, the Text callback will be invoked. The data will be in the data encoding, and the returned length is in characters, not bytes. See also <code class="codeph">XmlSaxWhitespace</code>, which receiving notification about ignorable (whitespace formatting) character data.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxCDATA(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *ch, 
+&nbsp;&nbsp;&nbsp;size_t len);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-F5F07AF3-818E-46B6-8201-A4FD212AA95F__GUID-C3BF970D-BB81-4C77-BF6A-5A74CA06942F">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e492">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e495">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e498">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e503" headers="d90132e492 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e503 d90132e495 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e503 d90132e498 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e513" headers="d90132e492 "><pre class="oac_no_warn" dir="ltr">ch</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e513 d90132e495 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e513 d90132e498 ">
+                                 <p>pointer to <code class="codeph">CDATA</code>; data encoding
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e526" headers="d90132e492 "><pre class="oac_no_warn" dir="ltr">len</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e526 d90132e495 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e526 d90132e498 ">
+                                 <p>length of <code class="codeph">CDATA</code>, in characters
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-F5F07AF3-818E-46B6-8201-A4FD212AA95F__GUID-AEA2F318-40BC-496E-B214-CC49EF769B1F">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-328B677E-4081-40DA-9CB4-9205FD832FEE">XmlSaxWhitespace()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5920"></a><a id="CAXML5921"></a><a id="CAXML5919"></a><div class="props_rev_3"><a id="GUID-119B0F18-87E5-4754-BE4C-E0043436A9C8" name="GUID-119B0F18-87E5-4754-BE4C-E0043436A9C8"></a><h3 id="CAXML-GUID-119B0F18-87E5-4754-BE4C-E0043436A9C8" class="sect3"><span class="enumeration_section">7.4 </span>XmlSaxCharacters()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks character data, either <code class="codeph">Text</code> or <code class="codeph">CDATA</code>. If an <code class="codeph">XmlSaxCDATA</code> callback is provided, then <code class="codeph">CDATA</code> will be send to that instead; with no <code class="codeph">XmlSaxCDATA</code> callback, both <code class="codeph">Text</code> and <code class="codeph">CDATA</code> go to the <code class="codeph">XmlSaxCharacters</code> callback. The data will be in the data encoding, and the returned length is in characters, not bytes. See also <code class="codeph">XmlSaxWhitespace</code>, which receiving notification about ignorable (whitespace formatting) character data.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxCharacters(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *ch, 
+&nbsp;&nbsp;&nbsp;size_t len);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-119B0F18-87E5-4754-BE4C-E0043436A9C8__GUID-AE8E0431-75FA-482B-A224-194C3F383B3D">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e640">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e643">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e646">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e651" headers="d90132e640 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e651 d90132e643 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e651 d90132e646 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e661" headers="d90132e640 "><pre class="oac_no_warn" dir="ltr">ch</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e661 d90132e643 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e661 d90132e646 ">
+                                 <p>pointer to data; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e671" headers="d90132e640 "><pre class="oac_no_warn" dir="ltr">len</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e671 d90132e643 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e671 d90132e646 ">
+                                 <p>length of data, in characters</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-119B0F18-87E5-4754-BE4C-E0043436A9C8__GUID-E6BBB0C8-D974-4C90-A952-1890003B86BB">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-328B677E-4081-40DA-9CB4-9205FD832FEE">XmlSaxWhitespace()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5923"></a><a id="CAXML5924"></a><a id="CAXML5922"></a><div class="props_rev_3"><a id="GUID-9EBD76EE-2ECA-4F2D-BB3E-E747C367D780" name="GUID-9EBD76EE-2ECA-4F2D-BB3E-E747C367D780"></a><h3 id="CAXML-GUID-9EBD76EE-2ECA-4F2D-BB3E-E747C367D780" class="sect3"><span class="enumeration_section">7.5 </span>XmlSaxComment()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks a comment in the XML document. The comment's data will be in the data encoding. Oracle extension, not in SAX standard.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxComment(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *data);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-9EBD76EE-2ECA-4F2D-BB3E-E747C367D780__GUID-5C33EB59-424A-429E-A1BF-ACDBB65957F8">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e754">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e757">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e760">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e765" headers="d90132e754 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e765 d90132e757 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e765 d90132e760 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e775" headers="d90132e754 "><pre class="oac_no_warn" dir="ltr">data</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e775 d90132e757 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e775 d90132e760 ">
+                                 <p>comment's data; data encoding</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5926"></a><a id="CAXML5927"></a><a id="CAXML5925"></a><div class="props_rev_3"><a id="GUID-4554D744-1575-46AF-956F-AE037EFA2AE6" name="GUID-4554D744-1575-46AF-956F-AE037EFA2AE6"></a><h3 id="CAXML-GUID-4554D744-1575-46AF-956F-AE037EFA2AE6" class="sect3"><span class="enumeration_section">7.6 </span>XmlSaxElementDecl()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks an element declaration in the DTD. The element's name and content will be in the data encoding.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxElementDecl(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *name, 
+&nbsp;&nbsp;&nbsp;oratext *content);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-4554D744-1575-46AF-956F-AE037EFA2AE6__GUID-F7B1CFBF-413F-4CD1-845E-7F05D2251556">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e854">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e857">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e860">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e865" headers="d90132e854 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e865 d90132e857 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e865 d90132e860 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e875" headers="d90132e854 "><pre class="oac_no_warn" dir="ltr">name</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e875 d90132e857 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e875 d90132e860 ">
+                                 <p>element's name</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e885" headers="d90132e854 "><pre class="oac_no_warn" dir="ltr">content</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e885 d90132e857 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e885 d90132e860 ">
+                                 <p>element's context model</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-4554D744-1575-46AF-956F-AE037EFA2AE6__GUID-69419302-4213-47EB-8157-5BE382FE7418">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-8D4F4B76-B6BD-4B96-96E3-AD5CE288E2B8">XmlSaxAttributeDecl()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5929"></a><a id="CAXML5930"></a><a id="CAXML5928"></a><div class="props_rev_3"><a id="GUID-D54A83F2-A3CD-459C-A22F-066EBE88FC34" name="GUID-D54A83F2-A3CD-459C-A22F-066EBE88FC34"></a><h3 id="CAXML-GUID-D54A83F2-A3CD-459C-A22F-066EBE88FC34" class="sect3"><span class="enumeration_section">7.7 </span>XmlSaxEndDocument()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The last SAX event, called once for each document, indicating the end of the document. Matching event is <code class="codeph">XmlSaxStartDocument</code>.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxEndDocument(
+&nbsp;&nbsp;&nbsp;void *ctx);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-D54A83F2-A3CD-459C-A22F-066EBE88FC34__GUID-EDC9ABF0-A57B-4FDF-87AE-A6DAD1559B07">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e971">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e974">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e977">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e982" headers="d90132e971 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e982 d90132e974 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e982 d90132e977 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-D54A83F2-A3CD-459C-A22F-066EBE88FC34__GUID-060020A9-5E3F-40D2-891B-F7F09B8B9AC5">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-7A3096AF-CBCA-47E0-9230-0E948259F16D">XmlSaxStartDocument()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5931"></a><div class="props_rev_3"><a id="GUID-9F161C87-7121-4D79-B2AA-7C0E522B6202" name="GUID-9F161C87-7121-4D79-B2AA-7C0E522B6202"></a><h3 id="CAXML-GUID-9F161C87-7121-4D79-B2AA-7C0E522B6202" class="sect3"><span class="enumeration_section">7.8 </span>XmlSaxEndElement()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks the close of an element; it matches the <code class="codeph">XmlSaxStartElement</code> or <code class="codeph">XmlSaxStartElementNS</code> events. The name is the <code class="codeph">tagName</code> of the element (which may be a qualified name for namespace-aware elements) and is in the data encoding.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5935"></a><a id="CAXML5936"></a><a id="CAXML5934"></a><div class="props_rev_3"><a id="GUID-0F049E7E-B5D1-42D5-84C5-ABE5E53E599A" name="GUID-0F049E7E-B5D1-42D5-84C5-ABE5E53E599A"></a><h3 id="CAXML-GUID-0F049E7E-B5D1-42D5-84C5-ABE5E53E599A" class="sect3"><span class="enumeration_section">7.9 </span>XmlSaxEndGen()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Completes the generation of an incrementally constructed XML document, and returns it to the application.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">orastream *XmlSaxEndGen(
+&nbsp;&nbsp;&nbsp;void *genCtx);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-0F049E7E-B5D1-42D5-84C5-ABE5E53E599A__GUID-95E3BC2F-6340-46E0-A236-6DE30A7CDDA1">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e1116">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e1119">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e1122">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1127" headers="d90132e1116 "><pre class="oac_no_warn" dir="ltr">genCtx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1127 d90132e1119 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1127 d90132e1122 ">
+                                 <p>the generation context used to create the XML document; see <a href="package-SAX-API.html#GUID-54AC0B85-5E5D-4BBC-A6C5-8AB08AB1C662">XmlSaxBeginGen()</a><a href="package-SAX-API.html#GUID-54AC0B85-5E5D-4BBC-A6C5-8AB08AB1C662">XmlSaxBeginGen()</a>t
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Return</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(orastream*)</code> the stream containing the generated XML document
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5937"></a><div class="props_rev_3"><a id="GUID-941D0879-E550-438B-9ED1-E6107B7F9420" name="GUID-941D0879-E550-438B-9ED1-E6107B7F9420"></a><h3 id="CAXML-GUID-941D0879-E550-438B-9ED1-E6107B7F9420" class="sect3"><span class="enumeration_section">7.10 </span>XmlSaxNotationDecl()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The even marks the declaration of a notation in the DTD. The notation's name, public ID, and system ID will all be in the data encoding. Both IDs are optional and may be <code class="codeph">NULL</code>.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5941"></a><a id="CAXML5942"></a><a id="CAXML5940"></a><div class="props_rev_3"><a id="GUID-2B14CFBD-853F-475A-B196-69A6DA3F091E" name="GUID-2B14CFBD-853F-475A-B196-69A6DA3F091E"></a><h3 id="CAXML-GUID-2B14CFBD-853F-475A-B196-69A6DA3F091E" class="sect3"><span class="enumeration_section">7.11 </span>XmlSaxPI()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks a <code class="codeph">ProcessingInstruction</code>. The <code class="codeph">ProcessingInstruction</code>s target and data will be in the data encoding. There is always a target, but the data may be <code class="codeph">NULL</code>.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxPI(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *target, 
+&nbsp;&nbsp;&nbsp;oratext *data);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-2B14CFBD-853F-475A-B196-69A6DA3F091E__GUID-85BF70F2-7038-47AB-AFA6-67F22A837554">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e1262">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e1265">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e1268">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1273" headers="d90132e1262 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1273 d90132e1265 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1273 d90132e1268 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1283" headers="d90132e1262 "><pre class="oac_no_warn" dir="ltr">target</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1283 d90132e1265 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1283 d90132e1268 ">
+                                 <p>PI's target; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1293" headers="d90132e1262 "><pre class="oac_no_warn" dir="ltr">data</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1293 d90132e1265 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1293 d90132e1268 ">
+                                 <p>PI's data as data encoding, or <code class="codeph">NULL</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5944"></a><a id="CAXML5945"></a><a id="CAXML5943"></a><div class="props_rev_3"><a id="GUID-92A86DFE-DDA6-48E4-B574-CD20690A020E" name="GUID-92A86DFE-DDA6-48E4-B574-CD20690A020E"></a><h3 id="CAXML-GUID-92A86DFE-DDA6-48E4-B574-CD20690A020E" class="sect3"><span class="enumeration_section">7.12 </span>XmlSaxParsedEntityDecl()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Marks an parsed entity declaration in the DTD. The parsed entity's name, public ID, system ID, and notation name will all be in the data encoding.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxParsedEntityDecl(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *name, 
+&nbsp;&nbsp;&nbsp;oratext *value, 
+&nbsp;&nbsp;&nbsp;oratext *pubId, 
+&nbsp;&nbsp;&nbsp;oratext *sysId, 
+&nbsp;&nbsp;&nbsp;boolean general);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-92A86DFE-DDA6-48E4-B574-CD20690A020E__GUID-4D57EA5C-E5B2-4E7B-B0C9-9CAE2850CD04">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e1374">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e1377">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e1380">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1385" headers="d90132e1374 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1385 d90132e1377 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1385 d90132e1380 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1395" headers="d90132e1374 "><pre class="oac_no_warn" dir="ltr">name</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1395 d90132e1377 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1395 d90132e1380 ">
+                                 <p>entity's name; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1405" headers="d90132e1374 "><pre class="oac_no_warn" dir="ltr">value</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1405 d90132e1377 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1405 d90132e1380 ">
+                                 <p>entity's value; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1415" headers="d90132e1374 "><pre class="oac_no_warn" dir="ltr">pubId</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1415 d90132e1377 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1415 d90132e1380 ">
+                                 <p>entity's public ID as data encoding, or <code class="codeph">NULL</code></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1427" headers="d90132e1374 "><pre class="oac_no_warn" dir="ltr">sysId</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1427 d90132e1377 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1427 d90132e1380 ">
+                                 <p>entity's system ID; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1437" headers="d90132e1374 "><pre class="oac_no_warn" dir="ltr">general</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1437 d90132e1377 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1437 d90132e1380 ">
+                                 <p><code class="codeph">TRUE</code> if general entity, <code class="codeph">FALSE</code> if parameter entity
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-92A86DFE-DDA6-48E4-B574-CD20690A020E__GUID-AA334631-29E2-46EF-B456-6347CC639151">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-81D77B2B-8DB0-4E5B-862D-46ECEA41B4BE">XmlSaxUnparsedEntityDecl()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5947"></a><a id="CAXML5948"></a><a id="CAXML5946"></a><div class="props_rev_3"><a id="GUID-7A3096AF-CBCA-47E0-9230-0E948259F16D" name="GUID-7A3096AF-CBCA-47E0-9230-0E948259F16D"></a><h3 id="CAXML-GUID-7A3096AF-CBCA-47E0-9230-0E948259F16D" class="sect3"><span class="enumeration_section">7.13 </span>XmlSaxStartDocument()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The first SAX event, called once for each document, indicating the start of the document. Matching event is <code class="codeph">XmlSaxEndDocument</code>.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxStartDocument(
+&nbsp;&nbsp;&nbsp;void *ctx);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-7A3096AF-CBCA-47E0-9230-0E948259F16D__GUID-F6A60225-CD55-42F9-B1B0-8F315D502CDF">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e1528">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e1531">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e1534">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1539" headers="d90132e1528 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1539 d90132e1531 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1539 d90132e1534 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-7A3096AF-CBCA-47E0-9230-0E948259F16D__GUID-15DEB692-BC85-4917-83F4-FF9C32A9847A">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-D54A83F2-A3CD-459C-A22F-066EBE88FC34">XmlSaxEndDocument()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5950"></a><a id="CAXML5951"></a><a id="CAXML5949"></a><div class="props_rev_3"><a id="GUID-A398BD6A-744A-4338-A19C-1D1FE70AD3A1" name="GUID-A398BD6A-744A-4338-A19C-1D1FE70AD3A1"></a><h3 id="CAXML-GUID-A398BD6A-744A-4338-A19C-1D1FE70AD3A1" class="sect3"><span class="enumeration_section">7.14 </span>XmlSaxStartElement()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks the start of an element. Note this is the original SAX 1 non-namespace-aware version; <code class="codeph">XmlSaxStartElementNS</code> is the SAX 2 namespace-aware version. If both are registered, only the NS version will be called. The element's name will be in the data encoding, as are all the attribute parts. See the functions in the <code class="codeph">NamedNodeMap</code> interface for operating on the attributes map. The matching function is <code class="codeph">XmlSaxEndElement</code> (there is no namespace aware version of this function).
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxStartElement(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *name, 
+&nbsp;&nbsp;&nbsp;xmlnodelist *attrs);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-A398BD6A-744A-4338-A19C-1D1FE70AD3A1__GUID-52AA0761-3ACD-49AE-803D-0A9CF4543284">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e1631">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e1634">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e1637">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1642" headers="d90132e1631 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1642 d90132e1634 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1642 d90132e1637 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1652" headers="d90132e1631 "><pre class="oac_no_warn" dir="ltr">name</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1652 d90132e1634 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1652 d90132e1637 ">
+                                 <p>element's name; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1662" headers="d90132e1631 "><pre class="oac_no_warn" dir="ltr">attrs</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1662 d90132e1634 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1662 d90132e1637 ">
+                                 <p><code class="codeph">NamedNodeMap</code> of element's attributes
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-A398BD6A-744A-4338-A19C-1D1FE70AD3A1__GUID-185FDE35-FE90-4DCE-ABC0-D55283D5EB0A">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-9F161C87-7121-4D79-B2AA-7C0E522B6202">XmlSaxEndElement()</a>, <a href="package-DOM-API.html#GUID-00B37FDA-E64D-4604-9566-CA56C0171508">XmlDomGetNodeMapLength()</a> and <a href="package-DOM-API.html#GUID-797CFDD4-5EAE-42F8-BA18-1DAC62B7D96F">XmlDomRemoveNamedItem()</a> in <a href="package-DOM-API.html#GUID-B2FDCC0D-9770-475E-BAD2-2E840583E545">   Package DOM APIs for C</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5953"></a><a id="CAXML5954"></a><a id="CAXML5952"></a><div class="props_rev_3"><a id="GUID-5AC14F8E-90FA-48A5-BB67-F9F7CE5D0C78" name="GUID-5AC14F8E-90FA-48A5-BB67-F9F7CE5D0C78"></a><h3 id="CAXML-GUID-5AC14F8E-90FA-48A5-BB67-F9F7CE5D0C78" class="sect3"><span class="enumeration_section">7.15 </span>XmlSaxStartElementNS()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks the start of an element. Note this is the new SAX 2 namespace-aware version; XmlSaxStartElement is the SAX 1 non-namespace-aware version. If both are registered, only the NS version will be called. The element's qualified name, local name, and namespace URI will be in the data encoding, as are all the attribute parts. See the functions in the <code class="codeph">NamedNodeMap</code> interface for operating on the attributes map. The matching function is <code class="codeph">XmlSaxEndElement</code> (there is no namespace aware version of this function).
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxStartElementNS(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *qname, 
+&nbsp;&nbsp;&nbsp;oratext *local, 
+&nbsp;&nbsp;&nbsp;oratext *nsp, 
+&nbsp;&nbsp;&nbsp;xmlnodelist *attrs);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-5AC14F8E-90FA-48A5-BB67-F9F7CE5D0C78__GUID-5372D81A-BFB0-4509-9F4A-E2F24A96ACE2">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e1766">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e1769">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e1772">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1777" headers="d90132e1766 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1777 d90132e1769 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1777 d90132e1772 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1787" headers="d90132e1766 "><pre class="oac_no_warn" dir="ltr">qname</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1787 d90132e1769 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1787 d90132e1772 ">
+                                 <p>element's qualified name; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1797" headers="d90132e1766 "><pre class="oac_no_warn" dir="ltr">local</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1797 d90132e1769 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1797 d90132e1772 ">
+                                 <p>element's namespace local name; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1807" headers="d90132e1766 "><pre class="oac_no_warn" dir="ltr">nsp</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1807 d90132e1769 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1807 d90132e1772 ">
+                                 <p>element's namespace URI; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1817" headers="d90132e1766 "><pre class="oac_no_warn" dir="ltr">attrs</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1817 d90132e1769 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1817 d90132e1772 ">
+                                 <p><code class="codeph">NodeList</code> of element's attributes, or <code class="codeph">NULL</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-5AC14F8E-90FA-48A5-BB67-F9F7CE5D0C78__GUID-12BC571A-6426-441B-BB67-7061EC74F4E7">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-A398BD6A-744A-4338-A19C-1D1FE70AD3A1">XmlSaxStartElement()</a>, <a href="package-SAX-API.html#GUID-9F161C87-7121-4D79-B2AA-7C0E522B6202">XmlSaxEndElement()</a>, <a href="package-DOM-API.html#GUID-00B37FDA-E64D-4604-9566-CA56C0171508">XmlDomGetNodeMapLength()</a> and <a href="package-DOM-API.html#GUID-797CFDD4-5EAE-42F8-BA18-1DAC62B7D96F">XmlDomRemoveNamedItem()</a> in <a href="package-DOM-API.html#GUID-B2FDCC0D-9770-475E-BAD2-2E840583E545">   Package DOM APIs for C</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5956"></a><a id="CAXML5957"></a><a id="CAXML5955"></a><div class="props_rev_3"><a id="GUID-81D77B2B-8DB0-4E5B-862D-46ECEA41B4BE" name="GUID-81D77B2B-8DB0-4E5B-862D-46ECEA41B4BE"></a><h3 id="CAXML-GUID-81D77B2B-8DB0-4E5B-862D-46ECEA41B4BE" class="sect3"><span class="enumeration_section">7.16 </span>XmlSaxUnparsedEntityDecl()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Marks an unparsed entity declaration in the DTD, see <code class="codeph">XmlSaxParsedEntityDecl</code> for the parsed entity version. The unparsed entity's name, public ID, system ID, and notation name will all be in the data encoding.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxUnparsedEntityDecl(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *name, 
+&nbsp;&nbsp;&nbsp;oratext *pubId, 
+&nbsp;&nbsp;&nbsp;oratext *sysId, 
+&nbsp;&nbsp;&nbsp;oratext *note);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-81D77B2B-8DB0-4E5B-862D-46ECEA41B4BE__GUID-E94CFCD8-BE6B-4CBC-9919-093846D318D1">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e1923">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e1926">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e1929">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1934" headers="d90132e1923 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1934 d90132e1926 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1934 d90132e1929 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1944" headers="d90132e1923 "><pre class="oac_no_warn" dir="ltr">name</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1944 d90132e1926 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1944 d90132e1929 ">
+                                 <p>entity's name; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1954" headers="d90132e1923 "><pre class="oac_no_warn" dir="ltr">pubId</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1954 d90132e1926 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1954 d90132e1929 ">
+                                 <p>entity's public ID as data encoding, or <code class="codeph">NULL</code></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1966" headers="d90132e1923 "><pre class="oac_no_warn" dir="ltr">sysId</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1966 d90132e1926 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1966 d90132e1929 ">
+                                 <p>entity's system ID; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e1976" headers="d90132e1923 "><pre class="oac_no_warn" dir="ltr">note</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e1976 d90132e1926 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e1976 d90132e1929 ">
+                                 <p>entity's notation name; data encoding</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-81D77B2B-8DB0-4E5B-862D-46ECEA41B4BE__GUID-C68767E3-0199-4DDE-A606-9EA13B5B7D4B">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-92A86DFE-DDA6-48E4-B574-CD20690A020E">XmlSaxParsedEntityDecl()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5959"></a><a id="CAXML5960"></a><a id="CAXML5958"></a><div class="props_rev_3"><a id="GUID-328B677E-4081-40DA-9CB4-9205FD832FEE" name="GUID-328B677E-4081-40DA-9CB4-9205FD832FEE"></a><h3 id="CAXML-GUID-328B677E-4081-40DA-9CB4-9205FD832FEE" class="sect3"><span class="enumeration_section">7.17 </span>XmlSaxWhitespace()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks ignorable whitespace data such as newlines, and indentation between lines. The matching function is <code class="codeph">XmlSaxCharacters</code>, which receives notification of normal character data. The data is in the data encoding, and the returned length is in characters, not bytes.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxWhitespace(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *ch, 
+&nbsp;&nbsp;&nbsp;size_t len);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-328B677E-4081-40DA-9CB4-9205FD832FEE__GUID-A399F0F3-483E-4F85-8265-58E4973D2A80">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e2062">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e2065">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e2068">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e2073" headers="d90132e2062 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e2073 d90132e2065 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e2073 d90132e2068 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e2083" headers="d90132e2062 "><pre class="oac_no_warn" dir="ltr">ch</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e2083 d90132e2065 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e2083 d90132e2068 ">
+                                 <p>pointer to data; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e2093" headers="d90132e2062 "><pre class="oac_no_warn" dir="ltr">len</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e2093 d90132e2065 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e2093 d90132e2068 ">
+                                 <p>length of data, in characters</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-328B677E-4081-40DA-9CB4-9205FD832FEE__GUID-38C80023-EFF0-4C1A-852A-05C0BDF41B88">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="package-SAX-API.html#GUID-119B0F18-87E5-4754-BE4C-E0043436A9C8">XmlSaxCharacters()</a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="CAXML5962"></a><a id="CAXML5963"></a><a id="CAXML5961"></a><div class="props_rev_3"><a id="GUID-BBF07511-8918-483B-88EA-935FF49EF36D" name="GUID-BBF07511-8918-483B-88EA-935FF49EF36D"></a><h3 id="CAXML-GUID-BBF07511-8918-483B-88EA-935FF49EF36D" class="sect3"><span class="enumeration_section">7.18 </span>XmlSaxXmlDecl()
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This event marks an XML declaration. The <code class="codeph">XmlSaxStartDocument</code> event is always first; if this callback is registered and an <code class="codeph">XMLDecl</code> exists, it will be the second event. The encoding flag says whether an encoding was specified. Since the document's own encoding specification may be overridden (or wrong), and the input will be converted to the data encoding anyway, the actual encoding specified in the document is not provided. For the standalone flag, <code class="codeph">-1</code> will be returned if it was not specified, otherwise <code class="codeph">0</code> for <code class="codeph">FALSE</code>, 1 for <code class="codeph">TRUE</code>.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2">Syntax</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlSaxXmlDecl(
+&nbsp;&nbsp;&nbsp;void *ctx, 
+&nbsp;&nbsp;&nbsp;oratext *version, 
+&nbsp;&nbsp;&nbsp;boolean encoding, 
+&nbsp;&nbsp;&nbsp;sword standalone);</pre></div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-BBF07511-8918-483B-88EA-935FF49EF36D__GUID-B3A444D6-CA4A-42B5-AE22-19E3DEA7EFDC">
+                     <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d90132e2196">Parameter</th>
+                              <th align="left" valign="bottom" width="12%" id="d90132e2199">In/Out</th>
+                              <th align="left" valign="bottom" width="65%" id="d90132e2202">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e2207" headers="d90132e2196 "><pre class="oac_no_warn" dir="ltr">ctx</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e2207 d90132e2199 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e2207 d90132e2202 ">
+                                 <p>user's SAX context</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e2217" headers="d90132e2196 "><pre class="oac_no_warn" dir="ltr">version</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e2217 d90132e2199 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e2217 d90132e2202 ">
+                                 <p>version string from XMLDecl; data encoding</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e2227" headers="d90132e2196 "><pre class="oac_no_warn" dir="ltr">encoding</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e2227 d90132e2199 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e2227 d90132e2202 ">
+                                 <p>whether encoding was specified</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d90132e2237" headers="d90132e2196 "><pre class="oac_no_warn" dir="ltr">standalone</pre></td>
+                              <td align="left" valign="top" width="12%" headers="d90132e2237 d90132e2199 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                              <td align="left" valign="top" width="65%" headers="d90132e2237 d90132e2202 ">
+                                 <p>value of the standalone document; <code class="codeph">&lt; 0</code> if not specified
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section">
+                     <p class="subhead2">Returns</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p><code class="codeph">(xmlerr)</code> error code, <code class="codeph">XMLERR_OK [0]</code> for success
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

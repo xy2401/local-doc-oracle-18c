@@ -1,0 +1,1306 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Configuring Implicit Capture</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Replication Administrator’s Guide ">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Replication Administrator’s Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-replication-administrators-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T23:25:23-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2003, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83780-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="adding-to-an-oracle-streams-replication-environment.html" title="Previous" type="text/html">
+      <link rel="next" href="configuring-queues-and-propagations.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.isVersionOf" content="STREP">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="adding-to-an-oracle-streams-replication-environment.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="configuring-queues-and-propagations.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Replication Administrator’s Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="configuring-oracle-streams-replication.html" property="item" typeof="WebPage"><span property="name">    Configuring Oracle Streams Replication </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Configuring Implicit Capture</li>
+            </ol>
+            <a id="GUID-7EFBBD88-3B31-4F13-B62D-6F9761336C22" name="GUID-7EFBBD88-3B31-4F13-B62D-6F9761336C22"></a><a id="STREP204"></a>
+            
+            <h2 id="STREP-GUID-7EFBBD88-3B31-4F13-B62D-6F9761336C22" class="sect2"><span class="enumeration_chapter">5 </span> Configuring Implicit Capture
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d30644e100" class="indexterm-anchor"></a><a id="d30644e104" class="indexterm-anchor"></a><a id="d30644e106" class="indexterm-anchor"></a>Implicit capture means that a capture process or a synchronous capture captures and enqueues database changes automatically. A capture process captures changes in the redo log, while a synchronous capture captures data manipulation language (DML) changes with an internal mechanism. Both capture processes and synchronous captures reformat the captured changes into logical change records (LCRs) and enqueue the LCRs into an <code class="codeph">ANYDATA</code> queue.
+               </p>
+               <p>The following topics describe configuring implicit capture:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="configuring-implicit-capture.html#GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B">Configuring a Capture Process</a></p>
+                  </li>
+                  <li>
+                     <p><a href="configuring-implicit-capture.html#GUID-30D89F9D-C7E3-48FE-BF78-0CB98B983BB5">Configuring Synchronous Capture</a></p>
+                  </li>
+               </ul>
+               <p>Each task described in this chapter should be completed by an Oracle Streams administrator that has been granted the appropriate privileges, unless specified otherwise.</p>
+               <div class="infoboxnotealso" id="GUID-7EFBBD88-3B31-4F13-B62D-6F9761336C22__GUID-B77657D6-BC2A-4F7B-A679-E9E672483386">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS002"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about implicit capture
+                        </p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-EF5A403D-42E5-426D-B654-456E634F53B0">Configuring an Oracle Streams Administrator on All Databases</a>"</span></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STREP209"></a><div class="props_rev_3"><a id="GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B" name="GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B"></a><h3 id="STREP-GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B" class="sect3"><span class="enumeration_section">5.1 </span>Configuring a Capture Process
+               </h3>
+               <div>
+                  <p>You can create a capture process that captures changes either locally at the source database or remotely at a downstream database. A downstream capture process runs on a downstream database, and redo data from the source database is copied to the downstream database. A downstream capture process captures changes in the copied redo data at the downstream database.</p>
+                  <p>You can use any of the following procedures to create a local capture process:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS308"><code class="codeph">DBMS_STREAMS_ADM.ADD_TABLE_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS329"><code class="codeph">DBMS_STREAMS_ADM.ADD_SUBSET_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS309"><code class="codeph">DBMS_STREAMS_ADM.ADD_SCHEMA_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS310"><code class="codeph">DBMS_STREAMS_ADM.ADD_GLOBAL_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS311"><code class="codeph">DBMS_CAPTURE_ADM.CREATE_CAPTURE</code></a></p>
+                     </li>
+                  </ul>
+                  <p>Each of the procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package creates a capture process with the specified name if it does not already exist, creates either a positive rule set or negative rule set for the capture process if the capture process does not have such a rule set, and can add table rules, schema rules, or global rules to the rule set.
+                  </p>
+                  <p>The <code class="codeph">CREATE_CAPTURE</code> procedure creates a capture process, but does not create a rule set or rules for the capture process. However, the <code class="codeph">CREATE_CAPTURE</code> procedure enables you to specify an existing rule set to associate with the capture process, either as a positive or a negative rule set, a first SCN, and a start SCN for the capture process. Also, to create a capture process that performs downstream capture, you must use the <code class="codeph">CREATE_CAPTURE</code> procedure.
+                  </p>
+                  <p>The following sections describe configuring a capture process:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="configuring-implicit-capture.html#GUID-9B62501C-538F-4359-91B7-65910445C900">Preparing to Configure a Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-implicit-capture.html#GUID-85140369-6451-416C-ABD2-E16A80198F7D">Configuring a Local Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-implicit-capture.html#GUID-866E5607-FF31-4C42-BEF0-18BE14AECA50">Configuring a Downstream Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-implicit-capture.html#GUID-01104DA5-5B41-4A63-84EA-94D93A345189">After Configuring a Capture Process</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B__GUID-014C6699-F713-4177-92BD-D6EFE55D30D3">
+                     <p class="notep1">Note:</p>
+                     <p>When a capture process is started or restarted, it might need to scan redo log files with a <code class="codeph">FIRST_CHANGE#</code> value that is lower than start SCN. Removing required redo log files before they are scanned by a capture process causes the capture process to abort. You can query the <code class="codeph">DBA_CAPTURE</code> data dictionary view to determine the first SCN, start SCN, and required checkpoint SCN for a capture process. A capture process needs the redo log file that includes the required checkpoint SCN, and all subsequent redo log files. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS211"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about the first SCN and start SCN for a capture process.
+                     </p>
+                  </div>
+                  <div class="infoboxnote" id="GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B__GUID-C2F5E0BD-FE56-473D-81C8-827054E34D23">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>You can configure an entire Oracle Streams environment, including capture processes, using procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package or Oracle Enterprise Manager Cloud Control. See <a href="simple-oracle-streams-replication-configuration.html#GUID-19643DBA-4776-4A74-BC66-1979E6903E0A"> Simple Oracle Streams Replication Configuration</a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>After creating a capture process, avoid changing the <code class="codeph">DBID</code> or global name of the source database for the capture process. If you change either the <code class="codeph">DBID</code> or global name of the source database, then the capture process must be dropped and re-created. See <span class="q">"<a href="managing-oracle-streams-replication.html#GUID-15E7DA26-5E2C-4C0A-9626-6041C75E6E72">Changing the DBID or Global Name of a Source Database</a>"</span>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>To configure downstream capture, the source database must be an Oracle Database 10<span class="italic">g</span> Release 1 or later database.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STREP294"></a><div class="props_rev_3"><a id="GUID-9B62501C-538F-4359-91B7-65910445C900" name="GUID-9B62501C-538F-4359-91B7-65910445C900"></a><h4 id="STREP-GUID-9B62501C-538F-4359-91B7-65910445C900" class="sect4"><span class="enumeration_section">5.1.1 </span>Preparing to Configure a Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following tasks must be completed before you configure a capture process:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Complete the following tasks in <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-BB2E76CA-3645-4469-8750-4B276B8A955B">Tasks to Complete Before Configuring Oracle Streams Replication</a>"</span>.
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-EF5A403D-42E5-426D-B654-456E634F53B0">Configuring an Oracle Streams Administrator on All Databases</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-7867112D-DAC3-4693-811E-B1B1052C7847">Configuring Network Connectivity and Database Links</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-93BE3DA2-24EC-491A-811C-E32FD80D7809">Ensuring That Each Source Database Is In ARCHIVELOG Mode</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-F16B954D-35E0-422C-A89F-D3E170BD4505">Setting Initialization Parameters Relevant to Oracle Streams</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-E572258F-DEB4-4B0B-B29B-D196C7336112">Configuring the Oracle Streams Pool</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-12A4DC82-EEC7-4ACC-BF8F-8D82AA1D19DE">Specifying Supplemental Logging</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li>
+                              <p>If you plan to create a real-time or an archived-log downstream capture process that uses redo transport services to transfer archived redo log files to the downstream database automatically, then complete the steps in <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-CD6DB455-4D52-4CEF-B680-5A324E36BC5A">Configuring Log File Transfer to a Downstream Capture Database</a>"</span>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If you plan to create a real-time downstream capture process, then complete the steps in <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-4330E6AC-490D-438C-8A9D-D49DC7321BEE">Adding Standby Redo Logs for Real-Time Downstream Capture</a>"</span>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Create an <code class="codeph">ANYDATA</code> queue to associate with the capture process, if one does not exist. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span> for instructions. The examples in this chapter assume that the queue used by the capture process is <code class="codeph">strmadmin.streams_queue</code>. Create the queue on the same database that will run the capture process.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP295"></a><div class="props_rev_3"><a id="GUID-85140369-6451-416C-ABD2-E16A80198F7D" name="GUID-85140369-6451-416C-ABD2-E16A80198F7D"></a><h4 id="STREP-GUID-85140369-6451-416C-ABD2-E16A80198F7D" class="sect4"><span class="enumeration_section">5.1.2 </span>Configuring a Local Capture Process
+                  </h4>
+                  <div>
+                     <p>The following sections describe using the <code class="codeph">DBMS_STREAMS_ADM</code> package and the <code class="codeph">DBMS_CAPTURE_ADM</code> package to create a local capture process.
+                     </p>
+                     <p>This section contains the following examples:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="configuring-implicit-capture.html#GUID-C245E379-D914-4E09-AF29-52704B776A08">Configuring a Local Capture Process Using DBMS_STREAMS_ADM</a></p>
+                        </li>
+                        <li>
+                           <p><a href="configuring-implicit-capture.html#GUID-D413BFB6-0EED-4929-8F39-1BA3C1070486">Configuring a Local Capture Process Using DBMS_CAPTURE_ADM</a></p>
+                        </li>
+                        <li>
+                           <p><a href="configuring-implicit-capture.html#GUID-D4FA1FF4-2A22-437F-82BB-EDFF37C3E9D6">Configuring a Local Capture Process with Non-NULL Start SCN</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STREP296"></a><div class="props_rev_3"><a id="GUID-C245E379-D914-4E09-AF29-52704B776A08" name="GUID-C245E379-D914-4E09-AF29-52704B776A08"></a><h5 id="STREP-GUID-C245E379-D914-4E09-AF29-52704B776A08" class="sect5"><span class="enumeration_section">5.1.2.1 </span>Configuring a Local Capture Process Using DBMS_STREAMS_ADM
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To configure a local capture process using the <code class="codeph">DBMS_STREAMS_ADM</code> package, complete the following steps:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-capture.html#GUID-9B62501C-538F-4359-91B7-65910445C900">Preparing to Configure a Capture Process</a>"</span>.</span></li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the source database as the Oracle Streams administrator.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Run the <code class="codeph">ADD_TABLE_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create a local capture process:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name         =&gt; 'hr.employees',
+    streams_type       =&gt; 'capture',
+    streams_name       =&gt; 'strm01_capture',
+    queue_name         =&gt; 'strmadmin.streams_queue',
+    include_dml        =&gt; TRUE,
+    include_ddl        =&gt; TRUE,
+    include_tagged_lcr =&gt; FALSE,
+    source_database    =&gt; NULL,
+    inclusion_rule     =&gt; TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>Creates a capture process named <code class="codeph">strm01_capture</code>. The capture process is created only if it does not already exist. If a new capture process is created, then this procedure also sets the start SCN to the point in time of creation.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Associates the capture process with the existing queue <code class="codeph">strmadmin.streams_queue</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Creates a positive rule set and associates it with the capture process, if the capture process does not have a positive rule set. The rule set is a positive rule set because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>. The rule set uses the <code class="codeph">SYS.STREAMS$_EVALUATION_CONTEXT</code> evaluation context. The rule set name is system generated.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Creates two rules. One rule evaluates to <code class="codeph">TRUE</code> for data manipulation language (DML) changes to the <code class="codeph">hr.employees</code> table, and the other rule evaluates to <code class="codeph">TRUE</code> for data definition language (DDL) changes to the <code class="codeph">hr.employees</code> table. The rule names are system generated.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Adds the two rules to the positive rule set associated with the capture process. The rules are added to the positive rule set because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Specifies that the capture process captures a change in the redo log only if the change has a <code class="codeph">NULL</code> tag, because the <code class="codeph">include_tagged_lcr</code> parameter is set to&nbsp;<code class="codeph">FALSE</code>. This behavior is accomplished through the system-created rules for the capture process.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Creates a capture process that captures local changes to the source database because the <code class="codeph">source_database</code> parameter is set to <code class="codeph">NULL</code>. For a local capture process, you can also specify the global name of the local database for this parameter.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Prepares the <code class="codeph">hr.employees</code> table for instantiation.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Enables supplemental logging for any primary key, unique key, bitmap index, and foreign key columns in the <code class="codeph">hr.employees</code> table.
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>If necessary, complete the steps described in <span class="q">"<a href="configuring-implicit-capture.html#GUID-01104DA5-5B41-4A63-84EA-94D93A345189">After Configuring a Capture Process</a>"</span>.</span></li>
+                        </ol>
+                        <div class="section">
+                           <div class="infoboxnotealso" id="GUID-C245E379-D914-4E09-AF29-52704B776A08__GUID-41AA4AF9-88E1-4D82-BF9A-9B69CC3070D6">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS006"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about rules
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><a href="oracle-streams-tags.html#GUID-9339D29B-65F3-450B-B3CD-A7B4ADCA4AAF"> Oracle Streams Tags</a></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STREP297"></a><div class="props_rev_3"><a id="GUID-D413BFB6-0EED-4929-8F39-1BA3C1070486" name="GUID-D413BFB6-0EED-4929-8F39-1BA3C1070486"></a><h5 id="STREP-GUID-D413BFB6-0EED-4929-8F39-1BA3C1070486" class="sect5"><span class="enumeration_section">5.1.2.2 </span>Configuring a Local Capture Process Using DBMS_CAPTURE_ADM
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To configure a local capture process using the <code class="codeph">DBMS_CAPTURE_ADM</code> package, complete the following steps:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-capture.html#GUID-9B62501C-538F-4359-91B7-65910445C900">Preparing to Configure a Capture Process</a>"</span>.</span></li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the source database as the Oracle Streams administrator.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Create the rule set that will be used by the capture process if it does not exist. In this example, assume that the rule set is <code class="codeph">strmadmin.strm01_rule_set</code>. Optionally, you can also add rules to the rule set. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS012"><span class="italic">Oracle Streams Concepts and Administration</span></a> for instructions.</span></li>
+                           <li class="stepexpand"><span>Run the <code class="codeph">CREATE_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to create a local capture process:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.CREATE_CAPTURE(
+    queue_name         =&gt; 'strmadmin.streams_queue',
+    capture_name       =&gt; 'strm02_capture',
+    rule_set_name      =&gt; 'strmadmin.strm01_rule_set',
+    start_scn          =&gt; NULL,
+    source_database    =&gt; NULL,
+    first_scn          =&gt; NULL);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>Creates a capture process named <code class="codeph">strm02_capture</code>. A capture process with the same name must not exist.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Associates the capture process with the existing queue <code class="codeph">strmadmin.streams_queue</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Associates the capture process with the existing rule set <code class="codeph">strmadmin.strm01_rule_set</code>. This rule set is the positive rule set for the capture process.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Creates a capture process that captures local changes to the source database because the <code class="codeph">source_database</code> parameter is set to <code class="codeph">NULL</code>. For a local capture process, you can also specify the global name of the local database for this parameter.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Specifies that the Oracle database determines the start SCN and first SCN for the capture process because both the <code class="codeph">start_scn</code> parameter and the <code class="codeph">first_scn</code> parameter are set to <code class="codeph">NULL</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>If no other capture processes that capture local changes are running on the local database, then the <code class="codeph">BUILD</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package is run automatically. Running this procedure extracts the data dictionary to the redo log, and a LogMiner data dictionary is created when the capture process is started for the first time.
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>If necessary, complete the steps described in <span class="q">"<a href="configuring-implicit-capture.html#GUID-01104DA5-5B41-4A63-84EA-94D93A345189">After Configuring a Capture Process</a>"</span>.</span></li>
+                        </ol>
+                        <div class="section">
+                           <div class="infoboxnotealso" id="GUID-D413BFB6-0EED-4929-8F39-1BA3C1070486__GUID-8827DB8B-324E-49FC-B09B-5D25C6754A84">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS006"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about rules
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STREP298"></a><div class="props_rev_3"><a id="GUID-D4FA1FF4-2A22-437F-82BB-EDFF37C3E9D6" name="GUID-D4FA1FF4-2A22-437F-82BB-EDFF37C3E9D6"></a><h5 id="STREP-GUID-D4FA1FF4-2A22-437F-82BB-EDFF37C3E9D6" class="sect5"><span class="enumeration_section">5.1.2.3 </span>Configuring a Local Capture Process with Non-NULL Start SCN
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>This example runs the <code class="codeph">CREATE_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to create a local capture process with a start SCN set to <code class="codeph">223525</code>. This example assumes that there is at least one local capture process at the database, and that this capture process has taken at least one checkpoint. You can always specify a start SCN for a new capture process that is equal to or greater than the current SCN of the source database. To specify a start SCN that is lower than the current SCN of the database, the specified start SCN must be higher than the lowest first SCN for an existing local capture process that has been started successfully at least once and has taken at least one checkpoint. 
+                           </p>
+                           <p>You can determine the first SCN for existing capture processes, and whether these capture processes have taken a checkpoint, by running the following query:</p><pre class="oac_no_warn" dir="ltr">SELECT CAPTURE_NAME, FIRST_SCN, MAX_CHECKPOINT_SCN FROM DBA_CAPTURE;  
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">CAPTURE_NAME                    FIRST_SCN MAX_CHECKPOINT_SCN
+------------------------------ ---------- ------------------
+CAPTURE_SIMP                       223522             230825
+</pre><p>These results show that the <code class="codeph">capture_simp</code> capture process has a first SCN of <code class="codeph">223522</code>. Also, this capture process has taken a checkpoint because the <code class="codeph">MAX_CHECKPOINT_SCN</code> value is non-<code class="codeph">NULL</code>. Therefore, the start SCN for the new capture process can be set to <code class="codeph">223522</code> or higher.
+                           </p>
+                           <p>To configure a local capture process with a non-<code class="codeph">NULL</code> start SCN, complete the following steps:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-capture.html#GUID-9B62501C-538F-4359-91B7-65910445C900">Preparing to Configure a Capture Process</a>"</span>.</span></li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the source database as the Oracle Streams administrator.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Create the rule set that will be used by the capture process if it does not exist. In this example, assume that the rule set is <code class="codeph">strmadmin.strm01_rule_set</code>. Optionally, you can also add rules to the rule set. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS012"><span class="italic">Oracle Streams Concepts and Administration</span></a> for instructions.</span></li>
+                           <li class="stepexpand"><span>Run the following procedure to create the capture process:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.CREATE_CAPTURE(
+    queue_name         =&gt; 'strmadmin.streams_queue',
+    capture_name       =&gt; 'strm03_capture',
+    rule_set_name      =&gt; 'strmadmin.strm01_rule_set',
+    start_scn          =&gt; 223525,
+    source_database    =&gt; NULL,
+    first_scn          =&gt; NULL);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>Creates a capture process named <code class="codeph">strm03_capture</code>. A capture process with the same name must not exist.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Associates the capture process with the existing queue <code class="codeph">strmadmin.streams_queue</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Associates the capture process with the existing rule set <code class="codeph">strmadmin.strm01_rule_set</code>. This rule set is the positive rule set for the capture process.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Specifies <code class="codeph">223525</code> as the start SCN for the capture process. The new capture process uses the same LogMiner data dictionary as one of the existing capture processes. Oracle Streams automatically chooses which LogMiner data dictionary to share with the new capture process. Because the <code class="codeph">first_scn</code> parameter was set to <code class="codeph">NULL</code>, the first SCN for the new capture process is the same as the first SCN of the existing capture process whose LogMiner data dictionary was shared. In this example, the existing capture process is <code class="codeph">capture_simp</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Creates a capture process that captures local changes to the source database because the <code class="codeph">source_database</code> parameter is set to <code class="codeph">NULL</code>. For a local capture process, you can also specify the global name of the local database for this parameter.
+                                       </p>
+                                    </li>
+                                 </ul>
+                                 <div class="infoboxnote" id="GUID-D4FA1FF4-2A22-437F-82BB-EDFF37C3E9D6__GUID-2376A15A-B2C0-4A09-8889-162CAB815395">
+                                    <p class="notep1">Note:</p>
+                                    <p>If no local capture process exists when the procedure in this example is run, then the <code class="codeph">DBMS_CAPTURE_ADM.BUILD</code> procedure is run automatically during capture process creation to extract the data dictionary into the redo log. The first time the new capture process is started, it uses this redo data to create a LogMiner data dictionary. In this case, a specified <code class="codeph">start_scn</code> parameter value must be equal to or higher than the current database&nbsp;SCN.
+                                    </p>
+                                 </div>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>If necessary, complete the steps described in <span class="q">"<a href="configuring-implicit-capture.html#GUID-01104DA5-5B41-4A63-84EA-94D93A345189">After Configuring a Capture Process</a>"</span>.</span></li>
+                        </ol>
+                        <div class="section">
+                           <div class="infoboxnotealso" id="GUID-D4FA1FF4-2A22-437F-82BB-EDFF37C3E9D6__GUID-196327AD-3FFE-4A23-9398-A9F182F4F887">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS211"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS311"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about setting the <code class="codeph">first_scn</code> and <code class="codeph">start_scn</code> parameters in the <code class="codeph">CREATE_CAPTURE</code> procedure
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STREP299"></a><div class="props_rev_3"><a id="GUID-866E5607-FF31-4C42-BEF0-18BE14AECA50" name="GUID-866E5607-FF31-4C42-BEF0-18BE14AECA50"></a><h4 id="STREP-GUID-866E5607-FF31-4C42-BEF0-18BE14AECA50" class="sect4"><span class="enumeration_section">5.1.3 </span>Configuring a Downstream Capture Process
+                  </h4>
+                  <div>
+                     <p>This section describes configuring a real-time or archived-log downstream capture process.</p>
+                     <p>This section contains these topics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="configuring-implicit-capture.html#GUID-63942532-D305-4586-80FC-CC754FD37A93">Configuring a Real-Time Downstream Capture Process</a></p>
+                        </li>
+                        <li>
+                           <p><a href="configuring-implicit-capture.html#GUID-B3AC0900-A3B1-42A1-BE6F-A623F223835F">Configuring an Archived-Log Downstream Capture Process</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STREP207"></a><div class="props_rev_3"><a id="GUID-63942532-D305-4586-80FC-CC754FD37A93" name="GUID-63942532-D305-4586-80FC-CC754FD37A93"></a><h5 id="STREP-GUID-63942532-D305-4586-80FC-CC754FD37A93" class="sect5"><span class="enumeration_section">5.1.3.1 </span>Configuring a Real-Time Downstream Capture Process
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To create a capture process that performs downstream capture, you must use the <code class="codeph">CREATE_CAPTURE</code> procedure. The example in this section describes creating a real-time downstream capture process that uses a database link to the source database. However, a real-time downstream capture process might not use a database link.
+                           </p>
+                           <p>This example assumes the following:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The source database is <code class="codeph">dbs1.example.com</code> and the downstream database is <code class="codeph">dbs2.example.com</code>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The capture process that will be created at <code class="codeph">dbs2.example.com</code> uses the <code class="codeph">strmadmin.streams_queue</code>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The capture process will capture DML changes to the <code class="codeph">hr.departments</code> table.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>This section contains an example that runs the <code class="codeph">CREATE_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to create a real-time downstream capture process at the <code class="codeph">dbs2.example.com</code> downstream database that captures changes made to the <code class="codeph">dbs1.example.com</code> source database. The capture process in this example uses a database link to <code class="codeph">dbs1.example.com</code> for administrative purposes. The name of the database link must match the global name of the source database.
+                           </p>
+                           <div class="infoboxnote" id="GUID-63942532-D305-4586-80FC-CC754FD37A93__GUID-FF50A172-1338-408D-825B-CF901D0CD6D0">
+                              <p class="notep1">Note:</p>
+                              <p>You can configure multiple real-time downstream capture processes that captures changes from the same source database, but you cannot configure real-time downstream capture for multiple source databases at one downstream database.</p>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-63942532-D305-4586-80FC-CC754FD37A93__GUID-68AA7CB5-3029-496D-A80A-869153CFA3C2">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS129"><span class="italic">Oracle Streams Concepts and Administration</span></a> for conceptual information about real-time downstream capture
+                              </p>
+                           </div>
+                           <p>Complete the following steps:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-capture.html#GUID-9B62501C-538F-4359-91B7-65910445C900">Preparing to Configure a Capture Process</a>"</span>. Ensure that you complete the tasks <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-CD6DB455-4D52-4CEF-B680-5A324E36BC5A">Configuring Log File Transfer to a Downstream Capture Database</a>"</span> and <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-4330E6AC-490D-438C-8A9D-D49DC7321BEE">Adding Standby Redo Logs for Real-Time Downstream Capture</a>"</span>.</span></li>
+                           <li class="stepexpand"><span>In SQL*Plus, connect to the downstream database <code class="codeph">dbs2.example.com</code> as the Oracle Streams administrator.</span><div>
+                                 <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand" id="GUID-63942532-D305-4586-80FC-CC754FD37A93__BEHDFBDF"><span>Create the database link from <code class="codeph">dbs2.example.com</code> to <code class="codeph">dbs1.example.com</code>. For example, if the user <code class="codeph">strmadmin</code> is the Oracle Streams administrator on both databases, then create the following database link:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK dbs1.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY <span class="italic">password</span>
+   USING 'dbs1.example.com';
+</pre><p><a id="d30644e1775" class="indexterm-anchor"></a>This example assumes that an Oracle Streams administrator exists at the source database <code class="codeph">dbs1.example.com</code>. If no Oracle Streams administrator exists at the source database, then the Oracle Streams administrator at the downstream database should connect to a user who allows remote access by an Oracle Streams administrator. You can enable remote access for a user by specifying the user as the grantee when you run the <code class="codeph">GRANT_REMOTE_ADMIN_ACCESS</code> procedure in the <code class="codeph">DBMS_STREAMS_AUTH</code> package at the source database.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Run the <code class="codeph">CREATE_CAPTURE</code> procedure to create the capture process:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.CREATE_CAPTURE(
+    queue_name         =&gt; 'strmadmin.streams_queue',
+    capture_name       =&gt; 'real_time_capture',
+    rule_set_name      =&gt; NULL,
+    start_scn          =&gt; NULL,
+    source_database    =&gt; 'dbs1.example.com',
+    use_database_link  =&gt; TRUE,
+    first_scn          =&gt; NULL,
+    logfile_assignment =&gt; 'implicit');
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>Creates a capture process named <code class="codeph">real_time_capture</code> at the downstream database <code class="codeph">dbs2.example.com</code>. A capture process with the same name must not exist.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Associates the capture process with an existing queue on <code class="codeph">dbs2.example.com</code> named <code class="codeph">streams_queue</code> and owned by <code class="codeph">strmadmin</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Specifies that the source database of the changes that the capture process will capture is <code class="codeph">dbs1.example.com</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Specifies that the capture process uses a database link with the same name as the source database global name to perform administrative actions at the source database.</p>
+                                    </li>
+                                    <li>
+                                       <p>Specifies that the capture process accepts redo data implicitly from <code class="codeph">dbs1.example.com</code>. Therefore, the capture process scans the standby redo log at <code class="codeph">dbs2.example.com</code> for changes that it must capture. If the capture process falls behind, then it scans the archived redo log files written from the standby redo log.
+                                       </p>
+                                    </li>
+                                 </ul>
+                                 <p>This step does not associate the capture process <code class="codeph">real_time_capture</code> with any rule set. A rule set will be created and associated with the capture process in a later step.
+                                 </p>
+                                 <p>If no other capture process at <code class="codeph">dbs2.example.com</code> is capturing changes from the <code class="codeph">dbs1.example.com</code> source database, then the <code class="codeph">DBMS_CAPTURE_ADM.BUILD</code> procedure is run automatically at <code class="codeph">dbs1.example.com</code> using the database link. Running this procedure extracts the data dictionary at <code class="codeph">dbs1.example.com</code> to the redo log, and a LogMiner data dictionary for <code class="codeph">dbs1.example.com</code> is created at <code class="codeph">dbs2.example.com</code> when the capture process <code class="codeph">real_time_capture</code> is started for the first time at <code class="codeph">dbs2.example.com</code>.
+                                 </p>
+                                 <p>If multiple capture processes at <code class="codeph">dbs2.example.com</code> are capturing changes from the <code class="codeph">dbs1.example.com</code> source database, then the new capture process <code class="codeph">real_time_capture</code> uses the same LogMiner data dictionary for <code class="codeph">dbs1.example.com</code> as one of the existing archived-log capture process. Oracle Streams automatically chooses which LogMiner data dictionary to share with the new capture process.
+                                 </p>
+                                 <div class="infoboxnote" id="GUID-63942532-D305-4586-80FC-CC754FD37A93__GUID-F8554485-C3FB-4C29-ABE6-1249C7E638FA">
+                                    <p class="notep1">Note:</p>
+                                    <p>During the creation of a downstream capture process, if the <code class="codeph">first_scn</code> parameter is set to <code class="codeph">NULL</code> in the <code class="codeph">CREATE_CAPTURE</code> procedure, then the <code class="codeph">use_database_link</code> parameter must be set to <code class="codeph">TRUE</code>. Otherwise, an error is raised.
+                                    </p>
+                                 </div>
+                                 <div class="infoboxnotealso" id="GUID-63942532-D305-4586-80FC-CC754FD37A93__GUID-BF237CDB-2164-492A-8DD6-8C4ABBE8D854">
+                                    <p class="notep1">See Also:</p>
+                                    <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS123"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about SCN values related to a capture process
+                                    </p>
+                                 </div>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Set the <code class="codeph">downstream_real_time_mine</code> capture process parameter to <code class="codeph">Y</code>:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.SET_PARAMETER(
+    capture_name =&gt; 'real_time_capture',
+    parameter    =&gt; 'downstream_real_time_mine',
+    value        =&gt; 'Y');
+END;
+/
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Create the positive rule set for the capture process and add a rule to it:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name          =&gt;  'hr.departments',
+    streams_type        =&gt;  'capture',
+    streams_name        =&gt;  'real_time_capture',
+    queue_name          =&gt;  'strmadmin.streams_queue',
+    include_dml         =&gt;  TRUE,
+    include_ddl         =&gt;  FALSE,
+    include_tagged_lcr  =&gt;  FALSE,
+    source_database     =&gt;  'dbs1.example.com',
+    inclusion_rule      =&gt;  TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>Creates a rule set at <code class="codeph">dbs2.example.com</code> for capture process <code class="codeph">real_time_capture</code>. The rule set has a system-generated name. The rule set is the positive rule set for the capture process because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Creates a rule that captures data manipulation language (DML) changes to the <code class="codeph">hr.departments</code> table, and adds the rule to the positive rule set for the capture process. The rule has a system-generated name. The rule is added to the positive rule set for the capture process because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Prepares the <code class="codeph">hr.departments</code> table at <code class="codeph">dbs1.example.com</code> for instantiation using the database link created in Step <a href="configuring-implicit-capture.html#GUID-63942532-D305-4586-80FC-CC754FD37A93__BEHDFBDF">3</a>.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>Enables supplemental logging for any primary key, unique key, bitmap index, and foreign key columns in the table at <code class="codeph">dbs1.example.com</code>.
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Connect to the source database <code class="codeph">dbs1.example.com</code> as an administrative user with the necessary privileges to switch log files.</span></li>
+                           <li class="stepexpand"><span>Archive the current log file at the source database:</span><div><pre class="oac_no_warn" dir="ltr">ALTER SYSTEM ARCHIVE LOG CURRENT;
+</pre><p>Archiving the current log file at the source database starts real time mining of the source database redo log.</p>
+                                 <p>If the capture process appears to be waiting for redo data for an inordinately long time, then check the alert log for errors. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS1036"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information.
+                                 </p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>If necessary, complete the steps described in <span class="q">"<a href="configuring-implicit-capture.html#GUID-01104DA5-5B41-4A63-84EA-94D93A345189">After Configuring a Capture Process</a>"</span>.</span></li>
+                        </ol>
+                     </div>
+                  </div><a id="STREP300"></a><div class="props_rev_3"><a id="GUID-B3AC0900-A3B1-42A1-BE6F-A623F223835F" name="GUID-B3AC0900-A3B1-42A1-BE6F-A623F223835F"></a><h5 id="STREP-GUID-B3AC0900-A3B1-42A1-BE6F-A623F223835F" class="sect5"><span class="enumeration_section">5.1.3.2 </span>Configuring an Archived-Log Downstream Capture Process
+                     </h5>
+                     <div>
+                        <p>This section describes configuring an archived-log downstream capture process that either assigns log files implicitly or explicitly.</p>
+                        <p>This section contains these topics:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="configuring-implicit-capture.html#GUID-F746E948-84AF-460C-968A-4D151C6011F9">Configuring an Archived-Log Downstream Capture Process that Assigns Logs Implicitly</a></p>
+                           </li>
+                           <li>
+                              <p><a href="configuring-implicit-capture.html#GUID-703A6E9E-C777-4198-ABEC-82A243C1F272">Configuring an Archived-Log Downstream Capture Process that Assigns Logs Explicitly</a></p>
+                           </li>
+                        </ul>
+                     </div><a id="STREP301"></a><div class="props_rev_3"><a id="GUID-F746E948-84AF-460C-968A-4D151C6011F9" name="GUID-F746E948-84AF-460C-968A-4D151C6011F9"></a><h6 id="STREP-GUID-F746E948-84AF-460C-968A-4D151C6011F9" class="sect6"><span class="enumeration_section">5.1.3.2.1 </span>Configuring an Archived-Log Downstream Capture Process that Assigns Logs Implicitly
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>To create a capture process that performs downstream capture, you must use the <code class="codeph">CREATE_CAPTURE</code> procedure. The example in this section describes creating an archived-log downstream capture process that uses a database link to the source database for administrative purposes. The name of the database link must match the global name of the source database. 
+                              </p>
+                              <p>This example assumes the following:</p>
+                           </div>
+                           <!-- class="section" -->
+                           <div class="section">
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The source database is <code class="codeph">dbs1.example.com</code> and the downstream database is <code class="codeph">dbs2.example.com</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The capture process that will be created at <code class="codeph">dbs2.example.com</code> uses the <code class="codeph">streams_queue</code> owned by <code class="codeph">strmadmin</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The capture process will capture data manipulation language (DML) changes made to the <code class="codeph">hr.departments</code> table at <code class="codeph">dbs1.example.com</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The capture process assigns log files implicitly. That is, the downstream capture process automatically scans all redo log files added by redo transport services or added manually from the source database to the downstream database.</p>
+                                 </li>
+                              </ul>
+                              <p>Complete the following steps: </p>
+                           </div>
+                           <!-- class="section" -->
+                           <ol>
+                              <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-capture.html#GUID-9B62501C-538F-4359-91B7-65910445C900">Preparing to Configure a Capture Process</a>"</span>. Ensure that you complete the task <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-CD6DB455-4D52-4CEF-B680-5A324E36BC5A">Configuring Log File Transfer to a Downstream Capture Database</a>"</span>.</span></li>
+                              <li class="stepexpand"><span>In SQL*Plus, connect to the downstream database <code class="codeph">dbs2.example.com</code> as the Oracle Streams administrator.</span><div>
+                                    <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>Create the database link from <code class="codeph">dbs2.example.com</code> to <code class="codeph">dbs1.example.com</code>. For example, if the user <code class="codeph">strmadmin</code> is the Oracle Streams administrator on both databases, then create the following database link:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DATABASE LINK dbs1.example.com CONNECT TO strmadmin
+   IDENTIFIED BY <span class="italic">password</span>
+   USING 'dbs1.example.com';
+</pre><p><a id="d30644e2316" class="indexterm-anchor"></a>This example assumes that an Oracle Streams administrator exists at the source database <code class="codeph">dbs1.example.com</code>. If no Oracle Streams administrator exists at the source database, then the Oracle Streams administrator at the downstream database should connect to a user who allows remote access by an Oracle Streams administrator. You can enable remote access for a user by specifying the user as the grantee when you run the <code class="codeph">GRANT_REMOTE_ADMIN_ACCESS</code> procedure in the <code class="codeph">DBMS_STREAMS_AUTH</code> package at the source database.
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>Run the <code class="codeph">CREATE_CAPTURE</code> procedure to create the capture process:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.CREATE_CAPTURE(
+    queue_name         =&gt; 'strmadmin.streams_queue',
+    capture_name       =&gt; 'strm04_capture',
+    rule_set_name      =&gt; NULL,
+    start_scn          =&gt; NULL,
+    source_database    =&gt; 'dbs1.example.com',
+    use_database_link  =&gt; TRUE,
+    first_scn          =&gt; NULL,
+    logfile_assignment =&gt; 'implicit');
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                    <ul style="list-style-type: disc;">
+                                       <li>
+                                          <p>Creates a capture process named <code class="codeph">strm04_capture</code> at the downstream database <code class="codeph">dbs2.example.com</code>. A capture process with the same name must not exist.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Associates the capture process with an existing queue on <code class="codeph">dbs2.example.com</code> named <code class="codeph">streams_queue</code> and owned by <code class="codeph">strmadmin</code>.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Specifies that the source database of the changes that the capture process will capture is <code class="codeph">dbs1.example.com</code>.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Specifies that the capture process accepts new redo log files implicitly from <code class="codeph">dbs1.example.com</code>. Therefore, the capture process scans any new log files copied from <code class="codeph">dbs1.example.com</code> to <code class="codeph">dbs2.example.com</code> for changes that it must capture.
+                                          </p>
+                                       </li>
+                                    </ul>
+                                    <p>This step does not associate the capture process <code class="codeph">strm04_capture</code> with any rule set. A rule set will be created and associated with the capture process in the next step.
+                                    </p>
+                                    <p>If no other capture process at <code class="codeph">dbs2.example.com</code> is capturing changes from the <code class="codeph">dbs1.example.com</code> source database, then the <code class="codeph">DBMS_CAPTURE_ADM.BUILD</code> procedure is run automatically at <code class="codeph">dbs1.example.com</code> using the database link. Running this procedure extracts the data dictionary at <code class="codeph">dbs1.example.com</code> to the redo log, and a LogMiner data dictionary for <code class="codeph">dbs1.example.com</code> is created at <code class="codeph">dbs2.example.com</code> when the capture process is started for the first time at <code class="codeph">dbs2.example.com</code>.
+                                    </p>
+                                    <p>If multiple capture processes at <code class="codeph">dbs2.example.com</code> are capturing changes from the <code class="codeph">dbs1.example.com</code> source database, then the new capture process uses the same LogMiner data dictionary for <code class="codeph">dbs1.example.com</code> as one of the existing capture process. Oracle Streams automatically chooses which LogMiner data dictionary to share with the new capture process.
+                                    </p>
+                                    <div class="infoboxnote" id="GUID-F746E948-84AF-460C-968A-4D151C6011F9__GUID-801E5005-4990-4620-9951-123F2018232E">
+                                       <p class="notep1">Note:</p>
+                                       <p>During the creation of a downstream capture process, if the <code class="codeph">first_scn</code> parameter is set to <code class="codeph">NULL</code> in the <code class="codeph">CREATE_CAPTURE</code> procedure, then the <code class="codeph">use_database_link</code> parameter must be set to <code class="codeph">TRUE</code>. Otherwise, an error is raised.
+                                       </p>
+                                    </div>
+                                    <div class="infoboxnotealso" id="GUID-F746E948-84AF-460C-968A-4D151C6011F9__GUID-2B581F81-35EA-444D-AB94-6E12F8E1FAFD">
+                                       <p class="notep1">See Also:</p>
+                                       <p></p>
+                                       <ul style="list-style-type: disc;">
+                                          <li>
+                                             <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS211"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                                          </li>
+                                          <li>
+                                             <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=SQLRF00802"><span class="italic">Oracle Database SQL Language Reference </span></a>for more information about the <code class="codeph">ALTER</code> <code class="codeph">DATABASE</code> statement
+                                             </p>
+                                          </li>
+                                          <li>
+                                             <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=SBYDB"><span class="italic">Oracle Data Guard Concepts and Administration </span></a>for more information registering redo log files
+                                             </p>
+                                          </li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>Create the positive rule set for the capture process and add a rule to it:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name          =&gt;  'hr.departments',
+    streams_type        =&gt;  'capture',
+    streams_name        =&gt;  'strm04_capture',
+    queue_name          =&gt;  'strmadmin.streams_queue',
+    include_dml         =&gt;  TRUE,
+    include_ddl         =&gt;  FALSE,
+    include_tagged_lcr  =&gt;  FALSE,
+    source_database     =&gt;  'dbs1.example.com',
+    inclusion_rule      =&gt;  TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                    <ul style="list-style-type: disc;">
+                                       <li>
+                                          <p>Creates a rule set at <code class="codeph">dbs2.example.com</code> for capture process <code class="codeph">strm04_capture</code>. The rule set has a system-generated name. The rule set is a positive rule set for the capture process because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Creates a rule that captures DML changes to the <code class="codeph">hr.departments</code> table, and adds the rule to the rule set for the capture process. The rule has a system-generated name. The rule is added to the positive rule set for the capture process because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                          </p>
+                                       </li>
+                                    </ul>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>If necessary, complete the steps described in <span class="q">"<a href="configuring-implicit-capture.html#GUID-01104DA5-5B41-4A63-84EA-94D93A345189">After Configuring a Capture Process</a>"</span>.</span></li>
+                           </ol>
+                        </div>
+                     </div><a id="STREP302"></a><div class="props_rev_3"><a id="GUID-703A6E9E-C777-4198-ABEC-82A243C1F272" name="GUID-703A6E9E-C777-4198-ABEC-82A243C1F272"></a><h6 id="STREP-GUID-703A6E9E-C777-4198-ABEC-82A243C1F272" class="sect6"><span class="enumeration_section">5.1.3.2.2 </span>Configuring an Archived-Log Downstream Capture Process that Assigns Logs Explicitly
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>To create a capture process that performs downstream capture, you must use the <code class="codeph">CREATE_CAPTURE</code> procedure. This section describes creating an archived-log downstream capture process that assigns redo log files explicitly. That is, you must use the <code class="codeph">DBMS_FILE_TRANSFER</code> package, FTP, or some other method to transfer redo log files from the source database to the downstream database, and then you must register these redo log files with the downstream capture process manually.
+                              </p>
+                              <p>In this example, assume the following:</p>
+                           </div>
+                           <!-- class="section" -->
+                           <div class="section">
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The source database is <code class="codeph">dbs1.example.com</code> and the downstream database is <code class="codeph">dbs2.example.com</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The capture process that will be created at <code class="codeph">dbs2.example.com</code> uses the <code class="codeph">streams_queue</code> owned by <code class="codeph">strmadmin</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The capture process will capture data manipulation language (DML) changes made to the <code class="codeph">hr.departments</code> table at <code class="codeph">dbs1.example.com</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The capture process does not use a database link to the source database for administrative actions.</p>
+                                 </li>
+                              </ul>
+                              <p>Complete the following steps:</p>
+                           </div>
+                           <!-- class="section" -->
+                           <ol>
+                              <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-capture.html#GUID-9B62501C-538F-4359-91B7-65910445C900">Preparing to Configure a Capture Process</a>"</span>. Because in this example you are transferring and registering archived redo log files explicitly at the downstream database, you do not need to complete the task <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-CD6DB455-4D52-4CEF-B680-5A324E36BC5A">Configuring Log File Transfer to a Downstream Capture Database</a>"</span>.</span></li>
+                              <li class="stepexpand"><span>In SQL*Plus, connect to the source database <code class="codeph">dbs1.example.com</code> as the Oracle Streams administrator.</span><div>
+                                    <p>If you do not use a database link from the downstream database to the source database, then an Oracle Streams administrator must exist at the source database.</p>
+                                    <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="stepexpand" id="GUID-703A6E9E-C777-4198-ABEC-82A243C1F272__i1012036"><span>If there is no capture process at <code class="codeph">dbs2.example.com</code> that captures changes from <code class="codeph">dbs1.example.com</code>, then perform a build of the <code class="codeph">dbs1.example.com</code> data dictionary in the redo log. This step is optional if a capture process at <code class="codeph">dbs2.example.com</code> is already configured to capture changes from the <code class="codeph">dbs1.example.com</code> source database.</span><div><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON
+DECLARE
+  scn  NUMBER;
+BEGIN
+  DBMS_CAPTURE_ADM.BUILD(
+    first_scn =&gt; scn);
+  DBMS_OUTPUT.PUT_LINE('First SCN Value = ' || scn);
+END;
+/
+First SCN Value = 409391
+</pre><p>This procedure displays the valid first SCN value for the capture process that will be created at <code class="codeph">dbs2.example.com</code>. Make a note of the SCN value returned because you will use it when you create the capture process at <code class="codeph">dbs2.example.com</code>. 
+                                    </p>
+                                    <p>If you run this procedure to build the data dictionary in the redo log, then when the capture process is first started at <code class="codeph">dbs2.example.com</code>, it will create a LogMiner data dictionary using the data dictionary information in the redo log.
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>Prepare the <code class="codeph">hr.departments</code> table for instantiation:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.PREPARE_TABLE_INSTANTIATION(
+     table_name           =&gt;  'hr.departments',
+     supplemental_logging =&gt;  'keys');
+END;
+/
+</pre><p>Primary key supplemental logging is required for the <code class="codeph">hr.departments</code> table because this example creates a capture processes that captures changes to this table. Specifying <code class="codeph">keys</code> for the <code class="codeph">supplemental_logging</code> parameter in the <code class="codeph">PREPARE_TABLE_INSTANTIATION</code> procedure enables supplemental logging for any primary key, unique key, bitmap index, and foreign key columns in the table.
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>Determine the current SCN of the source database:</span><div><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON SIZE 1000000
+
+DECLARE
+  iscn  NUMBER;         -- Variable to hold instantiation SCN value
+BEGIN
+  iscn := DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER();
+  DBMS_OUTPUT.PUT_LINE('Current SCN: ' || iscn);
+END;
+/
+</pre><p>You can use the returned SCN as the instantiation SCN for destination databases that will apply changes to the <code class="codeph">hr.departments</code> table that were captured by the capture process being created. In this example, assume the returned SCN is <code class="codeph">1001656</code>.
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>Connect to the downstream database <code class="codeph">dbs2.example.com</code> as the Oracle Streams administrator.</span></li>
+                              <li class="stepexpand"><span>Run the <code class="codeph">CREATE_CAPTURE</code> procedure to create the capture process and specify the value obtained in Step <a href="configuring-implicit-capture.html#GUID-703A6E9E-C777-4198-ABEC-82A243C1F272__i1012036">3</a> for the <code class="codeph">first_scn</code> parameter:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.CREATE_CAPTURE(
+    queue_name         =&gt; 'strmadmin.streams_queue',
+    capture_name       =&gt; 'strm05_capture',
+    rule_set_name      =&gt; NULL,
+    start_scn          =&gt; NULL,
+    source_database    =&gt; 'dbs1.example.com',
+    use_database_link  =&gt; FALSE,
+    first_scn          =&gt; 409391, -- Use value from Step <a href="configuring-implicit-capture.html#GUID-703A6E9E-C777-4198-ABEC-82A243C1F272__i1012036">3</a>
+    logfile_assignment =&gt; 'explicit');
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                    <ul style="list-style-type: disc;">
+                                       <li>
+                                          <p>Creates a capture process named <code class="codeph">strm05_capture</code> at the downstream database <code class="codeph">dbs2.example.com</code>. A capture process with the same name must not exist.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Associates the capture process with an existing queue on <code class="codeph">dbs2.example.com</code> named <code class="codeph">streams_queue</code> and owned by <code class="codeph">strmadmin</code>.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Specifies that the source database of the changes that the capture process will capture is <code class="codeph">dbs1.example.com</code>.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Specifies that the first SCN for the capture process is <code class="codeph">409391</code>. This value was obtained in Step <a href="configuring-implicit-capture.html#GUID-703A6E9E-C777-4198-ABEC-82A243C1F272__i1012036">3</a>. The first SCN is the lowest SCN for which a capture process can capture changes. Because a first SCN is specified, the capture process creates a new LogMiner data dictionary when it is first started, regardless of whether there are existing LogMiner data dictionaries for the same source database.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Specifies that new redo log files from <code class="codeph">dbs1.example.com</code> must be assigned to the capture process explicitly. After a redo log file has been transferred to the computer running the downstream database, you assign the log file to the capture process explicitly using the following statement:
+                                          </p><pre class="oac_no_warn" dir="ltr">ALTER DATABASE REGISTER LOGICAL LOGFILE <span class="italic">file_name</span> FOR <span class="italic">capture_process</span>;
+</pre><p>Here, <span class="italic"><code class="codeph">file_name</code></span> is the name of the redo log file and <span class="italic"><code class="codeph">capture_process</code></span> is the name of the capture process that will use the redo log file at the downstream database. You must add redo log files manually if the <code class="codeph">logfile_assignment</code> parameter is set to <code class="codeph">explicit</code>.
+                                          </p>
+                                       </li>
+                                    </ul>
+                                    <p>This step does not associate the capture process <code class="codeph">strm05_capture</code> with any rule set. A rule set will be created and associated with the capture process in the next step.
+                                    </p>
+                                    <div class="infoboxnotealso" id="GUID-703A6E9E-C777-4198-ABEC-82A243C1F272__GUID-9537BE0A-5ED8-42AB-BC4B-AFEB920A531E">
+                                       <p class="notep1">See Also:</p>
+                                       <p></p>
+                                       <ul style="list-style-type: disc;">
+                                          <li>
+                                             <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS123"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about SCN values related to a capture process
+                                             </p>
+                                          </li>
+                                          <li>
+                                             <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=SQLRF00802"><span class="italic">Oracle Database SQL Language Reference </span></a>for more information about the <code class="codeph">ALTER</code> <code class="codeph">DATABASE</code> statement
+                                             </p>
+                                          </li>
+                                          <li>
+                                             <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=SBYDB"><span class="italic">Oracle Data Guard Concepts and Administration </span></a>for more information registering redo log files
+                                             </p>
+                                          </li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>Create the positive rule set for the capture process and add a rule to it:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name          =&gt;  'hr.departments',
+    streams_type        =&gt;  'capture',
+    streams_name        =&gt;  'strm05_capture',
+    queue_name          =&gt;  'strmadmin.streams_queue',
+    include_dml         =&gt;  TRUE,
+    include_ddl         =&gt;  FALSE,
+    include_tagged_lcr  =&gt;  FALSE,
+    source_database     =&gt;  'dbs1.example.com',
+    inclusion_rule      =&gt;  TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                                    <ul style="list-style-type: disc;">
+                                       <li>
+                                          <p>Creates a rule set at <code class="codeph">dbs2.example.com</code> for capture process <code class="codeph">strm05_capture</code>. The rule set has a system-generated name. The rule set is a positive rule set for the capture process because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                          </p>
+                                       </li>
+                                       <li>
+                                          <p>Creates a rule that captures DML changes to the <code class="codeph">hr.departments</code> table, and adds the rule to the rule set for the capture process. The rule has a system-generated name. The rule is added to the positive rule set for the capture process because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                          </p>
+                                       </li>
+                                    </ul>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>After the redo log file at the source database <code class="codeph">dbs1.example.com</code> that contains the first SCN for the downstream capture process is archived, transfer the archived redo log file to the computer running the downstream database. The <code class="codeph">BUILD</code> procedure in Step <a href="configuring-implicit-capture.html#GUID-703A6E9E-C777-4198-ABEC-82A243C1F272__i1012036">3</a> determined the first SCN for the downstream capture process. If the redo log file is not yet archived, then you can run the <code class="codeph">ALTER</code> <code class="codeph">SYSTEM</code> <code class="codeph">SWITCH</code> <code class="codeph">LOGFILE</code> statement on the database to archive it.</span><div>
+                                    <p>You can run the following query at <code class="codeph">dbs1.example.com</code> to identify the archived redo log file that contains the first SCN for the downstream capture process:
+                                    </p><pre class="oac_no_warn" dir="ltr">COLUMN NAME HEADING 'Archived Redo Log|File Name' FORMAT A50
+COLUMN FIRST_CHANGE# HEADING 'First SCN' FORMAT 999999999
+
+SELECT NAME, FIRST_CHANGE# FROM V$ARCHIVED_LOG
+  WHERE FIRST_CHANGE# IS NOT NULL AND DICTIONARY_BEGIN = 'YES';</pre><pre class="oac_no_warn" dir="ltr"></pre><p>Transfer the archived redo log file with a <code class="codeph">FIRST_CHANGE#</code> that matches the first SCN returned in Step <a href="configuring-implicit-capture.html#GUID-703A6E9E-C777-4198-ABEC-82A243C1F272__i1012036">3</a> to the computer running the downstream capture process.
+                                    </p>
+                                 </div>
+                              </li>
+                              <li class="stepexpand"><span>Connect to the downstream database <code class="codeph">dbs2.example.com</code> as an administrative user.</span></li>
+                              <li class="stepexpand"><span>Assign the transferred redo log file to the capture process. For example, if the redo log file is <code class="codeph">/oracle/logs_from_dbs1/1_10_486574859.dbf</code>, then issue the following statement:</span><div><pre class="oac_no_warn" dir="ltr">ALTER DATABASE REGISTER LOGICAL LOGFILE 
+   '/oracle/logs_from_dbs1/1_10_486574859.dbf' FOR 'strm05_capture';
+</pre></div>
+                              </li>
+                              <li class="stepexpand"><span>If necessary, complete the steps described in <span class="q">"<a href="configuring-implicit-capture.html#GUID-01104DA5-5B41-4A63-84EA-94D93A345189">After Configuring a Capture Process</a>"</span>.</span></li>
+                           </ol>
+                        </div>
+                     </div>
+                  </div>
+               </div><a id="STREP303"></a><div class="props_rev_3"><a id="GUID-01104DA5-5B41-4A63-84EA-94D93A345189" name="GUID-01104DA5-5B41-4A63-84EA-94D93A345189"></a><h4 id="STREP-GUID-01104DA5-5B41-4A63-84EA-94D93A345189" class="sect4"><span class="enumeration_section">5.1.4 </span>After Configuring a Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>If you plan to configure propagations and apply processes that process logical change records (LCRs) captured by the new capture process, then perform the configuration in the following order:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li><span>Create all of the queues that will be required propagations and apply processes in the replication environment. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span>.</span></li>
+                        <li><span>Create all of the propagations that will propagate LCRs captured by the new capture process. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9">Creating Oracle Streams Propagations Between ANYDATA Queues</a>"</span>.</span></li>
+                        <li><span>Create all of the apply processes that will dequeue and process LCRs captured by the new capture process. See <a href="configuring-implicit-apply.html#GUID-7D393976-B22F-4CF1-901E-62451DEB64DB"> Configuring Implicit Apply</a>. Configure each apply process to apply captured LCRs.</span></li>
+                        <li><span>Instantiate the tables for which the new capture process captures changes at all destination databases. See <a href="instantiation-and-oracle-streams-replication.html#GUID-003967CE-08B9-439C-902F-45E7B7C37371"> Instantiation and Oracle Streams Replication</a> for detailed information about instantiation.</span></li>
+                        <li><span>Use the <code class="codeph">START_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package to start the apply processes that will process LCRs captured by the new capture process.</span></li>
+                        <li><span>Use the <code class="codeph">START_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to start the new capture process.</span></li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnote" id="GUID-01104DA5-5B41-4A63-84EA-94D93A345189__GUID-559F077D-60FB-4C21-8B50-6784B8FF1E91">
+                           <p class="notep1">Note:</p>
+                           <p>Other configuration steps might be required for your Oracle Streams environment. For example, some Oracle Streams environments include transformations, apply handlers, and conflict resolution.</p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STREP208"></a><div class="props_rev_3"><a id="GUID-30D89F9D-C7E3-48FE-BF78-0CB98B983BB5" name="GUID-30D89F9D-C7E3-48FE-BF78-0CB98B983BB5"></a><h3 id="STREP-GUID-30D89F9D-C7E3-48FE-BF78-0CB98B983BB5" class="sect3"><span class="enumeration_section">5.2 </span>Configuring Synchronous Capture
+               </h3>
+               <div>
+                  <p>You can use any of the following procedures to create a synchronous capture:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS308"><code class="codeph">DBMS_STREAMS_ADM.ADD_TABLE_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS329"><code class="codeph">DBMS_STREAMS_ADM.ADD_SUBSET_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS302"><code class="codeph">DBMS_CAPTURE_ADM.CREATE_SYNC_CAPTURE</code></a></p>
+                     </li>
+                  </ul>
+                  <p>Both of the procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package create a synchronous capture with the specified name if it does not already exist, create a positive rule set for the synchronous capture if it does not exist, and can add table rules or subset rules to the rule set.
+                  </p>
+                  <p>The <code class="codeph">CREATE_SYNC_CAPTURE</code> procedure creates a synchronous capture, but does not create a rule set or rules for the synchronous capture. However, the <code class="codeph">CREATE_SYNC_CAPTURE</code> procedure enables you to specify an existing rule set to associate with the synchronous capture, and it enables you to specify a capture user other than the default capture user.
+                  </p>
+                  <p>The following sections describe configuring a synchronous capture:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="configuring-implicit-capture.html#GUID-D391FA10-EA15-4EA1-BCF5-EF74461F2AAA">Preparing to Configure a Synchronous Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-implicit-capture.html#GUID-03490276-ABDE-4D37-92C8-29C5DA470DFB">Configuring a Synchronous Capture Using the DBMS_STREAMS_ADM Package</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-implicit-capture.html#GUID-30689295-4926-4FB4-A37D-ABE1D6FE1091">Configuring a Synchronous Capture Using the DBMS_CAPTURE_ADM Package</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-implicit-capture.html#GUID-D448ED74-F3A0-43E8-A673-F26FB15AA4A6">After Configuring a Synchronous Capture</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-30D89F9D-C7E3-48FE-BF78-0CB98B983BB5__GUID-22F35BC9-2A16-4E76-93EB-1287FCBE54A4">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS168"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="simple-oracle-streams-replication-configuration.html#GUID-DE04AAC0-800A-4F94-89C2-80560B32B6AD">Example That Configures Two-Database Replication with Synchronous Captures</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STREP304"></a><div class="props_rev_3"><a id="GUID-D391FA10-EA15-4EA1-BCF5-EF74461F2AAA" name="GUID-D391FA10-EA15-4EA1-BCF5-EF74461F2AAA"></a><h4 id="STREP-GUID-D391FA10-EA15-4EA1-BCF5-EF74461F2AAA" class="sect4"><span class="enumeration_section">5.2.1 </span>Preparing to Configure a Synchronous Capture
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following tasks must be completed before you configure a synchronous capture:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Complete the following tasks in <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-BB2E76CA-3645-4469-8750-4B276B8A955B">Tasks to Complete Before Configuring Oracle Streams Replication</a>"</span>.
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-EF5A403D-42E5-426D-B654-456E634F53B0">Configuring an Oracle Streams Administrator on All Databases</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-7867112D-DAC3-4693-811E-B1B1052C7847">Configuring Network Connectivity and Database Links</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-F16B954D-35E0-422C-A89F-D3E170BD4505">Setting Initialization Parameters Relevant to Oracle Streams</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-E572258F-DEB4-4B0B-B29B-D196C7336112">Configuring the Oracle Streams Pool</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li>
+                              <p>Create <code class="codeph">ANYDATA</code> queues to associate with the synchronous capture, if they do not exist. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span> for instructions. The queue must be a commit-time queue. The examples in this chapter assume that the queue used by synchronous capture is <code class="codeph">strmadmin.streams_queue</code>. Create the queue in the same database that will run the synchronous capture.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Create <code class="codeph">ANYDATA</code> queues to associate with the propagations that will propagate logical change records (LCRs) captured by the synchronous capture and apply processes that will dequeue and process LCRs captured by the synchronous capture, if they do not exist. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span> for instructions.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Create all of the propagations that will propagate LCRs captured by the new synchronous capture. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9">Creating Oracle Streams Propagations Between ANYDATA Queues</a>"</span>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Create all of the apply processes that will dequeue and process LCRs captured by the new synchronous capture. See <span class="q">"<a href="configuring-implicit-apply.html#GUID-B01D8417-45F3-443A-B9F7-B8BB5FF3F2A8">Creating an Apply Process for Persistent LCRs with DBMS_APPLY_ADM</a>"</span>. Configure each apply process to apply persistent LCRs by setting the <code class="codeph">apply_captured</code> parameter to <code class="codeph">FALSE</code> in the <code class="codeph">DBMS_APPLY_ADM.CREATE_APPLY</code> procedure. Do not start the apply process until after the instantiation performed in <span class="q">"<a href="configuring-implicit-capture.html#GUID-D448ED74-F3A0-43E8-A673-F26FB15AA4A6">After Configuring a Synchronous Capture</a>"</span> is complete.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Ensure that the Oracle Streams administrator is granted <code class="codeph">DBA</code> role. The Oracle Streams administrator must be granted <code class="codeph">DBA</code> role to create a synchronous capture.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP305"></a><div class="props_rev_3"><a id="GUID-03490276-ABDE-4D37-92C8-29C5DA470DFB" name="GUID-03490276-ABDE-4D37-92C8-29C5DA470DFB"></a><h4 id="STREP-GUID-03490276-ABDE-4D37-92C8-29C5DA470DFB" class="sect4"><span class="enumeration_section">5.2.2 </span>Configuring a Synchronous Capture Using the DBMS_STREAMS_ADM Package
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>When you run the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure to create a synchronous capture, set the <code class="codeph">streams_type</code> parameter in these procedures to <code class="codeph">sync_capture</code>. A rule created by the <code class="codeph">ADD_TABLE_RULES</code> procedure instructs the synchronous capture to capture all data manipulation language (DML) changes to the table. A rule created by the <code class="codeph">ADD_SUBSET_RULES</code> procedure instructs the synchronous capture to capture a subset of the DML changes to the table.
+                        </p>
+                        <p>This example assumes the following:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The source database is <code class="codeph">dbs1.example.com</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The synchronous capture that will be created uses the <code class="codeph">strmadmin.streams_queue</code> queue.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The synchronous capture that will be created captures the results of DML changes made to the <code class="codeph">hr.departments</code> table.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The capture user for the synchronous capture that will be created is the Oracle Streams administrator <code class="codeph">strmadmin</code>.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Complete the following steps to create a synchronous capture using the <code class="codeph">DBMS_STREAMS_ADM</code> package:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-capture.html#GUID-D391FA10-EA15-4EA1-BCF5-EF74461F2AAA">Preparing to Configure a Synchronous Capture</a>"</span>.</span></li>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the <code class="codeph">dbs1.example.com</code> database as the Oracle Streams administrator.</span><div>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Run the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure to create a synchronous capture. For example:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.ADD_TABLE_RULES(
+    table_name   =&gt; 'hr.departments',
+    streams_type =&gt; 'sync_capture',
+    streams_name =&gt; 'sync_capture',
+    queue_name   =&gt; 'strmadmin.streams_queue');
+END;
+/
+</pre><p>This procedure performs the following actions:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Creates a synchronous capture named <code class="codeph">sync_capture</code> at the source database.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Enables the synchronous capture. A synchronous capture cannot be disabled.</p>
+                                 </li>
+                                 <li>
+                                    <p>Associates the synchronous capture with the existing <code class="codeph">strmadmin.streams_queue</code> queue.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Creates a positive rule set for the synchronous capture. The rule set has a system-generated name.</p>
+                                 </li>
+                                 <li>
+                                    <p>Creates a rule that captures DML changes to the <code class="codeph">hr.departments</code> table, and adds the rule to the positive rule set for the synchronous capture. The rule has a system-generated name.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Configures the user who runs the procedure as the capture user for the synchronous capture. In this case, this user is <code class="codeph">strmadmin</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Prepares the specified table for instantiation by running the <code class="codeph">DBMS_CAPTURE_ADM.PREPARE_SYNC_INSTANTIATION</code> function for the table automatically.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <div class="infoboxnote" id="GUID-03490276-ABDE-4D37-92C8-29C5DA470DFB__GUID-A02D3B40-3CC0-4B39-8B9C-963736EAA709">
+                                 <p class="notep1">Note:</p>
+                                 <p>When the <code class="codeph">ADD_TABLE_RULES</code> or the <code class="codeph">ADD_SUBSET_RULES</code> procedure adds rules to a synchronous capture rule set, the procedure must obtain an exclusive lock on the specified table. If there are outstanding transactions on the specified table, then the procedure waits until it can obtain a lock.
+                                 </p>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>If necessary, complete the steps described in <span class="q">"<a href="configuring-implicit-capture.html#GUID-D448ED74-F3A0-43E8-A673-F26FB15AA4A6">After Configuring a Synchronous Capture</a>"</span>.</span></li>
+                     </ol>
+                  </div>
+               </div><a id="STREP306"></a><div class="props_rev_3"><a id="GUID-30689295-4926-4FB4-A37D-ABE1D6FE1091" name="GUID-30689295-4926-4FB4-A37D-ABE1D6FE1091"></a><h4 id="STREP-GUID-30689295-4926-4FB4-A37D-ABE1D6FE1091" class="sect4"><span class="enumeration_section">5.2.3 </span>Configuring a Synchronous Capture Using the DBMS_CAPTURE_ADM Package
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>This section contains an example that runs procedures in the <code class="codeph">DBMS_CAPTURE_ADM</code> package and <code class="codeph">DBMS_STREAMS_ADM</code> package to configure a synchronous capture.
+                        </p>
+                        <p>This example assumes the following:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The source database is <code class="codeph">dbs1.example.com</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The synchronous capture that will be created uses the <code class="codeph">strmadmin.streams_queue</code> queue.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The synchronous capture that will be created uses an existing rule set named <code class="codeph">sync01_rule_set</code> in the <code class="codeph">strmadmin</code> schema.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The synchronous capture that will be created captures the results of a subset of the DML changes made to the <code class="codeph">hr.departments</code> table.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The capture user for the synchronous capture that will be created is <code class="codeph">hr</code>. The <code class="codeph">hr</code> user must have privileges to enqueue into the <code class="codeph">streams_queue</code>.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Complete the following steps to create a synchronous capture using the <code class="codeph">DBMS_CAPTURE_ADM</code> package:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-implicit-capture.html#GUID-D391FA10-EA15-4EA1-BCF5-EF74461F2AAA">Preparing to Configure a Synchronous Capture</a>"</span>.</span></li>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the <code class="codeph">dbs1.example.com</code> database as the Oracle Streams administrator.</span><div>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create the rule set that will be used by the synchronous capture if it does not exist. In this example, assume that the rule set is <code class="codeph">strmadmin.sync01_rule_set</code>. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS012"><span class="italic">Oracle Streams Concepts and Administration</span></a> for instructions.</span></li>
+                        <li class="stepexpand"><span>Run the <code class="codeph">CREATE_SYNC_CAPTURE</code> procedure to create a synchronous capture. For example:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_CAPTURE_ADM.CREATE_SYNC_CAPTURE(
+    queue_name    =&gt; 'strmadmin.streams_queue',
+    capture_name  =&gt; 'sync01_capture',
+    rule_set_name =&gt; 'strmadmin.sync01_rule_set',
+    capture_user  =&gt; 'hr');
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Creates a synchronous capture named <code class="codeph">sync01_capture</code>. A synchronous capture with the same name must not exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Enables the synchronous capture. A synchronous capture cannot be disabled.</p>
+                                 </li>
+                                 <li>
+                                    <p>Associates the synchronous capture with the existing queue <code class="codeph">strmadmin.streams_queue</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Associates the synchronous capture with the existing rule set <code class="codeph">strmadmin.sync01_rule_set</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Configures <code class="codeph">hr</code> as the capture user for the synchronous capture.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Run the <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> procedure to add a rule to the synchronous capture rule set. For example, run the <code class="codeph">ADD_SUBSET_RULES</code> procedure to instruct the synchronous capture to capture a subset of the DML changes to the <code class="codeph">hr.departments</code> table:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_STREAMS_ADM.ADD_SUBSET_RULES(
+    table_name          =&gt; 'hr.departments',
+    dml_condition       =&gt; 'department_id=1700',
+    streams_type        =&gt; 'sync_capture',
+    streams_name        =&gt; 'sync01_capture',
+    queue_name          =&gt; 'strmadmin.streams_queue',
+    include_tagged_lcr  =&gt;  FALSE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Adds subset rules to the rule set for the synchronous capture named <code class="codeph">sync01_capture</code> at the source database <code class="codeph">dbs1.example.com</code>. The subset rules instruct the synchronous capture to capture changes to rows with <code class="codeph">department_id</code> equal to <code class="codeph">1700</code>. The synchronous capture does not capture changes to other rows in the table.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Prepares the <code class="codeph">hr.departments</code> table for instantiation by running the <code class="codeph">DBMS_CAPTURE_ADM.PREPARE_SYNC_INSTANTIATION</code> function for the table automatically.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the synchronous capture captures a change only if the session that makes the change has a <code class="codeph">NULL</code> tag, because the <code class="codeph">include_tagged_lcr</code> parameter is set to&nbsp;<code class="codeph">FALSE</code>. This behavior is accomplished through the system-created rules for the synchronous capture.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <div class="infoboxnote" id="GUID-30689295-4926-4FB4-A37D-ABE1D6FE1091__GUID-B2FD9AC2-ACB6-4E4B-90D6-1E4686444F2A">
+                                 <p class="notep1">Note:</p>
+                                 <p>When the <code class="codeph">CREATE_SYNC_CAPTURE</code> procedure creates a synchronous capture, the procedure must obtain an exclusive lock on each table for which it will capture changes. The rules in the specified rule set for the synchronous capture determine these tables. Similarly, when the <code class="codeph">ADD_TABLE_RULES</code> or the <code class="codeph">ADD_SUBSET_RULES</code> procedure adds rules to a synchronous capture rule set, the procedure must obtain an exclusive lock on the specified table. In these cases, if there are outstanding transactions on a table for which the synchronous capture will capture changes, then the procedure waits until it can obtain a lock.
+                                 </p>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>If necessary, complete the steps described in <span class="q">"<a href="configuring-implicit-capture.html#GUID-D448ED74-F3A0-43E8-A673-F26FB15AA4A6">After Configuring a Synchronous Capture</a>"</span>.</span></li>
+                     </ol>
+                  </div>
+               </div><a id="STREP307"></a><div class="props_rev_3"><a id="GUID-D448ED74-F3A0-43E8-A673-F26FB15AA4A6" name="GUID-D448ED74-F3A0-43E8-A673-F26FB15AA4A6"></a><h4 id="STREP-GUID-D448ED74-F3A0-43E8-A673-F26FB15AA4A6" class="sect4"><span class="enumeration_section">5.2.4 </span>After Configuring a Synchronous Capture
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>If you configured propagations and apply processes that process logical change records (LCRs captured) by the new synchronous capture, then complete the following steps:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li><span>Instantiate the tables for which the new synchronous capture captures changes at all destination databases. See <a href="instantiation-and-oracle-streams-replication.html#GUID-003967CE-08B9-439C-902F-45E7B7C37371"> Instantiation and Oracle Streams Replication</a> for detailed information about instantiation.</span></li>
+                        <li><span>Use the <code class="codeph">START_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package to start the apply processes that will process LCRs captured by the new synchronous capture.</span></li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnote" id="GUID-D448ED74-F3A0-43E8-A673-F26FB15AA4A6__GUID-90EB6D6D-FEE1-4BEC-A47A-FE49E9954D68">
+                           <p class="notep1">Note:</p>
+                           <p>Other configuration steps might be required for your Oracle Streams environment. For example, some Oracle Streams environments include transformations, apply handlers, and conflict resolution.</p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

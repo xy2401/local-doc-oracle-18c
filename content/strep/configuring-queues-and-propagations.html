@@ -1,0 +1,493 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Configuring Queues and Propagations</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Replication Administrator’s Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Replication Administrator’s Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-replication-administrators-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T23:25:23-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2003, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83780-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="configuring-implicit-capture.html" title="Previous" type="text/html">
+      <link rel="next" href="configuring-implicit-apply.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.isVersionOf" content="STREP">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="configuring-implicit-capture.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="configuring-implicit-apply.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Replication Administrator’s Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="configuring-oracle-streams-replication.html" property="item" typeof="WebPage"><span property="name">    Configuring Oracle Streams Replication </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Configuring Queues and Propagations</li>
+            </ol>
+            <a id="GUID-5D660DC8-BDB5-4BA3-9A14-1ADBBBC53868" name="GUID-5D660DC8-BDB5-4BA3-9A14-1ADBBBC53868"></a><a id="STREP205"></a>
+            
+            <h2 id="STREP-GUID-5D660DC8-BDB5-4BA3-9A14-1ADBBBC53868" class="sect2"><span class="enumeration_chapter">6 </span> Configuring Queues and Propagations
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d34671e100" class="indexterm-anchor"></a><a id="d34671e104" class="indexterm-anchor"></a><a id="d34671e106" class="indexterm-anchor"></a><a id="d34671e108" class="indexterm-anchor"></a>The following topics describe configuring queues and propagations:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a></p>
+                  </li>
+                  <li>
+                     <p><a href="configuring-queues-and-propagations.html#GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9">Creating Oracle Streams Propagations Between ANYDATA Queues</a></p>
+                  </li>
+               </ul>
+               <p>Each task described in this chapter should be completed by an Oracle Streams administrator that has been granted the appropriate privileges, unless specified otherwise.</p>
+               <div class="infoboxnotealso" id="GUID-5D660DC8-BDB5-4BA3-9A14-1ADBBBC53868__GUID-0AA09C05-40B9-402C-95E0-24961353F0F6">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="../strms/oracle-streams-staging-and-propagation.html#STRMS003"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about queues and propagations
+                        </p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-EF5A403D-42E5-426D-B654-456E634F53B0">Configuring an Oracle Streams Administrator on All Databases</a>"</span></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STREP308"></a><div class="props_rev_3"><a id="GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1" name="GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1"></a><h3 id="STREP-GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1" class="sect3"><span class="enumeration_section">6.1 </span>Creating an ANYDATA Queue
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>A queue stores messages in an Oracle Streams environment. Messages can be enqueued, propagated from one queue to another, and dequeued. An <code class="codeph">ANYDATA</code> queue stores messages whose payloads are of <code class="codeph">ANYDATA</code> type. Therefore, an <code class="codeph">ANYDATA</code> queue can store a message with a payload of nearly any type, if the payload is wrapped in an <code class="codeph">ANYDATA</code> wrapper. Each Oracle Streams capture process, synchronous capture, apply process, and messaging client is associated with one <code class="codeph">ANYDATA</code> queue, and each Oracle Streams propagation is associated with one <code class="codeph">ANYDATA</code> source queue and one <code class="codeph">ANYDATA</code> destination queue.
+                     </p>
+                     <p>The easiest way to create an <code class="codeph">ANYDATA</code> queue is to use the <code class="codeph">SET_UP_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package. This procedure enables you to specify the following settings for the <code class="codeph">ANYDATA</code> queue it creates:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The queue table for the queue</p>
+                        </li>
+                        <li>
+                           <p>A storage clause for the queue table</p>
+                        </li>
+                        <li>
+                           <p>The queue name</p>
+                        </li>
+                        <li>
+                           <p>A queue user that will be configured as a secure queue user of the queue and granted <code class="codeph">ENQUEUE</code> and <code class="codeph">DEQUEUE</code> privileges on the queue
+                           </p>
+                        </li>
+                        <li>
+                           <p>A comment for the queue</p>
+                        </li>
+                     </ul>
+                     <p>If the specified queue table does not exist, then it is created. If the specified queue table exists, then the existing queue table is used for the new queue. If you do not specify any queue table when you create the queue, then, by default, <code class="codeph">streams_queue_table</code> is specified.
+                     </p>
+                     <p>For example, complete the following steps to create an <code class="codeph">ANYDATA</code> queue with the <code class="codeph">SET_UP_QUEUE</code> procedure:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Complete the following tasks in <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-BB2E76CA-3645-4469-8750-4B276B8A955B">Tasks to Complete Before Configuring Oracle Streams Replication</a>"</span> you create an <code class="codeph">ANYDATA</code> queue:</span><div>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-EF5A403D-42E5-426D-B654-456E634F53B0">Configuring an Oracle Streams Administrator on All Databases</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-F16B954D-35E0-422C-A89F-D3E170BD4505">Setting Initialization Parameters Relevant to Oracle Streams</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-E572258F-DEB4-4B0B-B29B-D196C7336112">Configuring the Oracle Streams Pool</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, connect to the database that will contain the queue as the Oracle Streams administrator.</span><div>
+                           <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Run the <code class="codeph">SET_UP_QUEUE</code> procedure to create the queue:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table =&gt; 'strmadmin.streams_queue_table',
+    queue_name  =&gt; 'strmadmin.streams_queue',
+    queue_user  =&gt; 'hr');
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a queue table named <code class="codeph">streams_queue_table</code> in the <code class="codeph">strmadmin</code> schema. The queue table is created only if it does not already exist. Queues based on the queue table store messages of <code class="codeph">ANYDATA</code> type. Queue table names can be a maximum of 24 bytes.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates a queue named <code class="codeph">streams_queue</code> in the <code class="codeph">strmadmin</code> schema. The queue is created only if it does not already exist. Queue names can be a maximum of 24 bytes.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Specifies that the <code class="codeph">streams_queue</code> queue is based on the <code class="codeph">strmadmin.streams_queue_table</code> queue table.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Configures the <code class="codeph">hr</code> user as a secure queue user of the queue, and grants this user <code class="codeph">ENQUEUE</code> and <code class="codeph">DEQUEUE</code> privileges on the queue.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Starts the queue.</p>
+                              </li>
+                           </ul>
+                           <p>Default settings are used for the parameters that are not explicitly set in the <code class="codeph">SET_UP_QUEUE</code> procedure.
+                           </p>
+                        </div>
+                     </li>
+                  </ol>
+                  <div class="section">
+                     <p>When the <code class="codeph">SET_UP_QUEUE</code> procedure creates a queue table, the following <code class="codeph">DBMS_AQADM.CREATE_QUEUE_TABLE</code> parameter settings are specified:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If the database is Oracle Database 10<span class="italic">g</span> Release&nbsp;2 or later, then the <code class="codeph">sort_list</code> setting is <code class="codeph">commit_time</code>. If the database is a release before Oracle Database 10<span class="italic">g</span> Release&nbsp;2, then the <code class="codeph">sort_list</code> setting is <code class="codeph">enq_time</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">multiple_consumers</code> setting is <code class="codeph">TRUE</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">message_grouping</code> setting is <code class="codeph">transactional</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">secure</code> setting is <code class="codeph">TRUE</code>.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The other parameters in the <code class="codeph">CREATE_QUEUE_TABLE</code> procedure are set to their default values.
+                     </p>
+                     <p>You can use the <code class="codeph">CREATE_QUEUE_TABLE</code> procedure in the <code class="codeph">DBMS_AQADM</code> package to create a queue table of <code class="codeph">ANYDATA</code> type with different properties than the default properties specified by the <code class="codeph">SET_UP_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package. After you create the queue table with the <code class="codeph">CREATE_QUEUE_TABLE</code> procedure, you can create a queue that uses the queue table. To do so, specify the queue table in the <code class="codeph">queue_table</code> parameter of the <code class="codeph">SET_UP_QUEUE</code> procedure.
+                     </p>
+                     <p>Similarly, you can use the <code class="codeph">CREATE_QUEUE</code> procedure in the <code class="codeph">DBMS_AQADM</code> package to create a queue instead of <code class="codeph">SET_UP_QUEUE</code>. Use <code class="codeph">CREATE_QUEUE</code> if you require custom settings for the queue. For example, use <code class="codeph">CREATE_QUEUE</code> to specify a custom retry delay or retention time. If you use <code class="codeph">CREATE_QUEUE</code>, then you must start the queue manually.
+                     </p>
+                     <div class="infoboxnote" id="GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1__GUID-77D265D6-01FE-4CD6-A4AE-A86F25413A49">
+                        <p class="notep1">Note:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>You can configure an entire Oracle Streams environment, including queues, using procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package or Oracle Enterprise Manager Cloud Control. See <a href="simple-oracle-streams-replication-configuration.html#GUID-19643DBA-4776-4A74-BC66-1979E6903E0A"> Simple Oracle Streams Replication Configuration</a>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>A message cannot be enqueued unless a subscriber who can dequeue the message is configured.</p>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1__GUID-AC2EC320-B618-4482-80E5-83E0D3082502">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS003"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../adque/toc.htm"><span class="italic">Oracle Database Advanced Queuing User's Guide</span></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS507"><code class="codeph">SET_UP_QUEUE</code></a>, <a href="../arpls/DBMS_AQADM.html#ARPLS106"><code class="codeph">CREATE_QUEUE_TABLE</code></a>, and <a href="../arpls/DBMS_AQADM.html#ARPLS109"><code class="codeph">CREATE_QUEUE</code></a> procedures
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREP309"></a><div class="props_rev_3"><a id="GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9" name="GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9"></a><h3 id="STREP-GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9" class="sect3"><span class="enumeration_section">6.2 </span>Creating Oracle Streams Propagations Between ANYDATA Queues
+               </h3>
+               <div>
+                  <p>A propagation sends messages from an Oracle Streams source queue to an Oracle Streams destination queue. In addition, you can use the features of Oracle Database Advanced Queuing (AQ) to manage Oracle Streams propagations.</p>
+                  <p>You can use any of the following procedures to create a propagation between two <code class="codeph">ANYDATA</code> queues:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS394"><code class="codeph">DBMS_STREAMS_ADM.ADD_SUBSET_PROPAGATION_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS316"><code class="codeph">DBMS_STREAMS_ADM.ADD_TABLE_PROPAGATION_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS317"><code class="codeph">DBMS_STREAMS_ADM.ADD_SCHEMA_PROPAGATION_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS318"><code class="codeph">DBMS_STREAMS_ADM.ADD_GLOBAL_PROPAGATION_RULES</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="../arpls/DBMS_PROPAGATION_ADM.html#ARPLS333"><code class="codeph">DBMS_PROPAGATION_ADM.CREATE_PROPAGATION</code></a></p>
+                     </li>
+                  </ul>
+                  <p>Each of these procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package creates a propagation with the specified name if it does not already exist, creates either a positive rule set or negative rule set for the propagation if the propagation does not have such a rule set, and can add table rules, schema rules, or global rules to the rule set.
+                  </p>
+                  <p>The <code class="codeph">CREATE_PROPAGATION</code> procedure creates a propagation, but does not create a rule set or rules for the propagation. However, the <code class="codeph">CREATE_PROPAGATION</code> procedure enables you to specify an existing rule set to associate with the propagation, either as a positive or a negative rule set. All propagations are started automatically upon creation.
+                  </p>
+                  <p>This section contains the following topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="configuring-queues-and-propagations.html#GUID-47E0D14B-C043-4D2A-9AA9-AE2AEDA50B37">Preparing to Create a Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-queues-and-propagations.html#GUID-A3829CA1-570A-40DA-8207-4D053CCC5703">Creating a Propagation Using DBMS_STREAMS_ADM</a></p>
+                     </li>
+                     <li>
+                        <p><a href="configuring-queues-and-propagations.html#GUID-04326289-993F-427E-BA9A-6AEEF626C8F0">Creating a Propagation Using DBMS_PROPAGATION_ADM</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9__GUID-20D8E48B-3D7D-4418-88AD-5EDBCE77B946">
+                     <p class="notep1">Note:</p>
+                     <p>You can configure an entire Oracle Streams environment, including propagations, using procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package or Oracle Enterprise Manager Cloud Control. See <a href="simple-oracle-streams-replication-configuration.html#GUID-19643DBA-4776-4A74-BC66-1979E6903E0A"> Simple Oracle Streams Replication Configuration</a>.
+                     </p>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9__GUID-2EB4D087-E598-4E9D-BE57-E63D90F662CD">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strms/oracle-streams-staging-and-propagation.html#STRMS003"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../adque/aq-administrative-interface.html#ADQUE0800"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for more information about configuring propagations with the features of Oracle Streams AQ and instructions about configuring propagations between typed queues
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STREP310"></a><div class="props_rev_3"><a id="GUID-47E0D14B-C043-4D2A-9AA9-AE2AEDA50B37" name="GUID-47E0D14B-C043-4D2A-9AA9-AE2AEDA50B37"></a><h4 id="STREP-GUID-47E0D14B-C043-4D2A-9AA9-AE2AEDA50B37" class="sect4"><span class="enumeration_section">6.2.1 </span>Preparing to Create a Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following tasks must be completed before you create a propagation:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Complete the following tasks in <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-BB2E76CA-3645-4469-8750-4B276B8A955B">Tasks to Complete Before Configuring Oracle Streams Replication</a>"</span>:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-EF5A403D-42E5-426D-B654-456E634F53B0">Configuring an Oracle Streams Administrator on All Databases</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-7867112D-DAC3-4693-811E-B1B1052C7847">Configuring Network Connectivity and Database Links</a>"</span> if the propagation will send messages between databases
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-F16B954D-35E0-422C-A89F-D3E170BD4505">Setting Initialization Parameters Relevant to Oracle Streams</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-E572258F-DEB4-4B0B-B29B-D196C7336112">Configuring the Oracle Streams Pool</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li>
+                              <p>Create a source queue and a destination queue for the propagation, if they do not exist. Both queues must be <code class="codeph">ANYDATA</code> queues. The examples in this chapter assume that the source queue is <code class="codeph">strmadmin.strm_a_queue</code> and that the destination queue is <code class="codeph">strmadmin.strm_b_queue</code>. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span> for instructions.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP311"></a><div class="props_rev_3"><a id="GUID-A3829CA1-570A-40DA-8207-4D053CCC5703" name="GUID-A3829CA1-570A-40DA-8207-4D053CCC5703"></a><h4 id="STREP-GUID-A3829CA1-570A-40DA-8207-4D053CCC5703" class="sect4"><span class="enumeration_section">6.2.2 </span>Creating a Propagation Using DBMS_STREAMS_ADM
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Complete the following steps to create a propagation using the <code class="codeph">ADD_TABLE_PROPAGATION_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-47E0D14B-C043-4D2A-9AA9-AE2AEDA50B37">Preparing to Create a Propagation</a>"</span>.</span></li>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the database that contains the source queue for the propagation as the Oracle Streams administrator.</span><div>
+                              <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Run the <code class="codeph">ADD_TABLE_PROPAGATION_RULES</code> procedure to create the propagation:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_PROPAGATION_RULES(
+ &nbsp;&nbsp;&nbsp;table_name              =&gt; 'hr.departments',
+ &nbsp;&nbsp;&nbsp;streams_name            =&gt; 'strm01_propagation',
+ &nbsp;&nbsp;&nbsp;source_queue_name &nbsp;     =&gt; 'strmadmin.strm_a_queue',
+ &nbsp;&nbsp;&nbsp;destination_queue_name &nbsp;=&gt; 'strmadmin.strm_b_queue@dbs2.example.com',
+ &nbsp;&nbsp;&nbsp;include_dml &nbsp;           =&gt; TRUE,
+&nbsp; &nbsp;&nbsp;include_ddl             =&gt; TRUE,
+&nbsp; &nbsp;&nbsp;include_tagged_lcr      =&gt; FALSE,
+    source_database         =&gt; 'dbs1.example.com',
+    inclusion_rule          =&gt; TRUE,
+    queue_to_queue          =&gt; TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Creates a propagation named <code class="codeph">strm01_propagation</code>. The propagation is created only if it does not already exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the propagation propagates logical change records (LCRs) from <code class="codeph">strmadmin.strm_a_queue</code> in the current database to <code class="codeph">strmadmin.strm_b_queue</code> in the <code class="codeph">dbs2.example.com</code> database. These queues must exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the propagation uses the <code class="codeph">dbs2.example.com</code> database link to propagate the LCRs, because the <code class="codeph">destination_queue_name</code> parameter contains <code class="codeph">@dbs2.example.com</code>. This database link must exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Creates a positive rule set and associates it with the propagation because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>. The rule set uses the evaluation context <code class="codeph">SYS.STREAMS$_EVALUATION_CONTEXT</code>. The rule set name is system generated.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Creates two rules. One rule evaluates to <code class="codeph">TRUE</code> for row LCRs that contain the results of data manipulation language (DML) changes to the <code class="codeph">hr.departments</code> table. The other rule evaluates to <code class="codeph">TRUE</code> for DDL LCRs that contain data definition language (DDL) changes to the <code class="codeph">hr.departments</code> table. The rule names are system generated.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Adds the two rules to the positive rule set associated with the propagation. The rules are added to the positive rule set	because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the propagation propagates an LCR only if it has a <code class="codeph">NULL</code> tag, because the <code class="codeph">include_tagged_lcr</code> parameter is set to&nbsp;<code class="codeph">FALSE</code>. This behavior is accomplished through the system-created rules for the propagation.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the source database for the LCRs being propagated is <code class="codeph">dbs1.example.com</code>, which might or might not be the current database. This propagation does not propagate LCRs in the source queue that have a different source database.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Creates a propagation job for the queue-to-queue propagation.</p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnote" id="GUID-A3829CA1-570A-40DA-8207-4D053CCC5703__GUID-D8C7358B-CCA2-412A-8115-B8DA01EA9641">
+                           <p class="notep1">Note:</p>
+                           <p>To use queue-to-queue propagation, the compatibility level must be <code class="codeph">10.2.0</code> or higher for each database that contains a queue involved in the propagation.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-A3829CA1-570A-40DA-8207-4D053CCC5703__GUID-F899766B-C238-4EDE-82B5-DE33BDDC9125">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="../strms/toc.htm"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information about queues, propagations, and rules
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="oracle-streams-tags.html#GUID-9339D29B-65F3-450B-B3CD-A7B4ADCA4AAF"> Oracle Streams Tags</a></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP312"></a><div class="props_rev_3"><a id="GUID-04326289-993F-427E-BA9A-6AEEF626C8F0" name="GUID-04326289-993F-427E-BA9A-6AEEF626C8F0"></a><h4 id="STREP-GUID-04326289-993F-427E-BA9A-6AEEF626C8F0" class="sect4"><span class="enumeration_section">6.2.3 </span>Creating a Propagation Using DBMS_PROPAGATION_ADM
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Complete the following steps to create a propagation using the <code class="codeph">CREATE_PROPAGATION</code> procedure in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Complete the tasks in <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-47E0D14B-C043-4D2A-9AA9-AE2AEDA50B37">Preparing to Create a Propagation</a>"</span>.</span></li>
+                        <li class="stepexpand"><span>In SQL*Plus, connect to the database that contains the source queue for the propagation as the Oracle Streams administrator.</span><div>
+                              <p>See <a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create the rule set that will be used by the propagation if it does not exist. In this example, assume that the rule set is <code class="codeph">strmadmin.strm01_rule_set</code>. Optionally, you can also add rules to the rule set. See <a href="../strms/managing-rules.html#STRMS012"><span class="italic">Oracle Streams Concepts and Administration</span></a> for instructions.</span></li>
+                        <li class="stepexpand"><span>Run the <code class="codeph">CREATE_PROPAGATION</code> procedure to create the propagation:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.CREATE_PROPAGATION(
+    propagation_name   =&gt; 'strm02_propagation',
+    source_queue       =&gt; 'strmadmin.strm_a_queue',
+    destination_queue  =&gt; 'strmadmin.strm_b_queue',
+    destination_dblink =&gt; 'dbs2.example.com',
+    rule_set_name      =&gt; 'strmadmin.strm01_rule_set',
+    queue_to_queue     =&gt; TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Creates a propagation named <code class="codeph">strm02_propagation</code>. A propagation with the same name must not exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the propagation propagates messages from <code class="codeph">strmadmin.strm_a_queue</code> in the current database to <code class="codeph">strmadmin.strm_b_queue</code> in the <code class="codeph">dbs2.example.com</code> database. These queues must exist. Depending on the rules in the rule sets for the propagation, the propagated messages can be LCRs or user messages, or both.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Specifies that the propagation uses the <code class="codeph">dbs2.example.com</code> database link to propagate the messages. This database link must exist.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Associates the propagation with the rule set named <code class="codeph">strmadmin.strm01_rule_set</code>. This rule set must exist. This rule set is the positive rule set for the propagation.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Creates a propagation job for the queue-to-queue propagation.</p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnote" id="GUID-04326289-993F-427E-BA9A-6AEEF626C8F0__GUID-4C907595-EEBB-442A-BBE7-A5AD72E34E70">
+                           <p class="notep1">Note:</p>
+                           <p>To use queue-to-queue propagation, the compatibility level must be <code class="codeph">10.2.0</code> or higher for each database that contains a queue involved in the propagation.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

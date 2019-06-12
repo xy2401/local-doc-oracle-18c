@@ -1,0 +1,478 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).">
+      <meta name="description" content="Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).">
+      <title>Overview of NTFS File System and Windows Registry Permissions</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Administrator's Reference ">
+      <meta property="og:description" content="Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Administrator's Reference for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="administrators-reference-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-02T05:05:35-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83889-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="about-windows-authenticated-users.html" title="Previous" type="text/html">
+      <link rel="next" href="overview-of-refs-file-system.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Administrator's Reference Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="NTQRF">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="about-windows-authenticated-users.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="overview-of-refs-file-system.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Administrator's Reference </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="postinstallation-configuration-tasks-on-windows.html" property="item" typeof="WebPage"><span property="name">Postinstallation Configuration Tasks on Windows</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Overview of NTFS File System and Windows Registry Permissions</li>
+            </ol>
+            <a id="GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C" name="GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C"></a>
+            
+            <h2 id="NTQRF-GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C" class="sect2">Overview of NTFS File System and Windows Registry Permissions</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).</p>
+               <div class="section">
+                  <p>If you have created a database using Oracle Database Configuration Assistant or upgraded a database using Oracle Database Upgrade Assistant, then no further action is required.</p>
+                  <p>Learn about the permissions automatically set by Oracle Universal Installer, Oracle Database Configuration Assistant, and Oracle Database Upgrade Assistant and the steps to set these permissions manually.</p>
+                  <p>In addition to the various groups listed in Oracle Database software installation creates the following groups for Oracle internal use and sets permissions on files and registry entries for these groups to ensure that the Oracle software functions properly. The group memberships and permissions set for the following groups must not be changed or removed:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">ORA_INSTALL</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ORA_GRID_LISTENERS</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ORA_CLIENT_LISTENERS</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SVCSIDS</code></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C__GUID-EF69BEEB-E94C-4413-BF4E-3252AD4D4337">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Your operating system documentation for more information about modifying NTFS file system and Windows registry settings</p>
+                        </li>
+                        <li>
+                           <p><a href="../ntdbi/operating-system-groups-created-during-oracle-database-installation.html#NTDBI260" target="_blank"><span class="italic">Oracle Database Installation Guide for Microsoft Windows</span></a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC">Setting File Permissions</a><br>Oracle Universal Installer, Oracle Database Configuration Assistant, and Oracle Database Upgrade Assistant set file permissions when you install or upgrade Oracle Database software.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-F9A3FF23-D629-4AA4-BE43-BF2F13EC87C8">Setting Permissions for Windows Registry Entries</a><br>Oracle Universal Installer sets the permissions for Windows registry entries pertaining to Oracle Database software.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-06834C2C-34D5-4D3F-8B53-6521517EC1F3">Setting Permissions for Windows Service Entries</a><br>Oracle Universal Installer sets the following permissions to users and user groups for Windows service entries for Oracle Database services.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-F6914DE1-A1A2-411A-91A9-B571EA276364">Setting NTFS File System Security</a><br>Use this procedure to set the NTFS file system security.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-7EE3E62A-4E15-42E1-BC2C-F3ECA0D21AD7">Setting Windows Registry Security</a><br>Oracle recommends that you remove write permissions from users who are <span class="italic">not</span> Oracle Database DBAs or system administrators in the <code class="codeph">HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE</code> directory of the Windows registry. 
+                  </li>
+               </ul>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="postinstallation-configuration-tasks-on-windows.html#GUID-ECCA1626-A624-48E4-AB08-3D1F6419709E" title="Learn about the configuration tasks that you can perform to increase security, and other configuration tasks before using Oracle Multimedia and other Oracle options.">Postinstallation Configuration Tasks on Windows</a></p>
+                  </div>
+               </div>
+            </div>
+            
+            <div class="sect2"><a id="GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC" name="GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC"></a><h3 id="NTQRF-GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC" class="sect3">Setting File Permissions</h3>
+               <p>Oracle Universal Installer, Oracle Database Configuration Assistant, and Oracle Database Upgrade Assistant set file permissions when you install or upgrade Oracle Database software.</p>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-0CDEA8BB-9C69-425A-8D71-811FCDF8DCC2">About Default File Permissions Set by Oracle Universal Installer</a><br>During Oracle Database installation, by default Oracle Universal Installer installs software in the <span class="italic"><code class="codeph">ORACLE_HOME</code></span> directory. 
+                     </li>
+                     <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-6118098B-722D-47F0-B5F2-746865928D39">About File Permissions Set by Oracle Database Configuration Assistant</a><br>During Oracle Database configuration, Oracle Database Configuration Assistant installs files and directories in the following default locations, where <span class="italic"><code class="codeph">database_name</code></span> is the database name or <span class="italic"><code class="codeph">SID</code></span>.
+                     </li>
+                     <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-5E27F454-080D-4C3A-B681-DE94203274BF">About File Permissions Set by Oracle Database Upgrade Assistant</a><br>When an earlier version of the database is upgraded to Oracle Database 18c, Oracle Database Upgrade Assistant installs software in the following directories, where <span class="italic"><code class="codeph">database_name</code></span> is the database name or <span class="italic"><code class="codeph">SID</code></span>.
+                     </li>
+                     <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-0D3A4EC0-1B4B-4558-8AAD-A1DE209D6C02">About Setting Permissions for Oracle Wallets</a><br>When an Oracle Wallet is created in the file system, the user creating the wallet is granted access to the wallet by wallet creation tools.
+                     </li>
+                     <li class="ulchildlink"><a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-01201183-C8D4-4B9C-9D68-B8E5646F5CEC">About Setting File System ACLs Manually</a><br>As Oracle Database services now run under a standard Windows User Account, a file might not be accessible by Oracle Database services unless the file system Access Control Lists (ACLs) grant access to the file. 
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C" title="Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).">Overview of NTFS File System and Windows Registry Permissions</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="NTQRF669"></a><a id="NTQRF715"></a><a id="NTQRF717"></a><a id="NTQRF166"></a><div class="props_rev_3"><a id="GUID-0CDEA8BB-9C69-425A-8D71-811FCDF8DCC2" name="GUID-0CDEA8BB-9C69-425A-8D71-811FCDF8DCC2"></a><h4 id="NTQRF-GUID-0CDEA8BB-9C69-425A-8D71-811FCDF8DCC2" class="sect4">About Default File Permissions Set by Oracle Universal Installer</h4>
+                  <div>
+                     <p>During Oracle Database installation, by default Oracle Universal Installer installs software in the <span class="italic"><code class="codeph">ORACLE_HOME</code></span> directory. 
+                     </p>
+                     <p><a id="d18829e328" class="indexterm-anchor"></a><a id="d18829e332" class="indexterm-anchor"></a><a id="d18829e336" class="indexterm-anchor"></a><a id="d18829e340" class="indexterm-anchor"></a><a id="d18829e344" class="indexterm-anchor"></a><a id="d18829e348" class="indexterm-anchor"></a><a id="d18829e352" class="indexterm-anchor"></a><a id="d18829e356" class="indexterm-anchor"></a>Oracle Universal Installer sets the following permissions to this directory, and to all files and directories under this directory:
+                     </p>
+                     <div class="section">
+                        <p class="subhead3">For the Oracle Grid Infrastructure home:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Full control - <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, <code class="codeph">ORA_GRID_LISTENERS</code>, Oracle Installation User, Oracle Home User
+                              </p>
+                           </li>
+                           <li>
+                              <p><a id="d18829e378" class="indexterm-anchor"></a>Read, execute, and list content - <code class="codeph">Authenticated Users</code></p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">For the Database ORACLE_HOME:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Full control - <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, Oracle Installation User, Oracle Home User, or <code class="codeph">ORA_&lt;HomeName&gt;_SVCACCTS</code> group for Virtual Account homes. 
+                              </p>
+                           </li>
+                           <li>
+                              <p><a id="d18829e404" class="indexterm-anchor"></a>Read, execute, and list content - <code class="codeph">Authenticated Users</code></p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">For the Client ORACLE_HOME:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Full control - <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, Oracle Installation User, <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SVCSIDS</code> or the Oracle Home User
+                              </p>
+                           </li>
+                           <li>
+                              <p><a id="d18829e435" class="indexterm-anchor"></a>Read, execute, and list content - <code class="codeph">Authenticated Users</code></p>
+                           </li>
+                        </ul>
+                        <p>Oracle Universal Installer sets the following permissions to the <code class="codeph">ORACLE_BASE</code> directory, and to all the files and directories under this directory with the exception of database files, wallets, and so on:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Full control - <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, Oracle Installation User, Oracle Home User or <code class="codeph">ORA_&lt;HomeName&gt;_SVCACCTS </code>group for Virtual Account homes. 
+                              </p>
+                           </li>
+                           <li>
+                              <p>Full control - <code class="codeph">ORA_GRID_LISTENERS</code> if the <code class="codeph">ORACLE_BASE</code> is for the Oracle Grid Infrastructure <code class="codeph">ORACLE_HOME</code></p>
+                           </li>
+                           <li>
+                              <p>Full control - <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SVCSIDS</code> or Oracle Home User if the <code class="codeph">ORACLE_BASE</code> is for a Client <code class="codeph">ORACLE_HOME</code></p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-0CDEA8BB-9C69-425A-8D71-811FCDF8DCC2__GUID-99A0A577-4F20-4A7D-BE22-A30C50A1AE6E">
+                           <p class="notep1">Note:</p>
+                           <p>If these accounts already exist and have more restrictive permissions, then most restrictive permissions are retained. If accounts other than <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, <code class="codeph">Authenticated</code> <code class="codeph">Users</code>, and the Oracle groups mentioned exist, then the permissions for these accounts are removed.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-0CDEA8BB-9C69-425A-8D71-811FCDF8DCC2__GUID-77D3352A-0792-4CC7-AB12-C276A93D4CCB">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../cwwin/index.html" target="_blank"><span class="italic">Oracle Grid Infrastructure Installation Guide for Microsoft Windows x64 (64-Bit)</span></a> 
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../ntdbi/operating-system-groups-created-during-oracle-database-installation.html#NTDBI260" target="_blank"><span class="italic">Oracle Database Installation Guide for Microsoft Windows</span></a> 
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC" title="Oracle Universal Installer, Oracle Database Configuration Assistant, and Oracle Database Upgrade Assistant set file permissions when you install or upgrade Oracle Database software.">Setting File Permissions</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF167"></a><div class="props_rev_3"><a id="GUID-6118098B-722D-47F0-B5F2-746865928D39" name="GUID-6118098B-722D-47F0-B5F2-746865928D39"></a><h4 id="NTQRF-GUID-6118098B-722D-47F0-B5F2-746865928D39" class="sect4">About File Permissions Set by Oracle Database Configuration Assistant</h4>
+                  <div>
+                     <p>During Oracle Database configuration, Oracle Database Configuration Assistant installs files and directories in the following default locations, where <span class="italic"><code class="codeph">database_name</code></span> is the database name or <span class="italic"><code class="codeph">SID</code></span>.
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\admin\</code><span class="italic"><code class="codeph">database_name</code></span> (administration file directories)
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\oradata\</code><span class="italic"><code class="codeph">database_name</code></span> (database file directories)
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\oradata\</code><span class="italic"><code class="codeph">database_name</code></span> (redo log files and control files)
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">\database</code> (<code class="codeph">SPFILE</code><span class="italic"><code class="codeph">SID</code></span><code class="codeph">.ORA</code>)
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Oracle Database Configuration Assistant sets the following permission to these directories, and to all the files and directories under these directories: </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Full control <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, Oracle Home User or <code class="codeph">ORA_&lt;HomeName&gt;_SVCACCTS</code> group for Virtual Account homes
+                           </p>
+                           <div class="infoboxnote" id="GUID-6118098B-722D-47F0-B5F2-746865928D39__GUID-C997109E-2024-4704-B611-0993A3CF1FC1">
+                              <p class="notep1">Note:</p>
+                              <p>If these accounts already exist and have more restrictive permissions, then the most restrictive permissions are retained. If accounts other than <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, and Oracle Home User already exist, then the permissions for these accounts are removed.
+                              </p>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC" title="Oracle Universal Installer, Oracle Database Configuration Assistant, and Oracle Database Upgrade Assistant set file permissions when you install or upgrade Oracle Database software.">Setting File Permissions</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF168"></a><div class="props_rev_3"><a id="GUID-5E27F454-080D-4C3A-B681-DE94203274BF" name="GUID-5E27F454-080D-4C3A-B681-DE94203274BF"></a><h4 id="NTQRF-GUID-5E27F454-080D-4C3A-B681-DE94203274BF" class="sect4">About File Permissions Set by Oracle Database Upgrade Assistant</h4>
+                  <div>
+                     <p>When an earlier version of the database is upgraded to Oracle Database 18c, Oracle Database Upgrade Assistant installs software in the following directories, where <span class="italic"><code class="codeph">database_name</code></span> is the database name or <span class="italic"><code class="codeph">SID</code></span>.
+                     </p>
+                     <p>When an earlier version of the database is upgraded to Oracle Database 18c, Oracle Database Upgrade Assistant installs software in the following directories, where <span class="italic"><code class="codeph">database_name</code></span> is the database name or <span class="italic"><code class="codeph">SID</code></span>:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\admin\</code><span class="italic"><code class="codeph">database_name</code></span> (administration files)
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\oradata\</code><span class="italic"><code class="codeph">database_name</code></span> (database file directories)
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\oradata\</code><span class="italic"><code class="codeph">database_name</code></span> (redo log files and control files)
+                           </p>
+                        </li>
+                        <li>
+                           <p> <span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\</code><span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">\database</code> (<code class="codeph">SPFILE</code><span class="italic"><code class="codeph">SID</code></span><code class="codeph">.ORA</code>)
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Oracle Database Upgrade Assistant sets the following permissions to these directories, and to all files and directories under these directories: </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Full control <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, Oracle Home User or <code class="codeph">ORA_&lt;HomeName&gt;_SVCACCTS</code> group for Virtual Account homes
+                           </p>
+                           <div class="infoboxnote" id="GUID-5E27F454-080D-4C3A-B681-DE94203274BF__GUID-2F3DFAAF-AFFD-4601-BF10-D34654E72B2F">
+                              <p class="notep1">Note:</p>
+                              <p>If these accounts already exist and have more restrictive permissions, then the most restrictive permissions are retained. If accounts other than <code class="codeph">Administrators</code>, <code class="codeph">SYSTEM</code>, and Oracle Home User already exist, then the permissions for these accounts are removed.
+                              </p>
+                           </div>
+                        </li>
+                     </ul>
+                     <p>Oracle Database Upgrade Assistant can also configure Oracle Enterprise Manager. If the <span class="bold">Enable daily backup</span> option is selected while configuring Oracle Enterprise Manager, then Oracle Database Upgrade Assistant shows a separate screen asking for Fast Recovery Area. Oracle Database Upgrade Assistant tries to create the directory structure (if it does not exist) in the specified file system location. Oracle Database Upgrade Assistant also puts the same set of file permissions to this location. The default location shown by Oracle Database Upgrade Assistant for Fast Recovery Area is: 
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="italic"><code class="codeph">ORACLE_BASE</code></span><code class="codeph">\recovery_area</code></p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC" title="Oracle Universal Installer, Oracle Database Configuration Assistant, and Oracle Database Upgrade Assistant set file permissions when you install or upgrade Oracle Database software.">Setting File Permissions</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF716"></a><div class="props_rev_3"><a id="GUID-0D3A4EC0-1B4B-4558-8AAD-A1DE209D6C02" name="GUID-0D3A4EC0-1B4B-4558-8AAD-A1DE209D6C02"></a><h4 id="NTQRF-GUID-0D3A4EC0-1B4B-4558-8AAD-A1DE209D6C02" class="sect4">About Setting Permissions for Oracle Wallets</h4>
+                  <div>
+                     <p>When an Oracle Wallet is created in the file system, the user creating the wallet is granted access to the wallet by wallet creation tools.</p>
+                     <p>Oracle Database Windows services may run under a standard Windows User Account or Virtual Account and might not be able to access to the wallet. You may need to change the file system ACL for the wallet file manually to grant access to database and listener services. </p>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC" title="Oracle Universal Installer, Oracle Database Configuration Assistant, and Oracle Database Upgrade Assistant set file permissions when you install or upgrade Oracle Database software.">Setting File Permissions</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF720"></a><div class="props_rev_3"><a id="GUID-01201183-C8D4-4B9C-9D68-B8E5646F5CEC" name="GUID-01201183-C8D4-4B9C-9D68-B8E5646F5CEC"></a><h4 id="NTQRF-GUID-01201183-C8D4-4B9C-9D68-B8E5646F5CEC" class="sect4">About Setting File System ACLs Manually</h4>
+                  <div>
+                     <p>As Oracle Database services now run under a standard Windows User Account, a file might not be accessible by Oracle Database services unless the file system Access Control Lists (ACLs) grant access to the file. </p>
+                     <p>Though Oracle installation configures the ACLs in a way to ensure that you do not have to change ACLs manually for typical usage, it is necessary to change ACLs manually, for example, to manually upgrade databases, and database files not in Oracle base, or to grant access to wallets in the file system.</p>
+                     <p>The rules to set file system ACLs manually are:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>To allow Oracle Database service access to a file: Grant access to Oracle Home User for the file when a Windows User Account is used as the Oracle Home User. If a Windows built-in account is used as the Oracle Home User, then no such permission is necessary because the Oracle Database services run under the administrative account.</p>
+                        </li>
+                        <li>
+                           <p>To allow Oracle Grid Listeners services access to a file: Grant access to <code class="codeph">ORA_GRID_LISTENERS</code> group for the file.
+                           </p>
+                        </li>
+                        <li>
+                           <p>To allow Oracle services from a client <code class="codeph">ORACLE_HOME</code> access to a file: Grant access to Oracle Home User for the file when a Windows User Account is used as the Oracle Home User for the client home. If a Windows built-in account is used as the Oracle Home User, then grant access to the <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SVCSIDS </code>group for the file.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-ABAD80E1-7B1F-4ED6-A5DF-8CE8A3E744EC" title="Oracle Universal Installer, Oracle Database Configuration Assistant, and Oracle Database Upgrade Assistant set file permissions when you install or upgrade Oracle Database software.">Setting File Permissions</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div><a id="NTQRF670"></a><div class="props_rev_3"><a id="GUID-F9A3FF23-D629-4AA4-BE43-BF2F13EC87C8" name="GUID-F9A3FF23-D629-4AA4-BE43-BF2F13EC87C8"></a><h3 id="NTQRF-GUID-F9A3FF23-D629-4AA4-BE43-BF2F13EC87C8" class="sect3">Setting Permissions for Windows Registry Entries</h3>
+               <div>
+                  <p>Oracle Universal Installer sets the permissions for Windows registry entries pertaining to Oracle Database software.</p>
+                  <p>Follow the guidelines listed below to set the permissions for Windows registry entries:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>All users have read permissions.</p>
+                     </li>
+                     <li>
+                        <p>Local administrators and Oracle Installation User have full control.</p>
+                     </li>
+                  </ul>
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C" title="Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).">Overview of NTFS File System and Windows Registry Permissions</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF671"></a><div class="props_rev_3"><a id="GUID-06834C2C-34D5-4D3F-8B53-6521517EC1F3" name="GUID-06834C2C-34D5-4D3F-8B53-6521517EC1F3"></a><h3 id="NTQRF-GUID-06834C2C-34D5-4D3F-8B53-6521517EC1F3" class="sect3">Setting Permissions for Windows Service Entries</h3>
+               <div>
+                  <p>Oracle Universal Installer sets the following permissions to users and user groups for Windows service entries for Oracle Database services.</p>
+                  <p>The guidelines to set permissions to users and user groups for Windows service entries for Oracle Database services are:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">ORA_DBA</code> and <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_DBA</code> group users have start and stop privileges for Windows service entries.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Local System Account and local administrators have full control of Windows service entries.</p>
+                     </li>
+                  </ul>
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C" title="Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).">Overview of NTFS File System and Windows Registry Permissions</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF169"></a><div class="props_rev_3"><a id="GUID-F6914DE1-A1A2-411A-91A9-B571EA276364" name="GUID-F6914DE1-A1A2-411A-91A9-B571EA276364"></a><h3 id="NTQRF-GUID-F6914DE1-A1A2-411A-91A9-B571EA276364" class="sect3">Setting NTFS File System Security</h3>
+               <div>
+                  <p>Use this procedure to set the NTFS file system security.</p>
+                  <div class="section">
+                     <p>To ensure that only authorized users have full file system permissions: </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span>Go to Windows Explorer.</span></li>
+                     <li><span>Set the following permissions for each directory or file based on the information provided in the earlier sections.</span></li>
+                  </ol>
+                  <div class="section"></div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-F6914DE1-A1A2-411A-91A9-B571EA276364__GUID-54F02AFE-8804-4877-9258-B4D6332BC87D">
+                     <p class="notep1">See Also:</p>
+                     <p>Your operating system online help for more information about how to modify NTFS file system and registry settings</p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C" title="Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).">Overview of NTFS File System and Windows Registry Permissions</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF171"></a><div class="props_rev_3"><a id="GUID-7EE3E62A-4E15-42E1-BC2C-F3ECA0D21AD7" name="GUID-7EE3E62A-4E15-42E1-BC2C-F3ECA0D21AD7"></a><h3 id="NTQRF-GUID-7EE3E62A-4E15-42E1-BC2C-F3ECA0D21AD7" class="sect3">Setting Windows Registry Security</h3>
+               <div>
+                  <p>Oracle recommends that you remove write permissions from users who are <span class="italic">not</span> Oracle Database DBAs or system administrators in the <code class="codeph">HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE</code> directory of the Windows registry. 
+                  </p>
+                  <div class="section">
+                     <p>To remove write permissions: </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Open the registry. </span></li>
+                     <li class="stepexpand"><span>Go to <code class="codeph">HKEY_LOCAL_MACHINE\SOFTWARE\ORACLE</code>.</span></li>
+                     <li class="stepexpand"><span>Select <span class="bold">Permissions</span> from the <span class="bold">Edit</span> menu. </span><div>
+                           <p>The Permissions for Oracle dialog box appears.</p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Remove write privileges from any users who are not Oracle Database DBAs or system administrators. Note that the <code class="codeph">SYSTEM</code> account must have Full Control, because some Oracle Database services run as <code class="codeph">SYSTEM</code>.</span></li>
+                     <li class="stepexpand"><span>Ensure that user accounts that must run Oracle applications have read privileges.</span></li>
+                     <li class="stepexpand"><span>Select <span class="bold">OK</span>. </span></li>
+                     <li class="stepexpand"><span>Exit the registry. <a id="d18829e1358" class="indexterm-anchor"></a><a id="d18829e1360" class="indexterm-anchor"></a></span></li>
+                  </ol>
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-ntfs-file-system-and-windows-registry-permissions.html#GUID-0F2244F7-51A0-4DD6-833C-BD84ED5CC28C" title="Oracle recommends that you configure Oracle Database files, directories, and registry settings to provide full control to authorized database administrators (DBAs).">Overview of NTFS File System and Windows Registry Permissions</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

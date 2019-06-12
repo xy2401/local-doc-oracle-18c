@@ -1,0 +1,1625 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Your test plan for Oracle Database upgrades should include these test procedures.">
+      <meta name="description" content="Your test plan for Oracle Database upgrades should include these test procedures.">
+      <title>Testing the Upgrade Process for Oracle Database</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Database Upgrade Guide">
+      <meta property="og:description" content="Your test plan for Oracle Database upgrades should include these test procedures.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Database Upgrade Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-upgrade-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-11-27T11:59:18-08:00">
+      <meta name="dcterms.title" content="Database Upgrade Guide">
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E88788-06">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="using-preupgrade-information-tool-for-oracle-database.html" title="Previous" type="text/html">
+      <link rel="next" href="requirements-upgrading-databases-that-use-oracle-label-security-and-oracle-database-vault.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.isVersionOf" content="UPGRD">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="using-preupgrade-information-tool-for-oracle-database.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="requirements-upgrading-databases-that-use-oracle-label-security-and-oracle-database-vault.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Database Upgrade Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="tasks-prepare-upgrade-oracle-database.html" property="item" typeof="WebPage"><span property="name"> Preparing to Upgrade Oracle Database </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Testing the Upgrade Process for Oracle Database</li>
+            </ol>
+            <a id="GUID-DA291D0C-5680-48D3-90A8-CF4217577A6B" name="GUID-DA291D0C-5680-48D3-90A8-CF4217577A6B"></a>
+            
+            <h2 id="UPGRD-GUID-DA291D0C-5680-48D3-90A8-CF4217577A6B" class="sect2">Testing the Upgrade Process for Oracle Database</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Your test plan for Oracle Database upgrades should include these test procedures.</p>
+               <p>Oracle recommends that you create a full working copy of your database environment in which to test all the pre-upgrade, upgrade, and post-upgrade processes. </p>
+               <p>You can create a test environment that does not interfere with the current production Oracle database. Oracle Data Guard, for example, enables you to create physical and snapshot standby databases.</p>
+               <p>Your test environment depends on the upgrade method you choose:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>If you plan to use DBUA or perform a manual upgrade, then create a test version of the current production database.</p>
+                  </li>
+                  <li>
+                     <p>If you plan to use Data Pump Export/Import, then export and import in stages, using subsets of the current production database.</p>
+                  </li>
+               </ul>
+               <p>Practice upgrading the database using the test environment. The best practice is to perform testing of the upgrade process on an exact copy of the database that you want to upgrade, rather than on a downsized copy or test data. If an exact copy is impractical, then carefully chose a representative subset of your data to move over to your test environment and test the upgrade on that data.</p>
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="testing-upgraded-production-oracle-database.html#GUID-1613B800-89C3-4FA9-898B-19B602B2F907">Example of Testing Upgrades Using Priority List Emulation</a><br>You can use the Parallel Upgrade Utility on multitenant architecture Oracle Databases to run upgrade emulations to test your priority list or other parameter settings before you run your upgrade. 
+                  </li>
+                  <li class="ulchildlink"><a href="testing-upgraded-production-oracle-database.html#GUID-DCDFE417-1D74-4154-B565-5E34E616E1BA">Upgrade Oracle Call Interface (OCI) and Precompiler Applications</a><br>Upgrade any Oracle Call Interface (OCI) and precompiler applications that you plan to use with the new release of Oracle Database. 
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-DA291D0C-5680-48D3-90A8-CF4217577A6B__GUID-DE70367C-EC19-41D5-B4F2-1B0E00A22E45">
+                  <p class="notep1">See Also:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="../ratug/testing-a-database-upgrade.html#RATUG210" target="_blank"><span class="italic">Oracle Database Testing Guide</span></a> for information about testing a database upgrade
+                        </p>
+                     </li>
+                     <li>
+                        <p><a href="../sutil/oracle-data-pump-overview.html#SUTIL100" target="_blank"><span class="italic">Oracle Database Utilities</span></a> for information on Data Pump Export and Import utilities
+                        </p>
+                     </li>
+                     <li>
+                        <p><a href="../sbydb/managing-oracle-data-guard-physical-standby-databases.html#SBYDB00700" target="_blank"><span class="italic">Oracle Data Guard Concepts and Administration</span></a> for information on physical and snapshot standby databases
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="tasks-prepare-upgrade-oracle-database.html#GUID-733D2563-A42D-4366-9FCD-DABD25D0E2DF" title="Complete preupgrade tasks and checks to assist you with completing a successful upgrade.">Preparing to Upgrade Oracle Database</a></p>
+                  </div>
+               </div>
+            </div>
+            
+            <div class="sect2"><a id="GUID-1613B800-89C3-4FA9-898B-19B602B2F907" name="GUID-1613B800-89C3-4FA9-898B-19B602B2F907"></a><h3 id="UPGRD-GUID-1613B800-89C3-4FA9-898B-19B602B2F907" class="sect3">Example of Testing Upgrades Using Priority List Emulation</h3>
+               <div>
+                  <p>You can use the Parallel Upgrade Utility on multitenant architecture Oracle Databases to run upgrade emulations to test your priority list or other parameter settings before you run your upgrade. </p>
+                  <p>On multitenant architecture Oracle Database systems, starting with Oracle Database 12<span class="italic">c</span> release 2 (12.2), you can use priority lists to upgrade or exclude specific PDBs, or to set a specific upgrade priority order. Running the Parallel Upgrade Utility using priority emulation is a way to test your priority list without actually running the upgrade. Use the Parallel Upgrade Utility emulation feature to test your upgrade plan using priority lists. 
+                  </p>
+                  <div class="section">
+                     <p class="subhead2" id="GUID-1613B800-89C3-4FA9-898B-19B602B2F907__GUID-AB658875-6C79-42CC-AB7C-7B2EDB60AB81">Preparing for Upgrade Emulation Tests</p>
+                     <p>Before you run the emulation, you must set up your source and target upgrade locations, and prepare your database in the same way you prepare for an actual upgrade. No upgrade actually occurs, but the Parallel Upgrade Utility generates log files that show how an actual upgrade is carried out.</p>
+                     <div class="infoboxnote" id="GUID-1613B800-89C3-4FA9-898B-19B602B2F907__GUID-A1929698-28E5-4ED9-A8F6-04A14E2FE827">
+                        <p class="notep1">Note:</p>
+                        <p>You can use the <code class="codeph">-E</code> parameter to run the Parallel Upgrade Utility in emulation mode to test how priority lists run, or to test how other upgrade parameter selections are carried out during an upgrade. For example, you can run an upgrade emulation to obtain more information about how the resource allocation choices you make using the <code class="codeph">-n</code> and <code class="codeph">-N</code> parameters are carried out.
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p class="subhead2" id="GUID-1613B800-89C3-4FA9-898B-19B602B2F907__GUID-52688916-F507-4716-B8D4-6694124312FF">Syntax for Running Priority List Emulation</p>
+                     <p>You can use any of the parameter settings that you normally use with the Parallel Upgrade Utility, However, you must create a priority list, and you must use the <code class="codeph">-L</code> parameter to call the list when you run the Parallel Upgrade Utility with the <code class="codeph">-E</code> parameter to set it to perform an upgrade emulation. 
+                     </p>
+                     <p>The following is an example of the minimum required syntax for running the Parallel Upgrade Utility using priority list emulation, where <code class="codeph"><span class="variable" translate="no">priority_list_name</span></code> is the name of your priority list file:
+                     </p><pre class="pre codeblock"><code>
+catctl -E -L <span class="variable" translate="no">priority_list_name</span> catupgrd.sql</code></pre></div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-1613B800-89C3-4FA9-898B-19B602B2F907__GUID-2910999F-2157-4F21-B5A5-4DC3AA3949F6">
+                     <p class="titleinexample">Example 2-6 Example of Running the Parallel Upgrade Utility using Priority List Emulation</p>
+                     <p>The following example uses this priority list, which is named <code class="codeph">plist.txt</code>:
+                     </p><pre class="pre codeblock"><code>1,CDB$ROOT
+2,PDB$SEED
+3,CDB1_PDB2
+4,CDB1_PDB4
+4,CDB1_PDB3
+5,CDB1_PDB5
+5,CDB1_PDB1</code></pre><p>The following command runs a parallel emulation, calling this priority list:</p><pre class="pre codeblock"><code>$ORACLE_HOME/perl/bin/perl catctl.pl -L plist.txt -E -n 4 -N 2 catupgrd.sql</code></pre><p>This command uses the following parameter settings:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">-E </code>specifies that Parallel Upgrade Utility runs the upgrade procedures in emulation mode. 
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">-n 4</code> specifies that the upgrade allocates four processes to perform parallel upgrade operations. 
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">-N 2</code> specifies that the upgrade runs two SQL processors to upgrade the PDBs. The maximum PDB upgrades running concurrently is the value of <code class="codeph">-n</code> divided by the value of <code class="codeph">-N</code>, so the upgrade runs no more than two concurrent PDB upgrades. 
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">-L</code> specifies the priority list that the command reads to set upgrade priority. 
+                           </p>
+                        </li>
+                     </ul>
+                     <p>As the Parallel Upgrade Utility carries out the emulated upgrade, it displays on screen the same output that you see during an actual upgrade. </p>
+                     <p>When the upgrade emulation completes, it generates a log file, <code class="codeph">catctl_prority_run.list</code>, which is stored either in the default logging directory, or in a logging directory location that you specify with the <code class="codeph">-l</code> parameter. Because in this example we did not specify a different log directory, and we are running the upgrade on the container database named <code class="codeph">CDB1</code>, the output is place in the path <code class="codeph"><span class="variable" translate="no">Oracle_base</span>/cfgtoollogs/CDB1/run</code>, where <code class="codeph"><span class="variable" translate="no">Oracle_base</span></code> is the Oracle base of the user running the upgrade, and <code class="codeph">CDB1</code> is the name of the container database (CDB) on which you are running the upgrade.
+                     </p>
+                     <p>The log file <code class="codeph">catctl_priority_run.lst</code> displays the list of how the upgrade priority was carried out during the upgrade emulation. It shows how the Parallel Upgrade Utility grouped PDB upgrades. You can see a priority run that contains the groupings and priorities before you actually carry out the upgrade. The log file generated by the upgrade is also displayed on the screen after the upgrade completes.
+                     </p>
+                     <p>The following is the screen output and log file the Parallel Upgrade Utility generates using this upgrade scenario, with the parameter settings and the priority list:</p><pre class="pre codeblock"><code>
+Argument list for [catctl.pl]
+Run in                c = 0
+Do not run in         C = 0
+Input Directory       d = 0
+Echo OFF              e = 1
+Simulate              E = 1
+Log Id                i = 0
+Child Process         I = 0
+Log Dir               l = 0
+Priority List Name    L = plist.txt
+Upgrade Mode active   M = 0
+SQL Process Count     n = 4
+SQL PDB Process Count N = 2
+Open Mode Normal      o = 0
+Reverse Order         r = 0
+Start Phase           p = 0
+End Phase             P = 0
+Script                s = 0
+Serial Run            S = 0
+RO User Tablespaces   T = 0
+Display Phases        y = 0
+Debug catcon.pm       z = 0
+Debug catctl.pl       Z = 0
+
+catctl.pl VERSION: [12.2.0.1.0]
+
+
+orahome = [/u01/app/oracle/12.2.0]
+catctlGetOrabase = [/u01/app/oracle]
+
+Analyzing file ./catupgrd.sql
+
+Log file directory = [/u01/app/oracle/cfgtoollogs/CDB1/upgrade20151009185119]
+
+catcon: ALL catcon-related output will be written to [/[/u01/app/oracle/cfgtoollogs/CDB1/upgrade20151009185119/catupgrd_catcon_8126.lst]
+catcon: See [/[/u01/app/oracle/cfgtoollogs/CDB1/upgrade20151009185119/catupgrd*.log] files for output generated by scripts
+catcon: See [/[/u01/app/oracle/cfgtoollogs/CDB1/upgrade20151009185119/catupgrd_*.lst] files for spool files, if any
+
+Number of Cpus        = 2
+DATABASE NAME         = CDB1
+
+DataBase Version      = 12.2.0.1.0
+catcon: ALL catcon-related output will be written to [/[/u01/app/oracle/cfgtoollogs/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrd_catcon_8126.lst]
+catcon: See [/[/u01/app/oracle/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrd*.log] files for output generated by scripts
+catcon: See [/[/u01/app/oracle/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrd_*.lst] files for spool files, if any
+
+Log file directory = [/[/u01/app/oracle/cfgtoollogs/CDB1/dbopens/upgrade20151009185122]
+
+Parallel SQL Process Count (PDB)      = 2
+Parallel SQL Process Count (CDB$ROOT) = 4
+Concurrent PDB Upgrades               = 2
+Generated PDB Inclusion:[NONE]
+Generated PDB Inclusion:[PDB$SEED CDB1_PDB2 CDB1_PDB3 CDB1_PDB4 CDB1_PDB1 CDB1_PDB5]
+
+------------------------------------------------------
+Phases [0-104]         Start Time:[2015_10_09 18:51:24]
+Container Lists Inclusion:[CDB$ROOT] Exclusion:[NONE]
+------------------------------------------------------
+***********   Executing Change Scripts   ***********
+Serial   Phase #:0    [CDB$ROOT] Files:1    Time: 0s
+***************   Catalog Core SQL   ***************
+Serial   Phase #:1    [CDB$ROOT] Files:5    Time: 0s
+Restart  Phase #:2    [CDB$ROOT] Files:1    Time: 0s
+***********   Catalog Tables and Views   ***********
+Parallel Phase #:3    [CDB$ROOT] Files:20   Time: 0s
+Restart  Phase #:4    [CDB$ROOT] Files:1    Time: 1s
+*************   Catalog Final Scripts   ************
+Serial   Phase #:5    [CDB$ROOT] Files:5    Time: 0s
+*****************   Catproc Start   ****************
+Serial   Phase #:6    [CDB$ROOT] Files:1    Time: 0s
+*****************   Catproc Types   ****************
+Serial   Phase #:7    [CDB$ROOT] Files:4    Time: 0s
+Restart  Phase #:8    [CDB$ROOT] Files:1    Time: 0s
+****************   Catproc Tables   ****************
+Parallel Phase #:9    [CDB$ROOT] Files:69   Time: 0s
+Restart  Phase #:10   [CDB$ROOT] Files:1    Time: 1s
+*************   Catproc Package Specs   ************
+Serial   Phase #:11   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:12   [CDB$ROOT] Files:1    Time: 1s
+**************   Catproc Procedures   **************
+Parallel Phase #:13   [CDB$ROOT] Files:94   Time: 0s
+Restart  Phase #:14   [CDB$ROOT] Files:1    Time: 0s
+Parallel Phase #:15   [CDB$ROOT] Files:116  Time: 0s
+Restart  Phase #:16   [CDB$ROOT] Files:1    Time: 1s
+Serial   Phase #:17   [CDB$ROOT] Files:10   Time: 0s
+Restart  Phase #:18   [CDB$ROOT] Files:1    Time: 0s
+*****************   Catproc Views   ****************
+Parallel Phase #:19   [CDB$ROOT] Files:33   Time: 0s
+Restart  Phase #:20   [CDB$ROOT] Files:1    Time: 1s
+Serial   Phase #:21   [CDB$ROOT] Files:3    Time: 0s
+Restart  Phase #:22   [CDB$ROOT] Files:1    Time: 0s
+Parallel Phase #:23   [CDB$ROOT] Files:23   Time: 0s
+Restart  Phase #:24   [CDB$ROOT] Files:1    Time: 1s
+Parallel Phase #:25   [CDB$ROOT] Files:14   Time: 0s
+Restart  Phase #:26   [CDB$ROOT] Files:1    Time: 0s
+***************   Catproc CDB Views   **************
+Serial   Phase #:27   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:28   [CDB$ROOT] Files:1    Time: 1s
+Serial   Phase #:30   [CDB$ROOT] Files:1    Time: 0s
+*****************   Catproc PLBs   *****************
+Serial   Phase #:31   [CDB$ROOT] Files:277  Time: 0s
+Serial   Phase #:32   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:33   [CDB$ROOT] Files:1    Time: 1s
+Serial   Phase #:34   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:35   [CDB$ROOT] Files:1    Time: 0s
+***************   Catproc DataPump   ***************
+Serial   Phase #:36   [CDB$ROOT] Files:4    Time: 0s
+Restart  Phase #:37   [CDB$ROOT] Files:1    Time: 1s
+******************   Catproc SQL   *****************
+Parallel Phase #:38   [CDB$ROOT] Files:13   Time: 0s
+Restart  Phase #:39   [CDB$ROOT] Files:1    Time: 0s
+Parallel Phase #:40   [CDB$ROOT] Files:11   Time: 0s
+Restart  Phase #:41   [CDB$ROOT] Files:1    Time: 1s
+Parallel Phase #:42   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:43   [CDB$ROOT] Files:1    Time: 0s
+*************   Final Catproc scripts   ************
+Serial   Phase #:44   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:45   [CDB$ROOT] Files:1    Time: 1s
+**************   Final RDBMS scripts   *************
+Serial   Phase #:46   [CDB$ROOT] Files:1    Time: 0s
+************   Upgrade Component Start   ***********
+Serial   Phase #:47   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:48   [CDB$ROOT] Files:1    Time: 0s
+****************   Upgrading Java   ****************
+Serial   Phase #:49   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:50   [CDB$ROOT] Files:1    Time: 1s
+*****************   Upgrading XDK   ****************
+Serial   Phase #:51   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:52   [CDB$ROOT] Files:1    Time: 0s
+*********   Upgrading APS,OLS,DV,CONTEXT   *********
+Serial   Phase #:53   [CDB$ROOT] Files:1    Time: 0s
+*****************   Upgrading XDB   ****************
+Restart  Phase #:54   [CDB$ROOT] Files:1    Time: 1s
+Serial   Phase #:56   [CDB$ROOT] Files:3    Time: 0s
+Serial   Phase #:57   [CDB$ROOT] Files:2    Time: 0s
+Parallel Phase #:58   [CDB$ROOT] Files:11   Time: 0s
+Parallel Phase #:59   [CDB$ROOT] Files:24   Time: 0s
+Serial   Phase #:60   [CDB$ROOT] Files:4    Time: 0s
+Serial   Phase #:61   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:62   [CDB$ROOT] Files:30   Time: 0s
+Serial   Phase #:63   [CDB$ROOT] Files:1    Time: 0s
+Parallel Phase #:64   [CDB$ROOT] Files:6    Time: 0s
+Serial   Phase #:65   [CDB$ROOT] Files:2    Time: 0s
+Serial   Phase #:66   [CDB$ROOT] Files:3    Time: 0s
+Restart  Phase #:67   [CDB$ROOT] Files:1    Time: 1s
+*********   Upgrading CATJAVA,OWM,MGW,RAC   ********
+Serial   Phase #:68   [CDB$ROOT] Files:1    Time: 0s
+****************   Upgrading ORDIM   ***************
+Restart  Phase #:69   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:71   [CDB$ROOT] Files:1    Time: 0s
+Parallel Phase #:72   [CDB$ROOT] Files:2    Time: 0s
+Serial   Phase #:73   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:74   [CDB$ROOT] Files:1    Time: 1s
+Parallel Phase #:75   [CDB$ROOT] Files:2    Time: 0s
+Serial   Phase #:76   [CDB$ROOT] Files:2    Time: 0s
+*****************   Upgrading SDO   ****************
+Restart  Phase #:77   [CDB$ROOT] Files:1    Time: 1s
+Serial   Phase #:79   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:80   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:81   [CDB$ROOT] Files:1    Time: 0s
+Parallel Phase #:82   [CDB$ROOT] Files:3    Time: 0s
+Serial   Phase #:83   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:84   [CDB$ROOT] Files:1    Time: 0s
+Parallel Phase #:85   [CDB$ROOT] Files:4    Time: 0s
+Serial   Phase #:86   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:87   [CDB$ROOT] Files:3    Time: 0s
+Restart  Phase #:88   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:89   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:90   [CDB$ROOT] Files:1    Time: 1s
+***********   Upgrading Misc. ODM, OLAP   **********
+Serial   Phase #:91   [CDB$ROOT] Files:1    Time: 0s
+****************   Upgrading APEX   ****************
+Restart  Phase #:92   [CDB$ROOT] Files:1    Time: 1s
+Serial   Phase #:93   [CDB$ROOT] Files:1    Time: 0s
+Restart  Phase #:94   [CDB$ROOT] Files:1    Time: 0s
+***********   Final Component scripts    ***********
+Serial   Phase #:95   [CDB$ROOT] Files:1    Time: 0s
+*************   Final Upgrade scripts   ************
+Serial   Phase #:96   [CDB$ROOT] Files:1    Time: 0s
+*******************   Migration   ******************
+Serial   Phase #:97   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:98   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:99   [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:100  [CDB$ROOT] Files:1    Time: 1s
+*****************   Post Upgrade   *****************
+Serial   Phase #:101  [CDB$ROOT] Files:1    Time: 0s
+****************   Summary report   ****************
+Serial   Phase #:102  [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:103  [CDB$ROOT] Files:1    Time: 0s
+Serial   Phase #:104  [CDB$ROOT] Files:1     Time: 0s
+
+------------------------------------------------------
+Phases [0-104]         End Time:[2015_10_09 18:51:43]
+Container Lists Inclusion:[CDB$ROOT] Exclusion:[NONE]
+------------------------------------------------------
+
+Start processing of PDB$SEED
+[/u01/app/oracle/12.1.0/CDB1/perl/bin/perl catctl.pl -L plist.txt -E -n 2 -N 2 -I -i pdb_seed -c 'PDB$SEED' -l /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122 catupgrd.sql]
+
+Start processing of CDB1_PDB2
+[/u01/app/oracle/12.1.0/CDB1//perl/bin/perl catctl.pl -L plist.txt -E -n 2 -N 2 -I -i cdb1_pdb2 -c 'CDB1_PDB2' -l /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122 catupgrd.sql]
+
+Argument list for [catctl.pl]
+Run in                c = PDB$SEED
+Do not run in         C = 0
+Input Directory       d = 0
+Echo OFF              e = 1
+Simulate              E = 1
+Log Id                i = pdb_seed
+Child Process         I = 1
+Log Dir               l = /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122
+Priority List Name    L = plist.txt
+Upgrade Mode active   M = 0
+SQL Process Count     n = 2
+SQL PDB Process Count N = 2
+Open Mode Normal      o = 0
+Reverse Order         r = 0
+Start Phase           p = 0
+End Phase             P = 0
+Script                s = 0
+Serial Run            S = 0
+RO User Tablespaces   T = 0
+Display Phases        y = 0
+Debug catcon.pm       z = 0
+Debug catctl.pl       Z = 0
+
+catctl.pl VERSION: [12.2.0.1.0]
+        
+
+
+
+Argument list for [catctl.pl]
+Run in                c = CDB1_PDB2
+Do not run in         C = 0
+Input Directory       d = 0
+Echo OFF              e = 1
+Simulate              E = 1
+Log Id                i = cdb1_pdb2
+Child Process         I = 1
+Log Dir               l = /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122
+Priority List Name    L = plist.txt
+Upgrade Mode active   M = 0
+SQL Process Count     n = 2
+SQL PDB Process Count N = 2
+Open Mode Normal      o = 0
+Reverse Order         r = 0
+Start Phase           p = 0
+End Phase             P = 0
+Script                s = 0
+Serial Run            S = 0
+RO User Tablespaces   T = 0
+Display Phases        y = 0
+Debug catcon.pm       z = 0
+Debug catctl.pl       Z = 0
+
+catctl.pl VERSION: [12.2.0.1.0]
+           
+
+
+orahome = [/u01/app/oracle/12.1.0/CDB1/]
+orahome = [/u01/app/oracle/12.1.0/CDB1/]
+/u01/app/oracle/12.1.0/CDB1/bin/orabasehome = [/u01/app/oracle/
+catctlGetOrabase = [/u01/app/oracle/]
+
+Analyzing file ./catupgrd.sql
+
+Log file directory = [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122]
+
+/u01/app/oracle/12.1.0/CDB1/bin/orabasehome = [/u01/app/oracle]
+catctlGetOrabase = [/u01/app/oracle]
+
+Analyzing file ./catupgrd.sql
+
+Log file directory = [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122]
+
+catcon: ALL catcon-related output will be written to [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdpdb_seed_catcon_10120.lst]
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdpdb_seed*.log] files for output generated by scripts
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdpdb_seed_*.lst] files for spool files, if any
+catcon: ALL catcon-related output will be written to [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb2_catcon_10122.lst]
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb2*.log] files for output generated by scripts
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb2_*.lst] files for spool files, if any
+
+Number of Cpus        = 2
+
+Number of Cpus        = 2
+DATABASE NAME         = dbopens
+
+DATABASE NAME         = dbopens
+
+DataBase Version      = 12.2.0.1.0
+DataBase Version      = 12.2.0.1.0
+Generated PDB Inclusion:[CDB1_PDB2]
+Generated PDB Inclusion:[PDB$SEED]
+CDB$ROOT  Open Mode = [OPEN MIGRATE]
+
+------------------------------------------------------
+Phases [0-104]         Start Time:[2015_10_09 18:51:47]
+Container Lists Inclusion:[CDB1_PDB2] Exclusion:[NONE]
+------------------------------------------------------
+***********   Executing Change Scripts   ***********
+Serial   Phase #:0    [CDB1_PDB2] Files:1    Time: 0s
+***************   Catalog Core SQL   ***************
+Serial   Phase #:1    [CDB1_PDB2] Files:5    Time: 0s
+Restart  Phase #:2    [CDB1_PDB2] Files:1 CDB$ROOT  Open Mode = [OPEN MIGRATE]
+
+------------------------------------------------------
+Phases [0-104]         Start Time:[2015_10_09 18:51:47]
+Container Lists Inclusion:[PDB$SEED] Exclusion:[NONE]
+------------------------------------------------------
+***********   Executing Change Scripts   ***********
+Serial   Phase #:0    [PDB$SEED] Files:1    Time: 0s
+***************   Catalog Core SQL   ***************
+Serial   Phase #:1    [PDB$SEED] Files:5    Time: 0s
+Restart  Phase #:2    [PDB$SEED] Files:1    Time: 0s
+***********   Catalog Tables and Views   ***********
+Parallel Phase #:3    [PDB$SEED] Files:20   Time: 0s
+Restart  Phase #:4    [PDB$SEED] Files:1    Time: 0s
+***********   Catalog Tables and Views   ***********
+Parallel Phase #:3    [CDB1_PDB2] Files:20   Time: 0s
+Restart  Phase #:4    [CDB1_PDB2] Files:1    Time: 1s
+*************   Catalog Final Scripts   ************
+Serial   Phase #:5    [CDB1_PDB2] Files:5    Time: 0s
+*****************   Catproc Start   ****************
+Serial   Phase #:6    [CDB1_PDB2] Files:1    Time: 0s
+*****************   Catproc Types   ****************
+Serial   Phase #:7    [CDB1_PDB2] Files:4    Time: 0s
+Restart  Phase #:8    [CDB1_PDB2] Files:1    Time: 1s
+*************   Catalog Final Scripts   ************
+Serial   Phase #:5    [PDB$SEED] Files:5    Time: 0s
+*****************   Catproc Start   ****************
+Serial   Phase #:6    [PDB$SEED] Files:1    Time: 0s
+*****************   Catproc Types   ****************
+Serial   Phase #:7    [PDB$SEED] Files:4    Time: 0s
+Restart  Phase #:8    [PDB$SEED] Files:1    Time: 0s
+****************   Catproc Tables   ****************
+Parallel Phase #:9    [CDB1_PDB2] Files:69   Time: 0s
+Restart  Phase #:10   [CDB1_PDB2] Files:1    Time: 0s
+****************   Catproc Tables   ****************
+Parallel Phase #:9    [PDB$SEED] Files:69   Time: 0s
+Restart  Phase #:10   [PDB$SEED] Files:1    Time: 1s
+*************   Catproc Package Specs   ************
+Serial   Phase #:11   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:12   [CDB1_PDB2] Files:1    Time: 1s
+*************   Catproc Package Specs   ************
+Serial   Phase #:11   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:12   [PDB$SEED] Files:1    Time: 0s
+**************   Catproc Procedures   **************
+Parallel Phase #:13   [CDB1_PDB2] Files:94   Time: 0s
+Restart  Phase #:14   [CDB1_PDB2] Files:1    Time: 0s
+**************   Catproc Procedures   **************
+Parallel Phase #:13   [PDB$SEED] Files:94   Time: 0s
+Restart  Phase #:14   [PDB$SEED] Files:1    Time: 1s
+Parallel Phase #:15   [CDB1_PDB2] Files:116  Time: 0s
+Restart  Phase #:16   [CDB1_PDB2] Files:1    Time: 1s
+Parallel Phase #:15   [PDB$SEED] Files:116  Time: 0s
+Restart  Phase #:16   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:17   [CDB1_PDB2] Files:10   Time: 0s
+Restart  Phase #:18   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:17   [PDB$SEED] Files:10   Time: 0s
+Restart  Phase #:18   [PDB$SEED] Files:1    Time: 1s
+*****************   Catproc Views   ****************
+Parallel Phase #:19   [CDB1_PDB2] Files:33   Time: 0s
+Restart  Phase #:20   [CDB1_PDB2] Files:1    Time: 1s
+*****************   Catproc Views   ****************
+Parallel Phase #:19   [PDB$SEED] Files:33   Time: 0s
+Restart  Phase #:20   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:21   [PDB$SEED] Files:3    Time: 0s
+Restart  Phase #:22   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:21   [CDB1_PDB2] Files:3    Time: 0s
+Restart  Phase #:22   [CDB1_PDB2] Files:1    Time: 0s
+Parallel Phase #:23   [CDB1_PDB2] Files:23   Time: 0s
+Restart  Phase #:24   [CDB1_PDB2] Files:1    Time: 0s
+Parallel Phase #:23   [PDB$SEED] Files:23   Time: 0s
+Restart  Phase #:24   [PDB$SEED] Files:1    Time: 1s
+Parallel Phase #:25   [CDB1_PDB2] Files:14   Time: 0s
+Restart  Phase #:26   [CDB1_PDB2] Files:1    Time: 1s
+Parallel Phase #:25   [PDB$SEED] Files:14   Time: 0s
+Restart  Phase #:26   [PDB$SEED] Files:1    Time: 0s
+***************   Catproc CDB Views   **************
+Serial   Phase #:27   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:28   [CDB1_PDB2] Files:1    Time: 0s
+***************   Catproc CDB Views   **************
+Serial   Phase #:27   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:28   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:30   [CDB1_PDB2] Files:1    Time: 0s
+*****************   Catproc PLBs   *****************
+Serial   Phase #:31   [CDB1_PDB2] Files:277  Time: 0s
+Serial   Phase #:32   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:33   [CDB1_PDB2] Files:1    Time: 1s
+Serial   Phase #:30   [PDB$SEED] Files:1    Time: 0s
+*****************   Catproc PLBs   *****************
+Serial   Phase #:31   [PDB$SEED] Files:277  Time: 0s
+Serial   Phase #:32   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:33   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:34   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:35   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:34   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:35   [PDB$SEED] Files:1    Time: 1s
+***************   Catproc DataPump   ***************
+Serial   Phase #:36   [CDB1_PDB2] Files:4    Time: 0s
+Restart  Phase #:37   [CDB1_PDB2] Files:1    Time: 1s
+***************   Catproc DataPump   ***************
+Serial   Phase #:36   [PDB$SEED] Files:4    Time: 0s
+Restart  Phase #:37   [PDB$SEED] Files:1    Time: 0s
+******************   Catproc SQL   *****************
+Parallel Phase #:38   [CDB1_PDB2] Files:13   Time: 0s
+Restart  Phase #:39   [CDB1_PDB2] Files:1    Time: 0s
+******************   Catproc SQL   *****************
+Parallel Phase #:38   [PDB$SEED] Files:13   Time: 0s
+Restart  Phase #:39   [PDB$SEED] Files:1    Time: 1s
+Parallel Phase #:40   [CDB1_PDB2] Files:11   Time: 0s
+Restart  Phase #:41   [CDB1_PDB2] Files:1    Time: 1s
+Parallel Phase #:40   [PDB$SEED] Files:11   Time: 0s
+Restart  Phase #:41   [PDB$SEED] Files:1    Time: 0s
+Parallel Phase #:42   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:43   [PDB$SEED] Files:1    Time: 0s
+Parallel Phase #:42   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:43   [CDB1_PDB2] Files:1    Time: 1s
+*************   Final Catproc scripts   ************
+Serial   Phase #:44   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:45   [PDB$SEED] Files:1    Time: 1s
+*************   Final Catproc scripts   ************
+Serial   Phase #:44   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:45   [CDB1_PDB2] Files:1    Time: 0s
+**************   Final RDBMS scripts   *************
+Serial   Phase #:46   [PDB$SEED] Files:1    Time: 0s
+************   Upgrade Component Start   ***********
+Serial   Phase #:47   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:48   [PDB$SEED] Files:1    Time: 0s
+**************   Final RDBMS scripts   *************
+Serial   Phase #:46   [CDB1_PDB2] Files:1    Time: 0s
+************   Upgrade Component Start   ***********
+Serial   Phase #:47   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:48   [CDB1_PDB2] Files:1    Time: 1s
+****************   Upgrading Java   ****************
+Serial   Phase #:49   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:50   [PDB$SEED] Files:1    Time: 1s
+****************   Upgrading Java   ****************
+Serial   Phase #:49   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:50   [CDB1_PDB2] Files:1    Time: 0s
+*****************   Upgrading XDK   ****************
+Serial   Phase #:51   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:52   [PDB$SEED] Files:1    Time: 1s
+*****************   Upgrading XDK   ****************
+Serial   Phase #:51   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:52   [CDB1_PDB2] Files:1    Time: 0s
+*********   Upgrading APS,OLS,DV,CONTEXT   *********
+Serial   Phase #:53   [CDB1_PDB2] Files:1    Time: 0s
+*****************   Upgrading XDB   ****************
+Restart  Phase #:54   [CDB1_PDB2] Files:1    Time: 1s
+*********   Upgrading APS,OLS,DV,CONTEXT   *********
+Serial   Phase #:53   [PDB$SEED] Files:1    Time: 0s
+*****************   Upgrading XDB   ****************
+Restart  Phase #:54   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:56   [CDB1_PDB2] Files:3    Time: 0s
+Serial   Phase #:57   [CDB1_PDB2] Files:2    Time: 0s
+Parallel Phase #:58   [CDB1_PDB2] Files:11   Time: 0s
+Parallel Phase #:59   [CDB1_PDB2] Files:24   Time: 0s
+Serial   Phase #:60   [CDB1_PDB2] Files:4    Time: 0s
+Serial   Phase #:61   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:62   [CDB1_PDB2] Files:30   Time: 0s
+Serial   Phase #:63   [CDB1_PDB2] Files:1    Time: 0s
+Parallel Phase #:64   [CDB1_PDB2] Files:6    Time: 0s
+Serial   Phase #:65   [CDB1_PDB2] Files:2    Time: 0s
+Serial   Phase #:66   [CDB1_PDB2] Files:3    Time: 0s
+Restart  Phase #:67   [CDB1_PDB2] Files:1    Time: 1s
+Serial   Phase #:56   [PDB$SEED] Files:3    Time: 0s
+Serial   Phase #:57   [PDB$SEED] Files:2    Time: 0s
+Parallel Phase #:58   [PDB$SEED] Files:11   Time: 0s
+Parallel Phase #:59   [PDB$SEED] Files:24   Time: 0s
+Serial   Phase #:60   [PDB$SEED] Files:4    Time: 0s
+Serial   Phase #:61   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:62   [PDB$SEED] Files:30   Time: 0s
+Serial   Phase #:63   [PDB$SEED] Files:1    Time: 0s
+Parallel Phase #:64   [PDB$SEED] Files:6    Time: 0s
+Serial   Phase #:65   [PDB$SEED] Files:2    Time: 0s
+Serial   Phase #:66   [PDB$SEED] Files:3    Time: 0s
+Restart  Phase #:67   [PDB$SEED] Files:1    Time: 0s
+*********   Upgrading CATJAVA,OWM,MGW,RAC   ********
+Serial   Phase #:68   [CDB1_PDB2] Files:1    Time: 0s
+****************   Upgrading ORDIM   ***************
+Restart  Phase #:69   [CDB1_PDB2] Files:1    Time: 0s
+*********   Upgrading CATJAVA,OWM,MGW,RAC   ********
+Serial   Phase #:68   [PDB$SEED] Files:1    Time: 0s
+****************   Upgrading ORDIM   ***************
+Restart  Phase #:69   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:71   [CDB1_PDB2] Files:1    Time: 0s
+Parallel Phase #:72   [CDB1_PDB2] Files:2    Time: 0s
+Serial   Phase #:73   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:74   [CDB1_PDB2] Files:1    Time: 1s
+Serial   Phase #:71   [PDB$SEED] Files:1    Time: 0s
+Parallel Phase #:72   [PDB$SEED] Files:2    Time: 0s
+Serial   Phase #:73   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:74   [PDB$SEED] Files:1    Time: 0s
+Parallel Phase #:75   [CDB1_PDB2] Files:2    Time: 0s
+Serial   Phase #:76   [CDB1_PDB2] Files:2    Time: 0s
+*****************   Upgrading SDO   ****************
+Restart  Phase #:77   [CDB1_PDB2] Files:1    Time: 1s
+Parallel Phase #:75   [PDB$SEED] Files:2    Time: 0s
+Serial   Phase #:76   [PDB$SEED] Files:2    Time: 0s
+*****************   Upgrading SDO   ****************
+Restart  Phase #:77   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:79   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:80   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:81   [CDB1_PDB2] Files:1    Time: 0s
+Parallel Phase #:82   [CDB1_PDB2] Files:3    Time: 0s
+Serial   Phase #:83   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:84   [CDB1_PDB2] Files:1    Time: 0s
+Parallel Phase #:85   [CDB1_PDB2] Files:4    Time: 0s
+Serial   Phase #:86   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:87   [CDB1_PDB2] Files:3    Time: 0s
+Restart  Phase #:88   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:79   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:80   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:81   [PDB$SEED] Files:1    Time: 0s
+Parallel Phase #:82   [PDB$SEED] Files:3    Time: 0s
+Serial   Phase #:83   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:84   [PDB$SEED] Files:1    Time: 0s
+Parallel Phase #:85   [PDB$SEED] Files:4    Time: 0s
+Serial   Phase #:86   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:87   [PDB$SEED] Files:3    Time: 0s
+Restart  Phase #:88   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:89   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:90   [CDB1_PDB2] Files:1    Time: 1s
+Serial   Phase #:89   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:90   [PDB$SEED] Files:1    Time: 0s
+***********   Upgrading Misc. ODM, OLAP   **********
+Serial   Phase #:91   [CDB1_PDB2] Files:1    Time: 0s
+****************   Upgrading APEX   ****************
+Restart  Phase #:92   [CDB1_PDB2] Files:1    Time: 0s
+***********   Upgrading Misc. ODM, OLAP   **********
+Serial   Phase #:91   [PDB$SEED] Files:1    Time: 0s
+****************   Upgrading APEX   ****************
+Restart  Phase #:92   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:93   [PDB$SEED] Files:1    Time: 0s
+Restart  Phase #:94   [PDB$SEED] Files:1    Time: 1s
+Serial   Phase #:93   [CDB1_PDB2] Files:1    Time: 0s
+Restart  Phase #:94   [CDB1_PDB2] Files:1    Time: 0s
+***********   Final Component scripts    ***********
+Serial   Phase #:95   [CDB1_PDB2] Files:1    Time: 0s
+*************   Final Upgrade scripts   ************
+Serial   Phase #:96   [CDB1_PDB2] Files:1    Time: 0s
+*******************   Migration   ******************
+Serial   Phase #:97   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:98   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:99   [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:100  [CDB1_PDB2] Files:1    Time: 0s
+*****************   Post Upgrade   *****************
+Serial   Phase #:101  [CDB1_PDB2] Files:1    Time: 0s
+****************   Summary report   ****************
+Serial   Phase #:102  [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:103  [CDB1_PDB2] Files:1    Time: 0s
+Serial   Phase #:104  [CDB1_PDB2] Files:1     Time: 0s
+
+------------------------------------------------------
+Phases [0-104]         End Time:[2015_10_09 18:52:04]
+Container Lists Inclusion:[CDB1_PDB2] Exclusion:[NONE]
+------------------------------------------------------
+   Time: 0s
+***********   Final Component scripts    ***********
+Serial   Phase #:95   [PDB$SEED] Files:1    Time: 0s
+*************   Final Upgrade scripts   ************
+Serial   Phase #:96   [PDB$SEED] Files:1    Time: 0s
+*******************   Migration   ******************
+Serial   Phase #:97   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:98   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:99   [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:100  [PDB$SEED] Files:1    Time: 0s
+*****************   Post Upgrade   *****************
+Serial   Phase #:101  [PDB$SEED] Files:1 
+Grand Total Time: 17s [CDB1_PDB2]
+
+ LOG FILES: (/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb2*.log)
+   Time: 0s
+****************   Summary report   ****************
+Serial   Phase #:102  [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:103  [PDB$SEED] Files:1    Time: 0s
+Serial   Phase #:104  [PDB$SEED] Files:1     Time: 0s
+
+------------------------------------------------------
+Phases [0-104]         End Time:[2015_10_09 18:52:04]
+Container Lists Inclusion:[PDB$SEED] Exclusion:[NONE]
+------------------------------------------------------
+
+Total Upgrade Time:          [0d:0h:0m:17s]
+
+Grand Total Time: 17s [PDB$SEED]
+
+ LOG FILES: (/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdpdb_seed*.log)
+
+Total Upgrade Time:          [0d:0h:0m:17s]
+
+Start processing of CDB1_PDB3
+[/ade_autofs/dd19_db/RDBMS/MAIN/LINUX.X64/151007/perl/bin/perl catctl.pl -L plist.txt -E -n 2 -N 2 -I -i cdb1_pdb3 -c 'CDB1_PDB3' -l /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122 catupgrd.sql]
+
+Start processing of CDB1_PDB4
+[/ade_autofs/dd19_db/RDBMS/MAIN/LINUX.X64/151007/perl/bin/perl catctl.pl -L plist.txt -E -n 2 -N 2 -I -i cdb1_pdb4 -c 'CDB1_PDB4' -l /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122 catupgrd.sql]
+
+Argument list for [catctl.pl]
+Run in                c = CDB1_PDB3
+Do not run in         C = 0
+Input Directory       d = 0
+Echo OFF              e = 1
+Simulate              E = 1
+Log Id                i = cdb1_pdb3
+Child Process         I = 1
+Log Dir               l = /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122
+Priority List Name    L = plist.txt
+Upgrade Mode active   M = 0
+SQL Process Count     n = 2
+SQL PDB Process Count N = 2
+Open Mode Normal      o = 0
+Reverse Order         r = 0
+Start Phase           p = 0
+End Phase             P = 0
+Script                s = 0
+Serial Run            S = 0
+RO User Tablespaces   T = 0
+Display Phases        y = 0
+Debug catcon.pm       z = 0
+Debug catctl.pl       Z = 0
+
+catctl.pl VERSION: [12.2.0.1.0]
+
+
+
+Argument list for [catctl.pl]
+Run in                c = CDB1_PDB4
+Do not run in         C = 0
+Input Directory       d = 0
+Echo OFF              e = 1
+Simulate              E = 1
+Log Id                i = cdb1_pdb4
+Child Process         I = 1
+Log Dir               l = /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122
+Priority List Name    L = plist.txt
+Upgrade Mode active   M = 0
+SQL Process Count     n = 2
+SQL PDB Process Count N = 2
+Open Mode Normal      o = 0
+Reverse Order         r = 0
+Start Phase           p = 0
+End Phase             P = 0
+Script                s = 0
+Serial Run            S = 0
+RO User Tablespaces   T = 0
+Display Phases        y = 0
+Debug catcon.pm       z = 0
+Debug catctl.pl       Z = 0
+
+catctl.pl VERSION: [12.2.0.1.0]
+
+
+orahome = [/u01/app/oracle]
+orahome = [/u01/app/oracle]
+/u01/app/oracle/12.1.0/CDB1/bin/orabasehome = [/u01/app/oracle]
+catctlGetOrabase = [/u01/app/oracle]
+
+Analyzing file ./catupgrd.sql
+
+Log file directory = [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122]
+
+catcon: ALL catcon-related output will be written to [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb3_catcon_12150.lst]
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb3*.log] files for output generated by scripts
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb3_*.lst] files for spool files, if any
+/u01/app/oracle/12.1.0/CDB1/bin/orabasehome = [/u01/app/oracle]
+catctlGetOrabase = [/u01/app/oracle]
+
+Analyzing file ./catupgrd.sql
+
+Log file directory = [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122]
+
+catcon: ALL catcon-related output will be written to [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb4_catcon_12152.lst]
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb4*.log] files for output generated by scripts
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb4_*.lst] files for spool files, if any
+
+Number of Cpus        = 2
+
+Number of Cpus        = 2
+DATABASE NAME         = dbopens
+
+DATABASE NAME         = dbopens
+
+DataBase Version      = 12.2.0.1.0
+DataBase Version      = 12.2.0.1.0
+Generated PDB Inclusion:[CDB1_PDB3]
+Generated PDB Inclusion:[CDB1_PDB4]
+CDB$ROOT  Open Mode = [OPEN MIGRATE]
+
+------------------------------------------------------
+Phases [0-104]         Start Time:[2015_10_09 18:52:10]
+Container Lists Inclusion:[CDB1_PDB3] Exclusion:[NONE]
+------------------------------------------------------
+***********   Executing Change Scripts   ***********
+Serial   Phase #:0    [CDB1_PDB3] Files:1    Time: 0s
+***************   Catalog Core SQL   ***************
+Serial   Phase #:1    [CDB1_PDB3] Files:5    Time: 0s
+Restart  Phase #:2    [CDB1_PDB3] Files:1    Time: 0s
+***********   Catalog Tables and Views   ***********
+Parallel Phase #:3    [CDB1_PDB3] Files:20   Time: 0s
+Restart  Phase #:4    [CDB1_PDB3] Files:1 CDB$ROOT  Open Mode = [OPEN MIGRATE]
+
+------------------------------------------------------
+Phases [0-104]         Start Time:[2015_10_09 18:52:10]
+Container Lists Inclusion:[CDB1_PDB4] Exclusion:[NONE]
+------------------------------------------------------
+***********   Executing Change Scripts   ***********
+Serial   Phase #:0    [CDB1_PDB4] Files:1    Time: 0s
+***************   Catalog Core SQL   ***************
+Serial   Phase #:1    [CDB1_PDB4] Files:5    Time: 0s
+Restart  Phase #:2    [CDB1_PDB4] Files:1    Time: 0s
+***********   Catalog Tables and Views   ***********
+Parallel Phase #:3    [CDB1_PDB4] Files:20   Time: 0s
+Restart  Phase #:4    [CDB1_PDB4] Files:1    Time: 1s
+*************   Catalog Final Scripts   ************
+Serial   Phase #:5    [CDB1_PDB3] Files:5    Time: 0s
+*****************   Catproc Start   ****************
+Serial   Phase #:6    [CDB1_PDB3] Files:1    Time: 0s
+*****************   Catproc Types   ****************
+Serial   Phase #:7    [CDB1_PDB3] Files:4    Time: 0s
+Restart  Phase #:8    [CDB1_PDB3] Files:1    Time: 1s
+*************   Catalog Final Scripts   ************
+Serial   Phase #:5    [CDB1_PDB4] Files:5    Time: 0s
+*****************   Catproc Start   ****************
+Serial   Phase #:6    [CDB1_PDB4] Files:1    Time: 0s
+*****************   Catproc Types   ****************
+Serial   Phase #:7    [CDB1_PDB4] Files:4    Time: 0s
+Restart  Phase #:8    [CDB1_PDB4] Files:1    Time: 0s
+****************   Catproc Tables   ****************
+Parallel Phase #:9    [CDB1_PDB3] Files:69   Time: 0s
+Restart  Phase #:10   [CDB1_PDB3] Files:1    Time: 0s
+****************   Catproc Tables   ****************
+Parallel Phase #:9    [CDB1_PDB4] Files:69   Time: 0s
+Restart  Phase #:10   [CDB1_PDB4] Files:1    Time: 1s
+*************   Catproc Package Specs   ************
+Serial   Phase #:11   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:12   [CDB1_PDB3] Files:1    Time: 1s
+*************   Catproc Package Specs   ************
+Serial   Phase #:11   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:12   [CDB1_PDB4] Files:1    Time: 0s
+**************   Catproc Procedures   **************
+Parallel Phase #:13   [CDB1_PDB4] Files:94   Time: 0s
+Restart  Phase #:14   [CDB1_PDB4] Files:1    Time: 0s
+**************   Catproc Procedures   **************
+Parallel Phase #:13   [CDB1_PDB3] Files:94   Time: 0s
+Restart  Phase #:14   [CDB1_PDB3] Files:1    Time: 1s
+Parallel Phase #:15   [CDB1_PDB4] Files:116  Time: 0s
+Restart  Phase #:16   [CDB1_PDB4] Files:1    Time: 1s
+Parallel Phase #:15   [CDB1_PDB3] Files:116  Time: 0s
+Restart  Phase #:16   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:17   [CDB1_PDB3] Files:10   Time: 0s
+Restart  Phase #:18   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:17   [CDB1_PDB4] Files:10   Time: 0s
+Restart  Phase #:18   [CDB1_PDB4] Files:1    Time: 1s
+*****************   Catproc Views   ****************
+Parallel Phase #:19   [CDB1_PDB3] Files:33   Time: 0s
+Restart  Phase #:20   [CDB1_PDB3] Files:1    Time: 1s
+*****************   Catproc Views   ****************
+Parallel Phase #:19   [CDB1_PDB4] Files:33   Time: 0s
+Restart  Phase #:20   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:21   [CDB1_PDB4] Files:3    Time: 0s
+Restart  Phase #:22   [CDB1_PDB4] Files:1    Time: 1s
+Serial   Phase #:21   [CDB1_PDB3] Files:3    Time: 0s
+Restart  Phase #:22   [CDB1_PDB3] Files:1    Time: 1s
+Parallel Phase #:23   [CDB1_PDB4] Files:23   Time: 0s
+Restart  Phase #:24   [CDB1_PDB4] Files:1    Time: 0s
+Parallel Phase #:23   [CDB1_PDB3] Files:23   Time: 0s
+Restart  Phase #:24   [CDB1_PDB3] Files:1    Time: 1s
+Parallel Phase #:25   [CDB1_PDB4] Files:14   Time: 0s
+Restart  Phase #:26   [CDB1_PDB4] Files:1    Time: 1s
+Parallel Phase #:25   [CDB1_PDB3] Files:14   Time: 0s
+Restart  Phase #:26   [CDB1_PDB3] Files:1    Time: 0s
+***************   Catproc CDB Views   **************
+Serial   Phase #:27   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:28   [CDB1_PDB4] Files:1    Time: 0s
+***************   Catproc CDB Views   **************
+Serial   Phase #:27   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:28   [CDB1_PDB3] Files:1    Time: 1s
+Serial   Phase #:30   [CDB1_PDB4] Files:1    Time: 0s
+*****************   Catproc PLBs   *****************
+Serial   Phase #:31   [CDB1_PDB4] Files:277  Time: 0s
+Serial   Phase #:32   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:33   [CDB1_PDB4] Files:1    Time: 1s
+Serial   Phase #:30   [CDB1_PDB3] Files:1    Time: 0s
+*****************   Catproc PLBs   *****************
+Serial   Phase #:31   [CDB1_PDB3] Files:277  Time: 0s
+Serial   Phase #:32   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:33   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:34   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:35   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:34   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:35   [CDB1_PDB3] Files:1    Time: 1s
+***************   Catproc DataPump   ***************
+Serial   Phase #:36   [CDB1_PDB4] Files:4    Time: 0s
+Restart  Phase #:37   [CDB1_PDB4] Files:1    Time: 1s
+***************   Catproc DataPump   ***************
+Serial   Phase #:36   [CDB1_PDB3] Files:4    Time: 0s
+Restart  Phase #:37   [CDB1_PDB3] Files:1    Time: 0s
+******************   Catproc SQL   *****************
+Parallel Phase #:38   [CDB1_PDB3] Files:13   Time: 0s
+Restart  Phase #:39   [CDB1_PDB3] Files:1    Time: 0s
+******************   Catproc SQL   *****************
+Parallel Phase #:38   [CDB1_PDB4] Files:13   Time: 0s
+Restart  Phase #:39   [CDB1_PDB4] Files:1    Time: 1s
+Parallel Phase #:40   [CDB1_PDB3] Files:11   Time: 0s
+Restart  Phase #:41   [CDB1_PDB3] Files:1    Time: 1s
+Parallel Phase #:40   [CDB1_PDB4] Files:11   Time: 0s
+Restart  Phase #:41   [CDB1_PDB4] Files:1    Time: 0s
+Parallel Phase #:42   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:43   [CDB1_PDB3] Files:1    Time: 0s
+Parallel Phase #:42   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:43   [CDB1_PDB4] Files:1    Time: 1s
+*************   Final Catproc scripts   ************
+Serial   Phase #:44   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:45   [CDB1_PDB3] Files:1    Time: 1s
+*************   Final Catproc scripts   ************
+Serial   Phase #:44   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:45   [CDB1_PDB4] Files:1    Time: 0s
+**************   Final RDBMS scripts   *************
+Serial   Phase #:46   [CDB1_PDB3] Files:1    Time: 0s
+************   Upgrade Component Start   ***********
+Serial   Phase #:47   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:48   [CDB1_PDB3] Files:1    Time: 0s
+**************   Final RDBMS scripts   *************
+Serial   Phase #:46   [CDB1_PDB4] Files:1    Time: 0s
+************   Upgrade Component Start   ***********
+Serial   Phase #:47   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:48   [CDB1_PDB4] Files:1    Time: 1s
+****************   Upgrading Java   ****************
+Serial   Phase #:49   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:50   [CDB1_PDB3] Files:1    Time: 1s
+****************   Upgrading Java   ****************
+Serial   Phase #:49   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:50   [CDB1_PDB4] Files:1    Time: 0s
+*****************   Upgrading XDK   ****************
+Serial   Phase #:51   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:52   [CDB1_PDB4] Files:1    Time: 0s
+*****************   Upgrading XDK   ****************
+Serial   Phase #:51   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:52   [CDB1_PDB3] Files:1    Time: 1s
+*********   Upgrading APS,OLS,DV,CONTEXT   *********
+Serial   Phase #:53   [CDB1_PDB4] Files:1    Time: 0s
+*****************   Upgrading XDB   ****************
+Restart  Phase #:54   [CDB1_PDB4] Files:1    Time: 1s
+*********   Upgrading APS,OLS,DV,CONTEXT   *********
+Serial   Phase #:53   [CDB1_PDB3] Files:1    Time: 0s
+*****************   Upgrading XDB   ****************
+Restart  Phase #:54   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:56   [CDB1_PDB3] Files:3    Time: 0s
+Serial   Phase #:57   [CDB1_PDB3] Files:2    Time: 0s
+Parallel Phase #:58   [CDB1_PDB3] Files:11   Time: 0s
+Parallel Phase #:59   [CDB1_PDB3] Files:24   Time: 0s
+Serial   Phase #:60   [CDB1_PDB3] Files:4    Time: 0s
+Serial   Phase #:61   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:62   [CDB1_PDB3] Files:30   Time: 0s
+Serial   Phase #:63   [CDB1_PDB3] Files:1    Time: 0s
+Parallel Phase #:64   [CDB1_PDB3] Files:6    Time: 0s
+Serial   Phase #:65   [CDB1_PDB3] Files:2    Time: 0s
+Serial   Phase #:66   [CDB1_PDB3] Files:3    Time: 0s
+Restart  Phase #:67   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:56   [CDB1_PDB4] Files:3    Time: 0s
+Serial   Phase #:57   [CDB1_PDB4] Files:2    Time: 0s
+Parallel Phase #:58   [CDB1_PDB4] Files:11   Time: 0s
+Parallel Phase #:59   [CDB1_PDB4] Files:24   Time: 0s
+Serial   Phase #:60   [CDB1_PDB4] Files:4    Time: 0s
+Serial   Phase #:61   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:62   [CDB1_PDB4] Files:30   Time: 0s
+Serial   Phase #:63   [CDB1_PDB4] Files:1    Time: 0s
+Parallel Phase #:64   [CDB1_PDB4] Files:6    Time: 0s
+Serial   Phase #:65   [CDB1_PDB4] Files:2    Time: 0s
+Serial   Phase #:66   [CDB1_PDB4] Files:3    Time: 0s
+Restart  Phase #:67   [CDB1_PDB4] Files:1    Time: 1s
+*********   Upgrading CATJAVA,OWM,MGW,RAC   ********
+Serial   Phase #:68   [CDB1_PDB4] Files:1    Time: 0s
+****************   Upgrading ORDIM   ***************
+Restart  Phase #:69   [CDB1_PDB4] Files:1    Time: 1s
+*********   Upgrading CATJAVA,OWM,MGW,RAC   ********
+Serial   Phase #:68   [CDB1_PDB3] Files:1    Time: 0s
+****************   Upgrading ORDIM   ***************
+Restart  Phase #:69   [CDB1_PDB3] Files:1    Time: 1s
+Serial   Phase #:71   [CDB1_PDB3] Files:1    Time: 0s
+Parallel Phase #:72   [CDB1_PDB3] Files:2    Time: 0s
+Serial   Phase #:73   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:74   [CDB1_PDB3] Files:1    Time: 1s
+Serial   Phase #:71   [CDB1_PDB4] Files:1    Time: 0s
+Parallel Phase #:72   [CDB1_PDB4] Files:2    Time: 0s
+Serial   Phase #:73   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:74   [CDB1_PDB4] Files:1    Time: 0s
+Parallel Phase #:75   [CDB1_PDB4] Files:2    Time: 0s
+Serial   Phase #:76   [CDB1_PDB4] Files:2    Time: 0s
+*****************   Upgrading SDO   ****************
+Restart  Phase #:77   [CDB1_PDB4] Files:1    Time: 0s
+Parallel Phase #:75   [CDB1_PDB3] Files:2    Time: 0s
+Serial   Phase #:76   [CDB1_PDB3] Files:2    Time: 0s
+*****************   Upgrading SDO   ****************
+Restart  Phase #:77   [CDB1_PDB3] Files:1    Time: 1s
+Serial   Phase #:79   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:80   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:81   [CDB1_PDB4] Files:1    Time: 0s
+Parallel Phase #:82   [CDB1_PDB4] Files:3    Time: 0s
+Serial   Phase #:83   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:84   [CDB1_PDB4] Files:1    Time: 0s
+Parallel Phase #:85   [CDB1_PDB4] Files:4    Time: 0s
+Serial   Phase #:86   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:87   [CDB1_PDB4] Files:3    Time: 0s
+Restart  Phase #:88   [CDB1_PDB4] Files:1    Time: 1s
+Serial   Phase #:79   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:80   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:81   [CDB1_PDB3] Files:1    Time: 0s
+Parallel Phase #:82   [CDB1_PDB3] Files:3    Time: 0s
+Serial   Phase #:83   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:84   [CDB1_PDB3] Files:1    Time: 0s
+Parallel Phase #:85   [CDB1_PDB3] Files:4    Time: 0s
+Serial   Phase #:86   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:87   [CDB1_PDB3] Files:3    Time: 0s
+Restart  Phase #:88   [CDB1_PDB3] Files:1    Time: 1s
+Serial   Phase #:89   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:90   [CDB1_PDB3] Files:1    Time: 1s
+Serial   Phase #:89   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:90   [CDB1_PDB4] Files:1    Time: 0s
+***********   Upgrading Misc. ODM, OLAP   **********
+Serial   Phase #:91   [CDB1_PDB3] Files:1    Time: 0s
+****************   Upgrading APEX   ****************
+Restart  Phase #:92   [CDB1_PDB3] Files:1    Time: 0s
+***********   Upgrading Misc. ODM, OLAP   **********
+Serial   Phase #:91   [CDB1_PDB4] Files:1    Time: 0s
+****************   Upgrading APEX   ****************
+Restart  Phase #:92   [CDB1_PDB4] Files:1    Time: 1s
+Serial   Phase #:93   [CDB1_PDB3] Files:1    Time: 0s
+Restart  Phase #:94   [CDB1_PDB3] Files:1    Time: 1s
+Serial   Phase #:93   [CDB1_PDB4] Files:1    Time: 0s
+Restart  Phase #:94   [CDB1_PDB4] Files:1    Time: 0s
+***********   Final Component scripts    ***********
+Serial   Phase #:95   [CDB1_PDB4] Files:1    Time: 0s
+*************   Final Upgrade scripts   ************
+Serial   Phase #:96   [CDB1_PDB4] Files:1    Time: 0s
+*******************   Migration   ******************
+Serial   Phase #:97   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:98   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:99   [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:100  [CDB1_PDB4] Files:1    Time: 0s
+*****************   Post Upgrade   *****************
+Serial   Phase #:101  [CDB1_PDB4] Files:1    Time: 0s
+****************   Summary report   ****************
+Serial   Phase #:102  [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:103  [CDB1_PDB4] Files:1    Time: 0s
+Serial   Phase #:104  [CDB1_PDB4] Files:1     Time: 0s
+
+------------------------------------------------------
+Phases [0-104]         End Time:[2015_10_09 18:52:27]
+Container Lists Inclusion:[CDB1_PDB4] Exclusion:[NONE]
+------------------------------------------------------
+
+Grand Total Time: 17s [CDB1_PDB4]
+
+ LOG FILES: (/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb4*.log)
+
+Total Upgrade Time:          [0d:0h:0m:17s]
+   Time: 0s
+***********   Final Component scripts    ***********
+Serial   Phase #:95   [CDB1_PDB3] Files:1    Time: 0s
+*************   Final Upgrade scripts   ************
+Serial   Phase #:96   [CDB1_PDB3] Files:1    Time: 0s
+*******************   Migration   ******************
+Serial   Phase #:97   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:98   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:99   [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:100  [CDB1_PDB3] Files:1    Time: 0s
+*****************   Post Upgrade   *****************
+Serial   Phase #:101  [CDB1_PDB3] Files:1    Time: 0s
+****************   Summary report   ****************
+Serial   Phase #:102  [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:103  [CDB1_PDB3] Files:1    Time: 0s
+Serial   Phase #:104  [CDB1_PDB3] Files:1     Time: 0s
+
+------------------------------------------------------
+Phases [0-104]         End Time:[2015_10_09 18:52:27]
+Container Lists Inclusion:[CDB1_PDB3] Exclusion:[NONE]
+------------------------------------------------------
+
+Grand Total Time: 17s [CDB1_PDB3]
+
+ LOG FILES: (/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb3*.log)
+
+Total Upgrade Time:          [0d:0h:0m:17s]
+
+Start processing of CDB1_PDB1
+[/ade_autofs/dd19_db/RDBMS/MAIN/LINUX.X64/151007/perl/bin/perl catctl.pl -L plist.txt -E -n 2 -N 2 -I -i cdb1_pdb1 -c 'CDB1_PDB1' -l /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122 catupgrd.sql]
+
+Start processing of CDB1_PDB5
+[/ade_autofs/dd19_db/RDBMS/MAIN/LINUX.X64/151007/perl/bin/perl catctl.pl -L plist.txt -E -n 2 -N 2 -I -i cdb1_pdb5 -c 'CDB1_PDB5' -l /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122 catupgrd.sql]
+
+Argument list for [catctl.pl]
+Run in                c = CDB1_PDB1
+Do not run in         C = 0
+Input Directory       d = 0
+Echo OFF              e = 1
+Simulate              E = 1
+Log Id                i = cdb1_pdb1
+Child Process         I = 1
+Log Dir               l = /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122
+Priority List Name    L = plist.txt
+Upgrade Mode active   M = 0
+SQL Process Count     n = 2
+SQL PDB Process Count N = 2
+Open Mode Normal      o = 0
+Reverse Order         r = 0
+Start Phase           p = 0
+End Phase             P = 0
+Script                s = 0
+Serial Run            S = 0
+RO User Tablespaces   T = 0
+Display Phases        y = 0
+Debug catcon.pm       z = 0
+Debug catctl.pl       Z = 0
+
+catctl.pl VERSION: [12.2.0.1.0]
+           
+
+
+Argument list for [catctl.pl]
+Run in                c = CDB1_PDB5
+Do not run in         C = 0
+Input Directory       d = 0
+Echo OFF              e = 1
+Simulate              E = 1
+Log Id                i = cdb1_pdb5
+Child Process         I = 1
+Log Dir               l = /u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122
+Priority List Name    L = plist.txt
+Upgrade Mode active   M = 0
+SQL Process Count     n = 2
+SQL PDB Process Count N = 2
+Open Mode Normal      o = 0
+Reverse Order         r = 0
+Start Phase           p = 0
+End Phase             P = 0
+Script                s = 0
+Serial Run            S = 0
+RO User Tablespaces   T = 0
+Display Phases        y = 0
+Debug catcon.pm       z = 0
+Debug catctl.pl       Z = 0
+
+catctl.pl VERSION: [12.2.0.1.0]
+
+
+orahome = [/u01/app/oracle]
+orahome = [/u01/app/oracle]
+/u01/app/oracle/12.1.0/CDB1/bin/orabasehome = [/u01/app/oracle]
+catctlGetOrabase = [/u01/app/oracle]
+
+Analyzing file ./catupgrd.sql
+
+Log file directory = [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122]
+
+catcon: ALL catcon-related output will be written to [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb1_catcon_14178.lst]
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb1*.log] files for output generated by scripts
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb1_*.lst] files for spool files, if any
+/u01/app/oracle/12.1.0/CDB1/bin/orabasehome = [/u01/app/oracle]
+catctlGetOrabase = [/u01/app/oracle]
+
+Analyzing file ./catupgrd.sql
+
+Log file directory = [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122]
+
+catcon: ALL catcon-related output will be written to [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb5_catcon_14180.lst]
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb5*.log] files for output generated by scripts
+catcon: See [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb5_*.lst] files for spool files, if any
+
+Number of Cpus        = 2
+
+Number of Cpus        = 2
+DATABASE NAME         = dbopens
+
+DATABASE NAME         = dbopens
+
+DataBase Version      = 12.2.0.1.0
+DataBase Version      = 12.2.0.1.0
+Generated PDB Inclusion:[CDB1_PDB5]
+Generated PDB Inclusion:[CDB1_PDB1]
+CDB$ROOT  Open Mode = [OPEN MIGRATE]
+
+------------------------------------------------------
+Phases [0-104]         Start Time:[2015_10_09 18:52:32]
+Container Lists Inclusion:[CDB1_PDB5] Exclusion:[NONE]
+------------------------------------------------------
+***********   Executing Change Scripts   ***********
+Serial   Phase #:0    [CDB1_PDB5] Files:1    Time: 0s
+***************   Catalog Core SQL   ***************
+Serial   Phase #:1    [CDB1_PDB5] Files:5    Time: 0s
+Restart  Phase #:2    [CDB1_PDB5] Files:1 CDB$ROOT  Open Mode = [OPEN MIGRATE]
+
+------------------------------------------------------
+Phases [0-104]         Start Time:[2015_10_09 18:52:32]
+Container Lists Inclusion:[CDB1_PDB1] Exclusion:[NONE]
+------------------------------------------------------
+***********   Executing Change Scripts   ***********
+Serial   Phase #:0    [CDB1_PDB1] Files:1    Time: 0s
+***************   Catalog Core SQL   ***************
+Serial   Phase #:1    [CDB1_PDB1] Files:5    Time: 0s
+Restart  Phase #:2    [CDB1_PDB1] Files:1    Time: 0s
+***********   Catalog Tables and Views   ***********
+Parallel Phase #:3    [CDB1_PDB5] Files:20   Time: 0s
+Restart  Phase #:4    [CDB1_PDB5] Files:1    Time: 0s
+***********   Catalog Tables and Views   ***********
+Parallel Phase #:3    [CDB1_PDB1] Files:20   Time: 0s
+Restart  Phase #:4    [CDB1_PDB1] Files:1    Time: 1s
+*************   Catalog Final Scripts   ************
+Serial   Phase #:5    [CDB1_PDB1] Files:5    Time: 0s
+*****************   Catproc Start   ****************
+Serial   Phase #:6    [CDB1_PDB1] Files:1    Time: 0s
+*****************   Catproc Types   ****************
+Serial   Phase #:7    [CDB1_PDB1] Files:4    Time: 0s
+Restart  Phase #:8    [CDB1_PDB1] Files:1    Time: 1s
+*************   Catalog Final Scripts   ************
+Serial   Phase #:5    [CDB1_PDB5] Files:5    Time: 0s
+*****************   Catproc Start   ****************
+Serial   Phase #:6    [CDB1_PDB5] Files:1    Time: 0s
+*****************   Catproc Types   ****************
+Serial   Phase #:7    [CDB1_PDB5] Files:4    Time: 0s
+Restart  Phase #:8    [CDB1_PDB5] Files:1    Time: 0s
+****************   Catproc Tables   ****************
+Parallel Phase #:9    [CDB1_PDB1] Files:69   Time: 0s
+Restart  Phase #:10   [CDB1_PDB1] Files:1    Time: 0s
+****************   Catproc Tables   ****************
+Parallel Phase #:9    [CDB1_PDB5] Files:69   Time: 0s
+Restart  Phase #:10   [CDB1_PDB5] Files:1    Time: 1s
+*************   Catproc Package Specs   ************
+Serial   Phase #:11   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:12   [CDB1_PDB5] Files:1    Time: 1s
+*************   Catproc Package Specs   ************
+Serial   Phase #:11   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:12   [CDB1_PDB1] Files:1    Time: 0s
+**************   Catproc Procedures   **************
+Parallel Phase #:13   [CDB1_PDB1] Files:94   Time: 0s
+Restart  Phase #:14   [CDB1_PDB1] Files:1    Time: 0s
+**************   Catproc Procedures   **************
+Parallel Phase #:13   [CDB1_PDB5] Files:94   Time: 0s
+Restart  Phase #:14   [CDB1_PDB5] Files:1    Time: 1s
+Parallel Phase #:15   [CDB1_PDB1] Files:116  Time: 0s
+Restart  Phase #:16   [CDB1_PDB1] Files:1    Time: 1s
+Parallel Phase #:15   [CDB1_PDB5] Files:116  Time: 0s
+Restart  Phase #:16   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:17   [CDB1_PDB1] Files:10   Time: 0s
+Restart  Phase #:18   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:17   [CDB1_PDB5] Files:10   Time: 0s
+Restart  Phase #:18   [CDB1_PDB5] Files:1    Time: 1s
+*****************   Catproc Views   ****************
+Parallel Phase #:19   [CDB1_PDB1] Files:33   Time: 0s
+Restart  Phase #:20   [CDB1_PDB1] Files:1    Time: 1s
+*****************   Catproc Views   ****************
+Parallel Phase #:19   [CDB1_PDB5] Files:33   Time: 0s
+Restart  Phase #:20   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:21   [CDB1_PDB5] Files:3    Time: 0s
+Restart  Phase #:22   [CDB1_PDB5] Files:1    Time: 1s
+Serial   Phase #:21   [CDB1_PDB1] Files:3    Time: 0s
+Restart  Phase #:22   [CDB1_PDB1] Files:1    Time: 1s
+Parallel Phase #:23   [CDB1_PDB5] Files:23   Time: 0s
+Restart  Phase #:24   [CDB1_PDB5] Files:1    Time: 0s
+Parallel Phase #:23   [CDB1_PDB1] Files:23   Time: 0s
+Restart  Phase #:24   [CDB1_PDB1] Files:1    Time: 1s
+Parallel Phase #:25   [CDB1_PDB1] Files:14    Time: 1s
+Parallel Phase #:25   [CDB1_PDB5] Files:14   Time: 0s
+Restart  Phase #:26   [CDB1_PDB1] Files:1   Time: 0s
+Restart  Phase #:26   [CDB1_PDB5] Files:1    Time: 0s
+***************   Catproc CDB Views   **************
+Serial   Phase #:27   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:28   [CDB1_PDB1] Files:1    Time: 0s
+***************   Catproc CDB Views   **************
+Serial   Phase #:27   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:28   [CDB1_PDB5] Files:1    Time: 1s
+Serial   Phase #:30   [CDB1_PDB5] Files:1    Time: 0s
+*****************   Catproc PLBs   *****************
+Serial   Phase #:31   [CDB1_PDB5] Files:277  Time: 0s
+Serial   Phase #:32   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:33   [CDB1_PDB5] Files:1    Time: 1s
+Serial   Phase #:30   [CDB1_PDB1] Files:1    Time: 0s
+*****************   Catproc PLBs   *****************
+Serial   Phase #:31   [CDB1_PDB1] Files:277  Time: 0s
+Serial   Phase #:32   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:33   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:34   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:35   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:34   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:35   [CDB1_PDB1] Files:1    Time: 1s
+***************   Catproc DataPump   ***************
+Serial   Phase #:36   [CDB1_PDB5] Files:4    Time: 0s
+Restart  Phase #:37   [CDB1_PDB5] Files:1    Time: 1s
+***************   Catproc DataPump   ***************
+Serial   Phase #:36   [CDB1_PDB1] Files:4    Time: 0s
+Restart  Phase #:37   [CDB1_PDB1] Files:1    Time: 0s
+******************   Catproc SQL   *****************
+Parallel Phase #:38   [CDB1_PDB5] Files:13   Time: 0s
+Restart  Phase #:39   [CDB1_PDB5] Files:1    Time: 0s
+******************   Catproc SQL   *****************
+Parallel Phase #:38   [CDB1_PDB1] Files:13   Time: 0s
+Restart  Phase #:39   [CDB1_PDB1] Files:1    Time: 1s
+Parallel Phase #:40   [CDB1_PDB5] Files:11   Time: 0s
+Restart  Phase #:41   [CDB1_PDB5] Files:1    Time: 1s
+Parallel Phase #:40   [CDB1_PDB1] Files:11   Time: 0s
+Restart  Phase #:41   [CDB1_PDB1] Files:1    Time: 0s
+Parallel Phase #:42   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:43   [CDB1_PDB5] Files:1    Time: 1s
+Parallel Phase #:42   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:43   [CDB1_PDB1] Files:1    Time: 1s
+*************   Final Catproc scripts   ************
+Serial   Phase #:44   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:45   [CDB1_PDB5] Files:1    Time: 0s
+*************   Final Catproc scripts   ************
+Serial   Phase #:44   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:45   [CDB1_PDB1] Files:1    Time: 0s
+**************   Final RDBMS scripts   *************
+Serial   Phase #:46   [CDB1_PDB5] Files:1    Time: 0s
+************   Upgrade Component Start   ***********
+Serial   Phase #:47   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:48   [CDB1_PDB5] Files:1    Time: 1s
+**************   Final RDBMS scripts   *************
+Serial   Phase #:46   [CDB1_PDB1] Files:1    Time: 0s
+************   Upgrade Component Start   ***********
+Serial   Phase #:47   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:48   [CDB1_PDB1] Files:1    Time: 1s
+****************   Upgrading Java   ****************
+Serial   Phase #:49   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:50   [CDB1_PDB5] Files:1    Time: 0s
+****************   Upgrading Java   ****************
+Serial   Phase #:49   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:50   [CDB1_PDB1] Files:1    Time: 1s
+*****************   Upgrading XDK   ****************
+Serial   Phase #:51   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:52   [CDB1_PDB5] Files:1    Time: 1s
+*****************   Upgrading XDK   ****************
+Serial   Phase #:51   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:52   [CDB1_PDB1] Files:1    Time: 0s
+*********   Upgrading APS,OLS,DV,CONTEXT   *********
+Serial   Phase #:53   [CDB1_PDB5] Files:1    Time: 0s
+*****************   Upgrading XDB   ****************
+Restart  Phase #:54   [CDB1_PDB5] Files:1    Time: 0s
+*********   Upgrading APS,OLS,DV,CONTEXT   *********
+Serial   Phase #:53   [CDB1_PDB1] Files:1    Time: 0s
+*****************   Upgrading XDB   ****************
+Restart  Phase #:54   [CDB1_PDB1] Files:1    Time: 1s
+Serial   Phase #:56   [CDB1_PDB1] Files:3    Time: 0s
+Serial   Phase #:57   [CDB1_PDB1] Files:2    Time: 0s
+Parallel Phase #:58   [CDB1_PDB1] Files:11   Time: 0s
+Parallel Phase #:59   [CDB1_PDB1] Files:24   Time: 0s
+Serial   Phase #:60   [CDB1_PDB1] Files:4    Time: 0s
+Serial   Phase #:61   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:62   [CDB1_PDB1] Files:30   Time: 0s
+Serial   Phase #:63   [CDB1_PDB1] Files:1    Time: 0s
+Parallel Phase #:64   [CDB1_PDB1] Files:6    Time: 0s
+Serial   Phase #:65   [CDB1_PDB1] Files:2    Time: 0s
+Serial   Phase #:66   [CDB1_PDB1] Files:3    Time: 0s
+Restart  Phase #:67   [CDB1_PDB1] Files:1    Time: 1s
+Serial   Phase #:56   [CDB1_PDB5] Files:3    Time: 0s
+Serial   Phase #:57   [CDB1_PDB5] Files:2    Time: 0s
+Parallel Phase #:58   [CDB1_PDB5] Files:11   Time: 0s
+Parallel Phase #:59   [CDB1_PDB5] Files:24   Time: 0s
+Serial   Phase #:60   [CDB1_PDB5] Files:4    Time: 0s
+Serial   Phase #:61   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:62   [CDB1_PDB5] Files:30   Time: 0s
+Serial   Phase #:63   [CDB1_PDB5] Files:1    Time: 0s
+Parallel Phase #:64   [CDB1_PDB5] Files:6    Time: 0s
+Serial   Phase #:65   [CDB1_PDB5] Files:2    Time: 0s
+Serial   Phase #:66   [CDB1_PDB5] Files:3    Time: 0s
+Restart  Phase #:67   [CDB1_PDB5] Files:1    Time: 1s
+*********   Upgrading CATJAVA,OWM,MGW,RAC   ********
+Serial   Phase #:68   [CDB1_PDB1] Files:1    Time: 0s
+****************   Upgrading ORDIM   ***************
+Restart  Phase #:69   [CDB1_PDB1] Files:1    Time: 1s
+*********   Upgrading CATJAVA,OWM,MGW,RAC   ********
+Serial   Phase #:68   [CDB1_PDB5] Files:1    Time: 0s
+****************   Upgrading ORDIM   ***************
+Restart  Phase #:69   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:71   [CDB1_PDB1] Files:1    Time: 0s
+Parallel Phase #:72   [CDB1_PDB1] Files:2    Time: 0s
+Serial   Phase #:73   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:74   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:71   [CDB1_PDB5] Files:1    Time: 0s
+Parallel Phase #:72   [CDB1_PDB5] Files:2    Time: 0s
+Serial   Phase #:73   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:74   [CDB1_PDB5] Files:1    Time: 1s
+Parallel Phase #:75   [CDB1_PDB1] Files:2    Time: 0s
+Serial   Phase #:76   [CDB1_PDB1] Files:2    Time: 0s
+*****************   Upgrading SDO   ****************
+Restart  Phase #:77   [CDB1_PDB1] Files:1    Time: 1s
+Parallel Phase #:75   [CDB1_PDB5] Files:2    Time: 0s
+Serial   Phase #:76   [CDB1_PDB5] Files:2    Time: 0s
+*****************   Upgrading SDO   ****************
+Restart  Phase #:77   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:79   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:80   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:81   [CDB1_PDB1] Files:1    Time: 0s
+Parallel Phase #:82   [CDB1_PDB1] Files:3    Time: 0s
+Serial   Phase #:83   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:84   [CDB1_PDB1] Files:1    Time: 0s
+Parallel Phase #:85   [CDB1_PDB1] Files:4    Time: 0s
+Serial   Phase #:86   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:87   [CDB1_PDB1] Files:3    Time: 0s
+Restart  Phase #:88   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:79   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:80   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:81   [CDB1_PDB5] Files:1    Time: 0s
+Parallel Phase #:82   [CDB1_PDB5] Files:3    Time: 0s
+Serial   Phase #:83   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:84   [CDB1_PDB5] Files:1    Time: 0s
+Parallel Phase #:85   [CDB1_PDB5] Files:4    Time: 0s
+Serial   Phase #:86   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:87   [CDB1_PDB5] Files:3    Time: 0s
+Restart  Phase #:88   [CDB1_PDB5] Files:1    Time: 1s
+Serial   Phase #:89   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:90   [CDB1_PDB1] Files:1    Time: 1s
+Serial   Phase #:89   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:90   [CDB1_PDB5] Files:1    Time: 0s
+***********   Upgrading Misc. ODM, OLAP   **********
+Serial   Phase #:91   [CDB1_PDB1] Files:1    Time: 0s
+****************   Upgrading APEX   ****************
+Restart  Phase #:92   [CDB1_PDB1] Files:1    Time: 1s
+***********   Upgrading Misc. ODM, OLAP   **********
+Serial   Phase #:91   [CDB1_PDB5] Files:1    Time: 0s
+****************   Upgrading APEX   ****************
+Restart  Phase #:92   [CDB1_PDB5] Files:1    Time: 1s
+Serial   Phase #:93   [CDB1_PDB1] Files:1    Time: 0s
+Restart  Phase #:94   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:93   [CDB1_PDB5] Files:1    Time: 0s
+Restart  Phase #:94   [CDB1_PDB5] Files:1    Time: 1s
+***********   Final Component scripts    ***********
+Serial   Phase #:95   [CDB1_PDB1] Files:1    Time: 0s
+*************   Final Upgrade scripts   ************
+Serial   Phase #:96   [CDB1_PDB1] Files:1    Time: 0s
+*******************   Migration   ******************
+Serial   Phase #:97   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:98   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:99   [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:100  [CDB1_PDB1] Files:1    Time: 0s
+*****************   Post Upgrade   *****************
+Serial   Phase #:101  [CDB1_PDB1] Files:1    Time: 0s
+****************   Summary report   ****************
+Serial   Phase #:102  [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:103  [CDB1_PDB1] Files:1    Time: 0s
+Serial   Phase #:104  [CDB1_PDB1] Files:1     Time: 0s
+
+------------------------------------------------------
+Phases [0-104]         End Time:[2015_10_09 18:52:50]
+Container Lists Inclusion:[CDB1_PDB1] Exclusion:[NONE]
+------------------------------------------------------
+
+Grand Total Time: 18s [CDB1_PDB1]
+
+ LOG FILES: (/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb1*.log)
+
+Total Upgrade Time:          [0d:0h:0m:18s]
+   Time: 1s
+***********   Final Component scripts    ***********
+Serial   Phase #:95   [CDB1_PDB5] Files:1    Time: 0s
+*************   Final Upgrade scripts   ************
+Serial   Phase #:96   [CDB1_PDB5] Files:1    Time: 0s
+*******************   Migration   ******************
+Serial   Phase #:97   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:98   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:99   [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:100  [CDB1_PDB5] Files:1    Time: 0s
+*****************   Post Upgrade   *****************
+Serial   Phase #:101  [CDB1_PDB5] Files:1    Time: 0s
+****************   Summary report   ****************
+Serial   Phase #:102  [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:103  [CDB1_PDB5] Files:1    Time: 0s
+Serial   Phase #:104  [CDB1_PDB5] Files:1     Time: 0s
+
+------------------------------------------------------
+Phases [0-104]         End Time:[2015_10_09 18:52:50]
+Container Lists Inclusion:[CDB1_PDB5] Exclusion:[NONE]
+------------------------------------------------------
+
+Grand Total Time: 18s [CDB1_PDB5]
+
+ LOG FILES: (/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrdcdb1_pdb5*.log)
+
+Total Upgrade Time:          [0d:0h:0m:18s]
+
+Run file is [/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catctl_priority_run.lst]
+1,CDB$ROOT
+------------------------------------------------------
+3,PDB$SEED
+3,CDB1_PDB2
+------------------------------------------------------
+4,CDB1_PDB3
+4,CDB1_PDB4
+------------------------------------------------------
+5,CDB1_PDB1
+5,CDB1_PDB5
+------------------------------------------------------
+------------------------------------------------------
+
+     Time: 19s For CDB$ROOT
+     Time: 68s For PDB(s)
+
+Grand Total Time: 87s 
+
+ LOG FILES: (/u01/app/oracle/12.1.0/CDB1/cfgtoollogs/dbopens/upgrade20151009185122/catupgrd*.log)
+
+Grand Total Upgrade Time:    [0d:0h:1m:27s]
+</code></pre><p>In this example, at the conclusion of the upgrade log, you can see that <code class="codeph">CDB$ROOT</code> is upgraded first. After the CDB$ROOT upgrade is completed, the Parallel Upgrade Utility carries out the following concurrent upgrades of PDBs, in accordance with the priority settings in the priority list:
+                     </p>
+                     <ol>
+                        <li>
+                           <p>PDB$SEED and CDB1_PDB2</p>
+                        </li>
+                        <li>
+                           <p>CDB1_PDB3 and CDB1_PDB4</p>
+                        </li>
+                        <li>
+                           <p>CDB1_PDB1 and CDB1_PDB5</p>
+                        </li>
+                     </ol>
+                  </div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="upgrading-parallel-upgrade-utility-catctl-pl.html#GUID-9E7E83CC-6A4B-4645-AEA8-AFE16337339E">About the Parallel Upgrade Utility for Oracle Database (CATCTL.PL and DBUPGRADE)</a></li>
+                        <li><a href="upgrading-parallel-upgrade-utility-catctl-pl.html#GUID-C667B51C-058F-48B6-86FE-12E9D82FDDBD">Parallel Upgrade Utility (catctl.pl) Parameters</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="testing-upgraded-production-oracle-database.html#GUID-DA291D0C-5680-48D3-90A8-CF4217577A6B" title="Your test plan for Oracle Database upgrades should include these test procedures.">Testing the Upgrade Process for Oracle Database</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="UPGRD52882"></a><div class="props_rev_3"><a id="GUID-DCDFE417-1D74-4154-B565-5E34E616E1BA" name="GUID-DCDFE417-1D74-4154-B565-5E34E616E1BA"></a><h3 id="UPGRD-GUID-DCDFE417-1D74-4154-B565-5E34E616E1BA" class="sect3">Upgrade Oracle Call Interface (OCI) and Precompiler Applications</h3>
+               <div>
+                  <p>Upgrade any Oracle Call Interface (OCI) and precompiler applications that you plan to use with the new release of Oracle Database. </p>
+                  <p>Oracle recommends that you test these applications on a test database before you upgrade your current production database.</p>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="-upgrade-precompiler-oci-apps-oracle-database.html#GUID-624A9128-1FD8-4CE6-B69A-97A6E4A4882E">About Upgrading Precompiler and OCI Applications in Oracle Database</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="testing-upgraded-production-oracle-database.html#GUID-DA291D0C-5680-48D3-90A8-CF4217577A6B" title="Your test plan for Oracle Database upgrades should include these test procedures.">Testing the Upgrade Process for Oracle Database</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,1520 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Oracle Streams Messaging Examples</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Advanced Queuing User's Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Advanced Queuing User's Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="oracle-database-advanced-queuing.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-02-03T22:03:10-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E90592-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="anydata-queues-for-user-messages.html" title="Previous" type="text/html">
+      <link rel="next" href="non-persistent-queues.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Oracle® Database Advanced Queuing">
+    <meta name="dcterms.isVersionOf" content="ADQUE">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="anydata-queues-for-user-messages.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="non-persistent-queues.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Advanced Queuing User's Guide </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Oracle Streams Messaging Examples</li>
+            </ol>
+            <a id="GUID-F1E127D4-F6D3-409F-AB19-CE124E883DA7" name="GUID-F1E127D4-F6D3-409F-AB19-CE124E883DA7"></a><a id="ADQUE025"></a>
+            
+            <h2 id="ADQUE-GUID-F1E127D4-F6D3-409F-AB19-CE124E883DA7" class="sect2"><span class="enumeration_chapter">23 </span> Oracle Streams Messaging Examples
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>The examples illustrate a messaging environment that can be constructed using Oracle Streams. The examples assume you are in a SQL*Plus testing environment with access to a database named <code class="codeph">db01</code>. 
+               </p>
+               <p> Topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="streams-messaging-examples.html#GUID-DE545E61-0AFA-4C8B-99E4-4D7291F75379">Overview of Messaging Example</a></p>
+                  </li>
+                  <li>
+                     <p><a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65">Setting Up Users and Creating an ANYDATA Queue</a></p>
+                  </li>
+                  <li>
+                     <p><a href="streams-messaging-examples.html#GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02">Creating Enqueue Procedures</a></p>
+                  </li>
+                  <li>
+                     <p><a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B">Configuring an Apply Process</a></p>
+                  </li>
+                  <li>
+                     <p><a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764">Configuring Explicit Dequeue</a></p>
+                  </li>
+                  <li>
+                     <p><a href="streams-messaging-examples.html#GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8">Enqueuing Messages</a></p>
+                  </li>
+                  <li>
+                     <p><a href="streams-messaging-examples.html#GUID-0A6ED11A-8CF4-4627-875C-721043387419">Dequeuing Messages Explicitly and Querying for Applied Messages</a></p>
+                  </li>
+                  <li>
+                     <p><a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7">Enqueuing and Dequeuing Messages Using JMS</a></p>
+                     <div class="infoboxnotealso" id="GUID-F1E127D4-F6D3-409F-AB19-CE124E883DA7__GUID-991C432D-7D8D-46FE-8EED-B6E9EFC5AB3E">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../strms/oracle-streams-staging-and-propagation.html#STRMS111"><span class="italic">Oracle Streams Concepts and Administration </span></a>for more information about messaging and <code class="codeph">ANYDATA</code> queues
+                        </p>
+                     </div>
+                  </li>
+               </ul>
+            </div><a id="ADQUE3477"></a><a id="ADQUE3476"></a><div class="props_rev_3"><a id="GUID-DE545E61-0AFA-4C8B-99E4-4D7291F75379" name="GUID-DE545E61-0AFA-4C8B-99E4-4D7291F75379"></a><h3 id="ADQUE-GUID-DE545E61-0AFA-4C8B-99E4-4D7291F75379" class="sect3"><span class="enumeration_section">23.1 </span>Overview of Messaging Example
+               </h3>
+               <div>
+                  <p>This example illustrates using a single <code class="codeph">ANYDATA</code> <a href="glossary.html#GUID-583DEF67-C9BC-4B83-B8DC-2375A5BE08BB"><span class="xrefglossterm">queue</span></a> to create an Oracle Streams messaging environment in which <a href="glossary.html#GUID-2028AECF-DB3E-40E2-99B6-A35674C08038"><span class="xrefglossterm">message</span></a> payloads of different types are stored in the same queue. Specifically, this example illustrates the following messaging features of Oracle Streams:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Enqueuing messages containing order payload as <code class="codeph">ANYDATA</code> payloads
+                        </p>
+                     </li>
+                     <li>
+                        <p>Enqueuing messages containing customer payload as <code class="codeph">ANYDATA</code> payloads
+                        </p>
+                     </li>
+                     <li>
+                        <p>Enqueuing messages containing row LCRs as <code class="codeph">ANYDATA</code> payloads
+                        </p>
+                     </li>
+                     <li>
+                        <p>Creating a rule set for applying the events</p>
+                     </li>
+                     <li>
+                        <p>Creating an evaluation context used by the rule set</p>
+                     </li>
+                     <li>
+                        <p>Creating an Oracle Streams apply process to <a href="glossary.html#GUID-BC8D60E8-953A-4C6C-8163-F7AE187B768B"><span class="xrefglossterm">dequeue</span></a> and process the events based on <a href="glossary.html#GUID-99CB47E5-833C-41C3-965F-5115B1F1203E"><span class="xrefglossterm">rules</span></a></p>
+                     </li>
+                     <li>
+                        <p>Creating a message handler and associating it with the apply process</p>
+                     </li>
+                     <li>
+                        <p>Explicitly dequeuing and processing events based on rules without using the apply process</p>
+                     </li>
+                  </ul>
+                  <p><a href="streams-messaging-examples.html#GUID-DE545E61-0AFA-4C8B-99E4-4D7291F75379__i1005626">Figure 23-1</a> provides an overview of this environment.
+                  </p>
+                  <div class="figure" id="GUID-DE545E61-0AFA-4C8B-99E4-4D7291F75379__i1005626">
+                     <p class="titleinfigure">Figure 23-1 Example Oracle Streams Messaging Environment</p><img width="416" src="img/strms021.gif" alt="Description of Figure 23-1 follows" title="Description of Figure 23-1 follows" longdesc="img_text/strms021.html"><br><a href="img_text/strms021.html">Description of "Figure 23-1 Example Oracle Streams Messaging Environment"</a></div>
+                  <!-- class="figure" -->
+               </div>
+            </div><a id="ADQUE3479"></a><a id="ADQUE3480"></a><a id="ADQUE3481"></a><a id="ADQUE3478"></a><div class="props_rev_3"><a id="GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65" name="GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65"></a><h3 id="ADQUE-GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65" class="sect3"><span class="enumeration_section">23.2 </span>Setting Up Users and Creating an ANYDATA Queue
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Because the examples in this chapter use the <code class="codeph">oe</code> sample <a href="glossary.html#GUID-CBE1EC43-DFD2-4701-B758-DCE2C98C277A"><span class="xrefglossterm">schema</span></a>, the <code class="codeph">oe</code> user must have privileges to run the subprograms in the <code class="codeph">DBMS_AQ</code> package. This is accomplished in <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFFGEJD">Example 23-1</a>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__GUID-223CB3AA-D8D8-400D-BE2D-A1CADC3E35B0">
+                        <p class="notep1">Note:</p>
+                        <p>The <code class="codeph">oe</code> user is specified as the queue user when the <code class="codeph">ANYDATA</code> queue is created in <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFJCJJD">Example 23-2</a>. The <code class="codeph">SET_UP_QUEUE</code> procedure grants the <code class="codeph">oe</code> user <a href="glossary.html#GUID-B21E60F7-4BFA-42A2-9A8F-B781C2A55ED9"><span class="xrefglossterm">enqueue</span></a> and <a href="glossary.html#GUID-BC8D60E8-953A-4C6C-8163-F7AE187B768B"><span class="xrefglossterm">dequeue</span></a> privileges on the queue, but the <code class="codeph">oe</code> user also needs <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">DBMS_AQ</code> package to enqueue and dequeue messages. 
+                        </p>
+                     </div>
+                     <p>Most of the configuration and administration actions illustrated in these examples are performed by the Oracle Streams administrator <code class="codeph">strmadmin</code>. <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFFGEJD">Example 23-1</a> also creates this user and grants the necessary privileges. These privileges enable the user to run subprograms in packages related to Oracle Streams, create rule sets, create rules, and monitor the Oracle Streams environment by querying data dictionary views.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFFGEJD">Example 23-1</a>, you connect to database <code class="codeph">db01</code> as a user with administrative privileges.
+                     </p>
+                     <div class="infoboxnote" id="GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__GUID-EE99D33B-E390-4B5C-AB03-F6E69262838A">
+                        <p class="notep1">Note:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The <code class="codeph">SELECT_CATALOG_ROLE</code> is not required for the Oracle Streams administrator. It is granted in this example so that the Oracle Streams administrator can monitor the environment easily.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If you plan to use the Oracle Streams tool in Oracle Enterprise Manager, then grant the Oracle Streams administrator <code class="codeph">SELECT</code> <code class="codeph">ANY</code> <code class="codeph">DICTIONARY</code> privilege, in addition to the privileges shown in this step.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <p>In <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFJCJJD">Example 23-2</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create <code class="codeph">ANYDATA</code> queue <code class="codeph">oe_queue</code>. The <code class="codeph">SET_UP_QUEUE</code> procedure creates a queue table for the queue and then creates and starts the queue.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFGGADI">Example 23-3</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to grant the <code class="codeph">oe</code> user privileges on queue <code class="codeph">oe_queue</code>, create agent <code class="codeph">explicit_enq</code> that will be used to perform explicit enqueue operations on the queue, and associate the <code class="codeph">oe</code> user with the agent.
+                     </p>
+                     <p>Queue <code class="codeph">oe_queue</code> is a secure queue because it was created using <code class="codeph">SET_UP_QUEUE</code>. For a user to perform enqueue and dequeue operations on a secure queue, the user must be configured as a secure queue user of the queue. Associating the <code class="codeph">oe</code> user with agent <code class="codeph">explicit_enq</code> enables the <code class="codeph">oe</code> user to perform enqueue operations on this queue.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFFGEJD">
+                     <p class="titleinexample">Example 23-1 Setting Up ANYDATA Users</p><pre class="oac_no_warn" dir="ltr">GRANT EXECUTE ON DBMS_AQ TO oe;
+CREATE USER strmadmin IDENTIFIED  BY strmadmin DEFAULT TABLESPACE example;
+GRANT EXECUTE ON DBMS_APPLY_ADM   TO strmadmin;
+GRANT EXECUTE ON DBMS_AQ          TO strmadmin;
+GRANT EXECUTE ON DBMS_AQADM       TO strmadmin;
+GRANT EXECUTE ON DBMS_STREAMS_ADM TO strmadmin;
+BEGIN 
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_SET_OBJ, 
+    grantee      =&gt; 'strmadmin', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_RULE_OBJ, 
+    grantee      =&gt; 'strmadmin', 
+    grant_option =&gt; FALSE);
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ, 
+    grantee      =&gt; 'strmadmin', 
+    grant_option =&gt; FALSE);
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFJCJJD">
+                     <p class="titleinexample">Example 23-2 Creating an ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDE
+CONNECT strmadmin/&amp;password@db01;
+set echo on
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE( 
+    queue_table =&gt; 'oe_queue_table', 
+    queue_name  =&gt; 'oe_queue');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFGGADI">
+                     <p class="titleinexample">Example 23-3 Enabling Enqueue on the ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDE
+CONNECT strmadmin/&amp;password@db01;
+set echo on
+
+BEGIN
+  SYS.DBMS_AQADM.GRANT_QUEUE_PRIVILEGE(
+    privilege  =&gt; 'ALL',
+    queue_name =&gt; 'strmadmin.oe_queue',
+    grantee    =&gt; 'oe');
+  SYS.DBMS_AQADM.CREATE_AQ_AGENT(
+    agent_name  =&gt; 'explicit_enq');
+  DBMS_AQADM.ENABLE_DB_ACCESS(
+    agent_name  =&gt; 'explicit_enq',
+    db_username =&gt; 'oe');
+END;
+/</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3483"></a><a id="ADQUE3484"></a><a id="ADQUE3485"></a><a id="ADQUE3486"></a><a id="ADQUE3482"></a><div class="props_rev_3"><a id="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02" name="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02"></a><h3 id="ADQUE-GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02" class="sect3"><span class="enumeration_section">23.3 </span>Creating Enqueue Procedures
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The examples in this section create two PL/SQL procedures that enqueue messages into the <code class="codeph">ANYDATA</code> queue <code class="codeph">oe_queue</code>. One procedure enqueues non-LCR messages, and the other procedure enqueues row LCR messages.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__CJFEHHGC">Example 23-4</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a type to represent orders based on the columns in the <code class="codeph">oe.orders</code> table. This type is used for messages that are enqueued into the <code class="codeph">ANYDATA</code> queue <code class="codeph">oe_queue</code>. The type attributes include the columns in the <code class="codeph">oe.orders</code> table, along with one extra attribute named <code class="codeph">action</code>. The value of the <code class="codeph">action</code> attribute for instances of this type is used to determine the correct action to perform on the instance (either apply process dequeue or explicit dequeue). 
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__CJFGIFJE">Example 23-5</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a type to represent customers based on the columns in the <code class="codeph">oe.customers</code> table. This type is used for messages that are enqueued into the <code class="codeph">ANYDATA</code> queue <code class="codeph">oe_queue</code>. The type attributes include the columns in the <code class="codeph">oe.customers</code> table, along with one extra attribute named <code class="codeph">action</code>. The value of the <code class="codeph">action</code> attribute for instances of this type is used to determine the correct action to perform on the instance (either apply process dequeue or explicit dequeue). 
+                     </p>
+                     <div class="infoboxnote" id="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__GUID-9767C06A-8C53-4508-911F-81DDF8650035">
+                        <p class="notep1">Note:</p>
+                        <p>This example assumes you have dropped the <code class="codeph">cust_geo_location</code> column from the <code class="codeph">oe.customers</code> table. This column is useful only with Oracle Spatial.
+                        </p>
+                     </div>
+                     <p>In <a href="streams-messaging-examples.html#GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__CJFEAHDG">Example 23-6</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a PL/SQL procedure called <code class="codeph">enq_proc</code> to enqueue non-LCR messages into <code class="codeph">ANYDATA</code> queue oe_queue.
+                     </p>
+                     <div class="infoboxnote" id="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__GUID-4C98093B-9CB5-4EDD-B59B-A15151344DEE">
+                        <p class="notep1">Note:</p>
+                        <p>A single enqueued message can be dequeued by both an apply process and an explicit dequeue, but the examples in this chapter do not illustrate this capability.</p>
+                     </div>
+                     <p>In <a href="streams-messaging-examples.html#GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__CJFHDGJJ">Example 23-7</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a PL/SQL procedure called <code class="codeph">enq_row_lcr</code> that constructs a row LCR and then enqueues the row LCR into <code class="codeph">ANYDATA</code> queue oe_queue.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__GUID-1F34C43E-143C-4ADD-BDD5-8A38FB7969E4">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS307"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about LCR constructors
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__CJFEHHGC">
+                     <p class="titleinexample">Example 23-4 Creating an Orders Type</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDE
+CONNECT oe/&amp;password@db01;
+set echo on
+
+CREATE TYPE order_event_typ AS OBJECT(
+  order_id       NUMBER(12),
+  order_date     TIMESTAMP(6) WITH LOCAL TIME ZONE,
+  order_mode     VARCHAR2(8),
+  customer_id    NUMBER(6),
+  order_status   NUMBER(2),
+  order_total    NUMBER(8,2),
+  sales_rep_id   NUMBER(6),
+  promotion_id   NUMBER(6),
+  action         VARCHAR(7));
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__CJFGIFJE">
+                     <p class="titleinexample">Example 23-5 Creating a Customers Type</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDECONNECT oe/&amp;password@db01;set echo on
+
+CREATE TYPE customer_event_typ AS OBJECT(
+  customer_id         NUMBER(6),
+  cust_first_name     VARCHAR2(20),
+  cust_last_name      VARCHAR2(20),
+  cust_address        CUST_ADDRESS_TYP,
+  phone_numbers       PHONE_LIST_TYP,
+  nls_language        VARCHAR2(3),
+  nls_territory       VARCHAR2(30),
+  credit_limit        NUMBER(9,2),
+  cust_email          VARCHAR2(30),
+  account_mgr_id      NUMBER(6),
+  date_of_birth       DATE,
+  marital_status      VARCHAR2(20),
+  gender              VARCHAR2(1),
+  income_level        VARCHAR2(20),
+  action              VARCHAR(7));
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__CJFEAHDG">
+                     <p class="titleinexample">Example 23-6 Creating a Procedure to Enqueue Non-LCR Messages</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDECONNECT oe/&amp;password@db01;set echo on
+
+CREATE PROCEDURE oe.enq_proc (event IN ANYDATA) IS
+    enqopt       DBMS_AQ.ENQUEUE_OPTIONS_T;
+    mprop        DBMS_AQ.MESSAGE_PROPERTIES_T;
+    enq_eventid  RAW(16);
+  BEGIN
+    mprop.SENDER_ID := SYS.AQ$_AGENT('explicit_enq', NULL, NULL);
+    DBMS_AQ.ENQUEUE(
+      queue_name          =&gt;  'strmadmin.oe_queue',
+      enqueue_options     =&gt;  enqopt,
+      message_properties  =&gt;  mprop,
+      payload             =&gt;  event,
+      msgid               =&gt;  enq_eventid);
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-C1CF2AEC-6EAE-4EF7-AE22-C7A47E6C0B02__CJFHDGJJ">
+                     <p class="titleinexample">Example 23-7 Creating a Procedure to Construct and Enqueue Row LCR Events</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDECONNECT oe/&amp;password@db01;set echo on
+
+CREATE PROCEDURE oe.enq_row_lcr(
+  source_dbname  VARCHAR2,
+  cmd_type       VARCHAR2,
+  obj_owner      VARCHAR2,
+  obj_name       VARCHAR2,
+  old_vals       SYS.LCR$_ROW_LIST,
+  new_vals       SYS.LCR$_ROW_LIST) 
+AS
+  eopt           DBMS_AQ.ENQUEUE_OPTIONS_T;
+  mprop          DBMS_AQ.MESSAGE_PROPERTIES_T;
+  enq_msgid      RAW(16);
+  row_lcr        SYS.LCR$_ROW_RECORD;
+BEGIN
+  mprop.SENDER_ID := SYS.AQ$_AGENT('explicit_enq', NULL, NULL); 
+  row_lcr := SYS.LCR$_ROW_RECORD.CONSTRUCT(
+    source_database_name  =&gt;  source_dbname,
+    command_type          =&gt;  cmd_type,
+    object_owner          =&gt;  obj_owner,
+    object_name           =&gt;  obj_name,
+    old_values            =&gt;  old_vals,
+    new_values            =&gt;  new_vals);
+  DBMS_AQ.ENQUEUE(
+    queue_name         =&gt;  'strmadmin.oe_queue', 
+    enqueue_options    =&gt;  eopt,
+    message_properties =&gt;  mprop,
+    payload            =&gt;  ANYDATA.ConvertObject(row_lcr),
+    msgid              =&gt;  enq_msgid);
+END enq_row_lcr;
+/</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3488"></a><a id="ADQUE3489"></a><a id="ADQUE3490"></a><a id="ADQUE3491"></a><a id="ADQUE3492"></a><a id="ADQUE3493"></a><a id="ADQUE3494"></a><a id="ADQUE3495"></a><a id="ADQUE3496"></a><a id="ADQUE3497"></a><a id="ADQUE3487"></a><div class="props_rev_3"><a id="GUID-913B6074-22A9-4395-80DA-BE38985A628B" name="GUID-913B6074-22A9-4395-80DA-BE38985A628B"></a><h3 id="ADQUE-GUID-913B6074-22A9-4395-80DA-BE38985A628B" class="sect3"><span class="enumeration_section">23.4 </span>Configuring an Apply Process
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The examples in this section configure an apply process to apply the user-enqueued messages in the <code class="codeph">ANYDATA</code> queue oe_queue.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFCCBCI">Example 23-8</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a function called <code class="codeph">get_oe_action</code> and to grant <code class="codeph">EXECUTE</code> privilege on the function to administrator user <code class="codeph">strmadmin</code>. 
+                     </p>
+                     <p>This function determines the value of the <code class="codeph">action</code> attribute in the messages in queue <code class="codeph">oe_queue</code>. It is used in rules later in this chapter to determine the value of the <code class="codeph">action</code> attribute for an event. Then, the clients of the <a href="glossary.html#GUID-FA9072B7-F0F5-41F3-99E6-96AA82704E32"><span class="xrefglossterm">rules engine</span></a> perform the appropriate action for the event (either dequeue by apply process or explicit dequeue). In this example, the clients of the <a href="glossary.html#GUID-FA9072B7-F0F5-41F3-99E6-96AA82704E32"><span class="xrefglossterm">rules engine</span></a> are the apply process and the <code class="codeph">oe.explicit_dq</code> PL/SQL procedure.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFGEEEJ">Example 23-9</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a PL/SQL procedure called <code class="codeph">mes_handler</code> that is used as a message handler by the apply process. You also grant <code class="codeph">EXECUTE</code> privilege on this procedure to administrator user <code class="codeph">strmadmin</code>. This procedure takes the payload in a user-enqueued message of type <code class="codeph">oe.order_event_typ</code> or <code class="codeph">oe.customer_event_typ</code> and inserts it as a row in the <code class="codeph">oe.orders</code> table or <code class="codeph">oe.customers</code> table, respectively.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFBCEBJ">Example 23-10</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create an evaluation context for the rule set.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFHFIFF">Example 23-11</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create a rule set for the apply process.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFBIHAD">Example 23-12</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create a rule that evaluates to <code class="codeph">TRUE</code> if the <code class="codeph">action</code> value of a message is <code class="codeph">apply</code>. Notice that <code class="codeph">tab.user_data</code> is passed to the <code class="codeph">oe.get_oe_action</code> function. The <code class="codeph">tab.user_data</code> column holds the event payload in a queue table. The table alias for the queue table was specified as <code class="codeph">tab</code> in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFBCEBJ">Example 23-10</a>.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFFIBEG">Example 23-13</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create a rule that evaluates to <code class="codeph">TRUE</code> if the event in the queue is a row LCR that changes either the <code class="codeph">oe.orders</code> table or the <code class="codeph">oe.customers</code> table. This rule enables the apply process to apply user-enqueued changes to the tables directly. 
+                     </p>
+                     <p>For convenience, this rule uses the Oracle-supplied evaluation context <code class="codeph">SYS.STREAMS$_EVALUATION_CONTEXT</code> because the rule is used to evaluate LCRs. When this rule is added to the rule set, the Oracle-supplied evaluation context is used for the rule during evaluation instead of evaluation context <code class="codeph">oe_eval_context</code> created in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFBCEBJ">Example 23-10</a>.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFFECDD">Example 23-14</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to add the <code class="codeph">apply_action</code> rule created in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFBIHAD">Example 23-12</a> and the <code class="codeph">apply_lcrs</code> rule created in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFFIBEG">Example 23-13</a> to the <code class="codeph">apply_oe_rs</code> rule set created in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFHFIFF">Example 23-11</a>.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFGABHB">Example 23-15</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create an apply process that is associated with queue <code class="codeph">oe_queue</code>, that uses the <code class="codeph">apply_oe_rs</code> rule set, and that uses the <code class="codeph">mes_handler</code> procedure as a message handler.
+                     </p>
+                     <p>Because <code class="codeph">oe</code> was specified as the apply user when the apply process was created in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFGABHB">Example 23-15</a>, you must grant this user <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">strmadmin.apply_oe_rs</code> rule set used by the apply process. You connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to accomplish this in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFCCFEB">Example 23-16</a>. 
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFFAEGI">Example 23-17</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to start the apply process with the <code class="codeph">disable_on_error</code> parameter set to <code class="codeph">n</code> so that the apply process is not disabled if it encounters an error.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFCCBCI">
+                     <p class="titleinexample">Example 23-8 Creating a Function to Determine the Value of the Action Attribute</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDECONNECT oe/&amp;password@db01;set echo on
+
+CREATE FUNCTION oe.get_oe_action (event IN ANYDATA) 
+RETURN VARCHAR2
+IS 
+  ord         oe.order_event_typ;
+  cust        oe.customer_event_typ;
+  num         NUMBER;
+  type_name   VARCHAR2(61);
+BEGIN
+  type_name := event.GETTYPENAME; 
+  IF type_name = 'OE.ORDER_EVENT_TYP' THEN
+    num := event.GETOBJECT(ord);
+    RETURN ord.action;	
+  ELSIF type_name = 'OE.CUSTOMER_EVENT_TYP' THEN
+    num := event.GETOBJECT(cust);
+    RETURN cust.action;	
+  ELSE
+    RETURN NULL;
+  END IF;
+END;
+/
+GRANT EXECUTE ON get_oe_action TO strmadmin;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFGEEEJ">
+                     <p class="titleinexample">Example 23-9 Creating a Message Handler</p><pre class="oac_no_warn" dir="ltr">set echo offset verify offACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDECONNECT oe/&amp;password@db01;set echo on
+
+CREATE PROCEDURE oe.mes_handler (event IN ANYDATA) IS
+  ord           oe.order_event_typ;
+  cust          oe.customer_event_typ;
+  num           NUMBER;
+  type_name     VARCHAR2(61);
+BEGIN
+  type_name := event.GETTYPENAME;
+  IF type_name = 'OE.ORDER_EVENT_TYP' THEN
+    num := event.GETOBJECT(ord);
+    INSERT INTO oe.orders VALUES (ord.order_id, ord.order_date, 
+      ord.order_mode, ord.customer_id, ord.order_status, ord.order_total, 
+      ord.sales_rep_id, ord.promotion_id); 
+  ELSIF type_name = 'OE.CUSTOMER_EVENT_TYP' THEN
+    num := event.GETOBJECT(cust);
+    INSERT INTO oe.customers VALUES (cust.customer_id, cust.cust_first_name, 
+      cust.cust_last_name, cust.cust_address, cust.phone_numbers, 
+      cust.nls_language, cust.nls_territory, cust.credit_limit, cust.cust_email, 
+      cust.account_mgr_id, cust.date_of_birth, cust.marital_status, 
+      cust.gender, cust.income_level); 
+  END IF;
+END;
+/
+GRANT EXECUTE ON mes_handler TO strmadmin;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFBCEBJ">
+                     <p class="titleinexample">Example 23-10 Creating an Evaluation Context for the Rule Set</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDE
+CONNECT strmadmin/&amp;password@db01;
+set echo on
+
+DECLARE
+  table_alias     SYS.RE$TABLE_ALIAS_LIST;
+BEGIN
+  table_alias := SYS.RE$TABLE_ALIAS_LIST(
+    SYS.RE$TABLE_ALIAS('tab', 'strmadmin.oe_queue_table'));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name  =&gt;  'oe_eval_context', 
+    table_aliases            =&gt;  table_alias);
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFHFIFF">
+                     <p class="titleinexample">Example 23-11 Creating a Rule Set for the Apply Process</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDE
+CONNECT strmadmin/&amp;password@db01;
+set echo on
+
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name       =&gt;  'apply_oe_rs',
+    evaluation_context  =&gt;  'strmadmin.oe_eval_context');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFBIHAD">
+                     <p class="titleinexample">Example 23-12 Creating a Rule that Evaluates to TRUE if Action Is Apply</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDE
+CONNECT strmadmin/&amp;password@db01; 
+set echo on
+
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name   =&gt; 'strmadmin.apply_action',
+    condition   =&gt; 'oe.get_oe_action(tab.user_data) = ''APPLY'' ');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFFIBEG">
+                     <p class="titleinexample">Example 23-13 Creating a Rule that Evaluates to TRUE for Row LCR Events</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDE
+CONNECT strmadmin/&amp;password@db01;
+set echo on
+
+BEGIN
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name           =&gt;  'apply_lcrs',
+    condition           =&gt;  ':dml.GET_OBJECT_OWNER() = ''OE'' AND ' || 
+                            ' (:dml.GET_OBJECT_NAME() = ''ORDERS'' OR ' || 
+                            ':dml.GET_OBJECT_NAME() = ''CUSTOMERS'') ',
+    evaluation_context  =&gt;  'SYS.STREAMS$_EVALUATION_CONTEXT');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFFECDD">
+                     <p class="titleinexample">Example 23-14 Adding Rules to the Rule Set</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDECONNECT strmadmin/&amp;password@db01;set echo on
+
+BEGIN
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name          =&gt;  'apply_action',
+    rule_set_name      =&gt;  'apply_oe_rs');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name          =&gt;  'apply_lcrs',
+    rule_set_name      =&gt;  'apply_oe_rs');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFGABHB">
+                     <p class="titleinexample">Example 23-15 Creating an Apply Process</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDECONNECT strmadmin/&amp;password@db01;set echo on
+
+BEGIN
+  DBMS_APPLY_ADM.CREATE_APPLY(
+    queue_name       =&gt;  'strmadmin.oe_queue',
+    apply_name       =&gt;  'apply_oe',
+    rule_set_name    =&gt;  'strmadmin.apply_oe_rs',
+    message_handler  =&gt;  'oe.mes_handler',
+    apply_user       =&gt;  'oe',
+    apply_captured   =&gt;  false);
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFCCFEB">
+                     <p class="titleinexample">Example 23-16 Granting EXECUTE Privilege on the Rule Set To oe User</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDECONNECT strmadmin/&amp;password@db01;set echo on
+
+BEGIN 
+  DBMS_RULE_ADM.GRANT_OBJECT_PRIVILEGE(
+    privilege    =&gt; DBMS_RULE_ADM.EXECUTE_ON_RULE_SET,
+    object_name  =&gt; 'strmadmin.apply_oe_rs',
+    grantee      =&gt; 'oe', 
+    grant_option =&gt; FALSE);
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFFAEGI">
+                     <p class="titleinexample">Example 23-17 Starting the Apply Process</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDECONNECT strmadmin/&amp;password@db01;set echo on
+
+BEGIN
+  DBMS_APPLY_ADM.SET_PARAMETER(
+    apply_name  =&gt; 'apply_oe', 
+    parameter   =&gt; 'disable_on_error', 
+    value       =&gt; 'n');
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt;  'apply_oe');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3499"></a><a id="ADQUE3500"></a><a id="ADQUE3501"></a><a id="ADQUE3502"></a><a id="ADQUE3498"></a><div class="props_rev_3"><a id="GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764" name="GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764"></a><h3 id="ADQUE-GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764" class="sect3"><span class="enumeration_section">23.5 </span>Configuring Explicit Dequeue
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The examples in this section illustrate how to configure explicit dequeue of messages based on message contents.</p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFFDHAJ">Example 23-18</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create agent <code class="codeph">explicit_dq</code>. This agent is used to perform explicit dequeue operations on the <code class="codeph">oe_queue</code> queue.
+                     </p>
+                     <p>The <code class="codeph">oe_queue</code> queue is a secure queue because it was created using <code class="codeph">SET_UP_QUEUE</code> in <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFJCJJD">Example 23-2</a>. For a user to perform enqueue and dequeue operations on a secure queue, the user must be configured as a secure queue user of the queue. 
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFGFEGA">Example 23-19</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to associate the <code class="codeph">oe</code> user with agent <code class="codeph">explicit_dq</code>. The <code class="codeph">oe</code> user can perform dequeue operations on the <code class="codeph">oe_queue</code> queue when the agent is used to create a <a href="glossary.html#GUID-3E2C69B7-A56C-4F86-8997-5A708E1F14F3"><span class="xrefglossterm">subscriber</span></a> to the queue in <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFHDFFJ">Example 23-20</a>.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFHDFFJ">Example 23-20</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to add a subscriber to the <code class="codeph">oe_queue</code> queue. This subscriber will perform explicit dequeues of messages. A subscriber rule is used to dequeue any messages where the <code class="codeph">action</code> value is not <code class="codeph">apply</code>. If the action value is <code class="codeph">apply</code> for a message, then the message is ignored by the subscriber. Such messages are dequeued and processed by the apply process.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFICDJH">Example 23-21</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a PL/SQL procedure called <code class="codeph">explicit_dq</code> to dequeue messages explicitly using the subscriber created in <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFHDFFJ">Example 23-20</a>.
+                     </p>
+                     <p>The procedure commits after the dequeue of the messages. The commit informs the queue that the dequeued messages have been consumed successfully by this subscriber.</p>
+                     <p>The procedure can process multiple transactions and uses two exception handlers. Exception handler <code class="codeph">next_trans</code> moves to the next transaction, and exception handler <code class="codeph">no_messages</code> exits the loop when there are no more messages. 
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFFDHAJ">
+                     <p class="titleinexample">Example 23-18 Creating an Agent for Explicit Dequeue</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDECONNECT strmadmin/&amp;password@db01;set echo on
+
+BEGIN
+  SYS.DBMS_AQADM.CREATE_AQ_AGENT(
+    agent_name      =&gt; 'explicit_dq');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFGFEGA">
+                     <p class="titleinexample">Example 23-19 Associating User oe with Agent explicit_dq</p><pre class="oac_no_warn" dir="ltr">set echo offset verify offACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDECONNECT strmadmin/&amp;password@db01;set echo on
+
+BEGIN
+  DBMS_AQADM.ENABLE_DB_ACCESS(
+    agent_name  =&gt; 'explicit_dq',
+    db_username =&gt; 'oe');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFHDFFJ">
+                     <p class="titleinexample">Example 23-20 Adding a Subscriber to the oe_queue Queue</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for STRMADMIN: ' HIDECONNECT strmadmin/&amp;password@db01;set echo on
+
+DECLARE
+  subscriber SYS.AQ$_AGENT;
+BEGIN
+  subscriber :=  SYS.AQ$_AGENT('explicit_dq', NULL, NULL);
+  SYS.DBMS_AQADM.ADD_SUBSCRIBER(
+    queue_name  =&gt;  'strmadmin.oe_queue',
+    subscriber  =&gt;  subscriber,
+    rule        =&gt;  'oe.get_oe_action(tab.user_data) != ''APPLY''');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFICDJH">
+                     <p class="titleinexample">Example 23-21 Creating a Procedure to Dequeue Messages Explicitly</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDECONNECT oe/&amp;password@db01;set echo on
+
+CREATE PROCEDURE oe.explicit_dq (consumer IN VARCHAR2) AS
+  deqopt       DBMS_AQ.DEQUEUE_OPTIONS_T;
+  mprop        DBMS_AQ.MESSAGE_PROPERTIES_T;
+  msgid        RAW(16);
+  payload      ANYDATA;
+  new_messages BOOLEAN := TRUE;
+  ord          oe.order_event_typ;
+  cust         oe.customer_event_typ;
+  tc           pls_integer;
+  next_trans   EXCEPTION;
+  no_messages  EXCEPTION; 
+  pragma exception_init (next_trans, -25235);
+  pragma exception_init (no_messages, -25228);
+BEGIN
+  deqopt.consumer_name := consumer;
+  deqopt.wait := 1;
+  WHILE (new_messages) LOOP
+    BEGIN
+    DBMS_AQ.DEQUEUE(
+      queue_name          =&gt;  'strmadmin.oe_queue',
+      dequeue_options     =&gt;  deqopt,
+      message_properties  =&gt;  mprop,
+      payload             =&gt;  payload,
+      msgid               =&gt;  msgid);
+    COMMIT;
+    deqopt.navigation := DBMS_AQ.NEXT;
+    DBMS_OUTPUT.PUT_LINE('Message Dequeued');
+    DBMS_OUTPUT.PUT_LINE('Type Name := ' || payload.GetTypeName);
+    IF (payload.GetTypeName = 'OE.ORDER_EVENT_TYP') THEN
+      tc := payload.GetObject(ord); 
+      DBMS_OUTPUT.PUT_LINE('order_id     - ' || ord.order_id);
+      DBMS_OUTPUT.PUT_LINE('order_date   - ' || ord.order_date);
+      DBMS_OUTPUT.PUT_LINE('order_mode   - ' || ord.order_mode);
+      DBMS_OUTPUT.PUT_LINE('customer_id  - ' || ord.customer_id);
+      DBMS_OUTPUT.PUT_LINE('order_status - ' || ord.order_status);
+      DBMS_OUTPUT.PUT_LINE('order_total  - ' || ord.order_total);
+      DBMS_OUTPUT.PUT_LINE('sales_rep_id - ' || ord.sales_rep_id);
+      DBMS_OUTPUT.PUT_LINE('promotion_id - ' || ord.promotion_id);
+    END IF;
+    IF (payload.GetTypeName = 'OE.CUSTOMER_EVENT_TYP') THEN
+      tc := payload.GetObject(cust);
+      DBMS_OUTPUT.PUT_LINE('customer_id       - ' || cust.customer_id);
+      DBMS_OUTPUT.PUT_LINE('cust_first_name   - ' || cust.cust_first_name);
+      DBMS_OUTPUT.PUT_LINE('cust_last_name    - ' || cust.cust_last_name);
+      DBMS_OUTPUT.PUT_LINE('street_address    - ' || 
+                              cust.cust_address.street_address);
+      DBMS_OUTPUT.PUT_LINE('postal_code       - ' || 
+                              cust.cust_address.postal_code);
+      DBMS_OUTPUT.PUT_LINE('city              - ' || cust.cust_address.city);
+      DBMS_OUTPUT.PUT_LINE('state_province    - ' || 
+                              cust.cust_address.state_province);
+      DBMS_OUTPUT.PUT_LINE('country_id        - ' || 
+                              cust.cust_address.country_id);
+      DBMS_OUTPUT.PUT_LINE('phone_number1     - ' || cust.phone_numbers(1));
+      DBMS_OUTPUT.PUT_LINE('phone_number2     - ' || cust.phone_numbers(2));
+      DBMS_OUTPUT.PUT_LINE('phone_number3     - ' || cust.phone_numbers(3));
+      DBMS_OUTPUT.PUT_LINE('nls_language      - ' || cust.nls_language);
+      DBMS_OUTPUT.PUT_LINE('nls_territory     - ' || cust.nls_territory);
+      DBMS_OUTPUT.PUT_LINE('credit_limit      - ' || cust.credit_limit);
+      DBMS_OUTPUT.PUT_LINE('cust_email        - ' || cust.cust_email);
+      DBMS_OUTPUT.PUT_LINE('account_mgr_id    - ' || cust.account_mgr_id);
+      DBMS_OUTPUT.PUT_LINE('date_of_birth     - ' || cust.date_of_birth);
+      DBMS_OUTPUT.PUT_LINE('marital_status    - ' || cust.marital_status);
+      DBMS_OUTPUT.PUT_LINE('gender            - ' || cust.gender);
+      DBMS_OUTPUT.PUT_LINE('income_level      - ' || cust.income_level);
+    END IF;
+    EXCEPTION
+      WHEN next_trans THEN
+      deqopt.navigation := DBMS_AQ.NEXT_TRANSACTION;
+      WHEN no_messages THEN
+        new_messages  := FALSE;
+        DBMS_OUTPUT.PUT_LINE('No more messagess');
+     END;
+  END LOOP; 
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3504"></a><a id="ADQUE3505"></a><a id="ADQUE3506"></a><a id="ADQUE3503"></a><div class="props_rev_3"><a id="GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8" name="GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8"></a><h3 id="ADQUE-GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8" class="sect3"><span class="enumeration_section">23.6 </span>Enqueuing Messages
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The examples in this section illustrate how to enqueue non-LCR messages and row LCR messages into a queue.</p>
+                     <div class="infoboxnote" id="GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__GUID-8C2E2DC4-6265-4CD8-9545-F49086771247">
+                        <p class="notep1">Note:</p>
+                        <p>It is possible to dequeue user-enqueued LCRs explicitly, but these examples do not illustrate this capability.</p>
+                     </div>
+                     <p>In <a href="streams-messaging-examples.html#GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__CJFEIEFA">Example 23-22</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to enqueue two messages with <code class="codeph">apply</code> for the <code class="codeph">action</code> value. Based on the apply process rules, the apply process dequeues and processes these messages with the <code class="codeph">oe.mes_handler</code> message handler procedure created in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFGEEEJ">Example 23-9</a>. The <code class="codeph">COMMIT</code> after the enqueues makes these two enqueues part of the same transaction. An enqueued message is not visible until the session that enqueued it commits the enqueue.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__CJFDIIEA">Example 23-23</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to enqueue two messages with <code class="codeph">dequeue</code> for the <code class="codeph">action</code> value. The <code class="codeph">oe.explicit_dq</code> procedure created in <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFICDJH">Example 23-21</a> dequeues these messages because the <code class="codeph">action</code> is not <code class="codeph">apply</code>. Based on the apply process rules, the apply process ignores these messages. The <code class="codeph">COMMIT</code> after the enqueues makes these two enqueues part of the same transaction.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__CJFCDCED">Example 23-24</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a row LCR that inserts a row into the <code class="codeph">oe.orders</code> table and another LCR that updates that row. The apply process applies these messages directly. 
+                     </p>
+                     <div class="infoboxnote" id="GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__GUID-5EFBA38B-128E-4119-9A3F-DDA7B00E153E">
+                        <p class="notep1">Note:</p>
+                        <p>Enqueued LCRs should commit at transaction boundaries. In this example, a <code class="codeph">COMMIT</code> statement is run after each enqueue, making each enqueue a separate transaction. However, you can perform multiple LCR enqueues before a commit if there is more than one LCR in a transaction.
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__CJFEIEFA">
+                     <p class="titleinexample">Example 23-22 Enqueuing Non-LCR Messages to Be Dequeued by an Apply Process</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDECONNECT oe/&amp;password@db01;set echo on
+
+BEGIN
+  oe.enq_proc(ANYDATA.convertobject(oe.order_event_typ(
+    2500,'05-MAY-01','online',117,3,44699,161,NULL,'APPLY')));
+END;
+/
+BEGIN
+  oe.enq_proc(ANYDATA.convertobject(oe.customer_event_typ(
+    990,'Hester','Prynne',oe.cust_address_typ('555 Beacon Street',
+    '02109','Boston','MA','US'),oe.phone_list_typ('+1 617 123 4104',
+    '+1 617 083 4381','+1 617 742 5813'),'i','AMERICA',5000,
+    'a@scarlet_letter.com',145,NULL,'SINGLE','F','UNDER 50,000','APPLY')));
+END;
+/ 
+COMMIT;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__CJFDIIEA">
+                     <p class="titleinexample">Example 23-23 Enqueuing Non-LCR Messages to Be Dequeued Explicitly</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFFSET VERIFY OFFACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDECONNECT oe/&amp;password@db01;set echo on
+
+BEGIN
+  oe.enq_proc(ANYDATA.convertobject(oe.order_event_typ(
+    2501,'22-JAN-00','direct',117,3,22788,161,NULL,'DEQUEUE')));
+END;
+/
+BEGIN
+  oe.enq_proc(ANYDATA.convertobject(oe.customer_event_typ(
+    991,'Nick','Carraway',oe.cust_address_typ('10th Street',
+    '11101','Long Island','NY','US'),oe.phone_list_typ('+1 718 786 2287', 
+    '+1 718 511 9114', '+1 718 888 4832'),'i','AMERICA',3000,
+    'nick@great_gatsby.com',149,NULL,'MARRIED','M','OVER 150,000','DEQUEUE')));
+END;
+/
+COMMIT;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__CJFCDCED">
+                     <p class="titleinexample">Example 23-24 Enqueuing Row LCRs to Be Dequeued by an Apply Process</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDE
+CONNECT oe/&amp;password@db01;
+set echo on
+
+DECLARE
+  newunit1  SYS.LCR$_ROW_UNIT;
+  newunit2  SYS.LCR$_ROW_UNIT;
+  newunit3  SYS.LCR$_ROW_UNIT;
+  newunit4  SYS.LCR$_ROW_UNIT;
+  newunit5  SYS.LCR$_ROW_UNIT;
+  newunit6  SYS.LCR$_ROW_UNIT;
+  newunit7  SYS.LCR$_ROW_UNIT;
+  newunit8  SYS.LCR$_ROW_UNIT;
+  newvals   SYS.LCR$_ROW_LIST;
+BEGIN
+  newunit1 := SYS.LCR$_ROW_UNIT(
+    'ORDER_ID',ANYDATA.ConvertNumber(2502),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  newunit2 := SYS.LCR$_ROW_UNIT(
+    'ORDER_DATE',ANYDATA.ConvertTimestampLTZ('04-NOV-00'),DBMS_LCR.NOT_A_LOB,
+    NULL,NULL);
+  newunit3 := SYS.LCR$_ROW_UNIT(
+    'ORDER_MODE',ANYDATA.ConvertVarchar2('online'),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  newunit4 := SYS.LCR$_ROW_UNIT(
+    'CUSTOMER_ID',ANYDATA.ConvertNumber(145),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  newunit5 := SYS.LCR$_ROW_UNIT(
+    'ORDER_STATUS',ANYDATA.ConvertNumber(3),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  newunit6 := SYS.LCR$_ROW_UNIT(
+    'ORDER_TOTAL',ANYDATA.ConvertNumber(35199),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  newunit7 := SYS.LCR$_ROW_UNIT(
+    'SALES_REP_ID',ANYDATA.ConvertNumber(160),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  newunit8 := SYS.LCR$_ROW_UNIT(
+    'PROMOTION_ID',ANYDATA.ConvertNumber(1),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  newvals := SYS.LCR$_ROW_LIST(
+    newunit1,newunit2,newunit3,newunit4,newunit5,newunit6,newunit7,newunit8);
+  oe.enq_row_lcr('DB01','INSERT','OE','ORDERS',NULL,newvals);
+END;
+/
+COMMIT;
+DECLARE
+  oldunit1  SYS.LCR$_ROW_UNIT;
+  oldunit2  SYS.LCR$_ROW_UNIT;
+  oldvals   SYS.LCR$_ROW_LIST;
+  newunit1  SYS.LCR$_ROW_UNIT;
+  newvals   SYS.LCR$_ROW_LIST;
+BEGIN
+  oldunit1 := SYS.LCR$_ROW_UNIT(
+    'ORDER_ID',ANYDATA.ConvertNumber(2502),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  oldunit2 := SYS.LCR$_ROW_UNIT(
+    'ORDER_TOTAL',ANYDATA.ConvertNumber(35199),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  oldvals := SYS.LCR$_ROW_LIST(oldunit1,oldunit2);
+  newunit1 := SYS.LCR$_ROW_UNIT(
+    'ORDER_TOTAL',ANYDATA.ConvertNumber(5235),DBMS_LCR.NOT_A_LOB,NULL,NULL);
+  newvals := SYS.LCR$_ROW_LIST(newunit1);
+  oe.enq_row_lcr('DB01','UPDATE','OE','ORDERS',oldvals,newvals);
+END;
+/
+COMMIT;</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3508"></a><a id="ADQUE3509"></a><a id="ADQUE3507"></a><div class="props_rev_3"><a id="GUID-0A6ED11A-8CF4-4627-875C-721043387419" name="GUID-0A6ED11A-8CF4-4627-875C-721043387419"></a><h3 id="ADQUE-GUID-0A6ED11A-8CF4-4627-875C-721043387419" class="sect3"><span class="enumeration_section">23.7 </span>Dequeuing Messages Explicitly and Querying for Applied Messages
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The examples in this section illustrate how to dequeue messages explicitly and query messages that were applied by the apply process. The examples use messages that were enqueued in the previous section.</p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-0A6ED11A-8CF4-4627-875C-721043387419__CJFHAEAJ">Example 23-25</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to run procedure <code class="codeph">explicit_dq</code>, created in <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFICDJH">Example 23-21</a>. You specify subscriber <code class="codeph">explicit_dq</code>, added in <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFHDFFJ">Example 23-20</a>, as the <a href="glossary.html#GUID-B9071BDE-395F-4686-B2D2-A1B83F986BCC"><span class="xrefglossterm">consumer</span></a> of the messages you want to dequeue. In these examples, messages that are not dequeued explicitly by this procedure are dequeued by the apply process.
+                     </p>
+                     <p>The example returns the payload of the messages enqueued in <a href="streams-messaging-examples.html#GUID-F36B2FE6-F66D-4F74-AD4A-20609E87EFA8__CJFDIIEA">Example 23-23</a>:
+                     </p><pre class="oac_no_warn" dir="ltr">Message Dequeued
+Type Name := OE.ORDER_EVENT_TYP
+order_id     - 2501
+order_date   - 22-JAN-00 12.00.00.000000 AM
+order_mode   - direct
+customer_id  - 117
+order_status - 3
+order_total  - 22788
+sales_rep_id - 161
+promotion_id -
+Message Dequeued
+Type Name := OE.CUSTOMER_EVENT_TYP
+customer_id       - 991
+cust_first_name   - Nick
+cust_last_name    - Carraway
+street_address    - 10th Street
+postal_code       - 11101
+city              - Long Island
+state_province    - NY
+country_id        - US
+phone_number1     - +1 718 786 2287
+phone_number2     - +1 718 511 9114
+phone_number3     - +1 718 888 4832
+nls_language      - i
+nls_territory     - AMERICA
+credit_limit      - 3000
+cust_email        - nick@great_gatsby.com
+account_mgr_id    - 149
+date_of_birth     -
+marital_status    - MARRIED
+gender            - M
+income_level      - OVER 150,000
+No more messages
+</pre><p><a href="streams-messaging-examples.html#GUID-0A6ED11A-8CF4-4627-875C-721043387419__CJFFEJHB">Example 23-26</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to query the <code class="codeph">oe.orders</code> and <code class="codeph">oe.customers</code> tables to see the rows corresponding to the messages applied by apply process <code class="codeph">apply_oe</code>, created in <a href="streams-messaging-examples.html#GUID-913B6074-22A9-4395-80DA-BE38985A628B__CJFGABHB">Example 23-15</a>.
+                     </p>
+                     <p>The example returns three rows:</p><pre class="oac_no_warn" dir="ltr">  ORDER_ID ORDER_DATE                     CUSTOMER_ID ORDER_TOTAL
+---------- ------------------------------ ----------- -----------
+      2500 05-MAY-01 12.00.00.000000 AM           117       44699
+ 
+1 row selected.
+
+CUST_FIRST_NAME      CUST_LAST_NAME       CUST_EMAIL
+-------------------- -------------------- ------------------------------
+Hester               Prynne               a@scarlet_letter.com
+ 
+1 row selected.
+
+  ORDER_ID ORDER_DATE                     CUSTOMER_ID ORDER_TOTAL
+---------- ------------------------------ ----------- -----------
+      2502 04-NOV-00 12.00.00.000000 AM           145        5235
+ 
+1 row selected.</pre></div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-0A6ED11A-8CF4-4627-875C-721043387419__CJFHAEAJ">
+                     <p class="titleinexample">Example 23-25 Dequeuing Messages Explicitly</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDE
+CONNECT oe/&amp;password@db01;
+set echo on
+
+CREATE PROCEDURE oe.enq_proc (payload ANYDATA)  IS 
+SET SERVEROUTPUT ON SIZE 100000;
+EXEC oe.explicit_dq('explicit_dq');
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-0A6ED11A-8CF4-4627-875C-721043387419__CJFFEJHB">
+                     <p class="titleinexample">Example 23-26 Querying for Applied Messages</p><pre class="oac_no_warn" dir="ltr">SET ECHO OFF
+SET VERIFY OFF
+ACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDE
+CONNECT oe/&amp;password@db01; 
+set echo on
+
+CREATE PROCEDURE oe.enq_proc (payload ANYDATA)  IS 
+SELECT order_id, order_date, customer_id, order_total
+  FROM oe.orders WHERE order_id = 2500;
+SELECT cust_first_name, cust_last_name, cust_email 
+  FROM oe.customers WHERE customer_id = 990;
+SELECT order_id, order_date, customer_id, order_total 
+  FROM oe.orders WHERE order_id = 2502;
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3511"></a><a id="ADQUE3512"></a><a id="ADQUE3513"></a><a id="ADQUE3514"></a><a id="ADQUE3515"></a><a id="ADQUE3516"></a><a id="ADQUE3517"></a><a id="ADQUE3518"></a><a id="ADQUE3519"></a><a id="ADQUE3510"></a><div class="props_rev_3"><a id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7" name="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7"></a><h3 id="ADQUE-GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7" class="sect3"><span class="enumeration_section">23.8 </span>Enqueuing and Dequeuing Messages Using JMS
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The examples in this section illustrate how to enqueue non-LCR messages and row LCRs into a queue and then dequeue them using <a href="glossary.html#GUID-3A98EBD4-296B-4BE8-82AE-5B42D07E9894"><span class="xrefglossterm">Java Message Service</span></a> (JMS). 
+                     </p>
+                     <p>Note that the Oracle Database does not support JDK 1.2, JDK 1.3, JDK 1.4, JDK 5.n, and all classes12*.* files. You need to use the <code class="codeph">ojdbc6.jar </code>and <code class="codeph">ojbc7.jar</code> files with JDK 6.n and JDK 7.n, respectively. The following jar and zip files should be in the <code class="codeph">CLASSPATH</code> based on the release of JDK you are using.
+                     </p>
+                     <p>For JDK 6.n, the <code class="codeph">CLASSPATH</code> must contain:
+                     </p><pre class="oac_no_warn" dir="ltr"><span class="italic">ORACLE_HOME</span>/jdbc/lib/ojdbc6.jar
+</pre><p>For JDK 7.n, the <code class="codeph">CLASSPATH</code> must contain:
+                     </p><pre class="oac_no_warn" dir="ltr"><span class="italic">ORACLE_HOME</span>/jdbc/lib/ojdbc7.jar 
+</pre><p>The following files are used for either JDK version:</p><pre class="oac_no_warn" dir="ltr"><span class="italic">ORACLE_HOME</span>/lib/jta.jar
+<span class="italic">ORACLE_HOME</span>/xdk/lib/xmlparserv2.jar
+<span class="italic">ORACLE_HOME</span>/rdbms/jlib/xdb.jar
+<span class="italic">ORACLE_HOME</span>/rdbms/jlib/aqapi.jar 
+<span class="italic">ORACLE_HOME</span>/rdbms/jlib/jmscommon.jar
+</pre><p>Also, make sure <code class="codeph">LD_LIBRARY_PATH</code> (Linux and Solaris) or <code class="codeph">PATH</code> (Windows) includes <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/lib</code>. 
+                     </p>
+                     <p>These examples show sample schema user <code class="codeph">oe</code> enqueuing JMS messages into a queue and agent <code class="codeph">explicit_dq</code> dequeuing them. Agent <code class="codeph">explicit_dq</code> was created in <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFFDHAJ">Example 23-18</a>, associated with sample schema user <code class="codeph">oe</code> in <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFGFEGA">Example 23-19</a>, and made a subscriber to queue <code class="codeph">oe_queue</code> in <a href="streams-messaging-examples.html#GUID-D23B93BA-90B8-4C4C-85DC-79EB3BD98764__CJFHDFFJ">Example 23-20</a>.
+                     </p>
+                     <p>Sample schema user <code class="codeph">oe</code> was granted <code class="codeph">EXECUTE</code> on <code class="codeph">DBMS_AQ</code> in <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFFGEJD">Example 23-1</a>. In order for this user to use the Oracle JMS interface, it must have <code class="codeph">EXECUTE</code> privilege on <code class="codeph">DBMS_AQIN</code> as well. In <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFEICEJ">Example 23-27</a>, you connect to database <code class="codeph">db01</code> as a user with administrative privileges to grant the necessary privilege to <code class="codeph">oe</code>.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__GUID-B8EC4A76-2911-4F78-9AA9-89228454CEDB">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="aq-program-interfaces.html#GUID-ADD9DEAA-C2E3-4C87-9504-163F0DE7F21E__CHDIIIFB">Accessing Standard and Oracle JMS Applications</a>"</span></p>
+                     </div>
+                     <p>Enqueue of JMS types and XML types does not work with Oracle Streams <code class="codeph">ANYDATA</code> queues unless you call <code class="codeph">DBMS_AQADM.ENABLE_JMS_TYPES(</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">)</code> after <code class="codeph">DBMS_STREAMS_ADM.SET_UP_QUEUE()</code>. In <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFHGCDE">Example 23-28</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code>, created in <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFFGEJD">Example 23-1</a>, to run <code class="codeph">ENABLE_JMS_TYPES</code> on <code class="codeph">ANYDATA</code> queue table <code class="codeph">oe_queue_table</code>, created in <a href="streams-messaging-examples.html#GUID-7C057BF4-76F6-4930-8D83-CD38DD170F65__CJFJCJJD">Example 23-2</a>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__GUID-D58BAA3C-409B-454C-BF3E-3A60276A2471">
+                        <p class="notep1">Note:</p>
+                        <p>Enabling an Oracle Streams queue for these types may affect import/export of the queue table.</p>
+                     </div>
+                     <p>In <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFGBIIJ">Example 23-29</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create types <code class="codeph">address</code> and <code class="codeph">person</code>.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFBHJEI">Example 23-30</a>, you use JPublisher to generate two Java classes named <code class="codeph">JPerson</code> and <code class="codeph">JAddress</code> for the <code class="codeph">person</code> and <code class="codeph">address</code> types, respectively. The input to JPublisher is a file called <code class="codeph">input.typ</code> with the following lines:
+                     </p><pre class="oac_no_warn" dir="ltr">SQL PERSON AS JPerson
+SQL ADDRESS AS JAddress</pre><p><a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFCBFCH">Example 23-31</a> is the Java code that you use to publish JMS text messages, LCRs, and non-LCR ADT messages into an Oracle Streams topic. It does the following:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Creates a <code class="codeph">TopicConnectionFactory</code> using the JDBC OCI driver
+                           </p>
+                           <div class="infoboxnote" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__GUID-EC57ECC8-825F-479B-B264-0084C446184D">
+                              <p class="notep1">Note:</p>
+                              <p>The JDBC OCI driver is your only choice for accessing Oracle Streams through JMS.</p>
+                           </div>
+                        </li>
+                        <li>
+                           <p>Creates a <code class="codeph">TopicSession</code> 
+                           </p>
+                        </li>
+                        <li>
+                           <p>Starts the connection</p>
+                        </li>
+                        <li>
+                           <p>Creates method <code class="codeph">publishUserMessages()</code> to publish an ADT message and a JMS text message to an Oracle Streams topic
+                           </p>
+                        </li>
+                        <li>
+                           <p>Creates method <code class="codeph">publishLcrMessages()</code> to publish an XML LCR message to an Oracle Streams topic
+                           </p>
+                        </li>
+                        <li>
+                           <p>Publishes three messages, providing feedback as it proceeds</p>
+                        </li>
+                     </ul>
+                     <p>Method <code class="codeph">publishUserMessages()</code> does the following:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Gets the topic</p>
+                        </li>
+                        <li>
+                           <p>Creates a publisher</p>
+                        </li>
+                        <li>
+                           <p>Specifies agent <code class="codeph">explicit_enq</code> to access queue <code class="codeph">oe_queue</code></p>
+                        </li>
+                        <li>
+                           <p>Creates a <code class="codeph">PERSON</code> ADT message
+                           </p>
+                        </li>
+                        <li>
+                           <p>Sets the payload in the message</p>
+                        </li>
+                        <li>
+                           <p>Specifies <code class="codeph">explicit_dq</code> as the recipient
+                           </p>
+                        </li>
+                        <li>
+                           <p>Publishes the <code class="codeph">PERSON</code> ADT message
+                           </p>
+                        </li>
+                        <li>
+                           <p>Creates a JMS Text message</p>
+                        </li>
+                        <li>
+                           <p>Publishes the JMS Text message</p>
+                        </li>
+                     </ul>
+                     <p>Method <code class="codeph">publishLcrMessages()</code> does the following:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Gets the topic</p>
+                        </li>
+                        <li>
+                           <p>Creates a publisher</p>
+                        </li>
+                        <li>
+                           <p>Gets the JDBC connection</p>
+                        </li>
+                        <li>
+                           <p>Specifies agent <code class="codeph">explicit_enq</code> to access queue <code class="codeph">oe_queue</code></p>
+                        </li>
+                        <li>
+                           <p>Creates an ADT message</p>
+                        </li>
+                        <li>
+                           <p>Creates the LCR representation in XML</p>
+                        </li>
+                        <li>
+                           <p>Creates the <code class="codeph">XMLType</code> containing the LCR
+                           </p>
+                        </li>
+                        <li>
+                           <p>Sets the payload in the message</p>
+                        </li>
+                        <li>
+                           <p>Specifies <code class="codeph">explicit_dq</code> as the recipient
+                           </p>
+                        </li>
+                        <li>
+                           <p>Publishes the LCR</p>
+                        </li>
+                     </ul>
+                     <p>The code is compiled in <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFFFCFB">Example 23-33</a>. For now, just save it as <code class="codeph">StreamsEnq.java</code>. 
+                     </p>
+                     <p><a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFDHHAF">Example 23-32</a> is the Java code you use to receive messages from an Oracle Streams topic. It does the following:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Creates a <code class="codeph">TopicConnectionFactory</code> using the JDBC OCI driver
+                           </p>
+                           <div class="infoboxnote" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__GUID-5D48CA2B-BAE8-4929-8C91-0B74B3554144">
+                              <p class="notep1">Note:</p>
+                              <p>The JDBC OCI driver is your only choice for accessing Oracle Streams through JMS.</p>
+                           </div>
+                        </li>
+                        <li>
+                           <p>Creates a <code class="codeph">TopicSession</code> 
+                           </p>
+                        </li>
+                        <li>
+                           <p>Starts the connection</p>
+                        </li>
+                        <li>
+                           <p>Creates method <code class="codeph">receiveMessages()</code> to receive messages from an Oracle Streams topic
+                           </p>
+                        </li>
+                        <li>
+                           <p>Receives three messages, providing feedback as it proceeds</p>
+                        </li>
+                     </ul>
+                     <p>Method <code class="codeph">receiveMessages()</code> does the following:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Gets the topic</p>
+                        </li>
+                        <li>
+                           <p>Creates a <code class="codeph">TopicReceiver</code> to receive messages for consumer <code class="codeph">explicit_dq</code></p>
+                        </li>
+                        <li>
+                           <p>Registers mappings for <code class="codeph">ADDRESS</code> and <code class="codeph">PERSON</code> in the JMS typemap
+                           </p>
+                        </li>
+                        <li>
+                           <p>Registers a mapping for <code class="codeph">XMLType</code> in the typemap (required for LCRs)
+                           </p>
+                        </li>
+                        <li>
+                           <p>Receives the enqueued messages</p>
+                        </li>
+                     </ul>
+                     <p>The code is compiled in <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFFFCFB">Example 23-33</a>. For now, just save it as <code class="codeph">StreamsDeq.java</code>.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFFFCFB">Example 23-33</a>, you compile the scripts.
+                     </p>
+                     <p>In <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFEEGJH">Example 23-34</a>, you run the enqueue program, specifying values for <span class="italic"><code class="codeph">ORACLE_SID</code></span>, <span class="italic"><code class="codeph">HOST</code></span>, and <span class="italic"><code class="codeph">PORT</code></span> that are appropriate for your testing environment.
+                     </p>
+                     <p>The example returns:</p><pre class="oac_no_warn" dir="ltr">Publish message 1 -type  PERSON
+Publish message 2 -type  JMS TextMessage
+Publish message 3 - XMLType containing LCR ROW
+End of StreamsEnq Demo
+</pre><p>In <a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFJEDGC">Example 23-35</a>, you run the dequeue program, specifying values for <span class="italic"><code class="codeph">ORACLE_SID</code></span>, <span class="italic"><code class="codeph">HOST</code></span>, and <span class="italic"><code class="codeph">PORT</code></span> that are appropriate for your testing environment.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFEICEJ">
+                     <p class="titleinexample">Example 23-27 Granting EXECUTE on DBMS_AQIN to User oe</p><pre class="oac_no_warn" dir="ltr">GRANT EXECUTE on DBMS_AQIN to oe;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFHGCDE">
+                     <p class="titleinexample">Example 23-28 Enabling JMS Types on an ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+BEGIN
+  DBMS_AQADM.ENABLE_JMS_TYPES('oe_queue_table');
+END;
+/</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFGBIIJ">
+                     <p class="titleinexample">Example 23-29 Creating Oracle Object Types address and person</p><pre class="oac_no_warn" dir="ltr">CONNECT oe;
+Enter password: <span class="italic">password</span>
+CREATE TYPE address AS OBJECT (street VARCHAR (30), num NUMBER)
+/ 
+CREATE TYPE person AS OBJECT (name VARCHAR (30), home ADDRESS)
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFBHJEI">
+                     <p class="titleinexample">Example 23-30 Creating Java Classes That Map to Oracle Object Types</p><pre class="oac_no_warn" dir="ltr">jpub -input=input.typ -user=OE/OE
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFCBFCH">
+                     <p class="titleinexample">Example 23-31 Java Code for Enqueuing Messages</p><pre class="oac_no_warn" dir="ltr">import oracle.AQ.*;
+import oracle.jms.*;
+import javax.jms.*;
+import java.lang.*;
+import oracle.xdb.*;
+ 
+public class StreamsEnq
+{
+  public static void main (String args [])
+       throws java.sql.SQLException, ClassNotFoundException, JMSException
+  {
+     TopicConnectionFactory tc_fact= null;
+     TopicConnection        t_conn = null;
+     TopicSession           t_sess = null;
+ 
+     try
+     {
+       if (args.length &lt; 3 )
+         System.out.println("Usage:java filename [SID] [HOST] [PORT]");
+       else 
+       {
+         tc_fact = AQjmsFactory.getTopicConnectionFactory(
+                      args[1], args[0], Integer.parseInt(args[2]), "oci8");
+         t_conn = tc_fact.createTopicConnection( "OE","OE");
+         t_sess = t_conn.createTopicSession(true, Session.CLIENT_ACKNOWLEDGE);
+         t_conn.start() ;
+         publishUserMessages(t_sess);
+         publishLcrMessages(t_sess);
+         t_sess.close() ;
+         t_conn.close() ;
+         System.out.println("End of StreamsEnq Demo") ;
+       }
+     }
+     catch (Exception ex)
+     {
+       System.out.println("Exception-1: " + ex);
+       ex.printStackTrace();
+     }
+  }
+ 
+  public static void publishUserMessages(TopicSession t_sess) throws Exception
+  {
+    Topic           topic     = null;
+    TopicPublisher  t_pub     = null;
+    JPerson         pers      = null;
+    JAddress        addr      = null;
+    TextMessage     t_msg     = null;
+    AdtMessage      adt_msg   = null;
+    AQjmsAgent      agent     = null;
+    AQjmsAgent[]    recipList = null;
+ 
+    try
+    {
+      topic = ((AQjmsSession)t_sess).getTopic("strmadmin", "oe_queue");
+      t_pub = t_sess.createPublisher(topic);
+      agent = new AQjmsAgent("explicit_enq", null);
+      adt_msg = ((AQjmsSession)t_sess).createAdtMessage();
+      pers = new JPerson();
+      addr = new JAddress();
+      addr.setNum(new java.math.BigDecimal(500));
+      addr.setStreet("Oracle Pkwy");
+      pers.setName("Mark");
+      pers.setHome(addr);
+      adt_msg.setAdtPayload(pers);
+      ((AQjmsMessage)adt_msg).setSenderID(agent);
+      System.out.println("Publish message 1 -type  PERSON\n");
+      recipList = new AQjmsAgent[1];
+      recipList[0] = new AQjmsAgent("explicit_dq", null);
+      ((AQjmsTopicPublisher)t_pub).publish(topic, adt_msg, recipList);
+      t_sess.commit();
+ 
+      t_msg = t_sess.createTextMessage();
+      t_msg.setText("Test message");
+      t_msg.setStringProperty("color", "BLUE");
+      t_msg.setIntProperty("year", 1999);
+      ((AQjmsMessage)t_msg).setSenderID(agent);
+      System.out.println("Publish message 2 -type  JMS TextMessage\n");
+      ((AQjmsTopicPublisher)t_pub).publish(topic, t_msg, recipList);
+      t_sess.commit();
+ 
+    }
+    catch (JMSException jms_ex)
+    {
+      System.out.println("JMS Exception: " + jms_ex);
+      if(jms_ex.getLinkedException() != null)
+        System.out.println("Linked Exception: " + jms_ex.getLinkedException());
+    }
+  }
+ 
+  public static void publishLcrMessages(TopicSession t_sess) throws Exception
+  {
+    Topic                topic     = null;
+    TopicPublisher       t_pub     = null;
+    XMLType              xml_lcr   = null;
+    AdtMessage           adt_msg   = null;
+    AQjmsAgent           agent     = null;
+    StringBuffer         lcr_data  = null;
+    AQjmsAgent[]         recipList = null;
+    java.sql.Connection  db_conn   = null;
+ 
+    try
+    {
+      topic = ((AQjmsSession)t_sess).getTopic("strmadmin", "oe_queue");
+      t_pub = t_sess.createPublisher(topic);
+      db_conn = ((AQjmsSession)t_sess).getDBConnection();
+      agent = new AQjmsAgent("explicit_enq", null);
+      adt_msg = ((AQjmsSession)t_sess).createAdtMessage();
+      lcr_data = new StringBuffer();
+ 
+      lcr_data.append("&lt;ROW_LCR ");
+      lcr_data.append("xmlns='http://xmlns.oracle.com/streams/schemas/lcr' \n");
+      lcr_data.append("xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' \n");
+      lcr_data.append("xsi:schemaLocation='http://xmlns.oracle.com/streams/schemas/lcr "); 
+      lcr_data.append("http://xmlns.oracle.com/streams/schemas/lcr/streamslcr.xsd'");
+      lcr_data.append("&gt; \n");
+      lcr_data.append("&lt;source_database_name&gt;source_dbname&lt;/source_database_name&gt; \n");
+      lcr_data.append("&lt;command_type&gt;INSERT&lt;/command_type&gt; \n");
+      lcr_data.append("&lt;object_owner&gt;Ram&lt;/object_owner&gt; \n");
+      lcr_data.append("&lt;object_name&gt;Emp&lt;/object_name&gt; \n");
+      lcr_data.append("&lt;tag&gt;0ABC&lt;/tag&gt; \n");
+      lcr_data.append("&lt;transaction_id&gt;0.0.0&lt;/transaction_id&gt; \n");
+      lcr_data.append("&lt;scn&gt;0&lt;/scn&gt; \n");
+      lcr_data.append("&lt;old_values&gt; \n");
+      lcr_data.append("&lt;old_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C01&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt;&lt;varchar2&gt;Clob old&lt;/varchar2&gt;&lt;/data&gt; \n");
+      lcr_data.append("&lt;/old_value&gt; \n");
+      lcr_data.append("&lt;old_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C02&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt;&lt;varchar2&gt;A123FF&lt;/varchar2&gt;&lt;/data&gt; \n");
+      lcr_data.append("&lt;/old_value&gt; \n");
+      lcr_data.append("&lt;old_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C03&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt; \n");
+      lcr_data.append("&lt;date&gt;&lt;value&gt;1997-11-24&lt;/value&gt;&lt;format&gt;SYYYY-MM-DD&lt;/format&gt;&lt;/date&gt; \n");
+      lcr_data.append("&lt;/data&gt; \n");
+      lcr_data.append("&lt;/old_value&gt; \n");
+      lcr_data.append("&lt;old_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C04&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt; \n");
+      lcr_data.append("&lt;timestamp&gt;&lt;value&gt;1999-05-31T13:20:00.000&lt;/value&gt;");
+      lcr_data.append("&lt;format&gt;SYYYY-MM-DD\"T\"HH24:MI:SS.FF&lt;/format&gt;&lt;/timestamp&gt; \n");
+      lcr_data.append("&lt;/data&gt; \n");
+      lcr_data.append("&lt;/old_value&gt; \n");
+      lcr_data.append("&lt;old_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C05&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt;&lt;raw&gt;ABCDE&lt;/raw&gt;&lt;/data&gt; \n");
+      lcr_data.append("&lt;/old_value&gt; \n");
+      lcr_data.append("&lt;/old_values&gt; \n");
+      lcr_data.append("&lt;new_values&gt; \n");
+      lcr_data.append("&lt;new_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C01&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt;&lt;varchar2&gt;A123FF&lt;/varchar2&gt;&lt;/data&gt; \n");
+      lcr_data.append("&lt;/new_value&gt; \n");
+      lcr_data.append("&lt;new_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C02&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt;&lt;number&gt;35.23&lt;/number&gt;&lt;/data&gt; \n");
+      lcr_data.append("&lt;/new_value&gt; \n");
+      lcr_data.append("&lt;new_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C03&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt;&lt;number&gt;-100000&lt;/number&gt;&lt;/data&gt; \n");
+      lcr_data.append("&lt;/new_value&gt; \n");
+      lcr_data.append("&lt;new_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C04&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt;&lt;varchar2&gt;Hello&lt;/varchar2&gt;&lt;/data&gt; \n");
+      lcr_data.append("&lt;/new_value&gt; \n");
+      lcr_data.append("&lt;new_value&gt; \n");
+      lcr_data.append("&lt;column_name&gt;C05&lt;/column_name&gt; \n");
+      lcr_data.append("&lt;data&gt;&lt;char&gt;world&lt;/char&gt;&lt;/data&gt; \n");
+      lcr_data.append("&lt;/new_value&gt; \n");
+      lcr_data.append("&lt;/new_values&gt; \n");
+      lcr_data.append("&lt;/ROW_LCR&gt;");
+ 
+      xml_lcr = oracle.xdb.XMLType.createXML(db_conn, lcr_data.toString());
+      adt_msg.setAdtPayload(xml_lcr);
+      ((AQjmsMessage)adt_msg).setSenderID(agent);
+      System.out.println("Publish message 3 - XMLType containing LCR ROW\n");
+      recipList = new AQjmsAgent[1];
+      recipList[0] = new AQjmsAgent("explicit_dq", null);
+      ((AQjmsTopicPublisher)t_pub).publish(topic, adt_msg, recipList);
+      t_sess.commit();
+ 
+    }
+    catch (JMSException jms_ex)
+    {
+      System.out.println("JMS Exception: " + jms_ex);
+      if(jms_ex.getLinkedException() != null)
+        System.out.println("Linked Exception: " + jms_ex.getLinkedException());
+    }
+  }
+}</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFDHHAF">
+                     <p class="titleinexample">Example 23-32 Java Code for Dequeuing Messages</p><pre class="oac_no_warn" dir="ltr">import oracle.AQ.*;
+import oracle.jms.*;
+import javax.jms.*;
+import java.lang.*;
+import oracle.xdb.*;
+import java.sql.SQLException;
+ 
+public class StreamsDeq
+{
+  public static void main (String args [])
+       throws java.sql.SQLException, ClassNotFoundException, JMSException
+  {
+     TopicConnectionFactory tc_fact= null;
+     TopicConnection        t_conn = null;
+     TopicSession           t_sess = null;
+ 
+     try
+     {
+       if (args.length &lt; 3 )
+         System.out.println("Usage:java filename [SID] [HOST] [PORT]");
+       else 
+       {
+         tc_fact = AQjmsFactory.getTopicConnectionFactory(
+                      args[1], args[0], Integer.parseInt(args[2]), "oci8");
+         t_conn = tc_fact.createTopicConnection( "OE","OE");
+ 
+         t_sess = t_conn.createTopicSession(true, Session.CLIENT_ACKNOWLEDGE);
+         t_conn.start() ;
+ 
+         receiveMessages(t_sess);
+ 
+         t_sess.close() ;
+         t_conn.close() ;
+         System.out.println("\nEnd of StreamsDeq Demo") ;
+       }
+     }
+     catch (Exception ex)
+     {
+       System.out.println("Exception-1: " + ex);
+       ex.printStackTrace();
+     }
+  }
+ 
+  public static void receiveMessages(TopicSession t_sess) throws Exception
+  {
+    Topic           topic   = null;
+    JPerson         pers    = null;
+    JAddress        addr    = null;
+    XMLType         xtype   = null;
+    TextMessage     t_msg   = null;
+    AdtMessage      adt_msg = null;
+    Message         jms_msg = null;
+    TopicReceiver   t_recv  = null;
+    int             i       = 0;
+    java.util.Map map= null;
+ 
+    try
+    {
+      topic = ((AQjmsSession)t_sess).getTopic("strmadmin", "oe_queue");
+      t_recv = ((AQjmsSession)t_sess).createTopicReceiver(topic, "explicit_dq", null);
+      map = ((AQjmsSession)t_sess).getTypeMap();
+      map.put("OE.PERSON", Class.forName("JPerson"));
+      map.put("OE.ADDRESS", Class.forName("JAddress"));
+      map.put("SYS.XMLTYPE", Class.forName("oracle.xdb.XMLTypeFactory"));
+      System.out.println("Receive messages ...\n");
+      do
+      {
+        try
+        {
+          jms_msg = (t_recv.receive(10));
+          i++;
+ 
+          ((AQjmsTopicReceiver)t_recv).setNavigationMode(AQjmsConstants.NAVIGATION_NEXT_MESSAGE);
+        }
+        catch (JMSException jms_ex2)
+        {
+          if((jms_ex2.getLinkedException() != null) &amp;&amp;
+             (jms_ex2.getLinkedException() instanceof SQLException))
+          {
+            SQLException sql_ex2 =(SQLException)(jms_ex2.getLinkedException());
+            if(sql_ex2.getErrorCode() == 25235)
+            {
+              ((AQjmsTopicReceiver)t_recv).setNavigationMode(
+                                                AQjmsConstants.NAVIGATION_NEXT_TRANSACTION);
+              continue;
+            }
+            else
+              throw jms_ex2;
+          }
+          else
+            throw jms_ex2;
+        }
+        if(jms_msg == null)
+        {
+          System.out.println("\nNo more messages");
+        }
+        else
+        {
+          if(jms_msg instanceof AdtMessage)
+          {
+            adt_msg = (AdtMessage)jms_msg;
+ 
+            System.out.println("Retrieved message " + i + ": " +
+                               adt_msg.getAdtPayload());
+            if(adt_msg.getAdtPayload() instanceof JPerson)
+            {
+              pers =(JPerson)( adt_msg.getAdtPayload());
+              System.out.println("PERSON: Name: " + pers.getName());
+            }
+            else if(adt_msg.getAdtPayload() instanceof JAddress)
+            {
+              addr =(JAddress)( adt_msg.getAdtPayload());
+              System.out.println("ADDRESS: Street" + addr.getStreet());
+            }
+            else if(adt_msg.getAdtPayload() instanceof oracle.xdb.XMLType)
+            {
+              xtype = (XMLType)adt_msg.getAdtPayload();
+              System.out.println("XMLType: Data: \n" + xtype.getStringVal());
+            }
+            System.out.println("Msg id: " + adt_msg.getJMSMessageID());
+            System.out.println();
+          }
+          else if(jms_msg instanceof TextMessage)
+          {
+            t_msg = (TextMessage)jms_msg;
+ 
+            System.out.println("Retrieved message " + i + ": " +
+                               t_msg.getText());
+            System.out.println("Msg id: " + t_msg.getJMSMessageID());
+            System.out.println();
+          }
+          else
+            System.out.println("Invalid message type");
+        }
+      } while (jms_msg != null);
+      t_sess.commit();
+    }
+    catch (JMSException jms_ex)
+    {
+      System.out.println("JMS Exception: " + jms_ex);
+      if(jms_ex.getLinkedException() != null)
+        System.out.println("Linked Exception: " + jms_ex.getLinkedException());
+      t_sess.rollback();
+    }
+    catch (java.sql.SQLException sql_ex)
+    {
+      System.out.println("SQL Exception: " + sql_ex);
+      sql_ex.printStackTrace();
+      t_sess.rollback();
+    }
+  }
+}</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFFFCFB">
+                     <p class="titleinexample">Example 23-33 Compiling StreamsEnq.java and StreamsDeq.java</p><pre class="oac_no_warn" dir="ltr">javac StreamsEnq.java StreamsDeq.java JPerson.java JAddress.java
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFEEGJH">
+                     <p class="titleinexample">Example 23-34 Running StreamsEnq</p><pre class="oac_no_warn" dir="ltr">java StreamsEnq  <span class="italic">ORACLE_SID HOST PORT</span>
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7__CJFJEDGC">
+                     <p class="titleinexample">Example 23-35 Running StreamsDeq</p><pre class="oac_no_warn" dir="ltr">java StreamsDeq  <span class="italic">ORACLE_SID</span> <span class="italic">HOST</span> <span class="italic">PORT</span></pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

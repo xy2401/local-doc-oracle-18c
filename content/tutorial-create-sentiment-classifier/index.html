@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Part number: E96920-01 -->
+        <!-- Published date: July 2018 -->
+        <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+        <!-- Template date: 10/18/17 -->
+        <meta content="text/html; charset=utf-8" http-equiv="content-type">
+		<meta name="contentid" content="24184">
+        <title>Creating a Sentiment Classifier Preference with Oracle Text</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="robots" content="INDEX, FOLLOW">
+        <meta name="description" content="Learn how to create a sentiment classifier preference and define its attributes with Oracle Text.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/obe-lite.css">
+        <script src="js/jquery-1.11.0.min.js"></script>
+        <script src="js/jquery-ui-1.10.4.custom.js"></script>
+        <script src="js/jquery.tocify.jd.js"></script>
+        <script src="js/leftnav.js"></script>
+    
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-07-09T18:56:18+00:00">
+    <meta name="dcterms.title" content="Creating a Sentiment Classifier Preference with Oracle Text">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="TUTORIAL-CREATE-SENTIMENT-CLASSIFIER">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E96920-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+    <body>
+        <header>
+            <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo">
+              <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a>
+            </div>
+        </header>
+        <!--end header-->
+
+        <div id="content">
+
+            <h1><img src="./img/obe_tag.png" align="middle" alt="Oracle by Example branding">Creating a Sentiment Classifier Preference with Oracle Text</h1>
+            <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+                <div class="navbackwide border-right"><!-- --></div>
+                <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+                <div id="sidebar"><!-- -->
+                    <div class="left-nav-tut"><!-- -->
+                        <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+                        <div id="navbar" class="left-nav-w"><!-- -->
+                            <div id="toc" class="tocify"><!-- --></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="bookContainer">
+                    <article>
+                        <section>
+                            <h2><img src="./img/32_begin.png" alt="section 0" height="32" width="32" class="num_circ">Before You Begin</h2>
+                            <p>This 15-minute tutorial shows you how to create a sentiment classifier preference and define its attributes with Oracle Text.</p>
+							<h3>Background</h3>
+                            <p>A sentiment classifier is a type of document classifier that you use to extract sentiment metadata about a topic or document. To perform sentiment analysis by using a sentiment classifier, you must associate a sentiment classifier preference with the sentiment classifier.</p>  
+                            <h3>What Do You Need?</h3>
+                            <ul>
+                                <li>Oracle Database 18c</li>
+                                <li>Oracle SQL Developer 17.3.2</li>
+                            </ul>
+                        </section>
+
+                        <!-- ========================================================================================================================= -->
+                        <section>
+                            <hr>
+                            <h2 id="section_1" role="button" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" height="32" width="32" class="num_circ">Create a Database Connection</h2>
+                            <ol>
+                                <li>Run <code>sqldeveloper.exe</code> in Windows or <code>sqldeveloper.sh</code> in Linux.</li>
+                                <li>On the <strong>Connections</strong> tab, right-click <strong>Connections</strong> and select <strong>New Connection.</strong></li>
+								<li>In the <strong>New / Select Database Connection</strong> window, enter or select the values for your database connection. This example uses the following values:</li>
+                                <ul>
+                                    <li><strong>Connection Name:</strong> <code>sys_conn</code></li>
+                                    <li><strong>Username:</strong> <code>sys</code></li>
+                                    <li><strong>Password:</strong> <code><var>your SYS user password</var></code></li>
+									<li><strong>Role:</strong> <strong>SYSDBA</strong></li>
+									<li><strong>Hostname:</strong> <code>localhost</code></li>
+									<li><strong>Port:</strong> <code>1521</code></li>
+									<li><strong>SID:</strong> <code>orcl</code></li>
+                                </ul>
+                                <li>Click <strong>Test</strong> and verify the status of the connection. In this example, the status displays <strong>Success</strong> above the Help button.
+                                    <figure><img src="./img/sys_conn.png" alt="Status of sys_conn" class="ScreenShot">
+                                        <figcaption><a href="files/sys_conn.txt">Description of the illustration sys_conn.png</a></figcaption>
+                                    </figure>
+                                </li>
+								<li>Click <strong>Save,</strong> click <strong>Connect,</strong> and close the window.</li>
+								<p class="note"> When the connection is established, a SQL worksheet opens and you use it to run SQL commands.</p>
+                            </ol>
+                        </section>
+                        <hr>
+                        <section>
+                            <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" height="32" width="32" class="num_circ">Connect to an Oracle Text User</h2>
+                            <ol>
+								<li>Create the user.<pre><code>CREATE USER myuser IDENTIFIED BY <var>your_password</var>;</code></pre></li>
+								<li>Grant roles to the user.</li><pre><code>GRANT RESOURCE, CONNECT, CTXAPP TO myuser;</code></pre>
+								<p class="note">The <code>CTXAPP</code> role enables you to create Oracle Text indexes and index preferences and to use PL/SQL packages.</p>
+								<li>Grant <strong>myuser</strong> an unlimited quota in the <code>USERS</code> tablespace.<pre><code>ALTER USER myuser QUOTA UNLIMITED ON USERS;</code></pre></li>
+								<li>To create a connection to <strong>myuser,</strong> click the <strong>Connections</strong> tab, right-click <strong>Connections,</strong> and select <strong>New Connection.</strong></li>
+								<li>In the <strong>New / Select Database Connection</strong> window, enter or select the values for your database connection. This example uses the following values:</li>
+								<ul>
+									<li><strong>Connection Name:</strong> <code>myuser_conn</code></li>
+                                    <li><strong>Username:</strong> <code>myuser</code></li>
+                                    <li><strong>Password:</strong> <code><var>your user password</var></code></li>
+									<li><strong>Role:</strong> <strong>default</strong></li>
+									<li><strong>Hostname:</strong> <code>localhost</code></li>
+									<li><strong>Port:</strong> <code>1521</code></li>
+									<li><strong>SID:</strong> <code>orcl</code></li>
+								</ul>
+                                <li>Click <strong>Test</strong> and verify the status of the connection. In this example, the status displays <strong>Success</strong> above the Help button.
+									<figure><img src="./img/myuser_conn.png" alt="Status of myuser_conn" class="ScreenShot">
+                                        <figcaption><a href="files/myuser_conn.txt">Description of the illustration myuser_conn.png</a></figcaption>
+                                    </figure>
+								</li>
+								<li>Click <strong>Save,</strong> click <strong>Connect,</strong> and close the window.</li> 
+								<p class="note"> When the connection is established, a SQL worksheet opens and you use it to run SQL commands.</p>
+                            </ol>
+                        </section>
+                        <hr>
+                        <section>
+                            <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" height="32" width="32" class="num_circ">Create a Sentiment Classifier Preference</h2>
+                            <ol>
+                                <li>Create a sentiment classifier preference of <code>SENTIMENT_CLASSIFIER</code> type.<pre><code>EXEC CTX_DDL.CREATE_PREFERENCE('clsfier_camera','SENTIMENT_CLASSIFIER')</code></pre></li>
+								<li>Define the attributes of the sentiment classifier preference.</li><pre><code>EXEC CTX_DDL.SET_ATTRIBUTE('clsfier_camera','MAX_FEATURES','1000')
+EXEC CTX_DDL.SET_ATTRIBUTE('clsfier_camera','NUM_ITERATIONS','600')</code></pre><p class="note"><code>MAX_FEATURES</code> enables you to specify the maximum number of distinct features (words, stems, and themes) to be extracted to build a sentiment classifier. <code>NUM_ITERATIONS</code> enables you to specify the number of iterations for which the sentiment classifier runs.</p>
+                            </ol>
+                        </section>
+                        <hr>
+                    </article>
+                </div>
+                <br class="clearfloat">
+            </div>
+        </div>
+        <!--close main--> 
+        <!--end content-->
+        <div class="footer-container ">
+            <div style="max-width: 994px; padding:10px 0 0 17px;">
+                <footer class="footer-list">
+                    <ul>
+                        <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About Oracle</a> </li>
+                        <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal Notices</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms of Use</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your Privacy Rights</a> </li>
+                        <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en">Copyright © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+                    </ul>
+                </footer>
+            </div>
+            <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+        </div>
+		<!-- OBE Dialog Box code 5/31/2018 -->
+        <div id="lpModal" class="modal">
+            <!-- Modal hdr and body -->
+            <div id="obe_dialog" class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close">  
+                        <span class="close">&times;</span>
+                    </a>
+                    <h1>Associated Learning Paths</h1>
+                </div>
+                <div id="dialog-content">
+                </div>
+                <div id="dialog-close" class="closeBtn">
+                    <a href="#" class="close2">  
+                        <p class="close2"> 
+                            <span>&nbsp;&nbsp;Got It! &nbsp;</span> 
+                        </p>
+                    </a>  
+                </div>
+            </div>   
+        </div>
+    </body>
+</html>

@@ -1,0 +1,1991 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">
+      <meta name="description" content="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">
+      <title>Using SODA for PL/SQL</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="SODA for PL/SQL Developer's Guide">
+      <meta property="og:description" content="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="SODA for PL/SQL Developer's Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="oracle-database-soda-pl-sql-developers-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2019-02-25T09:39:58-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2018, 2019">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84719-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="soda-pl-sql-overview.html" title="Previous" type="text/html">
+      <link rel="next" href="soda-collection-configuration-using-custom-metadata.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Oracle® Database SODA for PL/SQL Developer's Guide">
+    <meta name="dcterms.isVersionOf" content="ADSDP">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="soda-pl-sql-overview.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="soda-collection-configuration-using-custom-metadata.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">SODA for PL/SQL Developer's Guide</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Using SODA for PL/SQL</li>
+            </ol>
+            <a id="GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" name="GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9"></a>
+            
+            <h2 id="ADSDP-GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" class="sect2"><span class="enumeration_chapter">3 </span>Using SODA for PL/SQL
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.</p>
+               <div class="section">
+                  <p>(CRUD operations are also called “read and write operations” in this document.) </p>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-B3232AB9-5477-4348-B68C-CA496B3EF662">Getting Started with SODA for PL/SQL</a><br>How to access SODA for PL/SQL is described, as well as how to use it to create a database collection, insert a document into a collection, and retrieve a document from a collection.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96">Creating a Document Collection with SODA for PL/SQL</a><br>You can use PL/SQL function <code class="codeph">DBMS_SODA.create_collection</code> to create a document collection with the default metadata.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-04A5F0A1-3A3F-4DDE-AF85-324C8CE698DB">Opening an Existing Document Collection with SODA for PL/SQL</a><br>You can use PL/SQL function <code class="codeph">DBMS_SODA.open_collection</code> to open an existing document collection.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-ECE58906-DD2A-4593-93B8-201946632054">Checking Whether a Given Collection Exists with SODA for PL/SQL</a><br>You can use PL/SQL function <code class="codeph">DBMS_SODA.open_collection</code> to check for the existence of a given collection. It returns a SQL <code class="codeph">NULL</code> value if a collection with the specified name does not exist; otherwise, it returns the collection object.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-4568B14A-C54D-459B-B8B6-114A2148C4F1">Discovering Existing Collections with SODA for PL/SQL</a><br>You can use PL/SQL function <code class="codeph">DBMS_SODA.list_collection_names</code> to discover existing collections.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6">Dropping a Document Collection with SODA for PL/SQL</a><br>You use PL/SQL function <code class="codeph">DBMS_SODA.drop_collection</code> to         drop a document collection.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3">Creating Documents with SODA for PL/SQL</a><br>You use a constructor for PL/SQL object type <code class="codeph">SODA_DOCUMENT_T</code> to create SODA documents.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279">Inserting Documents into Collections with SODA for PL/SQL</a><br>To insert a document into a collection, you invoke <code class="codeph">SODA_COLLECTION_T</code> method (member function) <code class="codeph"><span class="bold">insert_one()</span></code> or <code class="codeph"><span class="bold">insert_one_and_get()</span></code>. These methods create document keys automatically, unless the collection is configured with client-assigned keys and the input document provides the key.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8">SODA for PLSQL Read and Write Operations</a><br>A <code class="codeph">SODA_OPERATION_T</code> instance is returned by method             <code class="codeph">find()</code> of <code class="codeph">SODA_COLLECTION_T</code>. You can chain together             <code class="codeph">SODA_OPERATION_T</code> methods, to specify read and write operations against         a collection.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A">Finding Documents in Collections with SODA for PL/SQL</a><br>You         can use <code>SODA_OPERATION_T</code> terminal method             <code class="codeph">get_one()</code> or <code class="codeph">get_cursor()</code> to find one or multiple         documents in a collection, respectively. You can use terminal method             <code class="codeph">count()</code> to count the documents in a collection. You can use nonterminal         methods, such as <code class="codeph">key()</code>, <code class="codeph">keys()</code>, and             <code class="codeph">filter()</code>, to specify conditions for a find operation.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924">Replacing Documents in a Collection with SODA for PL/SQL</a><br>You can chain together             <code class="codeph">SODA_OPERATION_T</code> replace-operation method             <code class="codeph">replace_one()</code> or <code class="codeph">replace_one_and_get()</code> with         nonterminal method <code class="codeph">key()</code> to uniquely identify a document to be replaced.         You can optionally make use of additional nonterminal methods such as             <code class="codeph">version()</code> and <code class="codeph">filter()</code>.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-3359F024-2789-482A-9D8D-FDB10AC85369">Removing Documents from a Collection with SODA for PL/SQL</a><br>You can remove documents from a         collection by chaining together <code class="codeph">SODA_OPERATION_T</code> method             <code class="codeph">remove()</code> with nonterminal method <code class="codeph">key()</code>,             <code class="codeph">keys()</code>, or <code class="codeph">filter()</code> to identify documents to be         removed. You can optionally make use of additional nonterminal methods such as             <code class="codeph">version()</code>.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB">Indexing the Documents in a Collection with SODA for PL/SQL</a><br>You index the documents in a SODA collection with             <code class="codeph">SODA_COLLECTION_T</code> method <code class="codeph">create_index()</code>. Its input         parameter is a textual JSON index specification. This can specify support for B-tree,         spatial, full-text, and ad hoc indexing, and it can specify support for a JSON data         guide.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-ED8FAAAA-C93D-456C-AF56-D8E4B8DCFE2E">Getting a Data Guide for a Collection with SODA for PL/SQL</a><br>You use <code class="codeph">SODA_COLLECTION_T</code> method             <code class="codeph">get_Data_Guide()</code> to get a data guide for a collection. A data guide is         a JSON document that summarizes the structural and type information of the JSON documents in         the collection. It records metadata about the fields used in those documents.
+                  </li>
+                  <li class="ulchildlink"><a href="using-soda-pl-sql.html#GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC">Handling Transactions with SODA for PL/SQL</a><br>As usual in PL/SQL and SQL, you can treat individual SODA read and write operations, or groups of them, as a transaction. To commit a transaction, use a SQL <code class="codeph">COMMIT</code> statement. If you want to roll back changes, use a SQL <code class="codeph">ROLLBACK</code> statement.
+                  </li>
+               </ul>
+            </div>
+            
+            <div class="sect2"><a id="GUID-B3232AB9-5477-4348-B68C-CA496B3EF662" name="GUID-B3232AB9-5477-4348-B68C-CA496B3EF662"></a><h3 id="ADSDP-GUID-B3232AB9-5477-4348-B68C-CA496B3EF662" class="sect3"><span class="enumeration_section">3.1 </span>Getting Started with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>How to access SODA for PL/SQL is described, as well as how to use it to create a database collection, insert a document into a collection, and retrieve a document from a collection.</p>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-B3232AB9-5477-4348-B68C-CA496B3EF662__GUID-0C16412B-2C5C-432D-9F18-9C4B80C56D95">
+                        <p class="notep1">Note:</p>
+                        <p>Don’t worry if not
+                everything in this topic is clear to you on first reading. The necessary concepts
+                are developed in detail in other topics. This topic should give you an idea of what
+                is involved overall in using SODA.</p>
+                     </div>
+                     <p>Follow these steps to get started with SODA for PL/SQL:</p>
+                     <ol>
+                        <li>
+                           <p>Ensure that the prerequisites have been met for using SODA for PL/SQL. See <a href="soda-pl-sql-prerequisites.html#GUID-4F518E19-7B01-4C89-AFD7-56D9A4FC8779" title="SODA for PL/SQL is an integral part of Oracle Database, starting with Release 18c (18.1). The database is the only prerequisite for using SODA for PL/SQL, but some features are available only starting with particular database releases.">SODA for PL/SQL Prerequisites</a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Identify the database schema (user account) used to store collections, and grant database role <code class="codeph">SODA_APP</code> to that schema:
+                           </p><pre class="pre codeblock"><code>GRANT SODA_APP TO <span class="italic">schemaName</span>;
+</code></pre></li>
+                        <li>
+                           <p>Use PL/SQL code such as that in <a href="using-soda-pl-sql.html#GUID-B3232AB9-5477-4348-B68C-CA496B3EF662__GETTINGSTARTEDRUN-THROUGH-0FA6B2C6">Example 3-1</a> to do the following:
+                           </p>
+                           <ol type="a">
+                              <li>
+                                 <p>Create and open a collection (an instance of PL/SQL object type <code class="codeph">SODA_COLLECTION_T</code>), using the default collection configuration (metadata).
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Create a document with particular JSON content, as an instance of PL/SQL object type <code class="codeph">SODA_DOCUMENT_T</code>. 
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Insert the document into the collection. </p>
+                              </li>
+                              <li>
+                                 <p>Get the inserted document back. Its other components, besides the content, are generated automatically.</p>
+                              </li>
+                              <li>
+                                 <p>Print the unique document key, which is one of the components generated automatically.</p>
+                              </li>
+                              <li>
+                                 <p>Commit the document insertion.</p>
+                              </li>
+                              <li>
+                                 <p>Find the document in the collection, by providing its key.</p>
+                              </li>
+                              <li>
+                                 <p>Print some of the document components: key, content, creation timestamp, last-modified timestamp, and version.</p>
+                              </li>
+                           </ol>
+                        </li>
+                        <li>
+                           <p>Drop the collection, cleaning up the database table that is used to store the collection and its metadata:</p><pre class="pre codeblock"><code>SELECT DBMS_SODA.<span class="bold">drop_collection</span>('myCollectionName') AS drop_status FROM DUAL;</code></pre><div class="infoboxnote" id="GUID-B3232AB9-5477-4348-B68C-CA496B3EF662__GUID-99311192-16DD-4DF0-B76B-2245BB2A5A44">
+                              <p class="notep1">Caution:</p>
+                              <p>Do
+                    <span class="italic">not</span> use SQL to drop the database <span class="italic">table</span> that underlies a
+                collection. Dropping a <span class="italic">collection</span> involves more than just dropping its
+                database table. In addition to the documents that are stored in its table, a
+                collection has <span class="italic">metadata</span>, which is also persisted in Oracle Database. Dropping
+                the table underlying a collection does <span class="italic">not</span> also drop the collection metadata.
+            
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="infoboxnote" id="GUID-B3232AB9-5477-4348-B68C-CA496B3EF662__IFAPLSQLSUBPROGRAMTHATYOUWRITEINVOK-1021DB2A">
+                        <p class="notep1">Note:</p>
+                        <p>If a PL/SQL subprogram that you write invokes subprograms that are in package <code class="codeph">DBMS_SODA</code>, and if your subprogram has definer (owner) rights, then a database administrator (DBA) must grant role <code class="codeph">SODA_APP</code> to your subprogram. For example, this code grants role <code class="codeph">SODA_APP</code> to procedure <code class="codeph">my_soda_proc</code>, which is owned by database schema (user) <code class="codeph">my_db_schema</code>:
+                        </p><pre class="pre codeblock"><code>GRANT SODA_APP TO PROCEDURE my_db_schema.my_soda_proc;</code></pre></div>
+                     <div class="infoboxnotealso" id="GUID-B3232AB9-5477-4348-B68C-CA496B3EF662__GUID-AE5D2347-AE44-41D1-A8A8-4CF5B4C0E294">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../dbseg/configuring-privilege-and-role-authorization.html#DBSEG-GUID-A5B26A03-32CF-4F5D-A6BE-F2452AD8CB8A" target="_blank"><span><cite>Oracle Database Security Guide</cite></span></a> for information about role <code class="codeph">SODA_APP</code></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-B3232AB9-5477-4348-B68C-CA496B3EF662__GETTINGSTARTEDRUN-THROUGH-0FA6B2C6">
+                     <p class="titleinexample">Example 3-1 Getting Started Run-Through</p><pre class="pre codeblock"><code>DECLARE
+    collection      SODA_COLLECTION_T;
+    document        SODA_DOCUMENT_T;
+    foundDocument   SODA_DOCUMENT_T;
+    result_document SODA_DOCUMENT_T;
+    docKey          VARCHAR2(100);
+    status          NUMBER;
+BEGIN
+    <span class="italic">-- Create a collection.</span>
+    collection := DBMS_SODA.<span class="bold">create_collection</span>('myCollectionName');
+
+    <span class="italic">-- The default collection has BLOB content, so create a BLOB-based document.</span>
+    document := <span class="bold">SODA_DOCUMENT_T</span>(
+                  b_content =&gt; <span class="bold">utl_raw.cast_to_raw</span>('{"name" : "Alexander"}'));
+
+    <span class="italic">-- Insert the document and get it back.</span>
+    result_document := collection.<span class="bold">insert_one_and_get</span>(document);
+
+    <span class="italic">-- The result document has auto-generated components, such as key and version,
+    -- in addition to the content.  Print the auto-generated document key.</span>
+    docKey := result_document.<span class="bold">get_key</span>;
+    DBMS_OUTPUT.put_line('Auto-generated key is ' || docKey);
+
+    <span class="italic">-- Commit the insert</span>
+    <span class="bold">COMMIT</span>;
+
+    <span class="italic">-- Find the document in the collection by its key</span>
+    foundDocument := collection.<span class="bold">find_one</span>(docKey);
+
+    <span class="italic">-- Get and print some document components: key, content, etc.</span>
+    DBMS_OUTPUT.put_line('<span class="italic">Document components:</span>');
+    DBMS_OUTPUT.put_line('<span class="italic">  Key: </span>' || foundDocument.<span class="bold">get_key</span>);
+    DBMS_OUTPUT.put_line('<span class="italic">  Content: </span>'
+                         || <span class="bold">utl_raw.cast_to_varchar2</span>(foundDocument.<span class="bold">get_blob</span>));
+    DBMS_OUTPUT.put_line('<span class="italic">  Creation timestamp: </span>' || foundDocument.<span class="bold">get_created_on</span>);
+    DBMS_OUTPUT.put_line('<span class="italic">  Last-modified timestamp: </span>'
+                         || foundDocument.<span class="bold">get_last_modified</span>);
+    DBMS_OUTPUT.put_line('<span class="italic">  Version: </span>' || foundDocument.<span class="bold">get_version</span>);
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-B3232AB9-5477-4348-B68C-CA496B3EF662__SAMPLEOUTPUTFORGETTINGSTARTEDRUN-TH-0FA6C754">
+                     <p class="titleinexample">Example 3-2 Sample Output for Getting Started Run-Through</p>
+                     <p><a href="using-soda-pl-sql.html#GUID-B3232AB9-5477-4348-B68C-CA496B3EF662__GETTINGSTARTEDRUN-THROUGH-0FA6B2C6">Example 3-1</a> results in output similar to this. The values of the auto-generated components will differ in any actual execution.
+                     </p><pre class="pre codeblock"><code>Auto-generated key is 96F35328CD3B4F96BF3CD01BCE9EBDF5
+<span class="italic">Document components:</span>
+  <span class="italic">Key:</span> 96F35328CD3B4F96BF3CD01BCE9EBDF5
+  <span class="italic">Content:</span> {"name" : "Alexander"}
+  <span class="italic">Creation timestamp:</span> 2017-09-19T01:05:06.160289Z
+  <span class="italic">Last-modified timestamp:</span> 2017-09-19T01:05:06.160289Z
+  <span class="italic">Version:</span> FD69FB6ACE73FA735EC7922CA4A02DDE0690462583F9EA2AF754D7E342B3EE78
+</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96" name="GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96"></a><h3 id="ADSDP-GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96" class="sect3"><span class="enumeration_section">3.2 </span>Creating a Document Collection with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You can use PL/SQL function <code class="codeph">DBMS_SODA.create_collection</code> to create a document collection with the default metadata.
+                  </p>
+                  <div class="section">
+                     <p><a href="using-soda-pl-sql.html#GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96__CREATINGACOLLECTIONTHATHASTHEDEFAUL-0F85688A">Example 3-3</a> uses PL/SQL function <code class="codeph">DBMS_SODA.<span class="bold">create_collection</span></code> to create a collection that has the default metadata.
+                     </p>
+                     <p>The <span class="italic">default collection metadata</span> has the following characteristics.
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Each document in the collection has these document components:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Key</p>
+                              </li>
+                              <li>
+                                 <p>Content</p>
+                              </li>
+                              <li>
+                                 <p>Creation timestamp</p>
+                              </li>
+                              <li>
+                                 <p>Last-modified timestamp</p>
+                              </li>
+                              <li>
+                                 <p>Version</p>
+                              </li>
+                           </ul>
+                        </li>
+                        <li>
+                           <p>The collection can store only JSON documents.</p>
+                        </li>
+                        <li>
+                           <p>Document keys are automatically generated for documents that you add to the collection.</p>
+                        </li>
+                     </ul>
+                     <p>The default collection configuration is recommended in most cases, but collections are highly configurable. When you create a collection you can specify things such as the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Storage details, such as the name of the table that stores the collection and the names and data types of its columns.</p>
+                        </li>
+                        <li>
+                           <p>The presence or absence of columns for creation timestamp, last-modified timestamp, and version.</p>
+                        </li>
+                        <li>
+                           <p>Whether the collection can store only JSON documents.</p>
+                        </li>
+                        <li>
+                           <p>Methods of document key generation, and whether document keys are client-assigned or generated automatically.</p>
+                        </li>
+                        <li>
+                           <p>Methods of version generation.</p>
+                        </li>
+                     </ul>
+                     <p>This configurability also lets you map a new collection to an existing database table.</p>
+                     <p>To configure a collection in a nondefault way, supply custom collection metadata, expressed in JSON, as the second argument to <code class="codeph">DBMS_SODA.create_collection</code>. 
+                     </p>
+                     <p>If you do not care about the details of collection configuration then pass only the collection name to <code class="codeph">DBMS_SODA.create_collection</code> — no second argument. That creates a collection with the default configuration.
+                     </p>
+                     <p>If a collection with the same name already exists then it is simply opened and its handle is returned. If custom metadata is provided and it does not match the metadata of the existing collection then the collection is not opened and an error is raised. (To match, all metadata fields must have the same values.)</p>
+                     <div class="infoboxnote" id="GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96__UNLESSOTHERWISESTATEDTHEREMAINDEROF-0E94B5D5">
+                        <p class="notep1">Note:</p>
+                        <p>Unless otherwise stated, the remainder of this documentation assumes that a collection has the default configuration.</p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <div class="infoboxnotealso" id="GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96__ORACLEDATABASEINTRODUCTIONTOSIMPLEO-0F1EC08A">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../adsdi/overview-soda.html#ADSDI-GUID-9200BDAC-4BA3-4AD2-BF4B-81196278C064" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for information about the default naming of a collection table
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_SODA.html#ARPLS-GUID-ACD8298F-9EFC-4261-8639-4279FB8D63B3" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about PL/SQL function <code class="codeph">DBMS_SODA.create_collection</code></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96__CREATINGACOLLECTIONTHATHASTHEDEFAUL-0F85688A">
+                     <p class="titleinexample">Example 3-3 Creating a Collection That Has the Default Metadata</p>
+                     <p id="GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96__THISEXAMPLESCREATESCOLLECTIONMYCOLL-0F856BAC">This example creates collection <code class="codeph">myCollectionName</code> with the default metadata. 
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_Collection_T;
+BEGIN
+    collection := DBMS_SODA.<span class="bold">create_collection</span>('myCollectionName');   
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-collection-configuration-using-custom-metadata.html#GUID-30D97FE4-21F7-4B72-B634-B941E7E0F635" title="You use SODA_COLLECTION_T method get_metadata() to get all of the metadata for a collection, as a JSON document.">Getting the Metadata of an Existing Collection</a></li>
+                        <li><a href="soda-collection-configuration-using-custom-metadata.html#GUID-1973425A-F505-433F-9B2D-7003902A823E" title="To create a document collection that has custom metadata, you pass its metadata, as JSON data, to PL/SQL function DBMS_SODA.create_collection.">Creating a Collection That Has Custom Metadata</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-ECE58906-DD2A-4593-93B8-201946632054" title="You can use PL/SQL function DBMS_SODA.open_collection to check for the existence of a given collection. It returns a SQL NULL value if a collection with the specified name does not exist; otherwise, it returns the collection object.">Checking Whether a Given Collection Exists with SODA for PL/SQL</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-04A5F0A1-3A3F-4DDE-AF85-324C8CE698DB" name="GUID-04A5F0A1-3A3F-4DDE-AF85-324C8CE698DB"></a><h3 id="ADSDP-GUID-04A5F0A1-3A3F-4DDE-AF85-324C8CE698DB" class="sect3"><span class="enumeration_section">3.3 </span>Opening an Existing Document Collection with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You can use PL/SQL function <code class="codeph">DBMS_SODA.open_collection</code> to open an existing document collection.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnotealso" id="GUID-04A5F0A1-3A3F-4DDE-AF85-324C8CE698DB__NEEDARPLSXREFNEEDXREFORACLEDATABASE-0F1E6082">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../arpls/DBMS_SODA.html#ARPLS-GUID-0057B147-1CD0-461D-8BFD-D5DFBB9F6C22" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about PL/SQL function <code class="codeph">DBMS_SODA.open_collection</code> 
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-04A5F0A1-3A3F-4DDE-AF85-324C8CE698DB__OPENINGANEXISTINGDOCUMENTCOLLECTION-0D847B37">
+                     <p class="titleinexample">Example 3-4 Opening an Existing Document Collection</p>
+                     <p>This example uses PL/SQL function <code class="codeph">DBMS_SODA.open_collection</code> to open the collection named <code class="codeph">myCollectionName</code> and returns a <code class="codeph">SODA_COLLECTION_T</code> instance that represents this collection. If the value returned is <code class="codeph">NULL</code> then there is no existing collection named <code class="codeph">myCollectionName</code>.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+BEGIN
+    collection := DBMS_SODA.<span class="bold">open_collection</span>('myCollectionName');
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-ECE58906-DD2A-4593-93B8-201946632054" name="GUID-ECE58906-DD2A-4593-93B8-201946632054"></a><h3 id="ADSDP-GUID-ECE58906-DD2A-4593-93B8-201946632054" class="sect3"><span class="enumeration_section">3.4 </span>Checking Whether a Given Collection Exists with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You can use PL/SQL function <code class="codeph">DBMS_SODA.open_collection</code> to check for the existence of a given collection. It returns a SQL <code class="codeph">NULL</code> value if a collection with the specified name does not exist; otherwise, it returns the collection object.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnotealso" id="GUID-ECE58906-DD2A-4593-93B8-201946632054__ORACLEDATABASEPLSQLPACKAGESANDTYPES-1835858C">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../arpls/DBMS_SODA.html#ARPLS-GUID-0057B147-1CD0-461D-8BFD-D5DFBB9F6C22" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about PL/SQL function <code class="codeph">DBMS_SODA.open_collection</code> 
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-ECE58906-DD2A-4593-93B8-201946632054__GUID-F701F57E-EF05-4B11-B6A7-A442B41A299D">
+                     <p class="titleinexample">Example 3-5 Checking for a Collection with a Given Name</p>
+                     <p>This example uses <code class="codeph">DBMS_SODA.open_collection</code> to try to open an existing collection named <code class="codeph">myCollectionName</code>. It prints a message if no such collection exists.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection SODA_COLLECTION_T;
+BEGIN
+    collection := DBMS_SODA.<span class="bold">open_collection</span>('myCollectionName');
+    <span class="bold">IF</span> collection <span class="bold">IS NULL</span> THEN
+        DBMS_OUTPUT.put_line('Collection does not exist');
+    END IF;
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96" title="You can use PL/SQL function DBMS_SODA.create_collection to create a document collection with the default metadata.">Creating a Document Collection with SODA for PL/SQL</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-4568B14A-C54D-459B-B8B6-114A2148C4F1" name="GUID-4568B14A-C54D-459B-B8B6-114A2148C4F1"></a><h3 id="ADSDP-GUID-4568B14A-C54D-459B-B8B6-114A2148C4F1" class="sect3"><span class="enumeration_section">3.5 </span>Discovering Existing Collections with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You can use PL/SQL function <code class="codeph">DBMS_SODA.list_collection_names</code> to discover existing collections.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnotealso" id="GUID-4568B14A-C54D-459B-B8B6-114A2148C4F1__NEEDARPLSXREFNEEDXREFORACLEDATABASE-0F1E399C">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../arpls/DBMS_SODA.html#ARPLS-GUID-2D5982F5-34B2-44A7-8D94-DA7272A6B831" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about PL/SQL function <code class="codeph">DBMS_SODA.list_collection_names</code> 
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-4568B14A-C54D-459B-B8B6-114A2148C4F1__PRINTINGTHENAMESOFALLEXISTINGCOLLEC-0D858FEF">
+                     <p class="titleinexample">Example 3-6 Printing the Names of All Existing Collections</p>
+                     <p>This example uses PL/SQL function <code class="codeph">DBMS_SODA.list_collection_names</code> to obtain a list of the collection names. It then iterates over that list, printing out the names.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    coll_list  SODA_COLLNAME_LIST_T;
+BEGIN
+    coll_list := DBMS_SODA.<span class="bold">list_collection_names</span>;
+    DBMS_OUTPUT.put_line('Number of collections: ' || to_char(coll_list.count));
+    DBMS_OUTPUT.put_line('Collection List: ');
+    IF (coll_list.count &gt; 0) THEN
+        -- Loop over the collection name list
+        FOR i IN
+            coll_list.first .. coll_list.last
+        LOOP
+            DBMS_OUTPUT.put_line(coll_list(i));
+        END LOOP;  
+    ELSE   
+        DBMS_OUTPUT.put_line('No collections found');
+    END IF;
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6" name="GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6"></a><h3 id="ADSDP-GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6" class="sect3"><span class="enumeration_section">3.6 </span>Dropping a Document Collection with SODA
+        for PL/SQL
+               </h3>
+               <div>
+                  <p>You use PL/SQL function <code class="codeph">DBMS_SODA.drop_collection</code> to
+        drop a document collection.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6__GUID-486F51AA-DFC5-4A46-AB4A-6C3875FF8F4B">
+                        <p class="notep1">Caution:</p>
+                        <p>Do
+                    <span class="italic">not</span> use SQL to drop the database <span class="italic">table</span> that underlies a
+                collection. Dropping a <span class="italic">collection</span> involves more than just dropping its
+                database table. In addition to the documents that are stored in its table, a
+                collection has <span class="italic">metadata</span>, which is also persisted in Oracle Database. Dropping
+                the table underlying a collection does <span class="italic">not</span> also drop the collection metadata.
+            
+                        </p>
+                     </div>
+                     <div class="infoboxnote" id="GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6__GUID-659A5154-1D21-4223-832C-DB9927951E95">
+                        <p class="notep1">Note:</p>
+                        <p>Day-to-day use of a typical application that makes use of SODA does not require that you drop and re-create collections. But if you need to do that for any reason then this guideline applies.</p>
+                        <p>Do <span class="italic">not </span>drop a collection and then re-create it with <span class="italic">different metadata </span>if there is any application running that uses the collection in any way. Shut down any such applications before re-creating the collection, so that all live SODA objects are released.
+                        </p>
+                        <p>There is no problem just dropping a collection. Any read or write operation on a dropped collection raises an error. And there is no problem dropping a collection and then re-creating it with the same metadata. But if you re-create a collection with different metadata, and if there are any live applications using SODA objects, then there is a risk that a stale collection is accessed, and <span class="italic">no error is raised</span> in this case. 
+                        </p>
+                     </div>
+                     <div class="infoboxnote" id="GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6__WHATISNEEDEDHERECOMMITALLWRITESTOAC-0D86727A">
+                        <p class="notep1">Note:</p>
+                        <p>Commit all writes
+                    to a collection <span class="italic">before</span> using <code class="codeph">DBMS_SODA.drop_collection</code>.
+                    For the drop to succeed, all uncommitted writes to the collection must first be
+                    either committed or rolled back — you must explicitly use SQL
+                        <code class="codeph">COMMIT</code> or <code class="codeph">ROLLBACK</code>.. Otherwise, an
+                    exception is raised. 
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6__NEEDARPLSXREFNEEDXREFORACLEDATABASE-0F1EE6C1">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../arpls/DBMS_SODA.html#ARPLS-GUID-8806F2BE-DC70-417D-B08B-A3972B3DA69C" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about PL/SQL function
+                        <code class="codeph">DBMS_SODA.drop_collection</code>
+                           
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6__DROPPINGADOCUMENTCOLLECTION-0D863BFC">
+                     <p class="titleinexample">Example 3-7 Dropping a Document Collection</p>
+                     <p>This example uses PL/SQL function
+                    <code class="codeph">DBMS_SODA.drop_collection</code> to drop collection
+                    <code class="codeph">myCollectionName</code>. 
+                     </p>
+                     <p>If the collection cannot
+                be dropped because of uncommitted write operations then an exception is thrown. If
+                the collection is dropped successfully, the returned status is 1; otherwise, the
+                status is 0. In particular, if a collection with the specified name does not exist,
+                the returned status is 0 — no exception is
+            thrown.</p><pre class="pre codeblock"><code>DECLARE
+    status  NUMBER := 0;
+BEGIN
+    status := DBMS_SODA.<span class="bold">drop_collection</span>('myCollectionName');
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC" title="As usual in PL/SQL and SQL, you can treat individual SODA read and write operations, or groups of them, as a transaction. To commit a transaction, use a SQL COMMIT statement. If you want to roll back changes, use a SQL ROLLBACK statement.">Handling Transactions with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279" title="To insert a document into a collection, you invoke SODA_COLLECTION_T method (member function) insert_one() or insert_one_and_get(). These methods create document keys automatically, unless the collection is configured with client-assigned keys and the input document provides the key.">Inserting Documents into Collections with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924" title="You can chain together SODA_OPERATION_T replace-operation method replace_one() or replace_one_and_get() with nonterminal method key() to uniquely identify a document to be replaced. You can optionally make use of additional nonterminal methods such as version() and filter().">Replacing Documents in a Collection with SODA for PL/SQL</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3" name="GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3"></a><h3 id="ADSDP-GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3" class="sect3"><span class="enumeration_section">3.7 </span>Creating Documents with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You use a constructor for PL/SQL object type <code class="codeph">SODA_DOCUMENT_T</code> to create SODA documents.
+                  </p>
+                  <div class="section">
+                     <p>SODA for PL/SQL represents a document using an instance of PL/SQL object type <code class="codeph">SODA_DOCUMENT_T</code>. This object is a <span class="italic">carrier</span> of document content and other document components, such as the document key.
+                     </p>
+                     <p>Here is an example of the <span class="italic">content</span> of a JSON document:
+                     </p><pre class="pre codeblock"><code>{ "name" :    "Alexander",
+  "address" : "1234 Main Street",
+  "city" :    "Anytown",
+  "state" :   "CA",
+  "zip" :     "12345"
+}</code></pre></div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <p>A document has these <strong class="term">components</strong>:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Key</p>
+                        </li>
+                        <li>
+                           <p>Content</p>
+                        </li>
+                        <li>
+                           <p>Creation time stamp</p>
+                        </li>
+                        <li>
+                           <p>Last-modified time stamp</p>
+                        </li>
+                        <li>
+                           <p>Version</p>
+                        </li>
+                        <li>
+                           <p>Media type (<code class="codeph">"application/json"</code> for JSON documents)
+                           </p>
+                        </li>
+                     </ul>
+                     <p>You <span class="italic">create a document</span> by invoking one of the <code class="codeph"><span class="bold">SODA_DOCUMENT_T</span></code> constructors. The constructors differ according to the content type of the documents they create: <code class="codeph">VARCHAR2</code>, <code class="codeph">CLOB</code>, or <code class="codeph">BLOB</code>. 
+                     </p>
+                     <p>You can write a document of a given content type only to a collection whose content column has been defined for documents of that type. For example, you can write (insert or replace) only a document with content type <code class="codeph">BLOB</code> to a collection whose <code class="codeph">contentColumn</code> has a <code class="codeph">sqlType</code> value of <code class="codeph">BLOB</code>. (<code class="codeph">BLOB</code> is the default content type for a collection.)
+                     </p>
+                     <p> There are different ways to invoke a document constructor:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>You can provide the document <span class="italic">key</span>, as the first argument.
+                           </p>
+                           <p>In a collection, each document must have a key. You must provide the key when you create the document <span class="italic">only</span> if you expect to insert the document into a collection that does <span class="italic">not</span> automatically generate keys for inserted documents. By default, collections are configured to automatically generate document keys.
+                           </p>
+                        </li>
+                        <li>
+                           <p>You <span class="italic">must</span> provide the document <span class="italic">content</span>. If you also provide the document key then the content is the second argument to the constructor. 
+                           </p>
+                           <p>If you provide only the content then you must specify both the formal and actual content parameters, separated by the association arrow (<code class="codeph">=&gt;</code>): <code class="codeph"><span class="bold">v_content =&gt;</span> <span class="codeinlineitalic">actual</span></code>, <code class="codeph"><span class="bold">c_content =&gt;</span> <span class="codeinlineitalic">actual</span></code>, or <code class="codeph"><span class="bold">b_content =&gt;</span> <span class="codeinlineitalic">actual</span></code>, for content of type <code class="codeph">VARCHAR2</code>, <code class="codeph">CLOB</code>, or <code class="codeph">BLOB</code>, respectively.
+                           </p>
+                        </li>
+                        <li>
+                           <p>You can provide the document media type, which defaults to <code class="codeph">"application/json"</code>. Unless you provide all of the parameters (key, content, and media type) you must specify both the formal and actual media-type parameters, , separated by the association arrow (<code class="codeph">=&gt;</code>): <code class="codeph"><span class="bold">media_type =&gt;</span> <span class="codeinlineitalic">actual</span></code>.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Parameters that you do not provide explicitly default to <code class="codeph">NULL</code>. 
+                     </p>
+                     <p>Providing only the content parameter can be useful for creating documents that you insert into a collection that automatically generates document keys. Providing only the key and content can be useful for creating documents that you insert into a collection that has client-assigned keys. Providing (the content and) the media type can be useful for creating <span class="italic">non</span>-JSON documents (using a media type other than <code class="codeph">"application/json"</code>).
+                     </p>
+                     <p>However you invoke a <code class="codeph">SODA_DOCUMENT_T</code> constructor, doing so sets the components that you provide (the content, possibly the key, and possibly the media type) to the values you provide for them. And it sets the values of the creation time stamp, last-modified time stamp, and version to a SQL <code class="codeph">NULL</code> value.
+                     </p>
+                     <p>Object type <code class="codeph">SODA_DOCUMENT_T</code> provides <strong class="term">getter methods</strong> (also known as <span class="italic">getters</span>), which each retrieve a particular component from a document. (Getter <code class="codeph">get_data_type()</code> actually returns information about the content component, rather than the component itself.)
+                     </p>
+                     <div class="tblformal" id="GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3__GETTERMETHODSFORDOCUMENTSSODA_DOCUM-13BAEEF0">
+                        <p class="titleintable">Table 3-1 Getter Methods for Documents (SODA_DOCUMENT_T)</p>
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="Getter Methods for Documents (SODA_DOCUMENT_T)" summary="The table columns are Getter Method and Description" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" id="d1274e1571">Getter Method</th>
+                                 <th align="left" valign="bottom" id="d1274e1573">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1577" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_created_on()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1577 d1274e1573 ">
+                                    <p>Get the <span class="italic">creation time stamp</span> for the document, as a <code class="codeph">VARCHAR2</code> value.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1592" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_key()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1592 d1274e1573 ">
+                                    <p>Get the unique <span class="italic">key</span> for the document, as a <code class="codeph">VARCHAR2</code> value.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1607" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_last_modified()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1607 d1274e1573 ">
+                                    <p>Get the <span class="italic">last-modified time stamp</span> for the document, as a <code class="codeph">VARCHAR2</code> value.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1622" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_media_type()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1622 d1274e1573 ">
+                                    <p>Get the <span class="italic">media type</span> for the document, as a <code class="codeph">VARCHAR2</code> value.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1637" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_version()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1637 d1274e1573 ">
+                                    <p>Get the document <span class="italic">version</span>, as a <code class="codeph">VARCHAR2</code> value.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1652" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_blob()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1652 d1274e1573 ">
+                                    <p>Get the document <span class="italic">content</span>, as a <code class="codeph">BLOB</code> value. 
+                                    </p>
+                                    <p>The document content must be <code class="codeph">BLOB</code> data, or else an error is raised.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1672" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_clob()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1672 d1274e1573 ">
+                                    <p>Get the document <span class="italic">content</span>, as a <code class="codeph">CLOB</code> value. 
+                                    </p>
+                                    <p>The document content must be <code class="codeph">CLOB</code> data, or else an error is raised.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1692" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_varchar2()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1692 d1274e1573 ">
+                                    <p>Get the document <span class="italic">content</span>, as a <code class="codeph">VARCHAR2</code> value. 
+                                    </p>
+                                    <p>The document content must be <code class="codeph">VARCHAR2</code> data, or else an error is raised.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d1274e1712" headers="d1274e1571 ">
+                                    <p><code class="codeph"><span class="bold">get_data_type()</span></code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d1274e1712 d1274e1573 ">
+                                    <p>Get the data type of the document content, as a <code class="codeph">PLS_INTEGER</code> value. The value is <code class="codeph"><span class="bold">DBMS_SODA.DOC_VARCHAR2</span></code> for <code class="codeph">VARCHAR2</code> content, <code class="codeph"><span class="bold">DBMS_SODA.DOC_BLOB</span></code> for <code class="codeph">BLOB</code> content, and <code class="codeph"><span class="bold">DBMS_SODA.DOC_CLOB</span></code> for <code class="codeph">CLOB</code> content.
+                                    </p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <p>Immediately after you create a document, the getter methods return these values:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Values provided to the constructor</p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">"application/json"</code>, for method <code class="codeph">get_media_type()</code>, if the media type was not provided
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">NULL</code> for other components
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Each content storage data type has an associated content-component getter method. You must use the getter method that is appropriate to each content storage type: <code class="codeph">get_varchar2()</code> for <code class="codeph">VARCHAR2</code> storage, <code class="codeph">get_clob()</code> for <code class="codeph">CLOB</code> storage, and <code class="codeph">get_blob()</code> for <code class="codeph">BLOB</code> storage. Otherwise, an error is raised.
+                     </p>
+                     <p><a href="using-soda-pl-sql.html#GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3__CREATINGADOCUMENTWITHJSONCONTENT-0D87A155">Example 3-8</a> creates a <code class="codeph">SODA_DOCUMENT_T</code> instance, providing only content. The media type defaults to <code class="codeph">"application/json"</code>, and the other document components default to <code class="codeph">NULL</code>.
+                     </p>
+                     <p><a href="using-soda-pl-sql.html#GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3__CREATINGADOCUMENTWITHDOCUMENTKEYAND-0D87A47E">Example 3-9</a> creates a <code class="codeph">SODA_DOCUMENT_T</code> instance, providing the document key and content. The media type defaults to <code class="codeph">"application/json"</code>, and the other document components default to <code class="codeph">NULL</code>.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3__WRITEOPERATIONWRITEOPERATIONREADOPE-0D87D2EC">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../adsdi/overview-soda.html#ADSDI-GUID-FD2AA288-D82C-4CE8-995C-88DD02F5BA1C" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for an overview of SODA documents
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adsdi/soda-guidelines-and-restrictions.html#ADSDI-GUID-5B96ECEE-4766-48C6-847B-76B09DB8F800" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for restrictions that apply for SODA documents
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-22E455FF-979D-452F-8FDF-6F9A3F14A514" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about object type <code class="codeph">SODA_DOCUMENT_T</code> constructors and getter methods
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3__CREATINGADOCUMENTWITHJSONCONTENT-0D87A155">
+                     <p class="titleinexample">Example 3-8 Creating a Document with JSON Content</p>
+                     <p>This example uses <code class="codeph">SODA_DOCUMENT_T</code> constructors to create three documents, one of each content type. The example provides only the document content (which is the same for each). 
+                     </p>
+                     <p>The content parameter is different in each case; it specifies the SQL data type to use to store the content. The first document creation here uses content parameter <code class="codeph"><span class="bold">v</span>_content</code>, which specifies <code class="codeph">VARCHAR2</code> content; the second uses parameter <code class="codeph"><span class="bold">c</span>_content</code>, which specifies <code class="codeph">CLOB</code> content; the third uses parameter <code class="codeph"><span class="bold">b</span>_content</code>, which specifies <code class="codeph">BLOB</code> content. 
+                     </p>
+                     <p>After creating each document, the example uses getter methods to get the document content. Note that the getter method that is appropriate for each content storage type is used: <code class="codeph">get_blob()</code> for <code class="codeph">BLOB</code> content, and so on.
+                     </p>
+                     <p>The document with content type <code class="codeph">BLOB</code> would be appropriate for writing to the collection created in <a href="using-soda-pl-sql.html#GUID-AC1A88D5-8C89-492D-AC57-E6F3694F6D96__CREATINGACOLLECTIONTHATHASTHEDEFAUL-0F85688A">Example 3-3</a>, because that collection (which has the default metadata) accepts documents with (only) <code class="codeph">BLOB</code> content. The other two documents would not be appropriate for that collection; trying to insert them would raise an error.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    v_doc  SODA_DOCUMENT_T;
+    b_doc  SODA_DOCUMENT_T;
+    c_doc  SODA_DOCUMENT_T;
+BEGIN
+    -- Create VARCHAR2 document
+    v_doc := <span class="bold">SODA_DOCUMENT_T</span>(<span class="bold">v_content</span> =&gt; '{"name" : "Alexander"}');
+    DBMS_OUTPUT.put_line('Varchar2 Doc content: ' || v_doc.<span class="bold">get_varchar2</span>);
+    
+    -- Create BLOB document
+    b_doc := <span class="bold">SODA_DOCUMENT_T</span>(
+               <span class="bold">b_content</span> =&gt; <span class="bold">utl_raw.cast_to_raw</span>('{"name" : "Alexander"}'));
+    DBMS_OUTPUT.put_line('Blob Doc content: ' ||
+                         utl_raw.cast_to_varchar2(b_doc.<span class="bold">get_blob</span>));
+
+    -- Create CLOB document
+    c_doc := <span class="bold">SODA_DOCUMENT_T</span>(<span class="bold">c_content</span> =&gt; '{"name" : "Alexander"}');
+    DBMS_OUTPUT.put_line('Clob Doc content: ' || c_doc.<span class="bold">get_clob</span>);
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3__CREATINGADOCUMENTWITHDOCUMENTKEYAND-0D87A47E">
+                     <p class="titleinexample">Example 3-9 Creating a Document with Document Key and JSON Content</p>
+                     <p>This example is similar to <a href="using-soda-pl-sql.html#GUID-F3C183EE-01F4-4986-AFA0-D47CEC0E52F3__CREATINGADOCUMENTWITHJSONCONTENT-0D87A155">Example 3-8</a>, but it provides the document key (<code class="codeph">myKey</code>) as well as the document content. 
+                     </p><pre class="pre codeblock"><code>DECLARE
+    v_doc  SODA_DOCUMENT_T;
+    b_doc  SODA_DOCUMENT_T;
+    c_doc  SODA_DOCUMENT_T;
+BEGIN
+    -- Create VARCHAR2 document
+    v_doc := SODA_DOCUMENT_T('<span class="bold">myKey</span>' , v_content =&gt; '{"name" : "Alexander"}');
+    DBMS_OUTPUT.put_line('Varchar2 Doc key: ' || v_doc.get_key);
+    DBMS_OUTPUT.put_line('Varchar2 Doc content: ' || v_doc.get_varchar2);
+        
+    -- Create BLOB document
+    b_doc := SODA_DOCUMENT_T('<span class="bold">myKey</span>' ,
+                             b_content =&gt; utl_raw.cast_to_raw('{"name" : "Alexander"}'));
+    DBMS_OUTPUT.put_line('Blob Doc key: ' || b_doc.get_key);
+    DBMS_OUTPUT.put_line('Blob Doc content: ' ||
+                         utl_raw.cast_to_varchar2(b_doc.get_blob));
+    
+    -- Create CLOB document
+    c_doc := SODA_DOCUMENT_T('<span class="bold">myKey</span>' , c_content =&gt; '{"name" : "Alexander"}');
+    DBMS_OUTPUT.put_line('Clob Doc key: ' || c_doc.get_key);
+    DBMS_OUTPUT.put_line('Clob Doc content: ' || c_doc.get_clob);
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279" title="To insert a document into a collection, you invoke SODA_COLLECTION_T method (member function) insert_one() or insert_one_and_get(). These methods create document keys automatically, unless the collection is configured with client-assigned keys and the input document provides the key.">Inserting Documents into Collections with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A" title="You can use SODA_OPERATION_T terminal method get_one() or get_cursor() to find one or multiple documents in a collection, respectively. You can use terminal method count() to count the documents in a collection. You can use nonterminal methods, such as key(), keys(), and filter(), to specify conditions for a find operation.">Finding Documents in Collections with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924" title="You can chain together SODA_OPERATION_T replace-operation method replace_one() or replace_one_and_get() with nonterminal method key() to uniquely identify a document to be replaced. You can optionally make use of additional nonterminal methods such as version() and filter().">Replacing Documents in a Collection with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-3359F024-2789-482A-9D8D-FDB10AC85369" title="You can remove documents from a collection by chaining together SODA_OPERATION_T method remove() with nonterminal method key(), keys(), or filter() to identify documents to be removed. You can optionally make use of additional nonterminal methods such as version().">Removing Documents from a Collection with SODA for PL/SQL</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279" name="GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279"></a><h3 id="ADSDP-GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279" class="sect3"><span class="enumeration_section">3.8 </span>Inserting Documents into Collections with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>To insert a document into a collection, you invoke <code class="codeph">SODA_COLLECTION_T</code> method (member function) <code class="codeph"><span class="bold">insert_one()</span></code> or <code class="codeph"><span class="bold">insert_one_and_get()</span></code>. These methods create document keys automatically, unless the collection is configured with client-assigned keys and the input document provides the key.
+                  </p>
+                  <div class="section">
+                     <p>Both method <code class="codeph">insert_one()</code> and method <code class="codeph">insert_one_and_get()</code> insert a document into a collection and automatically set the values of the creation time stamp, last-modified time stamp, and version (if the collection is configured to include these components and to generate the version automatically, as is the case by default).
+                     </p>
+                     <p>When you insert a document, any document components that currently have <code class="codeph">NULL</code> values (as a result of creating the document without providing those component values) are updated to have appropriate, automatically generated values. Thereafter, other SODA operations on a document can automatically update the last-modified timestamp and version components.
+                     </p>
+                     <p>In addition to inserting the document, <code class="codeph">insert_one_and_get</code> returns a result document, which contains the generated document components, such as the key, and which does not contain the content of the inserted document.
+                     </p>
+                     <div class="infoboxnote" id="GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279__IFTHECOLLECTIONISCONFIGUREDWITHCLIE-0D8917B8">
+                        <p class="notep1">Note:</p>
+                        <p>If the collection is configured with client-assigned document keys (which is not the default case), and the input document provides a key that identifies an existing document in the collection, then these methods throw an exception.</p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279__NEEDARPLSXREFNEEDXREFORACLEDATABASE-0F1DACB6">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-BF3FB0BF-F35F-4D1B-A14F-2667F4DEA748" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about <code class="codeph">SODA_COLLECTION_T</code> method <code class="codeph">insert_one()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-22E455FF-979D-452F-8FDF-6F9A3F14A514" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a>  for information about <code class="codeph">SODA_COLLECTION_T</code> method <code class="codeph">insert_one_and_get()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-22E455FF-979D-452F-8FDF-6F9A3F14A514" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about <code class="codeph">SODA_DOCUMENT_T</code> getter methods
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279__INSERTINGADOCUMENTINTOACOLLECTION-0D898A0C">
+                     <p class="titleinexample">Example 3-10 Inserting a Document into a Collection</p>
+                     <p>This example creates a document and inserts it into a collection using <code class="codeph">SODA_COLLECTION_T</code> method <code class="codeph">insert_one()</code> .
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    status      NUMBER;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+    document := SODA_DOCUMENT_T(
+                  b_content =&gt; utl_raw.cast_to_raw('{"name" : "Alexander"}'));
+
+    -- Insert a document
+    status := collection.<span class="bold">insert_one</span>(document);
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279__INSERTINGADOCUMENTINTOACOLLECTIONAN-0D899C43">
+                     <p class="titleinexample">Example 3-11 Inserting a Document into a Collection and Getting the Result Document</p>
+                     <p>This example creates a document and inserts it into a collection using method <code class="codeph">insert_one_and_get()</code>. It then gets (and prints) each of the generated components from the result document (which contains them). To obtain the components it uses <code class="codeph">SODA_DOCUMENT_T</code> methods <code class="codeph">get_key()</code>, <code class="codeph">get_created_on()</code>, <code class="codeph">get_last_modified()</code>, and <code class="codeph">get_version()</code>.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    ins_doc     SODA_DOCUMENT_T;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+    document := SODA_DOCUMENT_T(
+                  b_content =&gt; utl_raw.cast_to_raw('{"name" : "Alexander"}'));
+    ins_doc := collection.<span class="bold">insert_one_and_get</span>(document);
+
+    -- Insert the document and get its components
+    IF ins_doc IS NOT NULL THEN
+        DBMS_OUTPUT.put_line('Inserted document components:');
+        DBMS_OUTPUT.put_line('Key: ' || ins_doc.<span class="bold">get_key</span>);
+        DBMS_OUTPUT.put_line('Creation timestamp: ' || ins_doc.<span class="bold">get_created_on</span>);
+        DBMS_OUTPUT.put_line('Last modified timestamp: '
+                             || ins_doc.<span class="bold">get_last_modified</span>);
+        DBMS_OUTPUT.put_line('Version: ' || ins_doc.<span class="bold">get_version</span>);
+    END IF;
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC" title="As usual in PL/SQL and SQL, you can treat individual SODA read and write operations, or groups of them, as a transaction. To commit a transaction, use a SQL COMMIT statement. If you want to roll back changes, use a SQL ROLLBACK statement.">Handling Transactions with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6" title="You use PL/SQL function DBMS_SODA.drop_collection to drop a document collection.">Dropping a Document Collection with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924" title="You can chain together SODA_OPERATION_T replace-operation method replace_one() or replace_one_and_get() with nonterminal method key() to uniquely identify a document to be replaced. You can optionally make use of additional nonterminal methods such as version() and filter().">Replacing Documents in a Collection with SODA for PL/SQL</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8" name="GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8"></a><h3 id="ADSDP-GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8" class="sect3"><span class="enumeration_section">3.9 </span>SODA for PLSQL Read and Write
+        Operations
+               </h3>
+               <div>
+                  <p>A <code class="codeph">SODA_OPERATION_T</code> instance is returned by method
+            <code class="codeph">find()</code> of <code class="codeph">SODA_COLLECTION_T</code>. You can chain together
+            <code class="codeph">SODA_OPERATION_T</code> methods, to specify read and write operations against
+        a collection.
+                  </p>
+                  <div class="infoboxnote" id="GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8__GUID-5D35BBCD-2766-44D8-9E48-87E628E7EA6F">
+                     <p class="notep1">Note:</p>
+                     <p>Data type <code class="codeph">SODA_OPERATION_T</code> was added to SODA for PL/SQL in Oracle Database 18.3. You need that database release or later to use it.
+                     </p>
+                  </div>
+                  <p>You typically use <code class="codeph">SODA_OPERATION_T</code> to specify all SODA read
+            and write operations other than inserts. You chain together
+                <code class="codeph">SODA_OPERATION_T</code> nonterminal methods to narrow the scope or
+            otherwise condition or qualify a read or write operation. 
+                  </p>
+                  <p><strong class="term">Nonterminal</strong> methods return the same
+                <code class="codeph">SODA_OPERATION_T</code> instance on which they are invoked, which allows
+            you to chain them together. The nonterminal methods are <code class="codeph">key()</code>,
+                <code class="codeph">keys()</code>,<code class="codeph"> filter()</code>, <code class="codeph">version()</code>,
+                <code class="codeph">skip()</code>, and <code class="codeph">limit()</code>.
+                  </p>
+                  <p>A <code class="codeph">SODA_OPERATION_T</code>
+                     <strong class="term">terminal</strong> method at the end of the chain carries out the actual
+            read or write operation. The methods for read operations are
+                <code class="codeph">get_cursor()</code>, <code class="codeph">get_one()</code>, and
+                <code class="codeph">count()</code>. The methods for write operations are
+                <code class="codeph">replace_one()</code>, <code class="codeph">replace_one_and_get()</code>, and
+                <code class="codeph">remove()</code>. 
+                  </p>
+                  <p>Unless documentation states otherwise, you can chain together any nonterminal
+            methods, and you can end the chain with any terminal method. However, not all
+            combinations make sense. For example, it does not make sense to chain method
+                <code class="codeph">version()</code> together with methods that do not uniquely identify the
+            document, such as <code class="codeph">keys()</code>.
+                  </p>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A" title="You can use SODA_OPERATION_T terminal method get_one() or get_cursor() to find one or multiple documents in a collection, respectively. You can use terminal method count() to count the documents in a collection. You can use nonterminal methods, such as key(), keys(), and filter(), to specify conditions for a find operation.">Finding Documents in Collections with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924" title="You can chain together SODA_OPERATION_T replace-operation method replace_one() or replace_one_and_get() with nonterminal method key() to uniquely identify a document to be replaced. You can optionally make use of additional nonterminal methods such as version() and filter().">Replacing Documents in a Collection with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-3359F024-2789-482A-9D8D-FDB10AC85369" title="You can remove documents from a collection by chaining together SODA_OPERATION_T method remove() with nonterminal method key(), keys(), or filter() to identify documents to be removed. You can optionally make use of additional nonterminal methods such as version().">Removing Documents from a Collection with SODA for PL/SQL</a></li>
+                     </ul>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8__GUID-13A67FE3-871B-4412-8740-E867FA34A62E">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-B5D5D6AE-997F-4A7B-A250-78F33781850F" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a>
+                for information about <code class="codeph">SODA_OPERATION_T</code>, including each of its
+                methods
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A" name="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A"></a><h3 id="ADSDP-GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A" class="sect3"><span class="enumeration_section">3.10 </span>Finding Documents in Collections with SODA
+        for PL/SQL
+               </h3>
+               <div>
+                  <p>You
+        can use <code>SODA_OPERATION_T</code> terminal method
+            <code class="codeph">get_one()</code> or <code class="codeph">get_cursor()</code> to find one or multiple
+        documents in a collection, respectively. You can use terminal method
+            <code class="codeph">count()</code> to count the documents in a collection. You can use nonterminal
+        methods, such as <code class="codeph">key()</code>, <code class="codeph">keys()</code>, and
+            <code class="codeph">filter()</code>, to specify conditions for a find operation.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__GUID-0F5E41E2-CE1C-40E0-AA71-18CD96EE6EDD">
+                        <p class="notep1">Note:</p>
+                        <p>Data type <code class="codeph">SODA_OPERATION_T</code> was added to SODA for PL/SQL in Oracle Database 18.3. You need that database release or later to use it.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__NEEDARPLSXREFNEEDXREFORACLEDATABASE-0F1F7B84">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-01AAC60C-5405-4167-84E9-2509E4FF91EC" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about
+                                <code class="codeph">SODA_COLLECTION_T</code> method
+                            <code class="codeph">find()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-B5D5D6AE-997F-4A7B-A250-78F33781850F" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about data type
+                                <code class="codeph">SODA_OPERATION_T</code> and its methods
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-22E455FF-979D-452F-8FDF-6F9A3F14A514" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about
+                                <code class="codeph">SODA_DOCUMENT_T</code> getter methods
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../sqlrf/JSON_QUERY.html#SQLRF-GUID-6D396EC4-D2AA-43D2-8F5D-08D646A4A2D9" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for
+                            information about SQL/JSON function <code class="codeph">json_query</code></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__FINDINGALLDOCUMENTSINACOLLECTION-C7DC8A2B">
+                     <p class="titleinexample">Example 3-12 Finding All Documents in a
+                Collection</p>
+                     <p>This example uses
+                    <code class="codeph">SODA_COLLECTION_T</code> methods <code class="codeph">find()</code> and
+                    <code class="codeph">getCursor()</code> to obtain a cursor for a query result list that
+                contains each document in a collection. It then uses the cursor in a
+                    <code class="codeph">WHILE</code> statement to get and print the content of each document
+                in the result list, as a string. Finally, it closes the cursor. 
+                     </p>
+                     <p>It uses <code class="codeph">SODA_DOCUMENT_T</code> methods <code class="codeph">get_key()</code>,
+                    <code class="codeph">get_blob()</code>, <code class="codeph">get_created_on()</code>,
+                    <code class="codeph">get_last_modified()</code>, and <code class="codeph">get_version()</code>, to get
+                the document components, which it prints. It passes the document content to SQL/JSON
+                function <code class="codeph">json_query</code> to pretty-print (using keyword
+                    <code class="codeph">PRETTY</code>).
+                     </p>
+                     <div class="infoboxnote" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__GUID-B5937243-D804-4B25-BADB-3920E4D17D45">
+                        <p class="notep1">Note:</p>
+                        <p>To avoid resource
+                    leaks, <span class="italic">close </span>any cursor that you no longer
+            need.
+                        </p>
+                     </div><pre class="pre codeblock"><code>DECLARE
+    collection    SODA_COLLECTION_T;
+    document      SODA_DOCUMENT_T;
+    cur           SODA_CURSOR_T;
+    status        BOOLEAN;
+BEGIN
+    -- Open the collection to be queried
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Open the cursor to fetch the documents
+    cur := collection.<span class="bold">find</span>().<span class="bold">get_cursor</span>();
+
+    -- Loop through the cursor
+    WHILE cur.has_next
+    LOOP
+      document := cur.next;
+      IF document IS NOT NULL THEN
+          DBMS_OUTPUT.put_line('Document components:');
+          DBMS_OUTPUT.put_line('Key: ' || document.<span class="bold">get_key</span>);
+          DBMS_OUTPUT.put_line('Content: ' || <span class="bold">json_query</span>(document.<span class="bold">get_blob</span>, '$' <span class="bold">PRETTY</span>));
+          DBMS_OUTPUT.put_line('Creation timestamp: ' || document.<span class="bold">get_created_on</span>);
+          DBMS_OUTPUT.put_line('Last modified timestamp: ' || document.<span class="bold">get_last_modified</span>);
+          DBMS_OUTPUT.put_line('Version: ' || document.<span class="bold">get_version</span>);
+      END IF;
+    END LOOP;
+
+    -- IMPORTANT: You <span class="italic">must close the cursor</span>, to release resources.
+    status := cur.<span class="bold">close</span>;
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__FINDINGTHEUNIQUEDOCUMENTTHATHASAGIV-0D8A5806">
+                     <p class="titleinexample">Example 3-13 Finding the Unique Document That
+                Has a Given Document Key</p>
+                     <p>This example uses
+                    <code class="codeph">SODA_COLLECTION_T</code> methods <code class="codeph">find()</code>,
+                    <code class="codeph">key()</code>, and <code class="codeph">get_one()</code> to find the unique
+                document whose key is <code class="codeph">"key1"</code>.
+            
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Find a document using a key
+    document := collection.<span class="bold">find</span>().<span class="bold">key</span>('key1').<span class="bold">get_one</span>;
+
+    IF document IS NOT NULL THEN
+        DBMS_OUTPUT.put_line('Document components:');
+        DBMS_OUTPUT.put_line('Key: ' || document.get_key);
+        DBMS_OUTPUT.put_line('Content: ' || JSON_QUERY(document.get_blob, '$' PRETTY));
+        DBMS_OUTPUT.put_line('Creation timestamp: ' || document.get_created_on);
+        DBMS_OUTPUT.put_line('Last modified timestamp: ' || document.get_last_modified);
+        DBMS_OUTPUT.put_line('Version: ' || document.get_version);
+    END IF;
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__GUID-42911825-0414-49E3-BCA6-4265A41B6BD3">
+                     <p class="titleinexample">Example 3-14 Finding Multiple Documents with
+                Specified Document Keys</p>
+                     <p>This example defines key list
+                        <code class="codeph"><span class="bold">myKeys</span></code>, with (string)
+                    keys&nbsp;<code class="codeph">"key1"</code>,&nbsp;<code class="codeph">"key2"</code>,
+                    and&nbsp;<code class="codeph">"key3"</code>. It then finds the documents that have those keys,
+                and it prints their components. <code class="codeph">SODA_COLLECTION_T</code>
+                    method&nbsp;<code class="codeph">keys()</code> &nbsp;specifies the documents with the given keys.
+            
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    cur         SODA_CURSOR_T;
+    status      BOOLEAN;
+    myKeys      SODA_KEY_LIST_T;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Set the keys list
+    myKeys := SODA_KEY_LIST_T(<span class="bold">'key1'</span>, <span class="bold">'key2'</span>, <span class="bold">'key3'</span>);
+
+    -- Find documents using keys
+    cur := collection.<span class="bold">find()</span>.<span class="bold">keys</span>(myKeys).get_cursor;
+
+    -- Loop through the cursor
+    WHILE cur.has_next
+    LOOP
+      document := cur.next;
+      IF document IS NOT NULL THEN
+          DBMS_OUTPUT.put_line('Document components:');
+          DBMS_OUTPUT.put_line('Key: ' || document.get_key);
+          DBMS_OUTPUT.put_line('Content: ' || json_query(document.get_blob, '$' PRETTY));
+          DBMS_OUTPUT.put_line('Creation timestamp: ' || document.get_created_on);
+          DBMS_OUTPUT.put_line('Last modified timestamp: ' || document.get_last_modified);
+          DBMS_OUTPUT.put_line('Version: ' || document.get_version);
+      END IF;
+    END LOOP;
+    status := cur.close;
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__FINDINGDOCUMENTSWITHAFILTERSPECIFIC-C7E4259A">
+                     <p class="titleinexample">Example 3-15 Finding Documents with a Filter
+                Specification</p>
+                     <p><code class="codeph">SODA_COLLECTION_T</code> method
+                    <code class="codeph">filter()</code> provides a powerful way to filter JSON documents in a
+                collection. Its parameter is a JSON query-by-example (QBE, also called a filter
+                specification). 
+                     </p>
+                     <p>The syntax of filter specifications is an
+                expressive pattern-matching language for JSON documents. This example uses only a
+                very simple QBE, just to indicate how you make use of one in SODA for PL/SQL.</p>
+                     <p>This example does the following:</p>
+                     <ol>
+                        <li>
+                           <p>Creates a filter specification that looks for all
+                        JSON documents whose <code class="codeph">name</code> field has value
+                            <code class="codeph">"Alexander"</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Uses the filter specification to find the matching
+                        documents.</p>
+                        </li>
+                        <li>
+                           <p>Prints the components of each document.</p>
+                        </li>
+                     </ol><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    cur         SODA_CURSOR_T;
+    status      BOOLEAN;
+    qbe         VARCHAR2(128);
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Define the filter specification (QBE)
+    qbe := '<span class="bold">{"name" : "alexander"}</span>';
+
+    -- Open a cursor for the filtered documents
+    cur := collection.<span class="bold">find</span>().<span class="bold">filter</span>(qbe).<span class="bold">get_cursor</span>;
+
+    -- Loop through the cursor
+    WHILE cur.has_next
+    LOOP
+      document := cur.next;
+      IF document IS NOT NULL THEN
+          DBMS_OUTPUT.put_line('Document components:');
+          DBMS_OUTPUT.put_line('Key: ' || document.get_key);
+          DBMS_OUTPUT.put_line('Content: ' || JSON_QUERY(document.get_blob, '$' PRETTY));
+          DBMS_OUTPUT.put_line('Creation timestamp: ' || document.get_created_on);
+          DBMS_OUTPUT.put_line('Last modified timestamp: ' || document.get_last_modified);
+          DBMS_OUTPUT.put_line('Version: ' || document.get_version);
+      END IF;
+    END LOOP;
+    status := cur.close;
+END;
+/</code></pre><div class="infoboxnotealso" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__ORACLEDATABASEINTRODUCTIONTOSIMPLEO-C7E50A59">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../adsdi/overview-soda-filter-specifications-qbes.html#ADSDI-GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for an introduction to SODA filter
+                            specifications
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adsdi/soda-filter-specifications-reference.html#ADSDI-GUID-8DDB51EB-D80F-4476-9ABF-D6860C6214D1" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for reference information about
+                            SODA filter specifications
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__SPECIFYINGPAGINATIONQUERIESWITHMETH-C7E51CD1">
+                     <p class="titleinexample">Example 3-16 Specifying Pagination Queries with
+                Methods skip() and limit()</p>
+                     <p>This example uses
+                    <code class="codeph">SODA_COLLECTION_T</code> methods <code class="codeph">filter()</code>,
+                    <code class="codeph">skip()</code> and <code class="codeph">limit()</code> in a pagination query.
+            
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    cur         SODA_Cursor_T;
+    status      BOOLEAN;
+    qbe         VARCHAR2(128);
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Define the filter
+    qbe := '{"name" : "Alexander"}';
+
+    -- Find all documents that match the QBE, skip over the first 1000 of them,
+    -- limit the number of returned documents to 100
+    cur := collection.<span class="bold">find</span>().<span class="bold">filter</span>(qbe).<span class="bold">skip</span>(1000).<span class="bold">limit</span>(100).get_cursor;
+
+    -- Loop through the cursor
+    WHILE cur.has_next
+    LOOP
+      document := cur.next;
+      IF document IS NOT NULL THEN
+          DBMS_OUTPUT.put_line('Document components:');
+          DBMS_OUTPUT.put_line('Key: ' || document.get_key);
+          DBMS_OUTPUT.put_line('Content: ' ||
+                               JSON_QUERY(document.get_blob, '$' PRETTY));
+          DBMS_OUTPUT.put_line('Creation timestamp: ' || 
+                               document.get_created_on);
+          DBMS_OUTPUT.put_line('Last modified timestamp: ' ||
+                               document.get_last_modified);
+          DBMS_OUTPUT.put_line('Version: ' || document.get_version);
+      END IF;
+    END LOOP;
+    status := cur.close;
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__SPECIFYINGDOCUMENTVERSION-C7E5F589">
+                     <p class="titleinexample">Example 3-17 Specifying Document Version</p>
+                     <p>This example uses <code class="codeph">SODA_COLLECTION_T</code> method
+                    <code class="codeph">version()</code> to specify the document version. This is useful for
+                implementing optimistic locking, when used with the terminal methods for write
+                operations. 
+                     </p>
+                     <p>You typically use <code class="codeph">version()</code> together
+                with method <code class="codeph">key()</code>, which specifies the document. You can also use
+                    <code class="codeph">version()</code> with methods <code class="codeph">keyLike()</code> and
+                    <code class="codeph">filter()</code>, provided they identify at most one
+            document.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Find a particular version of the document that has a given key
+    document := collection.<span class="bold">find</span>().<span class="bold">key</span>('key1').<span class="bold">version</span>('version1').<span class="bold">get_one</span>;
+
+    IF document IS NOT NULL THEN
+        DBMS_OUTPUT.put_line('Document components:');
+        DBMS_OUTPUT.put_line('Key: ' || document.get_key);
+        DBMS_OUTPUT.put_line('Content: ' ||
+                             JSON_QUERY(document.get_blob, '$' PRETTY));
+        DBMS_OUTPUT.put_line('Creation timestamp: ' || document.get_created_on);
+        DBMS_OUTPUT.put_line('Last modified timestamp: ' ||
+                             document.get_last_modified);
+        DBMS_OUTPUT.put_line('Version: ' || document.get_version);
+    END IF;
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-E9E088A0-34BC-491E-BA92-9488E9F4354A__COUNTINGTHENUMBEROFDOCUMENTSFOUND-C7E651C8">
+                     <p class="titleinexample">Example 3-18 Counting the Number of Documents
+                Found</p>
+                     <p>This example uses <code class="codeph">SODA_COLLECTION_T</code>
+                method <code class="codeph">count()</code> to get a count of all of the documents in the
+                collection. It then gets a count of all of the documents that are returned by a
+                filter specification
+            (QBE).
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    num_docs    NUMBER;
+    qbe         VARCHAR2(128);
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Get a count of all documents in the collection
+    num_docs := collection.find().<span class="bold">count</span>;
+    DBMS_OUTPUT.put_line('Count: ' || num_docs);
+    
+    -- Set the filter
+    qbe := '{"name" : "Alexander"}';
+
+    -- Get a count of all documents in the collection that match a filter spec
+    num_docs := collection.find().<span class="bold">filter</span>(qbe).<span class="bold">count</span>;
+    DBMS_OUTPUT.put_line('Count: ' || num_docs);
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8" title="A SODA_OPERATION_T instance is returned by method find() of SODA_COLLECTION_T. You can chain together SODA_OPERATION_T methods, to specify read and write operations against a collection.">SODA for PLSQL Read and Write Operations</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924" name="GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924"></a><h3 id="ADSDP-GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924" class="sect3"><span class="enumeration_section">3.11 </span>Replacing Documents in a Collection with
+        SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You can chain together
+            <code class="codeph">SODA_OPERATION_T</code> replace-operation method
+            <code class="codeph">replace_one()</code> or <code class="codeph">replace_one_and_get()</code> with
+        nonterminal method <code class="codeph">key()</code> to uniquely identify a document to be replaced.
+        You can optionally make use of additional nonterminal methods such as
+            <code class="codeph">version()</code> and <code class="codeph">filter()</code>.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924__GUID-6281F7ED-D7A4-437B-BF9F-ACE025AD4A7C">
+                        <p class="notep1">Note:</p>
+                        <p>Data type <code class="codeph">SODA_OPERATION_T</code> was added to SODA for PL/SQL in Oracle Database 18.3. You need that database release or later to use it.
+                        </p>
+                     </div>
+                     <p>In addition to replacing the content, methods
+                    <code class="codeph">replace_one()</code> and <code class="codeph">replace_one_and_get()</code> update
+                the values of the last-modified timestamp and the version. Replacement does
+                    <span class="italic">not</span> change the document key or the creation timestamp.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924__NEEDARPLSXREFNEEDXREFORACLEDATABASE-0F1F9253">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-01AAC60C-5405-4167-84E9-2509E4FF91EC" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about
+                                <code class="codeph">SODA_COLLECTION_T</code> method
+                            <code class="codeph">find()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-B5D5D6AE-997F-4A7B-A250-78F33781850F" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about data type
+                                <code class="codeph">SODA_OPERATION_T</code> and its methods
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-569F834A-3E3E-4417-A260-ED4358A33EE7" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about
+                                <code class="codeph">SODA_COLLECTION_T</code> method
+                                <code class="codeph">replace_one()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-71783EC4-EDCC-4D99-B2A1-213E6D10D768" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about
+                                <code class="codeph">SODA_COLLECTION_T</code> method
+                                <code class="codeph">replace_one_and_get()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-22E455FF-979D-452F-8FDF-6F9A3F14A514" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for
+                            information about <code class="codeph">SODA_DOCUMENT_T</code> getter
+                        methods
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924__GUID-1DF7F1A8-FF52-4C4E-B92D-F44366FFA6B1">
+                     <p class="titleinexample">Example 3-19 Replacing a Document in a Collection,
+                Given Its Key, and Getting the Result Document</p>
+                     <p>This example
+                replaces a document in a collection, given its key. It then gets (and prints) the
+                key and the generated components from the result document. To obtain the components
+                it uses <code class="codeph">SODA_DOCUMENT_T</code> methods <code class="codeph">get_key()</code>,
+                    <code class="codeph">get_created_on()</code>, <code class="codeph">get_last_modified()</code>, and
+                    <code class="codeph">get_version()</code>.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    new_doc     SODA_DOCUMENT_T;
+BEGIN
+    collection := DBMS_SODA.open_collection('myCollectionName');
+    document := SODA_DOCUMENT_T(
+                  b_content =&gt; utl_raw.cast_to_raw('{"name" : "Sriky"}'));
+    new_doc := collection.find().key('key1').<span class="bold">replace_one_and_get</span>(document);
+
+    IF new_doc IS NOT NULL THEN
+        DBMS_OUTPUT.put_line('Document components:');
+        DBMS_OUTPUT.put_line('Key: ' || new_doc.<span class="bold">get_key</span>);
+        DBMS_OUTPUT.put_line('Creation timestamp: ' || new_doc.<span class="bold">get_created_on</span>);
+        DBMS_OUTPUT.put_line('Last modified timestamp: ' ||
+                             new_doc.<span class="bold">get_last_modified</span>);
+        DBMS_OUTPUT.put_line('Version: ' || new_doc.<span class="bold">get_version</span>);
+    END IF;
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924__REPLACINGADOCUMENTONLYIFTHEVERSIONH-C7F5A55C">
+                     <p class="titleinexample">Example 3-20 Replacing a Particular Version of
+                a Document</p>
+                     <p>To implement optimistic locking when replacing a
+                document, you can chain together methods <code class="codeph">key()</code> and
+                    <code class="codeph">version()</code>, as in this
+            example.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    new_doc     SODA_DOCUMENT_T;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Replace version 'version1' of the document that has key 'key1'
+    new_doc := SODA_DOCUMENT_T(
+                  b_content =&gt; utl_raw.cast_to_raw('{"name" : "Sriky"}'));
+    document := collection.find().<span class="bold">key</span>('key1').<span class="bold">version</span>('version1').replace_one_and_get(new_doc);
+
+    IF document IS NOT NULL THEN
+        DBMS_OUTPUT.put_line('Document components:');
+        DBMS_OUTPUT.put_line('Key: ' || document.get_key);
+        DBMS_OUTPUT.put_line('Content: ' ||
+                             JSON_QUERY(document.get_blob, '$' PRETTY));
+        DBMS_OUTPUT.put_line('Creation timestamp: ' || document.get_created_on);
+        DBMS_OUTPUT.put_line('Last modified timestamp: ' ||
+                             document.get_last_modified);
+        DBMS_OUTPUT.put_line('Version: ' || document.get_version);
+    END IF;
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8" title="A SODA_OPERATION_T instance is returned by method find() of SODA_COLLECTION_T. You can chain together SODA_OPERATION_T methods, to specify read and write operations against a collection.">SODA for PLSQL Read and Write Operations</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC" title="As usual in PL/SQL and SQL, you can treat individual SODA read and write operations, or groups of them, as a transaction. To commit a transaction, use a SQL COMMIT statement. If you want to roll back changes, use a SQL ROLLBACK statement.">Handling Transactions with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6" title="You use PL/SQL function DBMS_SODA.drop_collection to drop a document collection.">Dropping a Document Collection with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279" title="To insert a document into a collection, you invoke SODA_COLLECTION_T method (member function) insert_one() or insert_one_and_get(). These methods create document keys automatically, unless the collection is configured with client-assigned keys and the input document provides the key.">Inserting Documents into Collections with SODA for PL/SQL</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-3359F024-2789-482A-9D8D-FDB10AC85369" name="GUID-3359F024-2789-482A-9D8D-FDB10AC85369"></a><h3 id="ADSDP-GUID-3359F024-2789-482A-9D8D-FDB10AC85369" class="sect3"><span class="enumeration_section">3.12 </span>Removing Documents from a Collection with
+        SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You can remove documents from a
+        collection by chaining together <code class="codeph">SODA_OPERATION_T</code> method
+            <code class="codeph">remove()</code> with nonterminal method <code class="codeph">key()</code>,
+            <code class="codeph">keys()</code>, or <code class="codeph">filter()</code> to identify documents to be
+        removed. You can optionally make use of additional nonterminal methods such as
+            <code class="codeph">version()</code>.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-3359F024-2789-482A-9D8D-FDB10AC85369__GUID-42BB271B-953A-416B-B72E-B64A3119F27E">
+                        <p class="notep1">Note:</p>
+                        <p>Data type <code class="codeph">SODA_OPERATION_T</code> was added to SODA for PL/SQL in Oracle Database 18.3. You need that database release or later to use it.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-3359F024-2789-482A-9D8D-FDB10AC85369__NEEDARPLSXREFNEEDXREFORACLEDATABASE-0F1F9253">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;" id="GUID-3359F024-2789-482A-9D8D-FDB10AC85369__UL_BGJ_GPT_3GB">
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-01AAC60C-5405-4167-84E9-2509E4FF91EC" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about
+                                <code class="codeph">SODA_COLLECTION_T</code> method
+                            <code class="codeph">find()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-B5D5D6AE-997F-4A7B-A250-78F33781850F" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about data type
+                                <code class="codeph">SODA_OPERATION_T</code> and its methods
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-927A073E-A3CA-44D4-86B4-9F1BE97BF01B" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span>
+                                    </a> for information about <code class="codeph">SODA_OPERATION_T</code> method
+                                <code class="codeph">remove()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-B3F89419-280B-4251-9C5D-3CEEF40851FD" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about
+                                <code class="codeph">SODA_COLLECTION_T</code> method
+                                <code class="codeph">remove_one()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-22E455FF-979D-452F-8FDF-6F9A3F14A514" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for
+                            information about <code class="codeph">SODA_DOCUMENT_T</code> getter
+                        methods
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-3359F024-2789-482A-9D8D-FDB10AC85369__REMOVINGADOCUMENTFROMACOLLECTIONUSI-0D8D7E72">
+                     <p class="titleinexample">Example 3-21 Removing a Document from a
+                Collection Using a Document Key</p>
+                     <p>This example removes the
+                document whose document key is <code class="codeph">"key1"</code>. The removal status (1 if the
+                document was removed; 0 if not) is returned and
+            printed.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    status      NUMBER;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Remove document that has key 'key1'
+    status := collection.find().key('key1').<span class="bold">remove</span>;
+
+    -- Count is 1 if  document was found
+    IF status = 1 THEN
+        DBMS_OUTPUT.put_line('Document was removed!');
+    END IF;
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-3359F024-2789-482A-9D8D-FDB10AC85369__GUID-8319DC74-2328-4A56-9074-BD898A2D4505">
+                     <p class="titleinexample">Example 3-22 Removing a Particular Version of a
+                Document</p>
+                     <p>To implement optimistic locking when removing a
+                document, you can chain together methods <code class="codeph">key()</code> and
+                    <code class="codeph">version()</code>, as in this
+            example.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    status      NUMBER;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Remove version 'version1' of the document that has key 'key1'.
+    status := collection.find().<span class="bold">key</span>('key1').<span class="bold">version</span>('version1').<span class="bold">remove</span>;
+
+    -- Count is 1, if specified version of document with key 'key1' is found
+    IF status = 1 THEN
+        DBMS_OUTPUT.put_line('Document was removed!');
+    END IF;
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-3359F024-2789-482A-9D8D-FDB10AC85369__GUID-969EA2A0-9360-4BAE-B486-8680D18943FA">
+                     <p class="titleinexample">Example 3-23 Removing Documents from a Collection
+                Using Document Keys</p>
+                     <p>This example removes the documents whose
+                keys are <code class="codeph">key1</code>, <code class="codeph">key2</code>, and
+                <code class="codeph">key3</code>.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    document    SODA_DOCUMENT_T;
+    cur         SODA_CURSOR_T;
+    num_docs    NUMBER;
+    myKeys      SODA_KEY_LIST_T;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Define the keys list
+    myKeys := SODA_KEY_LIST_T('key1','key2','key3');
+
+    -- Remove documents using keys
+    num_docs := collection.find().<span class="bold">keys</span>(myKeys).<span class="bold">remove</span>;
+
+    DBMS_OUTPUT.put_line('Number of documents removed: ' || num_docs);
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-3359F024-2789-482A-9D8D-FDB10AC85369__GUID-F4617733-894F-4C23-8440-7953E11A48AA">
+                     <p class="titleinexample">Example 3-24 Removing JSON Documents from a
+                Collection Using a Filter</p>
+                     <p>This example uses a filter to
+                remove the JSON documents whose <code class="codeph">greeting</code> field has value
+                    <code class="codeph">"hello"</code>. It then prints the number of documents
+            removed.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    num_docs    NUMBER;
+    qbe         VARCHAR2(128);
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Define the filter specification
+    qbe := '<span class="bold">{ "greeting" : "hello" }</span>';
+
+    -- Get a count of all documents in the collection that match the QBE
+    num_docs := collection.find().<span class="bold">filter</span>(qbe).<span class="bold">remove</span>;
+    DBMS_OUTPUT.put_line('Number of documents removed: ' || num_docs);
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-A7BBED42-6C8D-4422-856C-AB8D07D46AB8" title="A SODA_OPERATION_T instance is returned by method find() of SODA_COLLECTION_T. You can chain together SODA_OPERATION_T methods, to specify read and write operations against a collection.">SODA for PLSQL Read and Write Operations</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB" name="GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB"></a><h3 id="ADSDP-GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB" class="sect3"><span class="enumeration_section">3.13 </span>Indexing the Documents in a Collection
+        with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You index the documents in a SODA collection with
+            <code class="codeph">SODA_COLLECTION_T</code> method <code class="codeph">create_index()</code>. Its input
+        parameter is a textual JSON index specification. This can specify support for B-tree,
+        spatial, full-text, and ad hoc indexing, and it can specify support for a JSON data
+        guide.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB__GUID-ED4A84AE-52D5-4075-BF68-8DB743D7B495">
+                        <p class="notep1">Note:</p>
+                        <p>SODA for PL/SQL support for indexing was added in Oracle Database 18.3. You need that database release or later to use this SODA feature.</p>
+                     </div>
+                     <p>You drop an index on a SODA collection with
+                    <code class="codeph">SODA_COLLECTION_T</code> method <code class="codeph">drop_Index()</code>.
+                     </p>
+                     <p>A JSON search index is used for full-text and ad hoc structural queries, and for persistent recording and automatic updating of JSON data-guide information.</p>
+                     <p>An Oracle Spatial and Graph index is used for
+                GeoJSON (spatial) data.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <div class="infoboxnotealso" id="GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB__ORACLEDATABASEINTRODUCTIONTOSIMPLEO-C86B1FF5">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../adsdi/overview-soda-index-specifications.html#ADSDI-GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for an overview of using SODA
+                            indexing
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adsdi/soda-index-specifications-reference.html#ADSDI-GUID-00C06941-6FFD-4CEB-81B6-9A7FBD577A2C" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for information about SODA index
+                            specifications
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adjsn/indexes-for-json-data.html#ADJSN-GUID-D7A604E1-F617-4C92-A9D9-00B6AB78EFD8" target="_blank"><span><cite>Oracle Database JSON Developer’s Guide</cite></span></a> for
+                            information about JSON search indexes
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adjsn/json-dataguide.html#ADJSN-GUID-E77948CB-DCA0-4733-8832-4B5F00C01A2E" target="_blank"><span><cite>Oracle Database JSON Developer’s Guide</cite></span></a> for
+                            information about persistent data-guide information as part of a JSON
+                            search index
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adjsn/using-GeoJSON-geographic-data.html#ADJSN-GUID-2AD827B4-871E-4652-87F3-AC33FE7839AE" target="_blank"><span><cite>Oracle Database JSON Developer’s Guide</cite></span></a> for
+                            information about spatial indexing of GeoJSON data.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB__CREATINGAB-TREEINDEXFORAJSONFIELDWI-D1BA617A">
+                     <p class="titleinexample">Example 3-25 Creating a B-Tree Index for a JSON
+                Field with SODA for PL/SQL</p>
+                     <p>This example creates a B-tree
+                non-unique index for numeric field <code class="codeph">address.zip</code> of the JSON
+                documents in collection
+            <code class="codeph">myCollectionName</code>.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    spec        VARCHAR2(700);
+    status      NUMBER;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Define the index specification
+    spec := '{"name"   : "ZIPCODE_IDX",
+              "<span class="bold">fields</span>" : [{"path"     : "<span class="bold">address.zip</span>",
+                           "datatype" : "<span class="bold">number</span>",
+                           "order"    : "asc"}]}';
+    -- Create the index
+    status := collection.<span class="bold">create_index</span>(spec);
+    DBMS_OUTPUT.put_Line('Status: ' || status);
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB__JSONSEARCHINDEXINGWITHSODAFORPLSQL-D1B8F168">
+                     <p class="titleinexample">Example 3-26 JSON Search Indexing with SODA for
+                PL/SQL</p>
+                     <p>This example indexes the documents in collection
+                    <code class="codeph">myCollectionName</code> for ad hoc queries and full-text search
+                (queries using QBE operator <code class="codeph">$contains</code>), and it automatically
+                accumulates and updates data-guide information about your JSON documents (aggregate
+                structural and type information). The index specification has only field
+                    <code class="codeph">name</code> (no field
+                <code class="codeph">fields</code>).
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection  SODA_COLLECTION_T;
+    spec        VARCHAR2(700);
+    status      NUMBER;
+BEGIN
+    -- Open the collection
+    collection := DBMS_SODA.open_collection('myCollectionName');
+
+    -- Define the index specification
+    indexSpec := '{"name" : "SEARCH_AND_DATA_GUIDE_IDX"}';
+               
+    -- Create the index
+    status := collection.<span class="bold">create_index</span>(indexSpec);
+    DBMS_OUTPUT.put_Line('Status: ' || status);
+END;
+/</code></pre><p>The simple index specification it uses is equivalent to this one, which
+                makes explicit the default
+                values:</p><pre class="pre codeblock"><code>{"name" : "SEARCH_AND_DATA_GUIDE_IDX",
+ "dataguide" : "on",
+ "search_on" : "text_value"}</code></pre><p>If you instead wanted <span class="italic">only ad hoc </span>(search) indexing then you
+                would explicitly specify a value of <code class="codeph">"off"</code> for field
+                    <code class="codeph">dataguide</code>. If you instead wanted <span class="italic">only data-guide </span>support
+                then you would explicitly specify a value of <code class="codeph">"none"</code> for field
+                    <code class="codeph">search_on</code>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB__GUID-3425903F-645D-4E76-9CDF-241950DDD701">
+                        <p class="notep1">Note:</p>
+                        <p>To create a data
+                guide-enabled JSON search index, or to data guide-enable an existing JSON search
+                index, you need database privilege <code class="codeph">CTXAPP</code> and Oracle Database
+                Release 12c (12.2.0.1) or later.
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB__DROPPINGANINDEXWITHSODAFORPLSQL-D1B8F9EF">
+                     <p class="titleinexample">Example 3-27 Dropping an Index with SODA for
+                PL/SQL</p>
+                     <p>To drop an index on a SODA collection, just pass the
+                index name to <code class="codeph">SODA_COLLECTION_T</code> method
+                    <code class="codeph">drop_index()</code>. This example drops index
+                <code class="codeph">myIndex</code>.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    coll    SODA_COLLECTION_T;
+    status  NUMBER;
+BEGIN
+    -- Open the collection
+    coll := dbms_soda.open_Collection('myCollectionName');
+
+    -- Drop the index using name
+    status := coll.<span class="bold">drop_index</span>('myIndex');
+    DBMS_OUTPUT.put_Line('Status: ' || status);
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-ED8FAAAA-C93D-456C-AF56-D8E4B8DCFE2E" name="GUID-ED8FAAAA-C93D-456C-AF56-D8E4B8DCFE2E"></a><h3 id="ADSDP-GUID-ED8FAAAA-C93D-456C-AF56-D8E4B8DCFE2E" class="sect3"><span class="enumeration_section">3.14 </span>Getting a Data Guide for a Collection with
+        SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>You use <code class="codeph">SODA_COLLECTION_T</code> method
+            <code class="codeph">get_Data_Guide()</code> to get a data guide for a collection. A data guide is
+        a JSON document that summarizes the structural and type information of the JSON documents in
+        the collection. It records metadata about the fields used in those documents.
+                  </p>
+                  <div class="section">
+                     <div class="infoboxnote" id="GUID-ED8FAAAA-C93D-456C-AF56-D8E4B8DCFE2E__GUID-A65B699B-D3B1-4DFA-B934-88C633F5DB30">
+                        <p class="notep1">Note:</p>
+                        <p>SODA for PL/SQL support for JSON data guide was added in Oracle Database 18.3. You need that database release or later to use this SODA feature.</p>
+                     </div>
+                     <p>Before you can obtain a data guide for your collection
+                you must create a data guide-enabled JSON search index on it. <a href="using-soda-pl-sql.html#GUID-CF377EA0-C1BC-40E3-8015-305A6B2F28CB__JSONSEARCHINDEXINGWITHSODAFORPLSQL-D1B8F168">Example 3-26</a> shows how to do that.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-ED8FAAAA-C93D-456C-AF56-D8E4B8DCFE2E__GUID-D296C555-608F-425F-8F4C-98D9D89DE69F">
+                     <p class="titleinexample">Example 3-28 Getting a Data Guide with SODA for
+                PL/SQL</p>
+                     <p>This example gets
+                a data guide for collection <code class="codeph">MyCollectionName</code> using
+                    <code class="codeph">SODA_COLLECTION_T</code> method <code class="codeph">get_Data_Guide()</code>. It
+                then uses SQL/JSON function <code class="codeph">json_query</code> to pretty-print the content
+                of the data-guide document. Finally, it frees the temporary LOB used for the
+                data-guide
+            document.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection   SODA_COLLECTION_T;
+    dataguide    CLOB;
+BEGIN
+    -- Open the collection.
+    collection := dbms_soda.open_Collection('myCollectionName');
+    
+    -- Get the data guide for the collection.
+    dataguide := collection.<span class="bold">get_Data_Guide</span>;
+    DBMS_OUTPUT.put_line(json_query(dataguide, '$' <span class="bold">pretty</span>));
+    
+    -- <span class="italic">Important:</span> Free the temporary LOB.
+    IF dbms_lob.isTemporary(dataguide) = 1
+    THEN
+        dbms_lob.freeTemporary(dataguide);
+    end if;   
+END;
+/</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC" name="GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC"></a><h3 id="ADSDP-GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC" class="sect3"><span class="enumeration_section">3.15 </span>Handling Transactions with SODA for PL/SQL
+               </h3>
+               <div>
+                  <p>As usual in PL/SQL and SQL, you can treat individual SODA read and write operations, or groups of them, as a transaction. To commit a transaction, use a SQL <code class="codeph">COMMIT</code> statement. If you want to roll back changes, use a SQL <code class="codeph">ROLLBACK</code> statement.
+                  </p>
+                  <div class="section">
+                     <p>SODA operations <code class="codeph">DBMS_SODA.create_collection</code> and <code class="codeph">DBMS_SODA.drop_collection</code> do <span class="italic">not</span> automatically commit before or after they perform their action. This differs from the behavior of SQL DDL statements, which commit both before and after performing their action.
+                     </p>
+                     <p>One consequence of this is that, before a SODA collection can be dropped, any outstanding write operations to it must be explicitly committed or rolled back — you must explicitly use SQL <code class="codeph">COMMIT</code> or <code class="codeph">ROLLBACK</code>. This is because <code class="codeph">DBMS_SODA.drop_collection</code> does not itself issue commit before it performs its action. In this, the behavior of <code class="codeph">DBMS_SODA.drop_collection</code> differs from that of a SQL <code class="codeph">DROP TABLE</code> statement.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <div class="infoboxnotealso" id="GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC__ORACLEDATABASESQLLANGUAGEREFERENCEF-0F80D262">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../sqlrf/COMMIT.html#SQLRF-GUID-6CD5C9A7-54B9-4FA2-BA3C-D6B4492B9EE2" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for information about the SQL <code class="codeph">COMMIT</code> statement
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../sqlrf/ROLLBACK.html#SQLRF-GUID-94551F0C-A47F-43DE-BC68-9B1C1ED38C93" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for information about the SQL <code class="codeph">ROLLBACK</code> statement
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/SODA_TYPES.html#ARPLS-GUID-BF3FB0BF-F35F-4D1B-A14F-2667F4DEA748" target="_blank"><span><cite>Oracle Database PL/SQL Packages and Types Reference</cite></span></a> for information about <code class="codeph">SODA_COLLECTION_T</code> method <code class="codeph">insert_one()</code></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-8C20B7E0-A502-42D5-9C0D-49D14F4655EC__GUID-8ECDF6D9-02DF-4C78-A18F-EF6187537343">
+                     <p class="titleinexample">Example 3-29 Transaction Involving SODA Document Insertion and Replacement</p>
+                     <p>This example shows the use of SQL <code class="codeph">COMMIT</code> and <code class="codeph">ROLLBACK</code> statements in an anonymous PL/SQL block. It opens a SODA collection, inserts a document, and then replaces its content. The combination of the document insertion and document content replacement operations is <span class="italic">atomic</span>: a single transaction.
+                     </p><pre class="pre codeblock"><code>DECLARE
+    collection SODA_COLLECTION_T;
+    status NUMBER;
+BEGIN
+    collection := DBMS_SODA.open_collection('myCollectionName');
+    status := collection.<span class="bold">insert_one</span>(
+                SODA_Document_T(
+                  b_content =&gt; utl_raw.cast_to_raw('{"a":"aval","b":"bval","c":"cval"}'));
+    status := collection.<span class="bold">replace_one</span>('key1', SODA_DOCUMENT_T('{"x":"xval","y":"yval"}'));
+    -- Commit the transaction
+    <span class="bold">COMMIT</span>;
+    DBMS_OUTPUT.put_line('Transaction is committed');
+-- Catch exceptions and roll back if an error is raised
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.put_line (SQLERRM);
+    <span class="bold">ROLLBACK</span>;
+    DBMS_OUTPUT.put_line('Transaction has been rolled back');
+END;
+/
+</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-pl-sql.html#GUID-D29C4FFF-D093-4C1B-889A-5C29B63756C6" title="You use PL/SQL function DBMS_SODA.drop_collection to drop a document collection.">Dropping a Document Collection with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-CD7FB0F2-02BC-4DD8-9895-57A53631A279" title="To insert a document into a collection, you invoke SODA_COLLECTION_T method (member function) insert_one() or insert_one_and_get(). These methods create document keys automatically, unless the collection is configured with client-assigned keys and the input document provides the key.">Inserting Documents into Collections with SODA for PL/SQL</a></li>
+                        <li><a href="using-soda-pl-sql.html#GUID-7559BB2E-852B-40F8-BBD7-90DA512D4924" title="You can chain together SODA_OPERATION_T replace-operation method replace_one() or replace_one_and_get() with nonterminal method key() to uniquely identify a document to be replaced. You can optionally make use of additional nonterminal methods such as version() and filter().">Replacing Documents in a Collection with SODA for PL/SQL</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="using-soda-pl-sql.html#GUID-C553B14B-376D-43B6-BF72-CE42F605B2D9" title="How to access SODA for PL/SQL is described, as well as how to use it to perform create, read (retrieve), update, and delete (CRUD) operations on collections.">Using SODA for PL/SQL</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

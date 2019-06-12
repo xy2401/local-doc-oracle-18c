@@ -1,0 +1,834 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Manually configure administrators, operators, users, and roles to be authenticated by the operating system.">
+      <meta name="description" content="Manually configure administrators, operators, users, and roles to be authenticated by the operating system.">
+      <title>Overview of Manually Administering External Users and Roles</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Administrator's Reference ">
+      <meta property="og:description" content="Manually configure administrators, operators, users, and roles to be authenticated by the operating system.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Administrator's Reference for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="administrators-reference-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-02T05:05:35-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83889-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="administering-external-users-and-roles-on-windows.html" title="Previous" type="text/html">
+      <link rel="next" href="storing-oracle-wallets-in-windows-registry.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Administrator's Reference Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="NTQRF">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="administering-external-users-and-roles-on-windows.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="storing-oracle-wallets-in-windows-registry.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Administrator's Reference </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="administering-external-users-and-roles-on-windows.html" property="item" typeof="WebPage"><span property="name">Administering External Users and Roles on Windows</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Overview of Manually Administering External Users and Roles</li>
+            </ol>
+            <a id="GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1" name="GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1"></a><a id="NTQRF341"></a>
+            
+            <h2 id="NTQRF-GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1" class="sect2">Overview of Manually Administering External Users and Roles</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Manually configure administrators, operators, users, and roles to be authenticated by the operating system.</p>
+               <p>Manual configuration involves using Oracle Database command-line tools, editing the registry, and creating local groups in Active Directory Users and Computers. </p>
+               <p>All of the following can be manually configured to access Oracle Database without a password: </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>External operating system users </p>
+                  </li>
+                  <li>
+                     <p>Windows database administrators (with <code class="codeph">SYSDBA</code> privilege)
+                     </p>
+                  </li>
+                  <li>
+                     <p>Windows database operators (with <code class="codeph">SYSOPER</code> privilege)
+                     </p>
+                  </li>
+               </ul>
+               <p>In addition, you can manually create and grant local and external database roles to Windows domain users and global groups. </p>
+               <p>This section describes:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-8A209E30-4BA9-4993-80F5-AF0A82ADEB5B" title="Describes how to authenticate external operating system users (not database administrators) using Windows, so that a password is not required when accessing the database.">About Manually Creating an External Operating System User</a></p>
+                     <p>Describes how to authenticate external operating system users (not database administrators) using Windows, so that a password is not required when accessing the database. When you use Windows to authenticate external operating system users, your database relies solely on the operating system to restrict access to database user names.</p>
+                  </li>
+                  <li>
+                     <p><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6" title="Describes how to enable Windows to grant the database administrator (SYSDBA), database operator (SYSOPER), database administrator for ASM (SYSASM), and new task-specific and less privileged than the ORA_DBA/SYSDBA system privileges to administrators.">Overview of Manually Granting Administrator, Operator, and Task-Specific Privileges for Databases</a></p>
+                     <p>Describes how to enable Windows to grant the database administrator (<code class="codeph">SYSDBA</code>), database operator (<code class="codeph">SYSOPER</code>), database administrator for ASM (<code class="codeph">SYSASM</code>), and new task-specific and less privileged than the <code class="codeph">ORA_DBA/SYSDBA</code> system privileges to administrators.
+                     </p>
+                  </li>
+                  <li>
+                     <p><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-57FE56E4-B387-4140-9C01-8764348E1A9F" title="Learn how to manage new users and user groups.">Managing New Users and User Groups</a></p>
+                     <p>During Oracle Database installation, <code class="codeph">ORA_INSTALL, ORA_DBA, ORA_OPER, ORA_<span class="codeinlineitalic">HOMENAME</span>_DBA, ORA_<span class="codeinlineitalic">HOMENAME</span>_OPER, ORA_<span class="codeinlineitalic">HOMENAME</span>_SYSDG, ORA_<span class="codeinlineitalic">HOMENAME</span>_SYSBACKUP, ORA_<span class="codeinlineitalic">HOMENAME</span>_SYSKM, ORA_ASMADMIN, ORA_ASMDBA</code>, and <code class="codeph">ORA_ASMOPER</code> user groups are automatically created with the required privileges.
+                     </p>
+                  </li>
+                  <li>
+                     <p><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-1728B82D-DEE2-4CAA-A72E-E4DD8F47636C" title="Describes how to grant Oracle Database roles to users directly through Windows (known as external roles).">Overview of Manually Creating an External Role</a></p>
+                     <p>Describes how to grant Oracle Database roles to users directly through Windows (known as external roles). When you use Windows to authenticate users, Windows local groups can grant these users external roles.</p>
+                  </li>
+                  <li>
+                     <p><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-CC0E0EB8-81A2-4BD4-9EB7-451945255920" title="You can migrate local or external users to enterprise users with User Migration Utility.">About Manually Migrating Users</a></p>
+                     <p>You can migrate local or external users to enterprise users with User Migration Utility. Migrating from a database user model to an enterprise user model provides solutions to administrative, security, and usability challenges in an enterprise environment. In an enterprise user model, all user information is moved to an LDAP directory service, which provides the following benefits:</p>
+                     <div class="infoboxnote" id="GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1__GUID-B656ED3D-5668-4558-B299-104778A9060A">
+                        <p class="notep1">Note:</p>
+                        <p> Use extreme care when manually configuring administrators, operators, users, and roles to be authenticated by the operating system. </p>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-8A209E30-4BA9-4993-80F5-AF0A82ADEB5B">About Manually Creating an External Operating System User</a><br>Describes how to authenticate external operating system users (not database administrators) using Windows, so that a password is not required when accessing the database. 
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6">Overview of Manually Granting Administrator, Operator, and Task-Specific Privileges for Databases</a><br>Describes how to enable Windows to grant the database administrator (<code class="codeph">SYSDBA</code>), database operator (<code class="codeph">SYSOPER</code>), database administrator for ASM (<code class="codeph">SYSASM</code>), and new task-specific and less privileged than the <code class="codeph">ORA_DBA</code>/<code class="codeph">SYSDBA</code> system privileges to administrators. 
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-57FE56E4-B387-4140-9C01-8764348E1A9F">Managing New Users and User Groups</a><br>Learn how to manage new users and user groups.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-1728B82D-DEE2-4CAA-A72E-E4DD8F47636C">Overview of Manually Creating an External Role</a><br>Describes how to grant Oracle Database roles to users directly through Windows (known as external roles).
+                  </li>
+                  <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-CC0E0EB8-81A2-4BD4-9EB7-451945255920">About Manually Migrating Users</a><br>You can migrate local or external users to enterprise users with User Migration Utility.
+                  </li>
+               </ul>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="administering-external-users-and-roles-on-windows.html#GUID-DC967330-BCB4-4737-AA50-BBBBF464F24C" title="External users and roles are in general defined by something external to Oracle Database.">Administering External Users and Roles on Windows</a></p>
+                  </div>
+               </div>
+            </div>
+            <a id="NTQRF342"></a><div class="props_rev_3"><a id="GUID-8A209E30-4BA9-4993-80F5-AF0A82ADEB5B" name="GUID-8A209E30-4BA9-4993-80F5-AF0A82ADEB5B"></a><h3 id="NTQRF-GUID-8A209E30-4BA9-4993-80F5-AF0A82ADEB5B" class="sect3">About Manually Creating an External Operating System User</h3>
+               <div>
+                  <p>Describes how to authenticate external operating system users (not database administrators) using Windows, so that a password is not required when accessing the database. </p>
+                  <p>When you use Windows to authenticate external operating system users, your database relies solely on the operating system to restrict access to database user names.</p>
+                  <p>Note that if a Windows Local User is used as the Oracle Home User for an Oracle home, then external user authentication of the Windows Local users is only supported from the same computer. Oracle recommends using Windows Domain User or Windows built-in user as the Oracle Home User to support external authentication of the Windows Domain User from the same computer or a different computer.</p>
+                  <p>In the following procedure, two Windows user names are authenticated:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Local user <code class="codeph">jones</code></p>
+                     </li>
+                     <li>
+                        <p>Domain user <code class="codeph">jones</code> on domain <code class="codeph">sales</code></p>
+                     </li>
+                  </ul>
+                  <p>Local user <code class="codeph">jones</code> logs into its local Windows client computer to access an Oracle Database server, which can be on a different computer. To access other databases and resources on other computers, the local user must provide a user name and password each time.
+                  </p>
+                  <p>Domain user <code class="codeph">jones</code> on domain <code class="codeph">sales</code> logs into a <code class="codeph">sales</code> domain that includes many other Windows computers and resources, one of which contains an Oracle Database server. The domain user can access all the resources the domain provides with a single user name and password.
+                  </p>
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-08BF0801-AB3A-410C-A3B5-F501EB809937">Performing External User Authentication Tasks on the Oracle Database Server</a><br>Use this procedure to perform external user authentication tasks.
+                     </li>
+                     <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-092501A9-8C87-41FD-B95D-2C823D6F46F1">Performing External User Authentication Tasks on the Client Computer</a><br>Use this procedure to perform external user authentication tasks on the client computer.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1" title="Manually configure administrators, operators, users, and roles to be authenticated by the operating system.">Overview of Manually Administering External Users and Roles</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="NTQRF343"></a><div class="props_rev_3"><a id="GUID-08BF0801-AB3A-410C-A3B5-F501EB809937" name="GUID-08BF0801-AB3A-410C-A3B5-F501EB809937"></a><h4 id="NTQRF-GUID-08BF0801-AB3A-410C-A3B5-F501EB809937" class="sect4">Performing External User Authentication Tasks on the Oracle Database Server</h4>
+                  <div>
+                     <p>Use this procedure to perform external user authentication tasks.</p>
+                     <div class="section">
+                        <p>Perform the following external user authentication tasks on the Oracle Database server:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Add parameter <code class="codeph">OS_AUTHENT_PREFIX</code> to your <code class="codeph">init.ora</code> file.</span><div>
+                              <p>The <code class="codeph">OS_AUTHENT_PREFIX</code> value is prefixed to local or domain user names attempting to connect to the server with the user's operating system name and password. The prefixed user name is compared with Oracle Database user names in the database when a connection request is attempted. Using parameter <code class="codeph">OS_AUTHENT_PREFIX</code> with Windows native authentication methods is the recommended method for performing secure, trusted client connections to your server.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span><a id="d33236e466" class="indexterm-anchor"></a><a id="d33236e468" class="indexterm-anchor"></a><a id="d33236e472" class="indexterm-anchor"></a><a id="d33236e476" class="indexterm-anchor"></a><a id="d33236e480" class="indexterm-anchor"></a><a id="d33236e484" class="indexterm-anchor"></a>Set a value for <code class="codeph">OS_AUTHENT_PREFIX</code>. Your choices are:</span><div>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Any character string</p>
+                                    <p>If you specify <code class="codeph">xyz</code>, as in this procedure's example, then <code class="codeph">xyz</code> is prefixed to the beginning of the Windows user name (for example, <code class="codeph">xyzjones</code> for local user <code class="codeph">jones</code> or <code class="codeph">xyzsales\jones</code> for domain user <code class="codeph">jones</code> on domain <code class="codeph">sales</code>).<code class="codeph"> </code>String values are case insensitive.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">""</code> (two double quotes with no space between)
+                                    </p>
+                                    <p>This option is recommended, because it eliminates the need for any prefix to Windows user names (for example, <code class="codeph">jones</code> for local user <code class="codeph">jones</code> or <code class="codeph">sales\jones</code> for domain user <code class="codeph">jones</code> on domain <code class="codeph">sales</code>).
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>No value specified</p>
+                                    <p>If you do not specify a value for <code class="codeph">OS_AUTHENT_PREFIX</code>, it defaults to <code class="codeph">OPS$</code> (for example, <code class="codeph">OPS$jones</code> for local user <code class="codeph">jones</code> or <code class="codeph">OPS$sales\jones</code> for domain user <code class="codeph">jones</code> on domain <code class="codeph">sales</code>).
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create a Windows local user name for <code class="codeph">jones</code> with the Computer Management tool, or create a Windows domain user name for <code class="codeph">jones</code> with Active Directory Users and Computers (if the appropriate name does not currently exist). See your operating system documentation for detailed instructions.</span></li>
+                        <li class="stepexpand"><span>Ensure that parameter <code class="codeph">SQLNET.AUTHENTICATN_SERVICES</code> in file <code class="codeph">sqlnet.ora</code> contains <code class="codeph">nts</code>.</span></li>
+                        <li class="stepexpand"><span>Start SQL*Plus:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; sqlplus /NOLOG
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Connect to the database with the SYSTEM database administrator (DBA) name:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CONNECT SYSTEM
+Enter password: <span class="italic">system_password</span>
+</pre><p>Unless you have changed it, the <code class="codeph">SYSTEM</code> password is <code class="codeph">MANAGER</code> by default.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create a local external user by entering:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CREATE USER xyzjones IDENTIFIED EXTERNALLY;
+</pre><p>where <code class="codeph">xyz</code> is the value you chose for initialization parameter <code class="codeph">OS_AUTHENT_PREFIX</code>, and <code class="codeph">jones</code> is the Windows local user name.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Grant a local external user database roles by entering:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; GRANT DBA TO xyzjones;
+</pre><div class="infoboxnote" id="GUID-08BF0801-AB3A-410C-A3B5-F501EB809937__GUID-B1517750-5CFC-4F96-AAB9-BEE71B1B374B">
+                                 <p class="notep1">Note:</p>
+                                 <p>External authentication of Windows Local users is supported from the same computer only. While external authentication of Windows Domain user is supported from the same computer or a different computer.</p>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create a domain external user by entering:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CREATE USER "XYZSALES\JONES" IDENTIFIED EXTERNALLY;
+</pre><p>where <code class="codeph">XYZ</code> is the value you chose for initialization parameter <code class="codeph">OS_AUTHENT_PREFIX</code>, and <code class="codeph">SALES\JONES</code> is the domain name and Windows domain user name. Double quotes are required and the entire syntax must be in uppercase.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Grant a domain external user database roles by entering:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; GRANT DBA TO "XYZSALES\JONES";
+</pre><p>Double quotes are required and the entire syntax must be in uppercase.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Log on to the Windows system using the Windows local user <code class="codeph">jones</code> or domain user <code class="codeph">SALES\JONES</code>. </span></li>
+                        <li class="stepexpand"><span>Connect to the database with the <code class="codeph">SYSDBA</code> name:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CONNECT / AS SYSDBA
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Shut down the database:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; SHUTDOWN
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Restart the database:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; STARTUP
+</pre><p>This causes the change to parameter <code class="codeph">OS_AUTHENT_PREFIX</code> to take effect.
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-8A209E30-4BA9-4993-80F5-AF0A82ADEB5B" title="Describes how to authenticate external operating system users (not database administrators) using Windows, so that a password is not required when accessing the database.">About Manually Creating an External Operating System User</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF344"></a><div class="props_rev_3"><a id="GUID-092501A9-8C87-41FD-B95D-2C823D6F46F1" name="GUID-092501A9-8C87-41FD-B95D-2C823D6F46F1"></a><h4 id="NTQRF-GUID-092501A9-8C87-41FD-B95D-2C823D6F46F1" class="sect4">Performing External User Authentication Tasks on the Client Computer</h4>
+                  <div>
+                     <p>Use this procedure to perform external user authentication tasks on the client computer.</p>
+                     <div class="section">
+                        <p>Perform the following external user authentication tasks on the client computer:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Ensure that parameter <code class="codeph">SQLNET.AUTHENTICATN_SERVICES</code> in file <code class="codeph">sqlnet.ora</code> contains <code class="codeph">nts</code>.</span></li>
+                        <li class="stepexpand"><span>Use Oracle Net Configuration Assistant to configure a network connection from your client computer to the Windows server on which Oracle Database is installed. </span></li>
+                        <li class="stepexpand"><span>Start SQL*Plus:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; sqlplus /NOLOG
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Connect to your Windows server:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CONNECT /@<span class="italic">connect_identifier</span>
+</pre><p>where <span class="italic"><code class="codeph">connect_identifier</code></span> is the net service name for Oracle Database.
+                              </p>
+                              <p>Oracle Database searches the data dictionary for an automatic login user name corresponding to the Windows local or domain user name, verifies it, and enables connection as <code class="codeph">xyzjones</code> or <code class="codeph">xyzsales\jones</code>.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Verify that you have connected to Oracle Database as domain user <code class="codeph">jones</code> by viewing the roles assigned.</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; SELECT * FROM USER_ROLE_PRIVS;
+</pre><p>which outputs for local user <code class="codeph">jones</code>:
+                              </p><pre class="oac_no_warn" dir="ltr">USERNAME                       GRANTED_ROLE                   ADM DEF OS_
+------------------------------ ------------------------------ --- --- ---
+XYZJONES                       DBA                            NO  YES NO 
+1 row selected.
+</pre><p>or, for domain user <code class="codeph">jones</code>:
+                              </p><pre class="oac_no_warn" dir="ltr">USERNAME                       GRANTED_ROLE                   ADM DEF OS_
+------------------------------ ------------------------------ --- --- ---
+XYZSALES\JONES                 DBA                            NO  YES NO 
+1 row selected.
+</pre><p>Because the Oracle Database user name is the whole name <code class="codeph">xyzjones</code> or <code class="codeph">xyzsales\jones</code>, each object created by <code class="codeph">xyzjones</code> or <code class="codeph">xyzsales\jones</code> (that is, table, view, index, and so on) is prefixed by this name. For another user to reference the table <code class="codeph">shark</code> owned by <code class="codeph">xyzjones</code>, for example, the user must enter:
+                              </p><pre class="oac_no_warn" dir="ltr">SQL&gt; SELECT * FROM xyzjones.shark </pre><div class="infoboxnote" id="GUID-092501A9-8C87-41FD-B95D-2C823D6F46F1__GUID-0C58E7E6-A05D-4B70-9C44-15E9356CD145">
+                                 <p class="notep1">Note:</p>
+                                 <p>Automatic authorization is supported for all Oracle Net protocols.</p>
+                              </div>
+                              <div class="infoboxnotealso" id="GUID-092501A9-8C87-41FD-B95D-2C823D6F46F1__GUID-C076DFF7-E475-4312-AAF0-1F0CA7A26525">
+                                 <p class="notep1">See Also:</p><a href="../netag/managing-oracle-net-services.html#NETAG005" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a></div>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="relinfo">
+                        <p><strong>Related Topics</strong></p>
+                        <ul>
+                           <li><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-08BF0801-AB3A-410C-A3B5-F501EB809937" title="Use this procedure to perform external user authentication tasks.">Performing External User Authentication Tasks on the Oracle Database Server</a></li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-8A209E30-4BA9-4993-80F5-AF0A82ADEB5B" title="Describes how to authenticate external operating system users (not database administrators) using Windows, so that a password is not required when accessing the database.">About Manually Creating an External Operating System User</a></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NTQRF346"></a><a id="NTQRF347"></a><a id="NTQRF345"></a><div class="props_rev_3"><a id="GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6" name="GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6"></a><h3 id="NTQRF-GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6" class="sect3">Overview of Manually Granting Administrator, Operator, and Task-Specific Privileges for Databases</h3>
+               <div>
+                  <p>Describes how to enable Windows to grant the database administrator (<code class="codeph">SYSDBA</code>), database operator (<code class="codeph">SYSOPER</code>), database administrator for ASM (<code class="codeph">SYSASM</code>), and new task-specific and less privileged than the <code class="codeph">ORA_DBA</code>/<code class="codeph">SYSDBA</code> system privileges to administrators. 
+                  </p>
+                  <p>With these privileges, the administrator can issue the following commands from a client computer and connect to Oracle Database without entering a password:</p><pre class="oac_no_warn" dir="ltr">SQL&gt; CONNECT / AS SYSOPER
+SQL&gt; CONNECT / AS SYSDBA
+SQL&gt; CONNECT / AS SYSASM
+SQL&gt; CONNECT / AS SYSBACKUP
+SQL&gt; CONNECT / AS SYSDG
+SQL&gt; CONNECT / AS SYSKM
+</pre><p>To enable this feature, a Windows local or a domain user name of the administrator must belong to one of the Windows local groups listed in Windows Local Groups with SYSDBA, SYSOPER, SYSASM, SYSDG, SYSBACKUP, and SYSKM Privileges.</p>
+                  <div class="tblformal" id="GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6__G1018614">
+                     <p class="titleintable">Table 11-1 Windows Local Groups with SYSDBA, SYSOPER, SYSASM, SYSDG, SYSBACKUP, and SYSKM Privileges</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Windows Local Groups with SYSDBA, SYSOPER, SYSASM, SYSDG, SYSBACKUP, and SYSKM Privileges" summary="Rows are local groups. For each group, the first column is its name, and the second column shows what privileges it has." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="31%" id="d33236e1028">Local Group</th>
+                              <th align="left" valign="bottom" width="69%" id="d33236e1031">System Privileges</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1036" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_OPER</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1036 d33236e1031 ">
+                                 <p><code class="codeph">SYSOPER</code> privileges for all databases on a computer
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1047" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_DBA</code> Note
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1047 d33236e1031 ">
+                                 <p><code class="codeph">SYSDBA</code> privileges for all databases on a computer
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1058" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_</code><span class="italic"><code class="codeph">SID</code></span><code class="codeph">_OPER</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1058 d33236e1031 ">
+                                 <p><code class="codeph">SYSOPER</code> privileges for a single database (identified by <span class="italic"><code class="codeph">SID</code></span>)
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1078" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_</code><span class="italic"><code class="codeph">SID</code></span><code class="codeph">_DBA</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1078 d33236e1031 ">
+                                 <p><code class="codeph">SYSDBA</code> privileges for a single database (identified by <span class="italic"><code class="codeph">SID</code></span>)
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1098" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_DBA</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1098 d33236e1031 ">
+                                 <p><code class="codeph">SYSDBA</code> privileges for all database instances of the specified Oracle home. 
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1114" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_OPER</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1114 d33236e1031 ">
+                                 <p><code class="codeph">SYSOPER</code> privileges for starting up and shutting down all databases instances that run from a specified Oracle home. 
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1130" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SYSDG</code></p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1130 d33236e1031 ">
+                                 <p><code class="codeph">SYSDG</code> privilege for all database instances that run from the particular Oracle home
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1145" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SYSBACKUP</code></p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1145 d33236e1031 ">
+                                 <p><code class="codeph">SYSBACKUP</code> privilege for all database instances that run from the particular Oracle home
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1160" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SYSKM</code></p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1160 d33236e1031 ">
+                                 <p><code class="codeph">SYSKM</code> privilege for all database instances that run from the particular Oracle home
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1175" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_ASMADMIN</code></p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1175 d33236e1031 ">
+                                 <p><code class="codeph">SYSASM</code> privileges for all ASM instances on a computer
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1185" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_ASMDBA</code></p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1185 d33236e1031 ">
+                                 <p><code class="codeph">SYSDBA</code> privileges for all ASM instances on a computer
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d33236e1196" headers="d33236e1028 ">
+                                 <p><code class="codeph">ORA_ASMOPER</code></p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d33236e1196 d33236e1031 ">
+                                 <p><code class="codeph">SYSOPER</code> privileges for all ASM instances on a computer
+                                 </p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="section" id="GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6__BJEJJBBF">
+                     <p class="subhead2">Note</p>
+                     <p>All the groups mentioned in the table above are automatically created during installation and the Oracle Home User is automatically added to <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_DBA</code> group. See section "<a href="overview-of-operating-system-authentication-enabled-at-installation.html#GUID-915E10ED-D9FA-4452-83B6-4015FAE1671D" title="When you install Oracle Database, a special Windows local group called ORA_DBA is created (if it does not already exist from an earlier Oracle Database installation) and the Oracle Installation User is automatically added to it.">Overview of Operating System Authentication Enabled at Installation</a>"  for information.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <div class="infoboxnotealso" id="GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6__GUID-0B2AF03A-95A3-478A-A0AD-5F8281BB1F1A">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../admin/getting-started-with-database-administration.html#ADMIN11010" target="_blank"><span class="italic">Oracle Database Administrator's Guide</span></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../ostmg/authenticate-access-asm-instance.html#OSTMG94101" target="_blank"><span class="italic">Oracle Automatic Storage Management Administrator's Guide</span></a></p>
+                           </li>
+                        </ul>
+                     </div>
+                     <p>The manual procedure for enabling administrators to connect as <code class="codeph">SYSOPER</code>, <code class="codeph">SYSDBA</code>, <code class="codeph">SYSASM</code>, <code class="codeph">SYSDG</code>, <code class="codeph">SYSKM</code>, or <code class="codeph">SYSBACKUP</code> without a password is divided into two sets of tasks performed on different computers:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-3B2DD1CA-EBC3-4FBF-AE9A-CD58E046D33B">Running System Privilege Authentication Tasks on the Oracle Database Server</a><br>Learn about running system privilege authentication tasks on the Oracle Database server.
+                     </li>
+                     <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-A6127CDF-D6B4-4F7C-88D4-43CFBD88FC23">Running System Privilege Authentication Tasks on the Client Computer</a><br>Learn about running system privilege authentication tasks on the client computer.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1" title="Manually configure administrators, operators, users, and roles to be authenticated by the operating system.">Overview of Manually Administering External Users and Roles</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="NTQRF348"></a><div class="props_rev_3"><a id="GUID-3B2DD1CA-EBC3-4FBF-AE9A-CD58E046D33B" name="GUID-3B2DD1CA-EBC3-4FBF-AE9A-CD58E046D33B"></a><h4 id="NTQRF-GUID-3B2DD1CA-EBC3-4FBF-AE9A-CD58E046D33B" class="sect4">Running System Privilege Authentication Tasks on the Oracle Database Server</h4>
+                  <div>
+                     <p>Learn about running system privilege authentication tasks on the Oracle Database server.</p>
+                     <div class="p">Perform the following steps:</div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand" id="GUID-3B2DD1CA-EBC3-4FBF-AE9A-CD58E046D33B__CHDGBJHJ"><span>Add your administrator user names to this group. The client logs in using one of these user names so that it is granted the required system privilege.</span><div>
+                              <div class="infoboxnotealso" id="GUID-3B2DD1CA-EBC3-4FBF-AE9A-CD58E046D33B__GUID-F65CFA1D-84E2-4F7C-9BE5-C93D9202608C">
+                                 <p class="notep1">See Also:</p>
+                                 <p>Your operating system documentation for instructions on managing users and groups</p>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Ensure that parameter <code class="codeph">SQLNET.AUTHENTICATN_SERVICES</code> in file <code class="codeph">sqlnet.ora</code> contains <code class="codeph">nts</code>.</span></li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6" title="Describes how to enable Windows to grant the database administrator (SYSDBA), database operator (SYSOPER), database administrator for ASM (SYSASM), and new task-specific and less privileged than the ORA_DBA/SYSDBA system privileges to administrators.">Overview of Manually Granting Administrator, Operator, and Task-Specific Privileges for Databases</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF349"></a><div class="props_rev_3"><a id="GUID-A6127CDF-D6B4-4F7C-88D4-43CFBD88FC23" name="GUID-A6127CDF-D6B4-4F7C-88D4-43CFBD88FC23"></a><h4 id="NTQRF-GUID-A6127CDF-D6B4-4F7C-88D4-43CFBD88FC23" class="sect4">Running System Privilege Authentication Tasks on the Client Computer</h4>
+                  <div>
+                     <p>Learn about running system privilege authentication tasks on the client computer.</p>
+                     <div class="p">Perform the following steps:</div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Log in as a Windows domain user who is a member of one of the Windows local group on the server, according to the system privilege that you want Windows to grant. The administrator must add this domain user to the required Windows local group. Windows local group membership is created on the server system where Oracle Database runs. </span></li>
+                        <li class="stepexpand"><span>Ensure that the parameter <code class="codeph">SQLNET.AUTHENTICATN_SERVICES</code> in file <code class="codeph">sqlnet.ora</code> contains <code class="codeph">nts</code>.</span></li>
+                        <li class="stepexpand"><span>Use Oracle Net Configuration Assistant to configure a network connection from your client computer to the Windows server on which Oracle Database is installed. </span></li>
+                        <li class="stepexpand"><span>Start SQL*Plus:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; sqlplus /NOLOG
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Connect to Oracle Database:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; SET INSTANCE <span class="italic">net_service_name</span>
+</pre><p>where <span class="italic"><code class="codeph">net_service_name</code></span> is the Oracle Net net service name for Oracle Database.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Enter either of the following SQL*Plus commands so that you connect to the database with the required system privilege:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CONNECT / AS SYSOPER
+SQL&gt; CONNECT / AS SYSDBA
+SQL&gt; CONNECT / AS SYSASM
+SQL&gt; CONNECT / AS SYSDG
+SQL&gt; CONNECT / AS SYSKM
+SQL&gt; CONNECT / AS SYSBACKUP
+</pre><p>You are now connected to the Windows server. If you connect with <code class="codeph">SYSDBA</code>, you are given DBA privileges.
+                              </p>
+                              <div class="infoboxnotealso" id="GUID-A6127CDF-D6B4-4F7C-88D4-43CFBD88FC23__GUID-8B7F903B-63B2-4BF5-A7B8-1AD512AD6E22">
+                                 <p class="notep1">See Also:</p><a href="../netag/managing-oracle-net-services.html#NETAG005" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a></div>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="relinfo">
+                        <p><strong>Related Topics</strong></p>
+                        <ul>
+                           <li><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-3B2DD1CA-EBC3-4FBF-AE9A-CD58E046D33B" title="Learn about running system privilege authentication tasks on the Oracle Database server.">Running System Privilege Authentication Tasks on the Oracle Database Server</a></li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6" title="Describes how to enable Windows to grant the database administrator (SYSDBA), database operator (SYSOPER), database administrator for ASM (SYSASM), and new task-specific and less privileged than the ORA_DBA/SYSDBA system privileges to administrators.">Overview of Manually Granting Administrator, Operator, and Task-Specific Privileges for Databases</a></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NTQRF699"></a><div class="props_rev_3"><a id="GUID-57FE56E4-B387-4140-9C01-8764348E1A9F" name="GUID-57FE56E4-B387-4140-9C01-8764348E1A9F"></a><h3 id="NTQRF-GUID-57FE56E4-B387-4140-9C01-8764348E1A9F" class="sect3">Managing New Users and User Groups</h3>
+               <div>
+                  <p>Learn how to manage new users and user groups.</p>
+                  <div class="section">
+                     <p>During Oracle Database installation, <code class="codeph">ORA_INSTALL</code>, <code class="codeph">ORA_DBA</code>, <code class="codeph">ORA_OPER</code>, <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_DBA</code>, <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_OPER</code>, <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SYSDG</code>, <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SYSBACKUP</code>, <code class="codeph">ORA_</code><span class="italic"><code class="codeph">HOMENAME</code></span><code class="codeph">_SYSKM</code>, <code class="codeph">ORA_ASMADMIN</code>, <code class="codeph">ORA_ASMDBA</code>, and <code class="codeph">ORA_ASMOPER</code> user groups are automatically created with the required privileges.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-57FE56E4-B387-4140-9C01-8764348E1A9F__GUID-E87F5B85-9A02-454B-A861-F6266170C230">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../ntdbi/about-job-role-separaation-operating-system-privileges-groups-and-users.html#NTDBI-GUID-059D905F-5126-4E79-A133-0FAB626B0882" target="_blank"><span><cite>Oracle Database Installation Guide for Microsoft Windows</cite></span></a> 
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../cwwin/standard-oracle-database-groups-for-database-administrators.html#CWWIN-GUID-74040A06-FF48-42A8-97D8-38287C0C0B56" target="_blank"><span><cite>Oracle Grid Infrastructure Installation and Upgrade Guide for Microsoft Windows x64 (64-Bit)</cite></span></a></p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1" title="Manually configure administrators, operators, users, and roles to be authenticated by the operating system.">Overview of Manually Administering External Users and Roles</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF350"></a><div class="props_rev_3"><a id="GUID-1728B82D-DEE2-4CAA-A72E-E4DD8F47636C" name="GUID-1728B82D-DEE2-4CAA-A72E-E4DD8F47636C"></a><h3 id="NTQRF-GUID-1728B82D-DEE2-4CAA-A72E-E4DD8F47636C" class="sect3">Overview of Manually Creating an External Role</h3>
+               <div>
+                  <p>Describes how to grant Oracle Database roles to users directly through Windows (known as external roles).</p>
+                  <p>When you use Windows to authenticate users, Windows local groups can grant these users external roles. </p>
+                  <p>All privileges for these roles are active when the user connects. When using external roles, all roles are granted and managed through the operating system. You cannot use both external roles and Oracle Database roles at the same time. </p>
+                  <p>Consider the following example. With external roles enabled, you log on to a Windows domain with domain user name <code class="codeph">sales\jones</code> (<code class="codeph">sales</code> is the domain name and <code class="codeph">jones</code> is the domain user name). You then connect to Oracle Database as Oracle Database user <code class="codeph">smith</code>. In this case, you receive the roles granted to <code class="codeph">sales\jones</code> but <span class="italic">not</span> the roles granted to <code class="codeph">smith</code>.
+                  </p>
+                  <p>The procedure for manually creating an external role is divided into two sets of authorization tasks performed on different computers:</p>
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-365AFA95-B5EB-4F21-B2DD-6A7FF51BE8DA">Performing External Role Authorization Tasks on the Oracle Database Server</a><br>Learn how to perform external role authorization tasks on the Oracle Database server.
+                     </li>
+                     <li class="ulchildlink"><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-E6106E4B-F6A1-48DD-8B5F-DE77E8D4C9C6">Performing External Role Authorization Tasks on the Client Computer</a><br>Learn how to perform external role authorization tasks on the client computer.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1" title="Manually configure administrators, operators, users, and roles to be authenticated by the operating system.">Overview of Manually Administering External Users and Roles</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="NTQRF351"></a><div class="props_rev_3"><a id="GUID-365AFA95-B5EB-4F21-B2DD-6A7FF51BE8DA" name="GUID-365AFA95-B5EB-4F21-B2DD-6A7FF51BE8DA"></a><h4 id="NTQRF-GUID-365AFA95-B5EB-4F21-B2DD-6A7FF51BE8DA" class="sect4">Performing External Role Authorization Tasks on the Oracle Database Server</h4>
+                  <div>
+                     <p>Learn how to perform external role authorization tasks on the Oracle Database server.</p>
+                     <div class="p">Perform the following steps:</div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Add initialization parameter <code class="codeph">OS_ROLES</code> to the <code class="codeph">init.ora</code> file. </span></li>
+                        <li class="stepexpand"><span>Set <code class="codeph">OS_ROLES</code> to <code class="codeph">true</code>. </span><div>
+                              <p>The default setting for this parameter is <code class="codeph">false</code>. 
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Ensure that parameter <code class="codeph">SQLNET.AUTHENTICATN_SERVICES</code> in file <code class="codeph">sqlnet.ora</code> contains <code class="codeph">nts</code>.</span></li>
+                        <li class="stepexpand"><span>Start SQL*Plus:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; sqlplus /NOLOG
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Connect to your Windows server:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CONNECT / AS SYSDBA
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Create a new database role. You can give this new role whatever name you want. In this example the role is named <code class="codeph">DBSALES3</code>:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CREATE ROLE DBSALES3 IDENTIFIED EXTERNALLY;
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Grant to <code class="codeph">DBSALES3</code> whatever Oracle Database roles are appropriate to your database environment:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; GRANT DBA TO DBSALES3 WITH ADMIN OPTN;
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Connect to the database as <code class="codeph">SYSDBA</code>:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CONNECT / AS SYSDBA
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Shut down the database:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; SHUTDOWN
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Restart the database:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; STARTUP
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Create a Windows local group with the following syntax:</span><div><pre class="oac_no_warn" dir="ltr">ORA_<span class="italic">sid_rolename</span>[_D][_A] 
+</pre><p>For this command, note the following:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="italic"><code class="codeph">sid</code></span> identifies the database instance
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="italic"><code class="codeph">rolename</code></span> identifies the database role granted
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">D</code> indicates that this database role is to be a default role of the database user
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">A</code> indicates that this database role includes <code class="codeph">ADMIN</code> <code class="codeph">OPTN</code> 
+                                    </p>
+                                 </li>
+                              </ul>
+                              <p>Characters <code class="codeph">D</code> and <code class="codeph">A</code> are optional. If specified, they must be preceded by an underscore.
+                              </p>
+                              <p>For this example, <code class="codeph">ORA_orcl_dbsales3_D</code> is created.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Add one or more Windows local or domain user names to this group.</span><div>
+                              <p>You can create multiple database roles and grant them to several possible Windows groups with differing options, as shown in the following table. Users connecting to the <code class="codeph">ORCL</code> instance and authenticated by Windows as members of all four of these Windows local groups has the privileges associated with <code class="codeph">dbsales3</code> and <code class="codeph">dbsales4</code> by default (because of option <code class="codeph">_D</code>). If these users first connect as members of <code class="codeph">dbsales3</code> or <code class="codeph">dbsales4</code> and use the <code class="codeph">SET ROLE</code> command, then they can also gain access to database roles <code class="codeph">dbsales1</code> and <code class="codeph">dbsales2</code>. But if these users try to connect with <code class="codeph">dbsales1</code> or <code class="codeph">dbsales2</code> without first connecting with a default role, they are unable to connect. Finally, these users can grant <code class="codeph">dbsales2</code> and <code class="codeph">dbsales4</code> to other roles (because of option <code class="codeph">_A</code>). 
+                              </p>
+                              <div class="tblformal" id="GUID-365AFA95-B5EB-4F21-B2DD-6A7FF51BE8DA__GUID-09A10CDB-339D-44BE-BB8C-C1A63457251A">
+                                 <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Rows are example database roles. For each role, the first column is its name, and the second column is a Windows group granted the role." width="90%" frame="hsides" border="1" rules="rows">
+                                    <thead>
+                                       <tr align="left" valign="top">
+                                          <th align="left" valign="bottom" width="49%" id="d33236e2099">Database Roles</th>
+                                          <th align="left" valign="bottom" width="51%" id="d33236e2102">Windows Groups</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr align="left" valign="top">
+                                          <td align="left" valign="top" width="49%" id="d33236e2107" headers="d33236e2099 ">
+                                             <p><code class="codeph">dbsales1</code> 
+                                             </p>
+                                          </td>
+                                          <td align="left" valign="top" width="51%" headers="d33236e2107 d33236e2102 ">
+                                             <p><code class="codeph">ORA_ORCL_dbsales1</code> 
+                                             </p>
+                                          </td>
+                                       </tr>
+                                       <tr align="left" valign="top">
+                                          <td align="left" valign="top" width="49%" id="d33236e2118" headers="d33236e2099 ">
+                                             <p><code class="codeph">dbsales2</code> 
+                                             </p>
+                                          </td>
+                                          <td align="left" valign="top" width="51%" headers="d33236e2118 d33236e2102 ">
+                                             <p><code class="codeph">ORA_ORCL_dbsales2_a</code> 
+                                             </p>
+                                          </td>
+                                       </tr>
+                                       <tr align="left" valign="top">
+                                          <td align="left" valign="top" width="49%" id="d33236e2129" headers="d33236e2099 ">
+                                             <p><code class="codeph">dbsales3</code> 
+                                             </p>
+                                          </td>
+                                          <td align="left" valign="top" width="51%" headers="d33236e2129 d33236e2102 ">
+                                             <p><code class="codeph">ORA_ORCL_dbsales3_d</code> 
+                                             </p>
+                                          </td>
+                                       </tr>
+                                       <tr align="left" valign="top">
+                                          <td align="left" valign="top" width="49%" id="d33236e2140" headers="d33236e2099 ">
+                                             <p><code class="codeph">dbsales4</code> 
+                                             </p>
+                                          </td>
+                                          <td align="left" valign="top" width="51%" headers="d33236e2140 d33236e2102 ">
+                                             <p><code class="codeph">ORA_ORCL_dbsales4_da</code> 
+                                             </p>
+                                          </td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                              <!-- class="inftblhruleinformal" -->
+                              <div class="infoboxnote" id="GUID-365AFA95-B5EB-4F21-B2DD-6A7FF51BE8DA__GUID-9A263BC9-B83E-46F5-97B4-702E04860CC3">
+                                 <p class="notep1">Note:</p>
+                                 <p>When Oracle Database converts the group name to a role name, it changes the name to uppercase.</p>
+                              </div>
+                           </div>
+                        </li>
+                     </ol>
+                     <div class="section"></div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-365AFA95-B5EB-4F21-B2DD-6A7FF51BE8DA__GUID-B3649EB3-B25D-4776-834A-1713747FAC10">
+                        <p class="notep1">See Also:</p>
+                        <p>Your operating system documentation for instructions on managing users and groups</p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-1728B82D-DEE2-4CAA-A72E-E4DD8F47636C" title="Describes how to grant Oracle Database roles to users directly through Windows (known as external roles).">Overview of Manually Creating an External Role</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF352"></a><div class="props_rev_3"><a id="GUID-E6106E4B-F6A1-48DD-8B5F-DE77E8D4C9C6" name="GUID-E6106E4B-F6A1-48DD-8B5F-DE77E8D4C9C6"></a><h4 id="NTQRF-GUID-E6106E4B-F6A1-48DD-8B5F-DE77E8D4C9C6" class="sect4">Performing External Role Authorization Tasks on the Client Computer</h4>
+                  <div>
+                     <p>Learn how to perform external role authorization tasks on the client computer.</p>
+                     <div class="p">Perform the following steps:</div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Create a Windows local or a domain user name with the same user name and password that exist on the Windows server (if the appropriate user name does not currently exist).</span></li>
+                        <li class="stepexpand"><span>Ensure that parameter <code class="codeph">SQLNET.AUTHENTICATN_SERVICES</code> in file <code class="codeph">sqlnet.ora</code> contains <code class="codeph">nts</code>.</span></li>
+                        <li class="stepexpand"><span>Use Oracle Net Configuration Assistant to configure a network connection from your client computer to Oracle Database. </span></li>
+                        <li class="stepexpand"><span>Start SQL*Plus:</span><div><pre class="oac_no_warn" dir="ltr">C:\&gt; sqlplus /NOLOG
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Connect to the correct instance:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; SET INSTANCE <span class="italic">connect_identifier</span>
+</pre><p>where<code class="codeph"> </code><span class="italic"><code class="codeph">connect_identifier</code></span> is the net service name for the Oracle Database connection that you created in Step 3.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Connect to Oracle Database:</span><div><pre class="oac_no_warn" dir="ltr">SQL&gt; CONNECT SMITH
+Enter password: <span class="italic">password</span>
+</pre><p>You are connected to the Windows server over net service with Oracle Database user name <code class="codeph">smith</code>. Roles applied to Oracle Database user name <code class="codeph">smith</code> consist of all roles defined for the Windows user name that were previously mapped to the database roles (in this case, <code class="codeph">ORA_DBSALES3_D</code>). All roles available under an authenticated connection are determined by the Windows user name and the Oracle-specific Windows local groups to which the user belongs (for example,<code class="codeph"> ORA_</code><span class="italic"><code class="codeph">SID</code></span><code class="codeph">_DBSALES1</code> or <code class="codeph">ORA_</code><span class="italic"><code class="codeph">SID</code></span><code class="codeph">_DBSALES4_DA</code>).
+                              </p>
+                              <div class="infoboxnote" id="GUID-E6106E4B-F6A1-48DD-8B5F-DE77E8D4C9C6__GUID-9C093D71-788B-4E90-9D93-1F93F7B48EB8">
+                                 <p class="notep1">Note:</p>
+                                 <p>OSDBA and OSOPER are the generic names for the two special operating system groups that control database administrator logins when using operating system authentication. </p>
+                              </div>
+                              <div class="infoboxnotealso" id="GUID-E6106E4B-F6A1-48DD-8B5F-DE77E8D4C9C6__GUID-39755EC5-C391-4712-B86D-0B0AABE5FA11">
+                                 <p class="notep1">See Also:</p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p><a href="../admin/getting-started-with-database-administration.html#ADMIN001" target="_blank"><span class="italic">Oracle Database Administrator's Guide</span></a></p>
+                                    </li>
+                                    <li>
+                                       <p><a href="../netag/managing-oracle-net-services.html#NETAG005" target="_blank"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a></p>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="relinfo">
+                        <p><strong>Related Topics</strong></p>
+                        <ul>
+                           <li><a href="overview-of-manually-administering-external-users-and-roles.html#GUID-7B52AE2B-27E6-4A7B-B0F0-35CB12A01EE6" title="Describes how to enable Windows to grant the database administrator (SYSDBA), database operator (SYSOPER), database administrator for ASM (SYSASM), and new task-specific and less privileged than the ORA_DBA/SYSDBA system privileges to administrators.">Overview of Manually Granting Administrator, Operator, and Task-Specific Privileges for Databases</a></li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-1728B82D-DEE2-4CAA-A72E-E4DD8F47636C" title="Describes how to grant Oracle Database roles to users directly through Windows (known as external roles).">Overview of Manually Creating an External Role</a></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="NTQRF353"></a><div class="props_rev_3"><a id="GUID-CC0E0EB8-81A2-4BD4-9EB7-451945255920" name="GUID-CC0E0EB8-81A2-4BD4-9EB7-451945255920"></a><h3 id="NTQRF-GUID-CC0E0EB8-81A2-4BD4-9EB7-451945255920" class="sect3">About Manually Migrating Users</h3>
+               <div>
+                  <p>You can migrate local or external users to enterprise users with User Migration Utility.</p>
+                  <p>Migrating from a database user model to an enterprise user model provides solutions to administrative, security, and usability challenges in an enterprise environment. In an enterprise user model, all user information is moved to an LDAP directory service, which provides the following benefits:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Centralized storage and management of user information</p>
+                     </li>
+                     <li>
+                        <p>Centralized user authentication</p>
+                     </li>
+                     <li>
+                        <p>Enhanced security</p>
+                     </li>
+                  </ul>
+                  <p>User Migration Utility is a command-line tool. Its syntax is of the form:</p><pre class="oac_no_warn" dir="ltr">C:\ umu <span class="italic">parameters</span>
+</pre><p>To get a list of User Migration Utility parameters, enter:</p><pre class="oac_no_warn" dir="ltr">C:\ umu help=yes
+</pre></div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-CC0E0EB8-81A2-4BD4-9EB7-451945255920__GUID-F8783F7E-8DB6-4D91-A6E2-DD1BF755D0B2">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../dbimi/using-the-user-migration-utility.html#DBIMI200" target="_blank"><span class="italic">Oracle Database Enterprise User Security Administrator's Guide</span> </a> in "Using the User Migration Utility."
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-of-manually-administering-external-users-and-roles.html#GUID-C8DEC66A-E7B1-4F00-B7CB-9EAF26E508C1" title="Manually configure administrators, operators, users, and roles to be authenticated by the operating system.">Overview of Manually Administering External Users and Roles</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

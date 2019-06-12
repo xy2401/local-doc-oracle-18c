@@ -1,0 +1,121 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Network access control lists (ACLs) are implemented as Real Application Security ACLs in 12c, and existing ACLs are migrated from XML DB ACLs and renamed during upgrade.">
+      <meta name="description" content="Network access control lists (ACLs) are implemented as Real Application Security ACLs in 12c, and existing ACLs are migrated from XML DB ACLs and renamed during upgrade.">
+      <title>Network Access Control Lists and Upgrade to Oracle Database 12c</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Database Upgrade Guide">
+      <meta property="og:description" content="Network access control lists (ACLs) are implemented as Real Application Security ACLs in 12c, and existing ACLs are migrated from XML DB ACLs and renamed during upgrade.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Database Upgrade Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-upgrade-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-11-27T11:59:18-08:00">
+      <meta name="dcterms.title" content="Database Upgrade Guide">
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E88788-06">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="changes-default-sga-permissions-oracle-database-12c-r2.html" title="Previous" type="text/html">
+      <link rel="next" href="parallel-upgrade-utility-batch-scripts-oracle-database-12c-r2.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.isVersionOf" content="UPGRD">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="changes-default-sga-permissions-oracle-database-12c-r2.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="parallel-upgrade-utility-batch-scripts-oracle-database-12c-r2.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Database Upgrade Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="changes-oracle-database-earlier-releases.html" property="item" typeof="WebPage"><span property="name"> Changes for Earlier Releases of Oracle Database </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="behavior-changes-oracle-database-12c-122.html" property="item" typeof="WebPage"><span property="name">Behavior Changes in Oracle Database 12c Release 2 (12.2.0.1)</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Network Access Control Lists and Upgrade to Oracle Database 12c</li>
+            </ol>
+            <a id="GUID-A5AEFB4A-2153-44C0-A17A-554AF3D75A91" name="GUID-A5AEFB4A-2153-44C0-A17A-554AF3D75A91"></a>
+            
+            <h2 id="UPGRD-GUID-A5AEFB4A-2153-44C0-A17A-554AF3D75A91" class="sect2">Network Access Control Lists and Upgrade to Oracle Database 12<span class="italic">c</span></h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Network access control lists (ACLs) are implemented as Real Application Security ACLs in 12<span class="italic">c</span>, and existing ACLs are migrated from XML DB ACLs and renamed during upgrade.
+               </p>
+               <p>During Oracle Database upgrades to 12<span class="italic">c</span> release 1 (12.1) and later releases, network access control in Oracle Database is implemented using Real Application Security access control lists (ACLs). Existing ACLs in XDB are migrated during upgrade. Existing APIs in the <code class="codeph">DBMS_NETWORK_ACL_ADMIN</code> PL/SQL package and catalog views are deprecated. These deprecated views are replaced with new equivalents in Oracle Database 12<span class="italic">c</span>. 
+               </p>
+               <p>Starting with Oracle Database 12<span class="italic">c</span> release 1 (12.1), you can grant network privileges by appending an access control entry (ACE) to a host ACL using <code class="codeph">DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE</code>. If you append an ACE to a host that has no existing host ACL, then a new host ACL is created implicitly. If the host ACL exists, then the ACEs are appended to the existing ACL.
+               </p>
+               <div class="section">
+                  <p class="subhead1" id="GUID-A5AEFB4A-2153-44C0-A17A-554AF3D75A91__GUID-357DAA34-8DAB-41CB-9AAC-25EAE7535337">How Changing to Real Application Security ACLS Affects You</p>
+                  <p>During upgrades, the following changes are made:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Existing network ACLs are migrated from Oracle Database 11<span class="italic">g</span> XML DB to Oracle Database 12<span class="italic">c</span> Real Application Security. All privileges of the existing ACLs are preserved during this migration.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Existing ACLs are renamed.</p>
+                     </li>
+                  </ul>
+               </div>
+               <!-- class="section" -->
+               <div class="section">
+                  <p class="subhead1" id="GUID-A5AEFB4A-2153-44C0-A17A-554AF3D75A91__GUID-0DCB8139-7419-4D85-8766-D02E51771699">What You Need To Do Before Upgrades</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Check for existing Network ACLs before the upgrade. </p> 
+                     </li>
+                     <li>
+                        <p>Preserve existing network ACLs and privileges (<code class="codeph">DBA_NETWORK_ACLS</code> and <code class="codeph">DBA_NETWORK_ACL_PRIVILEGES</code>) in an intermediate staging table. Preserving the existing privileges in a table enables you to restore them if the automatic migration fails, or if you want to roll back an upgrade. 
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <div class="relinfo">
+                  <p><strong>Related Topics</strong></p>
+                  <ul>
+                     <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/upgrd&amp;id=DBSEG-GUID-3A9008A8-A38B-4BBA-B520-8724A518EE54" target="_blank"><span><cite>Oracle Database Security Guide</cite></span> </a></li>
+                     <li><a href="../refrn/DBA_ACL_NAME_MAP.html#REFRN23936" target="_blank"><span><cite>Oracle Database Reference</cite></span></a></li>
+                  </ul>
+               </div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="behavior-changes-oracle-database-12c-122.html#GUID-2E7494A9-18C5-483D-95C6-7A13ECF879DF" title="Review for descriptions of Oracle Database 12c release 1 (12.1) changes.">Behavior Changes in Oracle Database 12c Release 2 (12.2.0.1)</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,2474 @@
+{
+    "swagger":"2.0",
+    "info":{
+        "version":"2018.07.22",
+        "title":"REST APIs for Oracle Database",
+        "description":"Provide consumers the ability to perform operations with different Oracle Database features through a web REST API that can be easily adopted.",
+        "x-summary":"Provide consumers the ability to perform operations with different Oracle Database features through a web REST API that can be easily adopted."
+    },
+    "basePath":"/rhp-restapi/rhp",
+    "consumes":[
+        "application/json"
+    ],
+    "produces":[
+        "application/json"
+    ],
+    "securityDefinitions":{
+        "basicAuthentication":{
+            "type":"basic"
+        }
+    },
+    "tags":[
+        {
+            "name":"Rapid Home Provisioning/Manage Gold Images",
+            "description":"You can create gold images and series to manage your deployments."
+        },
+        {
+            "name":"Rapid Home Provisioning/Manage Operation Results",
+            "description":"You can verify the status and retrieve the output messages of any operation that creates a job to handle its scheduled execution like imaging, provisioning, upgrade and patching operations of software homes."
+        },
+        {
+            "name":"Rapid Home Provisioning/Patch Software homes",
+            "description":"You can move from one provisioned copy of a gold image to a provisioned copy of a gold image that is at a higher patch level."
+        },
+        {
+            "name":"Rapid Home Provisioning/Patch Unmanaged Software Homes",
+            "description":"You can move from one software home that is not a copy of a gold image to a provisioned copy of a gold image that is at a higher patch level than the first software home."
+        },
+        {
+            "name":"Rapid Home Provisioning/Provisioning Software homes",
+            "description":"You can provision a working copy of a gold image."
+        },
+        {
+            "name":"Rapid Home Provisioning/Upgrade Software homes",
+            "description":"You can move from one provisioned copy of a gold image to a provisioned copy of a gold image that is at a higher version."
+        },
+        {
+            "name":"Rapid Home Provisioning/Upgrade Unmanaged Software Homes",
+            "description":"You can move from one software home that is not a copy of a gold image to a provisioned copy of a gold image that is at a higher version level than the first software home."
+        }
+    ],
+    "schemes":[
+        "http",
+        "https"
+    ],
+    "parameters":{
+        "authorizationHeader":{
+            "name":"Authorization",
+            "in":"header",
+            "type":"string",
+            "required":true,
+            "description":"Base64 encoding of the user name and password of the user making the request. For more information, see <a href='Authentication-RHP.html'>Authentication for Rapid Home Provisioning</a>."
+        },
+        "dbUNamePathParam":{
+            "name":"dbUniqueName",
+            "in":"path",
+            "required":true,
+            "type":"string",
+            "description":"Name of database (DB_UNIQUE_NAME) to be provisioned"
+        },
+        "destWcIdPatParam":{
+            "name":"destWcId",
+            "in":"path",
+            "required":true,
+            "type":"string",
+            "description":"Name of the destination working copy to which the Oracle Software needs to be moved"
+        },
+        "clientQueryParam":{
+            "name":"client",
+            "in":"query",
+            "required":false,
+            "type":"string",
+            "description":"Client cluster name."
+        },
+        "imageTypeQueryParam":{
+            "name":"imageType",
+            "in":"query",
+            "required":false,
+            "type":"string",
+            "description":"The software type. (\"ORACLEDBSOFTWARE\" (default) for Oracle database software, \"ORACLEGISOFTWARE\" for Oracle Grid Infrastructure software, ORACLEGGSOFTWARE for Oracle GoldenGate software, \"LINUXOS\" for linux Opearting System ISO, and \"SOFTWARE\" for all other software. For a custom image type, use the image type name.)"
+        },
+        "imageTypePathParam":{
+            "name":"imageType",
+            "in":"path",
+            "required":true,
+            "type":"string",
+            "description":"The software type. (\"ORACLEDBSOFTWARE\" (default) for Oracle database software, \"ORACLEGISOFTWARE\" for Oracle Grid Infrastructure software, ORACLEGGSOFTWARE for Oracle GoldenGate software, \"LINUXOS\" for linux Opearting System ISO, and \"SOFTWARE\" for all other software. For a custom image type, use the image type name.)"
+        },
+        "serverNameQueryParam":{
+            "name":"server",
+            "in":"query",
+            "required":false,
+            "type":"string",
+            "description":"Server cluster name."
+        },
+        "imageNamePathParam":{
+            "name":"imageId",
+            "in":"path",
+            "required":true,
+            "type":"string",
+            "description":"Name of the image."
+        },
+        "imageNameQueryParam":{
+            "name":"image",
+            "in":"query",
+            "required":false,
+            "type":"string",
+            "description":"Name of the image."
+        },
+        "jobIdPathParam":{
+            "name":"jobId",
+            "in":"path",
+            "required":true,
+            "type":"string",
+            "description":"Unique integer job ID value for the scheduled job."
+        },
+        "seriesIdPathParam":{
+            "name":"seriesId",
+            "in":"path",
+            "required":true,
+            "type":"string",
+            "description":"Name of the series."
+        },
+        "osUserNamePathParam":{
+            "name":"userId",
+            "in":"path",
+            "required":true,
+            "type":"string",
+            "description":"OS user name."
+        },
+        "subscribeUserSeriesBodyParam":{
+            "in":"body",
+            "name":"body",
+            "required":false,
+            "schema":{
+                "$ref":"#/definitions/SubscribeSeriesBody"
+            }
+        },
+        "workingcopyIdPathParam":{
+            "name":"workingCopyId",
+            "in":"path",
+            "required":true,
+            "type":"string",
+            "description":"Name of the working copy."
+        }
+    },
+    "responses":{
+        "jobAccepted202Response":{
+            "description":"Accepted. A JSON object containing job resource details of the accepted operation to obtain status and output of the progress.",
+            "schema":{
+                "$ref":"#/definitions/jobResource"
+            },
+            "headers":{
+                "Location":{
+                    "type":"string",
+                    "description":"URL to the job that will execute the operation"
+                }
+            }
+        },
+        "okSingleJobResponse":{
+            "description":"OK. A JSON object containing a job resource representation with multiple properties and the links array with at least the \"self\" link.",
+            "schema":{
+                "$ref":"#/definitions/jobResource"
+            }
+        },
+        "okSingleJobOutputResponse":{
+            "description":"OK. A JSON object containing a job output resource representation with multiple properties and the links array with at least the \"self\" link.",
+            "schema":{
+                "$ref":"#/definitions/jobOutputResource"
+            }
+        },
+        "errorResponse":{
+            "description":"Unexpected error. A JSON object containing error details of the issue while executing the operation.",
+            "schema":{
+                "$ref":"#/definitions/errorResource"
+            }
+        },
+        "badRequestResponse":{
+            "description":"Bad Request. A JSON object containing error details of the issue found while parsing a parameter value or name.",
+            "schema":{
+                "$ref":"#/definitions/errorResource"
+            }
+        },
+        "okArrayOfItemsResponse":{
+            "description":"OK. A JSON object containing an \"items\" property populated with 0 or more elements with at least an Id property and the links array with at least the \"self\" link.",
+            "schema":{
+                "$ref":"#/definitions/arrayOfItems"
+            }
+        },
+        "okSingleImageResponse":{
+            "description":"OK. A JSON object containing an image resource representation with multiple properties and the links array with at least the \"self\" link.",
+            "schema":{
+                "$ref":"#/definitions/imageResource"
+            }
+        },
+        "okDeleteImageResponse":{
+            "description":"OK. A JSON object containing an image resource representation with multiple properties and the links array with at least the \"self\" link. Only if it was successfully deleted.",
+            "schema":{
+                "$ref":"#/definitions/imageResource"
+            }
+        },
+        "okSingleSeriesResponse":{
+            "description":"OK. A JSON object containing a series resource representation with multiple properties and the links array with at least the \"self\" link.",
+            "schema":{
+                "$ref":"#/definitions/seriesResource"
+            }
+        },
+        "okDeleteSeriesResponse":{
+            "description":"OK. A JSON object containing a series resource representation with multiple properties and the links array with at least the \"self\" link. Only if it was successfully deleted.",
+            "schema":{
+                "$ref":"#/definitions/seriesResource"
+            }
+        },
+        "okSingleWorkingcopyResponse":{
+            "description":"OK. A JSON object containing a working copy resource representation with multiple properties and the links array with at least the \"self\" link.",
+            "schema":{
+                "$ref":"#/definitions/workingcopyResource"
+            }
+        }
+    },
+    "paths":{
+        "/databases":{
+            "patch":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Patch Unmanaged Software Homes"
+                ],
+                "summary":"Patch an unmanaged Oracle Database Software home",
+                "description":"Moves a database from the unamanged Oracle Database Software home to a patched working copy.",
+                "operationId":"moveDatabase",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/MoveDatabaseBody"
+                        }
+                    },
+                    {
+                        "$ref":"#/parameters/authorizationHeader"
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"databases-patch",
+                "x-filename-id":"databases-patch"
+            }
+        },
+        "/databases/{dbUniqueName}":{
+            "put":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Upgrade Unmanaged Software Homes"
+                ],
+                "summary":"Upgrade an unmanaged Oracle Database Software home",
+                "description":"Upgrade a database on the specified Oracle Database Software home",
+                "operationId":"upgradeDatabase",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/dbUNamePathParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/UpgradeDatabaseBody"
+                        }
+                    },
+                    {
+                        "$ref":"#/parameters/authorizationHeader"
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"databases-{dbUniqueName}-put",
+                "x-filename-id":"databases-dbuniquename-put"
+            }
+        },
+        "/gihome/{destWcId}":{
+            "put":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Upgrade Unmanaged Software Homes"
+                ],
+                "summary":"Upgrade unmanaged Grid Infrastructure Software home",
+                "description":"Upgrades the Oracle Grid Infrastructure from the source home path to the destination working copy.",
+                "operationId":"upgradeGihome",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/UpgradeGihomeBody"
+                        }
+                    },
+                    {
+                        "$ref":"#/parameters/destWcIdPatParam"
+                    },
+                    {
+                        "$ref":"#/parameters/authorizationHeader"
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"gihome-{destWcId}-put",
+                "x-filename-id":"gihome-destwcid-put"
+            },
+            "patch":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Patch Unmanaged Software Homes"
+                ],
+                "summary":"Patch unmanaged Grid Infrastructure Software home",
+                "description":"Moves the Oracle Grid Infrastructure from the source home path to the destination working copy.",
+                "operationId":"moveGihome",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/MoveGihomeBody"
+                        }
+                    },
+                    {
+                        "$ref":"#/parameters/destWcIdPatParam"
+                    },
+                    {
+                        "$ref":"#/parameters/authorizationHeader"
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"gihome-{destWcId}-patch",
+                "x-filename-id":"gihome-destwcid-patch"
+            }
+        },
+        "/images":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Lists all the gold images",
+                "description":"Display the name of all the existing gold images in the server.",
+                "operationId":"queryAllImages",
+                "parameters":[
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okArrayOfItemsResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"images-get",
+                "x-filename-id":"images-get"
+            },
+            "post":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Schedules an import image operation",
+                "description":"Create a gold image from the Software home specified in the body of this request, can be of Oracle Database, Grid Infrastructure or any other Software home.",
+                "operationId":"importImage",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/ImportImageBody"
+                        }
+                    },
+                    {
+                        "$ref":"#/parameters/authorizationHeader"
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"images-post",
+                "x-filename-id":"images-post"
+            }
+        },
+        "/images/search":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Lists all the gold images that matches the specified query parameters.",
+                "description":"Display the name of all the existing gold images in the server that matches the search parameters specified.",
+                "operationId":"searchImage",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/clientQueryParam"
+                    },
+                    {
+                        "$ref":"#/parameters/imageTypeQueryParam"
+                    },
+                    {
+                        "name":"version",
+                        "in":"query",
+                        "required":false,
+                        "type":"string",
+                        "description":"The version of the images."
+                    },
+                    {
+                        "name":"platform",
+                        "in":"query",
+                        "required":false,
+                        "type":"string",
+                        "description":"The OS platform to which the images correspond."
+                    },
+                    {
+                        "$ref":"#/parameters/serverNameQueryParam"
+                    },
+                    {
+                        "name":"drift",
+                        "in":"query",
+                        "required":false,
+                        "type":"string",
+                        "description":"Lists the bug fixes not included in the golden image."
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okArrayOfItemsResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"images-search-get",
+                "x-filename-id":"images-search-get"
+            }
+        },
+        "/images/{imageId}":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Display the configuration of the specified image",
+                "description":"Display the details of the gold image associated to the given image name.",
+                "operationId":"getImageByName",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/imageNamePathParam"
+                    },
+                    {
+                        "name":"dbtemplate",
+                        "in":"query",
+                        "required":false,
+                        "type":"boolean",
+                        "default":false,
+                        "description":"Displays template file names in the default template directory."
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleImageResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"images-{imageId}-get",
+                "x-filename-id":"images-imageid-get"
+            },
+            "delete":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Deletes the specified image name",
+                "description":"Delete the gold image represented by the given image name.",
+                "operationId":"deleteImageByName",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/imageNamePathParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okDeleteImageResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"images-{imageId}-delete",
+                "x-filename-id":"images-imageid-delete"
+            }
+        },
+        "/jobs":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Operation Results"
+                ],
+                "summary":"Get all the jobs",
+                "description":"Returns a list of all the jobs available in the server.",
+                "operationId":"listAllJobs",
+                "parameters":[
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okArrayOfItemsResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"jobs-get",
+                "x-filename-id":"jobs-get"
+            }
+        },
+        "/jobs/{jobId}":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Operation Results"
+                ],
+                "summary":"Get job details",
+                "description":"Return the configuration of the Job resource associated to the given job Id.",
+                "operationId":"getJobById",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/jobIdPathParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleJobResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"jobs-{jobId}-get",
+                "x-filename-id":"jobs-jobid-get"
+            }
+        },
+        "/jobs/{jobId}/output":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Operation Results"
+                ],
+                "summary":"Get the job output and result",
+                "description":"Gets the job output presenting the job result and progress, which can be paginated using the limit and offset parameters.",
+                "operationId":"getJobOutput",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/jobIdPathParam"
+                    },
+                    {
+                        "name":"limit",
+                        "in":"query",
+                        "required":false,
+                        "type":"integer",
+                        "default":0,
+                        "description":"The number of lines from the job result to be included in the job output resource."
+                    },
+                    {
+                        "name":"offset",
+                        "in":"query",
+                        "required":false,
+                        "type":"integer",
+                        "default":0,
+                        "description":"The identifier of the first line on the job result to be included in the job output resource."
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleJobOutputResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"jobs-{jobId}-output-get",
+                "x-filename-id":"jobs-jobid-output-get"
+            }
+        },
+        "/series":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Get all the series",
+                "description":"Returns a list of series names available in the server.",
+                "operationId":"getAllSeries",
+                "parameters":[
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okArrayOfItemsResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-get",
+                "x-filename-id":"series-get"
+            }
+        },
+        "/series/search":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Search series matching certain parameters",
+                "description":"Returns a list of the series that matches either the image or the server provided.",
+                "operationId":"searchSeries",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/imageNameQueryParam"
+                    },
+                    {
+                        "$ref":"#/parameters/serverNameQueryParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okArrayOfItemsResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-search-get",
+                "x-filename-id":"series-search-get"
+            }
+        },
+        "/series/{seriesId}":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Get image series",
+                "description":"Return the series resource details of the seris associated to the given series Id and server",
+                "operationId":"getSeriesById",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/seriesIdPathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/serverNameQueryParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleSeriesResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-{seriesId}-get",
+                "x-filename-id":"series-seriesid-get"
+            },
+            "post":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Add a new image series",
+                "description":"Creates a new series resource with the given name in the seriesId parameter.",
+                "operationId":"addSeries",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/seriesIdPathParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":false,
+                        "schema":{
+                            "$ref":"#/definitions/AddSeriesBody"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleSeriesResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-{seriesId}-post",
+                "x-filename-id":"series-seriesid-post"
+            },
+            "delete":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Delete image series",
+                "description":"Delete the image series from the server, but leave all the images intact.",
+                "operationId":"deleteSeriesById",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/seriesIdPathParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":false,
+                        "schema":{
+                            "$ref":"#/definitions/DeleteSeriesBody"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okDeleteSeriesResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-{seriesId}-delete",
+                "x-filename-id":"series-seriesid-delete"
+            }
+        },
+        "/series/{seriesId}/images/{imageId}":{
+            "post":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Add image to series",
+                "description":"Add an existing image to an existing series.",
+                "operationId":"insertImageIntoSeries",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/seriesIdPathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/imageNamePathParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":false,
+                        "schema":{
+                            "$ref":"#/definitions/InsertImageSeriesBody"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleSeriesResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-{seriesId}-images-{imageId}-post",
+                "x-filename-id":"series-seriesid-images-imageid-post"
+            },
+            "delete":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Remove image from series",
+                "description":"Removes an existing image from an existing series.",
+                "operationId":"deleteImageFromSeries",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/seriesIdPathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/imageNamePathParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleSeriesResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-{seriesId}-images-{imageId}-delete",
+                "x-filename-id":"series-seriesid-images-imageid-delete"
+            }
+        },
+        "/series/{seriesId}/users/{userId}":{
+            "post":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Subscribe a user to a series",
+                "description":"Add an existing user to the subscribed users list for an existing series.",
+                "operationId":"subscribeUserToSeries",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/seriesIdPathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/osUserNamePathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/subscribeUserSeriesBodyParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleSeriesResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-{seriesId}-users-{userId}-post",
+                "x-filename-id":"series-seriesid-users-userid-post"
+            },
+            "delete":{
+                "tags":[
+                    "Rapid Home Provisioning/Manage Gold Images"
+                ],
+                "summary":"Unsubscribe a user from a series",
+                "description":"Removes an existing user from the subscribed users list for an existing series.",
+                "operationId":"unsubscribeUserFromSeries",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/seriesIdPathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/osUserNamePathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/subscribeUserSeriesBodyParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleSeriesResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"series-{seriesId}-users-{userId}-delete",
+                "x-filename-id":"series-seriesid-users-userid-delete"
+            }
+        },
+        "/workingcopies":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Provisioning Software homes"
+                ],
+                "summary":"Get all working copies",
+                "description":"Returns a list of names working copies available on the server.",
+                "operationId":"getAllWorkingcopies",
+                "parameters":[
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okArrayOfItemsResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-get",
+                "x-filename-id":"workingcopies-get"
+            },
+            "post":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Provisioning Software homes"
+                ],
+                "summary":"Create working copy",
+                "description":"Creates a new working copy using an existing gold image",
+                "operationId":"addWorkingcopy",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/AddWorkingCopyBody"
+                        }
+                    },
+                    {
+                        "$ref":"#/parameters/authorizationHeader"
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-post",
+                "x-filename-id":"workingcopies-post"
+            }
+        },
+        "/workingcopies/imagetypes/{imageType}":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Provisioning Software homes"
+                ],
+                "summary":"Get working copies based on a certain image type",
+                "description":"Return the list of working copies based on a given golden image.",
+                "operationId":"listWorkingCopiesByImageType",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/imageTypePathParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okArrayOfItemsResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-imagetypes-{imageType}-get",
+                "x-filename-id":"workingcopies-imagetypes-imagetype-get"
+            }
+        },
+        "/workingcopies/search":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Provisioning Software homes"
+                ],
+                "summary":"Search working copies",
+                "description":"that matches the given parameters.",
+                "operationId":"searchWorkingcopies",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/clientQueryParam"
+                    },
+                    {
+                        "$ref":"#/parameters/imageNameQueryParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okArrayOfItemsResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-search-get",
+                "x-filename-id":"workingcopies-search-get"
+            }
+        },
+        "/workingcopies/{workingCopyId}":{
+            "get":{
+                "tags":[
+                    "Rapid Home Provisioning/Provisioning Software homes"
+                ],
+                "summary":"Get working copy details",
+                "description":"Return the working copy configuration.",
+                "operationId":"getWorkingcopyByName",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/workingcopyIdPathParam"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/responses/okSingleWorkingcopyResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-{workingCopyId}-get",
+                "x-filename-id":"workingcopies-workingcopyid-get"
+            }
+        },
+        "/workingcopies/{workingCopyId}/databases":{
+            "post":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Provisioning Software homes"
+                ],
+                "summary":"Create Oracle Database Software",
+                "description":"Provision a new Oracle Database on a managed working copy.",
+                "operationId":"addDatabaseManagedWC",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/workingcopyIdPathParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/AddDatabaseBody"
+                        }
+                    },
+                    {
+                        "$ref":"#/parameters/authorizationHeader"
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-{workingCopyId}-databases-post",
+                "x-filename-id":"workingcopies-workingcopyid-databases-post"
+            },
+            "patch":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Patch Software homes"
+                ],
+                "summary":"Patch an Oracle Database Software home",
+                "description":"Moves a database from a source working copy to a patched working copy.",
+                "operationId":"moveDatabaseManagedWC",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/workingcopyIdPathParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/MoveDatabaseBody"
+                        }
+                    },
+                    {
+                        "$ref":"#/parameters/authorizationHeader"
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-{workingCopyId}-databases-patch",
+                "x-filename-id":"workingcopies-workingcopyid-databases-patch"
+            }
+        },
+        "/workingcopies/{workingCopyId}/databases/{dbUniqueName}":{
+            "put":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Upgrade Software homes"
+                ],
+                "summary":"Upgrade an Oracle Database Software home",
+                "description":"Upgrade a database from a source working copy to a patched working copy.",
+                "operationId":"upgradeDatabaseManagedWC",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/workingcopyIdPathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/dbUNamePathParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":false,
+                        "schema":{
+                            "$ref":"#/definitions/UpgradeDatabaseBody"
+                        }
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-{workingCopyId}-databases-{dbUniqueName}-put",
+                "x-filename-id":"workingcopies-workingcopyid-databases-dbuniquename-put"
+            }
+        },
+        "/workingcopies/{workingCopyId}/gihome/{destWcId}":{
+            "put":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Upgrade Software homes"
+                ],
+                "summary":"Upgrade Grid Infrastructure Software home",
+                "description":"Upgrades the Oracle Grid Infrastructure from the source working copy to the destination working copy.",
+                "operationId":"upgradeGihomeManagedWC",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/workingcopyIdPathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/destWcIdPatParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":false,
+                        "schema":{
+                            "$ref":"#/definitions/UpgradeGihomeBody"
+                        }
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-{workingCopyId}-gihome-{destWcId}-put",
+                "x-filename-id":"workingcopies-workingcopyid-gihome-destwcid-put"
+            },
+            "patch":{
+                "security":[
+                    {
+                        "basicAuthentication":[
+                        ]
+                    }
+                ],
+                "tags":[
+                    "Rapid Home Provisioning/Patch Software homes"
+                ],
+                "summary":"Patch Grid Infrastructure Software home",
+                "description":"Moves the Oracle Grid Infrastructure from the source working copy to the destination working copy.",
+                "operationId":"moveGihomeManagedWC",
+                "parameters":[
+                    {
+                        "$ref":"#/parameters/workingcopyIdPathParam"
+                    },
+                    {
+                        "$ref":"#/parameters/destWcIdPatParam"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "required":true,
+                        "schema":{
+                            "$ref":"#/definitions/MoveGihomeBody"
+                        }
+                    }
+                ],
+                "responses":{
+                    "202":{
+                        "$ref":"#/responses/jobAccepted202Response"
+                    },
+                    "400":{
+                        "$ref":"#/responses/badRequestResponse"
+                    },
+                    "default":{
+                        "$ref":"#/responses/errorResponse"
+                    }
+                },
+                "x-internal-id":"workingcopies-{workingCopyId}-gihome-{destWcId}-patch",
+                "x-filename-id":"workingcopies-workingcopyid-gihome-destwcid-patch"
+            }
+        }
+    },
+    "definitions":{
+        "UpgradeGihomeBody":{
+            "type":"object",
+            "properties":{
+                "sourcewc":{
+                    "type":"string",
+                    "description":"Name of the source working copy from which the Oracle Grid Infrastructure needs to be upgraded."
+                },
+                "destwc":{
+                    "type":"string",
+                    "description":"Name of the destination working copy to which the Oracle Grid Infrastructure needs to be upgraded."
+                },
+                "image":{
+                    "type":"string",
+                    "description":"Image name from the configured images."
+                },
+                "targetnode":{
+                    "type":"string",
+                    "description":"Name of a node in a remote cluster with no Rapid Home Provisioning Client."
+                },
+                "sourcehome":{
+                    "type":"string",
+                    "description":"Source Oracle home path."
+                },
+                "ignoreprereq":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"To ignore the CVU pre-requisite checks."
+                },
+                "path":{
+                    "type":"string",
+                    "description":"The absolute path for the destination working copy."
+                },
+                "root":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Use root credentials to access the remote node."
+                },
+                "sudoUser":{
+                    "type":"string",
+                    "description":"perform super user operations as sudo user name."
+                },
+                "sudoPath":{
+                    "type":"string",
+                    "description":"location of sudo binary."
+                },
+                "superUserPasswd":{
+                    "type":"string",
+                    "description":"The password for the super user account."
+                },
+                "authArgs":{
+                    "type":"object",
+                    "description":"Additional properties for the selected authentication plugin.",
+                    "additionalProperties":{
+                        "type":"string"
+                    }
+                },
+                "auth":{
+                    "type":"string",
+                    "description":"Use an authentication plugin to access the remote node."
+                },
+                "eval":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Evaluate without executing the command."
+                },
+                "schedule":{
+                    "type":"string",
+                    "description":"Preferred time to execute the operation, in ISO-8601 format. For example: 2016-12-21T19:13:17+05."
+                }
+            }
+        },
+        "AddDatabaseBody":{
+            "type":"object",
+            "properties":{
+                "pqpool":{
+                    "type":"string",
+                    "description":"Existing PQ pool name"
+                },
+                "newpqpool":{
+                    "type":"string",
+                    "description":"Server pool name for pool to be created"
+                },
+                "pqcardinality":{
+                    "type":"string",
+                    "description":"Cardinality for new PQ pool"
+                },
+                "dbtemplate":{
+                    "type":"string",
+                    "description":"Absolute file path for the template file or relative path to the image home directory on Rapid Home Provisioning Server"
+                },
+                "targetnode":{
+                    "type":"string",
+                    "description":"Node on which operation needs to be executed"
+                },
+                "datafileDestination":{
+                    "type":"string",
+                    "description":"Data file destination location or ASM disk group name"
+                },
+                "numberOfPDBs":{
+                    "type":"integer",
+                    "format":"int32",
+                    "description":"Number of PDBs to be created"
+                },
+                "pdbName":{
+                    "type":"string",
+                    "description":"The pdbName prefix if one or more PDBs need to be created"
+                },
+                "cdb":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"To create database as container database"
+                },
+                "dbtype":{
+                    "type":"string",
+                    "enum":[
+                        "RAC",
+                        "RACONENODE",
+                        "SINGLE"
+                    ],
+                    "description":"Type of database: Oracle RAC One Node or Oracle RAC or Single Instance"
+                },
+                "useractiondata":{
+                    "type":"string",
+                    "description":"Value to be passed to useractiondata parameter of useraction script"
+                },
+                "root":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Use root credentials to access the remote node."
+                },
+                "sudoUser":{
+                    "type":"string",
+                    "description":"perform super user operations as sudo user name."
+                },
+                "sudoPath":{
+                    "type":"string",
+                    "description":"location of sudo binary."
+                },
+                "superUserPasswd":{
+                    "type":"string",
+                    "description":"The password for the super user account."
+                },
+                "authArgs":{
+                    "type":"object",
+                    "description":"Additional properties for the selected authentication plugin.",
+                    "additionalProperties":{
+                        "type":"string"
+                    }
+                },
+                "auth":{
+                    "type":"string",
+                    "description":"Use an authentication plugin to access the remote node."
+                },
+                "eval":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Evaluate without executing the command."
+                },
+                "schedule":{
+                    "type":"string",
+                    "description":"Preferred time to execute the operation, in ISO-8601 format. For example: 2016-12-21T19:13:17+05."
+                }
+            }
+        },
+        "ImportImageBody":{
+            "type":"object",
+            "properties":{
+                "imageName":{
+                    "type":"string",
+                    "description":"Name of the image."
+                },
+                "client":{
+                    "type":"string",
+                    "description":"Client cluster name."
+                },
+                "imageType":{
+                    "type":"string",
+                    "description":"The software type. (\"ORACLEDBSOFTWARE\" (default) for Oracle database software, \"ORACLEGISOFTWARE\" for Oracle Grid Infrastructure software, ORACLEGGSOFTWARE for Oracle GoldenGate software, \"LINUXOS\" for linux Opearting System ISO, and \"SOFTWARE\" for all other software. For a custom image type, use the image type name.)"
+                },
+                "schedule":{
+                    "type":"string",
+                    "description":"Preferred time to execute the operation, in ISO-8601 format. For example: 2016-12-21T19:13:17+05."
+                },
+                "targetnode":{
+                    "type":"string",
+                    "description":"Node on which operation needs to be executed."
+                },
+                "useractiondata":{
+                    "type":"string",
+                    "description":"Value to be passed to useractiondata parameter of useraction script."
+                },
+                "pathOwner":{
+                    "type":"string",
+                    "description":"User with read access to files under the specified path."
+                },
+                "zip":{
+                    "type":"string",
+                    "description":"Absolute path of the compressed software home to be imported (a ZIP or TAR file)."
+                },
+                "version":{
+                    "type":"string",
+                    "description":"Oracle database version for GIAAS, ODA patchbundle version for ODAPATCHSOFTWARE."
+                },
+                "state":{
+                    "type":"string",
+                    "description":"State name.",
+                    "enum":[
+                        "TESTABLE",
+                        "RESTRICTED",
+                        "PUBLISHED"
+                    ]
+                },
+                "path":{
+                    "type":"string",
+                    "description":"Absolute path location of the software home to be imported (For database images, this will be the ORACLE_HOME)."
+                },
+                "root":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Use root credentials to access the remote node."
+                },
+                "sudoUser":{
+                    "type":"string",
+                    "description":"perform super user operations as sudo user name."
+                },
+                "sudoPath":{
+                    "type":"string",
+                    "description":"location of sudo binary."
+                },
+                "superUserPasswd":{
+                    "type":"string",
+                    "description":"The password for the super user account."
+                },
+                "authArgs":{
+                    "type":"object",
+                    "description":"Additional properties for the selected authentication plugin.",
+                    "additionalProperties":{
+                        "type":"string"
+                    }
+                },
+                "auth":{
+                    "type":"string",
+                    "description":"Use an authentication plugin to access the remote node."
+                },
+                "host":{
+                    "type":"string",
+                    "description":"GIAAS host name."
+                },
+                "cc":{
+                    "type":"string",
+                    "description":"List of users to whom email notifications will be sent, in addition to owner of working copy."
+                },
+                "notify":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Send email notification."
+                },
+                "psu":{
+                    "type":"string",
+                    "description":"Bug number or downloaded zip location or released PSU/BP."
+                },
+                "patches":{
+                    "type":"string",
+                    "description":"Comma separated bug numbers or NFS downloaded zip location or combination of both."
+                },
+                "port":{
+                    "type":"string",
+                    "description":"Port number in the range of 1024-65536."
+                }
+            }
+        },
+        "AddWorkingCopyBody":{
+            "type":"object",
+            "properties":{
+                "client":{
+                    "type":"string",
+                    "description":"Client cluster name"
+                },
+                "targetnode":{
+                    "type":"string",
+                    "description":"Node on which operation needs to be executed"
+                },
+                "setupSSH":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"sets up passwordless SSH user equivalence on the remote nodes for the provisioning user."
+                },
+                "node":{
+                    "type":"string",
+                    "description":"Comma-separated list of nodes on which database will be created"
+                },
+                "root":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Use root credentials to access the remote node."
+                },
+                "sudoUser":{
+                    "type":"string",
+                    "description":"perform super user operations as sudo user name."
+                },
+                "sudoPath":{
+                    "type":"string",
+                    "description":"location of sudo binary."
+                },
+                "superUserPasswd":{
+                    "type":"string",
+                    "description":"The password for the super user account."
+                },
+                "authArgs":{
+                    "type":"object",
+                    "description":"Additional properties for the selected authentication plugin.",
+                    "additionalProperties":{
+                        "type":"string"
+                    }
+                },
+                "auth":{
+                    "type":"string",
+                    "description":"Use an authentication plugin to access the remote node."
+                },
+                "eval":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Evaluate without executing the command."
+                },
+                "schedule":{
+                    "type":"string",
+                    "description":"Preferred time to execute the operation, in ISO-8601 format. For example: 2016-12-21T19:13:17+05."
+                },
+                "user":{
+                    "type":"string",
+                    "description":"Name of the user for whom the software home is being provisioned."
+                },
+                "clusterNodes":{
+                    "type":"string",
+                    "description":"Comma-separated list of node information on which Oracle Clusterware will be provisioned."
+                },
+                "isfixup":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Execute fixup script. Valid only for Grid Infrastructure provisioning."
+                },
+                "asmClientData":{
+                    "type":"string",
+                    "description":"File that contains the ASM client data."
+                },
+                "gnsClientData":{
+                    "type":"string",
+                    "description":"File that contains the GNS client data."
+                },
+                "clusterManifest":{
+                    "type":"string",
+                    "description":"Location of Cluster Manifest File."
+                },
+                "oracleBase":{
+                    "type":"string",
+                    "description":"ORACLE_BASE path for provisioning Oracle database home or Oracle Grid Infrastructure home."
+                },
+                "agpath":{
+                    "type":"string",
+                    "description":"Read/write path for the persistent Oracle home path."
+                },
+                "aupath":{
+                    "type":"string",
+                    "description":"Read-only gold image path for the persistent Oracle home path."
+                },
+                "ignorePrereq":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"To ignore the CVU pre-requisite checks."
+                },
+                "path":{
+                    "type":"string",
+                    "description":"Absolute path location of the software home to be imported (For database images, this will be the ORACLE_HOME)."
+                },
+                "dbtemplate":{
+                    "type":"string",
+                    "description":"Absolute file path for the template file or relative path to the image home directory on Rapid Home Provisioning Server."
+                },
+                "dbname":{
+                    "type":"string",
+                    "description":"Name of database (DB_UNIQUE_NAME) to be provisioned."
+                },
+                "cardinality":{
+                    "type":"string",
+                    "description":"Cardinality for new server pool."
+                },
+                "storagetype":{
+                    "type":"string",
+                    "description":"Type of storage for the home.",
+                    "enum":[
+                        "NFS",
+                        "LOCAL",
+                        "RHP_MANAGED"
+                    ]
+                },
+                "datafileDestination":{
+                    "type":"string",
+                    "description":"Data file destination location or ASM disk group name."
+                },
+                "serverpool":{
+                    "type":"string",
+                    "description":"Comma-separated list of existing server pool names."
+                },
+                "numberOfPDBs":{
+                    "type":"integer",
+                    "format":"int32",
+                    "description":"Number of PDBs to be created."
+                },
+                "newpool":{
+                    "type":"string",
+                    "description":"Server pool name for pool to be created."
+                },
+                "pdbName":{
+                    "type":"string",
+                    "description":"The pdbName prefix if one or more PDBs need to be created."
+                },
+                "cdb":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"To create database as container database."
+                },
+                "dbtype":{
+                    "type":"string",
+                    "enum":[
+                        "RAC",
+                        "RACONENODE",
+                        "SINGLE"
+                    ],
+                    "description":"Type of database: Oracle RAC One Node or Oracle RAC or Single Instance."
+                }
+            }
+        },
+        "UpgradeDatabaseBody":{
+            "type":"object",
+            "properties":{
+                "sourcewc":{
+                    "type":"string",
+                    "description":"Name of the source working copy from which the Oracle Grid Infrastructure needs to be upgraded."
+                },
+                "image":{
+                    "type":"string",
+                    "description":"Name of the image."
+                },
+                "client":{
+                    "type":"string",
+                    "description":"Client cluster name"
+                },
+                "targetnode":{
+                    "type":"string",
+                    "description":"Node on which operation needs to be executed"
+                },
+                "sourcehome":{
+                    "type":"string",
+                    "description":"Source Oracle home path."
+                },
+                "ignoreprereq":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"To ignore the CVU pre-requisite checks."
+                },
+                "path":{
+                    "type":"string",
+                    "description":"Absolute path location of the software home to be imported (For database images, this will be the ORACLE_HOME)."
+                },
+                "root":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Use root credentials to access the remote node."
+                },
+                "sudoUser":{
+                    "type":"string",
+                    "description":"perform super user operations as sudo user name."
+                },
+                "sudoPath":{
+                    "type":"string",
+                    "description":"location of sudo binary."
+                },
+                "superUserPasswd":{
+                    "type":"string",
+                    "description":"The password for the super user account."
+                },
+                "authArgs":{
+                    "type":"object",
+                    "description":"Additional properties for the selected authentication plugin.",
+                    "additionalProperties":{
+                        "type":"string"
+                    }
+                },
+                "auth":{
+                    "type":"string",
+                    "description":"Use an authentication plugin to access the remote node."
+                },
+                "eval":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Evaluate without executing the command."
+                },
+                "schedule":{
+                    "type":"string",
+                    "description":"Preferred time to execute the operation, in ISO-8601 format. For example: 2016-12-21T19:13:17+05."
+                }
+            }
+        },
+        "AddSeriesBody":{
+            "type":"object",
+            "properties":{
+                "imageName":{
+                    "type":"string",
+                    "description":"Name of the image."
+                }
+            }
+        },
+        "MoveDatabaseBody":{
+            "type":"object",
+            "properties":{
+                "dbname":{
+                    "type":"string",
+                    "description":"Name of database (DB_UNIQUE_NAME) to be provisioned."
+                },
+                "agpath":{
+                    "type":"string",
+                    "description":"Read/write path for the persistent Oracle home path."
+                },
+                "aupath":{
+                    "type":"string",
+                    "description":"Read-only gold image path for the persistent Oracle home path."
+                },
+                "cc":{
+                    "type":"string",
+                    "description":"List of users to whom email notifications will be sent, in addition to owner of working copy."
+                },
+                "ignorewcpatches":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Ignores if the patched working copy is missing some patches which are present in the source path or working copy."
+                },
+                "notify":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Send email notification."
+                },
+                "noDataPatch":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Indicates that \"datapatch\" should not be executed for databases being moved."
+                },
+                "useractiondata":{
+                    "type":"string",
+                    "description":"Value to be passed to useractiondata parameter of useraction script"
+                },
+                "root":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Use root credentials to access the remote node."
+                },
+                "sudoUser":{
+                    "type":"string",
+                    "description":"perform super user operations as sudo user name."
+                },
+                "sudoPath":{
+                    "type":"string",
+                    "description":"location of sudo binary."
+                },
+                "superUserPasswd":{
+                    "type":"string",
+                    "description":"The password for the super user account."
+                },
+                "authArgs":{
+                    "type":"object",
+                    "description":"Additional properties for the selected authentication plugin.",
+                    "additionalProperties":{
+                        "type":"string"
+                    }
+                },
+                "auth":{
+                    "type":"string",
+                    "description":"Use an authentication plugin to access the remote node."
+                },
+                "eval":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Evaluate without executing the command."
+                },
+                "schedule":{
+                    "type":"string",
+                    "description":"Preferred time to execute the operation, in ISO-8601 format. For example: 2016-12-21T19:13:17+05."
+                },
+                "abort":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Abort the ongoing \"move\" operation."
+                },
+                "drain_timeout":{
+                    "type":"integer",
+                    "format":"int32",
+                    "description":"Service drain timeout specified in seconds."
+                },
+                "skip":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Skip current batch of nodes and restart databases on the next batch of nodes."
+                },
+                "stopoption":{
+                    "type":"string",
+                    "description":"Stop option for database: ABORT, IMMEDIATE, NORMAL, TRANSACTIONAL, TRANSACTIONAL_LOCAL.",
+                    "enum":[
+                        "ABORT",
+                        "IMMEDIATE",
+                        "NORMAL",
+                        "TRANSACTIONAL",
+                        "TRANSACTIONAL_LOCAL"
+                    ]
+                },
+                "continueRestart":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Continue restarting databases on the next batch of nodes."
+                },
+                "disconnect":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Disconnect all sessions before stopping or relocating services."
+                },
+                "keepplacement":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Ensure that services of administrator-managed Oracle RAC or Oracle RAC One databases are running on the same instances before and after the move operation."
+                },
+                "revert":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Revert to source Oracle home or working copy in case of batch-move or smartmove."
+                },
+                "noreplay":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Disable session replay during disconnection."
+                },
+                "path":{
+                    "type":"string"
+                },
+                "targetnode":{
+                    "type":"string",
+                    "description":"Node on which operation needs to be executed"
+                },
+                "separate":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Process batches separately. Move operation pauses for user intervention before continuing with the next batch."
+                },
+                "saf":{
+                    "type":"string",
+                    "description":"Service availability factor, the minimum percentage of instances on which a service must remain running during the move."
+                },
+                "client":{
+                    "type":"string",
+                    "description":"Client cluster name"
+                },
+                "oraclebase":{
+                    "type":"string",
+                    "description":"ORACLE_BASE path for provisioning Oracle database home or Oracle Grid Infrastructure home."
+                }
+            }
+        },
+        "MoveGihomeBody":{
+            "type":"object",
+            "properties":{
+                "image":{
+                    "type":"string",
+                    "description":"Name of the image."
+                },
+                "targetnode":{
+                    "type":"string",
+                    "description":"Node on which operation needs to be executed"
+                },
+                "agpath":{
+                    "type":"string",
+                    "description":"Read/write path for the persistent Oracle home path."
+                },
+                "aupath":{
+                    "type":"string",
+                    "description":"Read-only gold image path for the persistent Oracle home path."
+                },
+                "ignorewcpatches":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Ignores if the patched working copy is missing some patches which are present in the source path or working copy."
+                },
+                "abort":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Abort the ongoing \"move\" operation."
+                },
+                "saf":{
+                    "type":"string",
+                    "description":"Service availability factor, the minimum percentage of instances on which a service must remain running during the move."
+                },
+                "batches":{
+                    "type":"string",
+                    "description":"List of batches of nodes in the format: \"(Ba),...,(Bz)\"."
+                },
+                "nonrolling":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Move the Oracle home in non-rolling mode."
+                },
+                "smartmove":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Auto-generate the list of batches of nodes and move databases by restarting instances batch after batch."
+                },
+                "firstnode":{
+                    "type":"string",
+                    "description":"Deprecated."
+                },
+                "excludedblist":{
+                    "type":"string",
+                    "description":"Patch all databases except the specified databases."
+                },
+                "cleanpids":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Cleans up processes during Oracle Grid Infrastructure move operation."
+                },
+                "continue":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Continue restarting CRS stack on the next batch of nodes."
+                },
+                "useractiondata":{
+                    "type":"string",
+                    "description":"Value to be passed to useractiondata parameter of useraction script."
+                },
+                "draintimeout":{
+                    "type":"integer",
+                    "format":"int32",
+                    "description":"Service drain timeout specified in seconds."
+                },
+                "nodatapatch":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Indicates that \"datapatch\" should not be executed for databases being moved."
+                },
+                "dbhomes":{
+                    "type":"string",
+                    "description":"Mapping of source and destination working copies in the format: \"<source_wc1>=<dest_wc1>,...,<source_oracle_home_path>=<dest_wcN>\"."
+                },
+                "auto":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Automatically patch databases along with patching Grid Infrastructure."
+                },
+                "dblist":{
+                    "type":"string",
+                    "description":"Patch only the specified databases."
+                },
+                "disconnect":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Disconnect all sessions before stopping or relocating services."
+                },
+                "keepplacement":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Ensure that services of administrator-managed Oracle RAC or Oracle RAC One databases are running on the same instances before and after the move operation."
+                },
+                "revert":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Revert to source Oracle home or working copy in case of batch-move or smartmove."
+                },
+                "path":{
+                    "type":"string",
+                    "description":"The absolute path for the destination working copy."
+                },
+                "root":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Use root credentials to access the remote node."
+                },
+                "sudoUser":{
+                    "type":"string",
+                    "description":"Perform super user operations as sudo user name."
+                },
+                "sudoPath":{
+                    "type":"string",
+                    "description":"Location of sudo binary."
+                },
+                "superUserPasswd":{
+                    "type":"string",
+                    "description":"The password for the super user account."
+                },
+                "authArgs":{
+                    "type":"object",
+                    "description":"Additional properties for the selected authentication plugin.",
+                    "additionalProperties":{
+                        "type":"string"
+                    }
+                },
+                "auth":{
+                    "type":"string",
+                    "description":"Use an authentication plugin to access the remote node."
+                },
+                "eval":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"Evaluate without executing the command."
+                },
+                "schedule":{
+                    "type":"string",
+                    "description":"Preferred time to execute the operation, in ISO-8601 format. For example: 2016-12-21T19:13:17+05."
+                }
+            }
+        },
+        "InsertImageSeriesBody":{
+            "type":"object",
+            "properties":{
+                "before":{
+                    "type":"string",
+                    "description":"Name of the image before which new image will inserted."
+                }
+            }
+        },
+        "DeleteSeriesBody":{
+            "type":"object",
+            "properties":{
+                "force":{
+                    "type":"boolean",
+                    "default":false,
+                    "description":"To remove forcibily."
+                }
+            }
+        },
+        "SubscribeSeriesBody":{
+            "type":"object",
+            "properties":{
+                "client":{
+                    "type":"string",
+                    "description":"Client cluster name"
+                }
+            }
+        },
+        "errorResource":{
+            "type":"object",
+            "properties":{
+                "status":{
+                    "type":"integer",
+                    "description":"HTTP status code."
+                },
+                "type":{
+                    "type":"string",
+                    "description":"Link to HTTP error code page."
+                },
+                "title":{
+                    "type":"string",
+                    "description":"Summary error message."
+                },
+                "instance":{
+                    "type":"string",
+                    "description":"URI to the link that provides more detail about the error."
+                },
+                "errorDetails":{
+                    "type":"array",
+                    "description":"If multiple errors are reported they can be organized in a hierarchical structure in this array.",
+                    "items":[
+                        {
+                            "$ref":"#/definitions/errorResource"
+                        }
+                    ]
+                },
+                "errorPath":{
+                    "type":"string",
+                    "description":"XPath or JSON path to indicate where the error occurs."
+                },
+                "errorCode":{
+                    "type":"string",
+                    "description":"Application specific error code, related to the error message shown at tittle."
+                }
+            }
+        },
+        "jobResource":{
+            "type":"object",
+            "properties":{
+                "jobId":{
+                    "type":"string"
+                },
+                "status":{
+                    "type":"string"
+                },
+                "operation":{
+                    "type":"string"
+                },
+                "output":{
+                    "$ref":"#/definitions/jobOutputResource"
+                },
+                "links":{
+                    "type":"array",
+                    "items":{
+                        "$ref":"#/definitions/singleResourceLinks"
+                    }
+                }
+            }
+        },
+        "jobOutputResource":{
+            "type":"object",
+            "properties":{
+                "output":{
+                    "type":"string"
+                },
+                "limit":{
+                    "type":"integer"
+                },
+                "offset":{
+                    "type":"integer"
+                },
+                "hasMore":{
+                    "type":"boolean",
+                    "default":false
+                },
+                "links":{
+                    "type":"array",
+                    "items":{
+                        "$ref":"#/definitions/collectionResourceLinks"
+                    }
+                }
+            }
+        },
+        "workingcopyResource":{
+            "type":"object",
+            "properties":{
+                "accessControl":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "additionalBugFixesNotInImage":{
+                    "type":"string"
+                },
+                "additionalPatchesComparedToImage":{
+                    "type":"string"
+                },
+                "allPatchesAvailableInHome":{
+                    "type":"string"
+                },
+                "clusterClient":{
+                    "type":"string"
+                },
+                "clusterClass":{
+                    "type":"string"
+                },
+                "clusterName":{
+                    "type":"string"
+                },
+                "clusterNodes":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "clusterType":{
+                    "type":"string"
+                },
+                "complete":{
+                    "type":"boolean",
+                    "default":false
+                },
+                "configuredDatabases":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "goldImagePath":{
+                    "type":"string"
+                },
+                "groupsConfiguredInWorkingCopy":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "imageName":{
+                    "type":"string"
+                },
+                "imageTypeName":{
+                    "type":"string"
+                },
+                "oracleBase":{
+                    "type":"string"
+                },
+                "owner":{
+                    "type":"string"
+                },
+                "softwareHomePath":{
+                    "type":"string"
+                },
+                "storageType":{
+                    "type":"string"
+                },
+                "workingCopyId":{
+                    "type":"string"
+                },
+                "workPath":{
+                    "type":"string"
+                },
+                "softwareOnly":{
+                    "type":"boolean",
+                    "default":false
+                },
+                "clusterMode":{
+                    "type":"string"
+                },
+                "links":{
+                    "type":"array",
+                    "items":{
+                        "$ref":"#/definitions/singleResourceLinks"
+                    }
+                }
+            }
+        },
+        "imageResource":{
+            "type":"object",
+            "properties":{
+                "imageId":{
+                    "type":"string"
+                },
+                "clientName":{
+                    "type":"string"
+                },
+                "roles":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "patches":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "parentImage":{
+                    "type":"string"
+                },
+                "homePath":{
+                    "type":"string"
+                },
+                "imageState":{
+                    "type":"string"
+                },
+                "imageType":{
+                    "type":"string"
+                },
+                "imageSize":{
+                    "type":"integer"
+                },
+                "version":{
+                    "type":"string"
+                },
+                "owner":{
+                    "type":"string"
+                },
+                "complete":{
+                    "type":"boolean"
+                },
+                "platform":{
+                    "type":"string"
+                },
+                "containsNonRollingPatch":{
+                    "type":"boolean"
+                },
+                "groupsConfigured":{
+                    "type":"string"
+                },
+                "templateWithDataFiles":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "templateWithoutDataFiles":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "links":{
+                    "type":"array",
+                    "items":{
+                        "$ref":"#/definitions/singleResourceLinks"
+                    }
+                }
+            }
+        },
+        "seriesResource":{
+            "type":"object",
+            "properties":{
+                "seriesId":{
+                    "type":"string"
+                },
+                "imageNames":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "subscribedUsers":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "links":{
+                    "type":"array",
+                    "items":{
+                        "$ref":"#/definitions/singleResourceLinks"
+                    }
+                }
+            }
+        },
+        "arrayOfItems":{
+            "type":"object",
+            "properties":{
+                "items":{
+                    "type":"array",
+                    "items":{
+                        "$ref":"#/definitions/singleResource"
+                    }
+                }
+            }
+        },
+        "singleResource":{
+            "type":"object",
+            "properties":{
+                "resourceId":{
+                    "type":"string"
+                },
+                "links":{
+                    "type":"array",
+                    "items":{
+                        "$ref":"#/definitions/singleResourceLinks"
+                    }
+                }
+            }
+        },
+        "singleResourceLinks":{
+            "type":"object",
+            "properties":{
+                "rel":{
+                    "type":"string",
+                    "description":"Specify the type of relationship the link has with the described resource.",
+                    "enum":[
+                        "self",
+                        "collection",
+                        "up",
+                        "describedBy"
+                    ]
+                },
+                "href":{
+                    "type":"string",
+                    "description":"The referenced hyperlink element provided in an absolute format."
+                }
+            }
+        },
+        "collectionResourceLinks":{
+            "type":"object",
+            "properties":{
+                "rel":{
+                    "type":"string",
+                    "description":"Specify the type of relationship the link has with the described resource.",
+                    "enum":[
+                        "next",
+                        "prev",
+                        "first",
+                        "last"
+                    ]
+                },
+                "href":{
+                    "type":"string",
+                    "description":"The referenced hyperlink element provided in an absolute format with the correct URL parameters."
+                }
+            }
+        }
+    }
+}

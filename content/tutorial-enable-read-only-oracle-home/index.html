@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Part number: F12726-01 -->
+    <!-- Published date: December 2018 -->
+    <!-- Template date: October 15, 2018 -->
+    <!-- Put the content ID of this OBE between the empty quotation marks for 'content' below -->
+    <meta name="contentid" content="25765">
+    <!-- The title below is displayed on the browser tab, in search results, and in  history. It can be longer than the tutorial title in the <h1> element, below.-->
+    <!-- Use an imperative verb in the title. -->
+    <title>Enable a Read-Only Oracle Home and Create a Database</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="This tutorial shows you how to enable a read-only Oracle Home and create a database.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-12-13T13:27:34+00:00">
+    <meta name="dcterms.title" content="Enable a Read-Only Oracle Home and Create a Database">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="TUTORIAL-ENABLE-READ-ONLY-ORACLE-HOME">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="F12726-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <!-- The title below is displayed as the title at the top of the OBE page. It can be shorter than the title in the <title> element, above. -->
+      <!-- Use an imperative verb in the title. -->
+      <h1><img src="img/obe_tag.png" alt="Oracle by Example branding" align="middle">Enable
+        a Read-Only Oracle Home and Create a Database</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p>This 15-minute tutorial shows you how to enable a read-only
+                Oracle home and create a database.</p>
+              <h3>Background</h3>
+              <p>In a read-only Oracle home, all the configuration data and log
+                files reside outside of the read-only Oracle home. This feature
+                allows you to use the read-only Oracle home as a software image
+                that can be distributed across multiple servers.</p>
+              <p> Apart from the traditional ORACLE_BASE and ORACLE_HOME
+                directories, the following directories contain files that used
+                to be in ORACLE_HOME: </p>
+              <ul>
+                <li>ORACLE_BASE_HOME
+                  <p> This directory contains user-specific files,
+                    instance-specific files, and log files. In a read/write
+                    ORACLE_HOME, the ORACLE_BASE_HOME path is the same as the
+                    ORACLE_HOME directory. However, in a read-only ORACLE_HOME,
+                    the ORACLE_BASE_HOME directory is located at
+                    ORACLE_BASE/homes/HOME_NAME. HOME_NAME is the internal name
+                    for ORACLE_HOME. </p>
+                </li>
+                <li>ORACLE_BASE_CONFIG
+                  <p> This directory contains configuration files. In a
+                    read/write ORACLE_HOME, the ORACLE_BASE_CONFIG path is the
+                    same as the ORACLE_HOME. However, in a read-only
+                    ORACLE_HOME, the ORACLE_BASE_CONFIG path is the same as
+                    ORACLE_BASE. </p>
+                </li>
+              </ul>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>You should have completed the following tutorial so that you
+                  have installed Oracle Database 18c:
+                  <p><a target="_blank" href="https://apexapps.oracle.com/pls/apex/f?p=44785:112:0::::P112_CONTENT_ID:25764">
+                      Perform a Software-Only Installation of Oracle Database</a></p>
+                </li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Enable
+                a Read-Only Oracle Home</h2>
+              <ol>
+                <li>Go to the <code>bin</code> directory.
+                  <pre>$ cd $ORACLE_HOME/bin</pre>
+                  <p> where <code>ORACLE_HOME</code> is the path to the Oracle
+                    home directory. For example: </p>
+                  <p> <code>/u01/app/oracle/product/18.0.0/dbhome_1</code> </p>
+                </li>
+                <li>Run the <code>roohctl</code> script.
+                  <pre>$ ./roohctl -enable </pre>
+                  <p> The following message is displayed: </p>
+                  <figure><img src="img/enable_rooh_output.jpg" alt="Description of the Enabling Read-Only Oracle Home Script Ouput">
+                    <figcaption><a target="_blank" href="files/enable_rooh_output.txt">Description
+                        of the Enabling Read-Only Oracle Home Script Output</a></figcaption>
+                  </figure>
+                </li>
+                <!-- <li>...
+                  <figure><img src="img/sample-image-1.png" alt="Description of sample-image-1.png follows">                    <figcaption><a href="files/sample-image-1.txt">Description                        of the illustration [filename]</a></figcaption> </figure>                </li> -->
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Run
+                Oracle Database Configuration Assistant</h2>
+              <ol>
+                <li>Ensure that you are still in the <code>bin</code> directory
+                  and run Oracle Database Configuration Assistant (Oracle DBCA).
+                  <pre>$ ./dbca</pre>
+                </li>
+                <li>In the Select Database Operation screen, select <b>Create a
+                    Database</b> and click <b>Next</b>.
+                  <p> The configuration screens vary depending on the options
+                    you select. Respond to the prompts as needed. Click <b>Help</b>
+                    if you have any questions about the information you are
+                    asked to submit during database creation. </p>
+                </li>
+                <li>In the Select Database Creation Mode screen, select <b>Typical
+                    configuration </b> and enter the values for the following:
+                  <p> <b>Note:</b> Typical configuration is selected for the
+                    purpose of this tutorial.&nbsp; In this configuration, you
+                    make fewer choices in the options for your database, which
+                    allows you to create your database sooner. </p>
+                  <p> <b>Global database name</b>: Enter the database name in
+                    the form <i>database_name.domain_name</i>. </p>
+                  <p> <b>Storage type</b>: Choose either <b>File System</b> or
+                    <b>Automatic Storage Management</b>. </p>
+                  <p> When you choose File System, your database files are
+                    managed by the file system of your operating system. </p>
+                  <p> When you choose Automatic Storage Management, you place
+                    your data files in Oracle Automatic Storage Management
+                    (Oracle ASM) disk groups. </p>
+                  <p> <b>Database files location</b>: The choice you make for
+                    the Storage type option determines what you specify for the
+                    Database files location option. </p>
+                  <p> When you choose File System in the Storage type field, you
+                    specify the directory path where the database files are to
+                    be stored in the Database files location field. Oracle
+                    Database can create and manage the actual files. </p>
+                  <p> When you choose Automatic Storage Management in the
+                    Storage type field, you specify the disk group to use in the
+                    Database files location field (the disk group must already
+                    exist). With Oracle ASM, Oracle Database automatically
+                    manages database file placement and naming. </p>
+                  <p> <b>Fast Recovery Area (FRA)</b>: Specify a backup and
+                    recovery area. </p>
+                  <p> <b>Database character set</b>: Choose the character set
+                    to use for the database. </p>
+                  <p> <b>Administrative password</b>: Enter the password to use
+                    for the database administrative passwords. For example: <i>Oracle_4u</i>.
+                  </p>
+                  <p> <b>Confirm password</b>: Reenter the password. For
+                    example, <i>Oracle_4u</i>. </p>
+                  <figure><img src="img/dbca_database_creation_mode.jpg" alt="Description of the Select Database Creation Mode screen">
+                    <figcaption><a target="_blank" href="files/dbca_database_creation_mode.txt">Description
+                        of the Select Database Creation Mode screen</a></figcaption>
+                  </figure>
+                </li>
+                <li>Select the <b>Create as Container database</b> option if
+                  you want to create the database as a multitenant container
+                  database (CDB) that can support zero, one, or many
+                  user-created pluggable databases (PDBs).</li>
+                <li>If you want Oracle DBCA to create a PDB when it creates the
+                  CDB, specify the PDB name in the <b>Pluggable database name</b>
+                  field. For example, pdb1. Click <b>Next</b>. </li>
+                <li>In the Summary screen, select <b>Save Response File</b> to
+                  save the response file to a directory and click <b>Next</b>.
+                  <p> You can use this response file later to create a database
+                    in a silent mode. </p>
+                </li>
+                <li>The Progress Page displays the progress of database
+                  creation.
+                  <figure><img src="img/dbca_progress_page.jpg" alt="Description of the Database Creation progress">
+                    <figcaption><a target="_blank" href="files/dbca_progress_page.txt">Description
+                        of the Database Creation progress</a></figcaption> </figure>
+                </li>
+                <li>Click <b>Close</b> to exit the Database Configuration
+                  Assistant wizard.</li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <!-- Include the Next section only in a lab series or tutorial series -->
+              <!-- Don't include this section if you plan to use the tutorials in a learning path -->
+              <h2 id="next" role="button" style="text-align: left;"><img src="img/32_next.png" alt="next step" class="num_circ" height="32" width="32">Next
+                 Tutorial</h2>
+              <p><a target="_blank" href="https://apexapps.oracle.com/pls/apex/f?p=44785:112:0::::P112_CONTENT_ID:25766">
+                  Perform an Oracle Database Examples Installation</a></p>
+            </section>
+            <hr>
+            <section>
+              <!-- Include the More Information section only in a standalone tutorial or in the final lab or tutorial in a series (not in a learning path) -->
+              <h2 id="more_info" role="button" style="text-align: left;"><img src="img/32_more.png" alt="more information" class="num_circ" height="32" width="32">Want
+                to Learn More?</h2>
+              <ul>
+                <li><a href="../admqs/toc.htm" target="_blank">Creating a Database Using DBCA </a></li>
+                <!--   <li><a href=".html" target="_blank">More information link here</a></li>
+                <li><a href=".html" target="_blank">More information link here</a></li>                <li><a href=".html" target="_blank">More information link here</a></li> -->
+              </ul>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li> <a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+    <!-- OBE Dialog Box code 5/31/2018 -->
+    <!-- DO NOT ALTER THE CODE BELOW   -->
+    <div id="lpModal" class="modal">
+      <!-- Modal hdr and body -->
+      <div id="obe_dialog" class="modal-content">
+        <div class="modal-header"> <a href="#" class="close"> <span class="close">×</span>
+          </a>
+          <h1>Associated Learning Paths</h1>
+        </div>
+        <div id="dialog-content"> </div>
+        <div id="dialog-close" class="closeBtn"> <a href="#" class="close2">
+            <p class="close2"> <span>&nbsp;&nbsp;Got It! &nbsp;</span> </p>
+          </a> </div>
+      </div>
+    </div>
+    <!-- END OBE Dialog Box code -->
+  </body>
+</html>

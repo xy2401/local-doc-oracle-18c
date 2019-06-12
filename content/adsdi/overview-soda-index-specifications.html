@@ -1,0 +1,205 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="The performance of SODA QBEs can sometimes be improved by using indexes. You define a SODA index with an index specification, which is a JSON object that specifies how particular QBE patterns are to be indexed for quicker matching.">
+      <meta name="description" content="The performance of SODA QBEs can sometimes be improved by using indexes. You define a SODA index with an index specification, which is a JSON object that specifies how particular QBE patterns are to be indexed for quicker matching.">
+      <title>Overview of SODA Indexing</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Introduction to Simple Oracle Document Access (SODA)">
+      <meta property="og:description" content="The performance of SODA QBEs can sometimes be improved by using indexes. You define a SODA index with an index specification, which is a JSON object that specifies how particular QBE patterns are to be indexed for quicker matching.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Introduction to Simple Oracle Document Access (SODA)">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="oracle-database-introduction-simple-oracle-document-access-soda.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-08T13:35:44-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E86033-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="overview-soda-filter-specifications-qbes.html" title="Previous" type="text/html">
+      <link rel="next" href="soda-paths-reference.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Oracle® Database Introduction to Simple Oracle Document Access (SODA)">
+    <meta name="dcterms.isVersionOf" content="ADSDI">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="overview-soda-filter-specifications-qbes.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="soda-paths-reference.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Introduction to Simple Oracle Document Access (SODA)</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Overview of SODA Indexing</li>
+            </ol>
+            <a id="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB" name="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB"></a>
+            
+            <h2 id="ADSDI-GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB" class="sect2"><span class="enumeration_chapter">3 </span>Overview of SODA Indexing
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>The performance of SODA QBEs can sometimes be improved by using indexes. You define a SODA index with an index specification, which is a JSON object that specifies how particular QBE patterns are to be indexed for quicker matching.</p>
+               <div class="section">
+                  <div class="infoboxnote" id="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB__TOCREATEAB-TREEINDEXYOUNEEDORACLEDA-9F62F883">
+                     <p class="notep1">Note:</p>To create a B-tree index you need Oracle Database Release 12c (12.2.0.1) or later. To create a B-tree index that indexes a <code class="codeph">DATE</code> or a <code class="codeph">TIMESTAMP</code> value you need Oracle Database Release 18c (18.1) or later.
+                  </div>
+                  <p>Suppose that you often use a query such as <code class="codeph">{"dateField" : {"$date" : <span class="codeinlineitalic">DATE-STRING</span>}}</code>, where <code class="codeph"><span class="codeinlineitalic">DATE-STRING</span></code> is a string in an ISO 8601 format supported by SODA. Here, item method <code class="codeph">$date</code> transforms <code class="codeph"><span class="codeinlineitalic">DATE-STRING</span></code> to a SQL value of data type <code class="codeph">DATE</code>. You can typically improve the performance of queries on a field such as <code class="codeph">"dateField"</code> by creating a <span class="italic">B-tree index</span> for it.
+                  </p>
+                  <p>Or suppose that you want to query spatial data in a GeoJSON geometry object. You can improve the performance of such queries by creating a SODA spatial index for that data.</p>
+                  <p>Or suppose that you want to be able to perform full-text queries using QBE operator <code class="codeph">$contains</code>. You can enable such queries by creating a <span class="italic">JSON search index</span> for your data.
+                  </p>
+                  <p>Or suppose that you want to perform metadata queries on a <span class="italic">JSON data guide</span>, which is a summary of the structural and type information about a set of JSON documents. You can create a JSON search index that holds and automatically updates such data-guide information.
+                  </p>
+                  <p>In all such cases you specify the index you want by creating a SODA <span class="italic">index specification</span> and then using it to create the specified index.
+                  </p>
+                  <p>Each SODA implementation that supports indexing provides a way to create an index. They all use a SODA <strong class="term">index specification</strong> to define the index to be created. For example, with SODA for REST you use an HTTP POST request, passing URI argument <code class="codeph">action=index</code>, and providing the index specification in the POST body.
+                  </p>
+               </div>
+               <!-- class="section" -->
+               <div class="section">
+                  <div class="infoboxnote" id="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB__GUID-53F69B94-8832-44DC-8BEE-8803E3EA44B9">
+                     <p class="notep1">Note:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>To create a B-tree index you need Oracle Database Release 12c (12.2.0.1) or later. </p>
+                           <p>To create a B-tree index that indexes a <code class="codeph">DATE</code> or a <code class="codeph">TIMESTAMP</code> value you need Oracle Database Release 18c (18.1) or later.
+                           </p>
+                        </li>
+                        <li>
+                           <p>To create a spatial index you need Oracle Database Release 12c (12.2.0.1) or later.</p>
+                        </li>
+                        <li>
+                           <p>To create a search index you need Oracle Database Release 12c (12.2.0.1) or later.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="section" -->
+               <div class="example" id="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB__SPECIFYINGAB-TREEINDEX-07E470E9">
+                  <p class="titleinexample">Example 3-1 Specifying a B-Tree Index</p>
+                  <p>This example specifies a B-tree non-unique index for numeric field <code class="codeph">address.zip</code>. 
+                  </p><pre class="pre codeblock"><code>{ "name"   : "ZIPCODE_IDX",
+  "fields" : [ { "path"     : <span class="bold">"address.zip"</span>,
+                 "datatype" : "number",
+                 "order"    : "asc" } ] }</code></pre><p>This indexes the field at path <code class="codeph">address.zip</code> in <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">Example 2-1</a> and <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT2-9D549888">Example 2-2</a>. 
+                  </p>
+                  <p><a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT3-9D549B5C">Example 2-3</a> has no such field, so that document is skipped during indexing. 
+                  </p>
+                  <p>If that index specification included <code class="codeph">scalarRequired = true</code> for the field at path <code class="codeph">address.zip</code>, and if the collection contained a document with no such field, then an error would be raised when creating the index. In addition, if such an index existed when you tried to write a document that lacks that indexed field then an error would be raised for the write operation.
+                  </p>
+                  <p>Regardless of the value of <code class="codeph">scalarRequired</code>, an error is raised if you try to write a document that has the targeted field but with a value that is not convertible to the specified data type. For example, for the index defined in <a href="overview-soda-index-specifications.html#GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB__SPECIFYINGAB-TREEINDEX-07E470E9">Example 3-1</a>, if a document contains field <code class="codeph">address.zip</code>, but the field value is not convertible to a number, then an error is raised. This would be the case, for instance, for a <code class="codeph">zip</code> field whose value is an object.
+                  </p>
+               </div>
+               <!-- class="example" -->
+               <div class="example" id="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB__SPECIFYINGASPATIALINDEX-07E47773">
+                  <p class="titleinexample">Example 3-2 Specifying a Spatial Index</p>
+                  <p>This example specifies an Oracle Spatial and Graph index named <code class="codeph">LOCATION_LONG_LAT_IDX</code>, which indexes the GeoJSON geometry object that is the value of field <code class="codeph">location</code> in your documents:
+                  </p><pre class="pre codeblock"><code>{ "name"    : "LOCATION_LONG_LAT_IDX",
+  "spatial" : "location" }</code></pre><p>This index specification applies to all documents that have a <code class="codeph">location</code> field whose value is a GeoJSON geometry object, and only to such documents. Here’s an example of an object with such a <code class="codeph">location</code> field, whose value is a geometry object of type <code class="codeph">Point</code>:
+                  </p><pre class="pre codeblock"><code>{ "location" : { "type" : "Point", "coordinates" : [ 33.7243, 118.1579 ] } }</code></pre><p>That <code class="codeph">location</code> value is indexed, because its value is a GeoJSON geometry object. 
+                  </p>
+                  <p>Because neither <code class="codeph">scalarRequired = true</code> nor <code class="codeph">lax = true</code> is specified in the index specification, a document that has <span class="italic">no</span> <code class="codeph">location</code> field is silently skipped (not indexed) during indexing. 
+                  </p>
+                  <p>And if the collection that is queried has a document with an object such as one of the following, whose <code class="codeph">location</code> values are <span class="italic">not</span> GeoJSON geometry objects, then an error is raised during indexing.
+                  </p><pre class="pre codeblock"><code>{ "location" : [ 33.7243, 118.1579 ] }
+{ "location" : "1600 Pennsylvania Ave NW, Washington, DC 20500" }</code></pre><p>In addition, if such an index exists, and you try to write a document that has <code class="codeph">location</code> field with such a non-geometry value, then an error is raised for the write operation.
+                  </p>
+                  <p>If the index specification included <code class="codeph">scalarRequired = true</code>, and if the collection contained a document that has <span class="italic">no</span> <code class="codeph">location</code> field, then an error would be raised when creating the index. In addition, if such an index exists, and you try to write a document that lacks the indexed field (<code class="codeph">location</code>), then an error is raised for the write operation. (An error is still also raised, for index creation or a write operation, for a <code class="codeph">location</code> field whose value is not a geometry object.)
+                  </p>
+                  <p>If the index specification included <code class="codeph">lax = true</code> instead, then <span class="italic">no error</span> would be raised for a document that lacks a <code class="codeph">location</code> field or for a document with a <code class="codeph">location</code> field value (such as <code class="codeph">{"location" : [33.7243, 118.1579]}</code>) that is not a GeoJSON geometry object. The index simply ignores such documents.
+                  </p>
+                  <div class="infoboxnote" id="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB__GUID-49A19EDC-B802-4B90-9E0E-DF8DEAA54758">
+                     <p class="notep1">Note:</p>
+                     <p>If you have created a SODA spatial index, for a field whose value is a GeoJSON <code class="codeph">geometry</code> object, and you use a QBE that targets that field, the index can be picked up for the QBE <span class="italic">only</span> if both index and QBE specify the <span class="italic">same</span> error-handling behavior for that field. Both must specify the <span class="italic">same one</span> of these:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">scalarRequired = true</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">lax = true</code></p>
+                        </li>
+                        <li>
+                           <p>Neither <code class="codeph">scalarRequired = true</code> nor <code class="codeph">lax = true</code></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="example" -->
+               <div class="example" id="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB__SPECIFYINGAJSONSEARCHINDEX-07E48580">
+                  <p class="titleinexample">Example 3-3 Specifying a JSON Search Index</p>
+                  <p>This example specifies a JSON search index. The index does both of these things:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Enables you to perform ad hoc full-word and full-number queries on your JSON documents.</p>
+                     </li>
+                     <li>
+                        <p>Automatically accumulates and updates aggregate structural and type information about your JSON documents.</p>
+                     </li>
+                  </ul><pre class="pre codeblock"><code>{ "name" : "SEARCH_AND_DATA_GUIDE_IDX" }</code></pre><p>This index specification is equivalent. It just makes explicit the default values.</p><pre class="pre codeblock"><code>{ "name"      : "SEARCH_AND_DATA_GUIDE_IDX",
+  <span class="bold">"dataguide" : "on"</span>,
+  <span class="bold">"search_on" : "text_value"</span> }</code></pre></div>
+               <!-- class="example" -->
+               <div class="section">
+                  <div class="infoboxnotealso" id="GUID-4848E6A0-58A7-44FD-8D6D-A033D0CCF9CB__GUID-E4A95DC9-E431-4718-8F0C-62F55D0E14D6">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../adjsn/indexes-for-json-data.html#ADJSN-GUID-FEE83855-780A-424B-9916-B899BFF2077B" target="_blank"><span><cite>Oracle Database JSON Developer’s Guide</cite></span></a> for information about using SQL to create <code class="codeph">json_value</code> B-tree indexes
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../spatl/spatial-concepts.html#SPATL-GUID-54CCC43F-56B7-42C6-8C87-86843FA25AFC" target="_blank"><span><cite>Oracle Spatial and Graph Developer's Guide</cite></span></a> for information about Oracle Spatial and Graph indexes
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../adjsn/indexes-for-json-data.html#ADJSN-GUID-D7A604E1-F617-4C92-A9D9-00B6AB78EFD8" target="_blank"><span><cite>Oracle Database JSON Developer’s Guide</cite></span></a> for information about JSON search indexes
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <div class="relinfo">
+                  <p><strong>Related Topics</strong></p>
+                  <ul>
+                     <li><a href="soda-index-specifications-reference.html#GUID-00C06941-6FFD-4CEB-81B6-9A7FBD577A2C" title="You can index the data in JSON documents using index specifications. A detailed definition of SODA index specifications is presented.">SODA Index Specifications (Reference)</a></li>
+                  </ul>
+               </div>
+            </div>
+            
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="You can install Oracle Express Edition using the silent mode. This mode can be used for embedded install of XE (with your application) or unattended operation.">
+      <meta name="description" content="You can install Oracle Express Edition using the silent mode. This mode can be used for embedded install of XE (with your application) or unattended operation.">
+      <title>Performing a Silent Installation</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Installation Guide">
+      <meta property="og:description" content="You can install Oracle Express Edition using the silent mode. This mode can be used for embedded install of XE (with your application) or unattended operation.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Installation Guide for Linux x86-64">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-express-edition-installation-guide-linux.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-12-07T09:23:36-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2005, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E90411-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="procedure-installing-oracle-database-xe.html" title="Previous" type="text/html">
+      <link rel="next" href="setting-oracle-database-xe-environment-variables.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Database Express Edition Installation Guide for Linux">
+    <meta name="dcterms.isVersionOf" content="XEINL">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="procedure-installing-oracle-database-xe.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="setting-oracle-database-xe-environment-variables.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Installation Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="installing-oracle-database-xe.html" property="item" typeof="WebPage"><span property="name">Installing Oracle Database XE</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Performing a Silent Installation</li>
+            </ol>
+            <a id="GUID-3F29EE7C-4546-49EE-B894-027EE3E371BF" name="GUID-3F29EE7C-4546-49EE-B894-027EE3E371BF"></a><a id="XEINL123"></a>
+            
+            <h2 id="XEINL-GUID-3F29EE7C-4546-49EE-B894-027EE3E371BF" class="sect2"><span class="enumeration_section">5.2 </span>Performing a Silent Installation
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>You can install Oracle Express Edition using the silent mode. This mode can be used for embedded install of XE (with your application) or unattended operation.</p>
+               <p>To perform a silent installation, a password for the administrative accounts must be provided as a parameter to the script, or specified in the configuration file. </p>
+               <ol>
+                  <li>
+                     <p>Create a wrapper shell script to perform the silent installation. </p>
+                     <p>It should contain commands similar to the following:</p><pre class="oac_no_warn" dir="ltr">#!/bin/bash
+ 
+yum -y localinstall /downloads/oracle-database-xe&#x2013;18c-1.0-1.x86_64.rpm &gt; /xe_logs/XEsilentinstall.log 2&gt;&amp;1
+
+/etc/init.d/oracle-xe-18c configure &gt;&gt; /xe_logs/XEsilentinstall.log 2&gt;&amp;1
+</pre><p>Alternatively, you can pass on the password in the script, such as:</p><pre class="pre codeblock"><code>(echo <span class="bold">"<span class="italic">password</span>"</span>; echo <span class="bold">"<span class="italic">password</span>"</span>;) | /etc/init.d/oracle-xe-18c configure &gt;&gt; /xe_logs/XEsilentinstall.log 2&gt;&amp;1</code></pre><p> Replace&nbsp;<span class="italic">password</span>&nbsp;with a password that is secure. The password entered should be at least 8 characters in length, contain at least 1 uppercase character, 1 lower case character and 1 digit [0-9].
+                     </p>
+                  </li>
+                  <li>
+                     <p>Make the  wrapper script executable.</p><pre class="oac_no_warn" dir="ltr">chmod +x myscript.sh</pre></li>
+                  <li>  Run as <code class="codeph">root</code> using <code class="codeph">sudo</code>. <pre class="oac_no_warn" dir="ltr">sudo ./myscript.sh</pre><p>XE Oracle Home is <code class="codeph">/opt/oracle/product/18c/dbhomeXE</code> . 
+                     </p>
+                     <p>For details of the installation, review the <code class="codeph">/xe_logs/XEsilentinstall.log</code> file. 
+                     </p>
+                  </li>
+               </ol>
+               <p>The XE database is configured with default settings. It is not necessary to modify these parameters unless you have specific requirements. Make a copy of the configuration file <code class="codeph">/etc/sysconfig/oracle-xe-18c.conf</code> before modifying it. Make your modifications after the RPM install and before configuring the database. 
+               </p>
+               <p>The provided configuration file <code class="codeph">/etc/sysconfig/oracle-xe-18c.conf</code> sets the following: 
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><code class="codeph">LISTENER_PORT</code>: A valid listener numeric port value for the database listener. Do not specify for automatic port assignment.
+                     </p>
+                  </li>
+                  <li>
+                     <p><code class="codeph">EM_EXPRESS_PORT</code>: A valid port numeric value for Oracle Enterprise Manager (EM) Express listener. This is set to port 5500.
+                     </p>
+                  </li>
+                  <li>
+                     <p><code class="codeph">CHARSET</code> : Character set of the database. This is set to <code class="codeph">AL32UTF8</code>.
+                     </p>
+                  </li>
+                  <li>
+                     <p><code class="codeph">DBFILE_DEST</code> Database file directory. By default, the database files are stored in the Oracle Base /opt/oradata subdirectory.
+                     </p>
+                  </li>
+                  <li>
+                     <p><code class="codeph">SKIP_VALIDATIONS</code>: Skip validation for memory and disk space. Default: false.
+                     </p>
+                  </li>
+                  <li>
+                     <p><code class="codeph">ORACLE_PASSWORD</code>: The password for the administrative accounts.
+                     </p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-3F29EE7C-4546-49EE-B894-027EE3E371BF__GUID-D344AACF-60E9-46EE-A1FF-9117F3AFAC9C">
+                  <p class="notep1">Caution:</p>
+                  <p>When you modify and save a file containing plain text password, ownership of the file should be given to the Oracle software installation owner only, and permissions on the file should be changed to 600. Oracle strongly recommends that database administrators or other administrators delete or secure such files containing plain text passwords when they are not in use.</p>
+               </div>
+               <div class="infoboxnote" id="GUID-3F29EE7C-4546-49EE-B894-027EE3E371BF__GUID-2C3E34AB-3187-47AB-B10C-5CF2DE0FDDD1">
+                  <p class="notep1">Note:</p>The password should conform to the Oracle recommended standards. See <a href="../dbseg/keeping-your-oracle-database-secure.html#DBSEG-GUID-451679EB-8676-47E6-82A6-DF025FD65156" target="_blank"><span class="italic">Oracle Database Security Guide</span></a> for more information about guidelines for securing passwords
+               </div>
+               <p>You can find the database creation logs under the Oracle Base <code class="codeph">/opt/oracle/cfgtoollogs/dbca/</code> subdirectory. 
+               </p>
+               <div class="infoboxnotealso" id="GUID-3F29EE7C-4546-49EE-B894-027EE3E371BF__GUID-A32ECE1B-29D5-47FD-8AAD-16E6D00AE021">
+                  <p class="notep1">See Also:</p><a href="procedure-installing-oracle-database-xe.html#GUID-46EA860A-AAC4-453F-8EEE-42CC55A4FAD5__CONFIGURATIONDATABASEFILESANDLOGSLO-D33FB357">Configuration, Database Files and Logs Location</a> for a summary of important files and their locations
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

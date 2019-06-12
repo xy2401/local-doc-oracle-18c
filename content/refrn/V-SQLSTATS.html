@@ -1,0 +1,951 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us" class="reference">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="V$SQLSTATS displays basic performance statistics for SQL cursors and contains one row per SQL statement (that is, one row per unique value of SQL_ID).">
+      <meta name="description" content="V$SQLSTATS displays basic performance statistics for SQL cursors and contains one row per SQL statement (that is, one row per unique value of SQL_ID).">
+      <title>V$SQLSTATS</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Database Reference">
+      <meta property="og:description" content="V$SQLSTATS displays basic performance statistics for SQL cursors and contains one row per SQL statement (that is, one row per unique value of SQL_ID).">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Database Reference">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = reference)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-reference.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-06-02T09:36:39-07:00">
+      <meta name="dcterms.title" content="Database Reference">
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83773-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="V-SQLFN_METADATA.html" title="Previous" type="text/html">
+      <link rel="next" href="V-SQLSTATS_PLAN_HASH.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.isVersionOf" content="REFRN">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="V-SQLFN_METADATA.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="V-SQLSTATS_PLAN_HASH.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Database Reference</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="dynamic-performance-views.html" property="item" typeof="WebPage"><span property="name"> Dynamic Performance Views </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="dynamic-performance-v-views-3.html" property="item" typeof="WebPage"><span property="name"> Dynamic Performance (V$) Views: V$SCHEDULER_RUNNING_JOBS to V$ZONEMAP_USAGE_STATS</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">V$SQLSTATS</li>
+            </ol>
+            <a id="GUID-495DD17D-6741-433F-871D-C965EB221DA9" name="GUID-495DD17D-6741-433F-871D-C965EB221DA9"></a><a id="REFRN30396"></a>
+            
+            <h2 id="REFRN-GUID-495DD17D-6741-433F-871D-C965EB221DA9" class="sect2"><span class="enumeration_section">9.74 </span>V$SQLSTATS
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <div><span><code class="codeph">V$SQLSTATS</code> displays basic performance statistics for SQL cursors and contains one row per SQL statement (that is, one row per unique value of <code class="codeph">SQL_ID</code>).</span> The column definitions for columns in <code class="codeph">V$SQLSTATS</code> are identical to those in the <code class="codeph">V$SQL</code> and <code class="codeph">V$SQLAREA</code> views. However, the <code class="codeph">V$SQLSTATS</code> view differs from <code class="codeph">V$SQL</code> and <code class="codeph">V$SQLAREA</code> in that it is faster, more scalable, and has a greater data retention (the statistics may still appear in this view, even after the cursor has been aged out of the shared pool). Note that <code class="codeph">V$SQLSTATS</code> contains a subset of columns that appear in <code class="codeph">V$SQL</code> and <code class="codeph">V$SQLAREA</code>. 
+               </div>
+               <div class="tblformalwide" id="GUID-495DD17D-6741-433F-871D-C965EB221DA9__GUID-59FAFC16-D4DA-4237-9C58-CCF304A55B99">
+                  <table cellpadding="4" cellspacing="0" class="FormalWide" title="" summary="This table describes the columns for this database view" width="100%" frame="hsides" border="1" rules="rows">
+                     <thead>
+                        <tr align="left" valign="top">
+                           <th align="left" valign="bottom" width="24%" id="d2138425e202">Column</th>
+                           <th align="left" valign="bottom" width="18%" id="d2138425e205">Datatype</th>
+                           <th align="left" valign="bottom" width="58%" id="d2138425e208">Description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e213" headers="d2138425e202 ">
+                              <p><code class="codeph">SQL_TEXT</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e213 d2138425e205 ">
+                              <p><code class="codeph">VARCHAR2(1000)</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e213 d2138425e208 ">
+                              <p>First thousand characters of the SQL text for the current cursor</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e225" headers="d2138425e202 ">
+                              <p><code class="codeph">SQL_FULLTEXT</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e225 d2138425e205 ">
+                              <p><code class="codeph">CLOB</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e225 d2138425e208 ">
+                              <p>Full text for the SQL statement exposed as a <code class="codeph">CLOB</code> column. THe full text of a SQL statement can be retrieved using this column instead of joining with the <code class="codeph">V$SQLTEXT</code> view.
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e243" headers="d2138425e202 ">
+                              <p><code class="codeph">SQL_ID</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e243 d2138425e205 ">
+                              <p><code class="codeph">VARCHAR2(13)</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e243 d2138425e208 ">
+                              <p>SQL identifier of the parent cursor in the library cache</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e255" headers="d2138425e202 ">
+                              <p><code class="codeph">LAST_ACTIVE_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e255 d2138425e205 ">
+                              <p><code class="codeph">DATE</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e255 d2138425e208 ">
+                              <p>Last time the statistics of a contributing cursor were updated</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e267" headers="d2138425e202 ">
+                              <p><code class="codeph">LAST_ACTIVE_CHILD_ADDRESS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e267 d2138425e205 ">
+                              <p><code class="codeph">RAW(4 | 8)</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e267 d2138425e208 ">
+                              <p>Address of the contributing cursor that last updated these statistics</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e279" headers="d2138425e202 ">
+                              <p><code class="codeph">PLAN_HASH_VALUE</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e279 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e279 d2138425e208 ">
+                              <p>Numeric representation of the current SQL plan for this cursor. Comparing one <code class="codeph">PLAN_HASH_VALUE</code> to another easily identifies whether or not two plans are the same (rather than comparing the two plans line by line).
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e294" headers="d2138425e202 ">
+                              <p><code class="codeph">PARSE_CALLS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e294 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e294 d2138425e208 ">
+                              <p>Number of parse calls for all cursors with this SQL text and plan</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e306" headers="d2138425e202 ">
+                              <p><code class="codeph">DISK_READS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e306 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e306 d2138425e208 ">
+                              <p>Number of disk reads for all cursors with this SQL text and plan</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e318" headers="d2138425e202 ">
+                              <p><code class="codeph">DIRECT_WRITES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e318 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e318 d2138425e208 ">
+                              <p>Number of direct writes for all cursors with this SQL text and plan</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e330" headers="d2138425e202 ">
+                              <p><code class="codeph">DIRECT_READS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e330 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e330 d2138425e208 ">
+                              <p>Number of direct reads for all cursors with this SQL text and plan</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e342" headers="d2138425e202 ">
+                              <p><code class="codeph">BUFFER_GETS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e342 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e342 d2138425e208 ">
+                              <p>Number of buffer gets for all cursors with this SQL text and plan</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e355" headers="d2138425e202 ">
+                              <p><code class="codeph">ROWS_PROCESSED</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e355 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e355 d2138425e208 ">
+                              <p>Total number of rows the parsed SQL statement returns</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e367" headers="d2138425e202 ">
+                              <p><code class="codeph">SERIALIZABLE_ABORTS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e367 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e367 d2138425e208 ">
+                              <p>Number of times the transaction failed to serialize, producing <code class="codeph">ORA-08177</code> errors, per cursor
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e382" headers="d2138425e202 ">
+                              <p><code class="codeph">FETCHES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e382 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e382 d2138425e208 ">
+                              <p>Number of fetches associated with the SQL statement</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e394" headers="d2138425e202 ">
+                              <p><code class="codeph">EXECUTIONS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e394 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e394 d2138425e208 ">
+                              <p>Number of executions that took place on this object since it was brought into the library cache</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e406" headers="d2138425e202 ">
+                              <p><code class="codeph">END_OF_FETCH_COUNT</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e406 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e406 d2138425e208 ">
+                              <p>Number of times this cursor was fully executed since the cursor was brought into the library cache. The value of this statistic is not incremented when the cursor is partially executed, either because it failed during the execution or because only the first few rows produced by this cursor are fetched before the cursor is closed or re-executed. By definition, the value of the <code class="codeph">END_OF_FETCH_COUNT</code> column should be less or equal to the value of the <code class="codeph">EXECUTIONS</code> column.
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e424" headers="d2138425e202 ">
+                              <p><code class="codeph">LOADS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e424 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e424 d2138425e208 ">
+                              <p>Number of times the object was either loaded or reloaded</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e436" headers="d2138425e202 ">
+                              <p><code class="codeph">VERSION_COUNT</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e436 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e436 d2138425e208 ">
+                              <p>number of cursors present in the cache with this SQL text and plan</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e448" headers="d2138425e202 ">
+                              <p><code class="codeph">INVALIDATIONS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e448 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e448 d2138425e208 ">
+                              <p>Number of times this child cursor has been invalidated</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e460" headers="d2138425e202 ">
+                              <p><code class="codeph">PX_SERVERS_EXECUTIONS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e460 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e460 d2138425e208 ">
+                              <p>Total number of executions performed by parallel execution servers (<code class="codeph">0</code> when the statement has never been executed in parallel)
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e475" headers="d2138425e202 ">
+                              <p><code class="codeph">CPU_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e475 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e475 d2138425e208 ">
+                              <p>CPU time (in microseconds) used by this cursor for parsing, executing, and fetching</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e487" headers="d2138425e202 ">
+                              <p><code class="codeph">ELAPSED_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e487 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e487 d2138425e208 ">
+                              <p>Elapsed time (in microseconds) used by this cursor for parsing, executing, and fetching. If the cursor uses parallel execution, then <code class="codeph">ELAPSED_TIME</code> is the cumulative time for the query coordinator, plus all parallel query slave processes.
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e503" headers="d2138425e202 ">
+                              <p><code class="codeph">AVG_HARD_PARSE_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e503 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e503 d2138425e208 ">
+                              <p>Average hard parse time (in microseconds) used by this cursor</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e515" headers="d2138425e202 ">
+                              <p><code class="codeph">APPLICATION_WAIT_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e515 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e515 d2138425e208 ">
+                              <p>Application wait time (in microseconds)</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e527" headers="d2138425e202 ">
+                              <p><code class="codeph">CONCURRENCY_WAIT_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e527 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e527 d2138425e208 ">
+                              <p>Concurrency wait time (in microseconds)</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e539" headers="d2138425e202 ">
+                              <p><code class="codeph">CLUSTER_WAIT_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e539 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e539 d2138425e208 ">
+                              <p>Cluster wait time (in microseconds). This value is specific to Oracle RAC. It shows the total time spent waiting for all waits that are categorized under the cluster class of wait events. The value is this column is an accumulated wait time spent waiting for Oracle RAC cluster resources.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e551" headers="d2138425e202 ">
+                              <p><code class="codeph">USER_IO_WAIT_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e551 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e551 d2138425e208 ">
+                              <p>User I/O wait time (in microseconds)</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e563" headers="d2138425e202 ">
+                              <p><code class="codeph">PLSQL_EXEC_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e563 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e563 d2138425e208 ">
+                              <p>PL/SQL execution time (in microseconds)</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e575" headers="d2138425e202 ">
+                              <p><code class="codeph">JAVA_EXEC_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e575 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e575 d2138425e208 ">
+                              <p>Java execution time (in microseconds)</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e587" headers="d2138425e202 ">
+                              <p><code class="codeph">SORTS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e587 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e587 d2138425e208 ">
+                              <p>Number of sorts that were done for the child cursor</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e599" headers="d2138425e202 ">
+                              <p><code class="codeph">SHARABLE_MEM</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e599 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e599 d2138425e208 ">
+                              <p>Total shared memory (in bytes) currently occupied by all cursors with this SQL text and plan</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e611" headers="d2138425e202 ">
+                              <p><code class="codeph">TOTAL_SHARABLE_MEM</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e611 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e611 d2138425e208 ">
+                              <p>Total shared memory (in bytes) occupied by all cursors with this SQL text and plan if they were to be fully loaded in the shared pool (that is, cursor size)</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e623" headers="d2138425e202 ">
+                              <p><code class="codeph">TYPECHECK_MEM</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e623 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e623 d2138425e208 ">
+                              <p>Typecheck memory</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e636" headers="d2138425e202 ">
+                              <p><code class="codeph">IO_CELL_OFFLOAD_ELIGIBLE_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e636 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e636 d2138425e208 ">
+                              <p>Number of I/O bytes which can be filtered by the Exadata storage system</p>
+                              <p><span class="bold">See Also:</span> Oracle Exadata Storage Server Software documentation for more information
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e652" headers="d2138425e202 ">
+                              <p><code class="codeph">IO_INTERCONNECT_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e652 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e652 d2138425e208 ">
+                              <p>Number of I/O bytes exchanged between Oracle Database and the storage system. Typically used for Cache Fusion or parallel queries.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e664" headers="d2138425e202 ">
+                              <p><code class="codeph">PHYSICAL_READ_REQUESTS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e664 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e664 d2138425e208 ">
+                              <p>Number of physical read I/O requests issued by the monitored SQL. The requests may not be disk reads.</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e676" headers="d2138425e202 ">
+                              <p><code class="codeph">PHYSICAL_READ_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e676 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e676 d2138425e208 ">
+                              <p>Number of bytes read from disks by the monitored SQL</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e688" headers="d2138425e202 ">
+                              <p><code class="codeph">PHYSICAL_WRITE_REQUESTS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e688 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e688 d2138425e208 ">
+                              <p>Number of physical write I/O requests issued by the monitored SQL</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e700" headers="d2138425e202 ">
+                              <p><code class="codeph">PHYSICAL_WRITE_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e700 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e700 d2138425e208 ">
+                              <p>Number of bytes written to disks by the monitored SQL</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e712" headers="d2138425e202 ">
+                              <p><code class="codeph">EXACT_MATCHING_SIGNATURE</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e712 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e712 d2138425e208 ">
+                              <p>Signature used when the <code class="codeph">CURSOR_SHARING</code> parameter is set to <code class="codeph">EXACT</code></p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e729" headers="d2138425e202 ">
+                              <p><code class="codeph">FORCE_MATCHING_SIGNATURE</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e729 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e729 d2138425e208 ">
+                              <p>Signature used when the <code class="codeph">CURSOR_SHARING</code> parameter is set to <code class="codeph">FORCE</code></p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e746" headers="d2138425e202 ">
+                              <p><code class="codeph">IO_CELL_UNCOMPRESSED_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e746 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e746 d2138425e208 ">
+                              <p>Number of uncompressed bytes (that is, size after decompression) that are offloaded to the Exadata cells</p>
+                              <p><span class="bold">See Also:</span> Oracle Exadata Storage Server Software documentation for more information
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e762" headers="d2138425e202 ">
+                              <p><code class="codeph">IO_CELL_OFFLOAD_RETURNED_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e762 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e762 d2138425e208 ">
+                              <p>Number of bytes that are returned by Exadata cell through the regular I/O path</p>
+                              <p><span class="bold">See Also:</span> Oracle Exadata Storage Server Software documentation for more information
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e778" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_PARSE_CALLS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e778 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e778 d2138425e208 ">
+                              <p>Number of parse calls for the cursor since the last Automatic Workload Repository (AWR) snapshot</p>
+                              <p><span class="bold">See Also:</span> <a href="../cncpt/concepts-for-database-administrators.html#CNCPT1374" target="_blank"><span><cite>Oracle Database Concepts</cite></span></a> for an introduction to AWR
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e801" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_DISK_READS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e801 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e801 d2138425e208 ">
+                              <p>Number of disk reads for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e813" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_DIRECT_WRITES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e813 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e813 d2138425e208 ">
+                              <p>Number of direct writes for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e825" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_DIRECT_READS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e825 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e825 d2138425e208 ">
+                              <p>Number of direct reads for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e837" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_BUFFER_GETS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e837 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e837 d2138425e208 ">
+                              <p>Number of buffer gets for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e849" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_ROWS_PROCESSED</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e849 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e849 d2138425e208 ">
+                              <p>Number of rows returned by the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e861" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_FETCH_COUNT</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e861 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e861 d2138425e208 ">
+                              <p>Number of fetches for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e873" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_EXECUTION_COUNT</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e873 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e873 d2138425e208 ">
+                              <p>Number of executions for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e885" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_PX_SERVERS_EXECUTIONS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e885 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e885 d2138425e208 ">
+                              <p>Number of executions performed by parallel execution servers since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e897" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_END_OF_FETCH_COUNT</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e897 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e897 d2138425e208 ">
+                              <p>Number of times the cursor was fully executed since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e909" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_CPU_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e909 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e909 d2138425e208 ">
+                              <p>CPU time (in microseconds) for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e921" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_ELAPSED_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e921 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e921 d2138425e208 ">
+                              <p>Database time (in microseconds) for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e934" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_APPLICATION_WAIT_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e934 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e934 d2138425e208 ">
+                              <p>Time spent by the cursor (in microseconds) in the Application wait class since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e946" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_CONCURRENCY_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e946 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e946 d2138425e208 ">
+                              <p>Time spent by the cursor (in microseconds) in the Concurrency wait class since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e958" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_CLUSTER_WAIT_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e958 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e958 d2138425e208 ">
+                              <p>Time spent by the cursor (in microseconds) in the Cluster wait class since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e970" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_USER_IO_WAIT_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e970 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e970 d2138425e208 ">
+                              <p>Time spent by the cursor (in microseconds) in the User I/O wait class since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e982" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_PLSQL_EXEC_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e982 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e982 d2138425e208 ">
+                              <p>Time spent by the cursor (in microseconds) executing PL/SQL since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e994" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_JAVA_EXEC_TIME</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e994 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e994 d2138425e208 ">
+                              <p>Time spent by the cursor (in microseconds) executing Java since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1006" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_SORTS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1006 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1006 d2138425e208 ">
+                              <p>Number of sorts for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1018" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_LOADS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1018 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1018 d2138425e208 ">
+                              <p>Number of times the cursor was loaded since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1030" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_INVALIDATIONS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1030 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1030 d2138425e208 ">
+                              <p>Number of times the cursor was invalidated since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1042" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_PHYSICAL_READ_REQUESTS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1042 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1042 d2138425e208 ">
+                              <p>Number of physical read I/O requests for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1054" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_PHYSICAL_READ_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1054 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1054 d2138425e208 ">
+                              <p>Number of bytes read from disk for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1067" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_PHYSICAL_WRITE_REQUESTS</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1067 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1067 d2138425e208 ">
+                              <p>Number of physical write I/O requests for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1079" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_PHYSICAL_WRITE_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1079 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1079 d2138425e208 ">
+                              <p>Number of bytes written to disk for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1091" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_IO_INTERCONNECT_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1091 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1091 d2138425e208 ">
+                              <p>Number of I/O bytes exchanged between the Oracle database and the storage system for the cursor since the last AWR snapshot</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1103" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_CELL_OFFLOAD_ELIG_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1103 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1103 d2138425e208 ">
+                              <p>Number of I/O bytes which can be filtered by the Exadata storage system for the cursor since the last AWR snapshot</p>
+                              <p><span class="bold">See Also:</span> Oracle Exadata Storage Server Software documentation for more information
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1119" headers="d2138425e202 ">
+                              <p><code class="codeph">DELTA_CELL_UNCOMPRESSED_BYTES</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1119 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1119 d2138425e208 ">
+                              <p>Number of uncompressed bytes that are offloaded to the Exadata cell for the cursor since the last AWR snapshot</p>
+                              <p><span class="bold">See Also:</span> Oracle Exadata Storage Server Software documentation for more information
+                              </p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1135" headers="d2138425e202 ">
+                              <p><code class="codeph">CON_ID</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1135 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1135 d2138425e208 ">
+                              <p>The ID of the container to which the data pertains. Possible values include:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><code class="codeph">0</code>: This value is used for rows containing data that pertain to the entire CDB. This value is also used for rows in non-CDBs.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><code class="codeph">1</code>: This value is used for rows containing data that pertain to only the root
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="italic">n</span>: Where <span class="italic">n</span> is the applicable container ID for the rows containing data
+                                    </p>
+                                 </li>
+                              </ul>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1166" headers="d2138425e202 ">
+                              <p><code class="codeph">CON_DBID</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1166 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1166 d2138425e208 ">
+                              <p>The database ID of the PDB</p>
+                           </td>
+                        </tr>
+                        <tr align="left" valign="top">
+                           <td align="left" valign="top" width="24%" id="d2138425e1178" headers="d2138425e202 ">
+                              <p><code class="codeph">OBSOLETE_COUNT</code></p>
+                           </td>
+                           <td align="left" valign="top" width="18%" headers="d2138425e1178 d2138425e205 ">
+                              <p><code class="codeph">NUMBER</code></p>
+                           </td>
+                           <td align="left" valign="top" width="58%" headers="d2138425e1178 d2138425e208 ">
+                              <p>Number of times that a parent cursor became obsolete</p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <!-- class="inftblhruleinformal" -->
+               <div class="section">
+                  <div class="infoboxnotealso" id="GUID-495DD17D-6741-433F-871D-C965EB221DA9__GUID-D08E5BB3-1227-4EF7-82CB-95615B03B3DF">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="V-SQL.html#GUID-2B9340D7-4AA8-4894-94C0-D5990F67BE75" title="V$SQL lists statistics on shared SQL areas without the GROUP BY clause and contains one row for each child of the original SQL text entered.">V$SQL</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="V-SQLAREA.html#GUID-09D5169F-EE9E-4297-8E01-8D191D87BDF7" title="V$SQLAREA displays statistics on shared SQL areas and contains one row per SQL string. It provides statistics on SQL statements that are in memory, parsed, and ready for execution.">V$SQLAREA</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="section" -->
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

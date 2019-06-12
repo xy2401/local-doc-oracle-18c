@@ -1,0 +1,22 @@
+DECLARE
+  nr INTEGER;
+  cnt INTEGER;
+  data VARCHAR(100);
+BEGIN
+  cnt := 0;
+  LOOP
+    data := CONCAT('data #', TO_CHAR(cnt));
+    INSERT INTO "dbo"."REMOTE_TABLE"@fdslink
+    VALUES (cnt, data, MOD(cnt,5));
+    cnt := cnt + 1;
+    EXIT WHEN cnt >= 100;
+  END LOOP;
+END;
+/
+COMMIT;
+  
+PL/SQL procedure successfully completed.
+
+Commit complete.
+
+Copyright © 2018, Oracle and/or its affiliates. All rights reserved.

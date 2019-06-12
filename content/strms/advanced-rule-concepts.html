@@ -1,0 +1,1771 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Advanced Rule Concepts</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="advanced-apply-process-concepts.html" title="Previous" type="text/html">
+      <link rel="next" href="combined-capture-and-apply-optimization.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="advanced-apply-process-concepts.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="combined-capture-and-apply-optimization.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="advanced-oracle-streams-concepts.html" property="item" typeof="WebPage"><span property="name">    Advanced Oracle Streams Concepts </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Advanced Rule Concepts</li>
+            </ol>
+            <a id="GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D" name="GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D"></a><a id="STRMS005"></a>
+            
+            <h2 id="STRMS-GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D" class="sect2"><span class="enumeration_chapter">11 </span> Advanced Rule Concepts
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d61036e125" class="indexterm-anchor"></a>The following topics contain information about rules.
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="advanced-rule-concepts.html#GUID-57C17FA9-E2A1-45EE-AE73-F9BCD9707D33">The Components of a Rule</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-rule-concepts.html#GUID-75AB7AAD-ADD6-47EF-B948-B46676079BAB">Rule Set Evaluation</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-rule-concepts.html#GUID-29608B7A-5D6E-4181-A793-F3AA227F94F8">Database Objects and Privileges Related to Rules</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-rule-concepts.html#GUID-6BEFE444-DC00-4B40-A280-40F1D4E3A66E">Evaluation Contexts Used in Oracle Streams</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-rule-concepts.html#GUID-9B4E9177-2405-46BE-9AF2-343C407F163F">Oracle Streams and Event Contexts</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-rule-concepts.html#GUID-58D3734F-2465-4AA0-A4B3-0E942075C612">Oracle Streams and Action Contexts</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-rule-concepts.html#GUID-99D68458-306F-487B-ACC4-652AA0AB4D18">User-Created Rules, Rule Sets, and Evaluation Contexts</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D__GUID-D4F7FB77-128F-4CE9-B7D4-F6822FDC48DD">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14">How Rules Are Used in Oracle Streams</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rules.html#GUID-AB9D9589-CD21-4EED-959B-72CA569334F3">Managing Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="../strex/rule-based-application-example.html#STREX017"><span class="italic">Oracle Streams Extended Examples</span></a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS526"></a><div class="props_rev_3"><a id="GUID-57C17FA9-E2A1-45EE-AE73-F9BCD9707D33" name="GUID-57C17FA9-E2A1-45EE-AE73-F9BCD9707D33"></a><h3 id="STRMS-GUID-57C17FA9-E2A1-45EE-AE73-F9BCD9707D33" class="sect3"><span class="enumeration_section">11.1 </span>The Components of a Rule
+               </h3>
+               <div>
+                  <p>A <span class="bold">rule</span> is a database object that enables a client to perform an action when an event occurs and a condition is satisfied. A rule consists of the following components:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-7208236D-1EB4-40EB-90FE-1E0890725B5F">Rule Condition</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-A43CB691-03B7-4E42-8E67-3D3C49DAB5F0">Rule Evaluation Context</a> (optional)
+                        </p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-F80AF321-89CA-4130-B22C-7247E18A789A">Rule Action Context</a> (optional)
+                        </p>
+                     </li>
+                  </ul>
+                  <p>Each rule is specified as a condition that is similar to the condition in the <code class="codeph">WHERE</code> clause of a SQL query. You can group related rules together into <span class="bold">rule sets</span>. A single rule can be in one rule set, multiple rule sets, or no rule sets.
+                  </p>
+                  <p>Rule sets are evaluated by a <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a>, which is a built-in part of Oracle. Both user-created applications and Oracle features, such as Oracle Streams, can be clients of the rules engine.
+                  </p>
+                  <div class="infoboxnote" id="GUID-57C17FA9-E2A1-45EE-AE73-F9BCD9707D33__GUID-A7831B15-D3E0-4959-88A0-EAE8645EA4DD">
+                     <p class="notep1">Note:</p>
+                     <p>A rule must be in a rule set for it to be evaluated.</p>
+                  </div>
+               </div><a id="STRMS527"></a><div class="props_rev_3"><a id="GUID-7208236D-1EB4-40EB-90FE-1E0890725B5F" name="GUID-7208236D-1EB4-40EB-90FE-1E0890725B5F"></a><h4 id="STRMS-GUID-7208236D-1EB4-40EB-90FE-1E0890725B5F" class="sect4"><span class="enumeration_section">11.1.1 </span>Rule Condition
+                  </h4>
+                  <div>
+                     <p>A <span class="bold">rule condition</span> combines one or more <a href="strms_glossary.html#GUID-1FA8985C-78C9-4D4D-AE52-1F0755B9C928"><span class="xrefglossterm">expression</span></a>s and conditions and returns a Boolean value, which is a value of <code class="codeph">TRUE</code>, <code class="codeph">FALSE</code>, or <code class="codeph">NULL</code> (unknown). An <span class="bold">expression</span> is a combination of one or more values and operators that evaluate to a value. A value can be data in a table, data in variables, or data returned by a SQL function or a PL/SQL function. For example, the following expression includes only a single value:
+                     </p><pre class="oac_no_warn" dir="ltr">salary
+</pre><p>The following expression includes two values (<code class="codeph">salary</code> and <code class="codeph">.1</code>) and an operator (<code class="codeph">*</code>):
+                     </p><pre class="oac_no_warn" dir="ltr">salary * .1
+</pre><p>The following condition consists of two expressions (<code class="codeph">salary</code> and <code class="codeph">3800</code>) and a condition (<code class="codeph">=</code>):
+                     </p><pre class="oac_no_warn" dir="ltr">salary = 3800
+</pre><p>This logical condition evaluates to <code class="codeph">TRUE</code> for a given row when the <code class="codeph">salary</code> column is <code class="codeph">3800</code>. Here, the value is data in the <code class="codeph">salary</code> column of a table.
+                     </p>
+                     <p>A single rule condition can include more than one condition combined with the <code class="codeph">AND</code>, <code class="codeph">OR</code>, and <code class="codeph">NOT</code> logical conditions to a form compound condition. A logical condition combines the results of two component conditions to produce a single result based on them or to invert the result of a single condition. For example, consider the following compound condition:
+                     </p><pre class="oac_no_warn" dir="ltr">salary = 3800 OR job_title = 'Programmer' 
+</pre><p>This rule condition contains two conditions joined by the <code class="codeph">OR</code> logical condition. If either condition evaluates to <code class="codeph">TRUE</code>, then the rule condition evaluates to <code class="codeph">TRUE</code>. If the logical condition were <code class="codeph">AND</code> instead of <code class="codeph">OR</code>, then both conditions must evaluate to <code class="codeph">TRUE</code> for the entire rule condition to evaluate to <code class="codeph">TRUE</code>.
+                     </p>
+                  </div><a id="STRMS528"></a><div class="props_rev_3"><a id="GUID-DEE47065-F6BC-4B01-BDB0-5E7A1C8992AD" name="GUID-DEE47065-F6BC-4B01-BDB0-5E7A1C8992AD"></a><h5 id="STRMS-GUID-DEE47065-F6BC-4B01-BDB0-5E7A1C8992AD" class="sect5"><span class="enumeration_section">11.1.1.1 </span>Variables in Rule Conditions
+                     </h5>
+                     <div>
+                        <p>Rule conditions can contain variables. When you use variables in rule conditions, precede each variable with a colon (:). The following is an example of a variable used in a rule condition:</p><pre class="oac_no_warn" dir="ltr">:x = 55
+</pre><p>Variables let you refer to data that is not stored in a table. A variable can also improve performance by replacing a commonly occurring expression. Performance can improve because, instead of evaluating the same expression multiple times, the variable is evaluated once.</p>
+                        <p>A rule condition can also contain an evaluation of a call to a subprogram. Such a condition is evaluated in the same way as other conditions. That is, it evaluates to a value of <code class="codeph">TRUE</code>, <code class="codeph">FALSE</code>, or <code class="codeph">NULL</code> (unknown). The following is an example of a condition that contains a call to a simple function named <code class="codeph">is_manager</code> that determines whether an employee is a manager:
+                        </p><pre class="oac_no_warn" dir="ltr">is_manager(employee_id) = 'Y'
+</pre><p>Here, the value of <code class="codeph">employee_id</code> is determined by data in a table where <code class="codeph">employee_id</code> is a column.
+                        </p>
+                        <p>You can use user-defined types for variables. Therefore, variables can have attributes. When a variable has attributes, each attribute contains partial data for the variable. In rule conditions, you specify attributes using dot notation. For example, the following condition evaluates to <code class="codeph">TRUE</code> if the value of attribute <code class="codeph">z</code> in variable <code class="codeph">y</code>&nbsp;is&nbsp;<code class="codeph">9</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">:y.z = 9
+</pre><div class="infoboxnote" id="GUID-DEE47065-F6BC-4B01-BDB0-5E7A1C8992AD__GUID-5BE29DF7-B4D3-45D6-B54D-1AD999C1F381">
+                           <p class="notep1">Note:</p>
+                           <p>A rule cannot have a <code class="codeph">NULL</code> (or empty) rule condition.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-DEE47065-F6BC-4B01-BDB0-5E7A1C8992AD__GUID-84D7F25B-13FC-4029-9173-BAD169312461">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="../sqlrf/index.html"><span class="italic">Oracle Database SQL Language Reference </span></a>for more information about conditions, expressions, and operators
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../adobj/toc.htm"><span class="italic">Oracle Database Object-Relational Developer's Guide </span></a>for more information about user-defined types
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STRMS529"></a><div class="props_rev_3"><a id="GUID-27853FFB-70B2-4153-9B11-BB3F8289138E" name="GUID-27853FFB-70B2-4153-9B11-BB3F8289138E"></a><h5 id="STRMS-GUID-27853FFB-70B2-4153-9B11-BB3F8289138E" class="sect5"><span class="enumeration_section">11.1.1.2 </span>Simple Rule Conditions
+                     </h5>
+                     <div>
+                        <p>A simple rule condition is a condition that has one of the following forms:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="italic"><code class="codeph">simple_rule_expression condition constant</code></span></p>
+                           </li>
+                           <li>
+                              <p><span class="italic"><code class="codeph">constant condition simple_rule_expression</code></span></p>
+                           </li>
+                           <li>
+                              <p><span class="italic"><code class="codeph">constant condition constant</code></span></p>
+                           </li>
+                        </ul>
+                     </div><a id="STRMS530"></a><div class="props_rev_3"><a id="GUID-DC9A322D-ECEC-4985-86C2-2049827CBB7F" name="GUID-DC9A322D-ECEC-4985-86C2-2049827CBB7F"></a><h6 id="STRMS-GUID-DC9A322D-ECEC-4985-86C2-2049827CBB7F" class="sect6"><span class="enumeration_section">11.1.1.2.1 </span>Simple Rule Expressions
+                        </h6>
+                        <div>
+                           <p>In a simple rule condition, a <span class="italic"><code class="codeph">simple_rule_expression</code></span> is one of the following:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Table column.</p>
+                              </li>
+                              <li>
+                                 <p>Variable.</p>
+                              </li>
+                              <li>
+                                 <p>Variable attribute.</p>
+                              </li>
+                              <li>
+                                 <p>Method result where the method either takes no arguments or constant arguments and the method result can be returned by the variable method function, so that the expression is one of the data types supported for simple rules. Such methods include LCR member subprograms that meet these requirements, such as <code class="codeph">GET_TAG</code>, <code class="codeph">GET_VALUE</code>, <code class="codeph">GET_COMPATIBLE</code>, <code class="codeph">GET_EXTRA_ATTRIBUTE</code>, and so on.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>For table columns, variables, variable attributes, and method results, the following data types can be used in simple rule conditions:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><code class="codeph">VARCHAR2</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">NVARCHAR2</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">NUMBER</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">DATE</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">BINARY_FLOAT</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">BINARY_DOUBLE</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">TIMESTAMP</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">TIMESTAMP</code> <code class="codeph">WITH</code> <code class="codeph">TIME</code> <code class="codeph">ZONE</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">TIMESTAMP</code> <code class="codeph">WITH</code> <code class="codeph">LOCAL</code> <code class="codeph">TIME</code> <code class="codeph">ZONE</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">RAW</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">CHAR</code></p>
+                              </li>
+                           </ul>
+                           <p>Use of other data types in expressions results in nonsimple rule conditions.</p>
+                        </div>
+                     </div><a id="STRMS531"></a><div class="props_rev_3"><a id="GUID-6D03292D-592A-4B06-A540-641C35230760" name="GUID-6D03292D-592A-4B06-A540-641C35230760"></a><h6 id="STRMS-GUID-6D03292D-592A-4B06-A540-641C35230760" class="sect6"><span class="enumeration_section">11.1.1.2.2 </span>Conditions
+                        </h6>
+                        <div>
+                           <p>In a simple rule condition, a <span class="italic"><code class="codeph">condition</code></span> is one of the following:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><code class="codeph">&lt;=</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">&lt;</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">=</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">&gt;</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">&gt;=</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">!=</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">IS NULL</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">IS NOT NULL</code></p>
+                              </li>
+                           </ul>
+                           <p>Use of other conditions results in nonsimple rule conditions.</p>
+                        </div>
+                     </div><a id="STRMS532"></a><div class="props_rev_3"><a id="GUID-5E6552EE-2908-48A8-9998-036956140AEA" name="GUID-5E6552EE-2908-48A8-9998-036956140AEA"></a><h6 id="STRMS-GUID-5E6552EE-2908-48A8-9998-036956140AEA" class="sect6"><span class="enumeration_section">11.1.1.2.3 </span>Constants
+                        </h6>
+                        <div>
+                           <p>A <span class="italic"><code class="codeph">constant</code></span> is a fixed value. A constant can be:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>A number, such as <code class="codeph">12</code> or <code class="codeph">5.4</code> 
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>A character, such as <code class="codeph">x</code> or <code class="codeph">$</code></p>
+                              </li>
+                              <li>
+                                 <p>A character string, such as <code class="codeph">"this</code> <code class="codeph">is</code> <code class="codeph">a</code> <code class="codeph">string"</code></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div><a id="STRMS533"></a><div class="props_rev_3"><a id="GUID-0A76BA13-4C72-4675-B0C8-416E3E04687F" name="GUID-0A76BA13-4C72-4675-B0C8-416E3E04687F"></a><h6 id="STRMS-GUID-0A76BA13-4C72-4675-B0C8-416E3E04687F" class="sect6"><span class="enumeration_section">11.1.1.2.4 </span>Examples of Simple Rule Conditions
+                        </h6>
+                        <div>
+                           <p>The following conditions are simple rule conditions, assuming the data types used in expressions are supported in simple rule conditions:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><code class="codeph">tab1.col = 5</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">tab2.col != 5</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">:v1 &gt; 'aaa'</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">:v2.a1 &lt; 10.01</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">:v3.m() = 10</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">:v4 IS NOT NULL</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">1 = 1</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">'abc' &gt; 'AB'</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">:date_var &lt; to_date('04-01-2004, 14:20:17', 'mm-dd-yyyy, hh24:mi:ss')</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">:adt_var.ts_attribute &gt;= to_timestamp('04-01-2004, 14:20:17 PST', 'mm-dd-yyyy, hh24:mi:ss TZR')</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">:my_var.my_to_upper('abc') = 'ABC'</code></p>
+                              </li>
+                           </ul>
+                           <p>Rules with simple rule conditions are called simple rules. You can combine two or more simple conditions with the logical conditions <code class="codeph">AND</code> and <code class="codeph">OR</code> for a rule, and the rule remains simple. For example, rules with the following conditions are simple rules:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><code class="codeph">tab1.col = 5 AND :v1 &gt; 'aaa'</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">tab1.col = 5 OR :v1 &gt; 'aaa'</code></p>
+                              </li>
+                           </ul>
+                           <p>However, using the <code class="codeph">NOT</code> logical condition in a rule condition causes the rule to be nonsimple.
+                           </p>
+                        </div>
+                     </div><a id="STRMS534"></a><div class="props_rev_3"><a id="GUID-B0A96A8C-0D1E-4D67-9977-2879997CF0F1" name="GUID-B0A96A8C-0D1E-4D67-9977-2879997CF0F1"></a><h6 id="STRMS-GUID-B0A96A8C-0D1E-4D67-9977-2879997CF0F1" class="sect6"><span class="enumeration_section">11.1.1.2.5 </span>Benefits of Simple Rules
+                        </h6>
+                        <div>
+                           <p>Simple rules are important for the following reasons:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Simple rules are indexed by the <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a> internally.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Simple rules can be evaluated without executing SQL.</p>
+                              </li>
+                              <li>
+                                 <p>Simple rules can be evaluated with partial data.</p>
+                              </li>
+                           </ul>
+                           <p>When a client uses the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure to evaluate an event, the client can specify that only simple rules should be evaluated by specifying <code class="codeph">TRUE</code> for the <code class="codeph">simple_rules_only</code> parameter.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-B0A96A8C-0D1E-4D67-9977-2879997CF0F1__GUID-19E0C2DD-0397-4EC0-9EC4-D50C62999A5F">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="../sqlrf/Conditions.html#SQLRF005"><span class="italic">Oracle Database SQL Language Reference </span></a>for more information about conditions and logical conditions
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS307"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about LCR types and their member subprograms
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div><a id="STRMS535"></a><div class="props_rev_3"><a id="GUID-A43CB691-03B7-4E42-8E67-3D3C49DAB5F0" name="GUID-A43CB691-03B7-4E42-8E67-3D3C49DAB5F0"></a><h4 id="STRMS-GUID-A43CB691-03B7-4E42-8E67-3D3C49DAB5F0" class="sect4"><span class="enumeration_section">11.1.2 </span>Rule Evaluation Context
+                  </h4>
+                  <div>
+                     <p>An <span class="bold">evaluation context</span> is a database object that defines external data that can be referenced in <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a>s. The external data can exist as variables, table data, or both. The following analogy might be helpful: If the rule condition were the <code class="codeph">WHERE</code> clause in a SQL query, then the external data in the evaluation context would be the tables and bind variables referenced in the <code class="codeph">FROM</code> clause of the query. That is, the <a href="strms_glossary.html#GUID-1FA8985C-78C9-4D4D-AE52-1F0755B9C928"><span class="xrefglossterm">expression</span></a>s in the rule condition should reference the tables, table aliases, and variables in the evaluation context to make a valid <code class="codeph">WHERE</code> clause.
+                     </p>
+                     <p>A rule evaluation context provides the necessary information for interpreting and evaluating the rule conditions that reference external data. For example, if a rule refers to a variable, then the information in the rule evaluation context must contain the variable type. Or, if a rule refers to a table alias, then the information in the evaluation context must define the table alias.</p>
+                     <p>The objects referenced by a rule are determined by the rule evaluation context associated with it. The rule owner must have the necessary privileges to access these objects, such as <code class="codeph">READ</code> or <code class="codeph">SELECT</code> privilege on tables, <code class="codeph">EXECUTE</code> privilege on types, and so on. The rule condition is resolved in the schema that owns the evaluation context.
+                     </p>
+                     <p>For example, consider a rule evaluation context named <code class="codeph">hr_evaluation_context</code> that contains the following information:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Table alias <code class="codeph">dep</code> corresponds to the <code class="codeph">hr.departments</code> table.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Variables <code class="codeph">loc_id1</code> and <code class="codeph">loc_id2</code> are both of type <code class="codeph">NUMBER</code>.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The <code class="codeph">hr_evaluation_context</code> rule evaluation context provides the necessary information for evaluating the following rule condition:
+                     </p><pre class="oac_no_warn" dir="ltr">dep.location_id IN (:loc_id1, :loc_id2)
+</pre><p>In this case, the rule condition evaluates to <code class="codeph">TRUE</code> for a row in the <code class="codeph">hr.departments</code> table if that row has a value in the <code class="codeph">location_id</code> column that corresponds to either of the values passed in by the <code class="codeph">loc_id1</code> or <code class="codeph">loc_id2</code> variables. The rule cannot be interpreted or evaluated properly without the information in the <code class="codeph">hr_evaluation_context</code> rule evaluation context. Also, notice that dot notation is used to specify the column <code class="codeph">location_id</code> in the <code class="codeph">dep</code> table alias.
+                     </p>
+                     <div class="infoboxnote" id="GUID-A43CB691-03B7-4E42-8E67-3D3C49DAB5F0__GUID-ECDE8F90-4776-4355-9081-AE03FCF7D42F">
+                        <p class="notep1">Note:</p>
+                        <p>Views are not supported as base tables in evaluation contexts.</p>
+                     </div>
+                  </div><a id="STRMS536"></a><div class="props_rev_3"><a id="GUID-97E88578-DFA9-45AF-BF06-0E751B20DD1B" name="GUID-97E88578-DFA9-45AF-BF06-0E751B20DD1B"></a><h5 id="STRMS-GUID-97E88578-DFA9-45AF-BF06-0E751B20DD1B" class="sect5"><span class="enumeration_section">11.1.2.1 </span>Explicit and Implicit Variables
+                     </h5>
+                     <div>
+                        <p>The value of a variable referenced in a rule condition can be explicitly specified when the rule is evaluated, or the value of a variable can be implicitly available given the event. </p>
+                        <p>Explicit variables are supplied by the caller at evaluation time. These values are specified by the <code class="codeph">variable_values</code> parameter when the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure is run.
+                        </p>
+                        <p>Implicit variables are not given a value supplied by the caller at evaluation time. The value of an implicit variable is obtained by calling the variable value function. You define this function when you specify the <code class="codeph">variable_types</code> list during the creation of an evaluation context using the <code class="codeph">CREATE_EVALUATION_CONTEXT</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package. If the value for an implicit variable is specified during evaluation, then the specified value overrides the value returned by the variable value function.
+                        </p>
+                        <p>Specifically, the <code class="codeph">variable_types</code> list is of type <code class="codeph">SYS.RE$VARIABLE_TYPE_LIST</code>, which is a list of variables of type <code class="codeph">SYS.RE$VARIABLE_TYPE</code>. Within each instance of <code class="codeph">SYS.RE$VARIABLE_TYPE</code> in the list, the function used to determine the value of an implicit variable is specified as the <code class="codeph">variable_value_function</code> attribute.
+                        </p>
+                        <p>Whether variables are explicit or implicit is the choice of the designer of the application using the <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a>. The following are reasons for using an implicit variable:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The caller of the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure does not need to know anything about the variable, which can reduce the complexity of the application using the rules engine. For example, a variable can call a function that returns a value based on the data being evaluated.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The caller might not have <code class="codeph">EXECUTE</code> privileges on the variable value function.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The caller of the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure does not know the variable value based on the event, which can improve security if the variable value contains confidential information. 
+                              </p>
+                           </li>
+                           <li>
+                              <p>The variable will be used infrequently, and the variable's value always can be derived if necessary. Making such variables implicit means that the caller of the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure does not need to specify many uncommon variables.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>For example, in the following rule condition, the values of variable <code class="codeph">x</code> and variable <code class="codeph">y</code> could be specified explicitly, but the value of the variable <code class="codeph">max</code> could be returned by running the <code class="codeph">max</code> function:
+                        </p><pre class="oac_no_warn" dir="ltr">:x = 4 AND :y &lt; :max
+</pre><p>Alternatively, variable <code class="codeph">x</code> and <code class="codeph">y</code> could be implicit variables, and variable <code class="codeph">max</code> could be an explicit variable. So, there is no syntactic difference between explicit and implicit variables in the rule condition. You can determine whether a variable is explicit or implicit by querying the <code class="codeph">DBA_EVALUATION_CONTEXT_VARS</code> data dictionary view. For explicit variables, the <code class="codeph">VARIABLE_VALUE_FUNCTION</code> field is <code class="codeph">NULL</code>. For implicit variables, this field contains the name of the function called by the implicit variable.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-97E88578-DFA9-45AF-BF06-0E751B20DD1B__GUID-B19A92FF-C833-4781-BD37-7A10E4690580">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="../arpls/index.html"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">DBMS_RULE</code> and <code class="codeph">DBMS_RULE_ADM</code> packages, and for more information about the Oracle-supplied rule types
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for more information about the <code class="codeph">DBA_EVALUATION_CONTEXT_VARS</code> data dictionary view
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STRMS537"></a><div class="props_rev_3"><a id="GUID-0B606B0F-D9E6-43E6-A90E-A1A8EA2D363E" name="GUID-0B606B0F-D9E6-43E6-A90E-A1A8EA2D363E"></a><h5 id="STRMS-GUID-0B606B0F-D9E6-43E6-A90E-A1A8EA2D363E" class="sect5"><span class="enumeration_section">11.1.2.2 </span>Evaluation Context Association with Rule Sets and Rules
+                     </h5>
+                     <div>
+                        <p>To be evaluated, each rule must be associated with an evaluation context or must be part of a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> that is associated with an evaluation context. A single evaluation context can be associated with multiple rules or rule sets. The following list describes which evaluation context is used when a rule is evaluated:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>If an evaluation context is associated with a rule, then it is used for the rule whenever the rule is evaluated, and any evaluation context associated with the rule set being evaluated is ignored.</p>
+                           </li>
+                           <li>
+                              <p>If a rule does not have an evaluation context, but an evaluation context was specified for the rule when it was added to a rule set using the <code class="codeph">ADD_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package, then the evaluation context specified in the <code class="codeph">ADD_RULE</code> procedure is used for the rule when the rule set is evaluated.
+                              </p>
+                           </li>
+                           <li>
+                              <p>If no rule evaluation context is associated with a rule and none was specified by the <code class="codeph">ADD_RULE</code> procedure, then the evaluation context of the rule set is used for the rule when the rule set is evaluated.
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-0B606B0F-D9E6-43E6-A90E-A1A8EA2D363E__GUID-AAEC8F88-B616-4436-9BBB-F1F2FA81FBB6">
+                           <p class="notep1">Note:</p>
+                           <p>If a rule does not have an evaluation context, and you try to add it to a rule set that does not have an evaluation context, then an error is raised, unless you specify an evaluation context when you run the <code class="codeph">ADD_RULE</code> procedure.
+                           </p>
+                        </div>
+                     </div>
+                  </div><a id="STRMS538"></a><div class="props_rev_3"><a id="GUID-4A3772AB-E55A-4D50-93F4-36AC1585C952" name="GUID-4A3772AB-E55A-4D50-93F4-36AC1585C952"></a><h5 id="STRMS-GUID-4A3772AB-E55A-4D50-93F4-36AC1585C952" class="sect5"><span class="enumeration_section">11.1.2.3 </span>Evaluation Function
+                     </h5>
+                     <div>
+                        <p>You have the option of creating an evaluation function to be run with a rule evaluation context. You can use an evaluation function for the following reasons:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>You want to bypass the rules engine and instead evaluate events using the evaluation function.</p>
+                           </li>
+                           <li>
+                              <p>You want to filter events so that some events are evaluated by the evaluation function and other events are evaluated by the rules engine.</p>
+                           </li>
+                        </ul>
+                        <p>You associate a function with a rule evaluation context by specifying the function name for the <code class="codeph">evaluation_function</code> parameter when you create the rule evaluation context with the <code class="codeph">CREATE_EVALUATION_CONTEXT</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package. The rules engine invokes the evaluation function during the evaluation of any rule set that uses the evaluation context. 
+                        </p>
+                        <p>The <code class="codeph">DBMS_RULE.EVALUATE</code> procedure is overloaded. The function must have each parameter in one of the <code class="codeph">DBMS_RULE.EVALUATE</code> procedures, and the type of each parameter must be same as the type of the corresponding parameter in the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure, but the names of the parameters can be different.
+                        </p>
+                        <p>An evaluation function has the following return values:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">DBMS_RULE_ADM.EVALUATION_SUCCESS</code>: The user specified evaluation function completed the rule set evaluation successfully. The rules engine returns the results of the evaluation obtained by the evaluation function to the rules engine client using the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">DBMS_RULE_ADM.EVALUATION_CONTINUE</code>: The rules engine evaluates the rule set as if there were no evaluation function. The evaluation function is not used, and any results returned by the evaluation function are ignored.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">DBMS_RULE_ADM.EVALUATION_FAILURE</code>: The user-specified evaluation function failed. Rule set evaluation stops, and an error is raised.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>If you always want to bypass the rules engine, then the evaluation function should return either <code class="codeph">EVALUATION_SUCCESS</code> or <code class="codeph">EVALUATION_FAILURE</code>. However, if you want to filter events so that some events are evaluated by the evaluation function and other events are evaluated by the rules engine, then the evaluation function can return all three return values, and it returns <code class="codeph">EVALUATION_CONTINUE</code> when the rules engine should be used for evaluation.
+                        </p>
+                        <p>If you specify an evaluation function for an evaluation context, then the evaluation function is run during evaluation when the evaluation context is used by a rule set or rule.</p>
+                        <div class="infoboxnotealso" id="GUID-4A3772AB-E55A-4D50-93F4-36AC1585C952__GUID-7FA040DE-C477-4FAD-AC09-284FEF8091D7">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../arpls/index.html"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the evaluation function specified in the <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS327"><code class="codeph">DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT</code></a> procedure and for more information about the overloaded <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS558"><code class="codeph">DBMS_RULE.EVALUATE</code></a> procedure
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div><a id="STRMS539"></a><div class="props_rev_3"><a id="GUID-F80AF321-89CA-4130-B22C-7247E18A789A" name="GUID-F80AF321-89CA-4130-B22C-7247E18A789A"></a><h4 id="STRMS-GUID-F80AF321-89CA-4130-B22C-7247E18A789A" class="sect4"><span class="enumeration_section">11.1.3 </span>Rule Action Context
+                  </h4>
+                  <div>
+                     <p>An <span class="bold">action context</span> contains optional information associated with a rule that is interpreted by the client of the <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a> when the rule is evaluated for an event. The client of the rules engine can be a user-created application or an internal feature of Oracle, such as Oracle Streams. Each rule has only one action context. The information in an action context is of type <code class="codeph">SYS.RE$NV_LIST</code>, which is a type that contains an array of name-value pairs.
+                     </p>
+                     <p>The rule action context information provides a context for the action taken by a client of the rules engine when a rule evaluates to <code class="codeph">TRUE</code> or <code class="codeph">MAYBE</code>. The rules engine does not interpret the action context. Instead, it returns the action context, and a client of the rules engine can interpret the action context information. 
+                     </p>
+                     <p>For example, suppose an event is defined as the addition of a new employee to a company. If the employee information is stored in the <code class="codeph">hr.employees</code> table, then the event occurs whenever a row is inserted into this table. The company wants to specify that several actions are taken when a new employee is added, but the actions depend on which department the employee joins. One of these actions is that the employee is registered for a course relating to the department.
+                     </p>
+                     <p>In this scenario, the company can create a rule for each department with an appropriate action context. Here, an action context returned when a rule evaluates to <code class="codeph">TRUE</code> specifies the number of a course that an employee should take. Here are parts of the <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a>s and the action contexts for three departments:
+                     </p>
+                     <div class="tblformal" id="GUID-F80AF321-89CA-4130-B22C-7247E18A789A__GUID-7BC46D86-8A19-497A-A25D-1DD08780FA3C">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="This table lists the rule condition and action context for each of three rules described in the text preceeding the table." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="23%" id="d61036e2965">Rule Name</th>
+                                 <th align="left" valign="bottom" width="32%" id="d61036e2968">Part of the Rule Condition</th>
+                                 <th align="left" valign="bottom" width="45%" id="d61036e2971">Action Context Name-Value Pair</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="23%" id="d61036e2976" headers="d61036e2965 ">
+                                    <p><code class="codeph">rule_dep_10</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="32%" headers="d61036e2976 d61036e2968 ">
+                                    <p><code class="codeph">department_id = 10</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="45%" headers="d61036e2976 d61036e2971 ">
+                                    <p><code class="codeph">course_number</code>, <code class="codeph">1057</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="23%" id="d61036e2992" headers="d61036e2965 ">
+                                    <p><code class="codeph">rule_dep_20</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="32%" headers="d61036e2992 d61036e2968 ">
+                                    <p><code class="codeph">department_id = 20</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="45%" headers="d61036e2992 d61036e2971 ">
+                                    <p><code class="codeph">course_number</code>, <code class="codeph">1215</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="23%" id="d61036e3008" headers="d61036e2965 ">
+                                    <p><code class="codeph">rule_dep_30</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="32%" headers="d61036e3008 d61036e2968 ">
+                                    <p><code class="codeph">department_id = 30</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="45%" headers="d61036e3008 d61036e2971 ">
+                                    <p><code class="codeph">NULL</code></p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <p>These action contexts return the following instructions to the client application:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The action context for the <code class="codeph">rule_dep_10</code> rule instructs the client application to enroll the new employee in course number <code class="codeph">1057</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The action context for the <code class="codeph">rule_dep_20</code> rule instructs the client application to enroll the new employee in course number <code class="codeph">1215</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">NULL</code> action context for the <code class="codeph">rule_dep_30</code> rule instructs the client application not to enroll the new employee in any course.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Each action context can contain zero or more name-value pairs. If an action context contains more than one name-value pair, then each name in the list must be unique. In this example, the client application to which the rules engine returns the action context registers the new employee in the course with the returned course number. The client application does not register the employee for a course if a <code class="codeph">NULL</code> action context is returned or if the action context does not contain a course number.
+                     </p>
+                     <p>If multiple clients use the same rule, or if you want an action context to return more than one name-value pair, then you can list more than one name-value pair in an action context. For example, suppose the company also adds a new employee to a department electronic mailing list. In this case, the action context for the <code class="codeph">rule_dep_10</code> rule might contain two name-value pairs:
+                     </p>
+                     <div class="tblformal" id="GUID-F80AF321-89CA-4130-B22C-7247E18A789A__GUID-F8C3D768-F579-4508-BF13-656FEC35BE3C">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="This table lists two name-value pairs in a single action context." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="50%" id="d61036e3068">Name</th>
+                                 <th align="left" valign="bottom" width="50%" id="d61036e3071">Value</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="50%" id="d61036e3076" headers="d61036e3068 ">
+                                    <p><code class="codeph">course_number</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="50%" headers="d61036e3076 d61036e3071 ">
+                                    <p><code class="codeph">1057</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="50%" id="d61036e3085" headers="d61036e3068 ">
+                                    <p><code class="codeph">dist_list</code></p>
+                                 </td>
+                                 <td align="left" valign="top" width="50%" headers="d61036e3085 d61036e3071 ">
+                                    <p><code class="codeph">admin_list</code></p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <p>The following are considerations for names in name-value pairs:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If different applications use the same action context, then use different names or prefixes of names to avoid naming conflicts.</p>
+                        </li>
+                        <li>
+                           <p>Do not use $ and # in names because they can cause conflicts with Oracle-supplied action context names.</p>
+                        </li>
+                     </ul>
+                     <p>You add a name-value pair to an action context using the <code class="codeph">ADD_PAIR</code> member procedure of the <code class="codeph">RE$NV_LIST</code> type. You remove a name-value pair from an action context using the <code class="codeph">REMOVE_PAIR</code> member procedure of the <code class="codeph">RE$NV_LIST</code> type. If you want to modify an existing name-value pair in an action context, then you should first remove it using the <code class="codeph">REMOVE_PAIR</code> member procedure and then add an appropriate name-value pair using the <code class="codeph">ADD_PAIR</code> member procedure.
+                     </p>
+                     <div class="infoboxnote" id="GUID-F80AF321-89CA-4130-B22C-7247E18A789A__GUID-2453F03C-D7EB-407D-8560-CA54E8D8004F">
+                        <p class="notep1">Note:</p>
+                        <p>Oracle Streams uses action contexts for <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>s and, when <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a>s are specified, for internal transformations that might be required on LCRs containing <code class="codeph">UPDATE</code> operations. Oracle Streams also uses action contexts to specify a <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> into which an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> enqueues <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s that satisfy the rule. In addition, Oracle Streams uses action contexts to specify whether a message that satisfies an apply process rule is executed by the apply process.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-F80AF321-89CA-4130-B22C-7247E18A789A__GUID-BB61D73E-A8CA-4BB3-97A2-135D2091217C">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-58D3734F-2465-4AA0-A4B3-0E942075C612">Oracle Streams and Action Contexts</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-restrictions.html#GUID-D674DC8F-A4F8-4908-9CC6-188856D33143">Restrictions for Action Contexts</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-rules.html#GUID-87652E9E-0703-4727-83D8-26A7B0C8B5AB">Creating a Rule with an Action Context</a>"</span> and <span class="q">"<a href="managing-rules.html#GUID-548A721C-A976-4908-8861-96F5F89AB8BC">Altering a Rule</a>"</span> for examples that add and modify name-value pairs
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/Rule-TYPEs.html#ARPLS319"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">RE$NV_LIST</code> type
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS540"></a><div class="props_rev_3"><a id="GUID-75AB7AAD-ADD6-47EF-B948-B46676079BAB" name="GUID-75AB7AAD-ADD6-47EF-B948-B46676079BAB"></a><h3 id="STRMS-GUID-75AB7AAD-ADD6-47EF-B948-B46676079BAB" class="sect3"><span class="enumeration_section">11.2 </span>Rule Set Evaluation
+               </h3>
+               <div>
+                  <p>The <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a> evaluates <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s against an event. An event is an occurrence that is defined by the client of the rules engine. The client initiates evaluation of an event by calling the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure. This procedure enables the client to send some information about the event to the rules engine for evaluation against a rule set. The event itself can have more information than the information that the client sends to the rules engine.
+                  </p>
+                  <p>The following information is specified by the client when it calls the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The name of the rule set that contains the rules to use to evaluate the event.</p>
+                     </li>
+                     <li>
+                        <p>The <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> to use for evaluation. Only rules that use the specified evaluation context are evaluated.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Table values and variable values. The table values contain rowids that refer to the data in table rows, and the variable values contain the data for explicit variables. Values specified for implicit variables override the values that might be obtained using a variable value function. If a specified variable has attributes, then the client can send a value for the entire variable, or the client can send values for any number of the attributes of the variable. However, clients cannot specify attribute values if the value of the entire variable is specified.</p>
+                     </li>
+                     <li>
+                        <p>An optional <span class="bold">event context</span>. An event context is a varray of type <code class="codeph">SYS.RE$NV_LIST</code> that contains name-value pairs that contain information about the event. This optional information is not used directly or interpreted by the rules engine. Instead, it is passed to client callbacks, such as an evaluation function, a variable value function (for implicit variables), and a variable method function.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>The client can also send other information about how to evaluate an event against the rule set using the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure. For example, the caller can specify if evaluation must stop as soon as the first <code class="codeph">TRUE</code> rule or the first <code class="codeph">MAYBE</code> rule (if there are no <code class="codeph">TRUE</code> rules) is found.
+                  </p>
+                  <p><a id="d61036e3416" class="indexterm-anchor"></a><a id="d61036e3418" class="indexterm-anchor"></a>If the client wants all of the rules that evaluate to <code class="codeph">TRUE</code> or <code class="codeph">MAYBE</code> returned to it, then the client can specify whether evaluation results should be sent back in a complete list of the rules that evaluated to <code class="codeph">TRUE</code> or <code class="codeph">MAYBE</code>, or evaluation results should be sent back iteratively. When evaluation results are sent iteratively to the client, the client can retrieve each rule that evaluated to <code class="codeph">TRUE</code> or <code class="codeph">MAYBE</code> one by one using the <code class="codeph">GET_NEXT_HIT</code> function in the <code class="codeph">DBMS_RULE</code> package.
+                  </p>
+                  <p>The rules engine uses the rules in the specified rule set for evaluation and returns the results to the client. The rules engine returns rules using two <code class="codeph">OUT</code> parameters in the <code class="codeph">EVALUATE</code> procedure. This procedure is overloaded and the two <code class="codeph">OUT</code> parameters are different in each version of the procedure:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>One version of the procedure returns all of the rules that evaluate to <code class="codeph">TRUE</code> in one list or all of the rules that evaluate to <code class="codeph">MAYBE</code> in one list, and the two <code class="codeph">OUT</code> parameters for this version of the procedure are <code class="codeph">true_rules</code> and <code class="codeph">maybe_rules</code>. That is, the <code class="codeph">true_rules</code> parameter returns rules in one list that evaluate to <code class="codeph">TRUE</code>, and the <code class="codeph">maybe_rules</code> parameter returns rules in one list that might evaluate to <code class="codeph">TRUE</code> given more information.
+                        </p>
+                     </li>
+                     <li>
+                        <p>The other version of the procedure returns all of the rules that evaluate to <code class="codeph">TRUE</code> or <code class="codeph">MAYBE</code> iteratively at the request of the client, and the two <code class="codeph">OUT</code> parameters for this version of the procedure are <code class="codeph">true_rules_iterator</code> and <code class="codeph">maybe_rules_iterator</code>. That is, the <code class="codeph">true_rules_iterator</code> parameter returns rules that evaluate to <code class="codeph">TRUE</code> one by one, and the <code class="codeph">maybe_rules_iterator</code> parameter returns rules one by one that might evaluate to <code class="codeph">TRUE</code> given more information.
+                        </p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS542"></a><a id="STRMS541"></a><div class="props_rev_3"><a id="GUID-2BBCCBFC-59C1-4E19-8E0D-CFF531956233" name="GUID-2BBCCBFC-59C1-4E19-8E0D-CFF531956233"></a><h4 id="STRMS-GUID-2BBCCBFC-59C1-4E19-8E0D-CFF531956233" class="sect4"><span class="enumeration_section">11.2.1 </span>Rule Set Evaluation Process
+                  </h4>
+                  <div>
+                     <p><a href="advanced-rule-concepts.html#GUID-2BBCCBFC-59C1-4E19-8E0D-CFF531956233__i1006414">Figure 11-1</a> shows the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> evaluation process:
+                     </p>
+                     <ol>
+                        <li>
+                           <p>A client-defined event occurs.</p>
+                        </li>
+                        <li>
+                           <p>The client initiates evaluation of a rule set by sending information about an event to the <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a> using the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The rules engine evaluates the rule set for the event using the relevant <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>. The client specifies both the rule set and the evaluation context in the call to the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure. Only rules that are in the specified rule set, and use the specified evaluation context, are used for evaluation.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The rules engine obtains the results of the evaluation. Each rule evaluates to either <code class="codeph">TRUE</code>, <code class="codeph">FALSE</code>, or <code class="codeph">NULL</code> (unknown).
+                           </p>
+                        </li>
+                        <li>
+                           <p>The rules engine returns rules that evaluated to <code class="codeph">TRUE</code> to the client, either in a complete list or one by one. Each returned rule is returned with its entire <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a>, which can contain information or can be <code class="codeph">NULL</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The client performs actions based on the results returned by the rules engine. The rules engine does not perform actions based on rule evaluations.</p>
+                        </li>
+                     </ol>
+                     <div class="figure" id="GUID-2BBCCBFC-59C1-4E19-8E0D-CFF531956233__i1006414">
+                        <p class="titleinfigure">Figure 11-1 Rule Set Evaluation</p><img width="388" src="img/strms017.gif" alt="Description of Figure 11-1 follows" title="Description of Figure 11-1 follows" longdesc="img_text/strms017.html"><br><a href="img_text/strms017.html">Description of "Figure 11-1 Rule Set Evaluation"</a></div>
+                     <!-- class="figure" -->
+                     <div class="infoboxnotealso" id="GUID-2BBCCBFC-59C1-4E19-8E0D-CFF531956233__GUID-0E5978B7-C70E-4107-8129-50A3A0667024">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../arpls/DBMS_RULE.html#ARPLS303"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure
+                              </p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-1C9AD6CC-91A1-4390-A322-19A07A25BC6F">Rule Conditions with Undefined Variables that Evaluate to NULL</a>"</span> for information about <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s and <code class="codeph">maybe_rules</code></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS543"></a><div class="props_rev_3"><a id="GUID-A55F39FF-F6A0-40C6-B0E1-68D124BDFD71" name="GUID-A55F39FF-F6A0-40C6-B0E1-68D124BDFD71"></a><h4 id="STRMS-GUID-A55F39FF-F6A0-40C6-B0E1-68D124BDFD71" class="sect4"><span class="enumeration_section">11.2.2 </span>Partial Evaluation
+                  </h4>
+                  <div>
+                     <p>Partial evaluation occurs when the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure is run without data for all the tables and variables in the specified <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>. During partial evaluation, some rules can reference columns, variables, or attributes that are unavailable, while some other rules can reference only available data.
+                     </p>
+                     <p>For example, consider a scenario where only the following data is available during evaluation:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Column <code class="codeph">tab1.col</code> <code class="codeph">=</code> <code class="codeph">7</code></p>
+                        </li>
+                        <li>
+                           <p>Attribute <code class="codeph">v1.a1</code> <code class="codeph">=</code> <code class="codeph">'ABC'</code></p>
+                        </li>
+                     </ul>
+                     <p>The following rules are used for evaluation:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Rule <code class="codeph">R1</code> has the following condition: 
+                           </p><pre class="oac_no_warn" dir="ltr">(tab1.col = 5)
+</pre></li>
+                        <li>
+                           <p>Rule <code class="codeph">R2</code> has the following condition: 
+                           </p><pre class="oac_no_warn" dir="ltr">(:v1.a2 &gt; 'aaa')
+</pre></li>
+                        <li>
+                           <p>Rule <code class="codeph">R3</code> has the following condition: 
+                           </p><pre class="oac_no_warn" dir="ltr">(:v1.a1 = 'ABC') OR (:v2 = 5)
+</pre></li>
+                        <li>
+                           <p>Rule <code class="codeph">R4</code> has the following condition: 
+                           </p><pre class="oac_no_warn" dir="ltr">(:v1.a1 = UPPER('abc'))
+</pre></li>
+                     </ul>
+                     <p>Given this scenario, <code class="codeph">R1</code> and <code class="codeph">R4</code> reference available data, <code class="codeph">R2</code> references unavailable data, and <code class="codeph">R3</code> references available data and unavailable data.
+                     </p>
+                     <p>Partial evaluation always evaluates only simple conditions within a rule. If the <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a> has parts which are not simple, then the rule might or might not be evaluated completely, depending on the extent to which data is available. If a rule is not completely evaluated, then it can be returned as a <code class="codeph">MAYBE</code> rule.
+                     </p>
+                     <p>Given the rules in this scenario, <code class="codeph">R1</code> and the first part of <code class="codeph">R3</code> are evaluated, but <code class="codeph">R2</code> and <code class="codeph">R4</code> are not evaluated. The following results are returned to the client:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">R1</code> evaluates to <code class="codeph">FALSE</code>, and so is not returned.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">R2</code> is returned as <code class="codeph">MAYBE</code> because information about attribute <code class="codeph">v1.a2</code> is not available.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">R3</code> is returned as <code class="codeph">TRUE</code> because <code class="codeph">R3</code> is a simple rule and the value of <code class="codeph">v1.a1</code> matches the first part of the rule condition.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">R4</code> is returned as <code class="codeph">MAYBE</code> because the rule condition is not simple. The client must supply the value of variable <code class="codeph">v1</code> for this rule to evaluate to <code class="codeph">TRUE</code> or <code class="codeph">FALSE</code>.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-A55F39FF-F6A0-40C6-B0E1-68D124BDFD71__GUID-6178DDDB-7CBA-43AE-A005-85F8687B1F1C">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-27853FFB-70B2-4153-9B11-BB3F8289138E">Simple Rule Conditions</a>"</span></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS544"></a><div class="props_rev_3"><a id="GUID-29608B7A-5D6E-4181-A793-F3AA227F94F8" name="GUID-29608B7A-5D6E-4181-A793-F3AA227F94F8"></a><h3 id="STRMS-GUID-29608B7A-5D6E-4181-A793-F3AA227F94F8" class="sect3"><span class="enumeration_section">11.3 </span>Database Objects and Privileges Related to Rules
+               </h3>
+               <div>
+                  <p>You can create the following types of database objects directly using the <code class="codeph">DBMS_RULE_ADM</code> package:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Evaluation contexts</p>
+                     </li>
+                     <li>
+                        <p>Rules</p>
+                     </li>
+                     <li>
+                        <p>Rule sets</p>
+                     </li>
+                  </ul>
+                  <p>You can create rules and <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s indirectly using the <code class="codeph">DBMS_STREAMS_ADM</code> package. You control the privileges for these database objects using the following procedures in the <code class="codeph">DBMS_RULE_ADM</code> package:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">GRANT_OBJECT_PRIVILEGE</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">GRANT_SYSTEM_PRIVILEGE</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">REVOKE_OBJECT_PRIVILEGE</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">REVOKE_SYSTEM_PRIVILEGE</code></p>
+                     </li>
+                  </ul>
+                  <p>To allow a user to create rule sets, rules, and <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>s in the user's own schema, grant the user the following system privileges:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">CREATE_RULE_SET_OBJ</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">CREATE_RULE_OBJ</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">CREATE_EVALUATION_CONTEXT_OBJ</code></p>
+                     </li>
+                  </ul>
+                  <p>These privileges, and the privileges discussed in the following sections, can be granted to the user directly or through a role.</p>
+                  <p>This section contains these topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-9BECA8CF-C4D8-4806-8ACF-8643F8B90DC5">Privileges for Creating Database Objects Related to Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-C27ED960-2938-4EAA-B8FC-6DB9132EFBB3">Privileges for Altering Database Objects Related to Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-BEC8F331-8EFB-4ECF-8879-A3676EA02014">Privileges for Dropping Database Objects Related to Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-1ADA5F65-2220-4EE2-BA2B-E2F2B450FDCC">Privileges for Placing Rules in a Rule Set</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-49E5D176-8EE7-42D9-B0C0-60E462A67BB7">Privileges for Evaluating a Rule Set</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-A5E3B889-B3E2-4EA6-B7D2-FC90720E16F1">Privileges for Using an Evaluation Context</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-29608B7A-5D6E-4181-A793-F3AA227F94F8__GUID-0A68CBE7-C418-4FE5-B0E7-1DD3A1762EED">
+                     <p class="notep1">Note:</p>
+                     <p>When you grant a privilege on <code class="codeph">"ANY"</code> object (for example, <code class="codeph">ALTER_ANY_RULE</code>), and the initialization parameter <code class="codeph">O7_DICTIONARY_ACCESSIBILITY</code> is set to <code class="codeph">FALSE</code>, you give the user access to that type of object in all schemas except the <code class="codeph">SYS</code> schema. By default, the initialization parameter <code class="codeph">O7_DICTIONARY_ACCESSIBILITY</code> is set to <code class="codeph">FALSE</code>.
+                     </p>
+                     <p>If you want to grant access to an object in the <code class="codeph">SYS</code> schema, then you can grant object privileges explicitly on the object. Alternatively, you can set the <code class="codeph">O7_DICTIONARY_ACCESSIBILITY</code> initialization parameter to <code class="codeph">TRUE</code>. Then privileges granted on <code class="codeph">"ANY"</code> object will allow access to any schema, including&nbsp;<code class="codeph">SYS</code>.
+                     </p>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-29608B7A-5D6E-4181-A793-F3AA227F94F8__GUID-A67F15A6-5E35-40E1-8450-D0B9321F8DC1">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-57C17FA9-E2A1-45EE-AE73-F9BCD9707D33">The Components of a Rule</a>"</span> for more information about these database objects
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_RULE_ADM.html#ARPLS304"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the system and object privileges for these database objects
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../cncpt/topics-for-database-administrators-and-developers.html#CNCPT123"><span class="italic">Oracle Database Concepts</span></a> and <a href="../dbseg/configuring-privilege-and-role-authorization.html#DBSEG004"><span class="italic">Oracle Database Security Guide </span></a>for general information about user privileges
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a> for more information about creating rules and rule sets indirectly using the <code class="codeph">DBMS_STREAMS_ADM</code> package
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS545"></a><div class="props_rev_3"><a id="GUID-9BECA8CF-C4D8-4806-8ACF-8643F8B90DC5" name="GUID-9BECA8CF-C4D8-4806-8ACF-8643F8B90DC5"></a><h4 id="STRMS-GUID-9BECA8CF-C4D8-4806-8ACF-8643F8B90DC5" class="sect4"><span class="enumeration_section">11.3.1 </span>Privileges for Creating Database Objects Related to Rules
+                  </h4>
+                  <div>
+                     <p>To create an <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>, rule, or <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> in a schema, a user must meet at least one of the following conditions:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The schema must be the user's own schema, and the user must be granted the create system privilege for the type of database object being created. For example, to create a rule set in the user's own schema, a user must be granted the <code class="codeph">CREATE_RULE_SET_OBJ</code> system privilege.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the create any system privilege for the type of database object being created. For example, to create an evaluation context in any schema, a user must be granted the <code class="codeph">CREATE_ANY_EVALUATION_CONTEXT</code> system privilege.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-9BECA8CF-C4D8-4806-8ACF-8643F8B90DC5__GUID-B96250B2-AD84-411E-9646-A6C3681D1B7F">
+                        <p class="notep1">Note:</p>
+                        <p>When creating a rule with an evaluation context, the rule owner must have privileges on all objects accessed by the evaluation context.</p>
+                     </div>
+                  </div>
+               </div><a id="STRMS546"></a><div class="props_rev_3"><a id="GUID-C27ED960-2938-4EAA-B8FC-6DB9132EFBB3" name="GUID-C27ED960-2938-4EAA-B8FC-6DB9132EFBB3"></a><h4 id="STRMS-GUID-C27ED960-2938-4EAA-B8FC-6DB9132EFBB3" class="sect4"><span class="enumeration_section">11.3.2 </span>Privileges for Altering Database Objects Related to Rules
+                  </h4>
+                  <div>
+                     <p>To alter an <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>, rule, or <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, a user must meet at least one of the following conditions:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The user must own the database object.</p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the alter object privilege for the database object if it is in another user's schema. For example, to alter a rule set in another user's schema, a user must be granted the <code class="codeph">ALTER_ON_RULE_SET</code> object privilege on the rule set.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the alter any system privilege for the database object. For example, to alter a rule in any schema, a user must be granted the <code class="codeph">ALTER_ANY_RULE</code> system privilege.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS547"></a><div class="props_rev_3"><a id="GUID-BEC8F331-8EFB-4ECF-8879-A3676EA02014" name="GUID-BEC8F331-8EFB-4ECF-8879-A3676EA02014"></a><h4 id="STRMS-GUID-BEC8F331-8EFB-4ECF-8879-A3676EA02014" class="sect4"><span class="enumeration_section">11.3.3 </span>Privileges for Dropping Database Objects Related to Rules
+                  </h4>
+                  <div>
+                     <p>To drop an <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>, rule, or <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, a user must meet at least one of the following conditions:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The user must own the database object.</p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the drop any system privilege for the database object. For example, to drop a rule set in any schema, a user must be granted the <code class="codeph">DROP_ANY_RULE_SET</code> system privilege.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS548"></a><div class="props_rev_3"><a id="GUID-1ADA5F65-2220-4EE2-BA2B-E2F2B450FDCC" name="GUID-1ADA5F65-2220-4EE2-BA2B-E2F2B450FDCC"></a><h4 id="STRMS-GUID-1ADA5F65-2220-4EE2-BA2B-E2F2B450FDCC" class="sect4"><span class="enumeration_section">11.3.4 </span>Privileges for Placing Rules in a Rule Set
+                  </h4>
+                  <div>
+                     <p>This section describes the privileges required to place a rule in a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>. The user must meet at least one of the following conditions for the rule:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The user must own the rule.</p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the execute object privilege on the rule if the rule is in another user's schema. For example, to place a rule named <code class="codeph">depts</code> in the <code class="codeph">hr</code> schema in a rule set, a user must be granted the <code class="codeph">EXECUTE_ON_RULE</code> privilege for the <code class="codeph">hr.depts</code> rule.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the execute any system privilege for rules. For example, to place any rule in a rule set, a user must be granted the <code class="codeph">EXECUTE_ANY_RULE</code> system privilege.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The user also must meet at least one of the following conditions for the rule set:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The user must own the rule set.</p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the alter object privilege on the rule set if the rule set is in another user's schema. For example, to place a rule in the <code class="codeph">human_resources</code> rule set in the <code class="codeph">hr</code> schema, a user must be granted the <code class="codeph">ALTER_ON_RULE_SET</code> privilege for the <code class="codeph">hr.human_resources</code> rule set.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the alter any system privilege for rule sets. For example, to place a rule in any rule set, a user must be granted the <code class="codeph">ALTER_ANY_RULE_SET</code> system privilege.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>In addition, the rule owner must have privileges on all objects referenced by the rule. These privileges are important when the rule does not have an <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> associated with it.
+                     </p>
+                  </div>
+               </div><a id="STRMS549"></a><div class="props_rev_3"><a id="GUID-49E5D176-8EE7-42D9-B0C0-60E462A67BB7" name="GUID-49E5D176-8EE7-42D9-B0C0-60E462A67BB7"></a><h4 id="STRMS-GUID-49E5D176-8EE7-42D9-B0C0-60E462A67BB7" class="sect4"><span class="enumeration_section">11.3.5 </span>Privileges for Evaluating a Rule Set
+                  </h4>
+                  <div>
+                     <p>To evaluate a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, a user must meet at least one of the following conditions:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The user must own the rule set.</p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the execute object privilege on the rule set if it is in another user's schema. For example, to evaluate a rule set named <code class="codeph">human_resources</code> in the <code class="codeph">hr</code> schema, a user must be granted the <code class="codeph">EXECUTE_ON_RULE_SET</code> privilege for the <code class="codeph">hr.human_resources</code> rule set.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the execute any system privilege for rule sets. For example, to evaluate any rule set, a user must be granted the <code class="codeph">EXECUTE_ANY_RULE_SET</code> system privilege.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Granting <code class="codeph">EXECUTE</code> object privilege on a rule set requires that the grantor have the <code class="codeph">EXECUTE</code> privilege specified <code class="codeph">WITH</code> <code class="codeph">GRANT</code> <code class="codeph">OPTION</code> on all rules currently in the rule set.
+                     </p>
+                  </div>
+               </div><a id="STRMS550"></a><div class="props_rev_3"><a id="GUID-A5E3B889-B3E2-4EA6-B7D2-FC90720E16F1" name="GUID-A5E3B889-B3E2-4EA6-B7D2-FC90720E16F1"></a><h4 id="STRMS-GUID-A5E3B889-B3E2-4EA6-B7D2-FC90720E16F1" class="sect4"><span class="enumeration_section">11.3.6 </span>Privileges for Using an Evaluation Context
+                  </h4>
+                  <div>
+                     <p>To use an <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> in a rule or a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, the user who owns the rule or rule set must meet at least one of the following conditions for the evaluation context:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The user must own the evaluation context.</p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the <code class="codeph">EXECUTE_ON_EVALUATION_CONTEXT</code> privilege on the evaluation context, if it is in another user's schema.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The user must be granted the <code class="codeph">EXECUTE_ANY_EVALUATION_CONTEXT</code> system privilege for evaluation contexts.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS185"></a><div class="props_rev_3"><a id="GUID-6BEFE444-DC00-4B40-A280-40F1D4E3A66E" name="GUID-6BEFE444-DC00-4B40-A280-40F1D4E3A66E"></a><h3 id="STRMS-GUID-6BEFE444-DC00-4B40-A280-40F1D4E3A66E" class="sect3"><span class="enumeration_section">11.4 </span>Evaluation Contexts Used in Oracle Streams
+               </h3>
+               <div>
+                  <p>The following sections describe the system-created <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>s used in Oracle Streams.
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-4224C901-4C88-4FFF-B143-B81A7C2F3592">Evaluation Context for Global, Schema, Table, and Subset Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-873DF102-9F24-457A-B4C7-E1F500AC7917">Evaluation Contexts for Message Rules</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS551"></a><div class="props_rev_3"><a id="GUID-4224C901-4C88-4FFF-B143-B81A7C2F3592" name="GUID-4224C901-4C88-4FFF-B143-B81A7C2F3592"></a><h4 id="STRMS-GUID-4224C901-4C88-4FFF-B143-B81A7C2F3592" class="sect4"><span class="enumeration_section">11.4.1 </span>Evaluation Context for Global, Schema, Table, and Subset Rules
+                  </h4>
+                  <div>
+                     <p>When you create global, schema, table, and subset rules, the system-created <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s and rules use a built-in <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> in the <code class="codeph">SYS</code> schema named <code class="codeph">STREAMS$_EVALUATION_CONTEXT</code>. <code class="codeph">PUBLIC</code> is granted the <code class="codeph">EXECUTE</code> privilege on this evaluation context. Global, schema, table, and subset rules can be used by <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es, and <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>s.
+                     </p>
+                     <p>During Oracle installation, the following statement creates the Oracle Streams evaluation context:</p><pre class="oac_no_warn" dir="ltr">DECLARE
+  vt  SYS.RE$VARIABLE_TYPE_LIST;
+BEGIN
+  vt := SYS.RE$VARIABLE_TYPE_LIST(
+    SYS.RE$VARIABLE_TYPE('DML', 'SYS.LCR$_ROW_RECORD', 
+       'SYS.DBMS_STREAMS_INTERNAL.ROW_VARIABLE_VALUE_FUNCTION',
+       'SYS.DBMS_STREAMS_INTERNAL.ROW_FAST_EVALUATION_FUNCTION'),
+    SYS.RE$VARIABLE_TYPE('DDL', 'SYS.LCR$_DDL_RECORD',
+       'SYS.DBMS_STREAMS_INTERNAL.DDL_VARIABLE_VALUE_FUNCTION',
+       'SYS.DBMS_STREAMS_INTERNAL.DDL_FAST_EVALUATION_FUNCTION'));
+    SYS.RE$VARIABLE_TYPE(NULL, 'SYS.ANYDATA', 
+       NULL,
+       'SYS.DBMS_STREAMS_INTERNAL.ANYDATA_FAST_EVAL_FUNCTION'));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name =&gt; 'SYS.STREAMS$_EVALUATION_CONTEXT',
+    variable_types          =&gt; vt,
+    evaluation_function     =&gt;
+                       'SYS.DBMS_STREAMS_INTERNAL.EVALUATION_CONTEXT_FUNCTION');
+END;
+/
+</pre><p>This statement includes references to the following internal functions in the <code class="codeph">SYS.DBMS_STREAM_INTERNAL</code> package:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">ROW_VARIABLE_VALUE_FUNCTION</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DDL_VARIABLE_VALUE_FUNCTION</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">EVALUATION_CONTEXT_FUNCTION</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">ROW_FAST_EVALUATION_FUNCTION</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">DDL_FAST_EVALUATION_FUNCTION</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">ANYDATA_FAST_EVAL_FUNCTION</code></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-4224C901-4C88-4FFF-B143-B81A7C2F3592__GUID-A3FB0BC0-CDA3-4851-8A7A-418107FCB002">
+                        <p class="notep1">Note:</p>
+                        <p>Information about these internal functions is provided for reference purposes only. You should never run any of these functions directly.</p>
+                     </div>
+                     <p>The <code class="codeph">ROW_VARIABLE_VALUE_FUNCTION</code> converts an <code class="codeph">ANYDATA</code> payload, which encapsulates a <code class="codeph">SYS.LCR$_ROW_RECORD</code> instance, into a <code class="codeph">SYS.LCR$_ROW_RECORD</code> instance before evaluating rules on the data.
+                     </p>
+                     <p>The <code class="codeph">DDL_VARIABLE_VALUE_FUNCTION</code> converts an <code class="codeph">ANYDATA</code> payload, which encapsulates a <code class="codeph">SYS.LCR$_DDL_RECORD</code> instance, into a <code class="codeph">SYS.LCR$_DDL_RECORD</code> instance before evaluating rules on the data.
+                     </p>
+                     <p>The <code class="codeph">EVALUATION_CONTEXT_FUNCTION</code> is specified as an <code class="codeph">evaluation_function</code> in the call to the <code class="codeph">CREATE_EVALUATION_CONTEXT</code> procedure. This function supplements normal rule evaluation for <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s. A capture process enqueues row LCRs and DDL LCRs into its <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>, and this function enables it to enqueue other internal <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s into the queue, such as commits, rollbacks, and data dictionary changes. This information that is enqueued by capture processes is also used during rule evaluation for a propagation or apply process. Synchronous captures do not use the <code class="codeph">EVALUATION_CONTEXT_FUNCTION</code>.
+                     </p>
+                     <p><code class="codeph">ROW_FAST_EVALUATION_FUNCTION</code> improves performance by optimizing access to the following <code class="codeph">LCR$_ROW_RECORD</code> member functions during rule evaluation: 
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">GET_OBJECT_OWNER</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">GET_OBJECT_NAME</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">IS_NULL_TAG</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">GET_SOURCE_DATABASE_NAME</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">GET_COMMAND_TYPE</code></p>
+                        </li>
+                     </ul>
+                     <p><code class="codeph">DDL_FAST_EVALUATION_FUNCTION</code> improves performance by optimizing access to the following <code class="codeph">LCR$_DDL_RECORD</code> member functions during rule evaluation if the condition is <code class="codeph">&lt;</code>, <code class="codeph">&lt;=</code>, <code class="codeph">=</code>, <code class="codeph">&gt;=</code>, or <code class="codeph">&gt;</code> and the other operand is a constant: 
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">GET_OBJECT_OWNER</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">GET_OBJECT_NAME</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">IS_NULL_TAG</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">GET_SOURCE_DATABASE_NAME</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">GET_COMMAND_TYPE</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">GET_BASE_TABLE_NAME</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">GET_BASE_TABLE_OWNER</code></p>
+                        </li>
+                     </ul>
+                     <p><code class="codeph">ANYDATA_FAST_EVAL_FUNCTION</code> improves performance by optimizing access to values inside an <code class="codeph">ANYDATA</code> object.
+                     </p>
+                     <p>Rules created using the <code class="codeph">DBMS_STREAMS_ADM</code> package use <code class="codeph">ROW_FAST_EVALUATION_FUNCTION</code> or <code class="codeph">DDL_FAST_EVALUATION_FUNCTION</code>, except for subset rules created using the <code class="codeph">ADD_SUBSET_RULES</code> or <code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code> procedure.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-4224C901-4C88-4FFF-B143-B81A7C2F3592__GUID-A80F3A88-1935-4691-A397-0A3711EBC5F7">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS307"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about LCRs and their member functions
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS552"></a><div class="props_rev_3"><a id="GUID-873DF102-9F24-457A-B4C7-E1F500AC7917" name="GUID-873DF102-9F24-457A-B4C7-E1F500AC7917"></a><h4 id="STRMS-GUID-873DF102-9F24-457A-B4C7-E1F500AC7917" class="sect4"><span class="enumeration_section">11.4.2 </span>Evaluation Contexts for Message Rules
+                  </h4>
+                  <div>
+                     <p>When you use either the <code class="codeph">ADD_MESSAGE_RULE</code> procedure or the <code class="codeph">ADD_MESSAGE_PROPAGATION_RULE</code> procedure to create a <a href="strms_glossary.html#GUID-B6DD250D-B3A5-486A-9411-C20D4B8FD9E0"><span class="xrefglossterm">message rule</span></a>, the message rule uses a user-defined <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> type that you specify when you create the rule. Such a system-created message rule uses a system-created <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>. The name of the system-created evaluation context is different for each message type used to create message rules. Such an evaluation context has a system-generated name and is created in the schema that owns the rule. Only the user who owns this evaluation context is granted the <code class="codeph">EXECUTE</code> privilege on it.
+                     </p>
+                     <p>The evaluation context for this type of message rule contains a variable that is the same type as the message type. The name of this variable is in the form <code class="codeph">VAR$_</code><span class="italic">number</span>, where <span class="italic">number</span> is a system-generated number. For example, if you specify <code class="codeph">strmadmin.region_pri_msg</code> as the message type when you create a message rule, then the system-created evaluation context has a variable of this type, and the variable is used in the <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a>. Assume that the following statement created the <code class="codeph">strmadmin.region_pri_msg</code> type:
+                     </p><pre class="oac_no_warn" dir="ltr">CREATE TYPE strmadmin.region_pri_msg AS OBJECT(
+  region         VARCHAR2(100),
+  priority       NUMBER,
+  message        VARCHAR2(3000))
+/
+</pre><p>When you create a message rule using this type, you can specify the following rule condition:</p><pre class="oac_no_warn" dir="ltr">:msg.region = 'EUROPE' AND :msg.priority = '1'
+</pre><p>The system-created message rule replaces <code class="codeph">:msg</code> in the rule condition you specify with the name of the variable. The following is an example of a message rule condition that might result:
+                     </p><pre class="oac_no_warn" dir="ltr">:VAR$_52.region = 'EUROPE' AND  :VAR$_52.priority = '1'
+</pre><p>In this case, <code class="codeph">VAR$_52</code> is the variable name, the type of the <code class="codeph">VAR$_52</code> variable is <code class="codeph">strmadmin.region_pri_msg</code>, and the evaluation context for the rule contains this variable.
+                     </p>
+                     <p>The message rule itself has an evaluation context. A statement similar to the following creates an evaluation context for a message rule:</p><pre class="oac_no_warn" dir="ltr">DECLARE
+  vt  SYS.RE$VARIABLE_TYPE_LIST;
+BEGIN
+  vt := SYS.RE$VARIABLE_TYPE_LIST(
+    SYS.RE$VARIABLE_TYPE('VAR$_52', 'STRMADMIN.REGION_PRI_MSG', 
+       'SYS.DBMS_STREAMS_INTERNAL.MSG_VARIABLE_VALUE_FUNCTION', NULL));
+  DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT(
+    evaluation_context_name =&gt; 'STRMADMIN.EVAL_CTX$_99',
+    variable_types          =&gt; vt,
+    evaluation_function     =&gt; NULL);
+END;
+/
+</pre><p>The name of the evaluation context is in the form <code class="codeph">EVAL_CTX$_</code><span class="italic">number</span>, where <span class="italic">number</span> is a system-generated number. In this example, the name of the evaluation context is <code class="codeph">EVAL_CTX$_99</code>. 
+                     </p>
+                     <p>This statement also includes a reference to the <code class="codeph">MSG_VARIABLE_VALUE_FUNCTION</code> internal function in the <code class="codeph">SYS.DBMS_STREAM_INTERNAL</code> package. This function converts an <code class="codeph">ANYDATA</code> payload, which encapsulates a message instance, into an instance of the same type as the variable before evaluating rules on the data. For example, if the variable type is <code class="codeph">strmadmin.region_pri_msg</code>, then the <code class="codeph">MSG_VARIABLE_VALUE_FUNCTION</code> converts the message payload from an <code class="codeph">ANYDATA</code> payload to a <code class="codeph">strmadmin.region_pri_msg</code> payload.
+                     </p>
+                     <p>If you create rules for different message types, then Oracle creates a different evaluation context for each message type. If you create a rule with the same message type as an existing rule, then the new rule uses the evaluation context for the existing rule. When you use the <code class="codeph">ADD_MESSAGE_RULE</code> or <code class="codeph">ADD_MESSAGE_PROPAGATION_RULE</code> to create a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> for a <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> or <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, the new rule set does not have an evaluation context.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-873DF102-9F24-457A-B4C7-E1F500AC7917__GUID-9572D217-442B-48A4-BE5E-D9ADF6977A8B">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-33E363CC-C872-4B3E-9E14-B5674B132C60">Message Rules</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-4224C901-4C88-4FFF-B143-B81A7C2F3592">Evaluation Context for Global, Schema, Table, and Subset Rules</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="monitoring-rules.html#GUID-8348078C-1D8A-4BC2-8B25-A9A759FD4634">Displaying the Oracle Streams Rules Used by a Specific Oracle Streams Client</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS553"></a><div class="props_rev_3"><a id="GUID-9B4E9177-2405-46BE-9AF2-343C407F163F" name="GUID-9B4E9177-2405-46BE-9AF2-343C407F163F"></a><h3 id="STRMS-GUID-9B4E9177-2405-46BE-9AF2-343C407F163F" class="sect3"><span class="enumeration_section">11.5 </span>Oracle Streams and Event Contexts
+               </h3>
+               <div>
+                  <p>In Oracle Streams, <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s, and <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>s do not use event contexts, but <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es do. The following types of <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s can be staged in a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>: <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s, <a href="strms_glossary.html#GUID-95FF7ACD-11FF-4ACF-8E06-60033BEC621B"><span class="xrefglossterm">buffered LCR</span></a>s, <a href="strms_glossary.html#GUID-2587F4F8-8B48-40F7-8541-D039E22291C3"><span class="xrefglossterm">buffered user message</span></a>s, <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>s, and <a href="strms_glossary.html#GUID-8F1FA1C4-ADB5-4A4D-9374-B50AADB53066"><span class="xrefglossterm">persistent user message</span></a>s. When a message is staged in a queue, a propagation or apply process can send the message, along with an event context, to the <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a> for evaluation. An event context always has the following name-value pair: <code class="codeph">AQ$_MESSAGE</code> as the name and the message as the value.
+                  </p>
+                  <p>If you create a custom <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>, then you can create propagation and apply process <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s that refer to Oracle Streams events using implicit variables. The variable value function for each implicit variable can check for event contexts with the name <code class="codeph">AQ$_MESSAGE</code>. If an event context with this name is found, then the variable value function returns a value based on a message. You can also pass the event context to an evaluation function and a variable method function.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-9B4E9177-2405-46BE-9AF2-343C407F163F__GUID-83494482-8F63-4C10-87A6-734343954890">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-75AB7AAD-ADD6-47EF-B948-B46676079BAB">Rule Set Evaluation</a>"</span> for more information about event contexts
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-97E88578-DFA9-45AF-BF06-0E751B20DD1B">Explicit and Implicit Variables</a>"</span> for more information about variable value functions
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-4A3772AB-E55A-4D50-93F4-36AC1585C952">Evaluation Function</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS554"></a><div class="props_rev_3"><a id="GUID-58D3734F-2465-4AA0-A4B3-0E942075C612" name="GUID-58D3734F-2465-4AA0-A4B3-0E942075C612"></a><h3 id="STRMS-GUID-58D3734F-2465-4AA0-A4B3-0E942075C612" class="sect3"><span class="enumeration_section">11.6 </span>Oracle Streams and Action Contexts
+               </h3>
+               <div>
+                  <p>The following sections describe the purposes of <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a>s in Oracle Streams and the importance of ensuring that only one <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> in a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> can evaluate to <code class="codeph">TRUE</code> for a particular <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a>.
+                  </p>
+               </div><a id="STRMS555"></a><div class="props_rev_3"><a id="GUID-523B6B87-F2DB-4FAB-870F-60AB6B49F461" name="GUID-523B6B87-F2DB-4FAB-870F-60AB6B49F461"></a><h4 id="STRMS-GUID-523B6B87-F2DB-4FAB-870F-60AB6B49F461" class="sect4"><span class="enumeration_section">11.6.1 </span>Purposes of Action Contexts in Oracle Streams
+                  </h4>
+                  <div>
+                     <p>In Oracle Streams, an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> serves the following purposes:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-BACE066D-B4AB-4538-ABCD-C912AC5F6C3D">Internal LCR Transformations in Subset Rules</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-4810085E-4095-4FA0-B7A4-EB65EFBF1612">Information About Declarative Rule-Based Transformations</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-0B101114-8AB3-4011-8D8F-F20E47E1330F">Custom Rule-Based Transformations</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-E0657629-9C62-4614-A4CE-C7C4CD9500B7">Execution Directives for Messages During Apply</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-43168977-C0D6-42B2-B0E3-711BDA4BE6AA">Enqueue Destinations for Messages During Apply</a></p>
+                        </li>
+                     </ul>
+                     <p>A different name-value pair can exist in the action context of a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> for each of these purposes. If an action context for a rule contains more than one of these name-value pairs, then the actions specified or described by the name-value pairs are performed in the following order:
+                     </p>
+                     <ol>
+                        <li>
+                           <p>Perform subset transformation.</p>
+                        </li>
+                        <li>
+                           <p>Display information about <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Perform <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Follow execution directive and perform execution if directed to do so (apply only).</p>
+                        </li>
+                        <li>
+                           <p>Enqueue into a <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> (apply only).
+                           </p>
+                           <div class="infoboxnote" id="GUID-523B6B87-F2DB-4FAB-870F-60AB6B49F461__GUID-887E9921-E036-4D6C-9950-8310E4FCDB65">
+                              <p class="notep1">Note:</p>
+                              <p>The actions specified in the action context for a rule are performed only if the rule is in the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>. If a rule is in a <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a>, then these <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s ignore the action context of the rule.
+                              </p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div><a id="STRMS556"></a><div class="props_rev_3"><a id="GUID-BACE066D-B4AB-4538-ABCD-C912AC5F6C3D" name="GUID-BACE066D-B4AB-4538-ABCD-C912AC5F6C3D"></a><h5 id="STRMS-GUID-BACE066D-B4AB-4538-ABCD-C912AC5F6C3D" class="sect5"><span class="enumeration_section">11.6.1.1 </span>Internal LCR Transformations in Subset Rules
+                     </h5>
+                     <div>
+                        <p>When you use <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a>s, an update operation can be converted into an insert or delete operation when it is captured, propagated, applied, or dequeued. This automatic conversion is called <a href="strms_glossary.html#GUID-DD0C1CF9-3357-4464-A102-F4790BD5BD91"><span class="xrefglossterm">row migration</span></a> and is performed by an internal transformation specified in the action context when the subset rule evaluates to <code class="codeph">TRUE</code>. The name-value pair for a subset transformation has <code class="codeph">STREAMS$_ROW_SUBSET</code> for the name and either <code class="codeph">INSERT</code> or <code class="codeph">DELETE</code> for the value.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-BACE066D-B4AB-4538-ABCD-C912AC5F6C3D__GUID-BA7300C2-98A7-4BAF-968B-CBBA2E7158E4">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-F68588B3-4297-43E5-BDCE-89A8740E23A0">Subset Rules</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="managing-rule-based-transformations.html#GUID-77B2B9D3-E092-49FC-BF49-9C4AB1E53BB2">   Managing Rule-Based Transformations </a> for information about using rule-based transformation with subset rules
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STRMS557"></a><div class="props_rev_3"><a id="GUID-4810085E-4095-4FA0-B7A4-EB65EFBF1612" name="GUID-4810085E-4095-4FA0-B7A4-EB65EFBF1612"></a><h5 id="STRMS-GUID-4810085E-4095-4FA0-B7A4-EB65EFBF1612" class="sect5"><span class="enumeration_section">11.6.1.2 </span>Information About Declarative Rule-Based Transformations
+                     </h5>
+                     <div>
+                        <p>A declarative rule-based transformation is an internal modification of a row LCR that results when a rule evaluates to <code class="codeph">TRUE</code>. The name-value pair for a declarative rule-based transformation has <code class="codeph">STREAMS$_INTERNAL_TRANFORM</code> for the name and the name of a data dictionary view that provides additional information about the transformation for the value.
+                        </p>
+                        <p>The name-value pair added for a declarative rule-based transformation is for information purposes only. These name-value pairs are not used by Oracle Streams clients. However, the declarative rule-based transformations described in an action context are performed internally before any custom rule-based transformations specified in the same action context.</p>
+                        <div class="infoboxnotealso" id="GUID-4810085E-4095-4FA0-B7A4-EB65EFBF1612__GUID-F497331D-83C3-42AD-A6B4-27561AF07516">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="rule-based-transformations.html#GUID-706DC628-4237-41A2-86CA-C9BCCA984052">Declarative Rule-Based Transformations</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="managing-rule-based-transformations.html#GUID-53C7811D-9311-495A-BA26-4DE5E6D6A3F7">Managing Declarative Rule-Based Transformations</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STRMS558"></a><div class="props_rev_3"><a id="GUID-0B101114-8AB3-4011-8D8F-F20E47E1330F" name="GUID-0B101114-8AB3-4011-8D8F-F20E47E1330F"></a><h5 id="STRMS-GUID-0B101114-8AB3-4011-8D8F-F20E47E1330F" class="sect5"><span class="enumeration_section">11.6.1.3 </span>Custom Rule-Based Transformations
+                     </h5>
+                     <div>
+                        <p>A custom rule-based transformation is any modification made by a user-defined function to a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> when a rule evaluates to <code class="codeph">TRUE</code>. The name-value pair for a custom rule-based transformation has <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> for the name and the name of the transformation function for the value.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-0B101114-8AB3-4011-8D8F-F20E47E1330F__GUID-8BF03A09-EF21-46F9-9F7D-A8B64A1C5D49">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="rule-based-transformations.html#GUID-F7D2443B-A1DE-4496-B629-EB3D636D41A6">Custom Rule-Based Transformations</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="managing-rule-based-transformations.html#GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7">Managing Custom Rule-Based Transformations</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STRMS559"></a><div class="props_rev_3"><a id="GUID-E0657629-9C62-4614-A4CE-C7C4CD9500B7" name="GUID-E0657629-9C62-4614-A4CE-C7C4CD9500B7"></a><h5 id="STRMS-GUID-E0657629-9C62-4614-A4CE-C7C4CD9500B7" class="sect5"><span class="enumeration_section">11.6.1.4 </span>Execution Directives for Messages During Apply
+                     </h5>
+                     <div>
+                        <p>The <code class="codeph">SET_EXECUTE</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package specifies whether a message that satisfies the specified rule is executed by an apply process. The name-value pair for an execution directive has <code class="codeph">APPLY$_EXECUTE</code> for the name and <code class="codeph">NO</code> for the value if the apply process should not execute the message. If a message that satisfies a rule should be executed by an apply process, then this name-value pair is not present in the action context of the rule.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-E0657629-9C62-4614-A4CE-C7C4CD9500B7__GUID-D66BD569-270F-4374-BE4C-5CE00353D007">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-C9D9ABD3-392A-4AF6-BD91-6A75E050AEFA">Specifying Execute Directives for Apply Processes</a>"</span></p>
+                        </div>
+                     </div>
+                  </div><a id="STRMS560"></a><div class="props_rev_3"><a id="GUID-43168977-C0D6-42B2-B0E3-711BDA4BE6AA" name="GUID-43168977-C0D6-42B2-B0E3-711BDA4BE6AA"></a><h5 id="STRMS-GUID-43168977-C0D6-42B2-B0E3-711BDA4BE6AA" class="sect5"><span class="enumeration_section">11.6.1.5 </span>Enqueue Destinations for Messages During Apply
+                     </h5>
+                     <div>
+                        <p>The <code class="codeph">SET_ENQUEUE_DESTINATION</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package sets the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> where a message that satisfies the specified rule is enqueued automatically by an apply process. The name-value pair for an enqueue destination has <code class="codeph">APPLY$_ENQUEUE</code> for the name and the name of the destination queue for the value.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-43168977-C0D6-42B2-B0E3-711BDA4BE6AA__GUID-8C1BC8F7-8C5B-4BE4-BA1F-F92F75D9CBE0">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-80FC2523-4B43-42D1-80F0-2A796BA81938">Specifying That Apply Processes Enqueue Messages</a>"</span></p>
+                        </div>
+                     </div>
+                  </div>
+               </div><a id="STRMS561"></a><div class="props_rev_3"><a id="GUID-598707AA-9C45-425A-8D9A-DADED74418ED" name="GUID-598707AA-9C45-425A-8D9A-DADED74418ED"></a><h4 id="STRMS-GUID-598707AA-9C45-425A-8D9A-DADED74418ED" class="sect4"><span class="enumeration_section">11.6.2 </span>Ensure That Only One Rule Can Evaluate to TRUE for a Particular Rule Condition
+                  </h4>
+                  <div>
+                     <p>If you use a non-<code class="codeph">NULL</code> <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> for one or more <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s in a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a>, then ensure that only one rule can evaluate to <code class="codeph">TRUE</code> for a particular <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a>. If more than one rule evaluates to <code class="codeph">TRUE</code> for a particular condition, then only one of the rules is returned, which can lead to unpredictable results. 
+                     </p>
+                     <p>For example, suppose two rules evaluate to <code class="codeph">TRUE</code> if an LCR contains a DML change to the <code class="codeph">hr.employees</code> table. The first rule has a <code class="codeph">NULL</code> action context. The second rule has an action context that specifies a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>. If there is a DML change to the <code class="codeph">hr.employees</code> table, then both rules evaluate to <code class="codeph">TRUE</code> for the change, but only one rule is returned. In this case, the transformation might or might not occur, depending on which rule is returned.
+                     </p>
+                     <p>You might want to ensure that only one rule in a positive rule set can evaluate to <code class="codeph">TRUE</code> for any condition, regardless of whether any of the rules have a non-<code class="codeph">NULL</code> action context. By following this guideline, you can avoid unpredictable results if, for example, a non-<code class="codeph">NULL</code> action context is added to a rule in the future.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-598707AA-9C45-425A-8D9A-DADED74418ED__GUID-22EB42EE-3D3D-4E65-9BB3-96EF0F0D862C">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS562"></a><div class="props_rev_3"><a id="GUID-8D6DB5B2-EEFA-45A5-AB49-A44AA9681AEA" name="GUID-8D6DB5B2-EEFA-45A5-AB49-A44AA9681AEA"></a><h4 id="STRMS-GUID-8D6DB5B2-EEFA-45A5-AB49-A44AA9681AEA" class="sect4"><span class="enumeration_section">11.6.3 </span>Action Context Considerations for Schema and Global Rules
+                  </h4>
+                  <div>
+                     <p>If you use an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> for a <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a>, enqueue destination, or execute directive with a <a href="strms_glossary.html#GUID-59A77572-3B32-483A-A816-5938ACA78220"><span class="xrefglossterm">schema rule</span></a> or <a href="strms_glossary.html#GUID-37142187-2A5B-48E7-A1CE-A07D60C60460"><span class="xrefglossterm">global rule</span></a>, then the action specified by the action context is carried out on a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> if the message causes the schema or global rule to evaluate to <code class="codeph">TRUE</code>. For example, if a <a href="strms_glossary.html#GUID-59A77572-3B32-483A-A816-5938ACA78220"><span class="xrefglossterm">schema rule</span></a> has an action context that specifies a custom rule-based transformation, then the transformation is performed on LCRs for the tables in the schema.
+                     </p>
+                     <p>You might want to use an action context with a schema or global rule but exclude a subset of LCRs from the action performed by the action context. For example, if you want to perform a custom rule-based transformation on all of the tables in the <code class="codeph">hr</code> schema except for the <code class="codeph">job_history</code> table, then ensure that the transformation function returns the original LCR if the table is <code class="codeph">job_history</code>. 
+                     </p>
+                     <p>If you want to set an enqueue destination or an execute directive for all of the tables in the <code class="codeph">hr</code> schema except for the <code class="codeph">job_history</code> table, then you can use a schema rule and add the following condition to it:
+                     </p><pre class="oac_no_warn" dir="ltr">:dml.get_object_name() != 'JOB_HISTORY'
+</pre><p>In this case, if you want LCRs for the <code class="codeph">job_history</code> table to evaluate to <code class="codeph">TRUE</code>, but you do not want to perform the enqueue or execute directive, then you can add a <a href="strms_glossary.html#GUID-4A72ABEB-7CC1-4A46-A4B9-41F722D872A4"><span class="xrefglossterm">table rule</span></a> for the table to a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a>. That is, the schema rule would have the enqueue destination or execute directive, but the table rule would not.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-8D6DB5B2-EEFA-45A5-AB49-A44AA9681AEA__GUID-713461CB-A8CC-4899-85DA-00E71832E356">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-979FB5C9-7EE7-4E0B-9D28-15696A78DC89">System-Created Rules</a>"</span> for more information about schema and global rules
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS158"></a><div class="props_rev_3"><a id="GUID-99D68458-306F-487B-ACC4-652AA0AB4D18" name="GUID-99D68458-306F-487B-ACC4-652AA0AB4D18"></a><h3 id="STRMS-GUID-99D68458-306F-487B-ACC4-652AA0AB4D18" class="sect3"><span class="enumeration_section">11.7 </span>User-Created Rules, Rule Sets, and Evaluation Contexts
+               </h3>
+               <div>
+                  <p>The <code class="codeph">DBMS_STREAMS_ADM</code> package generates system-created <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s and <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s, and it can specify an Oracle-supplied <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> for rules and rule sets or generate system-created evaluation contexts. If you must create rules, rule sets, or evaluation contexts that cannot be created using the <code class="codeph">DBMS_STREAMS_ADM</code> package, then you can use the <code class="codeph">DBMS_RULE_ADM</code> package to create them.
+                  </p>
+                  <p>Use the <code class="codeph">DBMS_RULE_ADM</code> package for the following reasons:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>You must create rules with <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a>s that cannot be created using the <code class="codeph">DBMS_STREAMS_ADM</code> package, such as rule conditions for specific types of operations, or rule conditions that use the <code class="codeph">LIKE</code> condition.
+                        </p>
+                     </li>
+                     <li>
+                        <p>You must create custom evaluation contexts for the rules in your Oracle Streams environment.</p>
+                     </li>
+                  </ul>
+                  <p>You can create a rule set using the <code class="codeph">DBMS_RULE_ADM</code> package, and you can associate it with a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>. Such a rule set can be a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> or <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for an <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>, and a rule set can be a positive rule set for one Oracle Streams client and a negative rule set for another.
+                  </p>
+                  <p>This section contains the following topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-8CEC66DD-4623-4644-9AEE-94E44624931B">User-Created Rules and Rule Sets</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-F62AB2C1-47E4-4B70-839F-3BAFB7E2508C">User-Created Evaluation Contexts</a></p>
+                        <div class="infoboxnotealso" id="GUID-99D68458-306F-487B-ACC4-652AA0AB4D18__GUID-09A17A7A-AB81-4D1C-A96E-7E5C8612CA49">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-D322629C-4B4F-4AD7-9522-59BB6A5033B0">Specifying a Rule Set for a Capture Process</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-ACCDEFE5-ECCE-478B-A601-98717E3C6204">Specifying the Rule Set for a Propagation</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-A51060A0-59D8-4F25-AF70-FBF1CF469DFB">Specifying the Rule Set for an Apply Process</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                  </ul>
+               </div><a id="STRMS563"></a><div class="props_rev_3"><a id="GUID-8CEC66DD-4623-4644-9AEE-94E44624931B" name="GUID-8CEC66DD-4623-4644-9AEE-94E44624931B"></a><h4 id="STRMS-GUID-8CEC66DD-4623-4644-9AEE-94E44624931B" class="sect4"><span class="enumeration_section">11.7.1 </span>User-Created Rules and Rule Sets
+                  </h4>
+                  <div>
+                     <p>The following sections describe some of the types of <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s and <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s that you can create using the <code class="codeph">DBMS_RULE_ADM</code> package:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-1A3A3691-5672-441B-8E35-10CF30E9CA64">Rule Conditions for Specific Types of Operations</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-A58CCA07-2550-4CE5-88FC-0486C86B202C">Rule Conditions that Instruct Oracle Streams Clients to Discard Unsupported LCRs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-E72554A9-54A2-4E4E-BD35-ED8484534E1A">Complex Rule Conditions</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-1C9AD6CC-91A1-4390-A322-19A07A25BC6F">Rule Conditions with Undefined Variables that Evaluate to NULL</a></p>
+                        </li>
+                        <li>
+                           <p><a href="advanced-rule-concepts.html#GUID-DA5DC204-5E34-44D9-985C-2A6A36972368">Variables as Function Parameters in Rule Conditions</a></p>
+                           <div class="infoboxnote" id="GUID-8CEC66DD-4623-4644-9AEE-94E44624931B__GUID-5F41E14B-7979-4B10-BA3A-E628B105DCF4">
+                              <p class="notep1">Note:</p>
+                              <p>You can add user-defined conditions to a <a href="strms_glossary.html#GUID-53B877C4-24D6-4D27-B80D-C1256A08A87A"><span class="xrefglossterm">system-created rule</span></a> by using the <code class="codeph">and_condition</code> parameter that is available in some of the procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package. Using the <code class="codeph">and_condition</code> parameter is sometimes easier than creating rules with the <code class="codeph">DBMS_RULE_ADM</code> package. 
+                              </p>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-8CEC66DD-4623-4644-9AEE-94E44624931B__GUID-71FA4AD0-BB05-4F18-905E-52139CD67AC6">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-1DCEB0D2-DADE-4B37-9EC2-59FA09DA24A4">System-Created Rules with Added User-Defined Conditions</a>"</span> for more information about the <code class="codeph">and_condition</code> parameter
+                              </p>
+                           </div>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS564"></a><div class="props_rev_3"><a id="GUID-1A3A3691-5672-441B-8E35-10CF30E9CA64" name="GUID-1A3A3691-5672-441B-8E35-10CF30E9CA64"></a><h5 id="STRMS-GUID-1A3A3691-5672-441B-8E35-10CF30E9CA64" class="sect5"><span class="enumeration_section">11.7.1.1 </span>Rule Conditions for Specific Types of Operations
+                     </h5>
+                     <div>
+                        <p>In some cases, you might want to capture, propagate, apply, or dequeue only changes that contain specific types of operations. For example, you might want to apply changes containing only insert operations for a particular table, but not other operations, such as update and delete.</p>
+                        <p>Suppose you want to specify a <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a> that evaluates to <code class="codeph">TRUE</code> only for <code class="codeph">INSERT</code> operations on the <code class="codeph">hr.employees</code> table. You can accomplish this by specifying the <code class="codeph">INSERT</code> command type in the rule condition:
+                        </p><pre class="oac_no_warn" dir="ltr">:dml.get_command_type() = 'INSERT' AND :dml.get_object_owner() = 'HR' 
+AND :dml.get_object_name() = 'EMPLOYEES' AND :dml.is_null_tag() = 'Y'
+</pre><p>Similarly, suppose you want to specify a rule condition that evaluates to <code class="codeph">TRUE</code> for all DML operations on the <code class="codeph">hr.departments</code> table, except <code class="codeph">DELETE</code> operations. You can accomplish this by specifying the following rule condition:
+                        </p><pre class="oac_no_warn" dir="ltr">:dml.get_object_owner() = 'HR' AND :dml.get_object_name() = 'DEPARTMENTS' AND
+:dml.is_null_tag() = 'Y' AND (:dml.get_command_type() = 'INSERT' OR
+:dml.get_command_type() = 'UPDATE')
+</pre><p>This rule condition evaluates to <code class="codeph">TRUE</code> for <code class="codeph">INSERT</code> and <code class="codeph">UPDATE</code> operations on the <code class="codeph">hr.departments</code> table, but not for <code class="codeph">DELETE</code> operations. Because the <code class="codeph">hr.departments</code> table does not include any LOB columns, you do not need to specify the LOB command types for DML operations (<code class="codeph">LOB</code> <code class="codeph">ERASE</code>, <code class="codeph">LOB</code>&nbsp;<code class="codeph">WRITE</code>, and <code class="codeph">LOB</code>&nbsp;<code class="codeph">TRIM</code>), but these command types should be specified in such a rule condition for a table that contains one or more LOB columns.
+                        </p>
+                        <p>The following rule condition accomplishes the same behavior for the <code class="codeph">hr.departments</code> table. That is, the following rule condition evaluates to <code class="codeph">TRUE</code> for all DML operations on the <code class="codeph">hr.departments</code> table, except <code class="codeph">DELETE</code> operations: 
+                        </p><pre class="oac_no_warn" dir="ltr">:dml.get_object_owner() = 'HR' AND :dml.get_object_name() = 'DEPARTMENTS' AND
+:dml.is_null_tag() = 'Y' AND :dml.get_command_type() != 'DELETE'
+</pre><p>The example rule conditions described previously in this section are all simple rule conditions. However, when you add custom conditions to system-created rule conditions, the entire condition might not be a simple rule condition, and nonsimple rules might not evaluate efficiently. In general, you should use simple rule conditions whenever possible to improve rule evaluation performance. Rule conditions created using the <code class="codeph">DBMS_STREAMS_ADM</code> package, without custom conditions added, are always simple.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-1A3A3691-5672-441B-8E35-10CF30E9CA64__GUID-5A322890-99EF-406F-91CC-94D89459C81B">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-27853FFB-70B2-4153-9B11-BB3F8289138E">Simple Rule Conditions</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-E72554A9-54A2-4E4E-BD35-ED8484534E1A">Complex Rule Conditions</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STRMS135"></a><div class="props_rev_3"><a id="GUID-A58CCA07-2550-4CE5-88FC-0486C86B202C" name="GUID-A58CCA07-2550-4CE5-88FC-0486C86B202C"></a><h5 id="STRMS-GUID-A58CCA07-2550-4CE5-88FC-0486C86B202C" class="sect5"><span class="enumeration_section">11.7.1.2 </span>Rule Conditions that Instruct Oracle Streams Clients to Discard Unsupported LCRs
+                     </h5>
+                     <div>
+                        <p>You can use the following functions in rule conditions to instruct an <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a> to discard LCRs that encapsulate unsupported changes:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The <code class="codeph">GET_COMPATIBLE</code> member function for LCRs. This function returns the minimal database compatibility required to support an LCR.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <code class="codeph">COMPATIBLE_9_2</code> function, <code class="codeph">COMPATIBLE_10_1</code> function, <code class="codeph">COMPATIBLE_10_2</code> function, <code class="codeph">COMPATIBLE_11_1</code> function, <code class="codeph">COMPATIBLE_11_2</code> function, <code class="codeph">COMPATIBLE_12_1</code> function, and <code class="codeph">MAX_COMPATIBLE</code> function in the <code class="codeph">DBMS_STREAMS</code> package. These functions return constant values that correspond to 9.2.0, 10.1.0, 10.2.0, 11.1.0, 11.2.0, 12.1.0, and maximum compatibility in a database, respectively. You control the compatibility of an Oracle database using the <code class="codeph">COMPATIBLE</code> initialization parameter.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>For example, consider the following rule:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name =&gt; 'strmadmin.dml_compat_9_2',
+    condition =&gt; ':dml.GET_COMPATIBLE() &gt; DBMS_STREAMS.COMPATIBLE_9_2()');
+END;
+/
+</pre><p>If this rule is in the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for an Oracle Streams client, such as a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, or an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, then the Oracle Streams client discards any row LCR that is not compatible with Oracle9<span class="italic">i</span> Release 2 (9.2).
+                        </p>
+                        <p>The following is an example that is more appropriate for a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name =&gt; 'strmadmin.dml_compat_9_2',
+    condition =&gt; ':dml.GET_COMPATIBLE() &lt;= DBMS_STREAMS.COMPATIBLE_10_1()');
+END;
+/
+</pre><p>If this rule is in the positive rule set for an Oracle Streams client, then the Oracle Streams client discards any row LCR that is not compatible with Oracle Database 10<span class="italic">g</span> Release 1 or earlier. That is, the Oracle Streams client processes any row LCR that is compatible with Oracle9<span class="italic">i</span> Release 2 (9.2) or Oracle Database 10<span class="italic">g</span> Release 1 (10.1) and satisfies the other rules in its rule sets, but it discards any row LCR that is not compatible with these releases.
+                        </p>
+                        <p>You can add the following rule to a positive rule set to discard row LCRs that are not supported by Oracle Streams in your current release of Oracle Database:</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name =&gt; 'strmadmin.dml_compat_max',
+    condition =&gt; ':dml.GET_COMPATIBLE() &lt; DBMS_STREAMS.MAX_COMPATIBLE()');
+END;
+/
+</pre><p>The <code class="codeph">MAX_COMPATIBLE</code> function always returns the maximum compatibility, which is greater than the compatibility constants returned by the <code class="codeph">DBMS_STREAMS</code> package. Therefore, when you use this function in rule conditions, the rule conditions do not need to be changed when you upgrade to a later release of Oracle Database. Newly supported changes in a later release will automatically be captured and LCRs containing newly supported changes will not be discarded.
+                        </p>
+                        <p>The rules in the previous examples evaluate efficiently. If you use <a href="strms_glossary.html#GUID-59A77572-3B32-483A-A816-5938ACA78220"><span class="xrefglossterm">schema rule</span></a>s or <a href="strms_glossary.html#GUID-37142187-2A5B-48E7-A1CE-A07D60C60460"><span class="xrefglossterm">global rule</span></a>s created by the <code class="codeph">DBMS_STREAMS_ADM</code> package to capture, propagate, apply, or dequeue LCRs, then you can use rules such as these to discard LCRs that are not supported by a particular database.
+                        </p>
+                        <div class="infoboxnote" id="GUID-A58CCA07-2550-4CE5-88FC-0486C86B202C__GUID-0242AD73-7D54-442D-871E-E419133CA973">
+                           <p class="notep1">Note:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>You can determine which database objects in a database are not supported by Oracle Streams by querying the <code class="codeph">DBA_STREAMS_UNSUPPORTED</code> and <code class="codeph">DBA_STREAMS_COLUMNS</code> data dictionary views.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Instead of using the <code class="codeph">DBMS_RULE_ADM</code> package to create rules with <code class="codeph">GET_COMPATIBLE</code> conditions, you can use one of the procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create such rules by specifying the <code class="codeph">GET_COMPATIBLE</code> condition in the <code class="codeph">AND_CONDITION</code> parameter.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>DDL LCRs always return <code class="codeph">DBMS_STREAMS.COMPATIBLE_9_2</code>.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-A58CCA07-2550-4CE5-88FC-0486C86B202C__GUID-9947C0DF-06D4-43EF-B072-8C769114BB1F">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="monitoring-other-oracle-streams-components.html#GUID-9B94561D-23C9-43E2-A311-A6F3BC3A39B0">Monitoring Compatibility in an Oracle Streams Environment</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-878B43DB-FFF7-4529-B527-2738A54B720A">Global Rules Example</a>"</span>, <span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-69E4E26A-0EDD-462B-843A-19876E0347BF">Schema Rule Example</a>"</span>, and <span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-1DCEB0D2-DADE-4B37-9EC2-59FA09DA24A4">System-Created Rules with Added User-Defined Conditions</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="../refrn/COMPATIBLE.html#REFRN10019"><span class="italic">Oracle Database Reference </span></a>and<a href="../upgrd/compatibility-interoperability-between-database-releases.html#UPGRD005"><span class="italic"> Oracle Database Upgrade Guide</span></a> for more information about the <code class="codeph">COMPATIBLE</code> initialization parameter
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STRMS565"></a><div class="props_rev_3"><a id="GUID-E72554A9-54A2-4E4E-BD35-ED8484534E1A" name="GUID-E72554A9-54A2-4E4E-BD35-ED8484534E1A"></a><h5 id="STRMS-GUID-E72554A9-54A2-4E4E-BD35-ED8484534E1A" class="sect5"><span class="enumeration_section">11.7.1.3 </span>Complex Rule Conditions
+                     </h5>
+                     <div>
+                        <p>Complex rule conditions are rule conditions that do not meet the requirements for simple rule conditions described in <span class="q">"<a href="advanced-rule-concepts.html#GUID-27853FFB-70B2-4153-9B11-BB3F8289138E">Simple Rule Conditions</a>"</span>. In an Oracle Streams environment, the <code class="codeph">DBMS_STREAMS_ADM</code> package creates rules with simple rule conditions only, assuming no custom conditions are added to the system-created rules.
+                        </p>
+                        <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-979FB5C9-7EE7-4E0B-9D28-15696A78DC89__g1030936" title="This table lists the types of changes that evaluate to true for different types of rule conditions. For each type of rule condition, the table lists the Streams client and the procedure used to create the rule condition.">Table 5-3</a> describes the types of system-created rule conditions that you can create with the <code class="codeph">DBMS_STREAMS_ADM</code> package. If you must create rules with complex conditions, then you can use the <code class="codeph">DBMS_RULE_ADM</code> package.
+                        </p>
+                        <p>There is a wide range of complex rule conditions. The following sections contain some examples of complex rule conditions. </p>
+                        <div class="infoboxnote" id="GUID-E72554A9-54A2-4E4E-BD35-ED8484534E1A__GUID-191EAF33-99E4-4CFC-A40E-E9711DD07FF6">
+                           <p class="notep1">Note:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Complex rule conditions can degrade rule evaluation performance.</p>
+                              </li>
+                              <li>
+                                 <p>In rule conditions, if you specify the name of a database, then ensure that you include the full database name, including the domain name.</p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div><a id="STRMS566"></a><div class="props_rev_3"><a id="GUID-D63369E6-14E3-48EE-A51B-F5EB4611F550" name="GUID-D63369E6-14E3-48EE-A51B-F5EB4611F550"></a><h6 id="STRMS-GUID-D63369E6-14E3-48EE-A51B-F5EB4611F550" class="sect6"><span class="enumeration_section">11.7.1.3.1 </span>Rule Conditions Using the NOT Logical Condition to Exclude Objects
+                        </h6>
+                        <div>
+                           <p>You can use the <code class="codeph">NOT</code> logical condition to exclude certain changes from being captured, propagated, applied, or dequeued in an Oracle Streams environment. 
+                           </p>
+                           <p>For example, suppose you want to specify rule conditions that evaluate to <code class="codeph">TRUE</code> for all DML and DDL changes to all database objects in the <code class="codeph">hr</code> schema, except for changes to the <code class="codeph">hr.regions</code> table. You can use the <code class="codeph">NOT</code> logical condition to accomplish this with two rules: one for DML changes and one for DDL changes. Here are the rule conditions for these rules:
+                           </p><pre class="oac_no_warn" dir="ltr">(:dml.get_object_owner() = 'HR' AND NOT :dml.get_object_name() = 'REGIONS')
+AND :dml.is_null_tag() = 'Y' ((:ddl.get_object_owner() = 'HR' OR :ddl.get_base_
+table_owner() = 	'HR') AND NOT :ddl.get_object_name() = 'REGIONS') AND :ddl.is_
+null_tag() = 'Y'
+</pre><p>Notice that object names, such as <code class="codeph">HR</code> and <code class="codeph">REGIONS</code> are specified in all uppercase characters in these examples. For rules to evaluate properly, the case of the characters in object names, such as tables and users, must match the case of the characters in the data dictionary. Therefore, if no case was specified for an object when the object was created, then specify the object name in all uppercase in rule conditions. However, if a particular case was specified with double quotation marks when the objects was created, then specify the object name in the same case in rule conditions. However, the object name cannot be enclosed in double quotes in rule conditions.
+                           </p>
+                           <p>For example, if the <code class="codeph">REGIONS</code> table in the <code class="codeph">HR</code> schema was actually created as <code class="codeph">"Regions"</code>, then specify <code class="codeph">Regions</code> in rule conditions that involve this table, as in the following example:
+                           </p><pre class="oac_no_warn" dir="ltr">:dml.get_object_name() = 'Regions'
+</pre><p>You can use the Oracle Streams <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> when you create these rules using the <code class="codeph">DBMS_RULE_ADM</code> package. The following example creates a rule set to hold the complex rules, creates rules with the previous conditions, and adds the rules to the rule set:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  -- Create the rule set
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name       =&gt; 'strmadmin.complex_rules',
+    evaluation_context  =&gt; 'SYS.STREAMS$_EVALUATION_CONTEXT');
+  -- Create the complex rules
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name  =&gt; 'strmadmin.hr_not_regions_dml',
+    condition  =&gt; ' (:dml.get_object_owner() = ''HR'' AND NOT ' ||
+                  ' :dml.get_object_name() = ''REGIONS'') AND ' ||
+                  ' :dml.is_null_tag() = ''Y'' ');
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name  =&gt; 'strmadmin.hr_not_regions_ddl',
+    condition  =&gt; ' ((:ddl.get_object_owner() = ''HR'' OR ' ||
+                  ' :ddl.get_base_table_owner() = 	''HR'') AND NOT ' ||
+                  ' :ddl.get_object_name() = ''REGIONS'') AND ' ||
+                  ' :ddl.is_null_tag() = ''Y'' ');
+  --  Add the rules to the rule set
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name      =&gt; 'strmadmin.hr_not_regions_dml', 
+    rule_set_name  =&gt; 'strmadmin.complex_rules');
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name      =&gt; 'strmadmin.hr_not_regions_ddl', 
+    rule_set_name  =&gt; 'strmadmin.complex_rules');
+END;
+/
+</pre><p>In this case, the rules inherit the Oracle Streams evaluation context from the rule set.</p>
+                           <div class="infoboxnote" id="GUID-D63369E6-14E3-48EE-A51B-F5EB4611F550__GUID-72DDD303-6888-467E-AAD5-F3429E1AC137">
+                              <p class="notep1">Note:</p>
+                              <p>In most cases, you can avoid using complex rules with the <code class="codeph">NOT</code> logical condition by using the <code class="codeph">DBMS_STREAMS_ADM</code> package to add rules to the negative rule set for an Oracle Streams client
+                              </p>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-D63369E6-14E3-48EE-A51B-F5EB4611F550__GUID-D24C0DC2-BC33-49ED-A1FB-7625EC350E28">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-5B69AA8F-73B4-46C4-836F-54D2CE9A8251">System-Created Rules and Negative Rule Sets</a>"</span></p>
+                           </div>
+                        </div>
+                     </div><a id="STRMS567"></a><div class="props_rev_3"><a id="GUID-03802EC2-B9DD-4BFC-8C6B-12B67F92058C" name="GUID-03802EC2-B9DD-4BFC-8C6B-12B67F92058C"></a><h6 id="STRMS-GUID-03802EC2-B9DD-4BFC-8C6B-12B67F92058C" class="sect6"><span class="enumeration_section">11.7.1.3.2 </span>Rule Conditions Using the LIKE Condition
+                        </h6>
+                        <div>
+                           <p>You can use the <code class="codeph">LIKE</code> condition to create complex rules that evaluate to <code class="codeph">TRUE</code> when a condition in the rule matches a specified pattern. For example, suppose you want to specify rule conditions that evaluate to <code class="codeph">TRUE</code> for all DML and DDL changes to all database objects in the <code class="codeph">hr</code> schema that begin with the pattern <code class="codeph">JOB</code>. You can use the <code class="codeph">LIKE</code> condition to accomplish this with two rules: one for DML changes and one for DDL changes. Here are the rule conditions for these rules:
+                           </p><pre class="oac_no_warn" dir="ltr">(:dml.get_object_owner() = 'HR' AND :dml.get_object_name() LIKE 'JOB%')
+AND :dml.is_null_tag() = 'Y'
+
+((:ddl.get_object_owner() = 'HR' OR :ddl.get_base_table_owner() = 	'HR') 
+AND :ddl.get_object_name() LIKE 'JOB%') AND :ddl.is_null_tag() = 'Y'</pre></div>
+                     </div>
+                  </div><a id="STRMS568"></a><div class="props_rev_3"><a id="GUID-1C9AD6CC-91A1-4390-A322-19A07A25BC6F" name="GUID-1C9AD6CC-91A1-4390-A322-19A07A25BC6F"></a><h5 id="STRMS-GUID-1C9AD6CC-91A1-4390-A322-19A07A25BC6F" class="sect5"><span class="enumeration_section">11.7.1.4 </span>Rule Conditions with Undefined Variables that Evaluate to NULL
+                     </h5>
+                     <div>
+                        <p>During evaluation, an implicit variable in a rule condition is undefined if the variable value function for the variable returns <code class="codeph">NULL</code>. An explicit variable without any attributes in a rule condition is undefined if the client does not send the value of the variable to the <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a> when it runs the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure.
+                        </p>
+                        <p>Regarding variables with attributes, a variable is undefined if the client does not send the value of the variable, or any of its attributes, to the rules engine when it runs the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure. For example, if variable <code class="codeph">x</code> has attributes <code class="codeph">a</code> and <code class="codeph">b</code>, then the variable is undefined if the client does not send the value of <code class="codeph">x</code> and does not send the value of <code class="codeph">a</code> and <code class="codeph">b</code>. However, if the client sends the value of at least one attribute, then the variable is defined. In this case, if the client sends the value of <code class="codeph">a</code>, but not <code class="codeph">b</code>, then the variable is defined. 
+                        </p>
+                        <p>An undefined variable in a rule condition evaluates to <code class="codeph">NULL</code> for Oracle Streams clients of the rules engine, which include capture processes, synchronous captures, propagations, apply processes, and messaging clients. In contrast, for non-Oracle Streams clients of the rules engine, an undefined variable in a rule condition can cause the rules engine to return <code class="codeph">maybe_rules</code> to the client. When a rule set is evaluated, <code class="codeph">maybe_rules</code> are rules that might evaluate to <code class="codeph">TRUE</code> given more information.
+                        </p>
+                        <p>The number of <code class="codeph">maybe_rules</code> returned to Oracle Streams clients is reduced by treating each undefined variable as <code class="codeph">NULL</code>. Reducing the number of <code class="codeph">maybe_rules</code> can improve performance if the reduction results in more efficient evaluation of a rule set when a message occurs. Rules that would result in <code class="codeph">maybe_rules</code> for non-Oracle Streams clients can result in <code class="codeph">TRUE</code> or <code class="codeph">FALSE</code> rules for Oracle Streams clients, as the following examples illustrate.
+                        </p>
+                     </div><a id="STRMS569"></a><div class="props_rev_3"><a id="GUID-F9CA85CE-4045-4083-857C-B48E82A56CDD" name="GUID-F9CA85CE-4045-4083-857C-B48E82A56CDD"></a><h6 id="STRMS-GUID-F9CA85CE-4045-4083-857C-B48E82A56CDD" class="sect6"><span class="enumeration_section">11.7.1.4.1 </span>Examples of Undefined Variables that Result in TRUE Rules for Oracle Streams Clients
+                        </h6>
+                        <div>
+                           <p>Consider the following user-defined rule condition:</p><pre class="oac_no_warn" dir="ltr">:m IS NULL
+</pre><p>If the value of the variable <code class="codeph">m</code> is undefined during evaluation, then a maybe rule results for non-Oracle Streams clients of the rules engine. However, for Oracle Streams clients, this condition evaluates to <code class="codeph">TRUE</code> because the undefined variable <code class="codeph">m</code> is treated as a <code class="codeph">NULL</code>. You should avoid adding rules such as this to rule sets for Oracle Streams clients, because such rules will evaluate to <code class="codeph">TRUE</code> for every message. So, for example, if the positive rule set for a capture process has such a rule, then the capture process might capture messages that you did not intend to capture.
+                           </p>
+                           <p>Here is another user-specified rule condition that uses an Oracle Streams <code class="codeph">:dml</code> variable:
+                           </p><pre class="oac_no_warn" dir="ltr">:dml.get_object_owner() = 'HR' AND :m IS NULL
+</pre><p>For Oracle Streams clients, if a message consists of a row change to a table in the <code class="codeph">hr</code> schema, and the value of the variable <code class="codeph">m</code> is not known during evaluation, then this condition evaluates to <code class="codeph">TRUE</code> because the undefined variable <code class="codeph">m</code> is treated as a <code class="codeph">NULL</code>.
+                           </p>
+                        </div>
+                     </div><a id="STRMS570"></a><div class="props_rev_3"><a id="GUID-6233D2E4-AF25-486F-A868-592886C16C1F" name="GUID-6233D2E4-AF25-486F-A868-592886C16C1F"></a><h6 id="STRMS-GUID-6233D2E4-AF25-486F-A868-592886C16C1F" class="sect6"><span class="enumeration_section">11.7.1.4.2 </span>Examples of Undefined Variables that Result in FALSE Rules for Oracle Streams Clients
+                        </h6>
+                        <div>
+                           <p>Consider the following user-defined rule condition:</p><pre class="oac_no_warn" dir="ltr">:m = 5
+</pre><p>If the value of the variable <code class="codeph">m</code> is undefined during evaluation, then a maybe rule results for non-Oracle Streams clients of the rules engine. However, for Oracle Streams clients, this condition evaluates to <code class="codeph">FALSE</code> because the undefined variable <code class="codeph">m</code> is treated as a <code class="codeph">NULL</code>.
+                           </p>
+                           <p>Consider another user-specified rule condition that uses an Oracle Streams <code class="codeph">:dml</code> variable:
+                           </p><pre class="oac_no_warn" dir="ltr">:dml.get_object_owner() = 'HR' AND :m = 5
+</pre><p>For Oracle Streams clients, if a message consists of a row change to a table in the <code class="codeph">hr</code> schema, and the value of the variable <code class="codeph">m</code> is not known during evaluation, then this condition evaluates to <code class="codeph">FALSE</code> because the undefined variable <code class="codeph">m</code> is treated as a <code class="codeph">NULL</code>.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-6233D2E4-AF25-486F-A868-592886C16C1F__GUID-1A45FF00-DFE4-4559-851F-FCB1CC433BC3">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-75AB7AAD-ADD6-47EF-B948-B46676079BAB">Rule Set Evaluation</a>"</span></p>
+                           </div>
+                        </div>
+                     </div>
+                  </div><a id="STRMS571"></a><div class="props_rev_3"><a id="GUID-DA5DC204-5E34-44D9-985C-2A6A36972368" name="GUID-DA5DC204-5E34-44D9-985C-2A6A36972368"></a><h5 id="STRMS-GUID-DA5DC204-5E34-44D9-985C-2A6A36972368" class="sect5"><span class="enumeration_section">11.7.1.5 </span>Variables as Function Parameters in Rule Conditions
+                     </h5>
+                     <div>
+                        <p>Oracle recommends that you avoid using <code class="codeph">:dml</code> and <code class="codeph">:ddl</code> variables as function parameters for rule conditions. The following example uses the <code class="codeph">:dml</code> variable as a parameter to a function named <code class="codeph">my_function</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">my_function(:dml) = 'Y'
+</pre><p>Rule conditions such as these can degrade rule evaluation performance and can result in the capture or propagation of extraneous <a href="strms_glossary.html#GUID-FC751688-EAAD-4EB5-AB51-DF3F6374C336"><span class="xrefglossterm">Oracle Streams data dictionary</span></a> information. 
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-DA5DC204-5E34-44D9-985C-2A6A36972368__GUID-29361BBA-4C10-41E3-8097-D5D97715ED8F">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-3A241698-20A0-4604-AC48-26DD82AA4426">The Oracle Streams Data Dictionary</a>"</span></p>
+                        </div>
+                     </div>
+                  </div>
+               </div><a id="STRMS572"></a><div class="props_rev_3"><a id="GUID-F62AB2C1-47E4-4B70-839F-3BAFB7E2508C" name="GUID-F62AB2C1-47E4-4B70-839F-3BAFB7E2508C"></a><h4 id="STRMS-GUID-F62AB2C1-47E4-4B70-839F-3BAFB7E2508C" class="sect4"><span class="enumeration_section">11.7.2 </span>User-Created Evaluation Contexts
+                  </h4>
+                  <div>
+                     <p>You can use a custom <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> in an Oracle Streams environment. Any user-defined evaluation context involving LCRs must include all the variables in <code class="codeph">SYS.STREAMS$_EVALUATION_CONTEXT</code>. The type of each variable and its variable value function must be the same for each variable as the ones defined in <code class="codeph">SYS.STREAMS$_EVALUATION_CONTEXT</code>. In addition, when creating the evaluation context using <code class="codeph">DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT</code>, the <code class="codeph">SYS.DBMS_STREAMS_INTERNAL.EVALUATION_CONTEXT_FUNCTION</code> must be specified for the <code class="codeph">evaluation_function</code> parameter. You can alter an existing evaluation context using the <code class="codeph">DBMS_RULE_ADM.ALTER_EVALUATION_CONTEXT</code> procedure.
+                     </p>
+                     <p>You can find information about an evaluation context in the following data dictionary views:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../refrn/ALL_EVALUATION_CONTEXT_TABLES.html#REFRN20066"><code class="codeph">ALL_EVALUATION_CONTEXT_TABLES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../refrn/ALL_EVALUATION_CONTEXT_VARS.html#REFRN20067"><code class="codeph">ALL_EVALUATION_CONTEXT_VARS</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="../refrn/ALL_EVALUATION_CONTEXTS.html#REFRN20068"><code class="codeph">ALL_EVALUATION_CONTEXTS</code></a></p>
+                        </li>
+                     </ul>
+                     <p>If necessary, you can use the information in these data dictionary views to build a new evaluation context based on the <code class="codeph">SYS.STREAMS$_EVALUATION_CONTEXT</code>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-F62AB2C1-47E4-4B70-839F-3BAFB7E2508C__GUID-63E1CD0D-58E2-45F0-98A4-B4E4B2503C06">
+                        <p class="notep1">Note:</p>
+                        <p>Avoid using variable names with special characters, such as $ and #, to ensure that there are no conflicts with Oracle-supplied evaluation context variables.</p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-F62AB2C1-47E4-4B70-839F-3BAFB7E2508C__GUID-D26BDF2A-6E9A-4BB7-83C7-8247E707821A">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for more information about these data dictionary views
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

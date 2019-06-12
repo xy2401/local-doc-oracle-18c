@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: E92604-01 -->
+    <!-- Published date: April 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Using Batched DDL</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to identify differences between tables with DBMS_METADATA package and generate a batched DDL.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-08-03T18:46:32+00:00">
+    <meta name="dcterms.title" content="Using batched DDL">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBEGH">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E92604-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Using
+        Batched DDL</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32"> Before You Begin</h2>
+              <p>This 10-minute tutorial shows you how to identify several
+                differences between two tables definition and how to generate a
+                single <code>ALTER TABLE</code> statement that can be executed
+                for one table to make it look like the other table.</p>
+              <h3>Background</h3>
+              <p>In Oracle Database 12c, the operation generates as many DDL
+                commands as required to describe the differences between two
+                tables definitions. </p>
+              <p>In Oracle Database 18c, the operation generates a single
+                batched DDL command. The performance impact resulting from
+                executing <code> ALTER TABLE ADD / DROP / MODIFY </code>
+                column statements can be mitigated by batching the commands and
+                collectively adding the new columns with a single <code> ALTER
+                  TABLE ADD / DROP / MODIFY </code> column DDL statement.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Oracle Database 18c installed</li>
+                <li>A container database (CDB) with one pluggable database
+                  (PDB), or a non container database (non-CDB)</li>
+                <li>If Oracle Database 12c is installed, you can complete the
+                  same test to observe the difference of result between the two
+                  Oracle Database releases.</li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">
+                Compare Tables</h2>
+              <ol>
+                <li>Log in to <code> PDB_ORCL </code> as <code> SYSTEM. </code>
+                  <pre><code>sqlplus system@PDB_ORCL<br>Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Create the user <code> U1 </code> and grant the DBA role
+                  and UNLIMITED TABLESPACE privilege.
+                  <pre><code>DROP USER u1 CASCADE;
+CREATE USER u1 IDENTIFIED BY <em>password</em>;
+GRANT dba, unlimited tablespace TO u1;</code></pre>
+                </li>
+                <li>Create the <code> U1.TEST1 </code> and the <code>
+                    U1.TEST2 </code> tables.
+                  <pre><code>CREATE TABLE u1.test1 (x number, y varchar2(20), z date);
+CREATE TABLE u1.test2 (x number, y varchar2(<strong>40</strong>), <strong>t varchar2(30)</strong>, z date);</code></pre>
+                </li>
+                <li>Connect to <code> PDB_ORCL </code> as <code> U1. </code>
+                  <pre><code>CONNECT u1@PDB_ORCL
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Use the existing <code> DBMS_METADATA.SET_TRANSFORM_PARAM </code>
+                  procedure to compare the two tables with the new <code>
+                    BATCHED_ALTER_DDL </code> name of the transform parameter.
+                  Execute the PL/SQL block from <a href="files/code1.txt" target="_blank">code1.
+                    </a> <pre><code>SET SERVEROUTPUT ON</code></pre>
+                </li>
+                <li>See the result after execution of the PL/SQL block.
+                  <pre><code><strong>ALTER TABLE "U1"."TEST1" ADD ("T" VARCHAR2(30))
+  ALTER TABLE "U1"."TEST1" MODIFY ("Y" VARCHAR2(40))
+</strong>  ALTER TABLE "U1"."TEST1" RENAME TO "TEST2"
+
+PL/SQL procedure successfully completed.</code></pre>
+                  <p class="note">Observe that there are three <code> ALTER
+                      TABLE </code> commands for the three differences
+                    detected. The reason is that the three clauses required to
+                    make the first <code> U1.TEST1 </code> table look like the
+                    second <code> U1.TEST2 </code> table - <code> ADD,
+                      MODIFY, RENAME, </code> cannot be combined together
+                    within a single <code> ALTER TABLE </code> statement. In
+                    this case, Oracle Database 12c would display the same
+                    result.</p>
+                </li>
+                <li>Recreate the first <code> U1.TEST2 </code> table and
+                  compare.
+                  <pre><code>DROP TABLE u1.test2;
+CREATE TABLE u1.test2 (x number);
+</code></pre> </li>
+                <li>Use the batched DDL command to make the first table look
+                  like the second one. Execute the PL/SQL block from <a href="files/code2.txt" target="_blank">code2. </a></li>
+                <li>See the result after execution of the PL/SQL block.
+                  <pre><code><strong>ALTER TABLE "U1"."TEST1" DROP ("Y","Z")
+  </strong>ALTER TABLE "U1"."TEST1" RENAME TO "TEST2"
+
+PL/SQL procedure successfully completed.</code></pre>
+                  <p class="note">Observe that there is now one single <code>
+                      ALTER TABLE </code> command for the first two differences
+                    detected. The reason is that these two differences
+                    correspond to the same <code> DROP </code> clause required
+                    to make the first <code> U1.TEST1 </code> table look like
+                    the second <code> U1.TEST2 </code> table. In this case,
+                    Oracle Database 12c would display two <code> ALTER TABLE </code>
+                    commands for the first two differences detected: <code>
+                      ALTER TABLE "U1"."TEST1" DROP ("Y") </code> and <code>
+                      ALTER TABLE "U1"."TEST1" DROP ("Z"). </code></p>
+                </li>
+                <li>Recreate the tables and compare.
+                  <pre><code>DROP TABLE u1.test1;
+CREATE TABLE u1.test1 (x number);</code></pre>
+                  <pre><code>DROP TABLE u1.test2;
+CREATE TABLE u1.test2 (x number, y varchar2(40), t varchar2(30), z date);
+</code></pre> </li>
+                <li>Use the batched DDL command to make the first table look
+                  like the second one. Execute the PL/SQL block from <a href="files/code3.txt" target="_blank">code3. </a></li>
+                <li>See the result after execution of the PL/SQL block.
+                  <pre><code><strong>ALTER TABLE "U1"."TEST1" ADD ("Y" VARCHAR2(40), "T" VARCHAR2(30), "Z" DATE)</strong>
+  ALTER TABLE "U1"."TEST1" RENAME TO "TEST2"
+
+PL/SQL procedure successfully completed.
+</code></pre>
+                  <p class="note">Observe that there is now one single <code>
+                      ALTER TABLE </code> command for the first three
+                    differences detected. The reason is that these three
+                    differences correspond to the same <code> ADD </code>
+                    clause required to make the first <code> U1.TEST1 </code>
+                    table look like the second <code> U1.TEST2 </code> table.
+                    In this case, Oracle Database 12c would display three <code>
+                      ALTER TABLE </code> commands for the first three
+                    differences detected: <code> ALTER TABLE "U1"."TEST1" ADD
+                      ("Y" VARCHAR2(40)), ALTER TABLE "U1"."TEST1" ADD ("T"
+                      VARCHAR2(30)) </code> and <code> ALTER TABLE
+                      "U1"."TEST1" ADD ("Z" DATE).</code></p>
+                </li>
+                <li>What happens if the <code> BATCHED_ALTER_DDL </code> name
+                  of the transform parameter is set to <code> FALSE? </code>
+                  Execute the PL/SQL block from <a href="files/code4.txt" target="_blank">code4.
+                    </a></li>
+                <li>See the result after execution of the PL/SQL block.
+                  <pre><code><strong>ALTER TABLE "U1"."TEST1" ADD ("Y" VARCHAR2(40))
+  ALTER TABLE "U1"."TEST1" ADD ("T" VARCHAR2(30))
+  ALTER TABLE "U1"."TEST1" ADD ("Z" DATE)</strong>
+  ALTER TABLE "U1"."TEST1" RENAME TO "TEST2"
+
+PL/SQL procedure successfully completed.</code>
+</pre>
+                  <p class="note">This is Oracle Database 12c behavior.</p>
+                </li>
+              </ol>
+            </section>
+            <section>
+              <hr>
+              <h2 id="section_2" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">
+                Cleanup Tutorial Environment</h2>
+              <ol>
+                <li>Connect to PDB_ORCL<code> </code> as <code> SYSTEM </code>
+                  to drop the user <code> U1.</code>
+                  <pre><code>CONNECT system@PDB_ORCL
+Enter password: <em>password</em></code></pre>
+                  <pre><code>DROP USER u1 CASCADE;</code></pre>
+                </li>
+                <li>Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+              </ol>
+            </section>
+          </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2017, 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+  </body>
+</html>

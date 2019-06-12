@@ -1,0 +1,61 @@
+DECLARE
+h           NUMBER;   -- Open handle
+och         NUMBER;   -- openc handle
+th          NUMBER;   -- transform handle
+clob1       CLOB;     -- object1 sxml doc
+clob2       CLOB;     -- object2 sxml doc
+difdoc      CLOB;     -- difference doc
+altxml      CLOB;     -- alter xmldoc
+altddl      CLOB;     -- alter ddl doc
+
+BEGIN
+-- Fetch SXML metadata for the first doc
+h    := dbms_metadata.open('TABLE');
+dbms_metadata.set_filter(h,'NAME', 'TEST1');
+th   := dbms_metadata.add_transform(h,'SXML');
+clob1 := dbms_metadata.fetch_clob(h);
+dbms_metadata.close(h);
+
+-- Fetch SXML metadata for the second doc
+h    := dbms_metadata.open('TABLE');
+dbms_metadata.set_filter(h, 'NAME', 'TEST2');
+th    := dbms_metadata.add_transform(h, 'SXML');
+clob2 := dbms_metadata.fetch_clob(h);
+dbms_metadata.close(h);
+
+-- Compare the two objects and generate an SXML difference document
+och := dbms_metadata_diff.openc('TABLE');
+dbms_metadata_diff.add_document(och, clob1);
+dbms_metadata_diff.add_document(och, clob2);
+difdoc :=  dbms_metadata_diff.fetch_clob(och);
+dbms_metadata_diff.close(och);
+
+-- Using the difdoc get the ALTER xmldoc
+h := dbms_metadata.openw('TABLE');
+th := dbms_metadata.add_transform(h,'ALTERXML');
+dbms_metadata.set_parse_item(h,'XPATH');
+dbms_metadata.set_parse_item(h,'ALTERABLE');
+dbms_metadata.set_parse_item(h,'CLAUSE_TYPE');
+dbms_metadata.set_parse_item(h,'NAME');
+dbms_metadata.set_parse_item(h,'COLUMN_ATTRIBUTE');
+dbms_metadata.set_parse_item(h,'CONSTRAINT_TYPE');
+dbms_metadata.set_parse_item(h,'CONSTRAINT_STATE');
+dbms_metadata.set_parse_item(h,'PARTITION_TYPE');
+
+-- Get the alter xmldoc
+dbms_metadata.set_transform_param(th, 'BATCH_ALTER_DDL', true);
+dbms_lob.createtemporary(altxml, TRUE);
+dbms_metadata.convert (h, difdoc, altxml);
+dbms_metadata.close(h);
+
+-- convert the alter xmldoc to ddl
+h := dbms_metadata.openw('TABLE');
+th := dbms_metadata.add_transform(h,'ALTERDDL');
+dbms_lob.createtemporary(altddl, TRUE);
+dbms_metadata.convert (h, altxml, altddl);
+
+-- display the ddl resulting from this compare
+dbms_output.put_line(altddl);
+
+END;
+/

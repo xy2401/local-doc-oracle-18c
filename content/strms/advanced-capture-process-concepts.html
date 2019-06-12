@@ -1,0 +1,691 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Advanced Capture Process Concepts</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="advanced-oracle-streams-concepts.html" title="Previous" type="text/html">
+      <link rel="next" href="advanced-queue-concepts.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="advanced-oracle-streams-concepts.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="advanced-queue-concepts.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="advanced-oracle-streams-concepts.html" property="item" typeof="WebPage"><span property="name">    Advanced Oracle Streams Concepts </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Advanced Capture Process Concepts</li>
+            </ol>
+            <a id="GUID-F0146165-A77C-4767-B406-CA716B439A87" name="GUID-F0146165-A77C-4767-B406-CA716B439A87"></a><a id="STRMS469"></a>
+            
+            <h2 id="STRMS-GUID-F0146165-A77C-4767-B406-CA716B439A87" class="sect2"><span class="enumeration_chapter">7 </span> Advanced Capture Process Concepts
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Capturing information with Oracle Streams means creating a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> that contains the information and enqueuing the message into a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>. The captured information can describe a database change, or it can be any other type of information.
+               </p>
+               <p><a id="d52350e135" class="indexterm-anchor"></a><a id="d52350e139" class="indexterm-anchor"></a>The following topics contain conceptual information about capturing information with Oracle Streams:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="advanced-capture-process-concepts.html#GUID-B388A47C-5C64-4F08-A449-EFEA79F066AA">Multiple Capture Processes in a Single Database</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-capture-process-concepts.html#GUID-47B0ADDC-A715-4F7A-8C29-241FC4EAD12C">Capture Process Checkpoints</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-capture-process-concepts.html#GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745">A New First SCN Value and Purged LogMiner Data Dictionary Information</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-capture-process-concepts.html#GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD">ARCHIVELOG Mode and a Capture Process</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-capture-process-concepts.html#GUID-CCC1CC2B-CA3E-486E-BB1B-FE01EA3C12E5">Capture Process Creation</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-capture-process-concepts.html#GUID-3A241698-20A0-4604-AC48-26DD82AA4426">The Oracle Streams Data Dictionary</a></p>
+                  </li>
+                  <li>
+                     <p><a href="advanced-capture-process-concepts.html#GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8">Capture Process Rule Evaluation</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-F0146165-A77C-4767-B406-CA716B439A87__GUID-E914E653-B65B-45AA-AB01-7674CD76B4DA">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-84DD3325-51A9-46D7-8BE0-81E48893DFAB">Implicit Capture with an Oracle Streams Capture Process</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-0D7FEE0E-48E4-43E2-AFBB-DF89D37A94B7">Managing a Capture Process</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-F763BE4D-CE6B-4C91-9FBF-73F9E75D5A62">Monitoring a Capture Process</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="troubleshooting-implicit-capture.html#GUID-FEBDFF33-DBD9-442E-B767-D421074F4A54"> Troubleshooting Implicit Capture</a>"</span></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS470"></a><div class="props_rev_3"><a id="GUID-B388A47C-5C64-4F08-A449-EFEA79F066AA" name="GUID-B388A47C-5C64-4F08-A449-EFEA79F066AA"></a><h3 id="STRMS-GUID-B388A47C-5C64-4F08-A449-EFEA79F066AA" class="sect3"><span class="enumeration_section">7.1 </span>Multiple Capture Processes in a Single Database
+               </h3>
+               <div>
+                  <p>If you run multiple <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es in a single database, increase the size of the System Global Area (SGA) for each instance. Use the <code class="codeph">SGA_MAX_SIZE</code> initialization parameter to increase the SGA size. Also, if the size of the <a href="strms_glossary.html#GUID-34E20CD1-AD4B-4B77-9F96-717397CFC1C4"><span class="xrefglossterm">Oracle Streams pool</span></a> is not managed automatically in the database, then increase the size of the Oracle Streams pool by 10 MB for each capture process parallelism. For example, if you have two capture processes running in a database, and the parallelism parameter is set to 4 for one of them and 1 for the other, then increase the Oracle Streams pool by 50 MB (4 + 1 = 5 parallelism).
+                  </p>
+                  <p>Also, Oracle recommends that each <code class="codeph">ANYDATA</code> queue used by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, or <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> store <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s from at most one capture process from a particular <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>. Therefore, use a separate <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> for each capture process that captures changes originating at a particular source database, and make sure each queue has its own queue table. Also, do not propagate messages from two or more capture processes with the same source database to the same queue.
+                  </p>
+                  <div class="infoboxnote" id="GUID-B388A47C-5C64-4F08-A449-EFEA79F066AA__GUID-E3431263-916B-461A-ABFF-44F7FB418930">
+                     <p class="notep1">Note:</p>
+                     <p>The size of the Oracle Streams pool is managed automatically if the <code class="codeph">MEMORY_TARGET</code>, <code class="codeph">MEMORY_MAX_TARGET</code>, or <code class="codeph">SGA_TARGET</code> initialization parameter is set to a nonzero value.
+                     </p>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-B388A47C-5C64-4F08-A449-EFEA79F066AA__GUID-B66B7F80-684D-4BA0-B3CB-3D1E01933D76">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP202"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring the Oracle Streams pool
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP201"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about the <code class="codeph">STREAMS_POOL_SIZE</code> initialization parameter
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS152"></a><div class="props_rev_3"><a id="GUID-47B0ADDC-A715-4F7A-8C29-241FC4EAD12C" name="GUID-47B0ADDC-A715-4F7A-8C29-241FC4EAD12C"></a><h3 id="STRMS-GUID-47B0ADDC-A715-4F7A-8C29-241FC4EAD12C" class="sect3"><span class="enumeration_section">7.2 </span>Capture Process Checkpoints
+               </h3>
+               <div>
+                  <p>A <span class="bold">checkpoint</span> is information about the current state of a capture process that is stored persistently in the data dictionary of the database running the capture process. A capture process tries to record a checkpoint at regular intervals called <span class="bold">checkpoint intervals</span>.
+                  </p>
+                  <p>The following topics provide more information about capture process checkpoints:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="advanced-capture-process-concepts.html#GUID-10FBDE76-4A33-4655-8944-197126C7A38C">Required Checkpoint SCN</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-capture-process-concepts.html#GUID-D3F369DC-0AFB-4421-8F2C-8467F2F3C75D">Maximum Checkpoint SCN</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-capture-process-concepts.html#GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4">Checkpoint Retention Time</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS471"></a><div class="props_rev_3"><a id="GUID-10FBDE76-4A33-4655-8944-197126C7A38C" name="GUID-10FBDE76-4A33-4655-8944-197126C7A38C"></a><h4 id="STRMS-GUID-10FBDE76-4A33-4655-8944-197126C7A38C" class="sect4"><span class="enumeration_section">7.2.1 </span>Required Checkpoint SCN
+                  </h4>
+                  <div>
+                     <p>The system change number (SCN) that corresponds to the lowest checkpoint for which a capture process requires redo data is the <span class="bold">required checkpoint SCN</span>. The redo log file that contains the required checkpoint SCN, and all subsequent redo log files, must be available to the capture process. If a capture process is stopped and restarted, then it starts scanning the redo log from the SCN that corresponds to its required checkpoint SCN. The required checkpoint SCN is important for recovery if a database stops unexpectedly. Also, if the <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> is reset for a capture process, then it must be set to a value that is less than or equal to the required checkpoint SCN for the captured process. You can determine the required checkpoint SCN for a capture process by querying the <code class="codeph">REQUIRED_CHECKPOINT_SCN</code> column in the <code class="codeph">DBA_CAPTURE</code> data dictionary view.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-10FBDE76-4A33-4655-8944-197126C7A38C__GUID-5AC9C800-D434-45BD-A7BF-6FE4FC687085">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-5E8CA83A-78FD-4BD2-9F24-7669BA06CFBF">Displaying the Redo Log Files That Are Required by Each Capture Process</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS472"></a><div class="props_rev_3"><a id="GUID-D3F369DC-0AFB-4421-8F2C-8467F2F3C75D" name="GUID-D3F369DC-0AFB-4421-8F2C-8467F2F3C75D"></a><h4 id="STRMS-GUID-D3F369DC-0AFB-4421-8F2C-8467F2F3C75D" class="sect4"><span class="enumeration_section">7.2.2 </span>Maximum Checkpoint SCN
+                  </h4>
+                  <div>
+                     <p>The SCN that corresponds to the last checkpoint recorded by a capture process is the <span class="bold">maximum checkpoint SCN</span>. If you create a capture process that captures changes from a <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>, and other capture processes already exist which capture changes from the same source database, then the maximum checkpoint SCNs of the existing capture processes can help you to decide whether the new capture process should create a <a href="strms_glossary.html#GUID-7CDF80A6-1AF5-4B03-8460-EA3DE828DE2A"><span class="xrefglossterm">LogMiner data dictionary</span></a> or share one of the existing LogMiner data dictionaries. You can determine the maximum checkpoint SCN for a capture process by querying the <code class="codeph">MAX_CHECKPOINT_SCN</code> column in the <code class="codeph">DBA_CAPTURE</code> data dictionary view.
+                     </p>
+                  </div>
+               </div><a id="STRMS474"></a><a id="STRMS473"></a><div class="props_rev_3"><a id="GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4" name="GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4"></a><h4 id="STRMS-GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4" class="sect4"><span class="enumeration_section">7.2.3 </span>Checkpoint Retention Time
+                  </h4>
+                  <div>
+                     <p>The <span class="bold">checkpoint retention time</span> is the amount of time, in number of days, that a capture process retains checkpoints before purging them automatically. A capture process periodically computes the age of a checkpoint by subtracting the <code class="codeph">NEXT_TIME</code> of the archived redo log file that corresponds to the checkpoint from <code class="codeph">FIRST_TIME</code> of the archived redo log file containing the required checkpoint SCN for the capture process. If the resulting value is greater than the checkpoint retention time, then the capture process automatically purges the checkpoint by advancing its <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> value. Otherwise, the checkpoint is retained. The <code class="codeph">DBA_REGISTERED_ARCHIVED_LOG</code> view displays the <code class="codeph">FIRST_TIME</code> and <code class="codeph">NEXT_TIME</code> for archived redo log files, and the <code class="codeph">REQUIRED_CHECKPOINT_SCN</code> column in the <code class="codeph">DBA_CAPTURE</code> view displays the required checkpoint SCN for a capture process.
+                     </p>
+                     <p><a href="advanced-capture-process-concepts.html#GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4__BABJIEGH">Figure 7-1</a> shows an example of a checkpoint being purged when the checkpoint retention time is set to 20 days.
+                     </p>
+                     <div class="figure" id="GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4__BABJIEGH">
+                        <p class="titleinfigure">Figure 7-1 Checkpoint Retention Time Set to 20 Days</p><img width="454" src="img/strms051.gif" alt="Description of Figure 7-1 follows" title="Description of Figure 7-1 follows" longdesc="img_text/strms051.html"><br><a href="img_text/strms051.html">Description of "Figure 7-1 Checkpoint Retention Time Set to 20 Days"</a></div>
+                     <!-- class="figure" -->
+                     <p>In <a href="advanced-capture-process-concepts.html#GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4__BABJIEGH">Figure 7-1</a>, with the checkpoint retention time set to 20 days, the checkpoint at SCN 435250 is purged because it is 21 days old, while the checkpoint at SCN 479315 is retained because it is 8 days old.
+                     </p>
+                     <p>Whenever the first SCN is reset for a capture process, the capture process purges information about archived redo log files before the new first SCN from its LogMiner data dictionary. After this information is purged, the archived redo log files remain on the hard disk, but the files are not needed by the capture process. The <code class="codeph">PURGEABLE</code> column in the <code class="codeph">DBA_REGISTERED_ARCHIVED_LOG</code> view displays <code class="codeph">YES</code> for the archived redo log files that are no longer needed. These files can be removed from disk or moved to another location without affecting the capture process.
+                     </p>
+                     <p>If you create a capture process using the <code class="codeph">CREATE_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package, then you can specify the checkpoint retention time, in days, using the <code class="codeph">checkpoint_retention_time</code> parameter. The default checkpoint retention time is 60 days if the <code class="codeph">checkpoint_retention_time</code> parameter is not specified in the <code class="codeph">CREATE_CAPTURE</code> procedure, or if you use the <code class="codeph">DBMS_STREAMS_ADM</code> package to create the capture process. The <code class="codeph">CHECKPOINT_RETENTION_TIME</code> column in the <code class="codeph">DBA_CAPTURE</code> view displays the current checkpoint retention time for a capture process.
+                     </p>
+                     <p>You can change the checkpoint retention time for a capture process by specifying a new time period in the <code class="codeph">ALTER_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. If you do not want checkpoints for a capture process to be purged automatically, then specify <code class="codeph">DBMS_CAPTURE_ADM.INFINITE</code> for the <code class="codeph">checkpoint_retention_time</code> parameter in <code class="codeph">CREATE_CAPTURE</code> or <code class="codeph">ALTER_CAPTURE</code>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4__GUID-0972390E-341D-4D57-BA5D-41D728BB2A18">
+                        <p class="notep1">Note:</p>
+                        <p>To specify a checkpoint retention time for a capture process, the compatibility level of the database running the capture process must be <code class="codeph">10.2.0</code> or higher. If the compatibility level is lower than <code class="codeph">10.2.0</code> for a database, then the checkpoint retention time for all capture processes running on the database is infinite.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-A81D8885-4E07-45ED-BD8F-DFE7B23C42A4__GUID-FB50E96B-439E-46FE-BA8B-A682D780AF91">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-657B8E26-C99D-403E-BF74-B15E122F0734">The LogMiner Data Dictionary for a Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745">A New First SCN Value and Purged LogMiner Data Dictionary Information</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-11ED8644-A53C-4866-8665-080B3D10DEAB">Managing the Checkpoint Retention Time for a Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_CAPTURE_ADM.html#ARPLS302"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">CREATE_CAPTURE</code> and <code class="codeph">ALTER_CAPTURE</code> procedures
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS476"></a><a id="STRMS477"></a><a id="STRMS475"></a><div class="props_rev_3"><a id="GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745" name="GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745"></a><h3 id="STRMS-GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745" class="sect3"><span class="enumeration_section">7.3 </span>A New First SCN Value and Purged LogMiner Data Dictionary Information
+               </h3>
+               <div>
+                  <p>If you reset the <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> value for an existing capture process, or if the first SCN is reset automatically when checkpoints are purged, then Oracle automatically purges <a href="strms_glossary.html#GUID-7CDF80A6-1AF5-4B03-8460-EA3DE828DE2A"><span class="xrefglossterm">LogMiner data dictionary</span></a> information before the new first SCN setting. If the <a href="strms_glossary.html#GUID-531018E6-B24E-4835-A4F5-179E2E427906"><span class="xrefglossterm">start SCN</span></a> for a capture process corresponds to redo information that has been purged, then Oracle Database automatically resets the start SCN to the same value as the first SCN. However, if the start SCN is higher than the new first SCN setting, then the start SCN remains unchanged.
+                  </p>
+                  <p><a href="advanced-capture-process-concepts.html#GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745__i1011622">Figure 7-2</a> shows how Oracle automatically purges LogMiner data dictionary information prior to a new first SCN setting, and how the start SCN is not changed if it is higher than the new first SCN setting.
+                  </p>
+                  <div class="figure" id="GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745__i1011622">
+                     <p class="titleinfigure">Figure 7-2 Start SCN Higher than Reset First SCN</p><img width="451" src="img/strms038.gif" alt="Description of Figure 7-2 follows" title="Description of Figure 7-2 follows" longdesc="img_text/strms038.html"><br><a href="img_text/strms038.html">Description of "Figure 7-2 Start SCN Higher than Reset First SCN"</a></div>
+                  <!-- class="figure" -->
+                  <p>Given this example, if the first SCN is reset again to a value higher than the start SCN value for a capture process, then the start SCN no longer corresponds to existing information in the LogMiner data dictionary. <a href="advanced-capture-process-concepts.html#GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745__i1011800">Figure 7-3</a> shows how Oracle Database resets the start SCN automatically if it is lower than a new first SCN setting.
+                  </p>
+                  <div class="figure" id="GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745__i1011800">
+                     <p class="titleinfigure">Figure 7-3 Start SCN Lower than Reset First SCN</p><img width="459" src="img/strms039.gif" alt="Description of Figure 7-3 follows" title="Description of Figure 7-3 follows" longdesc="img_text/strms039.html"><br><a href="img_text/strms039.html">Description of "Figure 7-3 Start SCN Lower than Reset First SCN"</a></div>
+                  <!-- class="figure" -->
+                  <p>As you can see, the first SCN and start SCN for a capture process can continually increase over time, and, as the first SCN moves forward, it might no longer correspond to an SCN established by the <code class="codeph">DBMS_CAPTURE_ADM.BUILD</code> procedure.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-D789DEF5-DEB5-4388-B3D4-94A65977B745__GUID-4F006D2A-7BCF-4995-8FB4-7513C6B41B7B">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-E99C4219-767D-40CC-9FE1-044AF4277828">First SCN and Start SCN</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-4E8A3ECC-D209-4DAA-90FF-B599128BC27B">Setting the Start SCN for an Existing Capture Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">DBMS_CAPTURE_ADM.ALTER_CAPTURE</code> procedure in the<a href="../arpls/DBMS_CAPTURE_ADM.html#ARPLS312"><span class="italic"> Oracle Database PL/SQL Packages and Types Reference </span></a>for information about altering a capture process
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS210"></a><div class="props_rev_3"><a id="GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD" name="GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD"></a><h3 id="STRMS-GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD" class="sect3"><span class="enumeration_section">7.4 </span>ARCHIVELOG Mode and a Capture Process
+               </h3>
+               <div>
+                  <p>The following list describes how different types of capture processes read the redo data: </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>A <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a> reads from the redo log buffer whenever possible. If it cannot read from the log buffer, then it reads from the online redo logs. If it cannot read from the log buffer or the online redo logs, then it reads from the archived redo log files. Therefore, the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> must be running in <code class="codeph">ARCHIVELOG</code> mode when a local capture process is configured to capture changes.
+                        </p>
+                     </li>
+                     <li>
+                        <p>A <a href="strms_glossary.html#GUID-06A0A2F0-B289-468B-83DD-FA912214CB2F"><span class="xrefglossterm">real-time downstream capture process</span></a> reads online redo data from its source database whenever possible and archived redo log files that contain redo data from the source database otherwise. In this case, the redo data from the source database is stored in the standby redo log at the <a href="strms_glossary.html#GUID-BEBC1371-719D-4103-877E-E3FB7B1DBA46"><span class="xrefglossterm">downstream database</span></a>, and the archiver at the downstream database archives the redo data in the standby redo log. Therefore, both the source database and the downstream database must be running in <code class="codeph">ARCHIVELOG</code> mode when a real-time downstream capture process is configured to capture changes.
+                        </p>
+                     </li>
+                     <li>
+                        <p>An <a href="strms_glossary.html#GUID-B12B203D-0E31-47EE-9B29-AAF4C9E593C2"><span class="xrefglossterm">archived-log downstream capture process</span></a> always reads archived redo log files from its source database. Therefore, the source database must be running in <code class="codeph">ARCHIVELOG</code> mode when an archived-log downstream capture process is configured to capture changes.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>You can query the <code class="codeph">REQUIRED_CHECKPOINT_SCN</code> column in the <code class="codeph">DBA_CAPTURE</code> data dictionary view to determine the <a href="strms_glossary.html#GUID-C3EC3C70-C86C-4F1F-8DDA-8C972D0EEFC2"><span class="xrefglossterm">required checkpoint SCN</span></a> for a capture process. When the capture process is restarted, it scans the redo log from the required checkpoint SCN forward. Therefore, the redo log file that includes the required checkpoint SCN, and all subsequent redo log files, must be available to the capture process.
+                  </p>
+                  <p>You must keep an archived redo log file available until you are certain that no capture process will need that file. The <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> for a capture process can be reset to a higher value, but it cannot be reset to a lower value. Therefore, a capture process will never need the redo log files that contain information before its first SCN. Query the <code class="codeph">DBA_LOGMNR_PURGED_LOG</code> data dictionary view to determine which archived redo log files will never be needed by any capture process.
+                  </p>
+                  <p>When a local capture process falls behind, there is a seamless transition from reading an online redo log to reading an archived redo log, and, when a local capture process catches up, there is a seamless transition from reading an archived redo log to reading an online redo log. Similarly, when a real-time downstream capture process falls behind, there is a seamless transition from reading the standby redo log to reading an archived redo log, and, when a real-time downstream capture process catches up, there is a seamless transition from reading an archived redo log to reading the standby redo log.</p>
+                  <div class="infoboxnote" id="GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD__GUID-157C0F90-B84F-488B-B154-F31E243F63C9">
+                     <p class="notep1">Note:</p>
+                     <p>At a downstream database in a downstream capture configuration, log files from a remote source database should be kept separate from local database log files. In addition, if the downstream database contains log files from multiple source databases, then the log files from each source database should be kept separate from each other.</p>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD__GUID-6306A0B2-E267-4B2C-A69F-D340FE556AE6">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN008"><span class="italic">Oracle Database Administrator's Guide </span></a>for information about running a database in <code class="codeph">ARCHIVELOG</code> mode
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-0D2F70A7-744F-471E-AFFD-E4870A41152C">Displaying SCN Values for Each Redo Log File Used by Each Capture Process</a>"</span> for a query that determines which redo log files are no longer needed
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS211"></a><div class="props_rev_3"><a id="GUID-CCC1CC2B-CA3E-486E-BB1B-FE01EA3C12E5" name="GUID-CCC1CC2B-CA3E-486E-BB1B-FE01EA3C12E5"></a><h3 id="STRMS-GUID-CCC1CC2B-CA3E-486E-BB1B-FE01EA3C12E5" class="sect3"><span class="enumeration_section">7.5 </span>Capture Process Creation
+               </h3>
+               <div>
+                  <p>You can create a capture process using a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package or the <code class="codeph">DBMS_CAPTURE_ADM</code> package. Using a procedure the <code class="codeph">DBMS_STREAMS_ADM</code> package to create a capture process is simpler because the procedure automatically uses defaults for some configuration options. In addition, when you use a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package, a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> is created for the capture process, and <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s can be added to the rule set automatically. The rule set is a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> if the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code> (the default) in the procedure, or it is a <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> if the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">FALSE</code> in the procedure.
+                  </p>
+                  <p>Alternatively, using the <code class="codeph">CREATE_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to create a capture process is more flexible, and you create one or more rule sets and rules for the capture process either before or after it is created. You can use the procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package or the <code class="codeph">DBMS_RULE_ADM</code> package to add rules to a rule set for the capture process. To create a capture process at a <a href="strms_glossary.html#GUID-BEBC1371-719D-4103-877E-E3FB7B1DBA46"><span class="xrefglossterm">downstream database</span></a>, you must use the <code class="codeph">DBMS_CAPTURE_ADM</code> package.
+                  </p>
+                  <p>When you create a capture process using a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package and generate one or more rules in the positive rule set for the capture process, the objects for which changes are captured are prepared for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> automatically, unless it is a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> and there is no database link from the downstream database to the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>.
+                  </p>
+                  <p>When you create a capture process using the <code class="codeph">CREATE_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package, you should prepare for instantiation any objects for which you plan to capture changes. Prepare these objects for instantiations as soon as possible after capture process creation. You can prepare objects for instantiation using one of the following procedures in the <code class="codeph">DBMS_CAPTURE_ADM</code> package:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">PREPARE_TABLE_INSTANTIATION</code> prepares a single table for instantiation.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code> prepares for instantiation all of the objects in a schema and all objects added to the schema in the future.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code> prepares for instantiation all of the objects in a database and all objects added to the database in the future.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>These procedures can also enable <a href="strms_glossary.html#GUID-27DA88A1-EDB9-4AC5-ACD0-BD514172385F"><span class="xrefglossterm">supplemental logging</span></a> for the key columns or for all columns in the table or tables prepared for instantiation.
+                  </p>
+                  <div class="infoboxnote" id="GUID-CCC1CC2B-CA3E-486E-BB1B-FE01EA3C12E5__GUID-09CD5385-E373-4650-BFF5-3652EE216D08">
+                     <p class="notep1">Note:</p>
+                     <p>After creating a capture process, avoid changing the <code class="codeph">DBID</code> or global name of the source database for the capture process. If you change either the <code class="codeph">DBID</code> or global name of the source database, then the capture process must be dropped and re-created.
+                     </p>
+                  </div>
+                  <div class="infoboxnote" id="GUID-CCC1CC2B-CA3E-486E-BB1B-FE01EA3C12E5__GUID-DFD59C98-675B-470F-9021-EE349372814A">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strep/configuring-implicit-capture.html#STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> and<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS"><span class="italic"> Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the procedures that can create a capture process
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/toc.htm"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for more information about <a href="../strep/instantiation-and-oracle-streams-replication.html#STREP115">capture process rules and preparation for instantiation,</a> and for more information about <a href="../strep/managing-oracle-streams-replication.html#STREP135">changing the DBID or global name of a source database</a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS478"></a><div class="props_rev_3"><a id="GUID-657B8E26-C99D-403E-BF74-B15E122F0734" name="GUID-657B8E26-C99D-403E-BF74-B15E122F0734"></a><h4 id="STRMS-GUID-657B8E26-C99D-403E-BF74-B15E122F0734" class="sect4"><span class="enumeration_section">7.5.1 </span>The LogMiner Data Dictionary for a Capture Process
+                  </h4>
+                  <div>
+                     <p>A capture process requires a data dictionary that is separate from the primary data dictionary for the source database. This separate data dictionary is called a <span class="bold">LogMiner data dictionary</span>. There can be more than one LogMiner data dictionary for a particular source database. If there are multiple capture processes capturing changes from the source database, then two or more capture processes can share a LogMiner data dictionary, or each capture process can have its own LogMiner data dictionary. If the LogMiner data dictionary that is needed by a capture process does not exist, then the capture process populates it using information in the redo log when the capture process is started for the first time.
+                     </p>
+                     <p>The <code class="codeph">DBMS_CAPTURE_ADM.BUILD</code> procedure extracts data dictionary information to the redo log, and this procedure must be run at least once on the source database before any capture process configured to capture changes originating at the source database is started. The extracted data dictionary information in the redo log is consistent with the primary data dictionary at the time when the <code class="codeph">DBMS_CAPTURE_ADM.BUILD</code> procedure is run. This procedure also identifies a valid <a href="strms_glossary.html#GUID-BE3F0D47-11A1-46BD-BF54-F395591C3464"><span class="xrefglossterm">first SCN</span></a> value that you can use to create a capture process.
+                     </p>
+                     <p>You can perform a build of data dictionary information in the redo log multiple times, and a particular build might or might not be used by a capture process to create a LogMiner data dictionary. The amount of information extracted to a redo log when you run the <code class="codeph">BUILD</code> procedure depends on the number of database objects in the database. Typically, the <code class="codeph">BUILD</code> procedure generates a large amount of redo data that a capture process must scan subsequently. Therefore, you should run the <code class="codeph">BUILD</code> procedure only when necessary.
+                     </p>
+                     <p>In most cases, if a build is required when a capture process is created using a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> or <code class="codeph">DBMS_CAPTURE_ADM</code> package, then the procedure runs the <code class="codeph">BUILD</code> procedure automatically. However, the <code class="codeph">BUILD</code> procedure is not run automatically during capture process creation in the following cases:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>You use <code class="codeph">CREATE_CAPTURE</code> and specify a non-<code class="codeph">NULL</code> value for the <code class="codeph">first_scn</code> parameter. In this case, the specified first SCN must correspond to a previous build.
+                           </p>
+                        </li>
+                        <li>
+                           <p>You create a downstream capture process that does not use a database link. In this case, the command at the downstream database cannot communicate with the source database to run the <code class="codeph">BUILD</code> procedure automatically. Therefore, you must run it manually on the source database and specify the first SCN that corresponds to the build during capture process creation.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>A capture process requires a LogMiner data dictionary because the information in the primary data dictionary might not apply to the changes being captured from the redo log. These changes might have occurred minutes, hours, or even days before they are captured by a capture process. For example, consider the following scenario:</p>
+                     <ol>
+                        <li>
+                           <p>A capture process is configured to capture changes to tables.</p>
+                        </li>
+                        <li>
+                           <p>A database administrator stops the capture process. When the capture process is stopped, it records the SCN of the change it was currently capturing.</p>
+                        </li>
+                        <li>
+                           <p>User applications continue to make changes to the tables while the capture process is stopped.</p>
+                        </li>
+                        <li>
+                           <p>The capture process is restarted three hours after it was stopped.</p>
+                        </li>
+                     </ol>
+                     <p>In this case, to ensure data consistency, the capture process must begin capturing changes in the redo log at the time when it was stopped. The capture process starts capturing changes at the SCN that it recorded when it was stopped. </p>
+                     <p>The redo log contains raw data. It does not contain database object names and column names in tables. Instead, it uses object numbers and internal column numbers for database objects and columns, respectively. Therefore, when a change is captured, a capture process must reference a data dictionary to determine the details of the change.</p>
+                     <p>Because a LogMiner data dictionary might be populated when a capture process is started for the first time, it might take some time to start capturing changes. The amount of time required depends on the number of database objects in the database. You can query the <code class="codeph">STATE</code> column in the <code class="codeph">V$STREAMS_CAPTURE</code> dynamic performance view to monitor the progress while a capture process is processing a data dictionary build.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-657B8E26-C99D-403E-BF74-B15E122F0734__GUID-10C75C22-A1FE-4B7F-8AE3-A602E571EBD8">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8">Capture Process Rule Evaluation</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-E99C4219-767D-40CC-9FE1-044AF4277828">First SCN and Start SCN</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-6EFCAFE0-E325-4C9F-B9A7-5F9493344DFC">Capture Process States</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP114"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for more information about preparing database objects for instantiation
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS480"></a><a id="STRMS479"></a><div class="props_rev_3"><a id="GUID-2F575C00-AF58-41EF-AD15-248DD8A6D96C" name="GUID-2F575C00-AF58-41EF-AD15-248DD8A6D96C"></a><h5 id="STRMS-GUID-2F575C00-AF58-41EF-AD15-248DD8A6D96C" class="sect5"><span class="enumeration_section">7.5.1.1 </span>Scenario Illustrating Why a Capture Process Needs a LogMiner Data Dictionary
+                     </h5>
+                     <div>
+                        <p>Consider a scenario in which a capture process has been configured to capture changes to table <code class="codeph">t1</code>, which has columns <code class="codeph">a</code> and <code class="codeph">b</code>, and the following changes are made to this table at three different points in time:
+                        </p>
+                        <p><span class="bold">Time 1:</span>  Insert values <code class="codeph">a=7</code> and <code class="codeph">b=15</code>.
+                        </p>
+                        <p><span class="bold">Time 2:</span>  Add column <code class="codeph">c</code>.
+                        </p>
+                        <p><span class="bold">Time 3:</span>  Drop column <code class="codeph">b</code>.
+                        </p>
+                        <p>If for some reason the capture process is capturing changes from an earlier time, then the primary data dictionary and the relevant version in the LogMiner data dictionary contain different information. <a href="advanced-capture-process-concepts.html#GUID-2F575C00-AF58-41EF-AD15-248DD8A6D96C__g1023093" title="This table lists the state of table t1 at different points in time. For each point in time, the table lists change capturing time, the state of table t1 in the primary data dictionary, and the state of table t1 in the LogMiner data dictionary.">Table 7-1</a> illustrates how the information in the LogMiner data dictionary is used when the current time is different than the change capturing time.
+                        </p>
+                        <div class="tblformalwide" id="GUID-2F575C00-AF58-41EF-AD15-248DD8A6D96C__g1023093">
+                           <p class="titleintable">Table 7-1 Information About Table t1 in the Primary and LogMiner Data Dictionaries</p>
+                           <table cellpadding="4" cellspacing="0" class="FormalWide" title="Information About Table t1 in the Primary and LogMiner Data Dictionaries" summary="This table lists the state of table t1 at different points in time. For each point in time, the table lists change capturing time, the state of table t1 in the primary data dictionary, and the state of table t1 in the LogMiner data dictionary." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="11%" id="d52350e2361">Current Time</th>
+                                    <th align="left" valign="bottom" width="19%" id="d52350e2364">Change Capturing Time</th>
+                                    <th align="left" valign="bottom" width="33%" id="d52350e2367">Primary Data Dictionary</th>
+                                    <th align="left" valign="bottom" width="38%" id="d52350e2370">LogMiner Data Dictionary</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="11%" id="d52350e2375" headers="d52350e2361 ">
+                                       <p>1</p>
+                                    </td>
+                                    <td align="left" valign="top" width="19%" headers="d52350e2375 d52350e2364 ">
+                                       <p>1</p>
+                                    </td>
+                                    <td align="left" valign="top" width="33%" headers="d52350e2375 d52350e2367 ">
+                                       <p>Table <code class="codeph">t1</code> has columns <code class="codeph">a</code> and <code class="codeph">b</code>.
+                                       </p>
+                                    </td>
+                                    <td align="left" valign="top" width="38%" headers="d52350e2375 d52350e2370 ">
+                                       <p>Table <code class="codeph">t1</code> has columns <code class="codeph">a</code> and <code class="codeph">b</code> at time 1.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="11%" id="d52350e2406" headers="d52350e2361 ">
+                                       <p>2</p>
+                                    </td>
+                                    <td align="left" valign="top" width="19%" headers="d52350e2406 d52350e2364 ">
+                                       <p>1</p>
+                                    </td>
+                                    <td align="left" valign="top" width="33%" headers="d52350e2406 d52350e2367 ">
+                                       <p>Table <code class="codeph">t1</code> has columns <code class="codeph">a</code>, <code class="codeph">b</code>, and <code class="codeph">c</code> at time 2.
+                                       </p>
+                                    </td>
+                                    <td align="left" valign="top" width="38%" headers="d52350e2406 d52350e2370 ">
+                                       <p>Table <code class="codeph">t1</code> has columns <code class="codeph">a</code> and <code class="codeph">b</code> at time 1.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="11%" id="d52350e2440" headers="d52350e2361 ">
+                                       <p>3</p>
+                                    </td>
+                                    <td align="left" valign="top" width="19%" headers="d52350e2440 d52350e2364 ">
+                                       <p>1</p>
+                                    </td>
+                                    <td align="left" valign="top" width="33%" headers="d52350e2440 d52350e2367 ">
+                                       <p>Table <code class="codeph">t1</code> has columns <code class="codeph">a</code> and <code class="codeph">c</code> at time 3.
+                                       </p>
+                                    </td>
+                                    <td align="left" valign="top" width="38%" headers="d52350e2440 d52350e2370 ">
+                                       <p>Table <code class="codeph">t1</code> has columns <code class="codeph">a</code> and <code class="codeph">b</code> at time 1.
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                        <p>Assume that the capture process captures the change resulting from the insert at time&nbsp;1 when the actual time is time 3. If the capture process used the primary data dictionary, then it might assume that a value of <code class="codeph">7</code> was inserted into column <code class="codeph">a</code> and a value of <code class="codeph">15</code> was inserted into column <code class="codeph">c</code>, because those are the two columns for table <code class="codeph">t1</code> at time&nbsp;3 in the primary data dictionary. However, a value of <code class="codeph">15</code> actually was inserted into column <code class="codeph">b</code>, not column <code class="codeph">c</code>.
+                        </p>
+                        <p>Because the capture process uses the LogMiner data dictionary, the error is avoided. The LogMiner data dictionary is synchronized with the capture process and continues to record that table <code class="codeph">t1</code> has columns <code class="codeph">a</code> and <code class="codeph">b</code> at time 1. So, the captured change specifies that a value of <code class="codeph">15</code> was inserted into column <code class="codeph">b</code>.
+                        </p>
+                     </div>
+                  </div><a id="STRMS482"></a><a id="STRMS481"></a><div class="props_rev_3"><a id="GUID-176992FB-5F92-431F-80F9-15D1CCA8808A" name="GUID-176992FB-5F92-431F-80F9-15D1CCA8808A"></a><h5 id="STRMS-GUID-176992FB-5F92-431F-80F9-15D1CCA8808A" class="sect5"><span class="enumeration_section">7.5.1.2 </span>Multiple Capture Processes for the Same Source Database
+                     </h5>
+                     <div>
+                        <p>If one or more capture processes are capturing changes made to a source database, and you want to create a capture process that captures changes to the same source database, then the new capture process can either create a LogMiner data dictionary or share one of the existing LogMiner data dictionaries with one or more other capture processes.</p>
+                        <p>Whether a new LogMiner data dictionary is created for a new capture process depends on the setting for the <code class="codeph">first_scn</code> parameter when you run <code class="codeph">CREATE_CAPTURE</code> to create a capture process.
+                        </p>
+                        <p><a id="d52350e2653" class="indexterm-anchor"></a><a id="d52350e2657" class="indexterm-anchor"></a>If multiple LogMiner data dictionaries exist, and you specify <code class="codeph">NULL</code> for the <code class="codeph">first_scn</code> parameter during capture process creation, then the new capture process automatically attempts to share the LogMiner data dictionary of one of the existing capture processes that has taken at least one <a href="strms_glossary.html#GUID-357F8B1F-3C6F-4B39-B050-184C23046A8C"><span class="xrefglossterm">checkpoint</span></a>. You can view the <a href="strms_glossary.html#GUID-940FD793-5C05-4E97-8627-7C1A79B8A704"><span class="xrefglossterm">maximum checkpoint SCN</span></a> for all existing capture processes by querying the <code class="codeph">MAX_CHECKPOINT_SCN</code> column in the <code class="codeph">DBA_CAPTURE</code> data dictionary view. During capture process creation, if the <code class="codeph">first_scn</code> parameter is <code class="codeph">NULL</code> and the <code class="codeph">start_scn</code> parameter is non-<code class="codeph">NULL</code>, then an error is raised if the <code class="codeph">start_scn</code> parameter setting is lower than all of the first SCN values for all existing capture processes.
+                        </p>
+                        <p>If multiple LogMiner data dictionaries exist, and you specify a non-<code class="codeph">NULL</code> value for the <code class="codeph">first_scn</code> parameter during capture process creation, then the new capture process creates a new LogMiner data dictionary the first time it is started. In this case, before you create the new capture process, you must run the <code class="codeph">BUILD</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package on the source database. The <code class="codeph">BUILD</code> procedure generates a corresponding valid first SCN value that you can specify when you create the new capture process.
+                        </p>
+                        <p>You can find a first SCN generated by the <code class="codeph">BUILD</code> procedure by running the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN FIRST_CHANGE# HEADING 'First SCN' FORMAT 999999999
+COLUMN NAME HEADING 'Log File Name' FORMAT A50
+
+SELECT DISTINCT FIRST_CHANGE#, NAME FROM V$ARCHIVED_LOG
+  WHERE DICTIONARY_BEGIN = 'YES';
+</pre><p>This query can return more than one row if the <code class="codeph">BUILD</code> procedure was run more than once.
+                        </p>
+                        <p>The most important factor to consider when deciding whether a new capture process should share an existing LogMiner data dictionary or create one is the difference between the maximum checkpoint SCN values of the existing capture processes and the <a href="strms_glossary.html#GUID-531018E6-B24E-4835-A4F5-179E2E427906"><span class="xrefglossterm">start SCN</span></a> of the new capture process. If the new capture process shares a LogMiner data dictionary, then it must scan the redo log from the point of the maximum checkpoint SCN of the shared LogMiner data dictionary onward, even though the new capture process cannot capture changes before its first SCN. If the start SCN of the new capture process is much higher than the maximum checkpoint SCN of the existing capture process, then the new capture process must scan a large amount of redo data before it reaches its start SCN.
+                        </p>
+                        <p>A capture process creates a new LogMiner data dictionary when the <code class="codeph">first_scn</code> parameter is non-<code class="codeph">NULL</code> during capture process creation. Follow these guidelines when you decide whether a new capture process should share an existing LogMiner data dictionary or create one:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>If one or more maximum checkpoint SCN values is greater than the start SCN you want to specify, and if this start SCN is greater than the first SCN of one or more existing capture processes, then it might be better to share the LogMiner data dictionary of an existing capture process. In this case, you can assume there is a checkpoint SCN that is less than the start SCN and that the difference between this checkpoint SCN and the start SCN is small. The new capture process will begin scanning the redo log from this checkpoint SCN and will catch up to the start SCN quickly.</p>
+                           </li>
+                           <li>
+                              <p>If no maximum checkpoint SCN is greater than the start SCN, and if the difference between the maximum checkpoint SCN and the start SCN is small, then it might be better to share the LogMiner data dictionary of an existing capture process. The new capture process will begin scanning the redo log from the maximum checkpoint SCN, but it will catch up to the start SCN quickly. </p>
+                           </li>
+                           <li>
+                              <p>If no maximum checkpoint SCN is greater than the start SCN, and if the difference between the highest maximum checkpoint SCN and the start SCN is large, then it might take a long time for the capture process to catch up to the start SCN. In this case, it might be better for the new capture process to create a LogMiner data dictionary. It will take some time to create the new LogMiner data dictionary when the new capture process is first started, but the capture process can specify the same value for its first SCN and start SCN, and thereby avoid scanning a large amount of redo data unnecessarily.</p>
+                           </li>
+                        </ul>
+                        <p><a href="advanced-capture-process-concepts.html#GUID-176992FB-5F92-431F-80F9-15D1CCA8808A__i1011860">Figure 7-4</a> illustrates these guidelines.
+                        </p>
+                        <div class="figure" id="GUID-176992FB-5F92-431F-80F9-15D1CCA8808A__i1011860">
+                           <p class="titleinfigure">Figure 7-4 Deciding Whether to Share a LogMiner Data Dictionary</p><img width="563" src="img/strms042.gif" alt="Description of Figure 7-4 follows" title="Description of Figure 7-4 follows" longdesc="img_text/strms042.html"><br><a href="img_text/strms042.html">Description of "Figure 7-4 Deciding Whether to Share a LogMiner Data Dictionary"</a></div>
+                        <!-- class="figure" -->
+                        <div class="infoboxnote" id="GUID-176992FB-5F92-431F-80F9-15D1CCA8808A__GUID-2E21D1C1-8F13-4343-9228-1CA8DFA23C9E">
+                           <p class="notep1">Note:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>If you create a capture process using one of the procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package, then it is the same as specifying <code class="codeph">NULL</code> for the <code class="codeph">first_scn</code> and <code class="codeph">start_scn</code> parameters in the <code class="codeph">CREATE_CAPTURE</code> procedure.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>You must prepare database objects for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> if a new capture process will capture changes made to these database objects. This requirement holds even if the new capture process shares a LogMiner data dictionary with one or more other capture processes for which these database objects have been prepared for instantiation.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-176992FB-5F92-431F-80F9-15D1CCA8808A__GUID-908375F1-4D85-4CBA-8F45-146D8C8D63F4">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-E99C4219-767D-40CC-9FE1-044AF4277828">First SCN and Start SCN</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-47B0ADDC-A715-4F7A-8C29-241FC4EAD12C">Capture Process Checkpoints</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="../arpls/DBMS_CAPTURE_ADM.html#ARPLS311"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about setting the <code class="codeph">first_scn</code> and <code class="codeph">start_scn</code> parameters in the <code class="codeph">CREATE_CAPTURE</code> procedure
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS138"></a><div class="props_rev_3"><a id="GUID-3A241698-20A0-4604-AC48-26DD82AA4426" name="GUID-3A241698-20A0-4604-AC48-26DD82AA4426"></a><h3 id="STRMS-GUID-3A241698-20A0-4604-AC48-26DD82AA4426" class="sect3"><span class="enumeration_section">7.6 </span>The Oracle Streams Data Dictionary
+               </h3>
+               <div>
+                  <p>Propagations and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es use an <span class="bold">Oracle Streams data dictionary</span> to keep track of the database objects from a particular <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>. An Oracle Streams data dictionary is populated whenever one or more database objects are prepared for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a> at a source database. Specifically, when a database object is prepared for instantiation, it is recorded in the redo log. When a capture process scans the redo log, it uses this information to populate the local Oracle Streams data dictionary for the source database. For local capture, this Oracle Streams data dictionary is at the source database. For downstream capture, this Oracle Streams data dictionary is at the <a href="strms_glossary.html#GUID-BEBC1371-719D-4103-877E-E3FB7B1DBA46"><span class="xrefglossterm">downstream database</span></a>.
+                  </p>
+                  <p>When you prepare a database object for instantiation, you are informing Oracle Streams that information about the database object is needed by <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s that propagate changes to the database object and apply processes that apply changes to the database object. Any database that propagates or applies these changes requires an Oracle Streams data dictionary for the source database where the changes originated. 
+                  </p>
+                  <p>After an object has been prepared for instantiation, the local Oracle Streams data dictionary is updated when a DDL statement on the object is processed by a capture process. In addition, an internal <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> containing information about this DDL statement is captured and placed in the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> for the capture process. Propagations can then propagate these internal messages to <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>s at databases.
+                  </p>
+                  <p>An Oracle Streams data dictionary is multiversioned. If a database has multiple propagations and apply processes, then all of them use the same Oracle Streams data dictionary for a particular source database. A database can contain only one Oracle Streams data dictionary for a particular source database, but it can contain multiple Oracle Streams data dictionaries if it propagates or applies changes from multiple source databases.</p>
+                  <div class="infoboxnotealso" id="GUID-3A241698-20A0-4604-AC48-26DD82AA4426__GUID-78AA27FE-A195-434A-835C-D87A9CFF54BF">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strep/instantiation-and-oracle-streams-replication.html#STREP113"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for more information about instantiation
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="advanced-propagation-concepts.html#GUID-370EF988-58F3-4C23-BD4F-886C336E2A38">Oracle Streams Data Dictionary for Propagations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="advanced-apply-process-concepts.html#GUID-1EF55468-1ACF-4EAE-B05D-99DC04EA6911">Oracle Streams Data Dictionary for an Apply Process</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS483"></a><a id="STRMS157"></a><div class="props_rev_3"><a id="GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8" name="GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8"></a><h3 id="STRMS-GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8" class="sect3"><span class="enumeration_section">7.7 </span>Capture Process Rule Evaluation
+               </h3>
+               <div>
+                  <p>A capture process evaluates changes it finds in the redo log against its positive and <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a>s. The capture process evaluates a change against the negative rule set first. If one or more <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s in the negative rule set evaluate to <code class="codeph">TRUE</code> for the change, then the change is discarded, but if no rule in the negative rule set evaluates to <code class="codeph">TRUE</code> for the change, then the change satisfies the negative rule set. When a change satisfies the negative rule set for a capture process, the capture process evaluates the change against its <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a>. If one or more rules in the positive rule set evaluate to <code class="codeph">TRUE</code> for the change, then the change satisfies the positive rule set, but if no rule in the positive rule set evaluates to <code class="codeph">TRUE</code> for the change, then the change is discarded. If a capture process only has one rule set, then it evaluates changes against this one rule set only.
+                  </p>
+                  <p>A running capture process completes the following series of actions to capture changes:</p>
+                  <ol>
+                     <li>
+                        <p>Finds changes in the redo log.</p>
+                     </li>
+                     <li>
+                        <p>Performs prefiltering of the changes in the redo log. During this step, a capture process evaluates rules in its rule sets at a basic level to place changes found in the redo log into two categories: changes that should be converted into LCRs and changes that should not be converted into LCRs. Prefiltering is done in two phases. In the first phase, information that can be evaluated during prefiltering includes schema name, object name, and command type. If more information is needed to determine whether a change should be converted into an LCR, then information that can be evaluated during the second phase of prefiltering includes <a href="strms_glossary.html#GUID-D667D798-F9C9-437F-92AB-8C04FAD19B64"><span class="xrefglossterm">tag</span></a> values and column values when appropriate.
+                        </p>
+                        <p>Prefiltering is a safe optimization done with incomplete information. This step identifies relevant changes to be processed subsequently, such that:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>A capture process converts a change into an LCR if the change satisfies the capture process rule sets. In this case, proceed to Step <a href="advanced-capture-process-concepts.html#GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8__CACDJJGH">3</a>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>A capture process does not convert a change into an LCR if the change does not satisfy the capture process rule sets.</p>
+                           </li>
+                           <li>
+                              <p>Regarding <code class="codeph">MAYBE</code> evaluations, the rule evaluation proceeds as follows:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>If a change evaluates to <code class="codeph">MAYBE</code> against both the positive and negative rule set for a capture process, then the capture process might not have enough information to determine whether the change will definitely satisfy both of its rule sets. In this case, further evaluation is necessary. Proceed to Step&nbsp;<a href="advanced-capture-process-concepts.html#GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8__CACDJJGH">3</a>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If the change evaluates to <code class="codeph">FALSE</code> against the negative rule set and <code class="codeph">MAYBE</code> against the positive rule set for the capture process, then the capture process might not have enough information to determine whether the change will definitely satisfy both of its rule sets. In this case, further evaluation is necessary. Proceed to Step <a href="advanced-capture-process-concepts.html#GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8__CACDJJGH">3</a>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If the change evaluates to <code class="codeph">MAYBE</code> against the negative rule set and <code class="codeph">TRUE</code> against the positive rule set for the capture process, then the capture process might not have enough information to determine whether the change will definitely satisfy both of its rule sets. In this case, further evaluation is necessary. Proceed to Step <a href="advanced-capture-process-concepts.html#GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8__CACDJJGH">3</a>.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If the change evaluates to <code class="codeph">TRUE</code> against the negative rule set and <code class="codeph">MAYBE</code> against the positive rule set for the capture process, then the capture process discards the change. 
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If the change evaluates to <code class="codeph">MAYBE</code> against the negative rule set and <code class="codeph">FALSE</code> against the positive rule set for the capture process, then the capture process discards the change.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </li>
+                        </ul>
+                     </li>
+                     <li id="GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8__CACDJJGH">
+                        <p>Converts changes that satisfy, or might satisfy, the capture process rule sets into LCRs based on prefiltering.</p>
+                     </li>
+                     <li>
+                        <p>Performs LCR filtering. During this step, a capture process evaluates rules regarding information in each LCR to separate the LCRs into two categories: LCRs that should be enqueued and LCRs that should be discarded.</p>
+                     </li>
+                     <li>
+                        <p>Discards the LCRs that should not be enqueued because they did not satisfy the capture process rule sets.</p>
+                     </li>
+                     <li>
+                        <p>Enqueues the remaining <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s into the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> associated with the capture process.
+                        </p>
+                     </li>
+                  </ol>
+                  <p>For example, suppose the following rule is defined in the positive rule set for a capture process: Capture changes to the <code class="codeph">hr.employees</code> table where the <code class="codeph">department_id</code> is&nbsp;<code class="codeph">50</code>. No other rules are defined for the capture process, and the <code class="codeph">parallelism</code> parameter for the capture process is set to <code class="codeph">1</code>.
+                  </p>
+                  <p>Given this rule, suppose an <code class="codeph">UPDATE</code> statement on the <code class="codeph">hr.employees</code> table changes 50 rows in the table. The capture process performs the following series of actions for each row change:
+                  </p>
+                  <ol>
+                     <li>
+                        <p>Finds the next change resulting from the <code class="codeph">UPDATE</code> statement in the redo log.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Determines that the change resulted from an <code class="codeph">UPDATE</code> statement to the <code class="codeph">hr.employees</code> table and must be captured. If the change was made to a different table, then the capture process ignores the change.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Captures the change and converts it into an LCR.</p>
+                     </li>
+                     <li>
+                        <p>Filters the LCR to determine whether it involves a row where the <code class="codeph">department_id</code> is <code class="codeph">50.</code></p>
+                     </li>
+                     <li>
+                        <p>Either enqueues the LCR into the queue associated with the capture process if it involves a row where the <code class="codeph">department_id</code> is <code class="codeph">50</code>, or discards the LCR if it involves a row where the <code class="codeph">department_id</code> is not <code class="codeph">50</code> or is missing.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8__GUID-7CBE0327-4DBF-4783-B16F-4A3D6C360944">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-00C97579-1532-4535-8CB3-A4CDF5A99097">Capture Process Subcomponents</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a> for more information about rule sets for <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s and for information about how messages satisfy rule sets
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                  </ol>
+                  <p><a href="advanced-capture-process-concepts.html#GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8__i1007098">Figure 7-5</a> illustrates capture process rule evaluation in a flowchart.
+                  </p>
+                  <div class="figure" id="GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8__i1007098">
+                     <p class="titleinfigure">Figure 7-5 Flowchart Showing Capture Process Rule Evaluation</p><img width="369" src="img/strms026.gif" alt="Description of Figure 7-5 follows" title="Description of Figure 7-5 follows" longdesc="img_text/strms026.html"><br><a href="img_text/strms026.html">Description of "Figure 7-5 Flowchart Showing Capture Process Rule Evaluation"</a></div>
+                  <!-- class="figure" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

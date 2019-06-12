@@ -1,0 +1,99 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="During installation, if you select a multitenant container database (CDB), and configure pluggable databases (PDBs), then Oracle recommends that you add services to the PDBs after installation.">
+      <meta name="description" content="During installation, if you select a multitenant container database (CDB), and configure pluggable databases (PDBs), then Oracle recommends that you add services to the PDBs after installation.">
+      <title>Configuring Services on Oracle RAC with CDBs</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Installation Guide">
+      <meta property="og:description" content="During installation, if you select a multitenant container database (CDB), and configure pluggable databases (PDBs), then Oracle recommends that you add services to the PDBs after installation.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Installation Guide for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="real-application-clusters-installation-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-07-31T04:59:38-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2012, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83916-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="recompiling-all-invalid-objects.html" title="Previous" type="text/html">
+      <link rel="next" href="recommended-postinstallation-tasks.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Real Application Clusters Installation Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="RIWIN">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="recompiling-all-invalid-objects.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="recommended-postinstallation-tasks.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Installation Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="oracle-real-application-clusters-postinstallation-procedures.html" property="item" typeof="WebPage"><span property="name">Oracle Real Application Clusters Postinstallation Procedures</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="required-postinstallation-tasks.html" property="item" typeof="WebPage"><span property="name">Required Postinstallation Tasks</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Configuring Services on Oracle RAC with CDBs</li>
+            </ol>
+            <a id="GUID-ACF4148E-DDED-4643-B5B6-DDEBEBFCD22E" name="GUID-ACF4148E-DDED-4643-B5B6-DDEBEBFCD22E"></a>
+            
+            <h2 id="RIWIN-GUID-ACF4148E-DDED-4643-B5B6-DDEBEBFCD22E" class="sect2"><span class="enumeration_section">4.1.5 </span>Configuring Services on Oracle RAC with CDBs
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>During installation, if you select a multitenant container database (CDB), and configure pluggable databases (PDBs), then Oracle recommends that you add services to the PDBs after installation. </p>
+               <div class="section">If you do not add services to PDBs, and then the Oracle RAC One Node CDB fails over to another node, or you manually relocate the CDB to another node, then by default, all PDBs associated with that CDB that do not have registered services are restarted in <code class="codeph">MOUNTED</code> state. 
+                  <p>PDBs are opened in Read Write mode after failover or relocation only after you have configured the PDBs to have associated services. If you have not associated services to PDBs, then the PDBs remains in <code class="codeph">MOUNTED</code> state when the CDB instance restarts. 
+                  </p>
+               </div>
+               <!-- class="section" -->
+               <ul>
+                  <li class="stepexpand"><span>Use the following <code class="codeph">srvctl</code> command syntax, where <span class="variable">cdbname</span> is the name of the CDB, <span class="variable">service_name</span> is the name of the service, and <span class="variable">pdbname</span> is the name of the PDB:</span><div><pre class="pre codeblock"><code>srvctl add service -d <span class="variable">cdbname</span> -s <span class="variable">service_name</span> -pdb <span class="variable">pdbname</span></code></pre></div>
+                  </li>
+               </ul>
+               <div class="section">
+                  <p>After you add services to your PDBs, if you relocate the CDB with which the PDBs are associated, or the CDB fails over, then the PDBs associated with that CDB automatically open in <code class="codeph">Read Write</code> state. 
+                  </p>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="required-postinstallation-tasks.html#GUID-A008B7FA-1CFC-4879-8910-2E5C1E58AB7C" title="Perform these tasks after completing your installation.">Required Postinstallation Tasks</a></p>
+                  </div>
+               </div>
+            </div>
+            
+         </div>
+      </article>
+   </body>
+</html>

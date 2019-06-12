@@ -1,0 +1,583 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="This chapter uses code examples to show how to manage configuration documents in the DICOM data model repository. The code examples are written in PL/SQL to match the ORD_DICOM_ADMIN package, which is provided in PL/SQL only.">
+      <meta name="description" content="This chapter uses code examples to show how to manage configuration documents in the DICOM data model repository. The code examples are written in PL/SQL to match the ORD_DICOM_ADMIN package, which is provided in PL/SQL only.">
+      <title>Administering the DICOM Repository</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="DICOM Developer's Guide ">
+      <meta property="og:description" content="This chapter uses code examples to show how to manage configuration documents in the DICOM data model repository. The code examples are written in PL/SQL to match the ORD_DICOM_ADMIN package, which is provided in PL/SQL only.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="DICOM Developer's Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="multimedia-dicom-developers-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-09-07T06:10:21-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2007, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84258-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="creating-dicom-configuration-documents.html" title="Previous" type="text/html">
+      <link rel="next" href="ORD_DICOM_ADMIN-package-reference.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Multimedia DICOM Developer's Guide">
+    <meta name="dcterms.isVersionOf" content="IMDCM">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="creating-dicom-configuration-documents.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="ORD_DICOM_ADMIN-package-reference.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">DICOM Developer's Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="dicom-administration-usage-and-reference.html" property="item" typeof="WebPage"><span property="name">   DICOM Administration Usage and Reference </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Administering the DICOM Repository</li>
+            </ol>
+            <a id="GUID-4F8E2620-1FF9-463A-9CB2-ABFA771966D6" name="GUID-4F8E2620-1FF9-463A-9CB2-ABFA771966D6"></a><a id="IMDCM9000"></a>
+            
+            <h2 id="IMDCM-GUID-4F8E2620-1FF9-463A-9CB2-ABFA771966D6" class="sect2"><span class="enumeration_chapter">10 </span> Administering the DICOM Repository
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>This chapter uses code examples to show how to manage configuration documents in the DICOM data model repository. The code examples are written in PL/SQL to match the ORD_DICOM_ADMIN package, which is provided in PL/SQL only.</p>
+               <div class="infoboxnote" id="GUID-4F8E2620-1FF9-463A-9CB2-ABFA771966D6__GUID-C078655C-3053-4B27-9A4B-235387AEC262">
+                  <p class="notep1">Note:</p>
+                  <p>The Oracle Multimedia support for DICOM was deprecated in Oracle Database 12<span class="italic">c</span> Release 2 (12.2), and may be desupported in a future release. Oracle recommends that you stop using deprecated features as soon as possible.
+                  </p>
+               </div>
+               <p>Oracle Multimedia DICOM provides capabilities for several administrative operations related to the data model repository. For example, administrators can review the Oracle-defined configuration documents in the DICOM data model repository before determining whether to add custom configuration documents for a particular organization (Steps 2 and 4 in <a href="administering-the-dicom-repository.html#GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829">Sample Session 2: Updating a Mapping Document</a> describe this process). Using views or invoking data model utility functions, administrators can obtain attributes and other detailed information about these configuration documents. Working with the procedures and functions in the ORD_DICOM_ADMIN package, administrators can insert, update, export, or delete configuration documents from the repository. Administrators of the DICOM data model repository are assigned the ORDADMIN role.
+               </p>
+               <p>This chapter includes these sections:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="administering-the-dicom-repository.html#GUID-777DABAA-40F1-47C6-8959-52FF6AE00511">Sample Session 1: Inserting Two Documents</a></p>
+                  </li>
+                  <li>
+                     <p><a href="administering-the-dicom-repository.html#GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829">Sample Session 2: Updating a Mapping Document</a></p>
+                  </li>
+                  <li>
+                     <p><a href="administering-the-dicom-repository.html#GUID-B7278D83-3EBC-4F8D-AFC6-E095BC6FAD02">Sample Session 3: Deleting a Constraint Document</a></p>
+                  </li>
+                  <li>
+                     <p><a href="administering-the-dicom-repository.html#GUID-CED9F479-4AFC-48C4-8684-09F5036A6471">Sample Session 4: Inserting a Stored Tag List Document</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-4F8E2620-1FF9-463A-9CB2-ABFA771966D6__GUID-8188A2CA-8808-4FFA-868D-5871EBCDEE2D">
+                  <p class="notep1">See Also:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="ORD_DICOM_ADMIN-package-reference.html#GUID-38918B06-07CB-4B2B-87B3-DD078712ECDF" title="Oracle Multimedia DICOM provides the ORD_DICOM_ADMIN data model repository interface in the ORD_DICOM_ADMIN package. Oracle Multimedia DICOM also defines a view for the DICOM repository to be used by DICOM administrators.">ORD_DICOM_ADMIN Package Reference</a> for reference information about the ORD_DICOM_ADMIN package
+                        </p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/imdcm&amp;id=mm_otn_index" target="_blank"><span class="italic">Oracle Multimedia</span></a> on the Oracle Technology Network Web site for additional examples, articles, and other information
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="IMDCM13811"></a><a id="IMDCM13812"></a><a id="IMDCM13813"></a><a id="IMDCM9100"></a><div class="props_rev_3"><a id="GUID-777DABAA-40F1-47C6-8959-52FF6AE00511" name="GUID-777DABAA-40F1-47C6-8959-52FF6AE00511"></a><h3 id="IMDCM-GUID-777DABAA-40F1-47C6-8959-52FF6AE00511" class="sect3"><span class="enumeration_section">10.1 </span>Sample Session 1: Inserting Two Documents
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following sample session shows the steps for inserting a mapping document and a constraint document into the repository. This sample assumes that the following prerequisite tasks have been completed:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The directory object (<code class="codeph">DICOMDIR</code>) has been created, and the administrator has been granted READ access.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The metadata schema associated with the mapping document has been registered with Oracle XML DB as a global or local XML schema.<a id="d30406e131" class="indexterm-anchor"></a></p>
+                           <div class="infoboxnotealso" id="GUID-777DABAA-40F1-47C6-8959-52FF6AE00511__GUID-12FA5B76-D599-4B89-9FE4-02A4F15CBF1F">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../adxdb/XML-Schema-and-query-basic.html#ADXDB0600" target="_blank"><span class="italic">Oracle XML DB Developer's Guide </span></a>for more information about registering XML schemas
+                              </p>
+                           </div>
+                        </li>
+                     </ul>
+                     <p>Perform the following steps to insert a mapping document and a constraint document into the repository:</p>
+                     <dl>
+                        <dt class="dlterm"><a name="GUID-777DABAA-40F1-47C6-8959-52FF6AE00511__GUID-358D46D5-BD90-40E4-8652-34203CC6F649">
+                              <!-- --></a>Step 1&nbsp;&nbsp;&nbsp;Edit the Data Model
+                        </dt>
+                        <dd>
+                           <p>Prepare the data model for editing and lock it to prevent other administrators from making changes at the same time. For example:</p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.editDataModel();
+</pre><p>The data model remains locked until you publish the changes, perform a rollback operation, or exit the session.</p>
+                           <p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-777DABAA-40F1-47C6-8959-52FF6AE00511__GUID-45E2EE95-38EA-4C2B-AC83-003A8550F6B4">
+                              <!-- --></a>Step 2&nbsp;&nbsp;&nbsp;Insert the New Documents
+                        </dt>
+                        <dd>
+                           <p>First, insert the <a id="d30406e171" class="indexterm-anchor"></a><a id="d30406e175" class="indexterm-anchor"></a>sample mapping document (<code class="codeph">sample_map.xml</code>), as follows:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.insertDocument('sample_map.xml', 'MAPPING',
+ xmltype(bfilename('DICOMDIR', 'sample_map.xml'), nls_charset_id('AL32UTF8')));
+ </pre><p>See <a href="oracle-multimedia-dicom-concepts.html#GUID-465B0BD9-4080-4520-80AA-52561F7FF904__CIHFDGHC">Example 2-1</a> for the sample mapping document (<code class="codeph">sample_map.xml</code>).
+                           </p>
+                           <p>Then, insert the <a id="d30406e192" class="indexterm-anchor"></a><a id="d30406e196" class="indexterm-anchor"></a>sample constraint document (<code class="codeph">sample_ct.xml</code>), as follows:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.insertDocument('sample_ct.xml', 'CONSTRAINT',
+ xmltype(bfilename('DICOMDIR', 'sample_ct.xml'), nls_charset_id('AL32UTF8')));
+</pre><p>See <a href="oracle-multimedia-dicom-concepts.html#GUID-55BA762D-D507-42CF-B6E7-1A8A83C4B611__BCEHJHBH">Example 2-3</a> for the sample constraint document (<code class="codeph">sample_ct.xml</code>).
+                           </p>
+                           <p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents to ensure that the inserted documents appear.</p>
+                           <p>As another option, you can query the orddcm_document_refs view, and then review the document references, as follows:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_document_refs order by doc_name, ref_by_doc_name asc;
+</pre><p>At this point, you can run administrative tests as needed. In addition, you can call the rollbackDataModel( ) procedure to terminate the operation without publishing the changes. Or, you can continue with the next step.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-777DABAA-40F1-47C6-8959-52FF6AE00511__GUID-E991B465-2F0B-4F27-8804-BB3865FE159E">
+                              <!-- --></a>Step 3&nbsp;&nbsp;&nbsp;Publish the Changes
+                        </dt>
+                        <dd>
+                           <p>Publish the changes and unlock the data model, as follows:</p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.publishDataModel();
+</pre><p>The data model includes the inserted configuration documents.</p>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="IMDCM13814"></a><a id="IMDCM13815"></a><a id="IMDCM13816"></a><a id="IMDCM13817"></a><a id="IMDCM13818"></a><a id="IMDCM13819"></a><a id="IMDCM9200"></a><div class="props_rev_3"><a id="GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829" name="GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829"></a><h3 id="IMDCM-GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829" class="sect3"><span class="enumeration_section">10.2 </span>Sample Session 2: Updating a Mapping Document
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following sample session shows the steps for <a id="d30406e275" class="indexterm-anchor"></a><a id="d30406e279" class="indexterm-anchor"></a>updating a mapping document in the repository. This sample assumes that the following prerequisite tasks have been completed:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The directory object (<code class="codeph">DICOMDIR</code>) has been created, and the administrator has been granted READ and WRITE access.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The referenced metadata schema associated with the mapping document has been registered with Oracle XML DB as a global or local XML schema.<a id="d30406e293" class="indexterm-anchor"></a></p>
+                           <p>See<a href="../adxdb/XML-Schema-and-query-basic.html#ADXDB0600" target="_blank"><span class="italic"> Oracle XML DB Developer's Guide </span></a>for information about registering XML schemas.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>Perform the following steps to update a mapping document in the repository:</p>
+                     <dl>
+                        <dt class="dlterm"><a name="GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829__GUID-E0D1458C-5A54-49B0-A75B-FCC440C5AE9D">
+                              <!-- --></a>Step 1&nbsp;&nbsp;&nbsp;Edit the Data Model
+                        </dt>
+                        <dd>
+                           <p>As in <a href="administering-the-dicom-repository.html#GUID-777DABAA-40F1-47C6-8959-52FF6AE00511">Sample Session 1: Inserting Two Documents</a>, prepare the data model for editing and lock it to prevent other administrators from making changes at the same time. For example:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.editDataModel();
+</pre><p>The data model remains locked until you publish the changes, perform a rollback operation, or exit the session.</p>
+                           <p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829__GUID-F2482733-6CDC-4AB6-9638-8E8F2C76133D">
+                              <!-- --></a>Step 2&nbsp;&nbsp;&nbsp;Export the Existing Document
+                        </dt>
+                        <dd>
+                           <p>Export the <a id="d30406e337" class="indexterm-anchor"></a><a id="d30406e341" class="indexterm-anchor"></a>sample mapping document (<code class="codeph">sample_map.xml</code>) from the repository into a specified file (<code class="codeph">sample_map_export.xml</code>) for editing. For example:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.exportDocument('sample_map.xml', 'DICOMDIR', 
+ 'sample_map_export.xml');
+</pre><p>See <a href="oracle-multimedia-dicom-concepts.html#GUID-465B0BD9-4080-4520-80AA-52561F7FF904__CIHFDGHC">Example 2-1</a> for the sample mapping document (<code class="codeph">sample_map.xml</code>).
+                           </p>
+                           <p>The <code class="codeph">sample_map_export.xml</code> file is available for editing with an XML editor.
+                           </p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829__GUID-926B7624-484F-488A-8256-78574F39D6A8">
+                              <!-- --></a>Step 3&nbsp;&nbsp;&nbsp;Delete the Existing Document
+                        </dt>
+                        <dd>
+                           <p>Delete the existing <a id="d30406e370" class="indexterm-anchor"></a><a id="d30406e374" class="indexterm-anchor"></a>mapping document (<code class="codeph">sample_map.xml</code>) from the repository, as follows:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.deleteDocument('sample_map.xml');
+</pre><p>The repository no longer includes the sample mapping document.</p>
+                           <p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents to ensure that the deleted document no longer appears.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829__GUID-BB62B77D-C542-4238-A83E-CB2D08A6BA8F">
+                              <!-- --></a>Step 4&nbsp;&nbsp;&nbsp;Edit the Exported Document
+                        </dt>
+                        <dd>
+                           <p>Use an XML editor to edit the file that was exported in Step 2. Then, save the changes and check the permissions on the file before inserting it into the repository.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829__GUID-058243A6-99D6-41BC-B90B-AA96AAAB5C29">
+                              <!-- --></a>Step 5&nbsp;&nbsp;&nbsp;Insert the Edited Document
+                        </dt>
+                        <dd>
+                           <p>Insert the edited document (<code class="codeph">sample_map_edited.xml</code>) into the repository, as follows:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.insertDocument('sample_map_edited.xml', 'MAPPING',
+ xmltype(bfilename('DICOMDIR', 'sample_map_edited.xml'), 
+ nls_charset_id('AL32UTF8')));
+</pre><p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents to ensure that the updated document appears.</p>
+                           <p>At this point, you can test your changes, run the extractMetadata( ) method on the edited mapping document to retrieve metadata from the embedded DICOM content as XML code, and then store it in a database table for searching or viewing. In addition, you can call the rollbackDataModel( ) procedure to terminate the operation without publishing the changes. Or, you can continue with the next step.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-7DED4131-7FE9-4154-A82A-9355CB1A0829__GUID-C0A3E22C-8D18-4BB7-8377-020B70F84299">
+                              <!-- --></a>Step 6&nbsp;&nbsp;&nbsp;Publish the Changes
+                        </dt>
+                        <dd>
+                           <p>As in <a href="administering-the-dicom-repository.html#GUID-777DABAA-40F1-47C6-8959-52FF6AE00511">Sample Session 1: Inserting Two Documents</a>, publish the changes and unlock the data model, as follows:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.publishDataModel();
+</pre><p>The data model includes the updated configuration document.</p>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="IMDCM13820"></a><a id="IMDCM13821"></a><a id="IMDCM13822"></a><a id="IMDCM13823"></a><a id="IMDCM9300"></a><div class="props_rev_3"><a id="GUID-B7278D83-3EBC-4F8D-AFC6-E095BC6FAD02" name="GUID-B7278D83-3EBC-4F8D-AFC6-E095BC6FAD02"></a><h3 id="IMDCM-GUID-B7278D83-3EBC-4F8D-AFC6-E095BC6FAD02" class="sect3"><span class="enumeration_section">10.3 </span>Sample Session 3: Deleting a Constraint Document
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following sample session shows the steps for <a id="d30406e467" class="indexterm-anchor"></a><a id="d30406e471" class="indexterm-anchor"></a>deleting a constraint document from the repository. This sample assumes that the following prerequisite task has been completed:
+                     </p>
+                     <p>The directory object (<code class="codeph">DICOMDIR</code>) has been created, and the administrator has been granted WRITE access.
+                     </p>
+                     <p>Perform the following steps to delete a constraint document from the repository:</p>
+                     <dl>
+                        <dt class="dlterm"><a name="GUID-B7278D83-3EBC-4F8D-AFC6-E095BC6FAD02__GUID-A2230754-C8EB-48F3-875D-25C6934E3DC9">
+                              <!-- --></a>Step 1&nbsp;&nbsp;&nbsp;Edit the Data Model
+                        </dt>
+                        <dd>
+                           <p>As in <a href="administering-the-dicom-repository.html#GUID-777DABAA-40F1-47C6-8959-52FF6AE00511">Sample Session 1: Inserting Two Documents</a>, prepare the data model for editing and lock it to prevent other administrators from making changes at the same time. For example:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.editDataModel();
+</pre><p>The data model remains locked until you publish the changes, perform a rollback operation, or exit the session.</p>
+                           <p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-B7278D83-3EBC-4F8D-AFC6-E095BC6FAD02__GUID-E982766E-9B84-430D-BB5A-BC2960E14383">
+                              <!-- --></a>Step 2&nbsp;&nbsp;&nbsp;Export the Existing Document (Optional and Recommended)
+                        </dt>
+                        <dd>
+                           <p>Export the <a id="d30406e512" class="indexterm-anchor"></a><a id="d30406e516" class="indexterm-anchor"></a>sample constraint document (<code class="codeph">sample_ct.xml</code>) from the repository into a specified file (<code class="codeph">sample_ct_export.xml</code>) for editing. For example:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.exportDocument('sample_ct.xml', 'DICOMDIR', 
+'sample_ct_export.xml');
+</pre><p>See <a href="oracle-multimedia-dicom-concepts.html#GUID-55BA762D-D507-42CF-B6E7-1A8A83C4B611__BCEHJHBH">Example 2-3</a> for the sample constraint document (<code class="codeph">sample_ct.xml</code>).
+                           </p>
+                           <p>Optionally, you can enter the following command to query the orddcm_document_refs view, which shows the list of documents that are referenced by other documents in the repository:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_document_refs order by doc_name, ref_by_doc_name asc;
+</pre><p>Review the list of documents to check the references for the constraint document that you intend to delete.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-B7278D83-3EBC-4F8D-AFC6-E095BC6FAD02__GUID-FA9199AD-3535-4F07-93EE-D0A02197F678">
+                              <!-- --></a>Step 3&nbsp;&nbsp;&nbsp;Delete the Document
+                        </dt>
+                        <dd>
+                           <p>Delete the <a id="d30406e546" class="indexterm-anchor"></a><a id="d30406e550" class="indexterm-anchor"></a>sample constraint document (<code class="codeph">sample_ct.xml</code>), as follows:
+                           </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.deleteDocument('sample_ct.xml');
+</pre><p>The repository no longer includes the sample constraint document.</p>
+                           <p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents to ensure that the deleted document no longer appears.</p>
+                           <p>At this point, you can call the rollbackDataModel( ) procedure to terminate the operation without publishing the changes. Or, you can continue with the next step.</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-B7278D83-3EBC-4F8D-AFC6-E095BC6FAD02__GUID-4BEC5759-24BC-4820-88B2-47DF53084D9F">
+                              <!-- --></a>Step 4&nbsp;&nbsp;&nbsp;Publish the Changes
+                        </dt>
+                        <dd>
+                           <p>Publish the changes and unlock the data model, as follows:</p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.publishDataModel();
+</pre><p>The data model does not include the deleted configuration document.</p>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="IMDCM13618"></a><div class="props_rev_3"><a id="GUID-CED9F479-4AFC-48C4-8684-09F5036A6471" name="GUID-CED9F479-4AFC-48C4-8684-09F5036A6471"></a><h3 id="IMDCM-GUID-CED9F479-4AFC-48C4-8684-09F5036A6471" class="sect3"><span class="enumeration_section">10.4 </span>Sample Session 4: Inserting a Stored Tag List Document
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section describes two different approaches you can take to insert a stored tag list document into the repository:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="administering-the-dicom-repository.html#GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F">Inserting a Stored Tag List Document with a Known Set of Tags</a> describes how to insert a stored tag list document with a known set of attribute tags.
+                           </p>
+                           <p>Follow the example in this section to create, and then insert, your own stored tag list document if you believe that you know the full set of attribute tags that all the constraint and mapping documents in your repository are likely to use.</p>
+                        </li>
+                        <li>
+                           <p><a href="administering-the-dicom-repository.html#GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8">Generating and Inserting a Stored Tag List Document</a> describes how to generate and insert a stored tag list document from an existing repository that is populated with constraint and mapping documents.
+                           </p>
+                           <p>Follow the examples in this section if you have an existing repository and want to generate, and then insert, a stored tag list document from tags used by your existing constraint and mapping documents.</p>
+                        </li>
+                     </ul>
+                     <p>Select the appropriate approach to take advantage of the storage and performance benefits of the stored tag list feature.</p>
+                     <p>The following subsections describe each approach:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="administering-the-dicom-repository.html#GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F">Inserting a Stored Tag List Document with a Known Set of Tags</a></p>
+                        </li>
+                        <li>
+                           <p><a href="administering-the-dicom-repository.html#GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8">Generating and Inserting a Stored Tag List Document</a></p>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- class="section" -->
+               </div><a id="IMDCM13824"></a><a id="IMDCM13825"></a><a id="IMDCM13826"></a><a id="IMDCM13622"></a><a id="IMDCM13621"></a><div class="props_rev_3"><a id="GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F" name="GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F"></a><h4 id="IMDCM-GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F" class="sect4"><span class="enumeration_section">10.4.1 </span>Inserting a Stored Tag List Document with a Known Set of Tags
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can create your own stored tag list document, and then insert it into the repository. Include all the attribute tags to be defined in the constraint and mapping documents in the repository in your document. <a href="administering-the-dicom-repository.html#GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F__CHDCGHCD">Example 10-1</a> is a sample file (<code class="codeph">sample_stl.xml</code>) that you can insert as the stored tag list document.
+                        </p>
+                        <p>This approach assumes that the following prerequisite task has been completed:</p>
+                        <p>The directory object (<code class="codeph">DICOMDIR</code>) has been created, and the administrator has been granted READ access.
+                        </p>
+                        <p>Perform the following steps to insert a stored tag list document with a known set of attribute tags into the repository:</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F__GUID-3B5145F7-5C07-4A65-8434-865E77CDDD31">
+                                 <!-- --></a>Step 1&nbsp;&nbsp;&nbsp;Edit the Data Model
+                           </dt>
+                           <dd>
+                              <p>As in <a href="administering-the-dicom-repository.html#GUID-777DABAA-40F1-47C6-8959-52FF6AE00511">Sample Session 1: Inserting Two Documents</a>, prepare the data model for editing and lock it to prevent other administrators from making changes at the same time. For example:
+                              </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.editDataModel();
+</pre><p>The data model remains locked until you publish the changes, perform a rollback operation, or exit the session.</p>
+                              <p>At this point, to see which documents are stored in the repository, enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select doc_name from orddcm_documents order by doc_id asc;</pre></dd>
+                           <dt class="dlterm"><a name="GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F__GUID-50CECF5A-4E4C-4490-B3B6-4B06D4014661">
+                                 <!-- --></a>Step 2&nbsp;&nbsp;&nbsp;Insert the Stored Tag List Document
+                           </dt>
+                           <dd>
+                              <p>Insert the <a id="d30406e725" class="indexterm-anchor"></a><a id="d30406e729" class="indexterm-anchor"></a>sample stored tag list document file (<code class="codeph">sample_stl.xml</code>), as follows:
+                              </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.insertDocument(
+                           'sample_stl.xml',
+                           'STORED_TAG_LIST',
+                            xmltype(bfilename('DICOMDIR', 'sample_stl.xml'),
+                            nls_charset_id('AL32UTF8') ) );</pre></dd>
+                           <dt class="dlterm"><a name="GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F__GUID-FE8833DA-4736-4AF5-8DEE-D1971B49CA9C">
+                                 <!-- --></a>Step 3&nbsp;&nbsp;&nbsp;Publish the Changes
+                           </dt>
+                           <dd>
+                              <p>Publish the changes and unlock the data model, as follows:</p><pre class="oac_no_warn" dir="ltr">exec  ord_dicom_admin.publishDataModel;
+</pre><p>The data model includes the inserted configuration documents.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-AF6B72B3-4EB6-4815-AE1C-34B49250730F__CHDCGHCD">
+                        <p class="titleinexample">Example 10-1 Inserting a Stored Tag List Document with Known Attribute Tags</p><pre class="oac_no_warn" dir="ltr">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!-- 
+ Copyright (c) 2008, Oracle. All rights reserved.
+ 
+   NAME
+     sample_stl.xml   - sample stored tag list 
+ 
+--&gt;
+&lt;ATTRIBUTE_TAG_LIST xmlns="http://xmlns.oracle.com/ord/dicom/attributeTag_1_0"
+ xmlns:dt="http://xmlns.oracle.com/ord/dicom/datatype_1_0" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://xmlns.oracle.com/ord/dicom/attributeTag_1_0
+ http://xmlns.oracle.com/ord/dicom/attributeTag_1_0"&gt;
+  &lt;DOCUMENT_HEADER&gt;
+    &lt;dt:DOCUMENT_CHANGE_LOG&gt;
+      &lt;dt:DOCUMENT_MODIFIER&gt;ORACLE&lt;/dt:DOCUMENT_MODIFIER&gt;
+      &lt;dt:DOCUMENT_MODIFICATION_DATE&gt;2009-02-25&lt;/dt:DOCUMENT_MODIFICATION_DATE&gt;
+      &lt;dt:DOCUMENT_VERSION&gt;1.0&lt;/dt:DOCUMENT_VERSION&gt;
+    &lt;/dt:DOCUMENT_CHANGE_LOG&gt;
+  &lt;/DOCUMENT_HEADER&gt;
+  &lt;ATTRIBUTE_TAG&gt;00020002&lt;/ATTRIBUTE_TAG&gt;
+  &lt;ATTRIBUTE_TAG&gt;00020003&lt;/ATTRIBUTE_TAG&gt;
+  &lt;ATTRIBUTE_TAG&gt;00100010&lt;/ATTRIBUTE_TAG&gt;
+&lt;/ATTRIBUTE_TAG_LIST&gt;
+</pre></div>
+                     <!-- class="example" -->
+                  </div>
+               </div><a id="IMDCM13828"></a><a id="IMDCM13829"></a><a id="IMDCM13830"></a><a id="IMDCM13831"></a><a id="IMDCM13832"></a><a id="IMDCM13833"></a><a id="IMDCM13657"></a><a id="IMDCM13623"></a><div class="props_rev_3"><a id="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8" name="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8"></a><h4 id="IMDCM-GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8" class="sect4"><span class="enumeration_section">10.4.2 </span>Generating and Inserting a Stored Tag List Document
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>If you have an existing repository that is populated with constraint and mapping documents, you can generate a stored tag list document from tags used by your existing constraint and mapping documents, make changes to the tags as needed, and insert the stored tag list document into the repository.</p>
+                        <p>To enforce specific rules for the attributes you want to include in your stored tag list, insert a preference document that defines those attribute rules. <a href="administering-the-dicom-repository.html#GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__CIHGHJEG">Example 10-2</a> shows a preference document (<code class="codeph">sample_pf.xml</code>) that enforces the mandate attribute tags rule for mapping and constraint documents. The code statements where this operation is performed are highlighted in bold.
+                        </p>
+                        <p>Because the value of the MANDATE_ATTR_TAGS_IN_STL parameter is set to <code class="codeph">true</code>, all the tags used by the constraint and mapping documents are listed in the stored tag list document. See <a href="creating-dicom-configuration-documents.html#GUID-0591200A-B1C4-4A6E-81B1-D77E2EC0831F">Defining the MANDATE_ATTR_TAGS_IN_STL Preference Parameter</a> for more information about defining this parameter in preference documents.
+                        </p>
+                        <p>This approach assumes that the following prerequisite task has been completed:</p>
+                        <p>The directory object (<code class="codeph">DICOMDIR</code>) has been created, and the administrator has been granted READ and WRITE access.
+                        </p>
+                        <p>Perform the following steps to generate and insert a stored tag list document into the repository:</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__GUID-CE8E8054-3E36-411F-A34D-1BC17A639F8D">
+                                 <!-- --></a>Step 1&nbsp;&nbsp;&nbsp;Edit the Data Model
+                           </dt>
+                           <dd>
+                              <p>As in <a href="administering-the-dicom-repository.html#GUID-777DABAA-40F1-47C6-8959-52FF6AE00511">Sample Session 1: Inserting Two Documents</a>, prepare the data model for editing and lock it to prevent other administrators from making changes at the same time. For example:
+                              </p><pre class="oac_no_warn" dir="ltr">exec ord_dicom_admin.editDataModel();
+</pre><p>The data model remains locked until you publish the changes, perform a rollback operation, or exit the session.</p>
+                              <p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select doc_name from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents to see which documents exist in your repository.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__GUID-16CA2963-C6FD-4436-A202-D9A1CFE1953F">
+                                 <!-- --></a>Step 2&nbsp;&nbsp;&nbsp;Generate and Export the Stored Tag List Document to a File
+                           </dt>
+                           <dd>
+                              <p>Generate and export the <a id="d30406e849" class="indexterm-anchor"></a><a id="d30406e853" class="indexterm-anchor"></a>stored tag list document to the sample stored tag list document file (<code class="codeph">sample_stl.xml</code>), as shown in <a href="administering-the-dicom-repository.html#GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__CHDFFBAB">Example 10-3</a>:
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__GUID-CBA84FDA-33B7-4FEC-93D5-5FD3F58A45B2">
+                                 <!-- --></a>Step 3&nbsp;&nbsp;&nbsp;Optional: Edit the Stored Tag List Document
+                           </dt>
+                           <dd>
+                              <p>Use an XML editor to edit the stored tag list document file that was exported in Step 2. Make changes to the tags as needed, save the changes, and check the permissions on the file before inserting it into the repository.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__GUID-425FF0ED-D8AD-4E9E-8E1D-93A070D2C3E6">
+                                 <!-- --></a>Step 4&nbsp;&nbsp;&nbsp;Insert the Stored Tag List Document
+                           </dt>
+                           <dd>
+                              <p>Insert the <a id="d30406e873" class="indexterm-anchor"></a><a id="d30406e877" class="indexterm-anchor"></a>generated stored tag list document (<code class="codeph">sample_stl.xml</code>), as follows:
+                              </p><pre class="oac_no_warn" dir="ltr">ord_dicom_admin.insertDocument(
+                        'sample_stl.xml', 
+                        'STORED_TAG_LIST',
+                         xmltype(bfilename('DICOMDIR', 'sample_stl.xml'),
+                         nls_charset_id('AL32UTF8') ) );</pre></dd>
+                           <dt class="dlterm"><a name="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__GUID-11155D81-2EC3-4718-A038-48F5936518B8">
+                                 <!-- --></a>Step 5&nbsp;&nbsp;&nbsp;Optional: Enforce the Mandate Attribute Tags Rule
+                           </dt>
+                           <dd>
+                              <p>To enforce the mandate attribute tags rule, insert a preference document with the value of the MANDATE_ATTR_TAGS_IN_STL parameter set to <code class="codeph">true</code>, as follows:
+                              </p><pre class="oac_no_warn" dir="ltr"> exec ord_dicom_admin.insertDocument(
+                           'sample_pf.xml', 
+                           'PREFERENCE',
+                            xmltype(bfilename('DICOMDIR', 'sample_pf.xml'),
+                            nls_charset_id('AL32UTF8') ) );
+</pre><p>See <a href="administering-the-dicom-repository.html#GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__CIHGHJEG">Example 10-2</a> for a sample preference document that enforces this rule.
+                              </p>
+                              <div class="infoboxnote" id="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__GUID-FE0AE1BD-E0EC-48C0-821E-2F04B7D7265A">
+                                 <p class="notep1">Note:</p>
+                                 <p>If the MANDATE_ATTR_TAGS_IN_STL parameter is set to <code class="codeph">true</code> in your preference document, and you attempt to insert any mapping or constraint documents that contain tags that are not listed in your stored tag list document, those documents are not inserted into the repository. See <a href="creating-dicom-configuration-documents.html#GUID-0591200A-B1C4-4A6E-81B1-D77E2EC0831F">Defining the MANDATE_ATTR_TAGS_IN_STL Preference Parameter</a> for more information about this preference parameter.
+                                 </p>
+                              </div>
+                              <p>Optionally, you can enter the following command to query the orddcm_documents view:</p><pre class="oac_no_warn" dir="ltr">select * from orddcm_documents order by doc_id asc;
+</pre><p>Review the list of documents.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__GUID-342A43D5-B039-4E5E-ACD4-629D75F307CA">
+                                 <!-- --></a>Step 6&nbsp;&nbsp;&nbsp;Publish the Changes
+                           </dt>
+                           <dd>
+                              <p>Publish the changes and unlock the data model, as follows:</p><pre class="oac_no_warn" dir="ltr">exec  ord_dicom_admin.publishDataModel;</pre></dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="example" id="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__CIHGHJEG">
+                        <p class="titleinexample">Example 10-2 Sample Preference Document for the Mandate Attribute Tags Rule</p><pre class="oac_no_warn" dir="ltr">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;DICOM_RUNTIME_PREFERENCES xmlns="http://xmlns.oracle.com/ord/dicom/preference_1_0"
+  xmlns:dt="http://xmlns.oracle.com/ord/dicom/datatype_1_0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://xmlns.oracle.com/ord/dicom/preference_1_0 
+  http://xmlns.oracle.com/ord/dicom/preference_1_0"&gt;
+ &lt;DOCUMENT_HEADER&gt;
+  &lt;dt:DOCUMENT_CHANGE_LOG&gt;
+   &lt;dt:DOCUMENT_MODIFIER&gt;Developer 1&lt;/dt:DOCUMENT_MODIFIER&gt;
+   &lt;dt:DOCUMENT_MODIFICATION_DATE&gt;2009-02-20&lt;/dt:DOCUMENT_MODIFICATION_DATE&gt;
+   &lt;dt:DOCUMENT_VERSION&gt;0.2&lt;/dt:DOCUMENT_VERSION&gt;
+   &lt;dt:MODIFICATION_COMMENT&gt; enable MANDATE_ATTR_TAGS_IN_STL&lt;/dt:MODIFICATION_COMMENT&gt;
+  &lt;/dt:DOCUMENT_CHANGE_LOG&gt;
+ &lt;/DOCUMENT_HEADER&gt;
+ &lt;PREFERENCE_DEF&gt;
+  &lt;PARAMETER&gt;<span class="bold">MANDATE_ATTR_TAGS_IN_STL</span>&lt;/PARAMETER&gt;
+  &lt;DESCRIPTION&gt; allowed values true or false&lt;/DESCRIPTION&gt;
+  &lt;VALUE&gt;<span class="bold">true</span>&lt;/VALUE&gt;
+ &lt;/PREFERENCE_DEF&gt;
+&lt;/DICOM_RUNTIME_PREFERENCES&gt;
+</pre></div>
+                     <!-- class="example" -->
+                     <div class="example" id="GUID-4A729FEF-7AD7-4209-9442-BA0E5C4429F8__CHDFFBAB">
+                        <p class="titleinexample">Example 10-3 Generating and Exporting a Stored Tag List Document to a File</p><pre class="oac_no_warn" dir="ltr">--
+-- Generate a tag list document and store in sample_stl.xml
+-- in DICOMDIR
+--
+-- A stored tag list document must include all tags used by
+-- mapping and constraint documents in the repository
+-- to enforce the mandate_attr_tags_in_stl rule using a
+-- preference document.
+--
+-- Use the 'ALL' option to ensure that the generated tag list
+-- document contains all the tags used by mapping and constraint
+-- documents.
+--
+set serveroutput on;
+declare
+  fid           UTL_FILE.FILE_TYPE;
+  buf           VARCHAR2(32767);
+  bytesLeft     INTEGER;
+  pos           INTEGER;
+  chunk         INTEGER;
+  xml_clob      CLOB;
+  xt            XMLType;
+BEGIN
+
+   xt := ORD_DICOM_ADMIN.generateTagListDocument('ALL');
+   if (xt is null) then
+    dbms_output.put_line('Repository has no documents');
+    dbms_output.put_line('Tag list document is null');
+    return;
+   end if;
+
+    -- write xml document to file using UTL_FILE
+    -- let UTL_FILE report errors for directory and filename
+    fid := utl_file.fopen( 'DICOMDIR', 'sample_stl.xml', 'w', 32767 );
+ 
+ 
+    -- Read from clob and write to file
+    select XMLSerialize(document xt as clob)        into xml_clob from dual;
+    bytesLeft := dbms_lob.getLength( xml_clob );
+    pos       := 1;
+    WHILE bytesLeft &gt; 0 loop
+      chunk := 32767;
+      IF bytesLeft &lt; chunk THEN
+        chunk := bytesLeft;
+      END IF;
+      dbms_lob.read(xml_clob, chunk, pos, buf );
+      utl_file.put( fid, buf);  
+      utl_file.fflush(fid);
+      bytesLeft := bytesLeft - chunk;
+      pos := pos + chunk;
+    end loop;
+ 
+    utl_file.fclose( fid );
+ 
+    --free the temporary blob returned by xmltype
+    if(dbms_lob.isTemporary(xml_clob) &lt;&gt; 0) then
+      dbms_lob.freeTemporary(xml_clob);
+    end if;
+ 
+ 
+   exception
+   WHEN OTHERS then
+    -- free temp lobs
+    if(dbms_lob.isTemporary(xml_clob) &lt;&gt; 0) then
+      dbms_lob.freeTemporary(xml_clob);
+    end if;
+ 
+    raise;   -- original exception
+END;
+/</pre></div>
+                     <!-- class="example" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

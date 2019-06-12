@@ -1,0 +1,1700 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Package SOAP APIs for C++</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="XML C++ API Reference ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="XML C++ API Reference">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="xml-c-api-reference.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T04:12:39-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2001, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83820-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="package-Parser-API.html" title="Previous" type="text/html">
+      <link rel="next" href="package-Tools-API.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="XML C++ API Reference">
+    <meta name="dcterms.isVersionOf" content="CPXML">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="package-Parser-API.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="package-Tools-API.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">XML C++ API Reference </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Package SOAP APIs for C++</li>
+            </ol>
+            <a id="GUID-A5882763-8895-49F6-B0AF-EA4540DB7E44" name="GUID-A5882763-8895-49F6-B0AF-EA4540DB7E44"></a><a id="CPXML02100"></a>
+            
+            <h2 id="CPXML-GUID-A5882763-8895-49F6-B0AF-EA4540DB7E44" class="sect2"><span class="enumeration_chapter">6 </span>Package SOAP APIs for C++
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>According to the W3C definition, “SOAP is a lightweight protocol for exchange of information in a decentralized, distributed environment. It is an XML based protocol that consists of three parts: an envelope that defines a framework for describing what is in a message and how to process it, a set of encoding rules for expressing instances of application-defined datatypes, and a convention for representing remote procedure calls and responses."</p>
+               <p>The structure of a SOAP message follows:</p><pre class="oac_no_warn" dir="ltr">[SOAP message (XML document)
+&nbsp;&nbsp;&nbsp;[SOAP envelope
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[SOAP header?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;element*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[SOAP body
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(element* | Fault)?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+&nbsp;&nbsp;&nbsp;]
+]
+</pre><p>The Oracle C++ implementation of the <code class="codeph">SOAP</code> interface includes <code class="codeph">SOAP</code> datatypes, <code class="codeph">SoapException</code> methods, <code class="codeph">ConnectRef</code> methods, and <code class="codeph">MsgFactory</code> methods.
+               </p>
+               <div class="infoboxnotealso" id="GUID-A5882763-8895-49F6-B0AF-EA4540DB7E44__GUID-350CE0C9-2B2D-4BB5-88B6-1BCFB2FDD1F6">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="../adxdk/using-SOAP-with-XDK.html#ADXDK-GUID-97787437-6E3F-4FC0-949B-B151E1861C38"><span><cite>Oracle XML Developer's Kit Programmer's Guide</cite></span></a></p>
+               </div>
+            </div><a id="CPXML2869"></a><a id="CPXML02105"></a><div class="props_rev_3"><a id="GUID-6922380B-5AB7-4CF8-BFC4-5CE380D2C66A" name="GUID-6922380B-5AB7-4CF8-BFC4-5CE380D2C66A"></a><h3 id="CPXML-GUID-6922380B-5AB7-4CF8-BFC4-5CE380D2C66A" class="sect3"><span class="enumeration_section">6.1 </span>SOAP Datatypes
+               </h3>
+               <div>
+                  <div class="section">
+                     <p><a href="package-SOAP-API.html#GUID-6922380B-5AB7-4CF8-BFC4-5CE380D2C66A__BABJHBGJ" title="Column one lists datatypes; column 2 has descriptions.">Table 6-1</a> summarizes the datatypes of the <code class="codeph">SOAP </code>package.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-6922380B-5AB7-4CF8-BFC4-5CE380D2C66A__BABJHBGJ">
+                     <p class="titleintable">Table 6-1 Summary of Datatypes; SOAP Package</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of Datatypes; SOAP Package" summary="Column one lists datatypes; column 2 has descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="40%" id="d43552e105">Datatype</th>
+                              <th align="left" valign="bottom" width="60%" id="d43552e108">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d43552e113" headers="d43552e105 ">
+                                 <p><a href="package-SOAP-API.html#GUID-AC2F4AC8-51F9-498F-8A14-494E41209412">SoapExceptionCode</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d43552e113 d43552e108 ">
+                                 <p>Defines Soap-related exception codes.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d43552e122" headers="d43552e105 ">
+                                 <p><a href="package-SOAP-API.html#GUID-E2E866C7-1CB8-4736-8B84-02BAE20D2564">SoapBinding</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d43552e122 d43552e108 ">
+                                 <p>Defines binding for SOAP connections.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d43552e131" headers="d43552e105 ">
+                                 <p><a href="package-SOAP-API.html#GUID-A8F249B2-0266-4705-B7AF-50559A3C0787">SoapRole</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d43552e131 d43552e108 ">
+                                 <p>Defines roles for SOAP nodes.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div><a id="CPXML2870"></a><div class="props_rev_3"><a id="GUID-AC2F4AC8-51F9-498F-8A14-494E41209412" name="GUID-AC2F4AC8-51F9-498F-8A14-494E41209412"></a><h4 id="CPXML-GUID-AC2F4AC8-51F9-498F-8A14-494E41209412" class="sect4"><span class="enumeration_section">6.1.1 </span>SoapExceptionCode
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Defines Soap-related exception codes.</p><pre class="oac_no_warn" dir="ltr">typedef enum SoapExceptionCode {
+&nbsp;&nbsp;&nbsp;SOAP_UNDEFINED_ERR       = 0,
+&nbsp;&nbsp;&nbsp;SOAP_OTHER_ERR           = 1} SoapExceptionCode;
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2871"></a><div class="props_rev_3"><a id="GUID-E2E866C7-1CB8-4736-8B84-02BAE20D2564" name="GUID-E2E866C7-1CB8-4736-8B84-02BAE20D2564"></a><h4 id="CPXML-GUID-E2E866C7-1CB8-4736-8B84-02BAE20D2564" class="sect4"><span class="enumeration_section">6.1.2 </span>SoapBinding
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Defines binding for SOAP connections.  HTTP is currently the only choice.</p><pre class="oac_no_warn" dir="ltr">typedef enum SoapBinding {
+&nbsp;&nbsp;&nbsp;BIND_NONE  = 0,  /* none */
+&nbsp;&nbsp;&nbsp;BIND_HTTP  = 1   /* HTTP */ } SoapBinding;
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2872"></a><div class="props_rev_3"><a id="GUID-A8F249B2-0266-4705-B7AF-50559A3C0787" name="GUID-A8F249B2-0266-4705-B7AF-50559A3C0787"></a><h4 id="CPXML-GUID-A8F249B2-0266-4705-B7AF-50559A3C0787" class="sect4"><span class="enumeration_section">6.1.3 </span>SoapRole
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Defines roles for SOAP nodes.</p><pre class="oac_no_warn" dir="ltr">typedef enum SoapRole {
+&nbsp;&nbsp;&nbsp;ROLE_UNSET = 0,  /* not specified */
+&nbsp;&nbsp;&nbsp;ROLE_NONE  = 1,  /* "none" */
+&nbsp;&nbsp;&nbsp;ROLE_NEXT  = 2,  /* "next" */
+&nbsp;&nbsp;&nbsp;ROLE_ULT   = 3   /* "ultimateReceiver" */ } SoapRole;</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="CPXML2873"></a><a id="CPXML02110"></a><div class="props_rev_3"><a id="GUID-06066554-09E4-4F2E-940D-70D503CF33FB" name="GUID-06066554-09E4-4F2E-940D-70D503CF33FB"></a><h3 id="CPXML-GUID-06066554-09E4-4F2E-940D-70D503CF33FB" class="sect3"><span class="enumeration_section">6.2 </span>SoapException Interface
+               </h3>
+               <div>
+                  <div class="section">
+                     <p><a href="package-SOAP-API.html#GUID-06066554-09E4-4F2E-940D-70D503CF33FB__BABBFADH" title="Column one lists datatypes; column 2 has descriptions.">Table 6-2</a> summarizes the methods available through the SoapException Interface.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-06066554-09E4-4F2E-940D-70D503CF33FB__BABBFADH">
+                     <p class="titleintable">Table 6-2 Summary of SoapException Interfaces</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of SoapException Interfaces" summary="Column one lists datatypes; column 2 has descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="40%" id="d43552e283">Datatype</th>
+                              <th align="left" valign="bottom" width="60%" id="d43552e286">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d43552e291" headers="d43552e283 ">
+                                 <p><a href="package-SOAP-API.html#GUID-E6802A8E-3D52-490D-9659-2091654674B9">getCode()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d43552e291 d43552e286 ">
+                                 <p>Get Oracle XML error code embedded in the exception</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d43552e300" headers="d43552e283 ">
+                                 <p><a href="package-SOAP-API.html#GUID-1404B863-F8A5-4B51-881F-E546ED3CA16D">getMessage()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d43552e300 d43552e286 ">
+                                 <p>Get Oracle XML error message.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d43552e310" headers="d43552e283 ">
+                                 <p><a href="package-SOAP-API.html#GUID-0C3CBD15-5485-43B6-84F7-A39ACF49BD81">getMesLang()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d43552e310 d43552e286 ">
+                                 <p>Get current language encoding of error messages.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="40%" id="d43552e320" headers="d43552e283 ">
+                                 <p><a href="package-SOAP-API.html#GUID-109E4EE2-E310-4828-9150-59DEDED7D5FA">getSoapCode()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="60%" headers="d43552e320 d43552e286 ">
+                                 <p>Get Soap exception code embedded in the exception.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div><a id="CPXML2875"></a><a id="CPXML2876"></a><a id="CPXML2874"></a><div class="props_rev_3"><a id="GUID-E6802A8E-3D52-490D-9659-2091654674B9" name="GUID-E6802A8E-3D52-490D-9659-2091654674B9"></a><h4 id="CPXML-GUID-E6802A8E-3D52-490D-9659-2091654674B9" class="sect4"><span class="enumeration_section">6.2.1 </span>getCode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Get Oracle XML error code embedded in the exception. This is a virtual member function inherited from <code class="codeph">XMLException</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">virtual unsigned getCode() const = 0;</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(unsigned) numeric error code (0 on success)</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2878"></a><a id="CPXML2879"></a><a id="CPXML2877"></a><div class="props_rev_3"><a id="GUID-1404B863-F8A5-4B51-881F-E546ED3CA16D" name="GUID-1404B863-F8A5-4B51-881F-E546ED3CA16D"></a><h4 id="CPXML-GUID-1404B863-F8A5-4B51-881F-E546ED3CA16D" class="sect4"><span class="enumeration_section">6.2.2 </span>getMessage()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Get Oracle XML error message. Virtual member function inherited from <code class="codeph">XMLException</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">virtual oratext* getMessage() const = 0;</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(oratext *) Error message</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2881"></a><a id="CPXML2882"></a><a id="CPXML2880"></a><div class="props_rev_3"><a id="GUID-0C3CBD15-5485-43B6-84F7-A39ACF49BD81" name="GUID-0C3CBD15-5485-43B6-84F7-A39ACF49BD81"></a><h4 id="CPXML-GUID-0C3CBD15-5485-43B6-84F7-A39ACF49BD81" class="sect4"><span class="enumeration_section">6.2.3 </span>getMesLang()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Get current language encoding of error messages. Virtual member function inherited from <code class="codeph">XMLException</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">virtual oratext* getMesLang() const = 0;</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(oratext*) Current language (encoding) of error messages</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2884"></a><a id="CPXML2885"></a><a id="CPXML2883"></a><div class="props_rev_3"><a id="GUID-109E4EE2-E310-4828-9150-59DEDED7D5FA" name="GUID-109E4EE2-E310-4828-9150-59DEDED7D5FA"></a><h4 id="CPXML-GUID-109E4EE2-E310-4828-9150-59DEDED7D5FA" class="sect4"><span class="enumeration_section">6.2.4 </span>getSoapCode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Get SOAP exception code embedded in the exception. This is a virtual member function that defines a prototype 	for implementing defined member functions that return SOAP API exception codes.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">virtual SoapExceptionCode getSoapCode() const = 0;</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(SoapExceptionCode) exception code</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="CPXML2886"></a><a id="CPXML02120"></a><div class="props_rev_3"><a id="GUID-B471128D-6A6D-4311-87AD-BECBDECCD34B" name="GUID-B471128D-6A6D-4311-87AD-BECBDECCD34B"></a><h3 id="CPXML-GUID-B471128D-6A6D-4311-87AD-BECBDECCD34B" class="sect3"><span class="enumeration_section">6.3 </span>ConnectRef Interface
+               </h3>
+               <div>
+                  <div class="section">
+                     <p><a href="package-SOAP-API.html#GUID-B471128D-6A6D-4311-87AD-BECBDECCD34B__BABGFJAF" title="Column one lists datatypes; column 2 has descriptions.">Table 6-3</a> summarizes the methods available ConnectRef Interface.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-B471128D-6A6D-4311-87AD-BECBDECCD34B__BABGFJAF">
+                     <p class="titleintable">Table 6-3 Summary of ConnectRef Interfaces</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of ConnectRef Interfaces" summary="Column one lists datatypes; column 2 has descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="31%" id="d43552e562">Datatype</th>
+                              <th align="left" valign="bottom" width="69%" id="d43552e565">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d43552e570" headers="d43552e562 ">
+                                 <p><a href="package-SOAP-API.html#GUID-1D41DD6B-32E0-4E03-9F52-5A8870CF2593">~ConnectRef()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d43552e570 d43552e565 ">
+                                 <p>Destroys a SOAP connection object</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="31%" id="d43552e580" headers="d43552e562 ">
+                                 <p><a href="package-SOAP-API.html#GUID-929EBDFD-DAC3-4169-ADE5-C13461753DE7">call()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="69%" headers="d43552e580 d43552e565 ">
+                                 <p>Send a SOAP message then waits for a response.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div><a id="CPXML2888"></a><a id="CPXML2887"></a><div class="props_rev_3"><a id="GUID-1D41DD6B-32E0-4E03-9F52-5A8870CF2593" name="GUID-1D41DD6B-32E0-4E03-9F52-5A8870CF2593"></a><h4 id="CPXML-GUID-1D41DD6B-32E0-4E03-9F52-5A8870CF2593" class="sect4"><span class="enumeration_section">6.3.1 </span>~ConnectRef()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Destructor. Destroys a SOAP connection object and frees any resources associated with it.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">~ConnectRef() throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2890"></a><a id="CPXML2891"></a><a id="CPXML2889"></a><div class="props_rev_3"><a id="GUID-929EBDFD-DAC3-4169-ADE5-C13461753DE7" name="GUID-929EBDFD-DAC3-4169-ADE5-C13461753DE7"></a><h4 id="CPXML-GUID-929EBDFD-DAC3-4169-ADE5-C13461753DE7" class="sect4"><span class="enumeration_section">6.3.2 </span>call()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Send a SOAP message then waits for a response.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">DocumentRef&lt; Node&gt;* call( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-929EBDFD-DAC3-4169-ADE5-C13461753DE7__GUID-D0B31C42-73F1-4C21-B36C-427C7CA8EB35">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e674">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e677">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e682" headers="d43552e674 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e682 d43552e677 ">
+                                    <p>The SOAP message that is sent.</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(DocumentRef) returned message</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="CPXML2892"></a><a id="CPXML02130"></a><div class="props_rev_3"><a id="GUID-15BE7E7F-56F9-46A8-8367-2D4C75F7222A" name="GUID-15BE7E7F-56F9-46A8-8367-2D4C75F7222A"></a><h3 id="CPXML-GUID-15BE7E7F-56F9-46A8-8367-2D4C75F7222A" class="sect3"><span class="enumeration_section">6.4 </span>MsgFactory Interface
+               </h3>
+               <div>
+                  <div class="section">
+                     <p><a href="package-SOAP-API.html#GUID-15BE7E7F-56F9-46A8-8367-2D4C75F7222A__BABIBHBJ" title="Column one lists datatypes; column 2 has descriptions.">Table 6-4</a> summarizes the methods available through the MsgFactory Interface.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-15BE7E7F-56F9-46A8-8367-2D4C75F7222A__BABIBHBJ">
+                     <p class="titleintable">Table 6-4 Summary of MsgFactory Interfaces</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of MsgFactory Interfaces" summary="Column one lists datatypes; column 2 has descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="37%" id="d43552e738">Datatype</th>
+                              <th align="left" valign="bottom" width="63%" id="d43552e741">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e746" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-96C4CBA9-97DA-45EC-98F9-4E42FCF74943">~MsgFactory()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e746 d43552e741 ">
+                                 <p>Destroys the SOAP message factory instance.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e756" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-76683F4B-4B71-46AA-8673-B90C4E1EB575">MsgFactory()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e756 d43552e741 ">
+                                 <p>Creates and returns a SOAP Message Factory instance.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e765" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-261DBA10-C3FF-459C-B676-F06595C1D8D9">addBodyElement()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e765 d43552e741 ">
+                                 <p>Adds an element to a SOAP message body.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e774" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-920F1E61-DAFB-456C-8184-49F8A17172FC">addFaultReason()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e774 d43552e741 ">
+                                 <p>Add s an additional Reason to Fault</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e784" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-832EDB80-8943-445B-9F30-FDFE07A02C4E">addHeaderElement()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e784 d43552e741 ">
+                                 <p>Adds an element to SOAP header.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e793" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-D58523F2-0EA9-4C76-A409-4D337BEC1E03">createConnection()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e793 d43552e741 ">
+                                 <p>Creates a SOAP connection.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e803" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-FD0C1C84-039D-425B-8D96-7BF03E25EA29">createMessage()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e803 d43552e741 ">
+                                 <p>Creates and returns an empty SOAP message.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e812" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-9362BB00-4691-4C01-9842-E4091B67A74D">destroyMessage()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e812 d43552e741 ">
+                                 <p>Destroyw a SOAP message.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e821" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-F110607B-438E-4650-B000-5DBF8D632757">getBody()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e821 d43552e741 ">
+                                 <p>Returns a SOAP message's envelope body..</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e831" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-A66E2D3A-0957-45AC-B0F1-558F0B2450DD">getBodyElement()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e831 d43552e741 ">
+                                 <p>Gets an element from a SOAP body.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e841" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-EBF08A57-15E3-4922-A4A3-CE2B73195EB1">getEnvelope()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e841 d43552e741 ">
+                                 <p>Returns a SOAP part's envelope.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e852" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-D34C74EC-A699-4C37-A053-15DA433B57B2">getFault()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e852 d43552e741 ">
+                                 <p>Returns Fault code, reason, and details.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e862" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-2B77058E-D675-44E6-B0FE-B3302DE87811">getHeader()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e862 d43552e741 ">
+                                 <p>Returns a SOAP message's envelope header..</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e872" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-C4279922-1EE7-419F-9025-BF5609BF23E8">getHeaderElement()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e872 d43552e741 ">
+                                 <p>Gets an element from a SOAP header.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e882" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-15C128A7-6078-40C3-A5DF-C06F673C47CC">getMustUnderstand()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e882 d43552e741 ">
+                                 <p>Gets <code class="codeph">mustUnderstand</code> attribute from the SOAP header element.
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e895" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-7A235A34-CDB4-41C2-958C-A3244F1EAC98">getReasonNum()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e895 d43552e741 ">
+                                 <p>Gets the number of reasons in <code class="codeph">Fault</code> element.
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e907" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-BEEA33D8-F37A-4962-8F3A-5267DB2CB2B5">getReasonLang()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e907 d43552e741 ">
+                                 <p>Gets a language of a reason with a particular index.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e917" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-67860DC7-8AB9-409B-93CF-9DE9CBD1992A">getRole()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e917 d43552e741 ">
+                                 <p>Gets role from SOAP header element.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e927" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-F841B953-49C7-4A7E-B81A-38CD9386F6DD">hasFault()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e927 d43552e741 ">
+                                 <p>Determines if a SOAP message contains a Fault object.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e937" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-363E39EF-6565-42A8-909C-C33B05CB4F43">setFault()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e937 d43552e741 ">
+                                 <p>Sets Fault in a SOAP message.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e946" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-745DED8B-7976-4A7A-9510-9698EE6FBD0B">setMustUnderstand()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e946 d43552e741 ">
+                                 <p>Sets <code class="codeph">mustUnderstand</code> attribute for the SOAP header element.
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="37%" id="d43552e959" headers="d43552e738 ">
+                                 <p><a href="package-SOAP-API.html#GUID-22F28297-2F53-470C-96A8-597541444BB4">setRole()</a> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="63%" headers="d43552e959 d43552e741 ">
+                                 <p>Sets  the role for SOAP header element.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div><a id="CPXML2894"></a><a id="CPXML2893"></a><div class="props_rev_3"><a id="GUID-96C4CBA9-97DA-45EC-98F9-4E42FCF74943" name="GUID-96C4CBA9-97DA-45EC-98F9-4E42FCF74943"></a><h4 id="CPXML-GUID-96C4CBA9-97DA-45EC-98F9-4E42FCF74943" class="sect4"><span class="enumeration_section">6.4.1 </span>~MsgFactory()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Destructor. Destroys the SOAP message factory.  All allocated memory is frieed and all connections are closed.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">~MsgFactory() throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2896"></a><a id="CPXML2897"></a><a id="CPXML2895"></a><div class="props_rev_3"><a id="GUID-76683F4B-4B71-46AA-8673-B90C4E1EB575" name="GUID-76683F4B-4B71-46AA-8673-B90C4E1EB575"></a><h4 id="CPXML-GUID-76683F4B-4B71-46AA-8673-B90C4E1EB575" class="sect4"><span class="enumeration_section">6.4.2 </span>MsgFactory()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Creates and returns a SOAP Message Factory instance.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">MsgFactory( 
+&nbsp;&nbsp;&nbsp;Context* ctx_ptr) throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-76683F4B-4B71-46AA-8673-B90C4E1EB575__GUID-06B37A2E-465C-4854-92A4-3F7A1E15CCC1">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1053">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1056">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1061" headers="d43552e1053 "><pre class="oac_no_warn" dir="ltr">ctx_ptr</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1061 d43552e1056 ">
+                                    <p><code class="codeph">TContext</code> object
+                                    </p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(MsgFactory) object</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2899"></a><a id="CPXML2900"></a><a id="CPXML2898"></a><div class="props_rev_3"><a id="GUID-261DBA10-C3FF-459C-B676-F06595C1D8D9" name="GUID-261DBA10-C3FF-459C-B676-F06595C1D8D9"></a><h4 id="CPXML-GUID-261DBA10-C3FF-459C-B676-F06595C1D8D9" class="sect4"><span class="enumeration_section">6.4.3 </span>addBodyElement()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Adds an element to a SOAP message body.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">Node* addBodyElement( DocumentRef&lt; Node&gt;&amp; msg,
+&nbsp;&nbsp;&nbsp;oratext *qname,
+&nbsp;&nbsp;&nbsp;oratext *uri) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-261DBA10-C3FF-459C-B676-F06595C1D8D9__GUID-8A0EEB38-01A2-4CDA-88F7-2E8E3E65E7A1">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1123">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1126">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1131" headers="d43552e1123 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1131 d43552e1126 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1138" headers="d43552e1123 "><pre class="oac_no_warn" dir="ltr">qname</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1138 d43552e1126 ">
+                                    <p>QName of element to add </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1145" headers="d43552e1123 "><pre class="oac_no_warn" dir="ltr">uri</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1145 d43552e1126 ">
+                                    <p>Namespace URI of element to add</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(Node*) pointer to the created element </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2902"></a><a id="CPXML2901"></a><div class="props_rev_3"><a id="GUID-920F1E61-DAFB-456C-8184-49F8A17172FC" name="GUID-920F1E61-DAFB-456C-8184-49F8A17172FC"></a><h4 id="CPXML-GUID-920F1E61-DAFB-456C-8184-49F8A17172FC" class="sect4"><span class="enumeration_section">6.4.4 </span>addFaultReason()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Adds an additional Reason to Fault. The same re son text may be provided in different languages.  When the fault is created, 	the primary language and reasonare added at that time; use this function to add additional translations of the reason.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">void addFaultReason( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg,
+&nbsp;&nbsp;&nbsp;oratext *reason, 
+&nbsp;&nbsp;&nbsp;oratext *lang) throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-920F1E61-DAFB-456C-8184-49F8A17172FC__GUID-86A8B437-FBB8-402E-A42C-2DB3BDE93C33">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1203">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1206">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1211" headers="d43552e1203 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1211 d43552e1206 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1218" headers="d43552e1203 "><pre class="oac_no_warn" dir="ltr">reason</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1218 d43552e1206 ">
+                                    <p>Human-readable fault reason</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1225" headers="d43552e1203 "><pre class="oac_no_warn" dir="ltr">lang</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1225 d43552e1206 ">
+                                    <p>Language of reason</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                  </div>
+               </div><a id="CPXML2904"></a><a id="CPXML2905"></a><a id="CPXML2903"></a><div class="props_rev_3"><a id="GUID-832EDB80-8943-445B-9F30-FDFE07A02C4E" name="GUID-832EDB80-8943-445B-9F30-FDFE07A02C4E"></a><h4 id="CPXML-GUID-832EDB80-8943-445B-9F30-FDFE07A02C4E" class="sect4"><span class="enumeration_section">6.4.5 </span>addHeaderElement()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Adds an element to SOAP header.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">Node* addHeaderElement( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg,
+&nbsp;&nbsp;&nbsp;oratext *qname, oratext *uri) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-832EDB80-8943-445B-9F30-FDFE07A02C4E__GUID-F31B124D-12E3-45B9-B91A-B990F23D0FF5">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1278">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1281">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1286" headers="d43552e1278 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1286 d43552e1281 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1293" headers="d43552e1278 "><pre class="oac_no_warn" dir="ltr">qname</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1293 d43552e1281 ">
+                                    <p>QName of element to add </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1300" headers="d43552e1278 "><pre class="oac_no_warn" dir="ltr">uri</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1300 d43552e1281 ">
+                                    <p>Namespace URI of element to add</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p> (Node*) pointer to the created element</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2907"></a><a id="CPXML2908"></a><a id="CPXML2906"></a><div class="props_rev_3"><a id="GUID-D58523F2-0EA9-4C76-A409-4D337BEC1E03" name="GUID-D58523F2-0EA9-4C76-A409-4D337BEC1E03"></a><h4 id="CPXML-GUID-D58523F2-0EA9-4C76-A409-4D337BEC1E03" class="sect4"><span class="enumeration_section">6.4.6 </span>createConnection()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Creates a SOAP connection object. The connection reference object should explicitly deleted by the user.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">ConnectRef&lt; Node&gt;* createConnection(
+&nbsp;&nbsp;&nbsp;SoapBinding bind,
+&nbsp;&nbsp;&nbsp;void *endp,
+&nbsp;&nbsp;&nbsp;oratext *buf,
+&nbsp;&nbsp;&nbsp;ubig_ora bufsiz,
+&nbsp;&nbsp;&nbsp;oratext *msgbuf,
+&nbsp;&nbsp;&nbsp;ubig_ora msgbufsiz) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-D58523F2-0EA9-4C76-A409-4D337BEC1E03__GUID-810E640B-563D-4129-B478-DC3D95BECD82">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1360">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1363">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1368" headers="d43552e1360 "><pre class="oac_no_warn" dir="ltr">bind</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1368 d43552e1363 ">
+                                    <p>connection binding</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1375" headers="d43552e1360 "><pre class="oac_no_warn" dir="ltr">endp</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1375 d43552e1363 ">
+                                    <p>connection endpoint</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1382" headers="d43552e1360 "><pre class="oac_no_warn" dir="ltr">buf</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1382 d43552e1363 ">
+                                    <p>data buffer (or <code class="codeph">NULL</code> to have one allocated)
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1392" headers="d43552e1360 "><pre class="oac_no_warn" dir="ltr">bufsiz</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1392 d43552e1363 ">
+                                    <p>size of data buffer (or 0 for default size)</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1399" headers="d43552e1360 "><pre class="oac_no_warn" dir="ltr">msgbuf</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1399 d43552e1363 ">
+                                    <p>message buffer (or <code class="codeph">NULL</code> to have one allocated)
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1409" headers="d43552e1360 "><pre class="oac_no_warn" dir="ltr">msgfubsiz</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1409 d43552e1363 ">
+                                    <p>size of message buffer (or 0 for default size)</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(ConnectRef) connect object</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2910"></a><a id="CPXML2911"></a><a id="CPXML2909"></a><div class="props_rev_3"><a id="GUID-FD0C1C84-039D-425B-8D96-7BF03E25EA29" name="GUID-FD0C1C84-039D-425B-8D96-7BF03E25EA29"></a><h4 id="CPXML-GUID-FD0C1C84-039D-425B-8D96-7BF03E25EA29" class="sect4"><span class="enumeration_section">6.4.7 </span>createMessage()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Creates and returns an empty SOAP message. The reference object should be explicitly deleted by the user when no longer needed.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">DocumentRef&lt; Node&gt;* CreateMessage() throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(DocumentRef*) SOAP message, or an exception</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2913"></a><a id="CPXML2912"></a><div class="props_rev_3"><a id="GUID-9362BB00-4691-4C01-9842-E4091B67A74D" name="GUID-9362BB00-4691-4C01-9842-E4091B67A74D"></a><h4 id="CPXML-GUID-9362BB00-4691-4C01-9842-E4091B67A74D" class="sect4"><span class="enumeration_section">6.4.8 </span>destroyMessage()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Destroys a SOAP message.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">void destroyMessage(
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg) throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-9362BB00-4691-4C01-9842-E4091B67A74D__GUID-D2BF2430-5F1F-464A-950E-607E196747FB">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1512">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1515">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1520" headers="d43552e1512 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1520 d43552e1515 ">
+                                    <p>The SOAP message.</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                  </div>
+               </div><a id="CPXML2915"></a><a id="CPXML2916"></a><a id="CPXML2914"></a><div class="props_rev_3"><a id="GUID-F110607B-438E-4650-B000-5DBF8D632757" name="GUID-F110607B-438E-4650-B000-5DBF8D632757"></a><h4 id="CPXML-GUID-F110607B-438E-4650-B000-5DBF8D632757" class="sect4"><span class="enumeration_section">6.4.9 </span>getBody()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Returns a SOAP message's envelope body as a pointer to 	the body's element node.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">Node* getBody( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt;Node&gt;&amp; msg) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-F110607B-438E-4650-B000-5DBF8D632757__GUID-E44F8F09-E085-469F-B82E-94E0F3456B3D">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1574">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1577">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1582" headers="d43552e1574 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1582 d43552e1577 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(Node*) pointer to the SOAP message's envelope body</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2918"></a><a id="CPXML2919"></a><a id="CPXML2917"></a><div class="props_rev_3"><a id="GUID-A66E2D3A-0957-45AC-B0F1-558F0B2450DD" name="GUID-A66E2D3A-0957-45AC-B0F1-558F0B2450DD"></a><h4 id="CPXML-GUID-A66E2D3A-0957-45AC-B0F1-558F0B2450DD" class="sect4"><span class="enumeration_section">6.4.10 </span>getBodyElement()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Gets an element from a SOAP body as a pointer to its element node.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">Node* getBodyElement(
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg,
+&nbsp;&nbsp;&nbsp;oratext *uri,
+&nbsp;&nbsp;&nbsp;oratext *local) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-A66E2D3A-0957-45AC-B0F1-558F0B2450DD__GUID-35E38FAC-4861-4829-95B8-2AF0509FEF27">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1641">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1644">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1649" headers="d43552e1641 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1649 d43552e1644 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1656" headers="d43552e1641 "><pre class="oac_no_warn" dir="ltr">uri</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1656 d43552e1644 ">
+                                    <p>Namespace URI of element to add</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1663" headers="d43552e1641 "><pre class="oac_no_warn" dir="ltr">local</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1663 d43552e1644 ">
+                                    <p>Local name of element to get</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(Node*) pointer to the named element</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2921"></a><a id="CPXML2922"></a><a id="CPXML2920"></a><div class="props_rev_3"><a id="GUID-EBF08A57-15E3-4922-A4A3-CE2B73195EB1" name="GUID-EBF08A57-15E3-4922-A4A3-CE2B73195EB1"></a><h4 id="CPXML-GUID-EBF08A57-15E3-4922-A4A3-CE2B73195EB1" class="sect4"><span class="enumeration_section">6.4.11 </span>getEnvelope()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Returns a SOAP part's envelope as a pointer to envelope element node.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">Node* getEnvelope( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt;Node&gt;&amp; msg) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-EBF08A57-15E3-4922-A4A3-CE2B73195EB1__GUID-210BAD8E-A929-4F75-88A1-F0F4BC8DDE37">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1722">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1725">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1730" headers="d43552e1722 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1730 d43552e1725 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(Node*) pointer to the SOAP message's envelope</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2924"></a><a id="CPXML2925"></a><a id="CPXML2923"></a><div class="props_rev_3"><a id="GUID-D34C74EC-A699-4C37-A053-15DA433B57B2" name="GUID-D34C74EC-A699-4C37-A053-15DA433B57B2"></a><h4 id="CPXML-GUID-D34C74EC-A699-4C37-A053-15DA433B57B2" class="sect4"><span class="enumeration_section">6.4.12 </span>getFault()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Returns Fault code, reason, and details through user variables. <code class="codeph">NULL</code> may be supplied for any part that is not needed. For <code class="codeph">lang</code>, if the pointed-to variable is <code class="codeph">NULL</code>, it will be set to the default language, that of the first reason.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">Node* getFault( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg,
+&nbsp;&nbsp;&nbsp;oratext **code,
+&nbsp;&nbsp;&nbsp;oratext **reason,
+&nbsp;&nbsp;&nbsp;oratext **lang,
+&nbsp;&nbsp;&nbsp;oratext **node,
+&nbsp;&nbsp;&nbsp;oratext **role) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-D34C74EC-A699-4C37-A053-15DA433B57B2__GUID-49BCFE46-8A96-4D56-8519-04C725829BCB">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="16%" id="d43552e1799">Parameter</th>
+                                 <th align="left" valign="bottom" width="84%" id="d43552e1802">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1807" headers="d43552e1799 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1807 d43552e1802 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1814" headers="d43552e1799 "><pre class="oac_no_warn" dir="ltr">code</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1814 d43552e1802 ">
+                                    <p>Fault code</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1821" headers="d43552e1799 "><pre class="oac_no_warn" dir="ltr">reason</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1821 d43552e1802 ">
+                                    <p>Human-readable fault reason</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1828" headers="d43552e1799 "><pre class="oac_no_warn" dir="ltr">lang</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1828 d43552e1802 ">
+                                    <p>Desired reason language or <code class="codeph">NULL</code> (default language, same as for the first reason)
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1838" headers="d43552e1799 "><pre class="oac_no_warn" dir="ltr">node</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1838 d43552e1802 ">
+                                    <p>Fault node</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1845" headers="d43552e1799 "><pre class="oac_no_warn" dir="ltr">role</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1845 d43552e1802 ">
+                                    <p>Role: next, none, or ulitmate receiver (not used in 1.1)</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(Node) pointer to the detail</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2927"></a><a id="CPXML2928"></a><a id="CPXML2926"></a><div class="props_rev_3"><a id="GUID-2B77058E-D675-44E6-B0FE-B3302DE87811" name="GUID-2B77058E-D675-44E6-B0FE-B3302DE87811"></a><h4 id="CPXML-GUID-2B77058E-D675-44E6-B0FE-B3302DE87811" class="sect4"><span class="enumeration_section">6.4.13 </span>getHeader()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Returns a SOAP message's envelope header as a pointer to the header element node.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">Node* getHeader( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-2B77058E-D675-44E6-B0FE-B3302DE87811__GUID-A0E1A33E-A1A5-4DEA-A4F6-CC1790D67E2B">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e1904">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e1907">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e1912" headers="d43552e1904 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e1912 d43552e1907 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(Node*) pointer to the SOAP message's envelope header </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2930"></a><a id="CPXML2931"></a><a id="CPXML2929"></a><div class="props_rev_3"><a id="GUID-C4279922-1EE7-419F-9025-BF5609BF23E8" name="GUID-C4279922-1EE7-419F-9025-BF5609BF23E8"></a><h4 id="CPXML-GUID-C4279922-1EE7-419F-9025-BF5609BF23E8" class="sect4"><span class="enumeration_section">6.4.14 </span>getHeaderElement()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Gets an element from a SOAP header as a pointer to its element node.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">Node* getHeaderElement( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg,
+&nbsp;&nbsp;&nbsp;oratext *uri, 
+&nbsp;&nbsp;&nbsp;oratext *local) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-C4279922-1EE7-419F-9025-BF5609BF23E8__GUID-CB9646EB-AC73-4B43-9DD2-07CBDE4C65B7">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="16%" id="d43552e1971">Parameter</th>
+                                 <th align="left" valign="bottom" width="84%" id="d43552e1974">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1979" headers="d43552e1971 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1979 d43552e1974 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1986" headers="d43552e1971 "><pre class="oac_no_warn" dir="ltr">uri</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1986 d43552e1974 ">
+                                    <p>Namespace URI of element to get</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="16%" id="d43552e1993" headers="d43552e1971 "><pre class="oac_no_warn" dir="ltr">local</pre></td>
+                                 <td align="left" valign="top" width="84%" headers="d43552e1993 d43552e1974 ">
+                                    <p>Local name of element to get</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(Node*) pointer to the named element</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2933"></a><a id="CPXML2934"></a><a id="CPXML2932"></a><div class="props_rev_3"><a id="GUID-15C128A7-6078-40C3-A5DF-C06F673C47CC" name="GUID-15C128A7-6078-40C3-A5DF-C06F673C47CC"></a><h4 id="CPXML-GUID-15C128A7-6078-40C3-A5DF-C06F673C47CC" class="sect4"><span class="enumeration_section">6.4.15 </span>getMustUnderstand()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Gets <code class="codeph">mustUnderstand</code> attribute from SOAP header element.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">boolean getMustUnderstand( 
+&nbsp;&nbsp;&nbsp;ElementRef&lt; Node&gt;&amp; elem) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-15C128A7-6078-40C3-A5DF-C06F673C47CC__GUID-C760ACA2-CC36-495A-BDD3-3B5FDF2F7124">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e2056">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e2059">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2064" headers="d43552e2056 "><pre class="oac_no_warn" dir="ltr">elem</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2064 d43552e2059 ">
+                                    <p>SOAP header element</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(boolean) value of the <code class="codeph">mustUnderstand</code> attribute
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2936"></a><a id="CPXML2937"></a><a id="CPXML2935"></a><div class="props_rev_3"><a id="GUID-7A235A34-CDB4-41C2-958C-A3244F1EAC98" name="GUID-7A235A34-CDB4-41C2-958C-A3244F1EAC98"></a><h4 id="CPXML-GUID-7A235A34-CDB4-41C2-958C-A3244F1EAC98" class="sect4"><span class="enumeration_section">6.4.16 </span>getReasonNum()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Determines the number of reasons in the <code class="codeph">Fault</code> element. Returns <code class="codeph">0</code> if no <code class="codeph">Fault</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">ub4 getReasonNum(
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg) throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-7A235A34-CDB4-41C2-958C-A3244F1EAC98__GUID-3B4853A9-E1BC-4213-A80E-61C3F15E2194">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e2135">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e2138">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2143" headers="d43552e2135 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2143 d43552e2138 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(up4) number of reasons in Fault element</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2939"></a><a id="CPXML2940"></a><a id="CPXML2938"></a><div class="props_rev_3"><a id="GUID-BEEA33D8-F37A-4962-8F3A-5267DB2CB2B5" name="GUID-BEEA33D8-F37A-4962-8F3A-5267DB2CB2B5"></a><h4 id="CPXML-GUID-BEEA33D8-F37A-4962-8F3A-5267DB2CB2B5" class="sect4"><span class="enumeration_section">6.4.17 </span>getReasonLang()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Returns the language of a reason with a particular index.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">oratext* getReasonLang( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg,
+&nbsp;&nbsp;&nbsp;ub4 idx) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-BEEA33D8-F37A-4962-8F3A-5267DB2CB2B5__GUID-1B7792D1-AD1C-4C24-B5C0-60A8210CF1C5">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e2202">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e2205">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2210" headers="d43552e2202 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2210 d43552e2205 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2217" headers="d43552e2202 "><pre class="oac_no_warn" dir="ltr">idx</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2217 d43552e2205 ">
+                                    <p>index of a fault reason</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(oratext *) value of property or <code class="codeph">NULL</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2942"></a><a id="CPXML2943"></a><a id="CPXML2941"></a><div class="props_rev_3"><a id="GUID-67860DC7-8AB9-409B-93CF-9DE9CBD1992A" name="GUID-67860DC7-8AB9-409B-93CF-9DE9CBD1992A"></a><h4 id="CPXML-GUID-67860DC7-8AB9-409B-93CF-9DE9CBD1992A" class="sect4"><span class="enumeration_section">6.4.18 </span>getRole()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Gets role from SOAP header element.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">SoapRole getRole( 
+&nbsp;&nbsp;&nbsp;ElementRef&lt; Node&gt;&amp; elem) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-67860DC7-8AB9-409B-93CF-9DE9CBD1992A__GUID-C8F28562-51BF-4DC0-9E4F-6C427FF5F827">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e2280">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e2283">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2288" headers="d43552e2280 "><pre class="oac_no_warn" dir="ltr">elem</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2288 d43552e2283 ">
+                                    <p>Reference to the header element</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(SoapRole) header element's role</p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2945"></a><a id="CPXML2946"></a><a id="CPXML2944"></a><div class="props_rev_3"><a id="GUID-F841B953-49C7-4A7E-B81A-38CD9386F6DD" name="GUID-F841B953-49C7-4A7E-B81A-38CD9386F6DD"></a><h4 id="CPXML-GUID-F841B953-49C7-4A7E-B81A-38CD9386F6DD" class="sect4"><span class="enumeration_section">6.4.19 </span>hasFault()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Determines if a SOAP message contains a Fault object.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">boolean hasFault( 
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-F841B953-49C7-4A7E-B81A-38CD9386F6DD__GUID-FD048297-5DFE-4A76-AB50-FDC50BAA4DCD">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e2347">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e2350">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2355" headers="d43552e2347 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2355 d43552e2350 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>(boolean) <code class="codeph">TRUE</code> if there's a Fault, <code class="codeph">FALSE</code> if not
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CPXML2948"></a><a id="CPXML2947"></a><div class="props_rev_3"><a id="GUID-363E39EF-6565-42A8-909C-C33B05CB4F43" name="GUID-363E39EF-6565-42A8-909C-C33B05CB4F43"></a><h4 id="CPXML-GUID-363E39EF-6565-42A8-909C-C33B05CB4F43" class="sect4"><span class="enumeration_section">6.4.20 </span>setFault()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Sets Fault in a SOAP message.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">void setFault(
+&nbsp;&nbsp;&nbsp;DocumentRef&lt; Node&gt;&amp; msg,
+&nbsp;&nbsp;&nbsp;oratext *node,
+&nbsp;&nbsp;&nbsp;oratext *code, 
+&nbsp;&nbsp;&nbsp;oratext *reason,
+&nbsp;&nbsp;&nbsp;oratext *lang,
+&nbsp;&nbsp;&nbsp;oratext *role,
+&nbsp;&nbsp;ElementRef&lt; Node&gt;&amp; detail) throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-363E39EF-6565-42A8-909C-C33B05CB4F43__GUID-A8365F9C-D0A8-419F-B93C-E1D7F16F7A44">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e2419">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e2422">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2427" headers="d43552e2419 "><pre class="oac_no_warn" dir="ltr">msg</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2427 d43552e2422 ">
+                                    <p>SOAP message</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2434" headers="d43552e2419 "><pre class="oac_no_warn" dir="ltr">node</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2434 d43552e2422 ">
+                                    <p>URI of SOAP node which faulted</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2441" headers="d43552e2419 "><pre class="oac_no_warn" dir="ltr">code</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2441 d43552e2422 ">
+                                    <p>Fault code</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2448" headers="d43552e2419 "><pre class="oac_no_warn" dir="ltr">reason</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2448 d43552e2422 ">
+                                    <p>Human-readable fault reason</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2455" headers="d43552e2419 "><pre class="oac_no_warn" dir="ltr">lang</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2455 d43552e2422 ">
+                                    <p>Language</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2462" headers="d43552e2419 "><pre class="oac_no_warn" dir="ltr">role</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2462 d43552e2422 ">
+                                    <p>URI representing role, Role (1.2), unused (1.1)</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2469" headers="d43552e2419 "><pre class="oac_no_warn" dir="ltr">detail</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2469 d43552e2422 ">
+                                    <p>User-defined elements</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                  </div>
+               </div><a id="CPXML2950"></a><a id="CPXML2949"></a><div class="props_rev_3"><a id="GUID-745DED8B-7976-4A7A-9510-9698EE6FBD0B" name="GUID-745DED8B-7976-4A7A-9510-9698EE6FBD0B"></a><h4 id="CPXML-GUID-745DED8B-7976-4A7A-9510-9698EE6FBD0B" class="sect4"><span class="enumeration_section">6.4.21 </span>setMustUnderstand()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Sets <code class="codeph">mustUnderstand</code> attribute for the SOAP header element.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">void setMustUnderstand( 
+&nbsp;&nbsp;&nbsp;ElementRef&lt; Node&gt;&amp; elem,
+&nbsp;&nbsp;&nbsp;boolean mustUnderstand) throw (SoapException);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-745DED8B-7976-4A7A-9510-9698EE6FBD0B__GUID-D34D03F6-1A95-49DB-B55E-31C6BB232EC9">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e2525">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e2528">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2533" headers="d43552e2525 "><pre class="oac_no_warn" dir="ltr">elem</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2533 d43552e2528 ">
+                                    <p>SOAP header element</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2540" headers="d43552e2525 "><pre class="oac_no_warn" dir="ltr">mustUnderstand</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2540 d43552e2528 ">
+                                    <p><code class="codeph">mustUnderstand</code> value (<code class="codeph">TRUE </code>or <code class="codeph">FALSE</code>)
+                                    </p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                  </div>
+               </div><a id="CPXML2952"></a><a id="CPXML2951"></a><div class="props_rev_3"><a id="GUID-22F28297-2F53-470C-96A8-597541444BB4" name="GUID-22F28297-2F53-470C-96A8-597541444BB4"></a><h4 id="CPXML-GUID-22F28297-2F53-470C-96A8-597541444BB4" class="sect4"><span class="enumeration_section">6.4.22 </span>setRole()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Sets the role for SOAP header element.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">void setRole( 
+&nbsp;&nbsp;&nbsp;ElementRef&lt; Node&gt;&amp; elem, 
+&nbsp;&nbsp;&nbsp;SoapRole role) throw (SoapException);
+</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-22F28297-2F53-470C-96A8-597541444BB4__GUID-D7A8DF1D-1AA2-4473-9523-E23EA46D65E1">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="Parameter Table; column 1 has parameters and column 2 has their descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d43552e2600">Parameter</th>
+                                 <th align="left" valign="bottom" width="74%" id="d43552e2603">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2608" headers="d43552e2600 "><pre class="oac_no_warn" dir="ltr">elem</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2608 d43552e2603 ">
+                                    <p>reference to the header element</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d43552e2615" headers="d43552e2600 "><pre class="oac_no_warn" dir="ltr">role</pre></td>
+                                 <td align="left" valign="top" width="74%" headers="d43552e2615 d43552e2603 ">
+                                    <p>role value</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p></p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

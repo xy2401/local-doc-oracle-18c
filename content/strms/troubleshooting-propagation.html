@@ -1,0 +1,276 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Troubleshooting Propagation</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="troubleshooting-implicit-capture.html" title="Previous" type="text/html">
+      <link rel="next" href="troubleshooting-apply.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="troubleshooting-implicit-capture.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="troubleshooting-apply.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="troubleshooting-an-oracle-streams-environment.html" property="item" typeof="WebPage"><span property="name">   Troubleshooting an Oracle Streams Environment </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Troubleshooting Propagation</li>
+            </ol>
+            <a id="GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08" name="GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08"></a><a id="STRMS1040"></a>
+            
+            <h2 id="STRMS-GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08" class="sect2"><span class="enumeration_chapter">32 </span> Troubleshooting Propagation
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d133748e125" class="indexterm-anchor"></a><a id="d133748e129" class="indexterm-anchor"></a><a id="d133748e133" class="indexterm-anchor"></a><a id="d133748e137" class="indexterm-anchor"></a><a id="d133748e141" class="indexterm-anchor"></a><a id="d133748e145" class="indexterm-anchor"></a>The following topics describe identifying and resolving common <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> problems in an Oracle Streams environment:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="troubleshooting-propagation.html#GUID-205A3A20-E691-4E17-88DC-D98BBE8D56E1">Does the Propagation Use the Correct Source and Destination Queue?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-propagation.html#GUID-B886EDCF-9FBE-4D94-AF77-2015CF408B73">Is the Propagation Enabled?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-propagation.html#GUID-8E9E9F81-4A77-4792-9C88-B0CDFB42BD3B">Is Security Configured Properly for the ANYDATA Queue?</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08__GUID-A0A23034-EEA6-4F2C-B340-A34C0F1072E6">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><a href="../strep/configuring-queues-and-propagations.html#STREP205"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating propagations
+                        </p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-138AAD67-94D5-4475-91EF-5EE7A78B4F49">Managing Oracle Streams Propagations and Propagation Jobs</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2">Monitoring Oracle Streams Propagations and Propagation Jobs</a>"</span></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS1041"></a><div class="props_rev_3"><a id="GUID-205A3A20-E691-4E17-88DC-D98BBE8D56E1" name="GUID-205A3A20-E691-4E17-88DC-D98BBE8D56E1"></a><h3 id="STRMS-GUID-205A3A20-E691-4E17-88DC-D98BBE8D56E1" class="sect3"><span class="enumeration_section">32.1 </span>Does the Propagation Use the Correct Source and Destination Queue?
+               </h3>
+               <div>
+                  <p>If messages are not appearing in the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> for a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> as expected, then the propagation might not be configured to propagate messages from the correct <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> to the correct destination queue. 
+                  </p>
+                  <p>For example, to check the source queue and destination queue for a propagation named <code class="codeph">dbs1_to_dbs2</code>, run the following query:
+                  </p><pre class="oac_no_warn" dir="ltr">COLUMN SOURCE_QUEUE HEADING 'Source Queue' FORMAT A35
+COLUMN DESTINATION_QUEUE HEADING 'Destination Queue' FORMAT A35
+
+SELECT 
+  p.SOURCE_QUEUE_OWNER||'.'||
+    p.SOURCE_QUEUE_NAME||'@'||
+    g.GLOBAL_NAME SOURCE_QUEUE, 
+  p.DESTINATION_QUEUE_OWNER||'.'||
+    p.DESTINATION_QUEUE_NAME||'@'||
+    p.DESTINATION_DBLINK DESTINATION_QUEUE 
+  FROM DBA_PROPAGATION p, GLOBAL_NAME g
+  WHERE p.PROPAGATION_NAME = 'DBS1_TO_DBS2';
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Source Queue                        Destination Queue
+----------------------------------- -----------------------------------
+STRMADMIN.QUEUE1@DBS1.EXAMPLE.COM   STRMADMIN.QUEUE2@DBS2.EXAMPLE.COM
+</pre><p>If the propagation is not using the correct queues, then create a different propagation. You might need to remove the existing propagation if it is not appropriate for your environment.</p>
+                  <div class="infoboxnotealso" id="GUID-205A3A20-E691-4E17-88DC-D98BBE8D56E1__GUID-B3E89C25-47AC-4BD9-94E9-B2EA500670A9">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strep/configuring-queues-and-propagations.html#STREP205"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating propagations
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-3AF0D355-2310-4525-AB57-B0FB4B2522FC">Dropping a Propagation</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1043"></a><div class="props_rev_3"><a id="GUID-B886EDCF-9FBE-4D94-AF77-2015CF408B73" name="GUID-B886EDCF-9FBE-4D94-AF77-2015CF408B73"></a><h3 id="STRMS-GUID-B886EDCF-9FBE-4D94-AF77-2015CF408B73" class="sect3"><span class="enumeration_section">32.2 </span>Is the Propagation Enabled?
+               </h3>
+               <div>
+                  <p>For a <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a> to propagate messages, the propagation must be enabled. If messages are not being propagated by a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> as expected, then the propagation might not be enabled.
+                  </p>
+                  <p>You can find the following information about a propagation:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The database link used to propagate messages from the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> to the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a></p>
+                     </li>
+                     <li>
+                        <p>Whether the propagation is <code class="codeph">ENABLED</code>, <code class="codeph">DISABLED</code>, or <code class="codeph">ABORTED</code></p>
+                     </li>
+                     <li>
+                        <p>The date of the last error, if there are any propagation errors</p>
+                     </li>
+                     <li>
+                        <p>If there are any propagation errors, then the error number of the last error</p>
+                     </li>
+                     <li>
+                        <p>The error message of the last error, if there are any propagation errors</p>
+                     </li>
+                  </ul>
+                  <p>For example, to check whether a propagation named <code class="codeph">streams_propagation</code> is enabled, run the following query:
+                  </p><pre class="oac_no_warn" dir="ltr">COLUMN DESTINATION_DBLINK HEADING 'Database|Link'      FORMAT A15
+COLUMN STATUS             HEADING 'Status'             FORMAT A8
+COLUMN ERROR_DATE         HEADING 'Error|Date'
+COLUMN ERROR_MESSAGE      HEADING 'Error Message'      FORMAT A35
+ 
+SELECT DESTINATION_DBLINK,
+       STATUS,
+       ERROR_DATE,
+       ERROR_MESSAGE
+  FROM DBA_PROPAGATION
+  WHERE PROPAGATION_NAME = 'STREAMS_PROPAGATION';
+</pre><p>If the propagation is disabled currently, then your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Database                 Error
+Link            Status   Date      Error Message
+--------------- -------- --------- -----------------------------------
+D2.EXAMPLE.COM  DISABLED 27-APR-05 ORA-25307: Enqueue rate too high, f
+                                   low control enabled
+</pre><p>If there is a problem, then try the following actions to correct it:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>If a propagation is disabled, then you can enable it using the <code class="codeph">START_PROPAGATION</code> procedure in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package, if you have not done so already.
+                        </p>
+                     </li>
+                     <li>
+                        <p>If the propagation is disabled or aborted, and the <code class="codeph">Error Date</code> and <code class="codeph">Error Message</code> fields are populated, then diagnose and correct the problem based on the error message.
+                        </p>
+                     </li>
+                     <li>
+                        <p>If the propagation is disabled or aborted, then check the trace file for the <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a> process. The query in <span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-B1599124-455A-4716-9DBC-88D64E098FB3">Displaying Information About the Schedules for Propagation Jobs</a>"</span> displays the propagation job process.
+                        </p>
+                     </li>
+                     <li>
+                        <p>If the propagation job is enabled, but is not propagating messages, then try stopping and restarting the propagation.</p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-B886EDCF-9FBE-4D94-AF77-2015CF408B73__GUID-FD8AB701-E36B-49D5-870B-6A7AE3BE5433">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-929FE82A-BA04-4EE8-80B0-480B0C8E71B7">Starting a Propagation</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-7D02B3F6-23FD-436E-B0F4-AA60128DF77A">Checking the Trace Files and Alert Log for Problems</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-4CBA0FBC-A8C3-480E-9BD0-C91795694EEF">Stopping a Propagation</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../errmg/toc.htm"><span class="italic">Oracle Database Error Messages</span></a> for more information about a specific error message
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1045"></a><div class="props_rev_3"><a id="GUID-8E9E9F81-4A77-4792-9C88-B0CDFB42BD3B" name="GUID-8E9E9F81-4A77-4792-9C88-B0CDFB42BD3B"></a><h3 id="STRMS-GUID-8E9E9F81-4A77-4792-9C88-B0CDFB42BD3B" class="sect3"><span class="enumeration_section">32.3 </span>Is Security Configured Properly for the ANYDATA Queue?
+               </h3>
+               <div>
+                  <p><code class="codeph">ANYDATA</code> queues are <a href="strms_glossary.html#GUID-B70AC3A1-F93B-445D-9BD1-342A94A9EDDE"><span class="xrefglossterm">secure queue</span></a>s, and security must be configured properly for users to be able to perform operations on them. If you use the <code class="codeph">SET_UP_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to configure a secure <code class="codeph">ANYDATA</code> queue, then an error is raised if the agent that <code class="codeph">SET_UP_QUEUE</code> tries to create already exists and is associated with a user other than the user specified by <code class="codeph">queue_user</code> in this procedure. In this case, rename or remove the existing agent using the <code class="codeph">ALTER_AQ_AGENT</code> or <code class="codeph">DROP_AQ_AGENT</code> procedure, respectively, in the <code class="codeph">DBMS_AQADM</code> package. Next, retry <code class="codeph">SET_UP_QUEUE</code>.
+                  </p>
+                  <p>In addition, you might encounter one of the following errors if security is not configured properly for an <code class="codeph">ANYDATA</code> queue:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="troubleshooting-propagation.html#GUID-8CD1AA91-47E2-4416-8B26-6612BEB0CD30">ORA-24093 AQ Agent not granted privileges of database user</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-propagation.html#GUID-C04790AF-5AA8-4A4E-81EF-D34F49C67773">ORA-25224 Sender name must be specified for enqueue into secure queues</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-8E9E9F81-4A77-4792-9C88-B0CDFB42BD3B__GUID-746299AE-6038-480C-AFB1-D14839DC34F8">
+                     <p class="notep1">See Also:</p>
+                     <p><span class="q">"<a href="advanced-queue-concepts.html#GUID-3D560C85-168F-45D9-BF1C-35E5AE857848">Secure Queues</a>"</span></p>
+                  </div>
+               </div><a id="STRMS1046"></a><div class="props_rev_3"><a id="GUID-8CD1AA91-47E2-4416-8B26-6612BEB0CD30" name="GUID-8CD1AA91-47E2-4416-8B26-6612BEB0CD30"></a><h4 id="STRMS-GUID-8CD1AA91-47E2-4416-8B26-6612BEB0CD30" class="sect4"><span class="enumeration_section">32.3.1 </span>ORA-24093 AQ Agent not granted privileges of database user
+                  </h4>
+                  <div>
+                     <p>Secure queue access must be granted to an Oracle Database Advanced Queuing (AQ) agent explicitly for both enqueue and dequeue operations. You grant the agent these privileges using the <code class="codeph">ENABLE_DB_ACCESS</code> procedure in the <code class="codeph">DBMS_AQADM</code> package.
+                     </p>
+                     <p>For example, to grant an agent named <code class="codeph">explicit_dq</code> privileges of the database user <code class="codeph">oe</code>, run the following procedure:
+                     </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_AQADM.ENABLE_DB_ACCESS(
+    agent_name  =&gt; 'explicit_dq',
+    db_username =&gt; 'oe');
+END;
+/
+</pre><p>To check the privileges of the agents in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">SELECT AGENT_NAME "Agent", DB_USERNAME "User" FROM DBA_AQ_AGENT_PRIVS;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Agent                          User
+------------------------------ ------------------------------
+EXPLICIT_ENQ                   OE
+APPLY_OE                       OE
+EXPLICIT_DQ                    OE
+</pre><div class="infoboxnotealso" id="GUID-8CD1AA91-47E2-4416-8B26-6612BEB0CD30__GUID-247ACACA-9504-402A-AB2E-7105BDEE45AE">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-E35C379E-13EF-4031-888E-1F943B7DAF9C">Enabling a User to Perform Operations on a Secure Queue</a>"</span> for a detailed example that grants privileges to an agent
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1047"></a><div class="props_rev_3"><a id="GUID-C04790AF-5AA8-4A4E-81EF-D34F49C67773" name="GUID-C04790AF-5AA8-4A4E-81EF-D34F49C67773"></a><h4 id="STRMS-GUID-C04790AF-5AA8-4A4E-81EF-D34F49C67773" class="sect4"><span class="enumeration_section">32.3.2 </span>ORA-25224 Sender name must be specified for enqueue into secure queues
+                  </h4>
+                  <div>
+                     <p>To enqueue into a secure queue, the <code class="codeph">SENDER_ID</code> must be set to an Oracle Database Advanced Queuing (AQ) agent with secure queue privileges for the queue in the message properties.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-C04790AF-5AA8-4A4E-81EF-D34F49C67773__GUID-04EB0B1F-641B-43EC-A1CD-509036412115">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../adque/omg-monitoring.html#ADQUE2100"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for an example that sets the <code class="codeph">SENDER_ID</code> for enqueue
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

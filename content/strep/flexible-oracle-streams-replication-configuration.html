@@ -1,0 +1,467 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Flexible Oracle Streams Replication Configuration</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Replication Administrator’s Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Replication Administrator’s Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-replication-administrators-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T23:25:23-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2003, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83780-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="simple-oracle-streams-replication-configuration.html" title="Previous" type="text/html">
+      <link rel="next" href="adding-to-an-oracle-streams-replication-environment.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.isVersionOf" content="STREP">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="simple-oracle-streams-replication-configuration.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="adding-to-an-oracle-streams-replication-environment.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Replication Administrator’s Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="configuring-oracle-streams-replication.html" property="item" typeof="WebPage"><span property="name">    Configuring Oracle Streams Replication </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Flexible Oracle Streams Replication Configuration</li>
+            </ol>
+            <a id="GUID-3945B3B9-4EC3-47A0-A095-FB1F80CE5683" name="GUID-3945B3B9-4EC3-47A0-A095-FB1F80CE5683"></a><a id="STREP007"></a>
+            
+            <h2 id="STREP-GUID-3945B3B9-4EC3-47A0-A095-FB1F80CE5683" class="sect2"><span class="enumeration_chapter">3 </span> Flexible Oracle Streams Replication Configuration
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d24384e100" class="indexterm-anchor"></a><a id="d24384e104" class="indexterm-anchor"></a>This chapter describes flexible methods for configuring Oracle Streams replication between two or more databases. This chapter includes step-by-step instructions for configuring each Oracle Streams component to build a single-source or multiple-source replication environment.
+               </p>
+               <p>One common type of single-source replication environment is a hub-and-spoke replication environment that does not allow changes to the replicated database objects in the spoke databases. The following are common types of multiple-source replication environments:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>A hub-and-spoke replication environment that allows changes to the replicated database objects in the spoke databases</p>
+                  </li>
+                  <li>
+                     <p>An n-way replication environment</p>
+                  </li>
+               </ul>
+               <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-9EBD9C47-B328-4740-B1CA-3066B5A9EFD6">Decide Which Type of Replication Environment to Configure</a>"</span> describes these common types of replication environments in detail.
+               </p>
+               <p>If possible, consider using a simple method for configuring Oracle Streams replication described in <a href="simple-oracle-streams-replication-configuration.html#GUID-19643DBA-4776-4A74-BC66-1979E6903E0A"> Simple Oracle Streams Replication Configuration</a>. You can either use the Oracle Streams tool in Oracle Enterprise Manager Cloud Control or a single procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package configure all of the Oracle Streams components in a replication environment with two databases. Also, you can use a simple method and still meet custom requirements for your replication environment in one of the following ways:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>You can use a simple method to generate a configuration script and modify the script to meet your requirements.</p>
+                  </li>
+                  <li>
+                     <p>You can use a simple method to configure Oracle Streams replication between two databases and add new database objects or databases to the environment by following the instructions in <a href="adding-to-an-oracle-streams-replication-environment.html#GUID-2A81F5DD-EAF9-4670-BD1F-C4D3C555C344"> Adding to an Oracle Streams Replication Environment</a>.
+                     </p>
+                  </li>
+               </ul>
+               <p>However, if you require more flexibility in your Oracle Streams replication configuration than what is available with the simple methods, then you can follow the instructions in this chapter to configure the environment.</p>
+               <p>This chapter contains these topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="flexible-oracle-streams-replication-configuration.html#GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB">Creating a New Oracle Streams Single-Source Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="flexible-oracle-streams-replication-configuration.html#GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440">Creating a New Oracle Streams Multiple-Source Environment</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-3945B3B9-4EC3-47A0-A095-FB1F80CE5683__GUID-41507B5D-B8B8-4684-899F-242366EC4C49">
+                  <p class="notep1">Note:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The instructions in the following sections assume you will use the <code class="codeph">DBMS_STREAMS_ADM</code> package to configure your Oracle Streams environment. If you use other packages, then extra steps might be necessary for each task.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Certain types of database objects are not supported by Oracle Streams. When you configure an Oracle Streams environment, ensure that no capture process attempts to capture changes to an unsupported database object. Also, ensure that no synchronous capture or apply process attempts to process changes to unsupported columns. To list unsupported database objects and unsupported columns, query the <code class="codeph">DBA_STREAMS_UNSUPPORTED</code> and <code class="codeph">DBA_STREAMS_COLUMNS</code> data dictionary views.
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <div class="infoboxnotealso" id="GUID-3945B3B9-4EC3-47A0-A095-FB1F80CE5683__GUID-C30604AD-443C-4F32-85A0-C9BE5BEF9B9B">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="../strms/monitoring-other-oracle-streams-components.html#STRMS172"><span class="italic">Oracle Streams Concepts and Administration</span></a> for instructions on determining which database objects are not supported by Oracle Streams
+                  </p>
+               </div>
+            </div><a id="STREP275"></a><a id="STREP274"></a><div class="props_rev_3"><a id="GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB" name="GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB"></a><h3 id="STREP-GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB" class="sect3"><span class="enumeration_section">3.1 </span>Creating a New Oracle Streams Single-Source Environment
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section lists the general steps to perform when creating a new single-source Oracle Streams environment. A single-source environment is one in which there is only one source database for replicated data. There can be multiple source databases in a single-source environment, but no two source databases capture any of the same&nbsp;data. A one-way replication environment with two databases is an example of a single-source environment.</p>
+                     <p>Before starting capture processes, creating synchronous captures, and configuring propagations in a new Oracle Streams environment, ensure that any propagations or apply processes that will receive LCRs are configured to handle these LCRs. That is, the propagations or apply processes should exist, and each one should be associated with rule sets that handle the LCRs appropriately. If these propagations and apply processes are not configured properly to handle these LCRs, then LCRs can be lost.</p>
+                     <p>This example assumes that the replicated database objects are read-only at the destination databases. If the replicated database objects are read/write at the destination databases, then the replication environment will not stay synchronized because Oracle Streams is not configured to replicate the changes made to the replicated objects at the destination databases.</p>
+                     <p><a href="flexible-oracle-streams-replication-configuration.html#GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB__i1013508">Figure 3-1</a> shows an example Oracle Streams single-source replication environment.
+                     </p>
+                     <div class="figure" id="GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB__i1013508">
+                        <p class="titleinfigure">Figure 3-1 Example Oracle Streams Single-Source Environment</p><img width="376" src="img/strep038.gif" alt="Description of Figure 3-1 follows" title="Description of Figure 3-1 follows" longdesc="img_text/strep038.html"><br><a href="img_text/strep038.html">Description of "Figure 3-1 Example Oracle Streams Single-Source Environment"</a></div>
+                     <!-- class="figure" -->
+                     <p>You can create an Oracle Streams replication environment that is more complicated than the one shown in <a href="flexible-oracle-streams-replication-configuration.html#GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB__i1013508">Figure 3-1</a>. For example, a single-source Oracle Streams replication environment can use downstream capture and directed networks.
+                     </p>
+                     <p>In general, if you are configuring a new Oracle Streams single-source environment in which changes to replicated database objects are captured at one database and then propagated and applied at remote databases, then you should configure the environment in the following order:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Make the necessary decisions about configuring the replication environment. See <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-C32C3F56-49EF-4964-A984-9CB220DCB5B3">Decisions to Make Before Configuring Oracle Streams Replication</a>"</span>.</span></li>
+                     <li class="stepexpand"><span>Complete the necessary tasks to prepare each database in your environment for Oracle Streams. See <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-BB2E76CA-3645-4469-8750-4B276B8A955B">Tasks to Complete Before Configuring Oracle Streams Replication</a>"</span>.</span><div>
+                           <p>Some of these tasks might not be required at certain databases.</p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Create any necessary <code class="codeph">ANYDATA</code> queues that do not already exist. When you create a capture process, synchronous capture, or apply process, you associate the process with a specific <code class="codeph">ANYDATA</code> queue. When you create a propagation, you associate it with a specific source queue and destination queue. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span> for instructions.</span></li>
+                     <li class="stepexpand"><span>Specify supplemental logging at each source database for any replicated database object. See <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-12A4DC82-EEC7-4ACC-BF8F-8D82AA1D19DE">Specifying Supplemental Logging</a>"</span> for instructions.</span></li>
+                     <li class="stepexpand" id="GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB__i1010067"><span>At each database, create the required capture processes, synchronous captures, propagations, and apply processes for your environment. You can create capture processes, propagations, and apply processes in any order. If you create synchronous captures, then create them after you create the relevant propagations and apply processes.</span><div>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Create one or more capture processes at each database that will capture changes with a capture process. Ensure that each capture process uses rule sets that are appropriate for capturing changes. Do not start the capture processes you create. Oracle recommends that you use only one capture process for each source database. See <span class="q">"<a href="configuring-implicit-capture.html#GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B">Configuring a Capture Process</a>"</span> for instructions.
+                                 </p>
+                                 <p>When you use a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add the capture process rules, it automatically runs the <code class="codeph">PREPARE_TABLE_INSTANTIATION</code>, <code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code>, or <code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package for the specified table, specified schema, or entire database, respectively, if the capture process is a local capture process or a downstream capture process with a database link to the source database. 
+                                 </p>
+                                 <p>You must run the appropriate procedure to prepare for instantiation manually if any of the following conditions is true:</p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>You use the <code class="codeph">DBMS_RULE_ADM</code> package to add or modify rules.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>You use an existing capture process and do not add capture process rules for any replicated object.</p>
+                                    </li>
+                                    <li>
+                                       <p>You use a downstream capture process with no database link to the source database.</p>
+                                    </li>
+                                 </ul>
+                                 <p>If you must prepare for instantiation manually, then see <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-CBDA09E8-D2E0-4E56-B7A7-E87BDC26FC5A">Preparing Database Objects for Instantiation at a Source Database</a>"</span> for instructions.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Create all propagations that send the captured LCRs from a source queue to a destination queue. Ensure that each propagation uses rule sets that are appropriate for sending changes. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9">Creating Oracle Streams Propagations Between ANYDATA Queues</a>"</span> for instructions.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Create one or more apply processes at each database that will apply changes. Ensure that each apply process uses rule sets that are appropriate for applying changes. Do not start the apply processes you create. See <a href="configuring-implicit-apply.html#GUID-7D393976-B22F-4CF1-901E-62451DEB64DB"> Configuring Implicit Apply</a> for instructions.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Create one or more synchronous captures at each database that will capture changes with a synchronous capture. Ensure that each synchronous capture use a rule set that is appropriate for capturing changes. Do not create the synchronous capture until you create all of the propagations and apply processes that will process its LCRs. See <span class="q">"<a href="configuring-implicit-capture.html#GUID-30D89F9D-C7E3-48FE-BF78-0CB98B983BB5">Configuring Synchronous Capture</a>"</span> for instructions.
+                                 </p>
+                                 <p>When you use a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add the synchronous capture rules, it automatically runs the <code class="codeph">PREPARE_SYNC_INSTANTIATION</code> function in the <code class="codeph">DBMS_CAPTURE_ADM</code> package for the specified table.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Either instantiate, or set the instantiation SCN for, each database object for which changes are applied by an apply process. If the database objects do not exist at a destination database, then instantiate them using export/import, transportable tablespaces, or RMAN. If the database objects already exist at a destination database, then set the instantiation SCNs for them manually.</span><div>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>To instantiate database objects using export/import, first export them at the source database. Next, import them at the destination database. See <a href="instantiation-and-oracle-streams-replication.html#GUID-003967CE-08B9-439C-902F-45E7B7C37371"> Instantiation and Oracle Streams Replication</a>.
+                                 </p>
+                                 <p>Do not allow any changes to the database objects being exported during export at the source database. Do not allow changes to the database objects being imported during import at the destination database.</p>
+                                 <p>You can specify a more stringent degree of consistency by using an export parameter such as <code class="codeph">FLASHBACK_SCN</code> or <code class="codeph">FLASHBACK_TIME</code>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>To set the instantiation SCN for a table, schema, or database manually, run the appropriate procedure or procedures in the <code class="codeph">DBMS_APPLY_ADM</code> package at the destination database: 
+                                 </p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p><code class="codeph">SET_TABLE_INSTANTIATION_SCN</code></p>
+                                    </li>
+                                    <li>
+                                       <p><code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code></p>
+                                    </li>
+                                    <li>
+                                       <p><code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code></p>
+                                    </li>
+                                 </ul>
+                                 <p>When you run one of these procedures, you must ensure that the replicated objects at the destination database are consistent with the source database as of the instantiation SCN.</p>
+                                 <p>If you run <code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code> at a destination database, then set the <code class="codeph">recursive</code> parameter for this procedure to <code class="codeph">TRUE</code> so that the instantiation SCN also is set for each schema at the destination database and for the tables owned by these schemas.
+                                 </p>
+                                 <p>If you run <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> at a destination database, then set the <code class="codeph">recursive</code> parameter for this procedure to <code class="codeph">TRUE</code> so that the instantiation SCN also is set for each table in the schema.
+                                 </p>
+                                 <p>If you set the <code class="codeph">recursive</code> parameter to <code class="codeph">TRUE</code> in the <code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code> procedure or the <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure, then a database link from the destination database to the source database is required. This database link must have the same name as the global name of the source database and must be accessible to the user who executes the procedure. See <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-F612AD02-15B7-4392-815E-1EB05A493633">Setting Instantiation SCNs Using the DBMS_APPLY_ADM Package</a>"</span> for instructions.
+                                 </p>
+                                 <p>Alternatively, you can perform a metadata export/import to set the instantiation SCNs for existing database objects. If you choose this option, then ensure that no rows are imported. Also, ensure that the replicated database objects at all of the destination databases are consistent with the source database that performed the export at the time of the export. If you are sharing DML changes only, then table level export/import is sufficient. If you are sharing DDL changes also, then additional considerations apply. See <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-478D3B54-1CFC-43DC-8741-6C7F7DF8A68D">Setting Instantiation SCNs Using Export/Import</a>"</span> for more information about performing a metadata export/import.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Start each apply process you created in Step <a href="flexible-oracle-streams-replication-configuration.html#GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB__i1010067">5</a> using the <code class="codeph">START_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package.</span></li>
+                     <li class="stepexpand"><span>Start each capture process you created in Step <a href="flexible-oracle-streams-replication-configuration.html#GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB__i1010067">5</a> using the <code class="codeph">START_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package.</span></li>
+                  </ol>
+                  <div class="section">
+                     <p>When you are configuring the environment, remember that capture processes and apply processes are stopped when they are created. However, synchronous captures start to capture changes immediately when they are created, and propagations are scheduled to send LCRs immediately when they are created. A capture process or synchronous capture must be created before the relevant objects are instantiated at a remote destination database. You must create the propagations and apply processes before starting the capture process or creating the synchronous capture, and you must instantiate the objects before running the whole&nbsp;stream.</p>
+                     <div class="infoboxnotealso" id="GUID-7CF7EED7-C485-432E-9B4A-1A29E5D3ACEB__GUID-A40A7F54-558A-4464-A0E8-F0C4937AF043">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../strex/toc.htm"><span class="italic">Oracle Streams Extended Examples</span></a> for detailed examples that set up single-source environments
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREP277"></a><a id="STREP276"></a><div class="props_rev_3"><a id="GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440" name="GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440"></a><h3 id="STREP-GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440" class="sect3"><span class="enumeration_section">3.2 </span>Creating a New Oracle Streams Multiple-Source Environment
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section lists the general steps to perform when creating a new multiple-source Oracle Streams environment. A multiple-source environment is one in which there are multiple source databases for any of the replicated data. An n-way replication environment is an example of a multiple-source environment.</p>
+                     <p>This example uses the following terms:</p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="bold">Populated database:</span> A database that already contains the replicated database objects before you create the new multiple-source environment. You must have at least one populated database to create the new Oracle Streams environment.
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="bold">Export database:</span> A populated database on which you perform an export of the replicated database objects. This export is used to instantiate the replicated database objects at the import databases. You might not have an export database if all of the databases in the environment are populated databases.
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="bold">Import database: </span>A database that does not contain the replicated database objects before you create the new multiple-source environment. You instantiate the replicated database objects at an import database by performing an import of these database objects. You might not have any import databases if all of the databases in the environment are populated databases.
+                           </p>
+                        </li>
+                     </ul>
+                     <p><a href="flexible-oracle-streams-replication-configuration.html#GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440__i1013579">Figure 3-2</a> shows an example multiple-source Oracle Streams environment.
+                     </p>
+                     <div class="figure" id="GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440__i1013579">
+                        <p class="titleinfigure">Figure 3-2 Example Oracle Streams Multiple-Source Environment</p><img width="368" src="img/strep039.gif" alt="Description of Figure 3-2 follows" title="Description of Figure 3-2 follows" longdesc="img_text/strep039.html"><br><a href="img_text/strep039.html">Description of "Figure 3-2 Example Oracle Streams Multiple-Source Environment"</a></div>
+                     <!-- class="figure" -->
+                     <p>You can create an Oracle Streams replication environment that is more complicated than the one shown in <a href="flexible-oracle-streams-replication-configuration.html#GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440__i1013579">Figure 3-2</a>. For example, a multiple-source Oracle Streams replication environment can use downstream capture and directed networks.
+                     </p>
+                     <p>When there are multiple source databases in an Oracle Streams replication environment, change cycling is possible. Change cycling happens when a change is sent back to the database where it originated. Typically, you should avoid change cycling. Before you configure your replication environment, see <a href="oracle-streams-tags.html#GUID-9339D29B-65F3-450B-B3CD-A7B4ADCA4AAF"> Oracle Streams Tags</a>, and ensure that you configure the replication environment to avoid change cycling.
+                     </p>
+                     <p>Complete the following steps to create a multiple-source environment:</p>
+                     <div class="infoboxnote" id="GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440__GUID-E0047D3A-5411-4F92-B622-2D8B4FDE7ABC">
+                        <p class="notep1">Note:</p>
+                        <p>Ensure that no changes are made to the objects being shared at a database you are adding to the Oracle Streams environment until the instantiation at the database is complete.</p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Make the necessary decisions about configuring the replication environment. See <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-C32C3F56-49EF-4964-A984-9CB220DCB5B3">Decisions to Make Before Configuring Oracle Streams Replication</a>"</span>.</span></li>
+                     <li class="stepexpand"><span>Complete the necessary tasks to prepare each database in your environment for Oracle Streams. See <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-BB2E76CA-3645-4469-8750-4B276B8A955B">Tasks to Complete Before Configuring Oracle Streams Replication</a>"</span>.</span><div>
+                           <p>Some of these tasks might not be required at certain databases.</p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>At each populated database, specify any necessary supplemental logging for the replicated database objects. See <span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-12A4DC82-EEC7-4ACC-BF8F-8D82AA1D19DE">Specifying Supplemental Logging</a>"</span> for instructions.</span></li>
+                     <li class="stepexpand"><span>Create any necessary <code class="codeph">ANYDATA</code> queues that do not already exist. When you create a capture process, synchronous capture, or apply process, you associate the process with a specific <code class="codeph">ANYDATA</code> queue. When you create a propagation, you associate it with a specific source queue and destination queue. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-ACF52296-CE1F-40E1-B63E-5A6EB6A284A1">Creating an ANYDATA Queue</a>"</span> for instructions.</span></li>
+                     <li class="stepexpand"><span>At each database, create the required capture processes, synchronous captures, propagations, and apply processes for your environment. You can create capture processes, propagations, and apply processes in any order. If you create synchronous captures, then create them after you create the relevant propagations and apply processes.</span><div>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Create one or more capture processes at each database that will capture changes with a capture process. Ensure that each capture process uses rule sets that are appropriate for capturing changes. Do not start the capture processes you create. Oracle recommends that you use only one capture process for each source database. See <span class="q">"<a href="configuring-implicit-capture.html#GUID-7E8A69CC-8B44-4F51-AE7E-E812035BC54B">Configuring a Capture Process</a>"</span> for instructions.
+                                 </p>
+                                 <p>When you use a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add the capture process rules, it automatically runs the <code class="codeph">PREPARE_TABLE_INSTANTIATION</code>, <code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code>, or <code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package for the specified table, specified schema, or entire database, respectively, if the capture process is a local capture process or a downstream capture process with a database link to the source database. 
+                                 </p>
+                                 <p>You must run the appropriate procedure to prepare for instantiation manually if any of the following conditions is true:</p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>You use the <code class="codeph">DBMS_RULE_ADM</code> package to add or modify rules.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <p>You use an existing capture process and do not add capture process rules for any replicated database object.</p>
+                                    </li>
+                                    <li>
+                                       <p>You use a downstream capture process with no database link to the source database.</p>
+                                    </li>
+                                 </ul>
+                                 <p>If you must prepare for instantiation manually, then see <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-CBDA09E8-D2E0-4E56-B7A7-E87BDC26FC5A">Preparing Database Objects for Instantiation at a Source Database</a>"</span> for instructions.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Create all propagations that propagate the captured LCRs from a source queue to a destination queue. Ensure that each propagation uses rule sets that are appropriate for propagating changes. See <span class="q">"<a href="configuring-queues-and-propagations.html#GUID-15AAD2ED-F1AD-465D-A8B4-897F73EE45C9">Creating Oracle Streams Propagations Between ANYDATA Queues</a>"</span> for instructions.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Create one or more apply processes at each database that will apply changes. Ensure that each apply process uses rule sets that are appropriate for applying changes. Do not start the apply processes you create. See <a href="configuring-implicit-apply.html#GUID-7D393976-B22F-4CF1-901E-62451DEB64DB"> Configuring Implicit Apply</a> for instructions.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Create one or more synchronous captures at each database that will capture changes with a synchronous capture. Ensure that each synchronous capture uses rule sets that are appropriate for capturing changes. Do not create the synchronous capture until you create all of the propagations and apply processes that will process its LCRs. See <span class="q">"<a href="configuring-implicit-capture.html#GUID-30D89F9D-C7E3-48FE-BF78-0CB98B983BB5">Configuring Synchronous Capture</a>"</span> for instructions.
+                                 </p>
+                                 <p>When you use a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add the synchronous capture rules, it automatically runs the <code class="codeph">PREPARE_SYNC_INSTANTIATION</code> function in the <code class="codeph">DBMS_CAPTURE_ADM</code> package for the specified table. 
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                  </ol>
+                  <div class="section">
+                     <p>After completing these steps, complete the steps in each of the following sections that apply to your environment. You might need to complete the steps in only one of these sections or in both of these sections:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>For each populated database, complete the steps in <span class="q">"<a href="flexible-oracle-streams-replication-configuration.html#GUID-382292F3-BEEC-455D-AE85-CA3E48B71118">Configuring Populated Databases When Creating a Multiple-Source Environment</a>"</span>. These steps are required only if your environment has multiple populated databases.
+                           </p>
+                        </li>
+                        <li>
+                           <p>For each import database, complete the steps in <span class="q">"<a href="flexible-oracle-streams-replication-configuration.html#GUID-93D67B4A-1635-4270-AB83-DADC0607A8A5">Adding Replicated Objects to Import Databases When Creating a New Environment</a>"</span>.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- class="section" -->
+               </div><a id="STREP278"></a><div class="props_rev_3"><a id="GUID-382292F3-BEEC-455D-AE85-CA3E48B71118" name="GUID-382292F3-BEEC-455D-AE85-CA3E48B71118"></a><h4 id="STREP-GUID-382292F3-BEEC-455D-AE85-CA3E48B71118" class="sect4"><span class="enumeration_section">3.2.1 </span>Configuring Populated Databases When Creating a Multiple-Source Environment
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>After completing the steps in <span class="q">"<a href="flexible-oracle-streams-replication-configuration.html#GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440">Creating a New Oracle Streams Multiple-Source Environment</a>"</span>, complete the following steps for the populated databases if your environment has multiple populated databases:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>For each populated database, set the instantiation SCN at each of the other populated databases in the environment that will be a destination database of the populated source database. These instantiation SCNs must be set, and only the changes made at a particular populated database that are committed after the corresponding SCN for that database will be applied at another populated database.</span><div>
+                              <p>For each populated database, you can set these instantiation SCNs in one of the following ways:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Perform a metadata only export of the replicated database objects at the populated database and import the metadata at each of the other populated databases. Such an import sets the required instantiation SCNs for the populated database at the other populated databases. Ensure that no rows are imported. Also, ensure that the replicated database objects at each populated database performing a metadata import are consistent with the populated database that performed the metadata export at the time of the export.</p>
+                                    <p>If you are replicating DML changes only, then table level export/import is sufficient. If you are replicating DDL changes also, then additional considerations apply. See <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-478D3B54-1CFC-43DC-8741-6C7F7DF8A68D">Setting Instantiation SCNs Using Export/Import</a>"</span> for more information about performing a metadata export/import.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>Set the instantiation SCNs manually at each of the other populated databases. Do this for each of the replicated database objects. Ensure that the replicated database objects at each populated database are consistent with the instantiation SCNs you set at that database. See <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-F612AD02-15B7-4392-815E-1EB05A493633">Setting Instantiation SCNs Using the DBMS_APPLY_ADM Package</a>"</span> for instructions.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+               </div><a id="STREP279"></a><div class="props_rev_3"><a id="GUID-93D67B4A-1635-4270-AB83-DADC0607A8A5" name="GUID-93D67B4A-1635-4270-AB83-DADC0607A8A5"></a><h4 id="STREP-GUID-93D67B4A-1635-4270-AB83-DADC0607A8A5" class="sect4"><span class="enumeration_section">3.2.2 </span>Adding Replicated Objects to Import Databases When Creating a New Environment
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>After completing the steps in <span class="q">"<a href="flexible-oracle-streams-replication-configuration.html#GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440">Creating a New Oracle Streams Multiple-Source Environment</a>"</span>, complete the following steps for the import databases:
+                        </p>
+                        <ol>
+                           <li id="GUID-93D67B4A-1635-4270-AB83-DADC0607A8A5__BABICEDI">
+                              <p>Pick the populated database that you will use as the export database. Do not perform the instantiations yet.</p>
+                           </li>
+                           <li>
+                              <p>For each import database, set the instantiation SCNs at all of the other databases in the environment that will be a destination database of the import database. In this case, the import database will be the source database for these destination databases. The databases where you set the instantiation SCNs can include populated databases and other import databases.</p>
+                              <ol type="a">
+                                 <li>
+                                    <p>If one or more schemas will be created at an import database during instantiation or by a subsequent replicated DDL change, then run the <code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package for this import database at all of the other databases in the environment.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>If a schema exists at an import database, and one or more tables will be created in the schema during instantiation or by a subsequent replicated DDL change, then run the <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package for the schema at all of the other databases in the environment for the import database. Do this for each such schema.
+                                    </p>
+                                 </li>
+                              </ol>
+                              <p>See <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-F612AD02-15B7-4392-815E-1EB05A493633">Setting Instantiation SCNs Using the DBMS_APPLY_ADM Package</a>"</span> for instructions.
+                              </p>
+                              <p>Because you run these procedures before any tables are instantiated at the import databases, and because the local capture processes or synchronous captures are configured already for these import databases, you will not need to run the <code class="codeph">SET_TABLE_INSTANTIATION_SCN</code> procedure for each table created during the instantiation. Instantiation SCNs will be set automatically for these tables at all of the other databases in the environment that will be destination databases of the import database.
+                              </p>
+                           </li>
+                           <li>
+                              <p>At the export database you chose in Step <a href="flexible-oracle-streams-replication-configuration.html#GUID-93D67B4A-1635-4270-AB83-DADC0607A8A5__BABICEDI">1</a>, perform an export of the replicated database objects. Next, perform an import of the replicated database objects at each import database. See <a href="instantiation-and-oracle-streams-replication.html#GUID-003967CE-08B9-439C-902F-45E7B7C37371"> Instantiation and Oracle Streams Replication</a> and<a href="../sutil/index.html"><span class="italic"> Oracle Database Utilities </span></a>for information about using export/import.
+                              </p>
+                              <p>Do not allow any changes to the database objects being exported while exporting these database objects at the source database. Do not allow changes to the database objects being imported while importing these database objects at the destination database.</p>
+                              <p>You can specify a more stringent degree of consistency by using an export parameter such as <code class="codeph">FLASHBACK_SCN</code> or <code class="codeph">FLASHBACK_TIME</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>For each populated database, except for the export database, set the instantiation SCNs at each import database that will be a destination database of the populated source database. These instantiation SCNs must be set, and only the changes made at a populated database that are committed after the corresponding SCN for that database will be applied at an import database.</p>
+                              <p>You can set these instantiation SCNs in one of the following ways:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Perform a metadata only export at each populated database and import the metadata at each import database. Each import sets the required instantiation SCNs for the populated database at the import database. In this case, ensure that the replicated database objects at the import database are consistent with the populated database at the time of the export.</p>
+                                    <p>If you are sharing DML changes only, then table level export/import is sufficient. If you are sharing DDL changes also, then additional considerations apply. See <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-478D3B54-1CFC-43DC-8741-6C7F7DF8A68D">Setting Instantiation SCNs Using Export/Import</a>"</span> for more information about performing a metadata export/import.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>For each populated database, set the instantiation SCN manually for each replicated database object at each import database. Ensure that the replicated database objects at each import database are consistent with the populated database as of the corresponding instantiation SCN. See <span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-F612AD02-15B7-4392-815E-1EB05A493633">Setting Instantiation SCNs Using the DBMS_APPLY_ADM Package</a>"</span> for instructions.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </li>
+                        </ol>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP280"></a><div class="props_rev_3"><a id="GUID-356BFFD5-8FE0-4842-9523-453FB6CEA91E" name="GUID-356BFFD5-8FE0-4842-9523-453FB6CEA91E"></a><h4 id="STREP-GUID-356BFFD5-8FE0-4842-9523-453FB6CEA91E" class="sect4"><span class="enumeration_section">3.2.3 </span>Complete the Multiple-Source Environment Configuration
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Before completing the steps in this section, you should have completed the following tasks:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="flexible-oracle-streams-replication-configuration.html#GUID-17BF2C11-3D6E-4915-B19A-13D1AD4CB440">Creating a New Oracle Streams Multiple-Source Environment</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="flexible-oracle-streams-replication-configuration.html#GUID-382292F3-BEEC-455D-AE85-CA3E48B71118">Configuring Populated Databases When Creating a Multiple-Source Environment</a>"</span>, if your environment has multiple populated databases
+                              </p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="flexible-oracle-streams-replication-configuration.html#GUID-93D67B4A-1635-4270-AB83-DADC0607A8A5">Adding Replicated Objects to Import Databases When Creating a New Environment</a>"</span>, if your environment has one or more import databases
+                              </p>
+                           </li>
+                        </ul>
+                        <p>When all of the previous configuration steps are finished, complete the following steps:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li><span>At each database, configure conflict resolution if conflicts are possible. See <a href="oracle-streams-conflict-resolution.html#GUID-5D79AA72-A682-4623-8A0B-4CF84D1FFC86"> Oracle Streams Conflict Resolution</a> for instructions.</span></li>
+                        <li><span>Start each apply process in the environment using the <code class="codeph">START_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package.</span></li>
+                        <li><span>Start each capture process the environment using the <code class="codeph">START_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package.</span></li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnotealso" id="GUID-356BFFD5-8FE0-4842-9523-453FB6CEA91E__GUID-4E15F5FF-EC96-42AB-87C0-7C991FC18BCA">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../strex/n-way-replication-example.html#STREX004"><span class="italic">Oracle Streams Extended Examples</span></a> for a detailed example that creates a multiple-source environment
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

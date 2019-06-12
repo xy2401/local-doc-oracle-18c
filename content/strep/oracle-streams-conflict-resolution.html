@@ -1,0 +1,988 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Oracle Streams Conflict Resolution</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Replication Administrator’s Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Replication Administrator’s Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-replication-administrators-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T23:25:23-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2003, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83780-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="instantiation-and-oracle-streams-replication.html" title="Previous" type="text/html">
+      <link rel="next" href="oracle-streams-tags.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.isVersionOf" content="STREP">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="instantiation-and-oracle-streams-replication.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="oracle-streams-tags.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Replication Administrator’s Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="configuring-oracle-streams-replication.html" property="item" typeof="WebPage"><span property="name">    Configuring Oracle Streams Replication </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Oracle Streams Conflict Resolution</li>
+            </ol>
+            <a id="GUID-5D79AA72-A682-4623-8A0B-4CF84D1FFC86" name="GUID-5D79AA72-A682-4623-8A0B-4CF84D1FFC86"></a><a id="STREP001"></a>
+            
+            <h2 id="STREP-GUID-5D79AA72-A682-4623-8A0B-4CF84D1FFC86" class="sect2"><span class="enumeration_chapter">9 </span> Oracle Streams Conflict Resolution
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d44964e100" class="indexterm-anchor"></a><a id="d44964e104" class="indexterm-anchor"></a><a id="d44964e106" class="indexterm-anchor"></a>Some Oracle Streams environments must use conflict handlers to resolve possible data conflicts that can result from sharing data between multiple databases.
+               </p>
+               <p>This chapter contains these topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="oracle-streams-conflict-resolution.html#GUID-EE05C68D-2241-4996-9BF6-E2E6CBCE8C32">About DML Conflicts in an Oracle Streams Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-conflict-resolution.html#GUID-5B8756A2-A59D-49C5-B7BA-3DAD8A9F1E03">Conflict Types in an Oracle Streams Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-conflict-resolution.html#GUID-C981059C-27DD-4C76-A682-5C06A0BA2754">Conflicts and Transaction Ordering in an Oracle Streams Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-conflict-resolution.html#GUID-D79B1715-F633-4C3D-874D-5183DB231766">Conflict Detection in an Oracle Streams Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-conflict-resolution.html#GUID-A3CB79E8-4963-4610-9E75-891FA71E625F">Conflict Avoidance in an Oracle Streams Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-conflict-resolution.html#GUID-A610F273-078E-4697-B483-2FF7DA464A14">Conflict Resolution in an Oracle Streams Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-conflict-resolution.html#GUID-06D7D452-AE20-4DF3-AE9B-5F4CB6FB016A">Managing Oracle Streams Conflict Detection and Resolution</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-streams-conflict-resolution.html#GUID-C5CD26C3-D4A8-4F1F-8C4A-3A697962A5EE">Monitoring Conflict Detection and Update Conflict Handlers</a></p>
+                  </li>
+               </ul>
+            </div><a id="STREP358"></a><div class="props_rev_3"><a id="GUID-EE05C68D-2241-4996-9BF6-E2E6CBCE8C32" name="GUID-EE05C68D-2241-4996-9BF6-E2E6CBCE8C32"></a><h3 id="STREP-GUID-EE05C68D-2241-4996-9BF6-E2E6CBCE8C32" class="sect3"><span class="enumeration_section">9.1 </span>About DML Conflicts in an Oracle Streams Environment
+               </h3>
+               <div>
+                  <p>A <span class="bold">conflict</span> is a mismatch between the old values in an LCR and the expected data in a table. Conflicts can occur in an Oracle Streams environment that permits concurrent data manipulation language (DML) operations on the same data at multiple databases. In an Oracle Streams environment, DML conflicts can occur only when an apply process is applying a message that contains a row change resulting from a DML operation. This type of message is called a row logical change record, or row LCR. An apply process automatically detects conflicts caused by row LCRs.
+                  </p>
+                  <p>For example, when two transactions originating at different databases update the same row at nearly the same time, a conflict can occur. When you configure an Oracle Streams environment, you must consider whether conflicts can occur. You can configure conflict resolution to resolve conflicts automatically, if your system design permits conflicts.</p>
+                  <p>In general, you should try to design an Oracle Streams environment that avoids the possibility of conflicts. Using the conflict avoidance techniques discussed later in this chapter, most system designs can avoid conflicts in all or a large percentage of the shared data. However, many applications require that some percentage of the shared data be updatable at multiple databases at any time. If this is the case, then you must address the possibility of conflicts.</p>
+                  <div class="infoboxnote" id="GUID-EE05C68D-2241-4996-9BF6-E2E6CBCE8C32__GUID-7231796A-5C16-400A-A9C4-5421669D2F65">
+                     <p class="notep1">Note:</p>
+                     <p>An apply process does not detect DDL conflicts or conflicts resulting from user messages. Ensure that your environment avoids these types of conflicts.</p>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-EE05C68D-2241-4996-9BF6-E2E6CBCE8C32__GUID-4F35DFA1-45C5-470E-8200-3B10C88732B8">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../strms/oracle-streams-information-capture.html#STRMS107"><span class="italic">Oracle Streams Concepts and Administration </span></a>for more information about row LCRs
+                     </p>
+                  </div>
+               </div>
+            </div><a id="STREP359"></a><div class="props_rev_3"><a id="GUID-5B8756A2-A59D-49C5-B7BA-3DAD8A9F1E03" name="GUID-5B8756A2-A59D-49C5-B7BA-3DAD8A9F1E03"></a><h3 id="STREP-GUID-5B8756A2-A59D-49C5-B7BA-3DAD8A9F1E03" class="sect3"><span class="enumeration_section">9.2 </span>Conflict Types in an Oracle Streams Environment
+               </h3>
+               <div>
+                  <p>You can encounter these types of conflicts when you share data at multiple databases: </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-F06B7F02-4B5D-40D5-9586-67B49E18B253">Update Conflicts in an Oracle Streams Environment</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-83279438-BA5D-438A-A40F-52C374DD41F5">Uniqueness Conflicts in an Oracle Streams Environment</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-D7879F2E-4C77-4853-9FE9-24F4571EDA9F">Delete Conflicts in an Oracle Streams Environment</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-299013B0-7D0B-4AA8-BB63-85A20895803B">Foreign Key Conflicts in an Oracle Streams Environment</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STREP360"></a><div class="props_rev_3"><a id="GUID-F06B7F02-4B5D-40D5-9586-67B49E18B253" name="GUID-F06B7F02-4B5D-40D5-9586-67B49E18B253"></a><h4 id="STREP-GUID-F06B7F02-4B5D-40D5-9586-67B49E18B253" class="sect4"><span class="enumeration_section">9.2.1 </span>Update Conflicts in an Oracle Streams Environment
+                  </h4>
+                  <div>
+                     <p>An <strong class="term">update conflict</strong> occurs when the apply process applies a row LCR containing an update to a row that conflicts with another update to the same row. Update conflicts can happen when two transactions originating from different databases update the same row at nearly the same time. 
+                     </p>
+                  </div>
+               </div><a id="STREP361"></a><div class="props_rev_3"><a id="GUID-83279438-BA5D-438A-A40F-52C374DD41F5" name="GUID-83279438-BA5D-438A-A40F-52C374DD41F5"></a><h4 id="STREP-GUID-83279438-BA5D-438A-A40F-52C374DD41F5" class="sect4"><span class="enumeration_section">9.2.2 </span>Uniqueness Conflicts in an Oracle Streams Environment
+                  </h4>
+                  <div>
+                     <p>A <strong class="term">uniqueness conflict</strong> occurs when the apply process applies a row LCR containing a change to a row that violates a uniqueness integrity constraint, such as a <code class="codeph">PRIMARY</code> <code class="codeph">KEY</code> or <code class="codeph">UNIQUE</code> constraint. For example, consider what happens when two transactions originate from two different databases, each inserting a row into a table with the same primary key value. In this case, the transactions cause a uniqueness conflict. 
+                     </p>
+                  </div>
+               </div><a id="STREP362"></a><div class="props_rev_3"><a id="GUID-D7879F2E-4C77-4853-9FE9-24F4571EDA9F" name="GUID-D7879F2E-4C77-4853-9FE9-24F4571EDA9F"></a><h4 id="STREP-GUID-D7879F2E-4C77-4853-9FE9-24F4571EDA9F" class="sect4"><span class="enumeration_section">9.2.3 </span>Delete Conflicts in an Oracle Streams Environment
+                  </h4>
+                  <div>
+                     <p>A <strong class="term">delete conflict </strong>occurs when two transactions originate at different databases, with one transaction deleting a row and another transaction updating or deleting the same row. In this case, the row referenced in the row LCR does not exist to be either updated or deleted.
+                     </p>
+                  </div>
+               </div><a id="STREP363"></a><div class="props_rev_3"><a id="GUID-299013B0-7D0B-4AA8-BB63-85A20895803B" name="GUID-299013B0-7D0B-4AA8-BB63-85A20895803B"></a><h4 id="STREP-GUID-299013B0-7D0B-4AA8-BB63-85A20895803B" class="sect4"><span class="enumeration_section">9.2.4 </span>Foreign Key Conflicts in an Oracle Streams Environment
+                  </h4>
+                  <div>
+                     <p>A <strong class="term">foreign key conflict </strong>occurs when the apply process applies a row LCR containing a change to a row that violates a foreign key constraint. For example, in the <code class="codeph">hr</code> schema, the <code class="codeph">department_id</code> column in the <code class="codeph">employees</code> table is a foreign key of the <code class="codeph">department_id</code> column in the <code class="codeph">departments</code> table. Consider what can happen when the following changes originate at two different databases (<code class="codeph">A</code> and <code class="codeph">B</code>) and are propagated to a third database (<code class="codeph">C</code>):
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>At database <code class="codeph">A</code>, a row is inserted into the <code class="codeph">departments</code> table with a <code class="codeph">department_id</code> of <code class="codeph">271</code>. This change is propagated to database <code class="codeph">B</code> and applied there.
+                           </p>
+                        </li>
+                        <li>
+                           <p>At database <code class="codeph">B</code>, a row is inserted into the <code class="codeph">employees</code> table with an <code class="codeph">employee_id</code> of&nbsp;<code class="codeph">206</code> and a <code class="codeph">department_id</code> of <code class="codeph">271</code>.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>If the change that originated at database <code class="codeph">B</code> is applied at database <code class="codeph">C</code> before the change that originated at database <code class="codeph">A</code>, then a foreign key conflict results because the row for the department with a <code class="codeph">department_id</code> of <code class="codeph">271</code> does not yet exist in the <code class="codeph">departments</code> table at database <code class="codeph">C</code>.
+                     </p>
+                  </div>
+               </div>
+            </div><a id="STREP364"></a><div class="props_rev_3"><a id="GUID-C981059C-27DD-4C76-A682-5C06A0BA2754" name="GUID-C981059C-27DD-4C76-A682-5C06A0BA2754"></a><h3 id="STREP-GUID-C981059C-27DD-4C76-A682-5C06A0BA2754" class="sect3"><span class="enumeration_section">9.3 </span>Conflicts and Transaction Ordering in an Oracle Streams Environment
+               </h3>
+               <div>
+                  <p>Ordering conflicts can occur in an Oracle Streams environment when three or more databases share data and the data is updated at two or more of these databases. For example, consider a scenario in which three databases share information in the <code class="codeph">hr.departments</code> table. The database names are <code class="codeph">mult1.example.com</code>, <code class="codeph">mult2.example.com</code>, and <code class="codeph">mult3.example.com</code>. Suppose a change is made to a row in the <code class="codeph">hr.departments</code> table at <code class="codeph">mult1.example.com</code> that will be propagated to both <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code>. The following series of actions might occur:
+                  </p>
+                  <ol>
+                     <li>
+                        <p> The change is propagated to <code class="codeph">mult2.example.com</code>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>An apply process at <code class="codeph">mult2.example.com</code> applies the change from <code class="codeph">mult1.example.com</code>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>A different change to the same row is made at <code class="codeph">mult2.example.com</code>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>The change at <code class="codeph">mult2.example.com</code> is propagated to <code class="codeph">mult3.example.com</code>.
+                        </p>
+                     </li>
+                     <li>
+                        <p>An apply process at <code class="codeph">mult3.example.com</code> attempts to apply the change from <code class="codeph">mult2.example.com</code> before another apply process at <code class="codeph">mult3.example.com</code> applies the change from <code class="codeph">mult1.example.com</code>.
+                        </p>
+                     </li>
+                  </ol>
+                  <p>In this case, a conflict occurs because a column value for the row at <code class="codeph">mult3.example.com</code> does not match the corresponding old value in the row LCR propagated from <code class="codeph">mult2.example.com</code>.
+                  </p>
+                  <p>In addition to causing a data conflict, transactions that are applied out of order might experience referential integrity problems at a remote database if supporting data has not been successfully propagated to that database. Consider the scenario where a new customer calls an order department. A customer record is created and an order is placed. If the order data is applied at a remote database before the customer data, then a referential integrity error is raised because the customer that the order references does not exist at the remote database.</p>
+                  <p>If an ordering conflict is encountered, then you can resolve the conflict by reexecuting the transaction in the error queue after the required data has been propagated to the remote database and applied.</p>
+               </div>
+            </div><a id="STREP365"></a><div class="props_rev_3"><a id="GUID-D79B1715-F633-4C3D-874D-5183DB231766" name="GUID-D79B1715-F633-4C3D-874D-5183DB231766"></a><h3 id="STREP-GUID-D79B1715-F633-4C3D-874D-5183DB231766" class="sect3"><span class="enumeration_section">9.4 </span>Conflict Detection in an Oracle Streams Environment
+               </h3>
+               <div>
+                  <p>An apply process detects update, uniqueness, delete, and foreign key conflicts as follows:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>An apply process detects an update conflict if there is any difference between the old values for a row in a row LCR and the current values of the same row at the destination database.</p>
+                     </li>
+                     <li>
+                        <p>An apply process detects a uniqueness conflict if a uniqueness constraint violation occurs when applying an LCR that contains an insert or update operation.</p>
+                     </li>
+                     <li>
+                        <p>An apply process detects a delete conflict if it cannot find a row when applying an LCR that contains an update or delete operation, because the primary key of the row does not exist. </p>
+                     </li>
+                     <li>
+                        <p>An apply process detects a foreign key conflict if a foreign key constraint violation occurs when applying an LCR.</p>
+                     </li>
+                  </ul>
+                  <p>A conflict can be detected when an apply process attempts to apply an LCR directly or when an apply process handler, such as a DML handler, runs the <code class="codeph">EXECUTE</code> member procedure for an LCR. A conflict can also be detected when either the <code class="codeph">EXECUTE_ERROR</code> or <code class="codeph">EXECUTE_ALL_ERRORS</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package is run.
+                  </p>
+                  <div class="infoboxnote" id="GUID-D79B1715-F633-4C3D-874D-5183DB231766__GUID-FE7E2D42-0808-4410-8273-00BD51A4AB04">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If a column is updated and the column's old value equals its new value, then Oracle never detects a conflict for this column update.</p>
+                        </li>
+                        <li>
+                           <p>Any old LOB values in update LCRs, delete LCRs, and LCRs dealing with piecewise updates to LOB columns are not used by conflict detection.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STREP366"></a><div class="props_rev_3"><a id="GUID-3D700815-7E2A-4B75-AD45-CB0CF09089C5" name="GUID-3D700815-7E2A-4B75-AD45-CB0CF09089C5"></a><h4 id="STREP-GUID-3D700815-7E2A-4B75-AD45-CB0CF09089C5" class="sect4"><span class="enumeration_section">9.4.1 </span>Control Over Conflict Detection for Nonkey Columns
+                  </h4>
+                  <div>
+                     <p>By default, an apply process compares old values for all columns during conflict detection, but you can stop conflict detection for nonkey columns using the <code class="codeph">COMPARE_OLD_VALUES</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. Conflict detection might not be needed for some nonkey columns.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-3D700815-7E2A-4B75-AD45-CB0CF09089C5__GUID-46285D77-E496-4237-86CD-E04B330B2545">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-320A3262-6A24-4B75-89E2-2A7DACBAFDC8">Stopping Conflict Detection for Nonkey Columns</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-103C7517-F51F-4A58-AA1A-644658D12DE9">Displaying Information About Conflict Detection</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STREP367"></a><div class="props_rev_3"><a id="GUID-7E2F9B47-D717-4D27-A97B-F7DF82D44FCF" name="GUID-7E2F9B47-D717-4D27-A97B-F7DF82D44FCF"></a><h4 id="STREP-GUID-7E2F9B47-D717-4D27-A97B-F7DF82D44FCF" class="sect4"><span class="enumeration_section">9.4.2 </span>Rows Identification During Conflict Detection in an Oracle Streams Environment 
+                  </h4>
+                  <div>
+                     <p>To detect conflicts accurately, Oracle must be able to identify and match corresponding rows at different databases uniquely. By default, Oracle uses the primary key of a table to identify rows in a table uniquely. When a table does not have a primary key, you should designate a substitute key. A substitute key is a column or set of columns that Oracle can use to identify uniquely rows in the table.</p>
+                     <div class="infoboxnotealso" id="GUID-7E2F9B47-D717-4D27-A97B-F7DF82D44FCF__GUID-0C1AFCAC-B37C-4560-AD21-1D4B2A707F07">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../strms/advanced-apply-process-concepts.html#STRMS214"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STREP368"></a><div class="props_rev_3"><a id="GUID-A3CB79E8-4963-4610-9E75-891FA71E625F" name="GUID-A3CB79E8-4963-4610-9E75-891FA71E625F"></a><h3 id="STREP-GUID-A3CB79E8-4963-4610-9E75-891FA71E625F" class="sect3"><span class="enumeration_section">9.5 </span>Conflict Avoidance in an Oracle Streams Environment
+               </h3>
+               <div>
+                  <p>The following topics describe ways to avoid data conflicts:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-B1C8BC31-B8D0-46EF-B427-39B5C7ECC413">Use a Primary Database Ownership Model</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-BAF84F3A-EDCF-44B7-AD9E-E8680F508408">Avoid Specific Types of Conflicts</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STREP369"></a><div class="props_rev_3"><a id="GUID-B1C8BC31-B8D0-46EF-B427-39B5C7ECC413" name="GUID-B1C8BC31-B8D0-46EF-B427-39B5C7ECC413"></a><h4 id="STREP-GUID-B1C8BC31-B8D0-46EF-B427-39B5C7ECC413" class="sect4"><span class="enumeration_section">9.5.1 </span>Use a Primary Database Ownership Model
+                  </h4>
+                  <div>
+                     <p>You can avoid the possibility of conflicts by limiting the number of databases in the system that have simultaneous update access to the tables containing shared data. Primary ownership prevents all conflicts, because only a single database permits updates to a set of shared data. Applications can even use row and column subsetting to establish more granular ownership of data than at the table level. For example, applications might have update access to specific columns or rows in a shared table on a database-by-database basis.</p>
+                  </div>
+               </div><a id="STREP370"></a><div class="props_rev_3"><a id="GUID-BAF84F3A-EDCF-44B7-AD9E-E8680F508408" name="GUID-BAF84F3A-EDCF-44B7-AD9E-E8680F508408"></a><h4 id="STREP-GUID-BAF84F3A-EDCF-44B7-AD9E-E8680F508408" class="sect4"><span class="enumeration_section">9.5.2 </span>Avoid Specific Types of Conflicts
+                  </h4>
+                  <div>
+                     <p>If a primary database ownership model is too restrictive for your application requirements, then you can use a shared ownership data model, which means that conflicts might be possible. Even so, typically you can use some simple strategies to avoid specific types of conflicts.</p>
+                     <p>The following topics describe strategies for avoiding specific types of conflicts:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="oracle-streams-conflict-resolution.html#GUID-4C4B7A9D-6471-4F23-9877-7540D5705265">Avoid Uniqueness Conflicts in an Oracle Streams Environment</a></p>
+                        </li>
+                        <li>
+                           <p><a href="oracle-streams-conflict-resolution.html#GUID-EC3EA82C-773D-4DAA-9F65-5057ADAF2F1F">Avoid Delete Conflicts in an Oracle Streams Environment</a></p>
+                        </li>
+                        <li>
+                           <p><a href="oracle-streams-conflict-resolution.html#GUID-56756D64-5201-494B-8199-168BA39A3215">Avoid Update Conflicts in an Oracle Streams Environment</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STREP371"></a><a id="STREP100"></a><div class="props_rev_3"><a id="GUID-4C4B7A9D-6471-4F23-9877-7540D5705265" name="GUID-4C4B7A9D-6471-4F23-9877-7540D5705265"></a><h5 id="STREP-GUID-4C4B7A9D-6471-4F23-9877-7540D5705265" class="sect5"><span class="enumeration_section">9.5.2.1 </span>Avoid Uniqueness Conflicts in an Oracle Streams Environment
+                     </h5>
+                     <div>
+                        <p>You can avoid uniqueness conflicts by ensuring that each database uses unique identifiers for shared data. There are three ways to ensure unique identifiers at all databases in an Oracle Streams environment. </p>
+                        <p>One way is to construct a unique identifier by executing the following select statement:</p><pre class="oac_no_warn" dir="ltr">SELECT SYS_GUID() OID FROM DUAL;
+</pre><p>This SQL operator returns a 16-byte globally unique identifier. This value is based on an algorithm that uses time, date, and the computer identifier to generate a globally unique identifier. The globally unique identifier appears in a format similar to the following:</p><pre class="oac_no_warn" dir="ltr">A741C791252B3EA0E034080020AE3E0A
+</pre><p><a id="d44964e2060" class="indexterm-anchor"></a><a id="d44964e2062" class="indexterm-anchor"></a>Another way to avoid uniqueness conflicts is to create a sequence at each of the databases that shares data and concatenate the database name (or other globally unique value) with the local sequence. This approach helps to avoid any duplicate sequence values and helps to prevent uniqueness conflicts.
+                        </p>
+                        <p>Finally, you can create a customized sequence at each of the databases that shares data so that no two databases can generate the same value. You can accomplish this by using a combination of starting, incrementing, and maximum values in the <code class="codeph">CREATE</code> <code class="codeph">SEQUENCE</code> statement. For example, you might configure the following sequences:
+                        </p>
+                        <div class="tblformal" id="GUID-4C4B7A9D-6471-4F23-9877-7540D5705265__GUID-0356771A-73A1-41A9-BA10-EC7B8FBCE32E">
+                           <p class="titleintable">Table 9-1 Customized Sequences for Oracle Streams Replication Environments</p>
+                           <table cellpadding="4" cellspacing="0" class="Formal" title="Customized Sequences for Oracle Streams Replication Environments" summary="This table lists values to use for the STARTS WITH, INCREMENT BY, and range parameters in the CREATE SEQUENCE statement to generate unique sequences at different master sites." width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="21%" id="d44964e2087">Parameter</th>
+                                    <th align="left" valign="bottom" width="26%" id="d44964e2090">Database A</th>
+                                    <th align="left" valign="bottom" width="26%" id="d44964e2093">Database B</th>
+                                    <th align="left" valign="bottom" width="26%" id="d44964e2096">Database C</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="21%" id="d44964e2101" headers="d44964e2087 ">
+                                       <p><code class="codeph">START</code> <code class="codeph">WITH</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2101 d44964e2090 ">
+                                       <p>1</p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2101 d44964e2093 ">
+                                       <p>3</p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2101 d44964e2096 ">
+                                       <p>5</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="21%" id="d44964e2118" headers="d44964e2087 ">
+                                       <p><code class="codeph">INCREMENT</code> <code class="codeph">BY</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2118 d44964e2090 ">
+                                       <p>10</p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2118 d44964e2093 ">
+                                       <p>10</p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2118 d44964e2096 ">
+                                       <p>10</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="21%" id="d44964e2135" headers="d44964e2087 ">
+                                       <p>Range Example</p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2135 d44964e2090 ">
+                                       <p>1, 11, 21, 31, 41,...</p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2135 d44964e2093 ">
+                                       <p>3, 13, 23, 33, 43,...</p>
+                                    </td>
+                                    <td align="left" valign="top" width="26%" headers="d44964e2135 d44964e2096 ">
+                                       <p>5, 15, 25, 35, 45,...</p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                        <p>Using a similar approach, you can define different ranges for each database by specifying a <code class="codeph">START</code> <code class="codeph">WITH</code> and <code class="codeph">MAXVALUE</code> that would produce a unique range for each database.
+                        </p>
+                     </div>
+                  </div><a id="STREP372"></a><div class="props_rev_3"><a id="GUID-EC3EA82C-773D-4DAA-9F65-5057ADAF2F1F" name="GUID-EC3EA82C-773D-4DAA-9F65-5057ADAF2F1F"></a><h5 id="STREP-GUID-EC3EA82C-773D-4DAA-9F65-5057ADAF2F1F" class="sect5"><span class="enumeration_section">9.5.2.2 </span>Avoid Delete Conflicts in an Oracle Streams Environment
+                     </h5>
+                     <div>
+                        <p>Always avoid delete conflicts in shared data environments. In general, applications that operate within a shared ownership data model should not delete rows using <code class="codeph">DELETE</code> statements. Instead, applications should mark rows for deletion and then configure the system to purge logically deleted rows periodically.
+                        </p>
+                     </div>
+                  </div><a id="STREP373"></a><div class="props_rev_3"><a id="GUID-56756D64-5201-494B-8199-168BA39A3215" name="GUID-56756D64-5201-494B-8199-168BA39A3215"></a><h5 id="STREP-GUID-56756D64-5201-494B-8199-168BA39A3215" class="sect5"><span class="enumeration_section">9.5.2.3 </span>Avoid Update Conflicts in an Oracle Streams Environment
+                     </h5>
+                     <div>
+                        <p>After trying to eliminate the possibility of uniqueness and delete conflicts, you should also try to limit the number of possible update conflicts. However, in a shared ownership data model, update conflicts cannot be avoided in all cases. If you cannot avoid all update conflicts, then you must understand the types of conflicts possible and configure the system to resolve them if they occur.</p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STREP374"></a><div class="props_rev_3"><a id="GUID-A610F273-078E-4697-B483-2FF7DA464A14" name="GUID-A610F273-078E-4697-B483-2FF7DA464A14"></a><h3 id="STREP-GUID-A610F273-078E-4697-B483-2FF7DA464A14" class="sect3"><span class="enumeration_section">9.6 </span>Conflict Resolution in an Oracle Streams Environment
+               </h3>
+               <div>
+                  <p>After an update conflict has been detected, a conflict handler can attempt to resolve it. Oracle Streams provides prebuilt conflict handlers to resolve update conflicts, but not uniqueness, delete, foreign key, or ordering conflicts. However, you can build your own custom conflict handler to resolve data conflicts specific to your business rules. Such a conflict handler can be part of a procedure DML handler or an error handler.</p>
+                  <p>Whether you use prebuilt or custom conflict handlers, a conflict handler is applied as soon as a conflict is detected. If neither the specified conflict handler nor the relevant apply handler can resolve the conflict, then the conflict is logged in the error queue. You might want to use the relevant apply handler to notify the database administrator when a conflict occurs.</p>
+                  <p>When a conflict causes a transaction to be moved to the error queue, sometimes it is possible to correct the condition that caused the conflict. In these cases, you can reexecute a transaction using the <code class="codeph">EXECUTE_ERROR</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-A610F273-078E-4697-B483-2FF7DA464A14__GUID-43D0E383-3155-4D4E-A1B7-F5938407FC0D">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strms/oracle-streams-information-consumption.html#STRMS004"><span class="italic">Oracle Streams Concepts and Administration </span></a>for more information about procedure DML handlers, error handlers, and the error queue
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_APPLY_ADM.html#ARPLS326"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">EXECUTE_ERROR</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STREP375"></a><div class="props_rev_3"><a id="GUID-3D424F00-2100-41F1-B7A0-61273CD464C9" name="GUID-3D424F00-2100-41F1-B7A0-61273CD464C9"></a><h4 id="STREP-GUID-3D424F00-2100-41F1-B7A0-61273CD464C9" class="sect4"><span class="enumeration_section">9.6.1 </span>Prebuilt Update Conflict Handlers
+                  </h4>
+                  <div>
+                     <p>This section describes the types of prebuilt update conflict handlers available to you and how column lists and resolution columns are used in prebuilt update conflict handlers. A column list is a list of columns for which the update conflict handler is called when there is an update conflict. The resolution column is the column used to identify an update conflict handler. If you use a <code class="codeph">MAXIMUM</code> or <code class="codeph">MINIMUM</code> prebuilt update conflict handler, then the resolution column is also the column used to resolve the conflict. The resolution column must be one of the columns in the column list for the handler.
+                     </p>
+                     <p>Use the <code class="codeph">SET_UPDATE_CONFLICT_HANDLER</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package to specify one or more update conflict handlers for a particular table. There are no prebuilt conflict handlers for uniqueness, delete, or foreign key conflicts.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-3D424F00-2100-41F1-B7A0-61273CD464C9__GUID-B1168CF8-0160-48E5-968B-72052FC1F11F">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-06D7D452-AE20-4DF3-AE9B-5F4CB6FB016A">Managing Oracle Streams Conflict Detection and Resolution</a>"</span> for instructions on adding, modifying, and removing an update conflict handler
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_APPLY_ADM.html#ARPLS323"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">SET_UPDATE_CONFLICT_HANDLER</code> procedure
+                              </p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-F03634B1-C4A5-4416-B17E-033815CFA4CA">Column Lists</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-EF83D0EE-A67E-40B0-9320-AC490C72B36E">Resolution Columns</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STREP376"></a><div class="props_rev_3"><a id="GUID-6E632DC4-0FDE-4BF5-98C2-96ED5CB2929A" name="GUID-6E632DC4-0FDE-4BF5-98C2-96ED5CB2929A"></a><h5 id="STREP-GUID-6E632DC4-0FDE-4BF5-98C2-96ED5CB2929A" class="sect5"><span class="enumeration_section">9.6.1.1 </span>Types of Prebuilt Update Conflict Handlers
+                     </h5>
+                     <div>
+                        <p>Oracle provides the following types of prebuilt update conflict handlers for an Oracle Streams environment: <code class="codeph">OVERWRITE</code>, <code class="codeph">DISCARD</code>, <code class="codeph">MAXIMUM</code>, and <code class="codeph">MINIMUM</code>. 
+                        </p>
+                        <p>The description for each type of handler later in this section refers to the following conflict scenario:</p>
+                        <ol>
+                           <li>
+                              <p>The following update is made at the <code class="codeph">dbs1.example.com</code> source database:
+                              </p><pre class="oac_no_warn" dir="ltr">UPDATE hr.employees SET salary = 4900 WHERE employee_id = 200;
+COMMIT;
+</pre><p>This update changes the salary for employee <code class="codeph">200</code> from <code class="codeph">4400</code> to <code class="codeph">4900</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>At nearly the same time, the following update is made at the <code class="codeph">dbs2.example.com</code> destination database:
+                              </p><pre class="oac_no_warn" dir="ltr">UPDATE hr.employees SET salary = 5000 WHERE employee_id = 200;
+COMMIT;
+</pre></li>
+                           <li>
+                              <p>A capture process or synchronous capture captures the update at the <code class="codeph">dbs1.example.com</code> source database and puts the resulting row LCR in a queue.
+                              </p>
+                           </li>
+                           <li>
+                              <p>A propagation propagates the row LCR from the queue at <code class="codeph">dbs1.example.com</code> to a queue at <code class="codeph">dbs2.example.com</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>An apply process at <code class="codeph">dbs2.example.com</code> attempts to apply the row LCR to the <code class="codeph">hr.employees</code> table but encounters a conflict because the salary value at <code class="codeph">dbs2.example.com</code> is <code class="codeph">5000</code>, which does not match the old value for the salary in the row LCR (<code class="codeph">4400</code>).
+                              </p>
+                           </li>
+                        </ol>
+                        <p>The following sections describe each prebuilt conflict handler and explain how the handler resolves this conflict.</p>
+                     </div><a id="STREP377"></a><div class="props_rev_3"><a id="GUID-A7AC095A-C551-4325-90BF-060CF5559602" name="GUID-A7AC095A-C551-4325-90BF-060CF5559602"></a><h6 id="STREP-GUID-A7AC095A-C551-4325-90BF-060CF5559602" class="sect6"><span class="enumeration_section">9.6.1.1.1 </span>OVERWRITE
+                        </h6>
+                        <div>
+                           <p>When a conflict occurs, the <code class="codeph">OVERWRITE</code> handler replaces the current value at the destination database with the new value in the LCR from the source database.
+                           </p>
+                           <p>If the <code class="codeph">OVERWRITE</code> handler is used for the <code class="codeph">hr.employees</code> table at the <code class="codeph">dbs2.example.com</code> destination database in the conflict example, then the new value in the row LCR overwrites the value at <code class="codeph">dbs2.example.com</code>. Therefore, after the conflict is resolved, the salary for employee <code class="codeph">200</code> is&nbsp;<code class="codeph">4900</code>.
+                           </p>
+                        </div>
+                     </div><a id="STREP378"></a><div class="props_rev_3"><a id="GUID-0FB4B5B0-BE06-4497-909C-8B11FF2252C1" name="GUID-0FB4B5B0-BE06-4497-909C-8B11FF2252C1"></a><h6 id="STREP-GUID-0FB4B5B0-BE06-4497-909C-8B11FF2252C1" class="sect6"><span class="enumeration_section">9.6.1.1.2 </span>DISCARD
+                        </h6>
+                        <div>
+                           <p>When a conflict occurs, the <code class="codeph">DISCARD</code> handler ignores the values in the LCR from the source database and retains the value at the destination database.
+                           </p>
+                           <p>If the <code class="codeph">DISCARD</code> handler is used for the <code class="codeph">hr.employees</code> table at the <code class="codeph">dbs2.example.com</code> destination database in the conflict example, then the new value in the row LCR is discarded. Therefore, after the conflict is resolved, the salary for employee <code class="codeph">200</code> is&nbsp;<code class="codeph">5000</code> at <code class="codeph">dbs2.example.com</code>.
+                           </p>
+                        </div>
+                     </div><a id="STREP379"></a><div class="props_rev_3"><a id="GUID-8B588001-83C5-44BD-A204-C2BB109B401C" name="GUID-8B588001-83C5-44BD-A204-C2BB109B401C"></a><h6 id="STREP-GUID-8B588001-83C5-44BD-A204-C2BB109B401C" class="sect6"><span class="enumeration_section">9.6.1.1.3 </span>MAXIMUM
+                        </h6>
+                        <div>
+                           <p>When a conflict occurs, the <code class="codeph">MAXIMUM</code> conflict handler compares the new value in the LCR from the source database with the current value in the destination database for a designated resolution column. If the new value of the resolution column in the LCR is greater than the current value of the column at the destination database, then the apply process resolves the conflict in favor of the LCR. If the new value of the resolution column in the LCR is less than the current value of the column at the destination database, then the apply process resolves the conflict in favor of the destination database. 
+                           </p>
+                           <p>If the <code class="codeph">MAXIMUM</code> handler is used for the <code class="codeph">salary</code> column in the <code class="codeph">hr.employees</code> table at the <code class="codeph">dbs2.example.com</code> destination database in the conflict example, then the apply process does not apply the row LCR, because the salary in the row LCR is less than the current salary in the table. Therefore, after the conflict is resolved, the salary for employee <code class="codeph">200</code> is&nbsp;<code class="codeph">5000</code> at <code class="codeph">dbs2.example.com</code>.
+                           </p>
+                           <p><a id="d44964e3276" class="indexterm-anchor"></a><a id="d44964e3280" class="indexterm-anchor"></a><a id="d44964e3286" class="indexterm-anchor"></a>If you want to resolve conflicts based on the time of the transactions involved, then one way to do this is to add a column to a shared table that automatically records the transaction time with a trigger. You can designate this column as a resolution column for a <code class="codeph">MAXIMUM</code> conflict handler, and the transaction with the latest (or greater) time would be used automatically.
+                           </p>
+                           <p>The following is an example of a trigger that records the time of a transaction for the <code class="codeph">hr.employees</code> table. Assume that the <code class="codeph">job_id</code>, <code class="codeph">salary</code>, and <code class="codeph">commission_pct</code> columns are part of the column list for the conflict resolution handler. The trigger should fire only when an <code class="codeph">UPDATE</code> is performed on the columns in the column list or when an <code class="codeph">INSERT</code> is performed.
+                           </p><pre class="oac_no_warn" dir="ltr">ALTER TABLE hr.employees ADD (time TIMESTAMP WITH TIME ZONE);
+
+CREATE OR REPLACE TRIGGER hr.insert_time_employees
+BEFORE 
+  INSERT OR UPDATE OF job_id, salary, commission_pct ON hr.employees
+FOR EACH ROW
+BEGIN
+   -- Consider time synchronization problems. The previous update to this 
+   -- row might have originated from a site with a clock time ahead of the 
+   -- local clock time.
+   IF :OLD.TIME IS NULL OR :OLD.TIME &lt; SYSTIMESTAMP THEN
+     :NEW.TIME := SYSTIMESTAMP;
+   ELSE
+     :NEW.TIME := :OLD.TIME + 1 / 86400;
+   END IF;
+END;
+/
+</pre><p>If you use such a trigger for conflict resolution, then ensure that the trigger's firing property is fire once, which is the default. Otherwise, a new time might be marked when transactions are applied by an apply process, resulting in the loss of the actual time of the transaction.</p>
+                           <div class="infoboxnotealso" id="GUID-8B588001-83C5-44BD-A204-C2BB109B401C__GUID-E2223303-832D-4F03-A177-EC12F5585B56">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS215"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                           </div>
+                        </div>
+                     </div><a id="STREP380"></a><div class="props_rev_3"><a id="GUID-DFC279BE-E686-4A94-B53D-B0DA9047D178" name="GUID-DFC279BE-E686-4A94-B53D-B0DA9047D178"></a><h6 id="STREP-GUID-DFC279BE-E686-4A94-B53D-B0DA9047D178" class="sect6"><span class="enumeration_section">9.6.1.1.4 </span>MINIMUM
+                        </h6>
+                        <div>
+                           <p>When a conflict occurs, the <code class="codeph">MINIMUM</code> conflict handler compares the new value in the LCR from the source database with the current value in the destination database for a designated resolution column. If the new value of the resolution column in the LCR is less than the current value of the column at the destination database, then the apply process resolves the conflict in favor of the LCR. If the new value of the resolution column in the LCR is greater than the current value of the column at the destination database, then the apply process resolves the conflict in favor of the destination database. 
+                           </p>
+                           <p>If the <code class="codeph">MINIMUM</code> handler is used for the <code class="codeph">salary</code> column in the <code class="codeph">hr.employees</code> table at the <code class="codeph">dbs2.example.com</code> destination database in the conflict example, then the apply process resolves the conflict in favor of the row LCR, because the salary in the row LCR is less than the current salary in the table. Therefore, after the conflict is resolved, the salary for employee <code class="codeph">200</code> is&nbsp;<code class="codeph">4900</code>.
+                           </p>
+                        </div>
+                     </div>
+                  </div><a id="STREP101"></a><div class="props_rev_3"><a id="GUID-F03634B1-C4A5-4416-B17E-033815CFA4CA" name="GUID-F03634B1-C4A5-4416-B17E-033815CFA4CA"></a><h5 id="STREP-GUID-F03634B1-C4A5-4416-B17E-033815CFA4CA" class="sect5"><span class="enumeration_section">9.6.1.2 </span>Column Lists
+                     </h5>
+                     <div>
+                        <p>Each time you specify a prebuilt update conflict handler for a table, you must specify a <span class="bold">column list</span>. A column list is a list of columns for which the update conflict handler is called. If an update conflict occurs for one or more of the columns in the list when an apply process tries to apply a row LCR, then the update conflict handler is called to resolve the conflict. The update conflict handler is not called if a conflict occurs only in columns that are not in the list. The scope of conflict resolution is a single column list on a single row LCR.
+                        </p>
+                        <p>You can specify multiple update conflict handlers for a particular table, but the same column cannot be in more than one column list. For example, suppose you specify two prebuilt update conflict handlers on <code class="codeph">hr.employees</code> table:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The first update conflict handler has the following columns in its column list: <code class="codeph">salary</code> and <code class="codeph">commission_pct</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The second update conflict handler has the following columns in its column list: <code class="codeph">job_id</code> and <code class="codeph">department_id</code>. 
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Also, assume that no other conflict handlers exist for this table. In this case, if a conflict occurs for the <code class="codeph">salary</code> column when an apply process tries to apply a row LCR, then the first update conflict handler is called to resolve the conflict. If, however, a conflict occurs for the <code class="codeph">department_id</code> column, then the second update conflict handler is called to resolve the conflict. If a conflict occurs for a column that is not in a column list for any conflict handler, then no conflict handler is called, and an error results. In this example, if a conflict occurs for the <code class="codeph">manager_id</code> column in the <code class="codeph">hr.employees</code> table, then an error results. If conflicts occur in more than one column list when a row LCR is being applied, and there are no conflicts in any columns that are not in a column list, then the appropriate update conflict handler is invoked for each column list with a conflict.
+                        </p>
+                        <p>Column lists enable you to use different handlers to resolve conflicts for different types of data. For example, numeric data is often suited for a maximum or minimum conflict handler, while an overwrite or discard conflict handler might be preferred for character data.</p>
+                        <p>If a conflict occurs in a column that is not in a column list, then the error handler for the specific operation on the table attempts to resolve the conflict. If the error handler cannot resolve the conflict, or if there is no such error handler, then the transaction that caused the conflict is moved to the error queue.</p>
+                        <p>Also, if a conflict occurs for a column in a column list that uses either the <code class="codeph">OVERWRITE</code>, <code class="codeph">MAXIMUM</code>, or <code class="codeph">MINIMUM</code> prebuilt handler, and the row LCR does not contain all of the columns in this column list, then the conflict cannot be resolved because all of the values are not available. In this case, the transaction that caused the conflict is moved to the error queue. If the column list uses the <code class="codeph">DISCARD</code> prebuilt method, then the row LCR is discarded and no error results, even if the row LCR does not contain all of the columns in this column list.
+                        </p>
+                        <p>A conditional supplemental log group must be specified for the columns specified in a column list if more than one column at the source database affects the column list at the destination database. Supplemental logging is specified at the source database and adds additional information to the LCR, which is needed to resolve conflicts properly. Typically, a conditional supplemental log group must be specified for the columns in a column list if there are multiple columns in the column list, but not if there is only one column in the column list. </p>
+                        <p>However, in some cases, a conditional supplemental log group is required even if there is only one column in a column list. That is, an apply handler or custom rule-based transformation can combine multiple columns from the source database into a single column in the column list at the destination database. For example, a custom rule-based transformation can take three columns that store street, state, and postal code data from a source database and combine the data into a single address column at a destination database.</p>
+                        <p>Also, in some cases, no conditional supplemental log group is required even if there are multiple columns in a column list. For example, an apply handler or custom rule-based transformation can separate one address column from the source database into multiple columns that are in a column list at the destination database. A custom rule-based transformation can take an address that includes street, state, and postal code data in one address column at a source database and separate the data into three columns at a destination database.</p>
+                        <div class="infoboxnote" id="GUID-F03634B1-C4A5-4416-B17E-033815CFA4CA__GUID-53735B94-A119-4B1E-BB41-0919BFC7D785">
+                           <p class="notep1">Note:</p>
+                           <p>Prebuilt update conflict handlers do not support LOB, <code class="codeph">LONG</code>, <code class="codeph">LONG</code> <code class="codeph">RAW</code>, user-defined type, and Oracle-supplied type columns. Therefore, you should not include these types of columns in the <code class="codeph">column_list</code> parameter when running the <code class="codeph">SET_UPDATE_CONFLICT_HANDLER</code> procedure.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-F03634B1-C4A5-4416-B17E-033815CFA4CA__GUID-25E5CF5B-26D5-481E-8803-0748DE49D5B9">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-12A4DC82-EEC7-4ACC-BF8F-8D82AA1D19DE">Specifying Supplemental Logging</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=SQLRF0021"><span class="italic">Oracle Database SQL Language Reference</span></a> for information about data types
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="STREP381"></a><div class="props_rev_3"><a id="GUID-EF83D0EE-A67E-40B0-9320-AC490C72B36E" name="GUID-EF83D0EE-A67E-40B0-9320-AC490C72B36E"></a><h5 id="STREP-GUID-EF83D0EE-A67E-40B0-9320-AC490C72B36E" class="sect5"><span class="enumeration_section">9.6.1.3 </span>Resolution Columns
+                     </h5>
+                     <div>
+                        <p>The <span class="bold">resolution column</span> is the column used to identify a prebuilt update conflict handler. If you use a <code class="codeph">MAXIMUM</code> or <code class="codeph">MINIMUM</code> prebuilt update conflict handler, then the resolution column is also the column used to resolve the conflict. The resolution column must be one of the columns in the column list for the handler.
+                        </p>
+                        <p>For example, if the <code class="codeph">salary</code> column in the <code class="codeph">hr.employees</code> table is specified as the resolution column for a maximum or minimum conflict handler, then the <code class="codeph">salary</code> column is evaluated to determine whether column list values in the row LCR are applied or the destination database values for the column list are retained.
+                        </p>
+                        <p>In either of the following situations involving a resolution column for a conflict, the apply process moves the transaction containing the row LCR that caused the conflict to the error queue, if the error handler cannot resolve the problem. In these cases, the conflict cannot be resolved and the values of the columns at the destination database remain unchanged:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The new LCR value and the destination row value for the resolution column are the same (for example, if the resolution column was not the column causing the conflict).</p>
+                           </li>
+                           <li>
+                              <p>Either the new LCR value of the resolution column or the current value of the resolution column at the destination database is <code class="codeph">NULL</code>.
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-EF83D0EE-A67E-40B0-9320-AC490C72B36E__GUID-C79A34CE-284A-4F9A-8DA8-C9BB394444B4">
+                           <p class="notep1">Note:</p>
+                           <p>Although the resolution column is not used for <code class="codeph">OVERWRITE</code> and <code class="codeph">DISCARD</code> conflict handlers, a resolution column must be specified for these conflict handlers.
+                           </p>
+                        </div>
+                     </div>
+                  </div><a id="STREP382"></a><div class="props_rev_3"><a id="GUID-9270020C-3143-4C39-B317-D88B44FAE391" name="GUID-9270020C-3143-4C39-B317-D88B44FAE391"></a><h5 id="STREP-GUID-9270020C-3143-4C39-B317-D88B44FAE391" class="sect5"><span class="enumeration_section">9.6.1.4 </span>Data Convergence
+                     </h5>
+                     <div>
+                        <p>When you share data between multiple databases, and you want the data to be the same at all of these databases, then ensure that you use conflict resolution handlers that cause the data to converge at all databases. If you allow changes to shared data at all of your databases, then data convergence for a table is possible only if all databases that are sharing data capture changes to the shared data and propagate these changes to all of the other databases that are sharing the data. </p>
+                        <p>In such an environment, the <code class="codeph">MAXIMUM</code> conflict resolution method can guarantee convergence only if the values in the resolution column are always increasing. A time-based resolution column meets this requirement, if successive time stamps on a row are distinct. The <code class="codeph">MINIMUM</code> conflict resolution method can guarantee convergence in such an environment only if the values in the resolution column are always decreasing.
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STREP383"></a><div class="props_rev_3"><a id="GUID-A1B4D351-CC35-49A6-B592-383CA92C1ED6" name="GUID-A1B4D351-CC35-49A6-B592-383CA92C1ED6"></a><h4 id="STREP-GUID-A1B4D351-CC35-49A6-B592-383CA92C1ED6" class="sect4"><span class="enumeration_section">9.6.2 </span>Custom Conflict Handlers
+                  </h4>
+                  <div>
+                     <p>You can create a PL/SQL procedure to use as a custom conflict handler. You use the <code class="codeph">SET_DML_HANDLER</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package to designate one or more custom conflict handlers for a particular table. Specifically, set the following parameters when you run this procedure to specify a custom conflict handler:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Set the <code class="codeph">object_name</code> parameter to the fully qualified name of the table for which you want to perform conflict resolution.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Set the <code class="codeph">object_type</code> parameter to <code class="codeph">TABLE</code>.
+                           </p>
+                        </li>
+                        <li>
+                           <p>Set the <code class="codeph">operation_name</code> parameter to the type of operation for which the custom conflict handler is called. The possible operations are the following: <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, <code class="codeph">DELETE</code>, and <code class="codeph">LOB_UPDATE</code>. You can also set the <code class="codeph">operation_name</code> parameter to <code class="codeph">DEFAULT</code> so that the handler is used by default for all operations.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If you want an error handler to perform conflict resolution when an error is raised, then set the <code class="codeph">error_handler</code> parameter to <code class="codeph">TRUE</code>. Or, if you want to include conflict resolution in your procedure DML handler, then set the <code class="codeph">error_handler</code> parameter to <code class="codeph">FALSE</code>. 
+                           </p>
+                           <p>If you specify <code class="codeph">FALSE</code> for this parameter, then, when you execute a row LCR using the <code class="codeph">EXECUTE</code> member procedure for the LCR, the conflict resolution within the procedure DML handler is performed for the specified object and operation(s). 
+                           </p>
+                        </li>
+                        <li>
+                           <p>Specify the procedure to resolve a conflict by setting the <code class="codeph">user_procedure</code> parameter. This user procedure is called to resolve any conflicts on the specified table resulting from the specified type of operation. 
+                           </p>
+                        </li>
+                     </ul>
+                     <p>If the custom conflict handler cannot resolve the conflict, then the apply process moves the transaction containing the conflict to the error queue and does not apply the transaction.</p>
+                     <p>If both a prebuilt update conflict handler and a custom conflict handler exist for a particular object, then the prebuilt update conflict handler is invoked only if both of the following conditions are met:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The custom conflict handler executes the row LCR using the <code class="codeph">EXECUTE</code> member procedure for the LCR.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">conflict_resolution</code> parameter in the <code class="codeph">EXECUTE</code> member procedure for the row LCR is set to <code class="codeph">TRUE</code>.
+                           </p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-A1B4D351-CC35-49A6-B592-383CA92C1ED6__GUID-A8A5F48F-B19A-4B17-8544-683F6C4E6AA4">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS144"><span class="italic">Oracle Streams Concepts and Administration </span></a>for more information about managing error handlers
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS324"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">SET_DML_HANDLER</code> procedure
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STREP161"></a><div class="props_rev_3"><a id="GUID-06D7D452-AE20-4DF3-AE9B-5F4CB6FB016A" name="GUID-06D7D452-AE20-4DF3-AE9B-5F4CB6FB016A"></a><h3 id="STREP-GUID-06D7D452-AE20-4DF3-AE9B-5F4CB6FB016A" class="sect3"><span class="enumeration_section">9.7 </span>Managing Oracle Streams Conflict Detection and Resolution
+               </h3>
+               <div>
+                  <p>This section describes the following tasks:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-7F980394-BA75-47CD-A608-63BE4603B7FB">Setting an Update Conflict Handler</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-23C604EC-B9E1-4A2E-9A4D-A7F24B9340AA">Modifying an Existing Update Conflict Handler</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-CC2A9A39-7FC7-4752-88F6-2E5F3FA3007F">Removing an Existing Update Conflict Handler</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-320A3262-6A24-4B75-89E2-2A7DACBAFDC8">Stopping Conflict Detection for Nonkey Columns</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-06D7D452-AE20-4DF3-AE9B-5F4CB6FB016A__GUID-9124DE4B-F30A-4B81-B6C5-45B1759A974A">
+                     <p class="notep1">See Also:</p>
+                     <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-0C6DACF1-BB9E-402E-813F-D480C890ED5C">Displaying Information About Update Conflict Handlers</a>"</span></p>
+                  </div>
+               </div><a id="STREP384"></a><div class="props_rev_3"><a id="GUID-7F980394-BA75-47CD-A608-63BE4603B7FB" name="GUID-7F980394-BA75-47CD-A608-63BE4603B7FB"></a><h4 id="STREP-GUID-7F980394-BA75-47CD-A608-63BE4603B7FB" class="sect4"><span class="enumeration_section">9.7.1 </span>Setting an Update Conflict Handler
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Set an update conflict handler using the <code class="codeph">SET_UPDATE_CONFLICT_HANDLER</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. You can use one of the following prebuilt methods when you create an update conflict resolution handler:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">OVERWRITE</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">DISCARD</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">MAXIMUM</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">MINIMUM</code></p>
+                           </li>
+                        </ul>
+                        <p>For example, suppose an Oracle Streams environment captures changes to the <code class="codeph">hr.jobs</code> table at <code class="codeph">dbs1.example.com</code> and propagates these changes to the <code class="codeph">dbs2.example.com</code> destination database, where they are applied. In this environment, applications can perform DML changes on the <code class="codeph">hr.jobs</code> table at both databases, but, if there is a conflict for a particular DML change, then the change at the <code class="codeph">dbs1.example.com</code> database should always overwrite the change at the <code class="codeph">dbs2.example.com</code> database. In this environment, you can accomplish this goal by specifying an <code class="codeph">OVERWRITE</code> handler at the <code class="codeph">dbs2.example.com</code> database. 
+                        </p>
+                        <p>To specify an update conflict handler for the <code class="codeph">hr.jobs</code> table in the <code class="codeph">hr</code> schema at the <code class="codeph">dbs2.example.com</code> database, run the following procedure at <code class="codeph">dbs2.example.com</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  cols DBMS_UTILITY.NAME_ARRAY;
+  BEGIN
+    cols(1) := 'job_title';
+    cols(2) := 'min_salary';
+    cols(3) := 'max_salary';
+    DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+      object_name       =&gt; 'hr.jobs',
+      method_name       =&gt; 'OVERWRITE',
+      resolution_column =&gt; 'job_title',
+      column_list       =&gt; cols);
+END;
+/
+</pre><p>All apply processes running on a database that apply changes to the specified table locally use the specified update conflict handler.</p>
+                        <div class="infoboxnote" id="GUID-7F980394-BA75-47CD-A608-63BE4603B7FB__GUID-F02D671A-1955-495C-B66F-BA2B348ACB98">
+                           <p class="notep1">Note:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The <code class="codeph">resolution_column</code> is not used for <code class="codeph">OVERWRITE</code> and <code class="codeph">DISCARD</code> methods, but one of the columns in the <code class="codeph">column_list</code> still must be specified.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>You must specify a conditional supplemental log group at the source database for all of the columns in the <code class="codeph">column_list</code> at the destination database. In this example, you would specify a conditional supplemental log group including the <code class="codeph">job_title</code>, <code class="codeph">min_salary</code>, and <code class="codeph">max_salary</code> columns in the <code class="codeph">hr.jobs</code> table at the <code class="codeph">dbs1.example.com</code> database.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Prebuilt update conflict handlers do not support LOB, <code class="codeph">LONG</code>, <code class="codeph">LONG</code> <code class="codeph">RAW</code>, user-defined type, and Oracle-supplied type columns. Therefore, you should not include these types of columns in the <code class="codeph">column_list</code> parameter when running the procedure <code class="codeph">SET_UPDATE_CONFLICT_HANDLER</code>.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-7F980394-BA75-47CD-A608-63BE4603B7FB__GUID-4635778F-0DA1-44AE-BA91-896D5E3B88E3">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="preparing-for-oracle-streams-replication.html#GUID-12A4DC82-EEC7-4ACC-BF8F-8D82AA1D19DE">Specifying Supplemental Logging</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="../strex/n-way-replication-example.html#STREX004"><span class="italic">Oracle Streams Extended Examples</span></a> for an example Oracle Streams environment that illustrates using the <code class="codeph">MAXIMUM</code> prebuilt method for time-based conflict resolution
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=SQLRF0021"><span class="italic">Oracle Database SQL Language Reference</span></a> for information about data types
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP385"></a><div class="props_rev_3"><a id="GUID-23C604EC-B9E1-4A2E-9A4D-A7F24B9340AA" name="GUID-23C604EC-B9E1-4A2E-9A4D-A7F24B9340AA"></a><h4 id="STREP-GUID-23C604EC-B9E1-4A2E-9A4D-A7F24B9340AA" class="sect4"><span class="enumeration_section">9.7.2 </span>Modifying an Existing Update Conflict Handler
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can modify an existing update conflict handler by running the <code class="codeph">SET_UPDATE_CONFLICT_HANDLER</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. To update an existing conflict handler, specify the same table and resolution column as the existing conflict handler.
+                        </p>
+                        <p>To modify the update conflict handler created in <span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-7F980394-BA75-47CD-A608-63BE4603B7FB">Setting an Update Conflict Handler</a>"</span>, you specify the <code class="codeph">hr.jobs</code> table and the <code class="codeph">job_title</code> column as the resolution column. You can modify this update conflict handler by specifying a different type of prebuilt method or a different column list, or both. However, to change the resolution column for an update conflict handler, you must remove and re-create the handler.
+                        </p>
+                        <p>For example, suppose the environment changes, and you want changes from <code class="codeph">dbs1.example.com</code> to be discarded in the event of a conflict, whereas previously changes from <code class="codeph">dbs1.example.com</code> overwrote changes at <code class="codeph">dbs2.example.com</code>. You can accomplish this goal by specifying a <code class="codeph">DISCARD</code> handler at the <code class="codeph">dbs2.example.com</code> database. 
+                        </p>
+                        <p>To modify the existing update conflict handler for the <code class="codeph">hr.jobs</code> table in the <code class="codeph">hr</code> schema at the <code class="codeph">dbs2.example.com</code> database, run the following procedure:
+                        </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  cols DBMS_UTILITY.NAME_ARRAY;
+  BEGIN
+    cols(1) := 'job_title';
+    cols(2) := 'min_salary';
+    cols(3) := 'max_salary';
+    DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+      object_name       =&gt; 'hr.jobs',
+      method_name       =&gt; 'DISCARD',
+      resolution_column =&gt; 'job_title',
+      column_list       =&gt; cols);
+END;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP386"></a><div class="props_rev_3"><a id="GUID-CC2A9A39-7FC7-4752-88F6-2E5F3FA3007F" name="GUID-CC2A9A39-7FC7-4752-88F6-2E5F3FA3007F"></a><h4 id="STREP-GUID-CC2A9A39-7FC7-4752-88F6-2E5F3FA3007F" class="sect4"><span class="enumeration_section">9.7.3 </span>Removing an Existing Update Conflict Handler
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can remove an existing update conflict handler by running the <code class="codeph">SET_UPDATE_CONFLICT_HANDLER</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. To remove a an existing conflict handler, specify <code class="codeph">NULL</code> for the method, and specify the same table, column list, and resolution column as the existing conflict handler.
+                        </p>
+                        <p>For example, suppose you want to remove the update conflict handler created in <span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-7F980394-BA75-47CD-A608-63BE4603B7FB">Setting an Update Conflict Handler</a>"</span> and then modified in <span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-23C604EC-B9E1-4A2E-9A4D-A7F24B9340AA">Modifying an Existing Update Conflict Handler</a>"</span>. To remove this update conflict handler, run the following procedure: 
+                        </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  cols DBMS_UTILITY.NAME_ARRAY;
+  BEGIN
+    cols(1) := 'job_title';
+    cols(2) := 'min_salary';
+    cols(3) := 'max_salary';
+    DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+      object_name       =&gt; 'hr.jobs',
+      method_name       =&gt; NULL,
+      resolution_column =&gt; 'job_title',
+      column_list       =&gt; cols);
+END;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP387"></a><div class="props_rev_3"><a id="GUID-320A3262-6A24-4B75-89E2-2A7DACBAFDC8" name="GUID-320A3262-6A24-4B75-89E2-2A7DACBAFDC8"></a><h4 id="STREP-GUID-320A3262-6A24-4B75-89E2-2A7DACBAFDC8" class="sect4"><span class="enumeration_section">9.7.4 </span>Stopping Conflict Detection for Nonkey Columns
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can stop conflict detection for nonkey columns using the <code class="codeph">COMPARE_OLD_VALUES</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. 
+                        </p>
+                        <p>For example, suppose you configure a <code class="codeph">time</code> column for conflict resolution for the <code class="codeph">hr.employees</code> table, as described in <span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-8B588001-83C5-44BD-A204-C2BB109B401C">MAXIMUM</a>"</span>. In this case, you can decide to stop conflict detection for the other nonkey columns in the table. After adding the <code class="codeph">time</code> column and creating the trigger as described in that section, add the columns in the <code class="codeph">hr.employees</code> table to the column list for an update conflict handler:
+                        </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1)  := 'first_name';
+  cols(2)  := 'last_name';
+  cols(3)  := 'email';
+  cols(4)  := 'phone_number';
+  cols(5)  := 'hire_date';
+  cols(6)  := 'job_id';
+  cols(7)  := 'salary';
+  cols(8)  := 'commission_pct';
+  cols(9)  := 'manager_id';
+  cols(10) := 'department_id';
+  cols(11) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name       =&gt; 'hr.employees',
+    method_name       =&gt; 'MAXIMUM',
+    resolution_column =&gt; 'time',
+    column_list       =&gt; cols);
+END;
+/
+</pre><p>This example does not include the primary key for the table in the column list because it assumes that the primary key is never updated. However, other key columns are included in the column list.</p>
+                        <p>To stop conflict detection for all nonkey columns in the table for both <code class="codeph">UPDATE</code> and <code class="codeph">DELETE</code> operations at a destination database, run the following procedure:
+                        </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  cols DBMS_UTILITY.LNAME_ARRAY;
+  BEGIN
+    cols(1) := 'first_name';
+    cols(2) := 'last_name';
+    cols(3) := 'email';
+    cols(4) := 'phone_number';
+    cols(5) := 'hire_date';
+    cols(6) := 'job_id';
+    cols(7) := 'salary';
+    cols(8) := 'commission_pct';  
+  DBMS_APPLY_ADM.COMPARE_OLD_VALUES(
+    object_name  =&gt; 'hr.employees',
+    column_table =&gt; cols, 
+    operation    =&gt; '*',
+    compare      =&gt; FALSE);
+END;
+/
+</pre><p>The asterisk (<code class="codeph">*</code>) specified for the <code class="codeph">operation</code> parameter means that conflict detection is stopped for both <code class="codeph">UPDATE</code> and <code class="codeph">DELETE</code> operations. After you run this procedure, all apply processes running on the database that apply changes to the specified table locally do not detect conflicts on the specified columns. Therefore, in this example, the <code class="codeph">time</code> column is the only column used for conflict detection.
+                        </p>
+                        <div class="infoboxnote" id="GUID-320A3262-6A24-4B75-89E2-2A7DACBAFDC8__GUID-1F552A74-B3AA-491B-8738-B9BC6F9680CC">
+                           <p class="notep1">Note:</p>
+                           <p>The example in this section sets an update conflict handler before stopping conflict detection for nonkey columns. However, an update conflict handler is not required before you stop conflict detection for nonkey columns.</p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-320A3262-6A24-4B75-89E2-2A7DACBAFDC8__GUID-27CB1BC2-7166-4070-9DD4-640514F8835F">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-3D700815-7E2A-4B75-AD45-CB0CF09089C5">Control Over Conflict Detection for Nonkey Columns</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-103C7517-F51F-4A58-AA1A-644658D12DE9">Displaying Information About Conflict Detection</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STREX004"><span class="italic">Oracle Streams Extended Examples</span></a> for a detailed example that uses time-based conflict resolution
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=ARPLS526"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">COMPARE_OLD_VALUES</code> procedure
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STREP158"></a><div class="props_rev_3"><a id="GUID-C5CD26C3-D4A8-4F1F-8C4A-3A697962A5EE" name="GUID-C5CD26C3-D4A8-4F1F-8C4A-3A697962A5EE"></a><h3 id="STREP-GUID-C5CD26C3-D4A8-4F1F-8C4A-3A697962A5EE" class="sect3"><span class="enumeration_section">9.8 </span>Monitoring Conflict Detection and Update Conflict Handlers
+               </h3>
+               <div>
+                  <p>The following sections contain queries that you can run to monitor an apply process in a Stream replication environment:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-103C7517-F51F-4A58-AA1A-644658D12DE9">Displaying Information About Conflict Detection</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-streams-conflict-resolution.html#GUID-0C6DACF1-BB9E-402E-813F-D480C890ED5C">Displaying Information About Update Conflict Handlers</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-C5CD26C3-D4A8-4F1F-8C4A-3A697962A5EE__GUID-953570EB-EAC8-4665-B795-039D79D77046">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strep&amp;id=STRMS004"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                  </div>
+               </div><a id="STREP388"></a><div class="props_rev_3"><a id="GUID-103C7517-F51F-4A58-AA1A-644658D12DE9" name="GUID-103C7517-F51F-4A58-AA1A-644658D12DE9"></a><h4 id="STREP-GUID-103C7517-F51F-4A58-AA1A-644658D12DE9" class="sect4"><span class="enumeration_section">9.8.1 </span>Displaying Information About Conflict Detection
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can stop conflict detection for nonkey columns using the <code class="codeph">COMPARE_OLD_VALUES</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. When you use this procedure, conflict detection is stopped for updates and deletes on the specified columns for all apply processes at a destination database. To display each column for which conflict detection has been stopped, run the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN OBJECT_OWNER HEADING 'Table Owner' FORMAT A15
+COLUMN OBJECT_NAME HEADING 'Table Name' FORMAT A20
+COLUMN COLUMN_NAME HEADING 'Column Name' FORMAT A20
+COLUMN COMPARE_OLD_ON_DELETE HEADING 'Compare|Old On|Delete' FORMAT A7
+COLUMN COMPARE_OLD_ON_UPDATE HEADING 'Compare|Old On|Update' FORMAT A7
+
+SELECT OBJECT_OWNER, 
+       OBJECT_NAME, 
+       COLUMN_NAME, 
+       COMPARE_OLD_ON_DELETE, 
+       COMPARE_OLD_ON_UPDATE 
+  FROM DBA_APPLY_TABLE_COLUMNS
+  WHERE APPLY_DATABASE_LINK IS NULL;
+</pre><p>Your output should look similar to the following:</p><pre class="oac_no_warn" dir="ltr">                                                          Compare Compare
+                                                          Old On  Old On
+Table Owner     Table Name           Column Name          Delete  Update
+--------------- -------------------- -------------------- ------- -------
+HR              EMPLOYEES            COMMISSION_PCT       NO      NO
+HR              EMPLOYEES            EMAIL                NO      NO
+HR              EMPLOYEES            FIRST_NAME           NO      NO
+HR              EMPLOYEES            HIRE_DATE            NO      NO
+HR              EMPLOYEES            JOB_ID               NO      NO
+HR              EMPLOYEES            LAST_NAME            NO      NO
+HR              EMPLOYEES            PHONE_NUMBER         NO      NO
+HR              EMPLOYEES            SALARY               NO      NO
+
+</pre><div class="infoboxnote" id="GUID-103C7517-F51F-4A58-AA1A-644658D12DE9__GUID-4426CF23-AA0C-4FC0-8782-6E51142858C3">
+                           <p class="notep1">Note:</p>
+                           <p>You can also stop conflict detection for changes that are applied to remote non-Oracle databases. This query does not display such specifications because it lists a specification only if the <code class="codeph">APPLY_DATABASE_LINK</code> column is <code class="codeph">NULL</code>.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-103C7517-F51F-4A58-AA1A-644658D12DE9__GUID-67248313-FBD8-45A6-A37B-06A880FA2FBB">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-3D700815-7E2A-4B75-AD45-CB0CF09089C5">Control Over Conflict Detection for Nonkey Columns</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-320A3262-6A24-4B75-89E2-2A7DACBAFDC8">Stopping Conflict Detection for Nonkey Columns</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STREP389"></a><div class="props_rev_3"><a id="GUID-0C6DACF1-BB9E-402E-813F-D480C890ED5C" name="GUID-0C6DACF1-BB9E-402E-813F-D480C890ED5C"></a><h4 id="STREP-GUID-0C6DACF1-BB9E-402E-813F-D480C890ED5C" class="sect4"><span class="enumeration_section">9.8.2 </span>Displaying Information About Update Conflict Handlers
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>When you specify an update conflict handler using the <code class="codeph">SET_UPDATE_CONFLICT_HANDLER</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package, the update conflict handler is run for all apply processes in the database, when a relevant conflict occurs. 
+                        </p>
+                        <p>The query in this section displays all of the columns for which conflict resolution has been specified using a prebuilt update conflict handler. That is, it shows the columns in all of the column lists specified in the database. This query also shows the type of prebuilt conflict handler specified and the resolution column specified for the column list.</p>
+                        <p>To display information about all of the update conflict handlers in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN OBJECT_OWNER HEADING 'Table|Owner' FORMAT A5
+COLUMN OBJECT_NAME HEADING 'Table Name' FORMAT A12
+COLUMN METHOD_NAME HEADING 'Method' FORMAT A12
+COLUMN RESOLUTION_COLUMN HEADING 'Resolution|Column' FORMAT A13
+COLUMN COLUMN_NAME HEADING 'Column Name' FORMAT A30
+
+SELECT OBJECT_OWNER, 
+       OBJECT_NAME, 
+       METHOD_NAME, 
+       RESOLUTION_COLUMN, 
+       COLUMN_NAME
+  FROM DBA_APPLY_CONFLICT_COLUMNS
+  ORDER BY OBJECT_OWNER, OBJECT_NAME, RESOLUTION_COLUMN;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Table                           Resolution
+Owner Table Name   Method       Column        Column Name
+----- ------------ ------------ ------------- ------------------------------
+HR    COUNTRIES    MAXIMUM      TIME          COUNTRY_NAME
+HR    COUNTRIES    MAXIMUM      TIME          REGION_ID
+HR    COUNTRIES    MAXIMUM      TIME          TIME
+HR    DEPARTMENTS  MAXIMUM      TIME          DEPARTMENT_NAME
+HR    DEPARTMENTS  MAXIMUM      TIME          LOCATION_ID
+HR    DEPARTMENTS  MAXIMUM      TIME          MANAGER_ID
+HR    DEPARTMENTS  MAXIMUM      TIME          TIME
+</pre><div class="infoboxnotealso" id="GUID-0C6DACF1-BB9E-402E-813F-D480C890ED5C__GUID-04E85B39-0AC1-4EC0-A61C-797870274E49">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="oracle-streams-conflict-resolution.html#GUID-06D7D452-AE20-4DF3-AE9B-5F4CB6FB016A">Managing Oracle Streams Conflict Detection and Resolution</a>"</span></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

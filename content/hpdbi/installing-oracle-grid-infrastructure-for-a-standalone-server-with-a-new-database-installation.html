@@ -1,0 +1,130 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Complete these steps to Install Oracle Grid Infrastructure for a standalone server and then create a database that is managed by Oracle Restart.">
+      <meta name="description" content="Complete these steps to Install Oracle Grid Infrastructure for a standalone server and then create a database that is managed by Oracle Restart.">
+      <title>Installing Oracle Grid Infrastructure for a Standalone Server with a New Database Installation</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Database Installation Guide">
+      <meta property="og:description" content="Complete these steps to Install Oracle Grid Infrastructure for a standalone server and then create a database that is managed by Oracle Restart.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Database Installation Guide for HP-UX Itanium">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-installation-guide-hp-ux-itanium.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-11-15T06:18:34-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2015, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83742-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="setup-wizard-installation-options.html" title="Previous" type="text/html">
+      <link rel="next" href="installing-oracle-grid-infrastructure-for-a-standalone-server-for-an-existing-database.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Database Installation Guide for HP-UX Itanium">
+    <meta name="dcterms.isVersionOf" content="HPDBI">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="setup-wizard-installation-options.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="installing-oracle-grid-infrastructure-for-a-standalone-server-for-an-existing-database.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Database Installation Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="installing-and-configuring-oracle-grid-infrastructure-for-a-standalone-server.html" property="item" typeof="WebPage"><span property="name">Installing and Configuring Oracle Grid Infrastructure for a Standalone Server</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Installing Oracle Grid Infrastructure for a Standalone Server with a New Database Installation</li>
+            </ol>
+            <a id="GUID-B24C181D-D53F-4F44-82DB-F977358589EF" name="GUID-B24C181D-D53F-4F44-82DB-F977358589EF"></a>
+            
+            <h2 id="HPDBI-GUID-B24C181D-D53F-4F44-82DB-F977358589EF" class="sect2">Installing Oracle Grid Infrastructure for a Standalone Server with a New Database Installation</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Complete these steps to Install Oracle Grid Infrastructure for a standalone server and then create a database that is managed by Oracle Restart.</p>
+               <div class="section">
+                  <p>Install Oracle Grid Infrastructure for a standalone server, which installs Oracle Restart and Oracle ASM, and creates one disk group.</p>
+               </div>
+               <!-- class="section" -->
+               <div class="p">
+                  <p>You should have your network information, storage information, and operating system users and groups available to you before you start the installation. You should also be prepared to run root scripts.</p>
+               </div>
+               <!-- class="section" -->
+               <ol>
+                  <li class="stepexpand"><span>Log in as the Oracle Restart software owner user (<code class="codeph">oracle</code>).</span></li>
+                  <li class="stepexpand"><span>Download the Oracle Grid Infrastructure for a standalone server installation image files, create the Grid home directory, and extract the image files in this Grid home directory.</span><div>
+                        <p>For example:</p><pre class="pre codeblock"><code>$ mkdir -p /u01/app/oracle/product/18.0.0/grid
+$ chgrp oinstall /u01/app/oracle/product/18.0.0/grid
+$ cd /u01/app/oracle/product/18.0.0/grid
+$ unzip -q <code>/tmp/grid.zip</code></code></pre></div>
+                     <div>
+                        <div class="infoboxnote" id="GUID-B24C181D-D53F-4F44-82DB-F977358589EF__GUID-DA07DFAD-D53D-4291-BD86-00EBF3F67985">
+                           <p class="notep1">Note:</p>Ensure that the Grid home directory path you create is in compliance with the Oracle Optimal Flexible Architecture recommendations. Also, unzip the installation image files only in this Grid home directory that you created.
+                        </div>
+                     </div>
+                  </li>
+                  <li class="stepexpand"><span>Run <code>gridSetup.sh</code> to start the Oracle Grid Infrastructure setup wizard:</span><div><pre class="pre codeblock"><code>$ <span class="variable" translate="no">Grid_home</span>/gridSetup.sh</code></pre><div class="infoboxnote" id="GUID-B24C181D-D53F-4F44-82DB-F977358589EF__GUID-C3CFE2D1-9087-4D20-8E02-701B31BB39A4">
+                           <p class="notep1">Note:</p>You must install Oracle Grid Infrastructure for a standalone server from the Oracle Grid Infrastructure media.
+                        </div>
+                     </div>
+                  </li>
+                  <li class="stepexpand"><span>In the Select Configuration Option screen, select the <span class="uicontrol bold">Configure Oracle Grid Infrastructure for a Standalone Server (Oracle Restart)</span> option to install and configure Oracle Restart and Oracle ASM. Click <span class="uicontrol bold">Next.</span></span></li>
+                  <li class="stepexpand"><span>During installation, disk paths mounted on Oracle ASM with the string<code class="codeph"> ORCL:*</code> are listed as default database storage candidate disks.</span></li>
+                  <li class="stepexpand"><span>Configure Oracle ASM as needed with additional disk groups. </span><div>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The default Disk Group Name is DATA. You can enter a new name for the disk group, or use the default name.</p>
+                           </li>
+                           <li>
+                              <p>Any additional disk devices that you create must be owned by the user performing the grid installation.</p>
+                           </li>
+                        </ul>
+                     </div>
+                  </li>
+                  <li class="stepexpand"><span>Respond to the configuration prompts as needed to configure Oracle Grid Infrastructure. Click <span class="uicontrol bold">Help</span> for information.</span></li>
+                  <li class="stepexpand"><span>Provide information to automate root scripts, or run scripts as root when prompted by OUI. </span><div>
+                        <p>If you configure automation for running root scripts, and a root script fails, then you can fix the problem manually, and click <span class="uicontrol bold">Retry</span> to run the root script again.
+                        </p>
+                     </div>
+                  </li>
+                  <li class="stepexpand"><span>Start the Oracle Database installation, and select Oracle ASM disk groups for Oracle Database files storage. For assistance during installation, click <span class="uicontrol bold">Help</span> on the Oracle Universal Installer page where you need more information.</span></li>
+               </ol>
+            </div>
+            <div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="installing-and-configuring-oracle-grid-infrastructure-for-a-standalone-server.html#GUID-DA3B90BE-EE1F-4347-8A5E-ED1BBFF29D93" title="Oracle Grid Infrastructure for a standalone server includes Oracle Restart and Oracle Automatic Storage Management.">Installing and Configuring Oracle Grid Infrastructure for a Standalone Server</a></p>
+                  </div>
+               </div>
+            </div>
+            
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,727 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="SODA collections are highly configurable. You can customize collection metadata, to obtain different behavior from that provided by default.">
+      <meta name="description" content="SODA collections are highly configurable. You can customize collection metadata, to obtain different behavior from that provided by default.">
+      <title>SODA Collection Configuration Using Custom Metadata</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="SODA for C Developers Guide">
+      <meta property="og:description" content="SODA collections are highly configurable. You can customize collection metadata, to obtain different behavior from that provided by default.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="SODA for C Developers Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="oracle-database-soda-c-developers-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2019-02-25T09:40:03-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2018, 2019">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84721-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="multithreading-soda-c-applications.html" title="Previous" type="text/html">
+      <link rel="next" href="book-index.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Oracle® Database SODA for C Developer's Guide">
+    <meta name="dcterms.isVersionOf" content="ADSDC">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="multithreading-soda-c-applications.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="book-index.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">SODA for C Developers Guide</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">SODA Collection Configuration Using Custom Metadata</li>
+            </ol>
+            <a id="GUID-D17E8D3C-EE74-49CD-84AA-CE86B9664554" name="GUID-D17E8D3C-EE74-49CD-84AA-CE86B9664554"></a>
+            
+            <h2 id="ADSDC-GUID-D17E8D3C-EE74-49CD-84AA-CE86B9664554" class="sect2"><span class="enumeration_chapter">6 </span>SODA Collection Configuration Using Custom Metadata
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>SODA collections are highly configurable. You can customize collection metadata, to obtain different behavior from that provided by default.</p>
+               <div class="infoboxnote" id="GUID-D17E8D3C-EE74-49CD-84AA-CE86B9664554__GUID-CA214E29-8204-406D-883C-F2D875EDAC64">
+                  <p class="notep1">Note:</p>
+                  <p>You can customize collection metadata to obtain different behavior from that provided by default. However, changing some components requires familiarity with Oracle Database concepts, such as SQL data types. Oracle recommends that you do not change such components unless you have a compelling reason. Because SODA collections are implemented on top of Oracle Database tables (or views), many collection configuration components are related to the underlying table configuration.</p>
+                  <p>For example, if you change the content column type from <code class="codeph">BLOB</code> (the default value) to <code class="codeph">VARCHAR2</code> then you must understand the implications (content size for <code class="codeph">VARCHAR2</code> is limited to 32K bytes, character-set conversion can take place, and so on).
+                  </p>
+               </div>
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="soda-collection-configuration-using-custom-metadata.html#GUID-E5544945-0347-409D-9DD2-7807DB732007">Getting the Metadata of an Existing Collection</a><br>You can use OCI function <code class="codeph">OCIAttrGet()</code> with attribute <code class="codeph">OCI_ATTR_SODA_DESCRIPTOR</code>, to get <span class="italic">all</span> of the metadata of a collection at once, as a JSON document. You can also use <code class="codeph">OCIAttrGet()</code> to get individual collection metadata attributes.
+                  </li>
+                  <li class="ulchildlink"><a href="soda-collection-configuration-using-custom-metadata.html#GUID-1650308E-56E0-448B-B727-B2E16F8621E2">Creating a Collection That Has Custom Metadata</a><br>To create a document collection that has custom metadata, you pass its metadata, as JSON data, to OCI function <code class="codeph">OCISodaCollCreateWithMetadata()</code>.
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-D17E8D3C-EE74-49CD-84AA-CE86B9664554__GUID-6E00E4A1-DE5A-4EF0-86F7-5D8D5D878C49">
+                  <p class="notep1">See Also:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="../adsdi/overview-soda.html#ADSDI-GUID-C107707F-E135-493F-9112-98691C80D3E9" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for general information about SODA document collections and their metadata
+                        </p>
+                     </li>
+                     <li>
+                        <p><a href="../adsdi/soda-collection-metadata-components-reference.html#ADSDI-GUID-49EFF3D3-9FAB-4DA6-BDE2-2650383566A3" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a> for reference information about collection metadata components
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            
+            <div class="sect2"><a id="GUID-E5544945-0347-409D-9DD2-7807DB732007" name="GUID-E5544945-0347-409D-9DD2-7807DB732007"></a><h3 id="ADSDC-GUID-E5544945-0347-409D-9DD2-7807DB732007" class="sect3"><span class="enumeration_section">6.1 </span>Getting the Metadata of an Existing Collection
+               </h3>
+               <div>
+                  <p>You can use OCI function <code class="codeph">OCIAttrGet()</code> with attribute <code class="codeph">OCI_ATTR_SODA_DESCRIPTOR</code>, to get <span class="italic">all</span> of the metadata of a collection at once, as a JSON document. You can also use <code class="codeph">OCIAttrGet()</code> to get individual collection metadata attributes.
+                  </p>
+                  <div class="section">
+                     <div class="tblformal" id="GUID-E5544945-0347-409D-9DD2-7807DB732007__COLLECTIONHANDLEATTRIBUTESCOLLECTIO-16CE7CA1">
+                        <p class="titleintable">Table 6-1 Collection Handle Attributes (Collection Metadata)</p>
+                        <table cellpadding="4" cellspacing="0" class="Formal" title="Collection Handle Attributes (Collection Metadata)" summary="The table columns are Attribute and Description" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" id="d7255e232">Attribute</th>
+                                 <th align="left" valign="bottom" id="d7255e234">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e238" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_CRTIME_COL_NAME</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e238 d7255e234 ">
+                                    <p>The name of the database column that stores the creation time stamp of the document.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e246" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_CTNT_CACHE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e246 d7255e234 ">
+                                    <p>The SecureFiles LOB cache setting.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e254" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_CTNT_COL_NAME</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e254 d7255e234 ">
+                                    <p>The database column that stores the document content.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e262" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_CTNT_COMPRESS</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e262 d7255e234 ">
+                                    <p>The SecureFiles LOB compression setting.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e270" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_CTNT_ENCRYPT</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e270 d7255e234 ">
+                                    <p>The SecureFiles LOB encryption setting.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e278" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_CTNT_MAX_LEN</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e278 d7255e234 ">
+                                    <p>The maximum length, in bytes, of the database column that stores the document content. This attribute applies only to content of type <code class="codeph">VARCHAR2</code>.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e289" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_CTNT_SQL_TYPE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e289 d7255e234 ">
+                                    <p>The SQL data type of the database column that stores the document content.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e297" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_CTNT_VALIDATION</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e297 d7255e234 ">
+                                    <p>The syntax to which JavaScript Object Notation (JSON) content must conform — standard, strict, or lax.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e305" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_DESCRIPTOR</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e305 d7255e234 ">
+                                    <p>All of the metadata of the collection, in JSON format.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e313" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_KEY_ASSIGN_METHOD</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e313 d7255e234 ">
+                                    <p>The method used to assign keys to documents that are inserted into the collection.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e321" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_KEY_COL_NAME</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e321 d7255e234 ">
+                                    <p>The name of the database column that stores the document key.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e330" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_KEY_MAX_LEN</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e330 d7255e234 ">
+                                    <p>The maximum length, in bytes, of the database column that stores the document key. This attribute applies only to content of type <code class="codeph">VARCHAR2</code>.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e341" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_KEY_SEQ_NAME</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e341 d7255e234 ">
+                                    <p>The name of the database sequence that generates keys for documents that are inserted into a collection if the key assignment method is <code class="codeph">SEQUENCE</code>.
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e352" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_KEY_SQL_TYPE</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e352 d7255e234 ">
+                                    <p>The SQL data type of the database column that stores the document key.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e360" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_MODTIME_COL_NAME</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e360 d7255e234 ">
+                                    <p>The name of the database column that stores the last-modified time stamp of the document.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e368" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_MODTIME_INDEX</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e368 d7255e234 ">
+                                    <p>The name of the index on the database column that stores the last-modified time stamp.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e376" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_READONLY</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e376 d7255e234 ">
+                                    <p>An indication of whether the collection is read-only.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e384" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_SCHEMA</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e384 d7255e234 ">
+                                    <p>The name of the Oracle Database schema (user) that owns the table or view to which the collection is mapped.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e392" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_TABLE_NAME</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e392 d7255e234 ">
+                                    <p>The name of the database table to which the collection is mapped.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e400" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_VERSION_COL_NAME</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e400 d7255e234 ">
+                                    <p>The name of the database column that stores the document version.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e408" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_VERSION_METHOD</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e408 d7255e234 ">
+                                    <p>The method used to compute version values for documents when they are inserted into a collection or replaced.</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" id="d7255e416" headers="d7255e232 ">
+                                    <p><code class="codeph">OCI_ATTR_SODA_VIEW_NAME</code></p>
+                                 </td>
+                                 <td align="left" valign="top" headers="d7255e416 d7255e234 ">
+                                    <p>The name of the database view to which the collection is mapped.</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="infoboxnotealso" id="GUID-E5544945-0347-409D-9DD2-7807DB732007__GUID-DA1DB18F-B1EB-4FC7-97D2-945843039749">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../lnoci/handle-and-descriptor-attributes.html#LNOCI-GUID-3817DAD7-19A8-4C7C-8E07-01FD5D926419" target="_blank"><span><cite>Oracle Call Interface Programmer's Guide</cite></span></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../adsdi/soda-collection-metadata-components-reference.html#ADSDI-GUID-49EFF3D3-9FAB-4DA6-BDE2-2650383566A3" target="_blank"><span><cite>Oracle Database Introduction to Simple Oracle Document Access (SODA)</cite></span></a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-E5544945-0347-409D-9DD2-7807DB732007__GETTINGTHEMETADATAOFACOLLECTION-16323C42">
+                     <p class="titleinexample">Example 6-1 Getting All of the Metadata of a Collection</p>
+                     <p>This example shows the result of invoking function <code class="codeph">OCIAttrGet()</code> for collection-handle attribute <code class="codeph">OCI_ATTR_SODA_DESCRIPTOR</code> on the collection with the default configuration that was created using <a href="using-soda-c.html#GUID-8B40F7AB-1397-4520-9854-B68B6B6D2D5D__CREATINGACOLLECTIONTHATHASTHEDEFAUL-14B659B0">Example 3-2</a>. This retrieves all of the collection metadata as JSON data. The default metadata for a collection is shown in <a href="soda-collection-configuration-using-custom-metadata.html#GUID-E5544945-0347-409D-9DD2-7807DB732007__EXAMPLE-144-24236290">Example 6-3</a>.
+                     </p><pre class="pre codeblock"><code>OraText *fetchedMetadata;
+ub4      fetchedMetadataLen = 0;
+
+rc = <span class="bold">OCIAttrGet</span>((dvoid *)collhp, 
+                OCI_HTYPE_SODA_COLLECTION,
+                (dvoid *)fetchedMetadata,
+                &amp;fetchedMetadataLen,
+                <span class="bold">OCI_ATTR_SODA_DESCRIPTOR</span>, errhp);
+
+if (rc == OCI_SUCCESS)
+  printf ("<span class="bold">Collection specification:</span> %.*s\n", fetchedMetadataLen, fetchedMetadata);
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-E5544945-0347-409D-9DD2-7807DB732007__GUID-61B06A6F-106B-4C5D-8353-63A3FDD670A6">
+                     <p class="titleinexample">Example 6-2 Getting Individual Collection Metadata Attributes</p>
+                     <p> This example uses <code class="codeph">OCIAttrGet()</code> to get individual collection metadata attributes. For each attribute, you pass the collection handle, the attribute, and the attribute type.
+                     </p><pre class="pre codeblock"><code>// String collection metadata attribute
+oratext *collAttr = NULL;
+
+// Length of collection metadata attribute
+// (relevant only for string attributes).
+ub4      collAttrLen = 0;
+
+ub1      ub1CollAttr = 0;
+ub4      ub4CollAttr = 0;
+boolean  boolCollAttr = FALSE;
+
+// Get and print collection metadata components.
+// (For brevity we omit checking the return values of the OCIAttrGet calls here.)
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_COLL_NAME</span>,
+           errhp);
+printf("<span class="bold">Collection name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_TABLE_NAME</span>,
+           errhp);
+printf("<span class="bold">Table name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_SCHEMA</span>,
+           errhp);
+printf("<span class="bold">Schema name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_KEY_COL_NAME</span>,
+           errhp);
+printf("<span class="bold">Key column name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;ub1CollAttr),
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_KEY_SQL_TYPE</span>,
+           errhp);
+if (ub1CollAttr == <span class="bold">SQLT_CHR</span>)
+  printf ("<span class="bold">Key column type:</span> VARCHAR2\n");
+else if (ub1CollAttr == <span class="bold">SQLT_BIN</span>)
+  printf ("<span class="bold">Key column type:</span> RAW\n");
+else if (ub1CollAttr == <span class="bold">SQLT_NUM</span>)
+  printf ("<span class="bold">Key column type:</span> NUMBER\n");
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;ub4CollAttr),
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_KEY_MAX_LEN</span>,
+           errhp);
+printf ("<span class="bold">Key column max length:</span> %d\n", ub4CollAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;ub1CollAttr),
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_KEY_ASSIGN_METHOD</span>,
+           errhp);
+
+if (ub1CollAttr == <span class="bold">OCI_SODA_KEY_METHOD_UUID</span>)
+  printf ("<span class="bold">Key assignment method: UUID</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_KEY_METHOD_GUID</span>)
+  printf ("<span class="bold">Key assignment method: GUID</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_KEY_METHOD_SEQUENCE</span>)
+  printf ("<span class="bold">Key assignment method: SEQUENCE</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_KEY_METHOD_CLIENT</span>)
+  printf ("<span class="bold">Key assignment method: CLIENT</span>\n");
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_CTNT_COL_NAME</span>,
+           errhp);
+printf("<span class="bold">Content column name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;ub1CollAttr),
+           &amp;collAttrLen, 
+           <span class="bold">OCI_ATTR_SODA_CTNT_SQL_TYPE</span>,
+           errhp);
+if (ub1CollAttr == <span class="bold">SQLT_CHR</span>)
+  printf ("<span class="bold">Content column type:</span> VARCHAR2\n");
+else if (ub1CollAttr == <span class="bold">SQLT_BLOB</span>)
+  printf ("<span class="bold">Content column type:</span> BLOB\n");
+else if (ub1CollAttr == <span class="bold">SQLT_CLOB</span>)
+  printf ("<span class="bold">Content column type:</span> CLOB\n");
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;ub4CollAttr),
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_CTNT_MAX_LEN</span>,
+           errhp);
+printf ("<span class="bold">Content column max length:</span> %d\n", ub4CollAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION, 
+           (dvoid *)(&amp;ub1CollAttr),
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_CTNT_VALIDATION</span>,
+           errhp);
+if (ub1CollAttr == <span class="bold">OCI_SODA_JSON_VALIDATION_STRICT</span>)
+  printf ("<span class="bold">Content column validation: STRICT</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_JSON_VALIDATION_LAX</span>)
+  printf ("<span class="bold">Content column validation: LAX</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_JSON_VALIDATION_STD</span>)
+  printf ("<span class="bold">Content column validation: STANDARD</span>\n");
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;ub1CollAttr),
+           &amp;collAttrLen, 
+           <span class="bold">OCI_ATTR_SODA_CTNT_COMPRESS</span>,
+           errhp);
+if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_COMPRESS_NONE</span>)
+  printf ("<span class="bold">Content column compress: NONE</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_COMPRESS_HIGH</span>)
+  printf ("<span class="bold">Content column compress: HIGH</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_COMPRESS_MEDIUM</span>)
+  printf ("<span class="bold">Content column compress:  MEDIUM</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_COMPRESS_LOW</span>)
+  printf ("<span class="bold">Content column compress: LOW</span>\n");
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;ub1CollAttr),
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_CTNT_ENCRYPT</span>,
+           errhp);
+if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_ENCRYPT_NONE</span>)
+  printf ("<span class="bold">Content column encrypt: NONE</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_ENCRYPT_3DES168</span>)
+  printf ("<span class="bold">Content column encrypt: 3DES168</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_ENCRYPT_AES128</span>)
+  printf ("<span class="bold">Content column encrypt: AES128</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_ENCRYPT_AES192</span>)
+  printf ("<span class="bold">Content column encrypt: AES192</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_LOB_ENCRYPT_AES256</span>)
+  printf ("<span class="bold">Content column encrypt: AES256</span>\n");
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;boolCollAttr),
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_CTNT_CACHE</span>,
+           errhp);
+if (boolCollAttr == TRUE)
+  printf ("<span class="bold">Content column cache: TRUE</span>\n");
+else
+  printf ("<span class="bold">Content column cache: FALSE</span>\n");
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_VERSION_COL_NAME</span>,
+           errhp);
+printf("<span class="bold">Version column name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)(&amp;ub1CollAttr),
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_VERSION_METHOD</span>,
+           errhp);
+if (ub1CollAttr == <span class="bold">OCI_SODA_VERSION_NONE</span>)
+  printf ("<span class="bold">Version method: NONE</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_VERSION_TIMESTAMP</span>)
+  printf ("<span class="bold">Version method: TIMESTAMP</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_VERSION_MD5</span>)
+  printf ("<span class="bold">Version method: MD5</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_VERSION_SHA256</span>)
+  printf ("<span class="bold">Version method: SHA256</span>\n");
+else if (ub1CollAttr == <span class="bold">OCI_SODA_VERSION_SEQUENTIAL</span>)
+  printf ("<span class="bold">Version method: SEQUENTIAL</span>\n");
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_MODTIME_COL_NAME</span>,
+           errhp);
+printf("<span class="bold">Last-modified column name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_MODTIME_INDEX</span>,
+           errhp);
+printf("<span class="bold">Last-modified index name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_CRTIME_COL_NAME</span>,
+           errhp);
+printf("<span class="bold">Created-on column name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)collAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_MTYPE_COL_NAME</span>,
+           errhp);
+printf("<span class="bold">Media type column name:</span> %.*s\n", collAttrLen, collAttr);
+
+OCIAttrGet((dvoid *)collhp,
+           OCI_HTYPE_SODA_COLLECTION,
+           (dvoid *)&amp;boolCollAttr,
+           &amp;collAttrLen,
+           <span class="bold">OCI_ATTR_SODA_READONLY</span>,
+           errhp);
+
+if (boolCollAttr == TRUE)
+  printf("<span class="bold">Collection is read-only</span>");
+else
+  printf("<span class="bold">Collection is not read-only</span>");
+</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-E5544945-0347-409D-9DD2-7807DB732007__EXAMPLE-144-24236290">
+                     <p class="titleinexample">Example 6-3 Default Collection Metadata</p><pre class="pre codeblock"><code>{
+   "schemaName" : "mySchemaName",
+   "tableName" : "myTableName",
+   "keyColumn" :
+   {
+      "name" : "ID",
+      "sqlType" : "VARCHAR2",
+      "maxLength" : 255,
+      "assignmentMethod" : "UUID"
+   },
+   "contentColumn" :
+   {
+      "name" : "JSON_DOCUMENT",
+      "sqlType" : "BLOB",
+      "compress" : "NONE",
+      "cache" : true,
+      "encrypt" : "NONE",
+      "validation" : "STANDARD"
+   },
+   "versionColumn" :
+   {
+     "name" : "VERSION",
+     "method" : "SHA256"
+   },
+   "lastModifiedColumn" :
+   {
+     "name" : "LAST_MODIFIED"
+   },
+   "creationTimeColumn" :
+   {
+      "name" : "CREATED_ON"
+   },
+   "readOnly" : false
+}</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-collection-configuration-using-custom-metadata.html#GUID-1650308E-56E0-448B-B727-B2E16F8621E2" title="To create a document collection that has custom metadata, you pass its metadata, as JSON data, to OCI function OCISodaCollCreateWithMetadata().">Creating a Collection That Has Custom Metadata</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="soda-collection-configuration-using-custom-metadata.html#GUID-D17E8D3C-EE74-49CD-84AA-CE86B9664554" title="SODA collections are highly configurable. You can customize collection metadata, to obtain different behavior from that provided by default.">SODA Collection Configuration Using Custom Metadata</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-1650308E-56E0-448B-B727-B2E16F8621E2" name="GUID-1650308E-56E0-448B-B727-B2E16F8621E2"></a><h3 id="ADSDC-GUID-1650308E-56E0-448B-B727-B2E16F8621E2" class="sect3"><span class="enumeration_section">6.2 </span>Creating a Collection That Has Custom Metadata
+               </h3>
+               <div>
+                  <p>To create a document collection that has custom metadata, you pass its metadata, as JSON data, to OCI function <code class="codeph">OCISodaCollCreateWithMetadata()</code>.
+                  </p>
+                  <div class="section">
+                     <p>The optional metadata argument to OCI function <code class="codeph">OCISodaCollCreateWithMetadata()</code> is a SODA <strong class="term">collection specification</strong>. It is JSON data that specifies the metadata for the new collection.
+                     </p>
+                     <p>If a collection with the same name already exists then it is simply opened and its handle is returned. If the metadata passed to <code class="codeph">OCISodaCollCreateWithMetadata()</code> does not match that of the existing collection then the collection is not opened and an error is raised. To match, all metadata fields must have the same values.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <div class="infoboxnotealso" id="GUID-1650308E-56E0-448B-B727-B2E16F8621E2__GUID-A7E64B8D-A7E5-4633-ADD9-FB898D8537D1">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../lnoci/oci-SODA-functions-listed.html#LNOCI-GUID-E1F2326C-FCCD-434C-8CBA-C0C27992AA25" target="_blank"><span><cite>Oracle Call Interface Programmer's Guide</cite></span></a> for information about OCI function <code class="codeph">OCISodaCollCreateWithMetadata()</code></p>
+                           </li>
+                           <li>
+                              <p><a href="../lnoci/index.html" target="_blank"><span><cite>Oracle Call Interface Programmer's Guide</cite></span></a> for information about collection-handle attribute <code class="codeph">OCI_ATTR_SODA_DESCRIPTOR</code></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-1650308E-56E0-448B-B727-B2E16F8621E2__CREATINGACOLLECTIONTHATHASCUSTOMMET-163315F2">
+                     <p class="titleinexample">Example 6-4 Creating a Collection That Has Custom Metadata</p>
+                     <p>This example creates a collection with custom metadata that specifies two metadata columns, named <code class="codeph">KEY</code> (for document keys), and <code class="codeph">JSON</code> (for document content type JSON). The key assignment method is <code class="codeph">CLIENT</code>, and the content-column SQL data type is <code class="codeph">VARCHAR2</code>. The example uses collection-handle attribute <code class="codeph">OCI_ATTR_SODA_DESCRIPTOR</code> to get the complete metadata from the newly created collection.
+                     </p><pre class="pre codeblock"><code>sword        rc = OCI_SUCCESS;
+OCISodaColl *collhp = NULL;
+OraText     *<span class="bold">metadata</span> ="{\"keyColumn\" : \
+{\"name\" : \"KEY\", \"assignmentMethod\": \"CLIENT\" }, \
+\"contentColumn\" : { \"name\" : \"JSON\", \"sqlType\": \"VARCHAR2\" } }";
+OraText     *collName = "myCustomCollection";
+OraText     *fetchedMetadata = NULL;
+ub4          fetchedMetadataLen = 0;
+
+rc = <span class="bold">OCISodaCollCreateWithMetadata</span>(svchp, 
+                                   collName,
+                                   (ub4) strlen(collName),
+                                   <span class="bold">metadata</span>,
+                                   (ub4) strlen(metadata),
+                                   &amp;collhp,
+                                   errhp,
+                                   OCI_DEFAULT));
+if (rc != OCI_SUCCESS)
+{
+  printf(OCISodaCollCreateWithMetadata failed\n");
+  goto finally;
+}
+
+rc = <span class="bold">OCIAttrGet</span>((dvoid *)collhp,
+                OCI_HTYPE_SODA_COLLECTION,
+                (dvoid *)fetchedMetadata,
+                &amp;fetchedMetadataLen,
+                <span class="bold">OCI_ATTR_SODA_DESCRIPTOR</span>,
+                errhp);
+
+if (rc == OCI_SUCCESS)
+{
+  printf ("<span class="bold">Collection specification:</span> %.*s\n", fetchedMetadataLen, fetchedMetadata);
+}
+
+finally: ...
+</code></pre><p> Here is the output, formatted for readability. The values of fields for <code class="codeph">keyColumn</code> and <code class="codeph">contentColumn</code> that are not specified in the collection specification are defaulted. The values of fields other than those provided in the collection specification (<code class="codeph">keyColumn</code> and <code class="codeph">contentColumn</code>) are also defaulted. The value of field <code class="codeph">tableName</code> is defaulted from the collection name. The value of field <code class="codeph">schemaName</code> is the database schema (user) that is current when the collection is created.
+                     </p><pre class="pre codeblock"><code>Collection specification: {
+  "schemaName" : "mySchemaName",
+  "tableName" : "myCustomCollection",
+  "<span class="bold">keyColumn</span>" :
+  {
+    "<span class="bold">name</span>" : "KEY",
+    "sqlType" : "VARCHAR2",
+    "maxLength" : 255,
+    "<span class="bold">assignmentMethod</span>" : "CLIENT"
+  },
+
+"<span class="bold">contentColumn</span>" :
+  {
+    "<span class="bold">name</span>" : "JSON",
+    "<span class="bold">sqlType</span>" : "VARCHAR2",
+    "maxLength" : 4000,
+    "validation" : "STANDARD"
+  },
+  "readOnly" : false
+}</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="using-soda-c.html#GUID-8B40F7AB-1397-4520-9854-B68B6B6D2D5D" title="Use OCI function OCISodaCollCreate() to create a collection, if you do not care about the details of its configuration. This creates a collection that has the default metadata. To create a collection that is configured in a nondefault way, use function OCISodaCollCreateWithMetadata() instead, passing it custom metadata, expressed in JSON.">Creating a Document Collection with SODA for C</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="soda-collection-configuration-using-custom-metadata.html#GUID-D17E8D3C-EE74-49CD-84AA-CE86B9664554" title="SODA collections are highly configurable. You can customize collection metadata, to obtain different behavior from that provided by default.">SODA Collection Configuration Using Custom Metadata</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Part number: F12653-01 -->
+        <!-- Published date: November 2018 -->
+        <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+        <!-- Template date: October 15, 2018 -->
+        <meta name="contentid" content="25729">
+        <meta content="text/html; charset=utf-8" http-equiv="content-type">
+        <title>Transfer a SQL Tuning Set from One Database to Another Database</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="robots" content="INDEX, FOLLOW">
+        <meta name="description" content="Learn how to transfer a SQL tuning set from one Oracle database to another Oracle database.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/obe-lite.css">
+        <script src="js/jquery-1.11.0.min.js"></script>
+        <script src="js/jquery-ui-1.10.4.custom.js"></script>
+        <script src="js/jquery.tocify.jd.js"></script>
+        <script src="js/leftnav.js"></script>
+    
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-11-29T03:41:49+00:00">
+    <meta name="dcterms.title" content="Oracle Database OBE Transfer a SQL Tuning Set from One Database to Another Database">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBEYB">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="F12653-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+    <body>
+        <header>
+            <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo">
+              <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a>
+            </div>
+        </header>
+        <!--end header-->
+
+        <div id="content">
+
+            <h1><img src="./img/obe_tag.png" align="middle" alt="Oracle by Example branding">Transfer a SQL Tuning Set from One Database to Another Database</h1>
+            <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+                <div class="navbackwide border-right"><!-- --></div>
+                <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+                <div id="sidebar"><!-- -->
+                    <div class="left-nav-tut"><!-- -->
+                        <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+                        <div id="navbar" class="left-nav-w"><!-- -->
+                            <div id="toc" class="tocify"><!-- --></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="bookContainer">
+                    <article>
+                        <section>
+                            <h2><img src="./img/32_begin.png" alt="section 0" height="32" width="32" class="num_circ">Before You Begin</h2>
+                            <p>This 15-minute tutorial shows you how to transfer a SQL tuning set from one Oracle database to another Oracle database.</p>
+                            <h3>Background</h3>
+                            <p>You can use a staging table to transfer a SQL tuning set from one Oracle database (the source database) to another Oracle database (the target database). On the source database, load the SQL tuning set into a staging table. Use Oracle Data Pump to export the contents of the staging table to a file on the source database host. Transfer the file to the target database host. Use Oracle Data Pump to import the contents of the staging table into the target database, and then unpack the SQL tuning set into the target database.</p>
+                            <h3>What Do You Need?</h3>
+                            <ul>
+                                <li>A source Oracle database</li>
+                                <li>A target Oracle database</li>   
+                                <li>The <code>SYSDBA</code> administrative privilege on both databases</li>
+                                <li>The <code>SYSTEM</code> user password on both databases</li>
+                                <li>On the source database, a SQL tuning set. This tutorial assumes that the SQL tuning set is named <code>MY_WORKLOAD_STS</code>.</li>
+                            </ul>
+                        </section>
+
+                        <!-- ========================================================================================================================= -->
+                        <section>
+                            <hr>
+                            <h2 id="section_1" role="button" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" height="32" width="32" class="num_circ">Create a Staging Table in the Source Database</h2>
+                            <ol>
+                                <li>Use SQL*Plus to log in to the source database as a user who has the <code>SYSDBA</code> administrative privilege.<pre>$ sqlplus / as sysdba</pre></li>
+                                <li>Create staging table <code>MY_STAGING_TABLE</code> in schema <code>SYSTEM</code>.<br>
+                                    <pre>SQL> BEGIN<br>  2  DBMS_SQLTUNE.CREATE_STGTAB_SQLSET(<br>  3  table_name  => 'MY_STAGING_TABLE',<br>  4  schema_name => 'SYSTEM');<br>  5  END;<br>  6  /</pre></li>
+                                <li>Load SQL tuning set <code>MY_WORKLOAD_STS</code> into staging table <code>MY_STAGING_TABLE</code>.
+                                                                <pre>SQL> BEGIN<br>  2  DBMS_SQLTUNE.PACK_STGTAB_SQLSET(<br>  3  sqlset_name          => 'MY_WORKLOAD_STS',<br>  4  sqlset_owner         => 'SYS',<br>  5  staging_table_name   => 'MY_STAGING_TABLE',<br>  6  staging_schema_owner => 'SYSTEM');<br>  7  END;<br>  8  /</pre></li>
+                        </ol></section>
+                        <hr>
+                        <section>
+                            <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" height="32" width="32" class="num_circ">Copy the Staging Table from the Source Database to the Target Database</h2>
+                            <ol>
+                                <li>While still connected to SQL*Plus on the source database, create a directory object that references a staging directory in the <code>/tmp</code> directory.<pre>SQL> CREATE DIRECTORY stg_dir AS '/tmp/stg_dir';</pre></li>
+                                <li>Exit SQL*Plus.<pre>SQL> exit</pre></li>
+                                <li>Create the staging directory.<pre>$ mkdir /tmp/stg_dir</pre></li>
+                                <li>Use Oracle Data Pump to export the contents of the staging table to a dumpfile in the staging directory. The dumpfile is named <code>my_workload_sts.dmp</code>.<pre>$ expdp SYSTEM/<i>password</i> DIRECTORY=stg_dir DUMPFILE=my_workload_sts.dmp TABLES=system.my_staging_table</pre></li>
+                                <li>Copy the dumpfile from the source database host to the target database host by using a secure copy utility like <code>scp</code> or WinSCP.</li>
+                                <li>Log in to the target database host.</li>
+                                <li>Create a staging directory on the target database host.<pre>$ mkdir /tmp/stg_dir</pre></li>
+                                <li>Navigate to the directory containing the dumpfile that you just transferred to the target database host, and move the dumpfile to the staging directory.<pre>$ mv my_workload_sts.dmp /tmp/stg_dir</pre></li>
+                                <li>Use SQL*Plus to log in to the target database as a user who has the <code>SYSDBA</code> administrative privilege.<pre>$ sqlplus / as sysdba</pre></li>
+                                <li>Create a directory object that references the staging directory.<pre>SQL> CREATE DIRECTORY stg_dir AS '/tmp/stg_dir';</pre></li>
+                                <li>Exit SQL*Plus.<pre>SQL> exit</pre></li>
+                                <li>Use Oracle Data Pump to import the contents of the staging table from the dumpfile in the staging directory.<pre>$ impdp SYSTEM/<i>password</i> DIRECTORY=stg_dir DUMPFILE=my_workload_sts.dmp TABLES=system.my_staging_table</pre></li> 
+                            </ol>
+                        </section>
+                        <hr>
+                        <section>
+                            <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" height="32" width="32" class="num_circ">Load the SQL Tuning Set into the Target Database</h2>
+                            <ol>
+                                <li>While still connected to the target database host, invoke SQL*Plus and log in to the target database as a user who has the <code>SYSDBA</code> administrative privilege.<pre>$ sqlplus / as sysdba</pre></li>
+                                <li>Load the SQL tuning set <code>MY_WORKLOAD_STS</code> from the staging table into the target database.<pre>SQL> BEGIN<br>  2  DBMS_SQLTUNE.UNPACK_STGTAB_SQLSET(<br>  3  sqlset_name          => 'MY_WORKLOAD_STS',<br>  4  replace              => true,<br>  5  staging_table_name   => 'MY_STAGING_TABLE',<br>  6  staging_schema_owner => 'SYSTEM');<br>  7  END;<br>  8  /</pre></li>
+                        </ol></section>
+                        <hr>
+                        <section>
+                            <h2 id="section_4" role="button" style="text-align: left;"><img src="./img/32_4.png" alt="section 4" height="32" width="32" class="num_circ">Clean Up</h2>
+                            <ol>
+                                <li>While still connected to the target database, delete the staging directory and the staging table.<pre>SQL> DROP DIRECTORY stg_dir;<br>SQL> DROP TABLE SYSTEM.MY_STAGING_TABLE;</pre></li>
+                                <li>Exit SQL*Plus.<pre>SQL> exit</pre></li>
+                                <li>Remove the staging directory from the target database host.<pre>$ rm -rf /tmp/stg_dir</pre></li>
+                                <li>Log in to the source database host.</li>
+                                <li>Use SQL*Plus to log in to the source database as a user who has the <code>SYSDBA</code> administrative privilege.<pre>$ sqlplus / as sysdba</pre></li>
+                                <li>On the source datbase, delete the staging directory and the staging table.<pre>SQL> DROP DIRECTORY stg_dir;<br>SQL> DROP TABLE SYSTEM.MY_STAGING_TABLE;</pre></li>
+                                <li>Exit SQL*Plus.<pre>SQL> exit</pre></li>
+                                <li>Remove the staging directory from the source database host.<pre>$ rm -rf /tmp/stg_dir</pre></li>
+                        </ol></section>
+                        <hr>
+                        <section>
+                            <!-- Include the More Information section only in a single or the final lab or tutorial in a series -->
+                            <h2 id="more_info" role="button" style="text-align: left;"><img src="./img/32_more.png" alt="more information" height="32" width="32" class="num_circ">Want to Learn More?</h2>
+                            <ul>
+                                <li><a class="external-link" href="../tgsql/managing-sql-tuning-sets.html#TGSQL-GUID-E6F9F020-6257-4456-A568-8BF4CC1FFF7C" rel="nofollow" target="_blank">Transporting a SQL Tuning Set</a></li>
+                            </ul>
+                        </section>
+                        <hr>
+                    </article>
+                </div>
+                <br class="clearfloat">
+            </div>
+        </div>
+        <!--close main--> 
+        <!--end content-->
+        <div class="footer-container ">
+            <div style="max-width: 994px; padding:10px 0 0 17px;">
+                <footer class="footer-list">
+                    <ul>
+                        <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About Oracle</a> </li>
+                        <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal Notices</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms of Use</a> </li>
+                        <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your Privacy Rights</a> </li>
+                        <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&id=en">Copyright © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+                    </ul>
+                </footer>
+            </div>
+            <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+        </div>
+        <!-- OBE Dialog Box code 5/31/2018 -->
+        <div id="lpModal" class="modal">
+            <!-- Modal hdr and body -->
+            <div id="obe_dialog" class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close">  
+                        <span class="close">&times;</span>
+                    </a>
+                    <h1>Associated Learning Paths</h1>
+                </div>
+                <div id="dialog-content">
+                </div>
+                <div id="dialog-close" class="closeBtn">
+                    <a href="#" class="close2">  
+                        <p class="close2"> 
+                            <span>&nbsp;&nbsp;Got It! &nbsp;</span> 
+                        </p>
+                    </a>  
+                </div>
+            </div>   
+        </div>
+    </body>
+</html>

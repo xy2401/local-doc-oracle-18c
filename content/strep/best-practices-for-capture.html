@@ -1,0 +1,289 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Best Practices for Capture</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Replication Administrator’s Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Replication Administrator’s Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-replication-administrators-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T23:25:23-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2003, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83780-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="best-practices-for-oracle-streams-replication-databases.html" title="Previous" type="text/html">
+      <link rel="next" href="best-practices-for-propagation.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.isVersionOf" content="STREP">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="best-practices-for-oracle-streams-replication-databases.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="best-practices-for-propagation.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Replication Administrator’s Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="oracle-streams-replication-best-practices.html" property="item" typeof="WebPage"><span property="name"> Oracle Streams Replication Best Practices </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Best Practices for Capture</li>
+            </ol>
+            <a id="GUID-0D187578-0C2E-477C-B679-85670CFED7BA" name="GUID-0D187578-0C2E-477C-B679-85670CFED7BA"></a><a id="STREP519"></a>
+            
+            <h2 id="STREP-GUID-0D187578-0C2E-477C-B679-85670CFED7BA" class="sect2"><span class="enumeration_chapter">16 </span> Best Practices for Capture
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d72324e100" class="indexterm-anchor"></a>This chapter describes the best practices for capturing changes with a capture process or a synchronous capture in an Oracle Streams replication environment. This chapter includes these topics:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="best-practices-for-capture.html#GUID-8E96145D-C377-4C42-95DB-3CA5E2AAC2CD">Best Practices for Capture Process Configuration</a></p>
+                  </li>
+                  <li>
+                     <p><a href="best-practices-for-capture.html#GUID-5BECE1D2-72BD-4A0F-BFF9-4B1E4762F9BC">Best Practices for Capture Process Operation</a></p>
+                  </li>
+                  <li>
+                     <p><a href="best-practices-for-capture.html#GUID-193BC908-FEFE-406C-8C02-2F0A79A1EAB4">Best Practices for Synchronous Capture Configuration</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-0D187578-0C2E-477C-B679-85670CFED7BA__GUID-158B7B14-AFEE-45BA-A25E-29829349C9EC">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><span class="q">"<a href="best-practices-for-oracle-streams-replication-databases.html#GUID-9E3CABFC-BE9C-49ED-BD21-0A1858868AAB">Best Practices for Oracle Real Application Clusters and Oracle Streams</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><a href="preparing-for-oracle-streams-replication.html#GUID-9110C1DA-8450-42A5-BA4B-2C0117DB8BFC"> Preparing for Oracle Streams Replication</a> describes best practices to follow when preparing for Oracle Streams capture processes
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STREP520"></a><div class="props_rev_3"><a id="GUID-8E96145D-C377-4C42-95DB-3CA5E2AAC2CD" name="GUID-8E96145D-C377-4C42-95DB-3CA5E2AAC2CD"></a><h3 id="STREP-GUID-8E96145D-C377-4C42-95DB-3CA5E2AAC2CD" class="sect3"><span class="enumeration_section">16.1 </span>Best Practices for Capture Process Configuration
+               </h3>
+               <div>
+                  <p>The following sections describe best practices for configuring capture processes:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="best-practices-for-capture.html#GUID-18E1385D-DB6F-4A85-BC35-4535D2DD94FC">Grant the Required Privileges to the Capture User</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-capture.html#GUID-ED30E1D4-726B-41B3-BB20-97D5E95546E0">Set Capture Process Parallelism</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-capture.html#GUID-E5EAB365-10A9-4315-AE62-4B2B2708E420">Set the Checkpoint Retention Time</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STREP590"></a><div class="props_rev_3"><a id="GUID-18E1385D-DB6F-4A85-BC35-4535D2DD94FC" name="GUID-18E1385D-DB6F-4A85-BC35-4535D2DD94FC"></a><h4 id="STREP-GUID-18E1385D-DB6F-4A85-BC35-4535D2DD94FC" class="sect4"><span class="enumeration_section">16.1.1 </span>Grant the Required Privileges to the Capture User
+                  </h4>
+                  <div>
+                     <p>The capture user is the user in whose security domain a capture process captures changes that satisfy its rule sets and runs custom rule-based transformations configured for capture process rules.</p>
+                     <p>The capture user for a capture process is configured when you create a capture process, and the capture user can be modified when you alter a capture process. Grant the following privileges to the apply user:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">EXECUTE</code> privilege on the rule sets used by the capture process
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">EXECUTE</code> privilege on all rule-based transformation functions used in the positive rule set
+                           </p>
+                        </li>
+                     </ul>
+                     <p>These privileges can be granted directly to the capture user, or they can be granted through roles.</p>
+                     <p>In addition, the capture user must be granted <code class="codeph">EXECUTE</code> privilege on all packages, including Oracle-supplied packages, that are invoked in rule-based transformations run by the capture process. These privileges must be granted directly to the capture user. They cannot be granted through roles.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-18E1385D-DB6F-4A85-BC35-4535D2DD94FC__GUID-6BDD9F20-FED1-4739-BAED-F7AE396A7852">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../dbseg/configuring-privilege-and-role-authorization.html#DBSEG004"><span class="italic">Oracle Database Security Guide</span></a> for general information about granting privileges
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../strms/managing-rules.html#STRMS012"><span class="italic">Oracle Streams Concepts and Administration</span></a> for information about granting privileges on rule sets
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STREP521"></a><div class="props_rev_3"><a id="GUID-ED30E1D4-726B-41B3-BB20-97D5E95546E0" name="GUID-ED30E1D4-726B-41B3-BB20-97D5E95546E0"></a><h4 id="STREP-GUID-ED30E1D4-726B-41B3-BB20-97D5E95546E0" class="sect4"><span class="enumeration_section">16.1.2 </span>Set Capture Process Parallelism
+                  </h4>
+                  <div>
+                     <p>Set the parallelism of each capture process by specifying the <code class="codeph">parallelism</code> parameter in the <code class="codeph">DBMS_CAPTURE_ADM.SET_PARAMETER</code> procedure. The <code class="codeph">parallelism</code> parameter controls the number of processes that concurrently mine the redo log for changes.
+                     </p>
+                     <p>The default setting for the <code class="codeph">parallelism</code> capture process parameter is <code class="codeph">1</code>, and the default <code class="codeph">parallelism</code> setting is appropriate for most capture process configurations. Ensure that the <code class="codeph">PROCESSES</code> initialization parameter is set appropriately when you set the <code class="codeph">parallelism</code> capture process parameter.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-ED30E1D4-726B-41B3-BB20-97D5E95546E0__GUID-5D790CD7-1724-46DF-BE09-039D3D1728D3">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../strms/oracle-streams-information-capture.html#STRMS002"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_CAPTURE_ADM.html#ARPLS306"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STREP522"></a><div class="props_rev_3"><a id="GUID-E5EAB365-10A9-4315-AE62-4B2B2708E420" name="GUID-E5EAB365-10A9-4315-AE62-4B2B2708E420"></a><h4 id="STREP-GUID-E5EAB365-10A9-4315-AE62-4B2B2708E420" class="sect4"><span class="enumeration_section">16.1.3 </span>Set the Checkpoint Retention Time
+                  </h4>
+                  <div>
+                     <p>Set the checkpoint retention time for each capture process. Periodically, a capture process takes a checkpoint to facilitate quicker restart. These checkpoints are maintained in the <code class="codeph">SYSAUX</code> tablespace by default. The checkpoint retention time for a capture process controls the amount of checkpoint data it retains. The checkpoint retention time specifies the number of days before the required checkpoint SCN to retain checkpoints. When a checkpoint is older than the specified time period, the capture process purges the checkpoint.
+                     </p>
+                     <p>When checkpoints are purged, the first SCN for the capture process moves forward, and Oracle Database writes a message including the text "first scn changed" to the alert log. The first SCN is the lowest possible SCN available for capturing changes. The checkpoint retention time is set when you create a capture process, and it can be set when you alter a capture process. When the checkpoint retention time is exceeded, the first SCN is moved forward, and the Oracle Streams metadata tables before this new first SCN are purged. The space used by these tables in the <code class="codeph">SYSAUX</code> tablespace is reclaimed. To alter the checkpoint retention time for a capture process, use the <code class="codeph">ALTER_CAPTURE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package and specify the new retention time with the <code class="codeph">checkpoint_retention_time</code> parameter.
+                     </p>
+                     <p>The default value for the checkpoint retention time is <code class="codeph">60</code> days. If checkpoints are available for a time in the past, then the capture process can recapture changes to recover a destination database. You should set the checkpoint retention time to an appropriate value for your environment. A typical setting is <code class="codeph">7</code> days.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-E5EAB365-10A9-4315-AE62-4B2B2708E420__GUID-A50DCA17-C83B-4203-A48A-278BC6AE44A1">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../strms/advanced-capture-process-concepts.html#STRMS152"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_CAPTURE_ADM.html#ARPLS302"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">ALTER_CAPTURE</code> procedure
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STREP523"></a><div class="props_rev_3"><a id="GUID-5BECE1D2-72BD-4A0F-BFF9-4B1E4762F9BC" name="GUID-5BECE1D2-72BD-4A0F-BFF9-4B1E4762F9BC"></a><h3 id="STREP-GUID-5BECE1D2-72BD-4A0F-BFF9-4B1E4762F9BC" class="sect3"><span class="enumeration_section">16.2 </span>Best Practices for Capture Process Operation
+               </h3>
+               <div>
+                  <p>The following sections describe best practices for operating existing capture processes:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="best-practices-for-capture.html#GUID-585C1204-7519-4C26-A912-B33D5A922916">Configure a Heartbeat Table at Each Source Database in an Oracle Streams Environment</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-capture.html#GUID-EEFDF8BB-3D96-4A35-B780-85B3AF4C84CC">Perform a Dictionary Build and Prepare Database Objects for Instantiation Periodically</a></p>
+                     </li>
+                     <li>
+                        <p><a href="best-practices-for-capture.html#GUID-7B793A15-B34D-4D9F-A559-FDA86DCB8C29">Minimize the Performance Impact of Batch Processing</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STREP524"></a><div class="props_rev_3"><a id="GUID-585C1204-7519-4C26-A912-B33D5A922916" name="GUID-585C1204-7519-4C26-A912-B33D5A922916"></a><h4 id="STREP-GUID-585C1204-7519-4C26-A912-B33D5A922916" class="sect4"><span class="enumeration_section">16.2.1 </span>Configure a Heartbeat Table at Each Source Database in an Oracle Streams Environment
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can use a heartbeat table to ensure that changes are being replicated in an Oracle Streams replication environment. Specifically, you can check the <code class="codeph">APPLIED_SCN</code> value in the <code class="codeph">DBA_CAPTURE</code> data dictionary view at the capture database to ensure that it is updated periodically. A heartbeat table is especially useful for databases that have a low activity rate because you can ensure that the replication environment is working properly even if there are few replicated changes.
+                        </p>
+                        <p>An Oracle Streams capture process requests a checkpoint after every 10 MB of generated redo. During the checkpoint, the metadata for Oracle Streams is maintained if there are active transactions. Implementing a heartbeat table ensures that there are open transactions occurring regularly in the source database, thereby providing additional opportunities for the metadata to be updated frequently. Additionally, the heartbeat table provides quick feedback to the database administrator about the health of the Oracle Streams replication environment.</p>
+                        <p>To implement a heartbeat table, complete the following steps:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li><span>Create a table at the source database that includes a date or time stamp column and the global name of the source database.</span></li>
+                        <li><span>Instantiate the table at the destination database. If there are multiple destination databases, then instantiate the heartbeat table at each destination database.</span></li>
+                        <li><span>Add a rule to the positive rule set for the capture process that captures changes to the source database. The rule instructs the capture process to capture changes to the heartbeat table.</span></li>
+                        <li><span>Add a rule to the positive rule set for the propagation that propagates changes from the source database to the destination database. The rule instructs the propagation to propagate LCRs for the heartbeat table. If there are multiple propagations, then add the rule to the rule set for each propagation. If your environment uses directed networks, then you might need to add rules to propagations at several databases.</span></li>
+                        <li><span>Add a rule to the positive rule set for the apply process that applies changes that originated at the source database. The rule instructs the apply process to apply changes to the heartbeat table. If there are multiple apply processes at multiple databases that apply the changes that originated at the source database, then add a rule to each the apply process.</span></li>
+                        <li><span>Configure an automated job to update the heartbeat table at the source database periodically. For example, the table might be updated every minute.</span></li>
+                        <li><span>Monitor the Oracle Streams replication environment to verify that changes to the heartbeat table at the source database are being replicated to the destination database.</span></li>
+                     </ol>
+                  </div>
+               </div><a id="STREP525"></a><div class="props_rev_3"><a id="GUID-EEFDF8BB-3D96-4A35-B780-85B3AF4C84CC" name="GUID-EEFDF8BB-3D96-4A35-B780-85B3AF4C84CC"></a><h4 id="STREP-GUID-EEFDF8BB-3D96-4A35-B780-85B3AF4C84CC" class="sect4"><span class="enumeration_section">16.2.2 </span>Perform a Dictionary Build and Prepare Database Objects for Instantiation Periodically
+                  </h4>
+                  <div>
+                     <p>Perform a data dictionary build in the source database redo periodically. Run the <code class="codeph">DBMS_CAPTURE_ADM.BUILD</code> procedure to build a current copy of the data dictionary in the redo log. Ideally, database objects should be prepared for instantiation after a build is performed. Run one or more of the following procedures in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to prepare database objects for instantiation:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">PREPARE_TABLE_INSTANTIATION</code></p>
+                        </li>
+                     </ul>
+                     <p>Each of the database objects for which a capture process captures changes should be prepared for instantiation periodically. You can reduce the amount of redo data that must be processed if additional capture process are created or if an existing capture process must be re-created by performing a build and preparing shared objects for instantiation periodically.</p>
+                     <div class="infoboxnotealso" id="GUID-EEFDF8BB-3D96-4A35-B780-85B3AF4C84CC__GUID-A4339BC3-302F-47A1-932F-FDE6E41576CD">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../strms/oracle-streams-information-capture.html#STRMS123"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="instantiation-and-oracle-streams-replication.html#GUID-49D5B599-16A8-40EB-8A2A-D4425F13682A">Capture Rules and Preparation for Instantiation</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STREP526"></a><div class="props_rev_3"><a id="GUID-7B793A15-B34D-4D9F-A559-FDA86DCB8C29" name="GUID-7B793A15-B34D-4D9F-A559-FDA86DCB8C29"></a><h4 id="STREP-GUID-7B793A15-B34D-4D9F-A559-FDA86DCB8C29" class="sect4"><span class="enumeration_section">16.2.3 </span>Minimize the Performance Impact of Batch Processing
+                  </h4>
+                  <div>
+                     <p>For best performance, the commit point for a batch processing job should be kept low. Also, if a large batch processing job must be run at a source database, then consider running it at each Oracle Streams replication database independently. If this technique is used, then ensure that the changes resulting from the batch processing job are not replicated. To accomplish this, run the <code class="codeph">DBMS_STREAMS.SET_TAG</code> procedure in the session that runs the batch processing job, and set the session tag to a value that <span class="italic">will not</span> be captured by a capture process.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-7B793A15-B34D-4D9F-A559-FDA86DCB8C29__GUID-76843A3A-A5B3-4190-80F4-2B0A8CCB7B21">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="oracle-streams-tags.html#GUID-9339D29B-65F3-450B-B3CD-A7B4ADCA4AAF"> Oracle Streams Tags</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STREP527"></a><div class="props_rev_3"><a id="GUID-193BC908-FEFE-406C-8C02-2F0A79A1EAB4" name="GUID-193BC908-FEFE-406C-8C02-2F0A79A1EAB4"></a><h3 id="STREP-GUID-193BC908-FEFE-406C-8C02-2F0A79A1EAB4" class="sect3"><span class="enumeration_section">16.3 </span>Best Practices for Synchronous Capture Configuration
+               </h3>
+               <div>
+                  <p>Creating and managing a synchronous capture is simplified when you use the <code class="codeph">DBMS_STREAMS_ADM</code> package. Specifically, use the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create a synchronous capture and configure synchronous capture rules:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">ADD_TABLE_RULES</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ADD_SUBSET_RULES</code></p>
+                     </li>
+                  </ul>
+                  <p>Also, use the <code class="codeph">REMOVE_RULE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to remove a rule from a synchronous capture rule set or to drop a rule in a synchronous capture rule set.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-193BC908-FEFE-406C-8C02-2F0A79A1EAB4__GUID-69DAAD58-C8CB-4A43-8369-3596E57675AF">
+                     <p class="notep1">See Also:</p>
+                     <p><span class="q">"<a href="configuring-implicit-capture.html#GUID-30D89F9D-C7E3-48FE-BF78-0CB98B983BB5">Configuring Synchronous Capture</a>"</span></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

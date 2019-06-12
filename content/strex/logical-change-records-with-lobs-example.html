@@ -1,0 +1,570 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Logical Change Records with LOBs Example</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Extended Examples ">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Extended Examples">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-extended-examples.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T22:39:34-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2008, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83782-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="single-database-capture-and-apply-example.html" title="Previous" type="text/html">
+      <link rel="next" href="rule-based-application-example.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Extended Examples">
+    <meta name="dcterms.isVersionOf" content="STREX">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="single-database-capture-and-apply-example.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="rule-based-application-example.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Extended Examples </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Logical Change Records with LOBs Example</li>
+            </ol>
+            <a id="GUID-8842A065-500D-454B-85BE-CA81C09ACCC8" name="GUID-8842A065-500D-454B-85BE-CA81C09ACCC8"></a><a id="STREX1165"></a>
+            
+            <h2 id="STREX-GUID-8842A065-500D-454B-85BE-CA81C09ACCC8" class="sect2"><span class="enumeration_chapter">5 </span> Logical Change Records with LOBs Example
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d12905e48" class="indexterm-anchor"></a><a id="d12905e54" class="indexterm-anchor"></a><a id="d12905e58" class="indexterm-anchor"></a><a id="d12905e62" class="indexterm-anchor"></a><a id="d12905e68" class="indexterm-anchor"></a><a id="d12905e72" class="indexterm-anchor"></a>This chapter illustrates an example that creates a PL/SQL procedure for constructing and enqueuing LCRs that contain LOBs. 
+               </p>
+               <p>This chapter contains this topic:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054">Example Script for Constructing and Enqueuing LCRs Containing LOBs</a></p>
+                  </li>
+               </ul>
+            </div><a id="STREX1328"></a><a id="STREX1329"></a><a id="STREX1330"></a><a id="STREX1331"></a><a id="STREX1332"></a><a id="STREX1333"></a><a id="STREX1334"></a><a id="STREX1335"></a><a id="STREX1336"></a><a id="STREX1337"></a><a id="STREX1338"></a><a id="STREX1166"></a><div class="props_rev_3"><a id="GUID-D42814B6-9682-4A93-80E4-D46BE5147054" name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054"></a><h3 id="STREX-GUID-D42814B6-9682-4A93-80E4-D46BE5147054" class="sect3"><span class="enumeration_section">5.1 </span>Example Script for Constructing and Enqueuing LCRs Containing LOBs
+               </h3>
+               <div>
+                  <ol>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__GUID-D4977CD9-4B47-4EE4-8EF6-0CD0742D4BD0">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABDACEH">"Grant the Oracle Streams Administrator EXECUTE Privilege on DBMS_STREAMS_MESSAGING"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABBEEDD">"Connect as the Oracle Streams Administrator"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABBGAIA">"Create an ANYDATA Queue"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABHCIFD">"Create and Start an Apply Process"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABJHGCC">"Create a Schema with Tables Containing LOB Columns"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABGGBGF">"Grant the Oracle Streams Administrator Necessary Privileges on the Tables"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABBDAIA">"Create a PL/SQL Procedure to Enqueue LCRs Containing LOBs"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABFFDFH">"Create the do_enq_clob Function to Enqueue CLOB Data"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABHBEBG">"Enqueue CLOB Data Using the do_enq_clob Function"</a></span></li>
+                     <li><span><a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABIIJFJ">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__GUID-E1A97344-E895-4569-B1C9-AD99ECDA3C84">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__i1030561">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__GUID-D4977CD9-4B47-4EE4-8EF6-0CD0742D4BD0">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL lob_construct.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABDACEH">
+                              <!-- --></a>Grant the Oracle Streams Administrator EXECUTE Privilege on DBMS_STREAMS_MESSAGING
+                        </dt>
+                        <dd>
+                           <p>Explicit <code class="codeph">EXECUTE</code> privilege on the package is required because a procedure in the package is called in within a PL/SQL procedure in Step <a href="logical-change-records-with-lobs-example.html#GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABBDAIA">"Create a PL/SQL Procedure to Enqueue LCRs Containing LOBs"</a>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT / AS SYSDBA;
+
+GRANT EXECUTE ON DBMS_STREAMS_MESSAGING TO strmadmin;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABBEEDD">
+                              <!-- --></a>Connect as the Oracle Streams Administrator
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+SET ECHO ON
+SET FEEDBACK 1
+SET NUMWIDTH 10
+SET LINESIZE 80
+SET TRIMSPOOL ON
+SET TAB OFF
+SET PAGESIZE 100
+SET SERVEROUTPUT ON SIZE 100000
+
+CONNECT strmadmin
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABBGAIA">
+                              <!-- --></a>Create an ANYDATA Queue
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE( 
+    queue_table =&gt; 'lobex_queue_table', 
+    queue_name  =&gt; 'lobex_queue');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABHCIFD">
+                              <!-- --></a>Create and Start an Apply Process
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+BEGIN
+  DBMS_APPLY_ADM.CREATE_APPLY(
+    queue_name      =&gt; 'strmadmin.lobex_queue',
+    apply_name      =&gt; 'apply_lob',
+    apply_captured  =&gt; FALSE);
+END;
+/
+
+BEGIN
+  DBMS_APPLY_ADM.SET_PARAMETER(
+    apply_name =&gt; 'apply_lob', 
+    parameter  =&gt; 'disable_on_error',
+    value      =&gt; 'N');
+END;
+/
+
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    'apply_lob');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABJHGCC">
+                              <!-- --></a>Create a Schema with Tables Containing LOB Columns
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT system
+
+CREATE TABLESPACE lob_user_tbs DATAFILE 'lob_user_tbs.dbf' 
+  SIZE 5M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+CREATE USER lob_user
+IDENTIFIED BY &amp;password
+  DEFAULT TABLESPACE lob_user_tbs
+  QUOTA UNLIMITED ON lob_user_tbs;
+
+GRANT ALTER SESSION, CREATE CLUSTER, CREATE DATABASE LINK, CREATE SEQUENCE,
+  CREATE SESSION, CREATE SYNONYM, CREATE TABLE, CREATE VIEW, CREATE INDEXTYPE, 
+  CREATE OPERATOR, CREATE PROCEDURE, CREATE TRIGGER, CREATE TYPE
+TO lob_user;
+
+CONNECT lob_user/lob_user_pw
+
+CREATE TABLE with_clob (a  NUMBER PRIMARY KEY,
+                        c1 CLOB,
+                        c2 CLOB,
+                        c3 CLOB);
+
+CREATE TABLE with_blob (a NUMBER PRIMARY KEY,
+                        b BLOB);
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABGGBGF">
+                              <!-- --></a>Grant the Oracle Streams Administrator Necessary Privileges on the Tables
+                        </dt>
+                        <dd>
+                           <p>Granting these privileges enables the Oracle Streams administrator to get the LOB length for offset and to perform DML operations on the tables.</p><pre class="oac_no_warn" dir="ltr">*/
+
+GRANT ALL ON with_clob TO strmadmin;
+GRANT ALL ON with_blob TO strmadmin;
+COMMIT;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABBDAIA">
+                              <!-- --></a>Create a PL/SQL Procedure to Enqueue LCRs Containing LOBs
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+CONNECT strmadmin
+
+CREATE OR REPLACE PROCEDURE enq_row_lcr(source_dbname  VARCHAR2,
+                                            cmd_type       VARCHAR2,
+                                            obj_owner      VARCHAR2,
+                                            obj_name       VARCHAR2,
+                                            old_vals       SYS.LCR$_ROW_LIST,
+                                            new_vals       SYS.LCR$_ROW_LIST) AS
+  xr_lcr         SYS.LCR$_ROW_RECORD;
+BEGIN
+  xr_lcr := SYS.LCR$_ROW_RECORD.CONSTRUCT(
+              source_database_name =&gt; source_dbname,
+              command_type         =&gt; cmd_type,
+              object_owner         =&gt; obj_owner,
+              object_name          =&gt; obj_name,
+              old_values           =&gt; old_vals,
+              new_values           =&gt; new_vals);
+  -- Enqueue a row lcr
+  DBMS_STREAMS_MESSAGING.ENQUEUE(
+        queue_name         =&gt; 'lobex_queue', 
+        payload            =&gt; ANYDATA.ConvertObject(xr_lcr));
+END enq_row_lcr;
+/
+SHOW ERRORS
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABFFDFH">
+                              <!-- --></a>Create the do_enq_clob Function to Enqueue CLOB Data
+                        </dt>
+                        <dd><pre class="oac_no_warn" dir="ltr">*/</pre><pre class="oac_no_warn" dir="ltr">
+-- Description of each variable:
+-- src_dbname  : Source database name
+-- tab_owner   : Table owner
+-- tab_name    : Table name
+-- col_name    : Name of the CLOB column
+-- new_vals    : SYS.LCR$_ROW_LIST containing primary key and supplementally  
+--               logged colums
+-- clob_data   : CLOB that contains data to be sent
+-- offset      : Offset from which data should be sent, default is 1
+-- lsize       : Size of data to be sent, default is 0
+-- chunk_size  : Size used for creating LOB chunks, default is 2048
+
+CREATE OR REPLACE FUNCTION do_enq_clob(src_dbname     VARCHAR2,
+                                       tab_owner      VARCHAR2,
+                                       tab_name       VARCHAR2,
+                                       col_name       VARCHAR2,
+                                       new_vals       SYS.LCR$_ROW_LIST,
+                                       clob_data      CLOB,
+                                       offset         NUMBER default 1,
+                                       lsize          NUMBER default 0,
+                                       chunk_size     NUMBER default 2048) 
+RETURN NUMBER IS
+  lob_offset NUMBER; -- maintain lob offset
+  newunit    SYS.LCR$_ROW_UNIT;
+  tnewvals   SYS.LCR$_ROW_LIST;
+  lob_flag   NUMBER;
+  lob_data   VARCHAR2(32767);
+  lob_size   NUMBER;
+  unit_pos   NUMBER;
+  final_size NUMBER;
+  exit_flg   BOOLEAN;
+  c_size     NUMBER;
+  i          NUMBER;
+BEGIN
+  lob_size := DBMS_LOB.GETLENGTH(clob_data);
+  unit_pos := new_vals.count + 1;
+  tnewvals := new_vals;
+  c_size   := chunk_size;
+  i := 0;
+  -- validate parameters
+  IF (unit_pos &lt;= 1) THEN
+    DBMS_OUTPUT.PUT_LINE('Invalid new_vals list');
+    RETURN 1;
+  END IF;
+
+  IF (c_size &lt; 1) THEN
+    DBMS_OUTPUT.PUT_LINE('Invalid LOB chunk size');
+    RETURN 1;
+  END IF;
+
+  IF (lsize &lt; 0 OR lsize &gt; lob_size) THEN
+    DBMS_OUTPUT.PUT_LINE('Invalid LOB size');
+    RETURN 1;
+  END IF;
+
+  IF (offset &lt; 1 OR offset &gt;= lob_size) THEN
+    DBMS_OUTPUT.PUT_LINE('Invalid lob offset');
+    RETURN 1;
+  ELSE
+    lob_offset := offset;
+  END IF;
+
+  -- calculate final size
+  IF (lsize = 0) THEN
+    final_size := lob_size;
+  ELSE
+    final_size := lob_offset + lsize;
+  END IF;
+
+  --  The following output lines are for debugging purposes only.
+  -- DBMS_OUTPUT.PUT_LINE('Final size: ' || final_size);
+  -- DBMS_OUTPUT.PUT_LINE('Lob size: ' || lob_size);
+
+  IF (final_size &lt; 1 OR final_size &gt; lob_size) THEN
+    DBMS_OUTPUT.PUT_LINE('Invalid lob size');
+    RETURN 1;
+  END IF;
+
+  -- expand new_vals list for LOB column
+  tnewvals.extend();
+
+  exit_flg := FALSE;
+
+  -- Enqueue all LOB chunks
+  LOOP
+    --  The following output line is for debugging purposes only.
+    DBMS_OUTPUT.PUT_LINE('About to write chunk#' || i);
+    i := i + 1;
+ 
+    -- check if last LOB chunk
+    IF ((lob_offset + c_size) &lt; final_size) THEN
+      lob_flag := DBMS_LCR.LOB_CHUNK;
+    ELSE
+      lob_flag := DBMS_LCR.LAST_LOB_CHUNK;
+      exit_flg := TRUE;
+      --  The following output line is for debugging purposes only.
+      DBMS_OUTPUT.PUT_LINE('Last LOB chunk');
+    END IF;
+
+    --  The following output lines are for debugging purposes only.
+    DBMS_OUTPUT.PUT_LINE('lob offset: ' || lob_offset);
+    DBMS_OUTPUT.PUT_LINE('Chunk size: ' || to_char(c_size));
+
+    lob_data := DBMS_LOB.SUBSTR(clob_data, c_size, lob_offset); 
+
+    -- create row unit for clob
+    newunit := SYS.LCR$_ROW_UNIT(col_name,
+                                 ANYDATA.ConvertVarChar2(lob_data), 
+                                 lob_flag, 
+                                 lob_offset, 
+                                 NULL);
+
+    -- insert new LCR$_ROW_UNIT
+    tnewvals(unit_pos) := newunit;  
+
+    -- enqueue lcr
+    enq_row_lcr(
+          source_dbname =&gt; src_dbname,
+          cmd_type      =&gt; 'LOB WRITE',
+          obj_owner     =&gt; tab_owner,
+          obj_name      =&gt; tab_name,
+          old_vals      =&gt; NULL,
+          new_vals      =&gt; tnewvals);
+
+    -- calculate next chunk size 
+    lob_offset := lob_offset + c_size;
+    
+    IF ((final_size - lob_offset) &lt; c_size) THEN
+      c_size := final_size - lob_offset + 1;
+    END IF;
+
+    --  The following output line is for debugging purposes only.
+    DBMS_OUTPUT.PUT_LINE('Next chunk size : ' || TO_CHAR(c_size));
+
+    IF (c_size &lt; 1) THEN
+      exit_flg := TRUE;
+    END IF;
+
+    EXIT WHEN exit_flg;
+
+  END LOOP;
+
+  RETURN 0;
+END do_enq_clob;
+/
+
+SHOW ERRORS
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABHBEBG">
+                              <!-- --></a>Enqueue CLOB Data Using the do_enq_clob Function
+                        </dt>
+                        <dd>
+                           <p>The <code class="codeph">DBMS_OUTPUT</code> lines in the following example can be used for debugging purposes if necessary. If they are not needed, then they can be commented out or deleted.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET SERVEROUTPUT ON SIZE 100000
+DECLARE
+  c1_data CLOB;
+  c2_data CLOB;
+  c3_data CLOB;
+  newunit1 SYS.LCR$_ROW_UNIT;
+  newunit2 SYS.LCR$_ROW_UNIT;
+  newunit3 SYS.LCR$_ROW_UNIT;
+  newunit4 SYS.LCR$_ROW_UNIT;
+  newvals  SYS.LCR$_ROW_LIST;
+  big_data VARCHAR(22000);
+  n        NUMBER;
+BEGIN
+  -- Create primary key for LCR$_ROW_UNIT
+  newunit1 := SYS.LCR$_ROW_UNIT('A',
+                                ANYDATA.ConvertNumber(3), 
+                                NULL, 
+                                NULL, 
+                                NULL);
+  -- Create empty CLOBs
+  newunit2 := sys.lcr$_row_unit('C1',
+                                ANYDATA.ConvertVarChar2(NULL),
+                                DBMS_LCR.EMPTY_LOB, 
+                                NULL, 
+                                NULL);
+  newunit3 := SYS.LCR$_ROW_UNIT('C2',
+                                ANYDATA.ConvertVarChar2(NULL),
+                                DBMS_LCR.EMPTY_LOB, 
+                                NULL, 
+                                NULL);
+  newunit4 := SYS.LCR$_ROW_UNIT('C3',
+                                ANYDATA.ConvertVarChar2(NULL),
+                                DBMS_LCR.EMPTY_LOB, 
+                                NULL, 
+                                NULL);
+  newvals := SYS.LCR$_ROW_LIST(newunit1,newunit2,newunit3,newunit4);
+
+  -- Perform an insert
+  enq_row_lcr(
+    source_dbname =&gt; 'MYDB.EXAMPLE.COM',
+    cmd_type      =&gt; 'INSERT',
+    obj_owner     =&gt; 'LOB_USER',
+    obj_name      =&gt; 'WITH_CLOB',
+    old_vals      =&gt; NULL,
+    new_vals      =&gt; newvals);
+
+  -- construct clobs
+  big_data := RPAD('Hello World', 1000, '_');
+  big_data := big_data || '#';
+  big_data := big_data || big_data || big_data || big_data || big_data;
+  DBMS_LOB.CREATETEMPORARY(
+    lob_loc =&gt; c1_data, 
+    cache   =&gt; TRUE);
+  DBMS_LOB.WRITEAPPEND(
+    lob_loc =&gt; c1_data, 
+    amount  =&gt; length(big_data), 
+    buffer  =&gt; big_data);
+
+  big_data := RPAD('1234567890#', 1000, '_');
+  big_data := big_data || big_data || big_data || big_data;
+  DBMS_LOB.CREATETEMPORARY(
+    lob_loc =&gt; c2_data, 
+    cache   =&gt; TRUE);
+  DBMS_LOB.WRITEAPPEND(
+    lob_loc =&gt; c2_data, 
+    amount  =&gt; length(big_data), 
+    buffer  =&gt; big_data);
+
+  big_data := RPAD('ASDFGHJKLQW', 2000, '_');
+  big_data := big_data || '#';
+  big_data := big_data || big_data || big_data || big_data || big_data;
+  DBMS_LOB.CREATETEMPORARY(
+    lob_loc =&gt; c3_data, 
+    cache   =&gt; TRUE);
+  DBMS_LOB.WRITEAPPEND(
+    lob_loc =&gt; c3_data, 
+    amount  =&gt; length(big_data), 
+    buffer  =&gt; big_data);
+
+  -- pk info
+  newunit1 := SYS.LCR$_ROW_UNIT('A',
+                                ANYDATA.ConvertNumber(3), 
+                                NULL, 
+                                NULL, 
+                                NULL);
+  newvals  := SYS.LCR$_ROW_LIST(newunit1); 
+
+  -- write c1 clob
+  n := do_enq_clob(
+         src_dbname =&gt; 'MYDB.EXAMPLE.COM',
+         tab_owner  =&gt; 'LOB_USER',
+         tab_name   =&gt; 'WITH_CLOB',
+         col_name   =&gt; 'C1',
+         new_vals   =&gt; newvals,
+         clob_data  =&gt; c1_data,
+         offset     =&gt; 1,
+         chunk_size =&gt; 1024);
+  DBMS_OUTPUT.PUT_LINE('n=' || n);
+ 
+  -- write c2 clob
+  newvals  := SYS.LCR$_ROW_LIST(newunit1); 
+  n := do_enq_clob(
+         src_dbname =&gt; 'MYDB.EXAMPLE.COM',
+         tab_owner  =&gt; 'LOB_USER',
+         tab_name   =&gt; 'WITH_CLOB',
+         col_name   =&gt; 'C2',
+         new_vals   =&gt; newvals,
+         clob_data  =&gt; c2_data,
+         offset     =&gt; 1,
+         chunk_size =&gt; 2000);
+  DBMS_OUTPUT.PUT_LINE('n=' || n);
+ 
+  -- write c3 clob
+  newvals  := SYS.LCR$_ROW_LIST(newunit1); 
+  n := do_enq_clob(src_dbname=&gt;'MYDB.EXAMPLE.COM',
+         tab_owner  =&gt; 'LOB_USER',
+         tab_name   =&gt; 'WITH_CLOB',
+         col_name   =&gt; 'C3',
+         new_vals   =&gt; newvals,
+         clob_data  =&gt; c3_data,
+         offset     =&gt; 1,
+         chunk_size =&gt; 500);
+  DBMS_OUTPUT.PUT_LINE('n=' || n);
+ 
+  COMMIT;
+
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-D42814B6-9682-4A93-80E4-D46BE5147054__BABIIJFJ">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">lob_construct.out</code> spool file to ensure that all actions completed successfully after this script completes.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/
+</pre><p>After you run the script, you can check the <code class="codeph">lob_user.with_clob</code> table to list the rows applied by the apply process. The <code class="codeph">DBMS_LOCK.SLEEP</code> statement is used to give the apply process time to apply the enqueued rows.
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT lob_user/lob_user_pw
+
+EXECUTE DBMS_LOCK.SLEEP(10);
+
+SELECT a, c1, c2, c3 FROM with_clob ORDER BY a;
+
+SELECT a, LENGTH(c1), LENGTH(c2), LENGTH(c3) FROM with_clob ORDER BY a;
+</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

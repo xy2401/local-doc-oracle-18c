@@ -1,0 +1,742 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>How Oracle Streams Works with Other Database Components</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="appendixes.html" title="Previous" type="text/html">
+      <link rel="next" href="oracle-streams-restrictions.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="appendixes.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="oracle-streams-restrictions.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="appendixes.html" property="item" typeof="WebPage"><span property="name">   Appendixes </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">How Oracle Streams Works with Other Database Components</li>
+            </ol>
+            <a id="GUID-9956939F-D9CF-404A-B6BA-25D901646D6B" name="GUID-9956939F-D9CF-404A-B6BA-25D901646D6B"></a><a id="STRMS1166"></a>
+            
+            <h2 id="STRMS-GUID-9956939F-D9CF-404A-B6BA-25D901646D6B" class="sect2"><span class="enumeration_chapter">A </span>How Oracle Streams Works with Other Database Components
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>This appendix describes how Oracle Streams works with other Oracle Database components.</p>
+               <p>This appendix includes these topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-3F39A40E-4A33-45F9-99F6-587256787917">Oracle Streams and Oracle Real Application Clusters</a></p>
+                  </li>
+                  <li>
+                     <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-C1E9DF55-EBBF-4799-91E3-0ABF97D8A6C1">Oracle Streams and Transparent Data Encryption</a></p>
+                  </li>
+                  <li>
+                     <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-F69B1306-01D6-4B9C-BF05-FD44DEA431B2">Oracle Streams and Flashback Data Archive</a></p>
+                  </li>
+                  <li>
+                     <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-3EA7A80A-5668-41C5-B6A8-4E3F3D306E35">Oracle Streams and Recovery Manager (RMAN)</a></p>
+                  </li>
+                  <li>
+                     <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-E054DDB9-A709-4CC5-82B1-D27CD4D5B512">Oracle Streams and Distributed Transactions</a></p>
+                  </li>
+                  <li>
+                     <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-388ECC1F-2EB8-4B55-BB17-D9D8955F6347">Oracle Streams and Oracle Database Vault</a></p>
+                  </li>
+               </ul>
+            </div><a id="STRMS179"></a><div class="props_rev_3"><a id="GUID-3F39A40E-4A33-45F9-99F6-587256787917" name="GUID-3F39A40E-4A33-45F9-99F6-587256787917"></a><h3 id="STRMS-GUID-3F39A40E-4A33-45F9-99F6-587256787917" class="sect3"><span class="enumeration_section">A.1 </span>Oracle Streams and Oracle Real Application Clusters
+               </h3>
+               <div>
+                  <p>The following topics describe how Oracle Streams works with Oracle Real Application Clusters (Oracle RAC):</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-720225FB-3DDB-45AD-957E-BF11688C05F0">Capture Processes and Oracle Real Application Clusters</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-AF2D7A23-DEBF-49BB-A478-EE1583E1A198">Synchronous Capture and Oracle Real Application Clusters</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-A361F78E-740E-4B2B-9A4F-F2B4C57AC6A5">Combined Capture and Apply and Oracle Real Application Clusters</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-9060FEE1-EBE2-4A9A-956D-4C83EE226997">Queues and Oracle Real Application Clusters</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-28AC6B5C-E194-4128-BE49-90C2E2FC36CC">Propagations and Oracle Real Application Clusters</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-8F1577E3-E3BB-455D-BB36-C8F8635BF494">Apply Processes and Oracle Real Application Clusters</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-3F39A40E-4A33-45F9-99F6-587256787917__GUID-E05EC0E3-DC9A-45BC-A32B-44A5B2093A1A">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../strep/best-practices-for-oracle-streams-replication-databases.html#STREP153"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about best practices for Oracle Streams in an Oracle RAC environment
+                     </p>
+                  </div>
+               </div><a id="STRMS1167"></a><div class="props_rev_3"><a id="GUID-720225FB-3DDB-45AD-957E-BF11688C05F0" name="GUID-720225FB-3DDB-45AD-957E-BF11688C05F0"></a><h4 id="STRMS-GUID-720225FB-3DDB-45AD-957E-BF11688C05F0" class="sect4"><span class="enumeration_section">A.1.1 </span>Capture Processes and Oracle Real Application Clusters
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> can capture changes in an Oracle Real Application Clusters (Oracle RAC) environment. If you use one or more capture processes and Oracle RAC in the same environment, then all archived logs that contain changes to be captured by a capture process must be available for all instances in the Oracle RAC environment. In an Oracle RAC environment, a capture process reads changes made by all instances. Any processes used by a single capture process run on a single instance in an Oracle RAC environment.
+                     </p>
+                     <p>Each capture process is started and stopped on the owner instance for its <code class="codeph">ANYDATA</code> queue, even if the start or stop procedure is run on a different instance. Also, a capture process follows its <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> to a different instance if the current owner instance becomes unavailable. The queue itself follows the rules for primary instance and secondary instance ownership.
+                     </p>
+                     <p>If the owner instance for a <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a> containing a queue used by a capture process becomes unavailable, then queue ownership is transferred automatically to another instance in the cluster. In addition, if the capture process was enabled when the owner instance became unavailable, then the capture process is restarted automatically on the new owner instance. If the capture process was disabled when the owner instance became unavailable, then the capture process remains disabled on the new owner instance.
+                     </p>
+                     <p>LogMiner supports the <code class="codeph">LOG_ARCHIVE_DEST_</code><span class="italic"><code class="codeph">n</code></span> initialization parameter, and Oracle Streams capture processes use LogMiner to capture changes from the redo log. If an archived log file is inaccessible from one destination, then a <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a> can read it from another accessible destination. On an Oracle RAC database, this ability also enables you to use cross instance archival (CIA) such that each instance archives its files to all other instances. This solution cannot detect or resolve gaps caused by missing archived log files. Hence, it can be used only to complement an existing solution to have the archived files shared between all instances.
+                     </p>
+                     <p>In a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> environment, the source database can be a single instance database or a multi-instance Oracle RAC database. The downstream database can be a single instance database or a multi-instance Oracle RAC database, regardless of whether the source database is single instance or multi-instance.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-720225FB-3DDB-45AD-957E-BF11688C05F0__GUID-38FE52D4-B73B-44CD-91FD-193B8DF59DCC">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-84DD3325-51A9-46D7-8BE0-81E48893DFAB">Implicit Capture with an Oracle Streams Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for more information about the <code class="codeph">DBA_QUEUE_TABLES</code> data dictionary view
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../racad/configuring-recovery-manager-and-archiving.html#RACAD325"><span class="italic">Oracle Real Application Clusters Administration and Deployment Guide </span></a>for more information about configuring archived logs to be shared between instances
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1168"></a><div class="props_rev_3"><a id="GUID-AF2D7A23-DEBF-49BB-A478-EE1583E1A198" name="GUID-AF2D7A23-DEBF-49BB-A478-EE1583E1A198"></a><h4 id="STRMS-GUID-AF2D7A23-DEBF-49BB-A478-EE1583E1A198" class="sect4"><span class="enumeration_section">A.1.2 </span>Synchronous Capture and Oracle Real Application Clusters
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> can capture changes in an Oracle Real Application Clusters (Oracle RAC) environment. In an Oracle RAC environment, synchronous capture reads changes made by all instances.
+                     </p>
+                     <p>For the best performance with synchronous capture in an Oracle RAC environment, changes to independent sets of tables should be captured by separate synchronous captures. For example, if different applications use different sets of database objects in the database, then configure a separate synchronous capture to capture changes to the database objects for each application. In this case, each synchronous capture should use a different queue and queue table.</p>
+                     <div class="infoboxnotealso" id="GUID-AF2D7A23-DEBF-49BB-A478-EE1583E1A198__GUID-651F9164-6618-4FDA-B657-1276F74DDD4E">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-9C81303F-69B5-4817-AB1D-493972C4F096">Implicit Capture with Synchronous Capture</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1169"></a><div class="props_rev_3"><a id="GUID-A361F78E-740E-4B2B-9A4F-F2B4C57AC6A5" name="GUID-A361F78E-740E-4B2B-9A4F-F2B4C57AC6A5"></a><h4 id="STRMS-GUID-A361F78E-740E-4B2B-9A4F-F2B4C57AC6A5" class="sect4"><span class="enumeration_section">A.1.3 </span>Combined Capture and Apply and Oracle Real Application Clusters
+                  </h4>
+                  <div>
+                     <p>Combined capture and apply can be used in an Oracle Real Application Clusters (Oracle RAC) environment. In an Oracle RAC environment, the capture process and apply process can be on the same instance, on different instances in a single Oracle RAC database, or on different databases. When the capture process and apply process are on different instances in the same database or on different databases, you must configure a propagation between the capture process's queue and the apply process's queue for combined capture and apply to be used.</p>
+                     <div class="infoboxnotealso" id="GUID-A361F78E-740E-4B2B-9A4F-F2B4C57AC6A5__GUID-050CA9C4-4BCB-462F-A58D-1E67CB78B00E">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="combined-capture-and-apply-optimization.html#GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F"> Combined Capture and Apply Optimization</a></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1170"></a><div class="props_rev_3"><a id="GUID-9060FEE1-EBE2-4A9A-956D-4C83EE226997" name="GUID-9060FEE1-EBE2-4A9A-956D-4C83EE226997"></a><h4 id="STRMS-GUID-9060FEE1-EBE2-4A9A-956D-4C83EE226997" class="sect4"><span class="enumeration_section">A.1.4 </span>Queues and Oracle Real Application Clusters
+                  </h4>
+                  <div>
+                     <p>You can configure a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> to stage <a href="strms_glossary.html#GUID-43A45807-D91D-43A2-89C8-8DEBCEF70770"><span class="xrefglossterm">LCR</span></a>s and <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a>s in an Oracle Real Application Clusters (Oracle RAC) environment. In an Oracle RAC environment, only the owner instance can have a buffer for a queue, but different instances can have buffers for different queues. A <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a> is System Global Area (SGA) memory associated with a queue.
+                     </p>
+                     <p>Oracle Streams processes and jobs support primary instance and secondary instance specifications for <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a>s. If you use these specifications, then the secondary instance assumes ownership of a queue table when the primary instance becomes unavailable, and ownership is transferred back to the primary instance when it becomes available again.
+                     </p>
+                     <p>You can set primary and secondary instance specifications using the <code class="codeph">ALTER_QUEUE_TABLE</code> procedure in the <code class="codeph">DBMS_AQADM</code> package. The <code class="codeph">DBA_QUEUE_TABLES</code> data dictionary view contains information about the owner instance for a queue table. A queue table can contain multiple queues. In this case, each queue in a queue table has the same owner instance as the queue table. 
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-9060FEE1-EBE2-4A9A-956D-4C83EE226997__GUID-B45CE4D9-4C45-4B8C-81E8-82427F3776C1">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-9341B7DE-2218-4290-ACC3-8D27931864B6">Queues</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for more information about the <code class="codeph">DBA_QUEUE_TABLES</code> data dictionary view
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../adque/aq-performance-scalability.html#ADQUE0500"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for more information about queues and Oracle RAC 
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_AQADM.html#ARPLS107"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">ALTER_QUEUE_TABLE</code> procedure
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1171"></a><div class="props_rev_3"><a id="GUID-28AC6B5C-E194-4128-BE49-90C2E2FC36CC" name="GUID-28AC6B5C-E194-4128-BE49-90C2E2FC36CC"></a><h4 id="STRMS-GUID-28AC6B5C-E194-4128-BE49-90C2E2FC36CC" class="sect4"><span class="enumeration_section">A.1.5 </span>Propagations and Oracle Real Application Clusters
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> can propagate messages from one <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> to another in an Oracle Real Application Clusters (Oracle RAC) environment. A <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a> running on an instance propagates logical change records (LCRs) from any queue owned by that instance to <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>s.
+                     </p>
+                     <p>Any propagation to an Oracle RAC database is made over database links. The database links must be configured to connect to the destination instance that owns the queue that will receive the messages.</p>
+                     <p>If the owner instance for a queue table containing a <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> for a propagation becomes unavailable, then queue ownership is transferred automatically to another instance in the cluster. If both the primary and secondary instance for a queue table containing a destination queue become unavailable, then queue ownership is transferred automatically to another instance in the cluster. In this case, if the primary or secondary instance becomes available again, then ownership is transferred back to one of them accordingly.
+                     </p>
+                     <p>A queue-to-queue propagation to a buffered destination queue uses a service to provide transparent failover in an Oracle RAC environment. That is, a propagation job for a queue-to-queue propagation automatically connects to the instance that owns the destination queue. The service used by a queue-to-queue propagation always runs on the owner instance of the destination queue. This service is created only for buffered queues in an Oracle RAC database. If you plan to use buffered messaging with an Oracle RAC database, then messages can be enqueued into a buffered queue on any instance. If messages are enqueued on an instance that does not own the queue, then the messages are sent to the correct instance, but it is more efficient to enqueue messages on the instance that owns the queue. You can use the service to connect to the owner instance of the queue before enqueuing messages into a buffered queue.</p>
+                     <p>Because the queue service always runs on the owner instance of the queue, transparent failover can occur when Oracle RAC instances fail. When multiple queue-to-queue propagations use a single database link, the connect description for each queue-to-queue propagation changes automatically to propagate messages to the correct destination queue.</p>
+                     <p>In contrast, queue-to-dblink propagations do not use services. Queue-to-dblink propagations require you to repoint your database links if the owner instance in an Oracle RAC database that contains the destination queue for the propagation fails. To make the propagation job connect to the correct instance on the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>, manually reconfigure the database link from the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> to connect to the instance that owns the destination queue. You do not need to modify a propagation that uses a re-created database link.
+                     </p>
+                     <p>The <code class="codeph">NAME</code> column in the <code class="codeph">DBA_SERVICES</code> data dictionary view contains the service name for a queue. The <code class="codeph">NETWORK_NAME</code> column in the <code class="codeph">DBA_QUEUES</code> data dictionary view contains the network name for a queue. Do not manage the services for queue-to-queue propagations in any way. Oracle manages them automatically. For queue-to-dblink propagations, use the network name as the service name in the connect string of the database link to connect to the correct instance.
+                     </p>
+                     <div class="infoboxnote" id="GUID-28AC6B5C-E194-4128-BE49-90C2E2FC36CC__GUID-B4C1800F-DB9C-4D88-BEAD-5EAC50821B01">
+                        <p class="notep1">Note:</p>
+                        <p>If a queue contains or will contain <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s in an Oracle RAC environment, then use queue-to-queue propagations to propagate messages to an Oracle RAC destination database. If a queue-to-dblink propagation propagates captured LCRs to an Oracle RAC destination database, then this propagation must use an instance-specific database link that refers to the owner instance of the destination queue. If such a propagation connects to any other instance, then the propagation raises an error.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-28AC6B5C-E194-4128-BE49-90C2E2FC36CC__GUID-62A425C3-79B2-469E-9308-4F7E28F47BAF">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1172"></a><div class="props_rev_3"><a id="GUID-8F1577E3-E3BB-455D-BB36-C8F8635BF494" name="GUID-8F1577E3-E3BB-455D-BB36-C8F8635BF494"></a><h4 id="STRMS-GUID-8F1577E3-E3BB-455D-BB36-C8F8635BF494" class="sect4"><span class="enumeration_section">A.1.6 </span>Apply Processes and Oracle Real Application Clusters
+                  </h4>
+                  <div>
+                     <p>You can configure an Oracle Streams <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> to apply changes in an Oracle Real Application Clusters (Oracle RAC) environment. Each apply process is started and stopped on the owner instance for its <code class="codeph">ANYDATA</code> queue, even if the start or stop procedure is run on a different instance. An apply <a href="strms_glossary.html#GUID-A72A1051-A75F-427A-8357-8BD9F9AAD49D"><span class="xrefglossterm">coordinator process</span></a>, its corresponding apply <a href="strms_glossary.html#GUID-EC66EBF0-2821-495C-BF77-BC7370728A29"><span class="xrefglossterm">reader server</span></a>, and all of its <a href="strms_glossary.html#GUID-B1090C5C-98E3-4B08-8A22-FAE4C35735B4"><span class="xrefglossterm">apply servers</span></a> run on a single instance.
+                     </p>
+                     <p>If the owner instance for a <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a> containing a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> used by an apply process becomes unavailable, then queue ownership is transferred automatically to another instance in the cluster. Also, an apply process will follow its queue to a different instance if the current owner instance becomes unavailable. The queue itself follows the rules for primary instance and secondary instance ownership. In addition, if the apply process was enabled when the owner instance became unavailable, then the apply process is restarted automatically on the new owner instance. If the apply process was disabled when the owner instance became unavailable, then the apply process remains disabled on the new owner instance.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-8F1577E3-E3BB-455D-BB36-C8F8635BF494__GUID-547F694D-B8A4-4673-9217-97387A6C0B56">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-40F2B660-C0DA-4DE4-BBC6-D8C47BE535ED">Implicit Consumption with an Apply Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for more information about the <code class="codeph">DBA_QUEUE_TABLES</code> data dictionary view
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS1173"></a><div class="props_rev_3"><a id="GUID-C1E9DF55-EBBF-4799-91E3-0ABF97D8A6C1" name="GUID-C1E9DF55-EBBF-4799-91E3-0ABF97D8A6C1"></a><h3 id="STRMS-GUID-C1E9DF55-EBBF-4799-91E3-0ABF97D8A6C1" class="sect3"><span class="enumeration_section">A.2 </span>Oracle Streams and Transparent Data Encryption
+               </h3>
+               <div>
+                  <p>The following topics describe how Oracle Streams works with Transparent Data Encryption:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-F028D985-F759-4F7E-B5AB-FEA6355CE203">Capture Processes and Transparent Data Encryption</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-514D5F43-468C-4A96-A99C-C02F9D7A06BD">Synchronous Capture and Transparent Data Encryption</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-6B9F40F7-9583-4AB5-AB5D-FD2FE4D96897">Explicit Capture and Transparent Data Encryption</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-D5F670CD-4EF2-4049-AD27-1738C75462E0">Queues and Transparent Data Encryption</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-C40ABA71-62AC-4F3D-8489-E3B4497974F0">Propagations and Transparent Data Encryption</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-BC03F818-0929-4444-BCA2-75505445E101">Apply Processes and Transparent Data Encryption</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-715700CE-C78A-41A1-AE5E-F53A918165AF">Messaging Clients and Transparent Data Encryption</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-97384F38-F048-444F-AECF-B9023F78A8F0">Manual Dequeue and Transparent Data Encryption</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-C1E9DF55-EBBF-4799-91E3-0ABF97D8A6C1__GUID-16941208-9D62-4885-8428-AF983F6242E2">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../asoag/asopart1.html#ASOAG600"><span class="italic">Oracle Database Advanced Security Guide</span></a> for information about Transparent Data Encryption
+                     </p>
+                  </div>
+               </div><a id="STRMS173"></a><div class="props_rev_3"><a id="GUID-F028D985-F759-4F7E-B5AB-FEA6355CE203" name="GUID-F028D985-F759-4F7E-B5AB-FEA6355CE203"></a><h4 id="STRMS-GUID-F028D985-F759-4F7E-B5AB-FEA6355CE203" class="sect4"><span class="enumeration_section">A.2.1 </span>Capture Processes and Transparent Data Encryption
+                  </h4>
+                  <div>
+                     <p>A local <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> can capture changes to columns that have been encrypted using Transparent Data Encryption. A downstream capture process can capture changes to columns that have been encrypted only if the downstream database shares a keystore with the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>. A keystore can be shared through a network file system (NFS), or it can be copied from one computer system to another manually. When a keystore is shared with a downstream database, ensure that the <code class="codeph">ENCRYPTION_WALLET_LOCATION</code> parameter in the <code class="codeph">sqlnet.ora</code> file at the downstream database specifies the keystore location.
+                     </p>
+                     <p>If you copy a keystore to a downstream database, then ensure that you copy the keystore from the source database to the downstream database whenever the keystore at the source database changes. Do not perform any operations on the keystore at the downstream database, such as changing the encryption key for a replicated table.</p>
+                     <p>Encrypted columns in row logical change records (row LCRs) captured by a local or downstream capture process are decrypted when the row LCRs are staged in a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a>. If row LCRs spill to disk in a database with Transparent Data Encryption enabled, then Oracle Streams transparently encrypts any encrypted columns while the row LCRs are stored on disk.
+                     </p>
+                     <div class="infoboxnote" id="GUID-F028D985-F759-4F7E-B5AB-FEA6355CE203__GUID-B12778F3-C564-4785-8233-932D7FF6A869">
+                        <p class="notep1">Note:</p>
+                        <p>A capture process only supports encrypted columns if the redo logs used by the capture process were generated by a database with a compatibility level of 11.0.0 or higher. The compatibility level is controlled by the <code class="codeph">COMPATIBLE</code> initialization parameter.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-F028D985-F759-4F7E-B5AB-FEA6355CE203__GUID-530AC878-5E8E-471E-B207-F24271A28909">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-84DD3325-51A9-46D7-8BE0-81E48893DFAB">Implicit Capture with an Oracle Streams Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-B54AC347-E6DA-48DD-93C9-517467C2B0F1">Persistent Queues and Buffered Queues</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1174"></a><div class="props_rev_3"><a id="GUID-514D5F43-468C-4A96-A99C-C02F9D7A06BD" name="GUID-514D5F43-468C-4A96-A99C-C02F9D7A06BD"></a><h4 id="STRMS-GUID-514D5F43-468C-4A96-A99C-C02F9D7A06BD" class="sect4"><span class="enumeration_section">A.2.2 </span>Synchronous Capture and Transparent Data Encryption
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> can capture changes to columns that have been encrypted using Transparent Data Encryption. Encrypted columns in row logical change records (row LCRs) captured by a synchronous capture remain encrypted when the row LCRs are staged in a <a href="strms_glossary.html#GUID-8D447372-AA6C-4326-8A8F-2E13F9350AF1"><span class="xrefglossterm">persistent queue</span></a>.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-514D5F43-468C-4A96-A99C-C02F9D7A06BD__GUID-394B2127-4F92-4C66-992F-3ACD95D23C09">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-9C81303F-69B5-4817-AB1D-493972C4F096">Implicit Capture with Synchronous Capture</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1175"></a><div class="props_rev_3"><a id="GUID-6B9F40F7-9583-4AB5-AB5D-FD2FE4D96897" name="GUID-6B9F40F7-9583-4AB5-AB5D-FD2FE4D96897"></a><h4 id="STRMS-GUID-6B9F40F7-9583-4AB5-AB5D-FD2FE4D96897" class="sect4"><span class="enumeration_section">A.2.3 </span>Explicit Capture and Transparent Data Encryption
+                  </h4>
+                  <div>
+                     <p>You can use explicit capture to construct and enqueue row logical change records (row LCRs) for columns that are encrypted in database tables. However, you cannot specify that columns are encrypted when you construct the row LCRs. Therefore, when explicitly captured row LCRs are staged in a queue, all of the columns in the row LCRs are decrypted.</p>
+                     <div class="infoboxnotealso" id="GUID-6B9F40F7-9583-4AB5-AB5D-FD2FE4D96897__GUID-64C33609-D828-471C-8010-5744C740873D">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-A51AFAF0-6C67-4A9C-AA1E-6CD1B1B3F67F">Explicit Capture by Applications</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1176"></a><div class="props_rev_3"><a id="GUID-D5F670CD-4EF2-4049-AD27-1738C75462E0" name="GUID-D5F670CD-4EF2-4049-AD27-1738C75462E0"></a><h4 id="STRMS-GUID-D5F670CD-4EF2-4049-AD27-1738C75462E0" class="sect4"><span class="enumeration_section">A.2.4 </span>Queues and Transparent Data Encryption
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-8D447372-AA6C-4326-8A8F-2E13F9350AF1"><span class="xrefglossterm">persistent queue</span></a> can store row logical change records (row LCRs) captured by a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, and these row LCRs can contain changes to columns that were encrypted using Transparent Data Encryption. The row LCRs remain encrypted while they are stored in the persistent queue. Explicitly captured row LCRs cannot contain encrypted columns.
+                     </p>
+                     <p>A <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a> can store row LCRs that contain changes captured by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, and these row LCRs can contain changes to columns that were encrypted using Transparent Data Encryption. When row LCRs with encrypted columns are stored in buffered queues, the columns are decrypted. When row LCRs spill to disk, Oracle Streams transparently encrypts any encrypted columns while the row LCRs are stored on disk.
+                     </p>
+                     <div class="infoboxnote" id="GUID-D5F670CD-4EF2-4049-AD27-1738C75462E0__GUID-75EAED79-AFB9-4A94-A267-AF918FBCC6AF">
+                        <p class="notep1">Note:</p>
+                        <p><a id="d145701e2267" class="indexterm-anchor"></a><a id="d145701e2271" class="indexterm-anchor"></a>For Oracle Streams to encrypt columns transparently, the encryption master key must be stored in the keystore on the local database, and the keystore must be open. The following statements set the master key and open the keystore:
+                        </p><pre class="oac_no_warn" dir="ltr">ALTER SYSTEM SET ENCRYPTION KEY IDENTIFIED BY <span class="italic">key-password</span>;
+ 
+ALTER SYSTEM SET ENCRYPTION WALLET OPEN IDENTIFIED BY <span class="italic">key-password</span>;
+</pre></div>
+                     <div class="infoboxnotealso" id="GUID-D5F670CD-4EF2-4049-AD27-1738C75462E0__GUID-00FDEA51-1AD4-4189-8333-02B17D138636">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-9341B7DE-2218-4290-ACC3-8D27931864B6">Queues</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-7EF8AB64-98C8-445A-8954-E91E85F9A7D3">Ways to Capture Information with Oracle Streams</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1177"></a><div class="props_rev_3"><a id="GUID-C40ABA71-62AC-4F3D-8489-E3B4497974F0" name="GUID-C40ABA71-62AC-4F3D-8489-E3B4497974F0"></a><h4 id="STRMS-GUID-C40ABA71-62AC-4F3D-8489-E3B4497974F0" class="sect4"><span class="enumeration_section">A.2.5 </span>Propagations and Transparent Data Encryption
+                  </h4>
+                  <div>
+                     <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> can propagate row logical change records (row LCRs) that contain changes to columns that were encrypted using Transparent Data Encryption. When a propagation propagates row LCRs with encrypted columns, the encrypted columns are decrypted while the row LCRs are transferred over the network. You can use the features of Oracle Advanced Security to encrypt data transfers over the network if necessary.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-C40ABA71-62AC-4F3D-8489-E3B4497974F0__GUID-02F16BC5-BFC1-4EC5-B079-9F631A7975BE">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../dbseg/configuring-network-data-encryption-and-integrity.html#DBSEG020"><span class="italic">Oracle Database Security Guide</span></a> for information about configuring network data encryption
+                              </p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div><a id="STRMS1178"></a><div class="props_rev_3"><a id="GUID-BC03F818-0929-4444-BCA2-75505445E101" name="GUID-BC03F818-0929-4444-BCA2-75505445E101"></a><h4 id="STRMS-GUID-BC03F818-0929-4444-BCA2-75505445E101" class="sect4"><span class="enumeration_section">A.2.6 </span>Apply Processes and Transparent Data Encryption
+                  </h4>
+                  <div>
+                     <p>An <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> can dequeue and process implicitly captured row logical change records (row LCRs) that contain columns encrypted using Transparent Data Encryption. When row LCRs with encrypted columns are dequeued by an apply process, the encrypted columns are decrypted. These row LCRs with decrypted columns can be sent to an apply handler for custom processing, or they can be applied directly. When row LCRs are applied, and the modified table contains encrypted columns, any changes to encrypted columns are encrypted when they are applied.
+                     </p>
+                     <p>When row LCRs contain encrypted columns, but the corresponding columns at the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a> are not encrypted, then the <code class="codeph">preserve_encryption</code> apply process parameter controls apply process behavior:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If the <code class="codeph">preserve_encryption</code> parameter is set to <code class="codeph">Y</code>, then the apply process raises an error when row LCRs contain encrypted columns, but the corresponding columns at the destination database are not encrypted. When an error is raised, the row LCR is not applied, and all of the row LCRs in the transaction are moved to the error queue.
+                           </p>
+                        </li>
+                        <li>
+                           <p>If the <code class="codeph">preserve_encryption</code> parameter is set to <code class="codeph">N</code>, then the apply process applies the row changes when row LCRs contain encrypted columns, but the corresponding columns at the destination database are not encrypted.
+                           </p>
+                        </li>
+                     </ul>
+                     <p><a id="d145701e2637" class="indexterm-anchor"></a><a id="d145701e2641" class="indexterm-anchor"></a>When an apply process moves implicitly captured row LCRs with encrypted columns to the error queue, the encrypted columns are encrypted when the row LCRs are in the error queue. Row LCRs are implicitly captured using <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es and <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-BC03F818-0929-4444-BCA2-75505445E101__GUID-8E9885FE-D671-473E-ACEC-5FAB82DAB1E7">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-40F2B660-C0DA-4DE4-BBC6-D8C47BE535ED">Implicit Consumption with an Apply Process</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1179"></a><div class="props_rev_3"><a id="GUID-715700CE-C78A-41A1-AE5E-F53A918165AF" name="GUID-715700CE-C78A-41A1-AE5E-F53A918165AF"></a><h4 id="STRMS-GUID-715700CE-C78A-41A1-AE5E-F53A918165AF" class="sect4"><span class="enumeration_section">A.2.7 </span>Messaging Clients and Transparent Data Encryption
+                  </h4>
+                  <div>
+                     <p><a id="d145701e2787" class="indexterm-anchor"></a><a id="d145701e2791" class="indexterm-anchor"></a>A <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> can dequeue implicitly captured row LCRs that contain columns encrypted using Transparent Data Encryption. When row LCRs with encrypted columns are dequeued by a messaging client, the encrypted columns are decrypted.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-715700CE-C78A-41A1-AE5E-F53A918165AF__GUID-A55922D2-785F-4BE9-8A4B-A81D0AC1A406">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-3794AB4D-3041-4A59-B3E5-8EF80B40E5B9">Explicit Consumption with a Messaging Client</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1180"></a><div class="props_rev_3"><a id="GUID-97384F38-F048-444F-AECF-B9023F78A8F0" name="GUID-97384F38-F048-444F-AECF-B9023F78A8F0"></a><h4 id="STRMS-GUID-97384F38-F048-444F-AECF-B9023F78A8F0" class="sect4"><span class="enumeration_section">A.2.8 </span>Manual Dequeue and Transparent Data Encryption
+                  </h4>
+                  <div>
+                     <p><a id="d145701e2933" class="indexterm-anchor"></a><a id="d145701e2937" class="indexterm-anchor"></a><a id="d145701e2943" class="indexterm-anchor"></a><a id="d145701e2947" class="indexterm-anchor"></a>A user or application can dequeue implicitly captured row LCRs that contain columns encrypted using Transparent Data Encryption. When row LCRs with encrypted columns are dequeued, the encrypted columns are decrypted.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-97384F38-F048-444F-AECF-B9023F78A8F0__GUID-4F6CDBB1-5881-4BE4-A1B5-5B418C4D6F5B">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-A5B0560D-9B0B-43AE-B723-AD5BFEA47DC6">Explicit Consumption with Manual Dequeue</a>"</span></p>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS1181"></a><div class="props_rev_3"><a id="GUID-F69B1306-01D6-4B9C-BF05-FD44DEA431B2" name="GUID-F69B1306-01D6-4B9C-BF05-FD44DEA431B2"></a><h3 id="STRMS-GUID-F69B1306-01D6-4B9C-BF05-FD44DEA431B2" class="sect3"><span class="enumeration_section">A.3 </span>Oracle Streams and Flashback Data Archive
+               </h3>
+               <div>
+                  <p>Oracle Streams supports tables in a flashback data archive. Capture processes can capture data manipulation language (DML) and data definition language (DDL) changes made to these tables. Synchronous captures can capture DML changes made to these tables. Apply processes can apply changes encapsulated in logical change records (LCRs) to these tables.</p>
+                  <p>Oracle Streams capture processes and apply processes also support the following DDL statements:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">CREATE</code> <code class="codeph">FLASHBACK</code> <code class="codeph">ARCHIVE</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ALTER</code> <code class="codeph">FLASHBACK</code> <code class="codeph">ARCHIVE</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">DROP</code> <code class="codeph">FLASHBACK</code> <code class="codeph">ARCHIVE</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">CREATE</code> <code class="codeph">TABLE</code> with a <code class="codeph">FLASHBACK</code> <code class="codeph">ARCHIVE</code> clause
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ALTER</code> <code class="codeph">TABLE</code> with a <code class="codeph">FLASHBACK</code> <code class="codeph">ARCHIVE</code> clause
+                        </p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnote" id="GUID-F69B1306-01D6-4B9C-BF05-FD44DEA431B2__GUID-84AD12BF-31BD-413A-90E0-FD8685CC3D91">
+                     <p class="notep1">Note:</p>
+                     <p>Oracle Streams does not capture or apply changes made to internal tables used by a flashback data archive.</p>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-F69B1306-01D6-4B9C-BF05-FD44DEA431B2__GUID-2C4F9C8F-6328-4BC1-B661-A43D031183E4">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../adfns/flashback.html#ADFNS01011"><span class="italic">Oracle Database Development Guide</span></a> for information about flashback data archive
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="oracle-streams-information-capture.html#GUID-84DD3325-51A9-46D7-8BE0-81E48893DFAB">Implicit Capture with an Oracle Streams Capture Process</a></p>
+                        </li>
+                        <li>
+                           <p><a href="oracle-streams-information-capture.html#GUID-9C81303F-69B5-4817-AB1D-493972C4F096">Implicit Capture with Synchronous Capture</a></p>
+                        </li>
+                        <li>
+                           <p><a href="oracle-streams-information-consumption.html#GUID-40F2B660-C0DA-4DE4-BBC6-D8C47BE535ED">Implicit Consumption with an Apply Process</a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1182"></a><div class="props_rev_3"><a id="GUID-3EA7A80A-5668-41C5-B6A8-4E3F3D306E35" name="GUID-3EA7A80A-5668-41C5-B6A8-4E3F3D306E35"></a><h3 id="STRMS-GUID-3EA7A80A-5668-41C5-B6A8-4E3F3D306E35" class="sect3"><span class="enumeration_section">A.4 </span>Oracle Streams and Recovery Manager (RMAN)
+               </h3>
+               <div>
+                  <p>The following topics describe how Oracle Streams works with Recovery Manager (RMAN):</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-C7B31A29-482E-4BC8-8891-E06B4BF5E43A">RMAN and Instantiation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-244DE352-CF91-4061-B29E-F78418C3AC72">RMAN and Archived Redo Log Files Required by a Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-EA7D31F9-F31A-4DE5-842C-80A20995C7A1">The Recovery Catalog and Oracle Streams</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-3EA7A80A-5668-41C5-B6A8-4E3F3D306E35__GUID-0F498097-992C-4B22-874F-63E91958B457">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../bradv/toc.htm"><span class="italic">Oracle Database Backup and Recovery User's Guide</span></a></p>
+                  </div>
+               </div><a id="STRMS1183"></a><div class="props_rev_3"><a id="GUID-C7B31A29-482E-4BC8-8891-E06B4BF5E43A" name="GUID-C7B31A29-482E-4BC8-8891-E06B4BF5E43A"></a><h4 id="STRMS-GUID-C7B31A29-482E-4BC8-8891-E06B4BF5E43A" class="sect4"><span class="enumeration_section">A.4.1 </span>RMAN and Instantiation
+                  </h4>
+                  <div>
+                     <p>You can use RMAN to instantiate database objects during the configuration of an Oracle Streams replication environment. The RMAN <code class="codeph">DUPLICATE</code> and <code class="codeph">CONVERT</code> <code class="codeph">DATABASE</code> commands can instantiate an entire database, and the RMAN <code class="codeph">TRANSPORT</code> <code class="codeph">TABLESPACE</code> command can instantiate a tablespace or set of tablespaces.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-C7B31A29-482E-4BC8-8891-E06B4BF5E43A__GUID-DFCB5E84-1EC2-470A-BD95-C30EDE608400">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP139"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about using RMAN for instantiation
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1184"></a><div class="props_rev_3"><a id="GUID-244DE352-CF91-4061-B29E-F78418C3AC72" name="GUID-244DE352-CF91-4061-B29E-F78418C3AC72"></a><h4 id="STRMS-GUID-244DE352-CF91-4061-B29E-F78418C3AC72" class="sect4"><span class="enumeration_section">A.4.2 </span>RMAN and Archived Redo Log Files Required by a Capture Process
+                  </h4>
+                  <div>
+                     <p>Some Recovery Manager (RMAN) deletion policies and commands delete archived redo log files. If one of these RMAN policies or commands is used on a database that generates redo log files for one or more capture processes, then ensure that the RMAN commands do not delete archived redo log files that are required by a capture process.</p>
+                     <p>The following sections describe the behavior of RMAN deletion policies and commands for local capture processes and downstream capture processes</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-0E0D938A-A119-42A9-B35F-4B5903D1DA15">RMAN and Local Capture Processes</a></p>
+                        </li>
+                        <li>
+                           <p><a href="how-oracle-streams-works-with-other-database-components.html#GUID-B6C91090-6D11-4155-9B02-E1C029409372">RMAN and Downstream Capture Processes</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-244DE352-CF91-4061-B29E-F78418C3AC72__GUID-40AE8A8B-1030-4C7E-9628-CF844B265045">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD">ARCHIVELOG Mode and a Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="troubleshooting-implicit-capture.html#GUID-71818F6E-9C98-42CB-AFC7-0AE197F96FA8">Are Required Redo Log Files Missing?</a>"</span> for information about determining whether a capture process is missing required archived redo log files and for information correcting this problem. This section also contains information about fast recovery area and local capture processes.
+                              </p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-7D02B3F6-23FD-436E-B0F4-AA60128DF77A">Checking the Trace Files and Alert Log for Problems</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../bradv/toc.htm"><span class="italic">Oracle Database Backup and Recovery User's Guide</span></a> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=RCMRF"><span class="italic">Oracle Database Backup and Recovery Reference</span></a> for more information about RMAN
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS1185"></a><div class="props_rev_3"><a id="GUID-0E0D938A-A119-42A9-B35F-4B5903D1DA15" name="GUID-0E0D938A-A119-42A9-B35F-4B5903D1DA15"></a><h5 id="STRMS-GUID-0E0D938A-A119-42A9-B35F-4B5903D1DA15" class="sect5"><span class="enumeration_section">A.4.2.1 </span>RMAN and Local Capture Processes
+                     </h5>
+                     <div>
+                        <p>When a <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a> is configured, RMAN does not delete archived redo log files that are required by the local capture process unless there is space pressure in the fast recovery area. Specifically, RMAN does not delete archived redo log files that contain changes with system change number (SCN) values that are equal to or greater than the <a href="strms_glossary.html#GUID-C3EC3C70-C86C-4F1F-8DDA-8C972D0EEFC2"><span class="xrefglossterm">required checkpoint SCN</span></a> for the local capture process. This is the default RMAN behavior for all RMAN deletion policies and <code class="codeph">DELETE</code> commands, including <code class="codeph">DELETE</code> <code class="codeph">ARCHIVELOG</code> and <code class="codeph">DELETE</code> <code class="codeph">OBSOLETE</code>.
+                        </p>
+                        <p>When there is not enough space in the fast recovery area to write a new log file, RMAN automatically deletes one or more archived redo log files. Oracle Database writes warnings to the alert log when RMAN automatically deletes an archived redo log file that is required by a local capture process.</p>
+                        <p>When backups of the archived redo log files are taken on the local capture process database, Oracle recommends the following RMAN deletion policy:</p><pre class="oac_no_warn" dir="ltr">CONFIGURE ARCHIVELOG DELETION POLICY TO BACKED UP <span class="italic">integer</span> TIMES 
+   TO DEVICE TYPE <span class="italic">deviceSpecifier</span>;
+</pre><p>This deletion policy requires that a log file be backed up <span class="italic"><code class="codeph">integer</code></span> times before it is considered for deletion.
+                        </p>
+                        <p>When no backups of the archived redo log files are taken on the local capture process database, no specific deletion policy is recommended. By default, RMAN does not delete archived redo log files that are required by a local capture process.</p>
+                     </div>
+                  </div><a id="STRMS1186"></a><div class="props_rev_3"><a id="GUID-B6C91090-6D11-4155-9B02-E1C029409372" name="GUID-B6C91090-6D11-4155-9B02-E1C029409372"></a><h5 id="STRMS-GUID-B6C91090-6D11-4155-9B02-E1C029409372" class="sect5"><span class="enumeration_section">A.4.2.2 </span>RMAN and Downstream Capture Processes
+                     </h5>
+                     <div>
+                        <p>When a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> captures database changes made at a <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>, ensure that no RMAN deletion policy or command deletes an archived redo log file until after it is transferred from the source database to the downstream capture process database.
+                        </p>
+                        <p>The following are considerations for specific RMAN deletion policies and commands that delete archived redo log files:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The RMAN command <code class="codeph">CONFIGURE</code> <code class="codeph">ARCHIVELOG</code> <code class="codeph">DELETION</code> <code class="codeph">POLICY</code> sets a deletion policy that determines when archived redo log files in the fast recovery area are eligible for deletion. The deletion policy also applies to all RMAN <code class="codeph">DELETE</code> commands, including <code class="codeph">DELETE</code> <code class="codeph">ARCHIVELOG</code> and <code class="codeph">DELETE</code> <code class="codeph">OBSOLETE</code>.
+                              </p>
+                              <p>The following settings determine the behavior at the source database:</p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>A deletion policy set <code class="codeph">TO</code> <code class="codeph">SHIPPED</code> <code class="codeph">TO</code> <code class="codeph">STANDBY</code> does not delete a log file until after it is transferred to a downstream capture process database that requires the file. These log files might or might not have been processed by the downstream capture process. Automatic deletion occurs when there is not enough space in the fast recovery area to write a new log file.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>A deletion policy set <code class="codeph">TO</code> <code class="codeph">APPLIED</code> <code class="codeph">ON</code> <code class="codeph">STANDBY</code> does not delete a log file until after it is transferred to a downstream capture process database that requires the file and the source database marks the log file as applied. The source database marks a log file as applied when the minimum required checkpoint SCN of all of the downstream capture processes for the source database is greater than the highest SCN in the log file.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>A deletion policy set to <code class="codeph">BACKED</code> <code class="codeph">UP</code> <span class="italic"><code class="codeph">integer</code></span> <code class="codeph">TIMES</code> <code class="codeph">TO</code> <code class="codeph">DEVICE</code> <code class="codeph">TYPE</code> requires that a log file be backed up <span class="italic"><code class="codeph">integer</code></span> times before it is considered for deletion. A log file can be deleted even if the log file has not been processed by a downstream capture process that requires it.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>A deletion policy set <code class="codeph">TO</code> <code class="codeph">NONE</code> means that a log file can be deleted when there is space pressure on the fast recovery area, even if the log file has not been processed by a downstream capture process that requires it.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li>
+                              <p>The RMAN command <code class="codeph">DELETE</code> <code class="codeph">ARCHIVELOG</code> deletes archived redo log files that meet all of the following conditions:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The log files satisfy the condition specified in the <code class="codeph">DELETE</code> <code class="codeph">ARCHIVELOG</code> command.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The log files can be deleted according to the <code class="codeph">CONFIGURE</code> <code class="codeph">ARCHIVELOG</code> <code class="codeph">DELETION</code> <code class="codeph">POLICY</code>. For example, if the policy is set <code class="codeph">TO</code> <code class="codeph">SHIPPED</code> <code class="codeph">TO</code> <code class="codeph">STANDBY</code>, then this command does not delete a log file until after it is transferred to any downstream capture process database that requires it.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <p>This behavior applies when the database is mounted or open.</p>
+                              <p>If archived redo log files are not deleted because they contain changes required by a downstream capture process, then RMAN displays a warning message about skipping the delete operation for these files.</p>
+                           </li>
+                           <li>
+                              <p>The RMAN command <code class="codeph">DELETE</code> <code class="codeph">OBSOLETE</code> permanently purges the archived redo log files that meet all of the following conditions:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The log files are obsolete according to the retention policy.</p>
+                                 </li>
+                                 <li>
+                                    <p>The log files can be deleted according to the <code class="codeph">CONFIGURE</code> <code class="codeph">ARCHIVELOG</code> <code class="codeph">DELETION</code> <code class="codeph">POLICY</code>. For example, if the policy is set <code class="codeph">TO</code> <code class="codeph">SHIPPED</code> <code class="codeph">TO</code> <code class="codeph">STANDBY</code>, then this command does not delete a log file until after it is transferred to any downstream capture process database that requires it.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <p>This behavior applies when the database is mounted or open.</p>
+                           </li>
+                           <li>
+                              <p>The RMAN command <code class="codeph">BACKUP</code> <code class="codeph">ARCHIVELOG</code> <code class="codeph">ALL</code> <code class="codeph">DELETE</code> <code class="codeph">INPUT</code> copies the archived redo log files and deletes the original files after completing the backup. This command does not delete the log file until after it is transferred to a downstream capture process database when the following conditions are met:
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The database is mounted or open.</p>
+                                 </li>
+                                 <li>
+                                    <p>The log file is required by a downstream capture process.</p>
+                                 </li>
+                                 <li>
+                                    <p>The deletion policy is set <code class="codeph">TO</code> <code class="codeph">SHIPPED</code> <code class="codeph">TO</code> <code class="codeph">STANDBY</code>.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <p>If archived redo log files are not deleted because they contain changes required by a downstream capture process, then RMAN displays a warning message about skipping the delete operation for these files.</p>
+                           </li>
+                        </ul>
+                        <p>Oracle recommends one of the following RMAN deletion policies at the source database for a downstream capture process:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>When backups of the archived redo log files are taken on the source database, set the deletion policy to the following:</p><pre class="oac_no_warn" dir="ltr">CONFIGURE ARCHIVELOG DELETION POLICY TO SHIPPED TO STANDBY 
+   BACKED UP <span class="italic">integer</span> TIMES TO DEVICE TYPE <span class="italic">deviceSpecifier</span>;
+</pre></li>
+                           <li>
+                              <p>When no backups of the archived redo log files are taken on the source database, set the deletion policy to the following:</p><pre class="oac_no_warn" dir="ltr">CONFIGURE ARCHIVELOG DELETION POLICY TO SHIPPED TO STANDBY;
+</pre></li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-B6C91090-6D11-4155-9B02-E1C029409372__GUID-98E4664F-446B-4A7C-BD8F-945FDBBD093D">
+                           <p class="notep1">Note:</p>
+                           <p>At a downstream capture process database, archived redo log files transferred from a source database are not managed by RMAN.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div><a id="STRMS1187"></a><div class="props_rev_3"><a id="GUID-EA7D31F9-F31A-4DE5-842C-80A20995C7A1" name="GUID-EA7D31F9-F31A-4DE5-842C-80A20995C7A1"></a><h4 id="STRMS-GUID-EA7D31F9-F31A-4DE5-842C-80A20995C7A1" class="sect4"><span class="enumeration_section">A.4.3 </span>The Recovery Catalog and Oracle Streams
+                  </h4>
+                  <div>
+                     <p>Oracle Streams supports replicating a recovery catalog in a one-way replication environment. Bi-directional replication of a recovery catalog is not supported.</p>
+                     <div class="infoboxnotealso" id="GUID-EA7D31F9-F31A-4DE5-842C-80A20995C7A1__GUID-2F552120-F8AF-49E1-9E86-E4B908E1B2D0">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP224"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about one-way and bi-directional replication
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../bradv/managing-recovery-catalog.html#BRADV89642"><span class="italic">Oracle Database Backup and Recovery User's Guide</span></a> for information about the recovery catalog
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS1649"></a><div class="props_rev_3"><a id="GUID-E054DDB9-A709-4CC5-82B1-D27CD4D5B512" name="GUID-E054DDB9-A709-4CC5-82B1-D27CD4D5B512"></a><h3 id="STRMS-GUID-E054DDB9-A709-4CC5-82B1-D27CD4D5B512" class="sect3"><span class="enumeration_section">A.5 </span>Oracle Streams and Distributed Transactions
+               </h3>
+               <div>
+                  <p>You can perform distributed transactions using either of the following methods:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Modify tables in multiple databases in a coordinated manner using database links.</p>
+                     </li>
+                     <li>
+                        <p>Use the XA interface, as exposed by the <code class="codeph">DBMS_XA</code> supplied PL/SQL package or by the OCI or JDBC libraries. The XA interface implements X/Open Distributed Transaction Processing (DTP) architecture.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>Oracle Streams replicates changes made to the source database during a distributed transaction using either of these two methods to the destination database. An apply process at the destination database applies the changes in a transaction after the transaction has committed.</p>
+                  <p>However, the distributed transaction state is not replicated or sent. The destination database or client application does not inherit the in-doubt or prepared state of such a transaction. Also, Oracle Streams does not replicate or send the changes using the same global transaction identifier used at the source database for XA transactions.</p>
+                  <p>XA transactions can be performed in two ways:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Tightly coupled, where different XA branches share locks</p>
+                     </li>
+                     <li>
+                        <p>Loosely coupled, where different XA branches do not share locks</p>
+                     </li>
+                  </ul>
+                  <p>Oracle Streams supports replication of changes made by loosely coupled XA branches regardless of the <code class="codeph">COMPATIBLE</code> initialization parameter value. Oracle Streams supports replication of changes made by tightly coupled branches on an Oracle RAC source database only if the <code class="codeph">COMPATIBLE</code> initialization parameter set to <code class="codeph">11.2.0</code> or higher.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-E054DDB9-A709-4CC5-82B1-D27CD4D5B512__GUID-7546D239-F87A-4BA6-B029-08A2A5B230B8">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../admin/distributed-database-concepts.html#ADMIN12113"><span class="italic">Oracle Database Administrator's Guide</span></a> for more information about distributed transactions
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../adfns/xa.html#ADFNS017"><span class="italic">Oracle Database Development Guide</span></a> for more information about Oracle XA
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1767"></a><div class="props_rev_3"><a id="GUID-388ECC1F-2EB8-4B55-BB17-D9D8955F6347" name="GUID-388ECC1F-2EB8-4B55-BB17-D9D8955F6347"></a><h3 id="STRMS-GUID-388ECC1F-2EB8-4B55-BB17-D9D8955F6347" class="sect3"><span class="enumeration_section">A.6 </span>Oracle Streams and Oracle Database Vault
+               </h3>
+               <div>
+                  <p>Oracle Database Vault restricts access to specific areas in an Oracle database from any user, including users who have administrative access. If you are using Oracle Streams in an Oracle Data Vault environment, then the following privileges and roles are required:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The Streams administrator must be granted the <code class="codeph">DV_STREAMS_ADMIN</code> role to perform the following tasks: create a capture process, create an apply process, and modify the capture user for a capture process. When the Streams administrator is not performing these tasks, you can revoke the <code class="codeph">DV_STREAMS_ADMIN</code> role from the Streams administrator.
+                        </p>
+                     </li>
+                     <li>
+                        <p>The apply user for an apply process must be authorized to apply changes to realms that include replicated database objects. The replicated database objects are the objects to which the apply process applies changes.</p>
+                     </li>
+                  </ul>
+                  <p>To authorize an apply user for a realm, run the <code class="codeph">DBMS_MACADM.ADD_AUTH_TO_REALM</code> procedure and specify the realm and the apply user. For example, to authorize apply user <code class="codeph">strmadmin</code> for the sales realm, run the following procedure:
+                  </p><pre class="oac_no_warn" dir="ltr"> BEGIN
+     DBMS_MACADM.ADD_AUTH_TO_REALM(
+      realm_name  =&gt; 'sales', 
+      grantee     =&gt; 'strmadmin'); 
+    END;
+    /</pre><p>In addition, the user who performs the following actions must be granted the <code class="codeph">BECOME USER</code> system privilege: 
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Creates or alters a capture process</p>
+                     </li>
+                     <li>
+                        <p>Creates or alters an outbound server</p>
+                     </li>
+                     <li>
+                        <p>Creates or alters an inbound server</p>
+                     </li>
+                  </ul>
+                  <p>Granting the <code class="codeph">BECOME USER</code> system privilege to the user who performs these actions is not required if Oracle Database Vault is not installed. You can revoke the <code class="codeph">BECOME USER</code> system privilege from the user after the completing one of these actions, if necessary.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-388ECC1F-2EB8-4B55-BB17-D9D8955F6347__GUID-60E77A2B-70CB-4A4D-8953-2DC1EAC9810B">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=DVADM70324"><span class="italic">Oracle Database Vault Administrator's Guide</span></a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

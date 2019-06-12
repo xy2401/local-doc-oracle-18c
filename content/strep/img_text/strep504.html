@@ -1,0 +1,119 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Description of the illustration strep504.eps</title>
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+   
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-01-25T07:28:22+00:00">
+    <meta name="dcterms.title" content="Streams Replication Administrator's Guide">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="STREP">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E83780-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+   <body>
+      <article>
+         <header>
+            <h1>Description of the illustration strep504.eps</h1>
+         </header>
+         <div>
+            <p>This illustration shows an Oracle Streams hub-and-spoke replication environment that includes the following Oracle databases:</p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p><code class="codeph">hub.example.com</code></p>
+               </li>
+               <li>
+                  <p><code class="codeph">spoke1.example.com</code></p>
+               </li>
+               <li>
+                  <p><code class="codeph">spoke2.example.com</code></p>
+               </li>
+            </ul>
+            <p>At each database, the local redo log records changes to the <code class="codeph">hr</code> schema.
+            </p>
+            <p>The <code class="codeph">hub.example.com</code> database has the following Oracle Streams components configured:
+            </p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p>The following queues: <code class="codeph">source_hns</code>, <code class="codeph">destination_spoke1</code>, and <code class="codeph">destination_spoke2</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>A capture process named <code class="codeph">capture_hns</code> that captures DML changes to the tables in the <code class="codeph">hr</code> schema from the local redo log. The capture process enqueues these changes into the local <code class="codeph">source_hns</code> queue.
+                  </p>
+               </li>
+               <li>
+                  <p>A propagation named <code class="codeph">propagation_spoke1</code> that sends changes from the local <code class="codeph">source_hns</code> queue to the <code class="codeph">destination_spoke1</code> queue at <code class="codeph">spoke1.example.com</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>A propagation named <code class="codeph">propagation_spoke2</code> that sends changes from the local <code class="codeph">source_hns</code> queue to the <code class="codeph">destination_spoke2</code> queue at <code class="codeph">spoke2.example.com</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>An apply process named <code class="codeph">apply_spoke1</code> that dequeues changes that originated at <code class="codeph">spoke1.example.com</code> from the <code class="codeph">destination_spoke1</code> queue and applies them to the tables in the <code class="codeph">hr</code> schema.
+                  </p>
+               </li>
+               <li>
+                  <p>An apply process named <code class="codeph">apply_spoke2</code> that dequeues changes that originated at <code class="codeph">spoke2.example.com</code> from the <code class="codeph">destination_spoke2</code> queue and applies them to the tables in the <code class="codeph">hr</code> schema.
+                  </p>
+               </li>
+            </ul>
+            <p>The <code class="codeph">spoke1.example.com</code> database has the following Oracle Streams components configured:
+            </p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p>The following queues: <code class="codeph">source_hns</code> and <code class="codeph">destination_spoke1</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>A capture process named <code class="codeph">capture_hns</code> that captures DML changes to the tables in the <code class="codeph">hr</code> schema from the local redo log. The capture process enqueues these changes into the local <code class="codeph">source_hns</code> queue.
+                  </p>
+               </li>
+               <li>
+                  <p>A propagation named <code class="codeph">propagation_spoke1</code> that sends changes from the local <code class="codeph">source_hns</code> queue to the <code class="codeph">destination_spoke1</code> queue at <code class="codeph">hub.example.com</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>An apply process named <code class="codeph">apply_spoke1</code> that dequeues changes that originated at <code class="codeph">hub.example.com</code> and <code class="codeph">spoke2.example.com</code> from the <code class="codeph">destination_spoke1</code> queue and applies them to the tables in the <code class="codeph">hr</code> schema.
+                  </p>
+               </li>
+            </ul>
+            <p>The <code class="codeph">spoke2.example.com</code> database has the following Oracle Streams components configured:
+            </p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p>The following queues: <code class="codeph">source_hns</code> and <code class="codeph">destination_spoke2</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>A capture process named <code class="codeph">capture_hns</code> that captures DML changes to the tables in the <code class="codeph">hr</code> schema from the local redo log. The capture process enqueues these changes into the local <code class="codeph">source_hns</code> queue.
+                  </p>
+               </li>
+               <li>
+                  <p>A propagation named <code class="codeph">propagation_spoke2</code> that sends changes from the local <code class="codeph">source_hns</code> queue to the <code class="codeph">destination_spoke2</code> queue at <code class="codeph">hub.example.com</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>An apply process named <code class="codeph">apply_spoke2</code> that dequeues changes that originated at <code class="codeph">hub.example.com</code> and <code class="codeph">spoke1.example.com</code> from the <code class="codeph">destination_spoke2</code> queue and applies them to the tables in the <code class="codeph">hr</code> schema.
+                  </p>
+               </li>
+            </ul>
+         </div>
+      </article>
+      
+      <div class="footer copyrightlogo">
+         <span><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright&nbsp;&copy;&nbsp;2003, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</a></span></div>
+   </body>
+</html>

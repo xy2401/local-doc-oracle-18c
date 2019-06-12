@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: E98876-01 -->
+    <!-- Published date: July 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Recovering PDBs Using Preplugin Backups</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to recover PDBs using preplugin backups.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-08-03T18:46:30+00:00">
+    <meta name="dcterms.title" content="Recovering plugged PDB using preplugin backups">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBESP">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E98876-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Recovering
+        PDBs Using Preplugin Backups</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p> This 15-minute tutorial shows how to recover a pluggable
+                database (PDB), unplugged and plugged from a container database
+                (CDB) into another CDB, by using preplugin backups. </p>
+              <p>Preplugin backups are all backups of a PDB taken before
+                unplugging/plugging operations, usable after plugging a PDB into
+                a new CDB.</p>
+              <h3>Background</h3>
+              <p> In Oracle Database 12c, backups taken for a PDB before the
+                unplugging and plugging operation cannot be reused after
+                plugging the PDB into another CDB. </p>
+              <p>In Oracle Database 18c, backups taken for a PDB before the
+                unplugging and plugging operation can be reused to recover the
+                PDB even if no other backups have been completed in the target
+                CDB.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Familiarity with PDB unplugging and plugging operations</li>
+                <li>Oracle Database 18c installed</li>
+                <li>Two CDBs, <code> ORCL </code> and <code> cdb1 </code>
+                  with one PDB opened in <code> cdb1: PDB1 </code></li>
+                <li>The <code> HR </code> schema that is installed in the
+                  non-CDB is an example of application tables or any other&nbsp;
+                  table that you created. If you want to use the <code>
+                    HR.EMPLOYEES </code> table, use the <a href="files/hr.sql" target="_blank"> hr.sql </a> script. Download the SQL
+                  script to the labs directory created on your server <code>
+                    /home/oracle/labs. </code> In the script, update the
+                  password of the user connected to the database</li>
+              </ul>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Prepare
+                PDB Before Unplugging to Use Preplugin Backups</h2>
+              <p>In this section, you'll use a new procedure to export all RMAN
+                backup metadata that belong to the PDB before the unplug
+                operation. The metadata is transported along with the PDB during
+                the unplug operation.</p>
+              <ol>
+                <li>Log in to <code> PDB1. </code> This is <em> Session1. </em>
+                  <pre><code>sqlplus system@PDB1</code> <br>Enter password: <em>password</em></pre>
+                </li>
+                <li>Use the <a href="files/hr.sql" target="_blank"> hr.sql </a>
+                  script to create the <code> HR </code> user and <code>
+                    DEPARTMENTS </code> table.
+                  <pre><code>@/home/oracle/labs/hr.sql</code></pre>
+                </li>
+                <li>Query the <code> HR.DEPARTMENTS </code> table and ensure
+                  that the output is similar to <a href="files/code1.txt" target="_blank">code1</a>.
+                  <pre><code>SELECT * FROM hr.departments;</code></pre>
+                </li>
+                <li>In another terminal window, launch <code> rman. </code>
+                  This is <em> Session2. </em>
+                  <pre><code>export ORACLE_SID=cdb1
+rman target /</code></pre>
+                </li>
+                <li>Create backups for <code> PDB1 </code> of <code> cdb1 </code>
+                  before the unplug operation. It is recommended that you back
+                  up all the archivelogs before the unplug operation so that
+                  they can be restored from the preplugin backups when a
+                  recovery might be required in the destination CDB. A sample of
+                  the RMAN session is available in <a href="files/code1a.txt" target="_blank">
+                    code1a</a>.
+                  <pre><code>BACKUP PLUGGABLE DATABASE pdb1 PLUS ARCHIVELOG;</code></pre>
+                </li>
+                <li>Quit the <code> rman </code> session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+                <li>In <em>Session1</em>, export the RMAN backup information
+                  that belongs to <code> PDB1 </code> to its dictionary before
+                  the unplug operation so that the preplugin backups can be used
+                  in the target CDB even if no new backup will be performed
+                  after you plug the PDB. The metadata is transported along with
+                  the PDB during the migration.
+                  <pre><code>EXEC dbms_pdb.exportrmanbackup('pdb1')</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Unplug
+                and Plug the PDB</h2>
+              <p>In this section, you'll unplug and plug <code> PDB1 </code>
+                and verify that the preplugin backups are cataloged.</p>
+              <ol>
+                <li>Connect to <code> cdb1 </code> as <code> SYSDBA. </code>
+                  <pre><code>CONNECT / AS SYSDBA</code></pre>
+                </li>
+                <li>Close the PDB before the unplug operation.
+                  <pre><code>ALTER PLUGGABLE DATABASE pdb1 CLOSE;</code></pre>
+                </li>
+                <li>Unplug <code> PDB1 </code> from <code> cdb1. </code>
+                  <pre><code>ALTER PLUGGABLE DATABASE pdb1 UNPLUG INTO '/tmp/pdb1.xml';</code></pre>
+                </li>
+                <li>Archive the current redo log.
+                  <pre><code>ALTER SYSTEM SWITCH LOGFILE;</code></pre>
+                </li>
+                <li> Query the <code> V$ARCHIVED_LOG </code> view and ensure
+                  that the output is similar to <a href="files/code2.txt" target="_blank">code2</a>
+                  to retrieve the last archive log file name will have to be
+                  cataloged later in Section2.
+                  <pre><code>SELECT name, next_change#, sequence# FROM V$ARCHIVED_LOG ORDER BY 3;</code></pre>
+                </li>
+                <li>Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+                <li> Before you plug <code> PDB1, </code> create a directory
+                  for the new PDB datafiles.
+                  <pre><code>mkdir /u02/app/oracle/oradata/ORCL/orcl_pdb1</code></pre>
+                </li>
+                <li>Log in to <code> ORCL </code> as <code> SYSDBA. </code>
+                  <pre><code>sqlplus sys@ORCL AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Plug <code> PDB1 </code> as <code> ORCL_PDB1 </code>
+                  into <code> ORCL.</code>
+                  <pre><code>CREATE PLUGGABLE DATABASE orcl_pdb1 USING '/tmp/pdb1.xml'
+                  CREATE_FILE_DEST='/u02/app/oracle/oradata/ORCL/orcl_pdb1'
+                  COPY;</code></pre>
+                </li>
+                <li>Open <code> ORCL_PDB1. </code>
+                  <pre><code>ALTER PLUGGABLE DATABASE orcl_pdb1 OPEN;</code></pre>
+                </li>
+                <li>In the <code> rman </code> terminal window, set the <code>
+                    ORACLE_SID </code> to <code> ORCL. </code>
+                  <pre><code>export ORACLE_SID=ORCL</code></pre>
+                </li>
+                <li>Launch a new <code> rman </code> session.
+                  <pre><code>rman target /</code></pre>
+                </li>
+                <li>Check that the preplugin backups for <code> ORCL_PDB1 </code>
+                  are cataloged in <code> ORCL. </code> First set the
+                  container name that you want the list of preplugin backups.
+                  <pre><code>SET PREPLUGIN CONTAINER=orcl_pdb1;</code></pre>
+                </li>
+                <li> Execute the following command to retrieve the list of
+                  preplugin backups for <code> ORCL_PDB1</code> and observe the
+                  output is similar to <a href="files/code3.txt" target="_blank">code3</a>.
+                  <pre><code>LIST PREPLUGIN BACKUP;</code></pre>
+                </li>
+                <li> Execute the following command to retrieve the list of
+                  preplugin archive log files for <code> ORCL_PDB1 </code>and
+                  ensure that the output is similar to <a href="files/code4.txt" target="_blank">code4</a>.
+                  <pre><code>LIST PREPLUGIN ARCHIVELOG ALL;</code></pre>
+                </li>
+                <li>Verify if the last redo log file has been archived,
+                  previously recorded, or been cataloged. If it was not
+                  cataloged it is because it was created after the PDB was
+                  unplugged. Catalog it and change the file reference to match
+                  the recorded file. Ensure that the output is similar to that
+                  shown below. </li>
+                <pre><code>CATALOG PREPLUGIN ARCHIVELOG '/u03/app/oracle/fast_recovery_area/CDB1/archivelog/2018_01_16/o1_mf_1_97_f5vj3vmx_.arc';
+
+cataloged archived log
+archived log file name=/u03/app/oracle/fast_recovery_area/CDB1/archivelog/2018_01_16/o1_mf_1_97_f5vj3vmx_.arc RECID=96 STAMP=0
+</code></pre>
+                <li>Verify that the cataloged preplugin archive log files are
+                  available on disk and ensure that the output is similar to <a href="files/code5.txt" target="_blank">code5</a>.
+                  <pre><code>CROSSCHECK PREPLUGIN ARCHIVELOG ALL;</code></pre>
+                </li>
+                <li>Verify that the cataloged preplugin backups are available on
+                  disk.
+                  <pre><code>CROSSCHECK PREPLUGIN BACKUP;
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=53 device type=DISK
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/app/oracle/fast_recovery_area/CDB1/backupset/2018_01_16/o1_mf_annnn_TAG20180116T090329_f5vhz21w_.bkp RECID=6 STAMP=965552609
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/app/oracle/fast_recovery_area/CDB1/62CEFFD0369E09BBE0532133960A4225/backupset/2018_01_16/o1_mf_nnndf_TAG20180116T090415_f5vj0j1d_.bkp RECID=7 STAMP=965552655
+crosschecked backup piece: found to be 'AVAILABLE'
+backup piece handle=/u03/app/oracle/fast_recovery_area/CDB1/backupset/2018_01_16/o1_mf_annnn_TAG20180116T090451_f5vj1n2f_.bkp RECID=8 STAMP=965552692
+Crosschecked 3 objects</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Recover
+                From Preplugin Backups</h2>
+              <p>In this section, you'll have to recover <code> ORCL_PDB1 </code>
+                after a datafile loss. There has been no new backup completed
+                since the plug operation. You will use the preplugin backups.</p>
+              <ol>
+                <li>In <em>Session1</em>, consider adding the new service name
+                  into the <code> tnsnames.ora </code> file before you connect
+                  to the plugged PDB to find a datafile to remove.
+                  <pre><code>CONNECT sys@ORCL_PDB1 AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Find a datafile to remove from <code> V$DATAFILE. </code>
+                  Ensure that the output is similar to <a href="files/code6.txt" target="_blank">code6</a>.</li>
+                <pre><code>SELECT name FROM v$datafile;</code></pre>
+                <li>Intentionally remove one of these files. In this example,
+                  the UNDO tablespace of the PDB is removed.
+                  <pre><code>HOST rm /u02/app/oracle/oradata/ORCL/orcl_pdb1/ORCL/62CEFFD0369E09BBE0532133
+960A4225/datafile/o1_mf_undotbs1_f5vjm6mg_.dbf</code></pre>
+                </li>
+                <li>Reconnect to <code> ORCL_PDB1 </code> as <code> HR </code>
+                  and view the error messages from <a href="files/code7.txt" target="_blank">code7</a>.
+                </li>
+                <li>Connect to <code> ORCL </code> to close <code> ORCL_PDB1,
+                  </code> if it is not already closed.
+                  <pre><code>CONNECT sys@ORCL AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Close <code> ORCL_PDB1. </code>
+                  <pre><code>ALTER PLUGGABLE DATABASE orcl_pdb1 CLOSE;</code></pre>
+                </li>
+                <li>To recover the situation, because there is no new backup
+                  completed after the plugin operation, you will use the
+                  preplugin backups. The datafiles that are restored from
+                  backups were taken before the PDB was plugged in. In the <em>Session2</em>,
+                  first set the session to the container that you want to
+                  restore and recover.
+                  <pre><code>SET PREPLUGIN CONTAINER=orcl_pdb1;</code></pre>
+                </li>
+                <li>Restore and recover <code> ORCL_PDB1 </code> from
+                  preplugin backups. Ensure that the output is similar to <a href="files/code8.txt" target="_blank">code8</a>.
+                  <pre><code>RUN {
+     RESTORE PLUGGABLE DATABASE orcl_pdb1 FROM PREPLUGIN;
+     RECOVER PLUGGABLE DATABASE orcl_pdb1 FROM PREPLUGIN;
+}</code></pre>
+                </li>
+                <li>Run a normal recovery after preplugin recovery in order to
+                  apply the redo log files of the CDB on the PDB.
+                  <pre><code>RECOVER PLUGGABLE DATABASE orcl_pdb1;
+
+Starting recover at 16-JAN-18
+using channel ORA_DISK_1
+
+starting media recovery
+media recovery complete, elapsed time: 00:00:02
+
+Finished recover at 16-JAN-18</code></pre>
+                </li>
+                <li>Open <code> ORCL_PDB1. </code>
+                  <pre><code>ALTER PLUGGABLE DATABASE orcl_pdb1 OPEN;</code> </pre>
+                </li>
+                <li> Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+                <li>In the <em> Session1, </em> verify the content of <code>
+                    HR.DEPARTMENTS </code> table in <code> ORCL_PDB1. </code>
+                  <pre><code>CONNECT hr@ORCL_PDB1
+Enter password: <em>password</em>
+</code></pre></li>
+                <li>Query <code> HR.DEPARTMENTS </code> table and ensure that
+                  the output is similar to <a href="files/code1.txt" target="_blank">code1</a>.
+                  <pre><code>SELECT * FROM hr.departments;</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_4" role="button" style="text-align: left;"><img src="./img/32_4.png" alt="section 4" class="num_circ" height="32" width="32">Clean
+                up the Tutorial Environment</h2>
+              <ol>
+                <li>Still in <em>Session1</em>, drop <code> PDB_ORCL1</code>
+                  that was created in a previous section. Reconnect to the CDB
+                  root as SYSDBA.
+                  <pre><code>CONNECT sys@ORCL AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Close <code> ORCL_PDB1. </code>
+                  <pre><code>ALTER PLUGGABLE DATABASE orcl_pdb1 CLOSE;</code></pre>
+                </li>
+                <li>Drop the PDB.
+                  <pre><code>DROP PLUGGABLE DATABASE orcl_pdb1 INCLUDING DATAFILES;</code></pre>
+                </li>
+                <li> Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+              </ol>
+            </section>
+          </article>
+          <code> </code></div>
+        <code> </code></div>
+      <code> </code></div>
+    <code> <code> <code>
+          <!--close main-->
+          <!--end content-->
+          <div class="footer-container ">
+            <div style="max-width: 994px; padding:10px 0 0 17px;">
+              <footer class="footer-list">
+                <ul>
+                  <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                      Oracle</a> </li>
+                  <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+                  <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                      Notices</a> </li>
+                  <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms of Use</a> </li>
+                  <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your Privacy Rights</a> </li>
+                  <li><a href="http://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                      © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+                </ul>
+              </footer>
+            </div>
+            <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+          </div>
+        </code> </code> </code>
+  </body>
+</html>

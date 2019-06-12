@@ -1,0 +1,116 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Before starting Oracle Database Configuration Assistant (DBCA) to configure an Oracle RAC database, you must install Oracle Grid Infrastructure for a cluster, and configure shared storage areas for Oracle RAC files.">
+      <meta name="description" content="Before starting Oracle Database Configuration Assistant (DBCA) to configure an Oracle RAC database, you must install Oracle Grid Infrastructure for a cluster, and configure shared storage areas for Oracle RAC files.">
+      <title>Configure Shared Storage for the Oracle RAC Database</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Installation Guide">
+      <meta property="og:description" content="Before starting Oracle Database Configuration Assistant (DBCA) to configure an Oracle RAC database, you must install Oracle Grid Infrastructure for a cluster, and configure shared storage areas for Oracle RAC files.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Installation Guide for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="real-application-clusters-installation-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-07-31T04:59:38-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2012, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83916-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="decide-on-naming-convention-for-your-oracle-rac-database.html" title="Previous" type="text/html">
+      <link rel="next" href="obtain-the-password-for-the-oracle-home-user.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Real Application Clusters Installation Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="RIWIN">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="decide-on-naming-convention-for-your-oracle-rac-database.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="obtain-the-password-for-the-oracle-home-user.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Installation Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="creating-oracle-rac-or-oracle-rac-one-node-databases-with-dbca.html" property="item" typeof="WebPage"><span property="name">Creating Oracle RAC or Oracle RAC One Node Databases with DBCA </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="tasks-to-complete-before-using-dbca-to-create-a-rac-database.html" property="item" typeof="WebPage"><span property="name">Tasks to Complete Before Using DBCA to Create an Oracle RAC Database</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Configure Shared Storage for the Oracle RAC Database</li>
+            </ol>
+            <a id="GUID-FC10D385-3F36-4FAA-B92B-8971AE8120EC" name="GUID-FC10D385-3F36-4FAA-B92B-8971AE8120EC"></a>
+            
+            <h2 id="RIWIN-GUID-FC10D385-3F36-4FAA-B92B-8971AE8120EC" class="sect2"><span class="enumeration_section">3.7.2 </span>Configure Shared Storage for the Oracle RAC Database
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Before starting Oracle Database Configuration Assistant (DBCA) to configure an Oracle RAC database, you must install Oracle Grid Infrastructure for a cluster, and configure shared storage areas for Oracle RAC files. </p>
+               <ol>
+                  <li class="stepexpand"><span>Log in as a user with SYSASM system privileges.</span><div>Storage administration tasks require the SYSASM system privileges, which are granted to members of the OSASM operating system group. This group may not be the same as the OSDBA group, whose members are granted the SYSDBA system privileges.</div>
+                  </li>
+                  <li class="stepexpand"><span>On Windows-based systems, if you plan to use Oracle ASM storage, then before you use DBCA to create a database, you must perform the following steps: </span><ol type="a">
+                        <li class="substepexpand"><span>Create logical drives either on extended partitions or primary partitions.</span></li>
+                        <li class="substepexpand"><span>Delete the drive letters for these partitions on all nodes.</span></li>
+                        <li class="substepexpand"><span>Stamp these partitions with <code class="codeph">asmtoolg</code>.</span></li>
+                        <li class="substepexpand"><span>After you have configured the disks to be used by Oracle ASM, you must create the disk groups that will be used by the database.</span><div>You can create disk groups by using Oracle Automatic Storage Management Configuration Assistant (ASMCA), SQL*Plus, or Oracle Enterprise Manager.</div>
+                        </li>
+                     </ol>
+                  </li>
+               </ol>
+               <div class="section">
+                  <div class="infoboxnotealso" id="GUID-FC10D385-3F36-4FAA-B92B-8971AE8120EC__GUID-3E35D3D7-DBEA-4861-AF5F-D91E66A9798A">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../ntdbi/configuring-storage-for-oracle-automatic-storage-management.html#NTDBI2744" target="_blank"><span class="italic">Oracle Database Installation Guide for Microsoft Windows</span></a> for more information about <code class="codeph">asmtoolg</code></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/riwin&amp;id=CWGEN" target="_blank"><span class="italic">Oracle Grid Infrastructure Installation Guide</span></a> for your platform more information on shared storage configuration requirements
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../ostmg/create-diskgroups.html#OSTMG10206" target="_blank"><span class="italic">Oracle Automatic Storage Management Administrator's Guide</span></a> for more information about creating disk groups
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="tasks-to-complete-before-using-dbca-to-create-a-rac-database.html#GUID-E4E9C7B0-F794-47B0-B4FA-BD5559709AC3" title="Before you can create an Oracle RAC database using Oracle Database Configuration Assistant, you must configure your system to meet the software requirements, if this was not done as part of the Oracle Grid Infrastructure installation.">Tasks to Complete Before Using DBCA to Create an Oracle RAC Database</a></p>
+                  </div>
+               </div>
+            </div>
+            
+         </div>
+      </article>
+   </body>
+</html>

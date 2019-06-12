@@ -1,0 +1,474 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Troubleshooting Rules and Rule-Based Transformations</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="troubleshooting-apply.html" title="Previous" type="text/html">
+      <link rel="next" href="oracle-streams-information-provisioning.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="troubleshooting-apply.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="oracle-streams-information-provisioning.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="troubleshooting-an-oracle-streams-environment.html" property="item" typeof="WebPage"><span property="name">   Troubleshooting an Oracle Streams Environment </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Troubleshooting Rules and Rule-Based Transformations</li>
+            </ol>
+            <a id="GUID-AEF9C9AE-9735-4688-925B-5C967BAC783F" name="GUID-AEF9C9AE-9735-4688-925B-5C967BAC783F"></a><a id="STRMS1075"></a>
+            
+            <h2 id="STRMS-GUID-AEF9C9AE-9735-4688-925B-5C967BAC783F" class="sect2"><span class="enumeration_chapter">34 </span> Troubleshooting Rules and Rule-Based Transformations
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d137483e125" class="indexterm-anchor"></a><a id="d137483e129" class="indexterm-anchor"></a>When a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> is not behaving as expected, the problem might be that <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s, <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s, or <a href="strms_glossary.html#GUID-18697C88-84CA-4F47-8F47-DD5D37E9543B"><span class="xrefglossterm">rule-based transformation</span></a>s for the <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a> are not configured properly. Use the following sections to identify and resolve problems with rule sets, rules, and rule-based transformations:
+               </p>
+               <p><a id="d137483e172" class="indexterm-anchor"></a><a id="d137483e176" class="indexterm-anchor"></a>The following topics describe identifying and resolving common problems with rules and rule-based transformations in an Oracle Streams environment:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-C9CF8619-F151-4C1A-A74E-E28A1698F0C6">Are Rules Configured Properly for the Oracle Streams Client?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-BAF48723-1AB9-4FED-B99A-8E7A7105076C">Are Declarative Rule-Based Transformations Configured Properly?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-B1461ECD-F0E8-461B-9EF7-08986072D4F9">Are the Custom Rule-Based Transformations Configured Properly?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-0BFB8BAA-C4E9-4105-9839-49417C4C8A75">Are Incorrectly Transformed LCRs in the Error Queue?</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-AEF9C9AE-9735-4688-925B-5C967BAC783F__GUID-777B452B-59D0-4AE4-B03D-C78B389414C5">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D"> Advanced Rule Concepts</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rules.html#GUID-AB9D9589-CD21-4EED-959B-72CA569334F3"> Managing Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-rules.html#GUID-8D031A97-43B4-4575-9931-FF4491058194"> Monitoring Rules</a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS1076"></a><div class="props_rev_3"><a id="GUID-C9CF8619-F151-4C1A-A74E-E28A1698F0C6" name="GUID-C9CF8619-F151-4C1A-A74E-E28A1698F0C6"></a><h3 id="STRMS-GUID-C9CF8619-F151-4C1A-A74E-E28A1698F0C6" class="sect3"><span class="enumeration_section">34.1 </span>Are Rules Configured Properly for the Oracle Streams Client?
+               </h3>
+               <div>
+                  <p>If a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> is behaving in an unexpected way, then the problem might be that the <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s in one or more of the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s for the <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a> are not configured properly. For example, if you expect a capture process to capture changes made to a particular table, but the capture process is not capturing these changes, then the cause might be that the rules in the rule sets used by the capture process do not instruct the capture process to capture changes to the table. 
+                  </p>
+                  <p>You can check the rules for a particular Oracle Streams client by querying the <code class="codeph">DBA_STREAMS_RULES</code> data dictionary view. If you use both <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a>s and <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a>s in your Oracle Streams environment, then it is important to know whether a rule returned by this view is in the positive or negative rule set for a particular Oracle Streams client.
+                  </p>
+                  <p>An Oracle Streams client performs an action, such as capture, propagation, apply, or dequeue, for messages that satisfy its rule sets. In general, a message satisfies the rule sets for an Oracle Streams client if <span class="italic">no rules</span> in the negative rule set evaluate to <code class="codeph">TRUE</code> for the message, and <span class="italic">at least one rule</span> in the positive rule set evaluates to <code class="codeph">TRUE</code> for the message. 
+                  </p>
+                  <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-40D0F31E-06AD-400D-BCDB-5FD3A8222B13">Rule Sets and Rule Evaluation of Messages</a>"</span> contains more detailed information about how a message satisfies the rule sets for an Oracle Streams client, including information about Oracle Streams client behavior when one or more rule sets are not specified. 
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-C9CF8619-F151-4C1A-A74E-E28A1698F0C6__GUID-3D1D38DB-8110-4567-A624-07A6DEFA844F">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-40D0F31E-06AD-400D-BCDB-5FD3A8222B13">Rule Sets and Rule Evaluation of Messages</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>This section includes the following subsections:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-BF13F733-9FB6-4761-B979-9DF40D726FA2">Checking Schema and Global Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-F9622F62-992B-49FE-AE1D-36BF62AC412B">Checking Table Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-0D42458D-F12E-4CAC-A955-3C48078F7B13">Checking Subset Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-3B64475F-0577-4D7A-B76C-BB8709AB91EF">Checking for Message Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-7E910F26-CE07-4161-917A-E382B98BE567">Resolving Problems with Rules</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS1077"></a><div class="props_rev_3"><a id="GUID-BF13F733-9FB6-4761-B979-9DF40D726FA2" name="GUID-BF13F733-9FB6-4761-B979-9DF40D726FA2"></a><h4 id="STRMS-GUID-BF13F733-9FB6-4761-B979-9DF40D726FA2" class="sect4"><span class="enumeration_section">34.1.1 </span>Checking Schema and Global Rules
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Schema and <a href="strms_glossary.html#GUID-37142187-2A5B-48E7-A1CE-A07D60C60460"><span class="xrefglossterm">global rule</span></a>s in the positive rule set for an Oracle Streams client instruct the Oracle Streams client to perform its task for all of the messages relating to a particular schema or database, respectively. Schema and global rules in the negative rule set for an Oracle Streams client instruct the Oracle Streams client to discard all of the messages relating to a particular schema or database, respectively. If an Oracle Streams client is not behaving as expected, then it might be because schema or global rules are not configured properly for the Oracle Streams client.
+                        </p>
+                        <p>For example, suppose a database is running an apply process named <code class="codeph">strm01_apply</code>, and you want this apply process to apply LCRs containing changes to the <code class="codeph">hr</code> schema. If the apply process uses a negative rule set, then ensure that there are no <a href="strms_glossary.html#GUID-59A77572-3B32-483A-A816-5938ACA78220"><span class="xrefglossterm">schema rule</span></a>s that evaluate to <code class="codeph">TRUE</code> for this schema in the negative rule set. Such rules cause the apply process to discard LCRs containing changes to the schema. <span class="q">"<a href="monitoring-rules.html#GUID-10656B8B-256B-4335-A488-265D5404EE48">Displaying the Rules in the Negative Rule Set for an Oracle Streams Client</a>"</span> contains an example of a query that shows such rules.
+                        </p>
+                        <p>If the query returns any such rules, then the rules returned might be causing the apply process to discard changes to the schema. If this query returns no rows, then ensure that there are schema rules in the positive rule set for the apply process that evaluate to <code class="codeph">TRUE</code> for the schema. <span class="q">"<a href="monitoring-rules.html#GUID-0B13C614-89F3-43C7-8B96-CDAEA1ED6063">Displaying the Rules in the Positive Rule Set for an Oracle Streams Client</a>"</span> contains an example of a query that shows such rules.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1078"></a><div class="props_rev_2"><a id="GUID-F9622F62-992B-49FE-AE1D-36BF62AC412B" name="GUID-F9622F62-992B-49FE-AE1D-36BF62AC412B"></a><h4 id="STRMS-GUID-F9622F62-992B-49FE-AE1D-36BF62AC412B" class="sect4"><span class="enumeration_section">34.1.2 </span>Checking Table Rules
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Table rules in the positive rule set for an Oracle Streams client instruct the Oracle Streams client to perform its task for the messages relating to one or more particular tables. Table rules in the negative rule set for an Oracle Streams client instruct the Oracle Streams client to discard the messages relating to one or more particular tables.</p>
+                        <p>If an Oracle Streams client is not behaving as expected for a particular table, then it might be for one of the following reasons:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>One or more global rules in the rule sets for the Oracle Streams client instruct the Oracle Streams client to behave in a particular way for messages relating to the table because the table is in a specific database. That is, a global rule in the negative rule set for the Oracle Streams client might instruct the Oracle Streams client to discard all messages from the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> that contains the table, or a global rule in the positive rule set for the Oracle Streams client might instruct the Oracle Streams client to perform its task for all messages from the source database that contains the table.
+                              </p>
+                           </li>
+                           <li>
+                              <p>One or more schema rules in the rule sets for the Oracle Streams client instruct the Oracle Streams client to behave in a particular way for messages relating to the table because the table is in a specific schema. That is, a schema rule in the negative rule set for the Oracle Streams client might instruct the Oracle Streams client to discard all messages relating to database objects in the schema, or a schema rule in the positive rule set for the Oracle Streams client might instruct the Oracle Streams client to perform its task for all messages relating to database objects in the schema.</p>
+                           </li>
+                           <li>
+                              <p>One or more <a href="strms_glossary.html#GUID-4A72ABEB-7CC1-4A46-A4B9-41F722D872A4"><span class="xrefglossterm">table rule</span></a>s in the rule sets for the Oracle Streams client instruct the Oracle Streams client to behave in a particular way for messages relating to the table.
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnotealso" id="GUID-F9622F62-992B-49FE-AE1D-36BF62AC412B__GUID-359D9163-FC27-435F-9287-D898AB3F7299">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-BF13F733-9FB6-4761-B979-9DF40D726FA2">Checking Schema and Global Rules</a>"</span></p>
+                        </div>
+                        <p>If you are sure that no global or schema rules are causing the unexpected behavior, then you can check for table rules in the rule sets for an Oracle Streams client. For example, if you expect a capture process to capture changes to a particular table, but the capture process is not capturing these changes, then the cause might be that the rules in the positive and negative rule sets for the capture process do not instruct it to capture changes to the table. </p>
+                        <p>Suppose a database is running a capture process named <code class="codeph">strm01_capture</code>, and you want this capture process to capture changes to the <code class="codeph">hr.departments</code> table. If the capture process uses a negative rule set, then ensure that there are no table rules that evaluate to <code class="codeph">TRUE</code> for this table in the negative rule set. Such rules cause the capture process to discard changes to the table. <span class="q">"<a href="monitoring-rules.html#GUID-10656B8B-256B-4335-A488-265D5404EE48">Displaying the Rules in the Negative Rule Set for an Oracle Streams Client</a>"</span> contains an example of a query that shows rules in a negative rule set.
+                        </p>
+                        <p>If that query returns any such rules, then the rules returned might be causing the capture process to discard changes to the table. If that query returns no rules, then ensure that there are one or more table rules in the positive rule set for the capture process that evaluate to <code class="codeph">TRUE</code> for the table. <span class="q">"<a href="monitoring-rules.html#GUID-0B13C614-89F3-43C7-8B96-CDAEA1ED6063">Displaying the Rules in the Positive Rule Set for an Oracle Streams Client</a>"</span> contains an example of a query that shows rules in a positive rule set.
+                        </p>
+                        <p>You can also determine which rules have a particular pattern in their rule condition. <span class="q">"<a href="monitoring-rules.html#GUID-CCFA4FEC-F34D-4C90-ABCE-A0B11A70BD5C">Listing Each Rule that Contains a Specified Pattern in Its Condition</a>"</span>. For example, you can find all of the rules with the string "departments" in their rule condition, and you can ensure that these rules are in the correct rule sets.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-F9622F62-992B-49FE-AE1D-36BF62AC412B__GUID-C1B111FB-5073-4D81-AB77-59032A6A2D4B">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-C74CAA33-1F17-44B8-9BCC-87DB8A981ECD">Table Rules Example</a>"</span> for more information about specifying table rules
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1079"></a><div class="props_rev_3"><a id="GUID-0D42458D-F12E-4CAC-A955-3C48078F7B13" name="GUID-0D42458D-F12E-4CAC-A955-3C48078F7B13"></a><h4 id="STRMS-GUID-0D42458D-F12E-4CAC-A955-3C48078F7B13" class="sect4"><span class="enumeration_section">34.1.3 </span>Checking Subset Rules
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a> can be in the rule set used by a capture process, synchronous capture, propagation, apply process, or messaging client. A subset rule evaluates to <code class="codeph">TRUE</code> only if a DML operation contains a change to a particular subset of rows in the table. For example, to check for table rules that evaluate to <code class="codeph">TRUE</code> for an apply process named <code class="codeph">strm01_apply</code> when there are changes to the <code class="codeph">hr.departments</code> table, run the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN RULE_NAME HEADING 'Rule Name' FORMAT A20
+COLUMN RULE_TYPE HEADING 'Rule Type' FORMAT A20
+COLUMN DML_CONDITION HEADING 'Subset Condition' FORMAT A30
+
+SELECT RULE_NAME, RULE_TYPE, DML_CONDITION
+  FROM DBA_STREAMS_RULES
+  WHERE STREAMS_NAME   = 'STRM01_APPLY' AND 
+        STREAMS_TYPE   = 'APPLY' AND
+        SCHEMA_NAME    = 'HR' AND
+        OBJECT_NAME    = 'DEPARTMENTS';</pre><p></p><pre class="oac_no_warn" dir="ltr">Rule Name            Rule Type            Subset Condition
+-------------------- -------------------- ------------------------------
+DEPARTMENTS5         DML                  location_id=1700
+DEPARTMENTS6         DML                  location_id=1700
+DEPARTMENTS7         DML                  location_id=1700
+</pre><p>Notice that this query returns any subset condition for the table in the <code class="codeph">DML_CONDITION</code> column, which is labeled "Subset Condition" in the output. In this example, subset rules are specified for the <code class="codeph">hr.departments</code> table. These subset rules evaluate to <code class="codeph">TRUE</code> only if an LCR contains a change that involves a row where the <code class="codeph">location_id</code> is <code class="codeph">1700</code>. So, if you expected the apply process to apply all changes to the table, then these subset rules cause the apply process to discard changes that involve rows where the <code class="codeph">location_id</code> is&nbsp;not&nbsp;<code class="codeph">1700</code>.
+                        </p>
+                        <div class="infoboxnote" id="GUID-0D42458D-F12E-4CAC-A955-3C48078F7B13__GUID-4C734CB8-80B8-46EE-8BB8-AD6BB503A79A">
+                           <p class="notep1">Note:</p>
+                           <p>Subset rules must reside only in positive rule sets.</p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-0D42458D-F12E-4CAC-A955-3C48078F7B13__GUID-2BB91711-DDA3-40B6-99BF-B574D536BD4C">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-C74CAA33-1F17-44B8-9BCC-87DB8A981ECD">Table Rules Example</a>"</span> for more information about specifying subset rules
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-35868ADC-C131-4988-9139-FC9B0EEA145D">Row Migration and Subset Rules</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1080"></a><div class="props_rev_3"><a id="GUID-3B64475F-0577-4D7A-B76C-BB8709AB91EF" name="GUID-3B64475F-0577-4D7A-B76C-BB8709AB91EF"></a><h4 id="STRMS-GUID-3B64475F-0577-4D7A-B76C-BB8709AB91EF" class="sect4"><span class="enumeration_section">34.1.4 </span>Checking for Message Rules
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A message rule can be in the rule set used by a propagation, apply process, or messaging client. Message rules pertain only to <a href="strms_glossary.html#GUID-7613B49E-9B03-4C9E-9A00-C92C6B2CEC9A"><span class="xrefglossterm">user message</span></a>s of a specific message type, not to <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s. A message rule evaluates to <code class="codeph">TRUE</code> if a user message in a <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> is of the type specified in the message rule and satisfies the <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a> of the message rule.
+                        </p>
+                        <p>If you expect a propagation, apply process, or messaging client to perform its task for some user messages, but the Oracle Streams client is not performing its task for these messages, then the cause might be that the rules in the positive and negative rule sets for the Oracle Streams client do not instruct it to perform its task for these messages. Similarly, if you expect a propagation, apply process, or messaging client to discard some user messages, but the Oracle Streams client is not discarding these messages, then the cause might be that the rules in the positive and negative rule sets for the Oracle Streams client do not instruct it to discard these messages.</p>
+                        <p>For example, suppose you want a messaging client named <code class="codeph">oe</code> to dequeue messages of type <code class="codeph">oe.user_msg</code> that satisfy the following condition:
+                        </p><pre class="oac_no_warn" dir="ltr">:"VAR$_2".OBJECT_OWNER = 'OE' AND  :"VAR$_2".OBJECT_NAME = 'ORDERS'
+</pre><p>If the messaging client uses a negative rule set, then ensure that there are no message rules that evaluate to <code class="codeph">TRUE</code> for this message type in the negative rule set. Such rules cause the messaging client to discard these messages. For example, to determine whether there are any such rules in the negative rule set for the messaging client, run the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN RULE_NAME HEADING 'Rule Name' FORMAT A30
+COLUMN RULE_CONDITION HEADING 'Rule Condition' FORMAT A30
+
+SELECT RULE_NAME, RULE_CONDITION 
+  FROM DBA_STREAMS_RULES
+  WHERE STREAMS_NAME       = 'OE' AND
+        MESSAGE_TYPE_OWNER = 'OE' AND
+        MESSAGE_TYPE_NAME  = 'USER_MSG' AND
+        RULE_SET_TYPE      = 'NEGATIVE';
+</pre><p>If this query returns any rules, then the rules returned might be causing the messaging client to discard messages. Examine the rule condition of the returned rules to determine whether these rules are causing the messaging client to discard the messages that it should be dequeuing. If this query returns no rules, then ensure that there are message rules in the positive rule set for the messaging client that evaluate to <code class="codeph">TRUE</code> for this message type and condition.
+                        </p>
+                        <p>For example, to determine whether any message rules evaluate to <code class="codeph">TRUE</code> for this message type in the positive rule set for the messaging client, run the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN RULE_NAME HEADING 'Rule Name' FORMAT A35
+COLUMN RULE_CONDITION HEADING 'Rule Condition' FORMAT A35
+
+SELECT RULE_NAME, RULE_CONDITION 
+  FROM DBA_STREAMS_RULES 
+  WHERE STREAMS_NAME       = 'OE' AND
+        MESSAGE_TYPE_OWNER = 'OE' AND
+        MESSAGE_TYPE_NAME  = 'USER_MSG' AND
+        RULE_SET_TYPE      = 'POSITIVE';</pre><p></p>
+                        <p>If you have message rules that evaluate to <code class="codeph">TRUE</code> for this message type in the positive rule set for the messaging client, then these rules are returned. In this case, your output looks similar to the following: 
+                        </p><pre class="oac_no_warn" dir="ltr">Rule Name                           Rule Condition
+----------------------------------- -----------------------------------
+RULE$_3                             :"VAR$_2".OBJECT_OWNER = 'OE' AND
+                                    :"VAR$_2".OBJECT_NAME = 'ORDERS'
+</pre><p>Examine the rule condition for the rules returned to determine whether they instruct the messaging client to dequeue the proper messages. Based on these results, the messaging client named <code class="codeph">oe</code> should dequeue messages of <code class="codeph">oe.user_msg</code> type that satisfy condition shown in the output. In other words, no rule in the negative messaging client rule set discards these messages, and a rule exists in the positive messaging client rule set that evaluates to <code class="codeph">TRUE</code> when the messaging client finds a message in its queue of the <code class="codeph">oe.user_msg</code> type that satisfies the rule condition. 
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-3B64475F-0577-4D7A-B76C-BB8709AB91EF__GUID-D81A8BA1-83D7-4A57-981C-8B25DD2AA43E">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-E77928CD-E5C7-4BA3-A8D5-B91FE92D664F">Message Rule Example</a>"</span> for more information about specifying message rules
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../adque/toc.htm"><span class="italic">Oracle Database Advanced Queuing User's Guide</span></a> for detailed information about messaging
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1081"></a><div class="props_rev_3"><a id="GUID-7E910F26-CE07-4161-917A-E382B98BE567" name="GUID-7E910F26-CE07-4161-917A-E382B98BE567"></a><h4 id="STRMS-GUID-7E910F26-CE07-4161-917A-E382B98BE567" class="sect4"><span class="enumeration_section">34.1.5 </span>Resolving Problems with Rules
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>If you determine that an Oracle Streams capture process, synchronous capture, propagation, apply process, or messaging client is not behaving as expected because one or more rules must be added to the rule set for the Oracle Streams client, then you can use one of the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add appropriate rules:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">ADD_GLOBAL_PROPAGATION_RULES</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_GLOBAL_RULES</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_SCHEMA_PROPAGATION_RULES</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_SCHEMA_RULES</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_SUBSET_RULES</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_TABLE_PROPAGATION_RULES</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_TABLE_RULES</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_MESSAGE_PROPAGATION_RULE</code> 
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">ADD_MESSAGE_RULE</code> 
+                              </p>
+                           </li>
+                        </ul>
+                        <p>You can use the <code class="codeph">DBMS_RULE_ADM</code> package to add customized rules, if necessary.
+                        </p>
+                        <p>It is also possible that the Oracle Streams capture process, synchronous capture, propagation, apply process, or messaging client is not behaving as expected because one or more rules should be altered or removed from a rule set.</p>
+                        <p>If you have the correct rules, and the relevant messages are still filtered out by an Oracle Streams capture process, propagation, or apply process, then check your trace files and alert log for a warning about a missing "multi-version data dictionary", which is an <a href="strms_glossary.html#GUID-FC751688-EAAD-4EB5-AB51-DF3F6374C336"><span class="xrefglossterm">Oracle Streams data dictionary</span></a>. The following information might be included in such warning messages:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">gdbnm</code>:  Global name of the source database of the missing object
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">scn</code>:  SCN for the transaction that has been missed
+                              </p>
+                           </li>
+                        </ul>
+                        <p>If you find such messages, and you are using custom capture process rules or reusing existing capture process rules for a new <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>, then ensure that you run the appropriate procedure to prepare for <a href="strms_glossary.html#GUID-8B2165CC-97F5-415E-8C7B-A356C6D26841"><span class="xrefglossterm">instantiation</span></a>: 
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">PREPARE_TABLE_INSTANTIATION</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code></p>
+                           </li>
+                        </ul>
+                        <p>Also, ensure that propagation is working from the source database to the destination database. Oracle Streams data dictionary information is propagated to the destination database and loaded into the dictionary at the destination database.</p>
+                        <div class="infoboxnotealso" id="GUID-7E910F26-CE07-4161-917A-E382B98BE567__GUID-594DB3B4-8CF8-479A-9CAF-C2C4388D9546">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="managing-rules.html#GUID-548A721C-A976-4908-8861-96F5F89AB8BC">Altering a Rule</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="managing-rules.html#GUID-3B82C5B0-9D9B-43ED-9C14-DE712CE71D3A">Removing a Rule from a Rule Set</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="../strep/instantiation-and-oracle-streams-replication.html#STREP114"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for more information about preparing database objects for instantiation
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-3A241698-20A0-4604-AC48-26DD82AA4426">The Oracle Streams Data Dictionary</a>"</span> for more information about the Oracle Streams data dictionary
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS1082"></a><div class="props_rev_3"><a id="GUID-BAF48723-1AB9-4FED-B99A-8E7A7105076C" name="GUID-BAF48723-1AB9-4FED-B99A-8E7A7105076C"></a><h3 id="STRMS-GUID-BAF48723-1AB9-4FED-B99A-8E7A7105076C" class="sect3"><span class="enumeration_section">34.2 </span>Are Declarative Rule-Based Transformations Configured Properly?
+               </h3>
+               <div>
+                  <p>A <a href="strms_glossary.html#GUID-FB75B75D-9D19-4F74-849F-57AC542540CC"><span class="xrefglossterm">declarative rule-based transformation</span></a> is a rule-based transformation that covers one of a common set of transformation scenarios for row LCRs. Declarative rule-based transformations are run internally without using PL/SQL. If an Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> is not behaving as expected, then check the declarative rule-based transformations specified for the <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s used by the Oracle Streams client and correct any mistakes.
+                  </p>
+                  <p>The most common problems with declarative rule-based transformations are:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>The declarative rule-based transformation is specified for a table or involves columns in a table, but the schema either was not specified or was incorrectly specified when the transformation was created. If the schema is not correct in a declarative rule-based transformation, then the transformation will not be run on the appropriate LCRs. You should specify the owning schema for a table when you create a declarative rule-based transformation. If the schema is not specified when a declarative rule-based transformation is created, then the user who creates the transformation is specified for the schema by default.</p>
+                        <p>If the schema is not correct for a declarative rule-based transformation, then, to correct the problem, remove the transformation and re-create it, specifying the correct schema for each table.</p>
+                     </li>
+                     <li>
+                        <p>If more than one declarative rule-based transformation is specified for a particular rule, then ensure that the ordering is correct for execution of these transformations. Incorrect ordering of declarative rule-based transformations can result in errors or inconsistent data.</p>
+                        <p>If the ordering is not correct for the declarative rule-based transformation specified on a single rule, then, to correct the problem, remove the transformations and re-create them with the correct ordering.</p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-BAF48723-1AB9-4FED-B99A-8E7A7105076C__GUID-5FA8E708-E023-4214-B19F-752B9D1EDF6E">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="monitoring-rule-based-transformations.html#GUID-68D1A932-B4B6-4515-BB03-3E28C1146BAD">Displaying Declarative Rule-Based Transformations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-rule-based-transformations.html#GUID-53C7811D-9311-495A-BA26-4DE5E6D6A3F7">Managing Declarative Rule-Based Transformations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="rule-based-transformations.html#GUID-57430920-685F-4CEA-BBC3-5CB78C54FC61">Transformation Ordering</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1083"></a><div class="props_rev_3"><a id="GUID-B1461ECD-F0E8-461B-9EF7-08986072D4F9" name="GUID-B1461ECD-F0E8-461B-9EF7-08986072D4F9"></a><h3 id="STRMS-GUID-B1461ECD-F0E8-461B-9EF7-08986072D4F9" class="sect3"><span class="enumeration_section">34.3 </span>Are the Custom Rule-Based Transformations Configured Properly?
+               </h3>
+               <div>
+                  <p>A <a href="strms_glossary.html#GUID-0E99A3FC-C59B-46D3-9908-A5E26A7AA91A"><span class="xrefglossterm">custom rule-based transformation</span></a> is any modification by a user-defined function to a message when a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> evaluates to <code class="codeph">TRUE</code>. A custom rule-based transformation is specified in the <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> of a rule, and these action contexts contain a name-value pair with <code class="codeph">STREAMS$_TRANSFORM_FUNCTION</code> for the name and a user-created function name for the value. This user-created function performs the transformation. If the user-created function contains any flaws, then unexpected behavior can result.
+                  </p>
+                  <p>If an Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> is not behaving as expected, then check the custom rule-based transformation functions specified for the rules used by the <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a> and correct any flaws. You can find the names of these functions by querying the <code class="codeph">DBA_STREAMS_TRANSFORM_FUNCTION</code> data dictionary view. You might need to modify a transformation function or remove a custom rule-based transformation to correct the problem. Also, ensure that the name of the function is spelled correctly when you specify the transformation for a rule.
+                  </p>
+                  <p>An error caused by a custom rule-based transformation might cause a capture process, synchronous capture, propagation, apply process, or messaging client to abort. In this case, you might need to correct the transformation before the Oracle Streams client can be restarted or invoked.</p>
+                  <p>Rule evaluation is done before a custom rule-based transformation. For example, if you have a transformation that changes the name of a table from <code class="codeph">emps</code> to <code class="codeph">employees</code>, then ensure that each rule using the transformation specifies the table name <code class="codeph">emps</code>, rather than <code class="codeph">employees</code>, in its <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a>.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-B1461ECD-F0E8-461B-9EF7-08986072D4F9__GUID-43BCF6C3-8C8D-4058-83DC-BB1358A321E5">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-rule-based-transformations.html#GUID-37724934-0CF2-4FE4-89EC-AAE853E5FCB7">Managing Custom Rule-Based Transformations</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-rule-based-transformations.html#GUID-A8637DC5-BFC9-4384-8AA9-83C49BFF8899">Displaying Custom Rule-Based Transformations</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1084"></a><div class="props_rev_3"><a id="GUID-0BFB8BAA-C4E9-4105-9839-49417C4C8A75" name="GUID-0BFB8BAA-C4E9-4105-9839-49417C4C8A75"></a><h3 id="STRMS-GUID-0BFB8BAA-C4E9-4105-9839-49417C4C8A75" class="sect3"><span class="enumeration_section">34.4 </span>Are Incorrectly Transformed LCRs in the Error Queue?
+               </h3>
+               <div>
+                  <p>In some cases, incorrectly transformed LCRs might have been moved to the error queue by an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>. When this occurs, you should examine the transaction in the error queue to analyze the feasibility of reexecuting the transaction successfully. If an abnormality is found in the transaction, then you might be able to configure a <a href="strms_glossary.html#GUID-8F26223B-B771-4E5B-9C57-0F748A0904F1"><span class="xrefglossterm">procedure DML handler</span></a> to correct the problem. The DML handler will run when you reexecute the error transaction. When a DML handler is used to correct a problem in an error transaction, the apply process that uses the DML handler should be stopped to prevent the DML handler from acting on LCRs that are not involved with the error transaction. After successful reexecution, if the DML handler is no longer needed, then remove it. Also, correct the <a href="strms_glossary.html#GUID-18697C88-84CA-4F47-8F47-DD5D37E9543B"><span class="xrefglossterm">rule-based transformation</span></a> to avoid future errors.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-0BFB8BAA-C4E9-4105-9839-49417C4C8A75__GUID-26A88027-EA2F-4675-9BC4-BDB66F43D71E">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-0996F5C0-F684-4495-A20E-02FD995FDAD8">The Error Queue</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-B3E9BD13-C4A2-4E7F-9571-A9687AEB5E07">Checking for Apply Errors</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-B2BCDB9E-5B7C-457C-8AB1-B5A7F1711148">Displaying Detailed Information About Apply Errors</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

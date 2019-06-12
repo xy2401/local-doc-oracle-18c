@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: F10842-01 -->
+    <!-- Published date: December 2018 -->
+    <!-- Template date: October 15, 2018 -->
+    <!-- Put the content ID of this OBE between the empty quotation marks for 'content' below -->
+    <meta name="contentid" content="25640">
+    <!-- The title below is displayed on the browser tab, in search results, and in  history. It can be longer than the tutorial title in the <h1> element, below.-->
+    <!-- Use an imperative verb in the title. -->
+    <title>Unplug, Plug, and Upgrade a Pluggable Database (PDB) to a New
+      Container Database (CDB)</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to unplug earlier release PDBs, plug them into a later release CDB, and then upgrade the PDBs.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-12-04T07:28:11+00:00">
+    <meta name="dcterms.title" content="Unplug, Plug, and Upgrade a PDB to a New CDB">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="TUTORIAL-UPGRADE-A-PDB-USING-UNPLUG-PLUG-METHOD">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="F10842-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <!-- The title below is displayed as the title at the top of the OBE page. It can be shorter than the title in the <title> element, above. -->
+      <!-- Use an imperative verb in the title. -->
+      <h1><img src="img/obe_tag.png" alt="Oracle by Example branding" align="middle">Unplug,
+        Plug, and Upgrade a PDB to a New CDB</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p>This 15-minute tutorial shows you how to unplug, plug, and
+                upgrade a pluggable database (PDB). </p>
+              <h3>Background</h3>
+              <p>Upgrading a container database (CDB) will also upgrade all of
+                the associated PDBs. One way to upgrade PDBs individually is by
+                using the unplug/plug method. In this method, first unplug the
+                PDB from an earlier release CDB, plug it into the later release
+                CDB, and then upgrade it.</p>
+              <figure><img src="img/cdb-and-pdbs.png" alt="Description of cdb-and-pdbs.png follows">
+                <figcaption><a href="files/cdb-and-pdbs.txt">Description of the
+                    illustration cdb-and-pdbs.png</a></figcaption> </figure>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>You are using Oracle Managed Files.</li>
+                <li>You have installed the same release Oracle Database software
+                  on the target server, and it is updated to the same release
+                  update and release update revision.</li>
+                <li>The endian formats of the source CDB and the target CDB are
+                  identical.</li>
+                <li>You have installed the same set of Oracle Database features
+                  on the source CDB and the target CDB.</li>
+                <li>The source CDB and the target CDB have compatible character
+                  sets and national character sets.</li>
+                <li>You must be connected to a CDB, and the current container
+                  must be root <code>(CDB$ROOT)</code>.</li>
+                <li>You must have the <code>CREATE PLUGGABLE DATABASE</code>
+                  system privilege.</li>
+                <li>The CDB in which the PDB is being created must be in
+                  read/write mode.</li>
+                <li>The source CDB and the target CDB can be on the same server
+                  hardware or on different server hardware.</li>
+                <li>You have backed up your PDB on the source CDB to the
+                  destination CDB, so that the backup is available on the
+                  destination CDB.</li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Unplug
+                the Earlier Release PDB from the Earlier Release CDB</h2>
+              <ol>
+                <li>Run the <code>Pre-Upgrade Information Tool</code> on the
+                  PDB.
+                  <p>For example, run the tool on the PDB <code>salespdb</code>
+                    in the CDB in <code>$ORACLE_HOME_12.2</code>:</p>
+                  <pre>$ORACLE_HOME_12.2/jdk/bin/java -jar
+$ORACLE_HOME_18/rdbms/admin/preupgrade.jar dir /tmp -c salespdb</pre>
+                </li>
+                <li>Run <code>preupgrade_fixups.sql</code> on the source
+                  database.
+                  <p>For example:</p>
+                  <pre>CONNECT / AS SYSDBA
+SQL&gt; ALTER SESSION SET CONTAINER=salespdb;</pre>
+                  <pre>SQL&gt; SET ECHO ON
+SQL&gt; SPOOL /tmp/preupgrade_fixups_salespdb.log
+SQL&gt; @/tmp/preupgrade_fixups_salespdb.sql</pre>
+                </li>
+                <li>Follow all the recommendations listed in <code>preupgrade.log</code>.</li>
+                <li>Close the PDB that you want to unplug.
+                  <p>For example, to close the PDB <code>salespdb</code>: </p>
+                  <pre>SQL&gt; ALTER PLUGGABLE DATABASE salespdb CLOSE;</pre>
+                </li>
+                <li>Log back in to <code>CDB$ROOT</code>:
+                  <pre>CONNECT / AS SYSDBA
+SQL&gt; ALTER SESSION SET CONTAINER=CDB$ROOT;</pre>
+                </li>
+                <li>Unplug the earlier release PDB using the following SQL
+                  command:
+                  <pre>SQL&gt; ALTER PLUGGABLE DATABASE salespdb UNPLUG INTO '/home/oracle/salespdb.xml';
+Pluggable database altered</pre>
+                  <p>Here, <code>salespdb</code> is the name of the PDB, and <code>/home/oracle/salespdb.xml</code>
+                    is the location of the PDB XML file.</p>
+                </li>
+                <li>Drop the pluggable database <code>salespdb</code>, but keep
+                  the data files.
+                  <pre>SQL&gt; DROP PLUGGABLE DATABASE salespdb KEEP DATAFILES;</pre>
+                  <p>Oracle recommends that you drop <code>salespdb</code>
+                    after this procedure to clean up leftover information in the
+                    CDB views, and to avoid future issues.</p>
+                  <p>As a best practice guideline, back up your PDB in the
+                    target CDB first, and then run the <code>DROP</code>
+                    command on the source CDB.</p>
+                  <p><strong>Caution:</strong> After you drop the PDB from its original CDB, you cannot restore the PDB on the source CDB by using a backup you have taken previously, because the <code>DROP</code> command removes the backup files.</p>
+                </li>
+                <li>Exit.</li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Plug
+                In the Earlier Release PDB to the Later Release CDB</h2>
+              <ol>
+                <li>Connect to the later release CDB.</li>
+                <li>Plug in the earlier release PDB using the following SQL
+                  command:
+                  <pre>SQL&gt; CREATE PLUGGABLE DATABASE salespdb USING '/home/oracle/salespdb.xml';
+Pluggable database altered</pre>
+                  <p><strong>Note:</strong> When you plug in an earlier release
+                    PDB, the PDB is in <code>RESTRICTED</code> mode. You can
+                    open the PDB only for an upgrade.</p>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Upgrade
+                the Earlier Release PDB to the Later Release</h2>
+              <ol>
+                <li>If needed, switch to the PDB <code>salespdb</code> that you
+                  want to upgrade to:
+                  <pre>SQL&gt; ALTER SESSION SET CONTAINER=salespdb;</pre>
+                </li>
+                <li>Open the PDB in <code>UPGRADE</code> mode.
+                  <pre>SQL&gt; ALTER PLUGGABLE DATABASE OPEN UPGRADE;</pre>
+                </li>
+                <li>Upgrade the PDB using the Parallel Upgrade Utility command <code>catctl.pl</code>,
+                  or the shell utility <code>dbupgrade</code>.
+                  <p>When you upgrade a PDB, use the commands that you normally
+                    use with the Parallel Upgrade Utility. However, also add the
+                    option <code>-c PDBname</code> to specify which PDB you are
+                    upgrading.</p>
+                  <p>Capitalize the name of your PDB as shown in the following
+                    example using the PDB named <code>salespdb</code>:</p>
+                  <pre>$ORACLE_HOME/perl/bin/perl $ORACLE_HOME/rdbms/admin/catctl.pl -d \
+$ORACLE_HOME/rdbms/admin -c 'SALESPDB' -l $ORACLE_BASE catupgrd.sql</pre>
+                </li>
+                <li>Review the results.
+                  <p>The default log file path is: <code><var>$ORACLE_BASE</var>/cfgtoollogs/<var>dbname</var>/<var>upgradedatetime</var></code>.</p>
+                  <p>where:</p>
+                  <p><var>dbname</var> is the name of the database.</p>
+                  <p><var>upgradedatetime</var> is the date and time for the
+                    upgrade.</p>
+                  <p>The date and time strings are in the character string
+                    format <var>YYYYMMDDHHMMSC</var>, in which <var>YYYY</var>
+                    designates the year, <var>MM</var> designates the month, <var>DD</var>
+                    designates the day, <var>HH</var> designates the hour, <var>MM</var>
+                    designates the minute, and <var>SC</var> designates the
+                    second.</p>
+                  <p>For example:</p>
+                  <pre>$ORACLE_BASE/cfgtoollogs/salespdb/upgrade20180815120001/upg_summary.log</pre>
+                </li>
+                <li>Log in to SQL*Plus. Open the PDB to execute the post-upgrade
+                  fixup scripts and to recompile the <code>INVALID</code>
+                  objects in the database:
+                  <pre>SQL&gt; connect / as sysdba
+SQL&gt; ALTER SESSION SET CONTAINER=salespdb;
+SQL&gt; STARTUP;</pre>
+                </li>
+                <li>Run the <code>postupgrade_fixups.sql</code> script using
+                  the <code>catcon.pl</code> utility:
+                  <pre>$ORACLE_HOME/perl/bin/perl catcon.pl –c 'salespdb' -n 1 -e -b postfixups -d '''.''' /tmp/cfgtoollogs/salespdb/preupgrade/postupgrade_fixups.sql</pre>
+                </li>
+                <li>Use the utility <code>catcon.pl</code> to run <code>utlrp.sql</code>
+                  from the <code>$ORACLE_HOME/rdbms/admin directory</code>:
+                  <pre>$ORACLE_HOME/perl/bin/perl catcon.pl –c 'salespdb' -n 1 -e -b comp -d '''.''' utlrp.sql</pre>
+                  <p>The <code>utlrp.sql</code> script recompiles <code>INVALID</code>
+                    objects in the database, and places a log file in the
+                    current directory with the name <code>comp0.log</code>.</p>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <!-- Include the More Information section only in a standalone tutorial or in the final lab or tutorial in a series (not in a learning path) -->
+              <h2 id="more_info" role="button" style="text-align: left;"><img src="img/32_more.png" alt="more information" class="num_circ" height="32" width="32">Want
+                to Learn More?</h2>
+              <ul>
+                <li><a href="../upgrd/manual-upgrade-scenarios-multitenant-architecture-oracle-databases.html#UPGRD-GUID-8F9AAFA1-690D-4F70-8448-E66D765AF136" target="_blank">Upgrading Multitenant Architecture
+                    Sequentially Using Unplug-Plug</a></li>
+                <li><a href="http://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18&amp;id=ADMIN-GUID-3132C4E5-8734-458B-8B0C-EFC77A45FFA3" target="_blank">Plugging In an Unplugged PDB</a></li>
+              </ul>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li> <a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+    <!-- OBE Dialog Box code 5/31/2018 -->
+    <!-- DO NOT ALTER THE CODE BELOW   -->
+    <div id="lpModal" class="modal">
+      <!-- Modal hdr and body -->
+      <div id="obe_dialog" class="modal-content">
+        <div class="modal-header"> <a href="#" class="close"> <span class="close">×</span>
+          </a>
+          <h1>Associated Learning Paths</h1>
+        </div>
+        <div id="dialog-content"> </div>
+        <div id="dialog-close" class="closeBtn"> <a href="#" class="close2">
+            <p class="close2"> <span>&nbsp;&nbsp;Got It! &nbsp;</span> </p>
+          </a> </div>
+      </div>
+    </div>
+    <!-- END OBE Dialog Box code -->
+  </body>
+</html>

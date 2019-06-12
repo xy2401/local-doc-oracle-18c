@@ -1,0 +1,720 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">
+      <meta name="description" content="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">
+      <title>Overview of SODA Filter Specifications (QBEs)</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Introduction to Simple Oracle Document Access (SODA)">
+      <meta property="og:description" content="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Introduction to Simple Oracle Document Access (SODA)">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="oracle-database-introduction-simple-oracle-document-access-soda.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-08T13:35:44-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E86033-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="overview-soda.html" title="Previous" type="text/html">
+      <link rel="next" href="overview-soda-index-specifications.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Oracle® Database Introduction to Simple Oracle Document Access (SODA)">
+    <meta name="dcterms.isVersionOf" content="ADSDI">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="overview-soda.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="overview-soda-index-specifications.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Introduction to Simple Oracle Document Access (SODA)</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Overview of SODA Filter Specifications (QBEs)</li>
+            </ol>
+            <a id="GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" name="GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE"></a>
+            
+            <h2 id="ADSDI-GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" class="sect2"><span class="enumeration_chapter">2 </span>Overview of SODA Filter Specifications (QBEs)
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>A <strong class="term">filter specification</strong> is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.
+               </p>
+               <div class="section">
+                  <p>A filter specification is also called a <strong class="term">query-by-example</strong> (<strong class="term">QBE</strong>), or simply a <strong class="term">filter</strong>.
+                  </p>
+                  <p>Because a QBE selects documents from a collection, you can use it to <span class="italic">drive read and write operations</span> on those documents. For example, you can use a QBE to remove all matching documents from a collection.
+                  </p>
+                  <p>Each SODA implementation that supports query-by-example provides its own way to query JSON documents. They all use a SODA filter specification to define the data to be queried. For example, with SODA for REST you use an HTTP POST request, passing URI argument <code class="codeph">action=query</code>, and providing the filter specification in the POST body.
+                  </p>
+                  <p>QBE patterns use <span class="italic">operators</span> for this document selection or matching, including condition operators, which perform operations such as field-value comparison or testing for field existence, and logical combining operators for union (<code class="codeph">$or</code>) and intersection (<code class="codeph">$and</code>). 
+                  </p>
+                  <p>A QBE <strong class="term">operator</strong> occurs in a QBE as a <span class="italic">field</span> of a JSON object. The associated field value is the <strong class="term">operand</strong> on which the operator acts. SODA operators are predefined fields whose names start with a dollar sign, <span class="bold"><code class="codeph">$</code></span>.
+                  </p>
+                  <p>For example, in this QBE, the object that is the value of field <code class="codeph">age</code> has as its only field the operator <code class="codeph">$gt</code>, and the associated operand is the numeric value <code class="codeph">45</code>:
+                  </p><pre class="pre codeblock"><code>{ "age" : { <span class="bold">"$gt" </span>: <span class="bold">45</span> } }</code></pre><div class="infoboxnote" id="GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE__GUID-8A57DB1D-A370-45A5-8087-A7B11647681A">
+                     <p class="notep1">Note:</p>
+                     <p>Query-by-example is <span class="italic">not</span> supported on a <span class="italic">heterogeneous collection</span>, that is, a collection that has the media type column. Such a collection is designed for storing both JSON and non-JSON content. QBE is supported only for collections that contain only JSON documents.
+                     </p>
+                  </div>
+               </div>
+               <!-- class="section" -->
+               <div class="section">
+                  <div class="infoboxnotealso" id="GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE__GUID-BE48E8B1-1D7C-458D-BEFD-A11182F93A22">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/adsdi&amp;id=json_org" target="_blank">Introducing JSON</a> for information about JSON
+                     </p>
+                  </div>
+               </div>
+               <!-- class="section" -->
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847">Sample JSON Documents</a><br>A few sample JSON documents are presented here. They are referenced in some query-by-example (QBE) examples, as well as in some reference descriptions.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-FF2B329D-B794-414D-8759-19BC033F23B1">Overview of Paths in SODA QBEs</a><br>A filter specification, or query-by-example (QBE), contains zero or more <span class="italic">paths</span> to fields in JSON documents. A path to a field can have multiple <span class="italic">steps</span>, and it can cross the boundaries of objects and arrays. 
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-A19B0A93-0B17-4D0C-8362-4A7015C74842">Overview of QBE Comparison Operators</a><br>A query-by-example (QBE) comparison operator tests whether a given JSON object field satisfies some conditions.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-3ACBE59E-4E74-4F44-BDDC-EAF3573C837B">Overview of QBE Operator $not</a><br>Query-by-example (QBE) operator <code class="codeph">$not</code> negates the behavior of its operand, which is a JSON object containing one or more comparison clauses, which are implicitly ANDed. 
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-6D2B91C9-C348-484A-9722-8A5078461132">Overview of QBE Item-Method Operators</a><br>A query-by-example (QBE) item-method operator acts on a JSON-object field value to modify or transform it in some way (or simply to filter it from the query result set). Other QBE operators that would otherwise act on the field value then act on the transformed field value instead.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-36420BAE-3BE0-43EA-9C4B-5F793BCCB3F5">Overview of QBE Logical Combining Operators</a><br>You use the query-by-example (QBE) logical combining operators, <code class="codeph">$and</code>, <code class="codeph">$or</code>, and <code class="codeph">$nor</code>, to combine conditions to form more complex QBEs. Each accepts an array of conditions as its argument.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-995657CE-69B4-4348-B9B3-FBA7D1D63474">Overview of Nested Conditions in QBEs</a><br>You can use a query-by-example (QBE) with a <span class="italic">nested</span> condition to match a document that has a field with an <span class="italic">array</span> value with object elements, where a <span class="italic">given element of the array satisfies multiple criteria</span>.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-41478908-D190-4DD4-9F3F-FF667699EE3E">Overview of QBE Operator $id</a><br>Other query-by-example (QBE) operators generally look for particular JSON fields within documents and try to match their values. Operator <code class="codeph">$id</code> is an exception in that it instead matches document <span class="italic">keys</span>. It thus matches document <span class="italic">metadata</span>, not document content. You use operator <code class="codeph">$id</code> in the outermost condition of a QBE.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-3B182089-9A38-45DA-B7D7-8232E13C8F83">Overview of QBE Operator $orderby</a><br>Query-by-example (QBE) operator <code class="codeph">$orderby</code> is described. It sorts query results in ascending or descending order.
+                  </li>
+                  <li class="ulchildlink"><a href="overview-soda-filter-specifications-qbes.html#GUID-12994E27-DA98-40C7-8D4F-84341106F8D9">Overview of QBE Spatial Operators</a><br>You can use query-by-example (QBE) operator <code class="codeph">$near</code>, <code class="codeph">$intersects</code>, or <code class="codeph">$within</code> to select documents that have a field whose value is a GeoJSON geometry object that is <span class="italic">near </span>a specified position, <span class="italic">intersects </span>a specified geometric object, or is <span class="italic">within </span>another specified geometric object, respectively.
+                  </li>
+               </ul>
+               <div class="relinfo">
+                  <p><strong>Related Topics</strong></p>
+                  <ul>
+                     <li><a href="soda-paths-reference.html#GUID-237F3788-9762-4473-B630-5E1DF6DB23EC" title="SODA filter specifications contain paths, each of which targets a value in a JavaScript Object Notation (JSON) document. A path is composed of a series of steps. A detailed definition of SODA paths is presented.">SODA Paths (Reference)</a></li>
+                     <li><a href="soda-filter-specifications-reference.html#GUID-8DDB51EB-D80F-4476-9ABF-D6860C6214D1" title="You can select JSON documents in a collection by pattern-matching. A detailed definition of SODA filter specifications (QBEs) is presented.">SODA Filter Specifications (Reference)</a></li>
+                     <li><a href="soda-collection-metadata-components-reference.html#GUID-BAFE22EB-FC90-4F5D-8C23-8D123787B703" title="The collection metadata component that specifies the name of the column that stores the media type of the document. A media type column is needed if the collection is to be heterogeneous, that is, it can store documents other than JavaScript Object Notation (JSON).">Media Type Column Name</a></li>
+                  </ul>
+               </div>
+            </div>
+            
+            <div class="props_rev_3"><a id="GUID-BF0C34CD-443C-43EC-A091-460B3C63A847" name="GUID-BF0C34CD-443C-43EC-A091-460B3C63A847"></a><h3 id="ADSDI-GUID-BF0C34CD-443C-43EC-A091-460B3C63A847" class="sect3"><span class="enumeration_section">2.1 </span>Sample JSON Documents
+               </h3>
+               <div>
+                  <p>A few sample JSON documents are presented here. They are referenced in some query-by-example (QBE) examples, as well as in some reference descriptions.</p>
+                  <div class="example" id="GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">
+                     <p class="titleinexample">Example 2-1 Sample JSON Document 1</p><pre class="pre codeblock"><code>{ "name"    : "Jason",  
+  "age"     : 45,   
+  "address" : [ { "street" : "25 A street", 
+                  "city"   : "Mono Vista", 
+                  "zip"    : 94088,
+                  "state"  : "CA" } ],  
+  "drinks"  : "tea" }</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT2-9D549888">
+                     <p class="titleinexample">Example 2-2 Sample JSON Document 2</p><pre class="pre codeblock"><code>{ "name"    : "Mary", 
+  "age"     : 50, 
+  "address" : [ { "street" : "15 C street", 
+                  "city"   : "Mono Vista", 
+                  "zip"    : 97090, 
+                  "state"  : "OR" }, 
+                { "street" : "30 ABC avenue", 
+                  "city"   : "Markstown",
+                  "zip"    : 90001, 
+                  "state"  : "CA" } ] }</code></pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT3-9D549B5C">
+                     <p class="titleinexample">Example 2-3 Sample JSON Document 3</p><pre class="pre codeblock"><code>{ "name"   : "Mark", 
+  "age"    : 65, 
+  "drinks" : ["soda", "tea"] }</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-C0EC27C9-4002-4C74-8B78-E0CEE905D673" title="A field-condition clause specifies that a given object field must satisfy a given set of criteria. It constrains a field using one or more condition-operator clauses, each of which is a comparison clause, a not clause, or an item-method clause.">Field-Condition Clause (Reference)</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-FF2B329D-B794-414D-8759-19BC033F23B1" name="GUID-FF2B329D-B794-414D-8759-19BC033F23B1"></a><h3 id="ADSDI-GUID-FF2B329D-B794-414D-8759-19BC033F23B1" class="sect3"><span class="enumeration_section">2.2 </span>Overview of Paths in SODA QBEs
+               </h3>
+               <div>
+                  <p>A filter specification, or query-by-example (QBE), contains zero or more <span class="italic">paths</span> to fields in JSON documents. A path to a field can have multiple <span class="italic">steps</span>, and it can cross the boundaries of objects and arrays. 
+                  </p>
+                  <div class="section">
+                     <p>(In the context of a QBE, the term "path to a field" is sometimes shortened informally to "<span class="italic">field</span>".) 
+                     </p>
+                     <p>For example, this QBE matches all JSON documents where a <code class="codeph">zip</code> field exists under field <code class="codeph">address</code> and has value <code class="codeph">94088</code>:
+                     </p><pre class="pre codeblock"><code>{ "address.zip" : 94088 }
+</code></pre><p>The path in the preceding QBE is <code class="codeph">address.zip</code>, which matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">Example 2-1</a>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-FF2B329D-B794-414D-8759-19BC033F23B1__GUID-5791C19F-6C95-4BC8-990C-C0D519E0BD3F">
+                        <p class="notep1">Note:</p>
+                        <p>A SODA QBE is itself a JSON object. You must use <span class="italic">strict</span> JSON syntax in a QBE. In particular, you must enclose all field names in double quotation marks (<code class="codeph"><span class="bold">"</span></code>). This includes field names, such as <code class="codeph">address.zip</code>, that act as SODA paths. For example, you must write <code class="codeph">{<span class="bold">"</span>address.zip<span class="bold">"</span> : 94088}</code>, not <code class="codeph">{address.zip : 94088}</code>.
+                        </p>
+                     </div>
+                     <p>Paths can target a particular element of an array in a JSON document, by enclosing the array <span class="italic">position</span> of the element in square brackets (<code class="codeph">[</code> and <code class="codeph">]</code>). 
+                     </p>
+                     <p>For example, path <code class="codeph">address[1].zip</code> targets all <code class="codeph">zip</code> fields in the <span class="italic">second</span> object of array <code class="codeph">addresses.</code> (Array position numbers start at 0, not 1.) The following QBE matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT2-9D549888">Example 2-2</a> because the second object of its <code class="codeph">address</code> array has a <code class="codeph">zip</code> field with value <code class="codeph">90001</code>.
+                     </p><pre class="pre codeblock"><code>{ "address<span class="bold">[1]</span>.zip" : 90001}
+</code></pre><p>Instead of specifying a single array position, you can specify a list of positions (for example, <code class="codeph">[1,2]</code>) or a range of positions (for example, <code class="codeph">[1 to 3]</code>). The following QBE matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT3-9D549B5C">Example 2-3</a> because it has <code class="codeph">"soda"</code> as the first element (position 0) of array <code class="codeph">drinks</code>.
+                     </p><pre class="pre codeblock"><code>{ "drinks<span class="bold">[0,1]</span>" : "soda" }
+</code></pre><p>And this QBE does not match any of the sample documents because they do not have <code class="codeph">"soda"</code> as the second <span class="italic">or</span> third array element (position 1 or 2).
+                     </p><pre class="pre codeblock"><code>{ "drinks<span class="bold">[1 to 2]</span>" : "soda" }
+</code></pre><p>If you do not specify an array step then <code class="codeph"><span class="bold">[*]</span></code> is assumed, which matches <span class="italic">any</span> array element — the asterisk, <code class="codeph"><span class="bold">*</span></code>, acts as a <span class="italic">wildcard</span>. For example, if the value of field <code class="codeph">drinks</code> is an array then the following QBE matches a document if the value of any array element is the string <code class="codeph">"tea"</code>:
+                     </p><pre class="pre codeblock"><code>{"drinks" : "tea"}
+</code></pre><p>This QBE thus matches sample documents 1 and 2. An equivalent QBE that uses the wildcard explicitly is the following:</p><pre class="pre codeblock"><code>{"drinks<span class="bold">[*]</span>" : "tea"}</code></pre></div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-paths-reference.html#GUID-237F3788-9762-4473-B630-5E1DF6DB23EC" title="SODA filter specifications contain paths, each of which targets a value in a JavaScript Object Notation (JSON) document. A path is composed of a series of steps. A detailed definition of SODA paths is presented.">SODA Paths (Reference)</a></li>
+                        <li><a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847" title="A few sample JSON documents are presented here. They are referenced in some query-by-example (QBE) examples, as well as in some reference descriptions.">Sample JSON Documents</a></li>
+                     </ul>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-FF2B329D-B794-414D-8759-19BC033F23B1__GUID-4F07E1E6-849A-45FC-B9D2-6B2B9D34F0CA">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../adjsn/conditions-is-json-and-is-not-json.html#ADJSN-GUID-1B6CFFBE-85FE-41DD-BA14-DD1DE73EAB20" target="_blank"><span><cite>Oracle Database JSON Developer’s Guide</cite></span></a> for information about strict and lax JSON syntax
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-A19B0A93-0B17-4D0C-8362-4A7015C74842" name="GUID-A19B0A93-0B17-4D0C-8362-4A7015C74842"></a><h3 id="ADSDI-GUID-A19B0A93-0B17-4D0C-8362-4A7015C74842" class="sect3"><span class="enumeration_section">2.3 </span>Overview of QBE Comparison Operators
+               </h3>
+               <div>
+                  <p>A query-by-example (QBE) comparison operator tests whether a given JSON object field satisfies some conditions.</p>
+                  <div class="section">
+                     <p>One of the simplest and most useful filter specifications tests a field for equality to a specific value. For example, this filter specification matches any document that has a field <code class="codeph">name</code> whose value is <code class="codeph">"Jason"</code>. It uses the QBE operator <code class="codeph">$eq</code>, which tests field-value equality.
+                     </p><pre class="pre codeblock"><code>{ "name" : { "$eq" : "Jason" } }
+</code></pre><p>For convenience, for such a scalar-equality QBE you can generally omit operator <code class="codeph">$eq</code>. This scalar-equality filter specification is thus equivalent to the preceding one, which uses <code class="codeph">$eq</code>:
+                     </p><pre class="pre codeblock"><code>{ "name" : "Jason" }
+</code></pre><p>Both of the preceding filter specifications match <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">Example 2-1</a>. 
+                     </p>
+                     <p>The comparison operators are the following:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">$all</code> — whether an array field value contains all of a set of values
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$between</code> — whether a field value is between two string or number values (inclusive)
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$eq</code> — whether a field value is equal to a given scalar
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$exists</code> — whether a given field exists
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$gt</code> — whether a field value is greater than a given scalar value
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$gte</code> — whether a field value is greater than or equal to a given scalar
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$hasSubstring</code> — whether a string field value has a given substring (same as <code class="codeph">$instr</code>)
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$in</code> — whether a field value is a member of a given set of scalar values
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$instr</code> — whether a string field value has a given substring (same as <code class="codeph">$hasSubstring</code>)
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$like</code> — whether a field value matches a given SQL <code class="codeph">LIKE</code> pattern 
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$lt</code> — whether a field value is less than a given scalar value
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$lte</code> — whether a field value is less than or equal to a given scalar value
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$ne</code> — whether a field valueis different from a given scalar value
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$nin</code> — whether a field value is not a member of  a given set of scalar values
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$regex</code> — whether a string field value matches a given regular expression 
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">$startsWith</code> — whether a string field value starts with a given substring
+                           </p>
+                        </li>
+                     </ul>
+                     <p>You can combine multiple comparison operators in the object that is the value of a single QBE field. The operators are implicitly ANDed. For example, the following QBE uses comparison operators <code class="codeph">$gt</code> and <code class="codeph">$lt</code>. It matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT2-9D549888">Example 2-2</a>, because that document contains an <code class="codeph">age</code> field with a value (<code class="codeph">50</code>), which is both greater than <code class="codeph">45</code> and less than <code class="codeph">55</code>.
+                     </p><pre class="pre codeblock"><code>{ "age" : { <span class="bold">"$gt"</span> : 45, <span class="bold">"$lt"</span> : 55 } }</code></pre><div class="infoboxnote" id="GUID-A19B0A93-0B17-4D0C-8362-4A7015C74842__GUID-AD4F5322-5846-4E3D-B101-1CAE138A9717">
+                        <p class="notep1">Note:</p>
+                        <p>Both the operand of a SODA operator and the data matched in your documents by a QBE are JSON data. But a comparison operator can in some cases <span class="italic">interpret</span> such JSON values specially before comparing them. The use of <span class="italic">item-method</span> operators can specify that a comparison should first interpret JSON string data as, for example, uppercase or as a date or a time stamp (date with time). This is explained in the sections about item-method operators.
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847" title="A few sample JSON documents are presented here. They are referenced in some query-by-example (QBE) examples, as well as in some reference descriptions.">Sample JSON Documents</a></li>
+                        <li><a href="overview-soda-filter-specifications-qbes.html#GUID-3ACBE59E-4E74-4F44-BDDC-EAF3573C837B" title="Query-by-example (QBE) operator $not negates the behavior of its operand, which is a JSON object containing one or more comparison clauses, which are implicitly ANDed.">Overview of QBE Operator $not</a></li>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-C0EC27C9-4002-4C74-8B78-E0CEE905D673" title="A field-condition clause specifies that a given object field must satisfy a given set of criteria. It constrains a field using one or more condition-operator clauses, each of which is a comparison clause, a not clause, or an item-method clause.">Field-Condition Clause (Reference)</a></li>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-FE28B34B-081B-465B-BBA9-30935AAF1859" title="A comparison clause is an object member whose field is a comparison operator. Example: "$gt" : 200.">Comparison Clause (Reference)</a></li>
+                        <li><a href="overview-soda-filter-specifications-qbes.html#GUID-6D2B91C9-C348-484A-9722-8A5078461132" title="A query-by-example (QBE) item-method operator acts on a JSON-object field value to modify or transform it in some way (or simply to filter it from the query result set). Other QBE operators that would otherwise act on the field value then act on the transformed field value instead.">Overview of QBE Item-Method Operators</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-3ACBE59E-4E74-4F44-BDDC-EAF3573C837B" name="GUID-3ACBE59E-4E74-4F44-BDDC-EAF3573C837B"></a><h3 id="ADSDI-GUID-3ACBE59E-4E74-4F44-BDDC-EAF3573C837B" class="sect3"><span class="enumeration_section">2.4 </span>Overview of QBE Operator $not
+               </h3>
+               <div>
+                  <p>Query-by-example (QBE) operator <code class="codeph">$not</code> negates the behavior of its operand, which is a JSON object containing one or more comparison clauses, which are implicitly ANDed. 
+                  </p>
+                  <div class="section">
+                     <p>When any of those clauses evaluates to false, the application of <code class="codeph">$not</code> to them evaluates to true. When all of them evaluate to true, it evaluates to false.
+                     </p>
+                     <p>For example, this QBE matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">Example 2-1</a> and <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT3-9D549B5C">Example 2-3</a>: document 1 has a field matching path <code class="codeph">address.zip</code> and whose value is <span class="italic">not</span> <code class="codeph">"90001"</code>, and document 3 has <span class="italic">no</span> field matching path <code class="codeph">address.zip</code>.
+                     </p><pre class="pre codeblock"><code>{"address.zip" : {"$not" : {"$eq" : "90001"}}}
+</code></pre><p>The <code class="codeph">$not</code> operand in the following QBE has two comparison clauses. It too matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">Example 2-1</a> and <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT3-9D549B5C">Example 2-3</a>, because each of them has an <code class="codeph">age</code> field whose value is <span class="italic">not</span> both greater than <code class="codeph">46</code> and less than <code class="codeph">65</code>.
+                     </p><pre class="pre codeblock"><code>{"age" : {"$not" : {"$gt" : 46, "$lt" : 65}}}</code></pre></div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-F717922B-5D0C-4029-A7B3-488643DAB706" title="A logical combining clause combines the effects of multiple non-empty filter conditions.">Logical Combining Clause (Reference)</a></li>
+                        <li><a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847" title="A few sample JSON documents are presented here. They are referenced in some query-by-example (QBE) examples, as well as in some reference descriptions.">Sample JSON Documents</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-6D2B91C9-C348-484A-9722-8A5078461132" name="GUID-6D2B91C9-C348-484A-9722-8A5078461132"></a><h3 id="ADSDI-GUID-6D2B91C9-C348-484A-9722-8A5078461132" class="sect3"><span class="enumeration_section">2.5 </span>Overview of QBE Item-Method Operators
+               </h3>
+               <div>
+                  <p>A query-by-example (QBE) item-method operator acts on a JSON-object field value to modify or transform it in some way (or simply to filter it from the query result set). Other QBE operators that would otherwise act on the field value then act on the transformed field value instead.</p>
+                  <p>Suppose you want to select documents whose string-valued field <code class="codeph">name</code> starts with “Jo”, irrespective of letter case, so that you find matches for <code class="codeph">name</code> values <code class="codeph">"Joe"</code>, <code class="codeph">"joe"</code>, <code class="codeph">"JOE"</code>, <code class="codeph">"joE"</code>, <code class="codeph">"Joey"</code>, <code class="codeph">"joseph"</code>, <code class="codeph">"josé"</code>, and so on. You might think of using operator <code class="codeph">$startsWith</code>, but that matches string prefixes literally, considering <code class="codeph">J</code> and <code class="codeph">j</code> as different characters, for example.
+                  </p>
+                  <p>This is where an <span class="italic">item-method operator</span> can come in. Your QBE can use item-method operator <code class="codeph">$upper</code> to, in effect, <span class="italic">transform</span> the raw field data, whether it is <code class="codeph">"Joey"</code> or <code class="codeph">"josé"</code>, to an uppercase string, before operator <code class="codeph">$startsWith</code> is applied to test it.
+                  </p>
+                  <p>The following QBE matches the prefix of the value of field <code class="codeph">name</code>, but only after converting it to uppercase. The uppercase value is matched using the condition that it starts with <code class="codeph">JO</code>.
+                  </p><pre class="pre codeblock"><code>{ "name" : { <span class="bold">"$upper"</span> : { "$startsWith" : "JO" } } }</code></pre><p>As another example, suppose that you have documents with a string-valued field <code class="codeph">deadline</code> that uses an ISO 8601 date-with-time format supported by SODA, and you want to select those documents whose deadline is prior to 7:00 am, January 31, 2019, UTC. You can use item-method operator <code class="codeph">$timestamp</code> to convert the field string values to UTC <span class="italic">time</span> values (not strings), and then perform a time comparison using an operator such as <code class="codeph">$lt</code>. This QBE does the job:
+                  </p><pre class="pre codeblock"><code>{ "deadline" : { <span class="bold">"$timestamp"</span> : { "$lt" : "2019-01-31T07:00:00Z" } } }</code></pre><p>That matches each of the following <code class="codeph">deadline</code> field values, because each of them represents a time prior to the one specified in the QBE. (The last two represent the exact same time, since 7 pm in a time zone that is 3 hours behind UTC is the same as 10 pm UTC.)
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">{ "deadline" : "2019-01-28T14:59:43Z" }</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">{ "deadline" : "2019-01-30T22:00:00Z" }</code></p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">{ "deadline" : "2019-01-30T19:00:00&#x2013;03:00" }</code></p>
+                     </li>
+                  </ul>
+                  <p>Not all item-method operators convert data to a given data type. Some perform other kinds of conversion. Operator <code class="codeph">$upper</code>, for instance, converts a string value to uppercase — the result is still a string.
+                  </p>
+                  <p>Some item-method operators even return data that is wholly different from the field values they are applied to. Operator <code class="codeph">$type</code>, for instance, returns a string value that names the JSON data type of the field value. 
+                  </p>
+                  <p>So for example, this QBE selects only <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT3-9D549B5C">Example 2-3</a> of the three sample documents, because it is the only one that has a <code class="codeph">drinks</code> field whose value is an array (<code class="codeph">["soda", "tea"]</code>). In particular, it does not match <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">Example 2-1</a>, even though that document has a field <code class="codeph">drinks</code>, because the value of that field is the string <code class="codeph">"tea"</code> — a scalar, not an array.
+                  </p><pre class="pre codeblock"><code>{ "drinks" : { "$type" : "array" } }</code></pre><div class="infoboxnote" id="GUID-6D2B91C9-C348-484A-9722-8A5078461132__GUID-CAC97028-50D3-4985-94BC-64E980453BFB">
+                     <p class="notep1">Note:</p>
+                     <p>An item-method field (operator) does not, itself, use or act on its associated value (its operand). Instead, it acts on the value of the JSON data that <span class="italic">matches</span> its <span class="italic">parent field</span>.
+                     </p>
+                     <p>For example, in the QBE <code class="codeph">{"birthday" : {"<span class="bold">$date</span>" : {"$gt" : "2000-01-01"}}}</code>, item-method operator <code class="codeph">$date</code> acts on the JSON data that matches its parent field, <code class="codeph">birthday</code>. It does not use or act on its operand, which is the JSON object (a comparison clause in this case) <code class="codeph">{"$gt" : "2000-01-01"}</code>. The birthday data (a JSON string of format ISO 8601) in your JSON document is interpreted as a date, and that date is then matched against the condition that it be greater than the date represented by the (ISO date) string <code class="codeph">"2000-01-01"</code> (later than January 1, 2000). 
+                     </p>
+                     <p>This can take some getting used to. The operand is used after the item-method operator does its job. It is matched against the <span class="italic">result of the action</span> of the operator on the value of its <span class="italic">parent</span> field. A item-method operator is a <span class="italic">filter</span> of sorts — it stands syntactically <span class="italic">between</span> the field (to its left) that matches the data it acts on and (to its right) some tests that are applied to the result of that action.
+                     </p>
+                  </div>
+                  <div class="infoboxnote" id="GUID-6D2B91C9-C348-484A-9722-8A5078461132__TOUSEITEMMETHODOPERATORABSDATESIZET-9F619D91">
+                     <p class="notep1">Note:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>To use item method operator <code class="codeph">$abs</code>, <code class="codeph">$date</code>, <code class="codeph">$size</code>, <code class="codeph">$timestamp</code>, or <code class="codeph">$type</code> you need Oracle Database Release 18c or later.
+                           </p>
+                        </li>
+                        <li>
+                           <p>To use any other item method you need Oracle Database Release 12c (12.2.0.1) or later.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-54828797-AB04-4926-908D-F6381749A21C" title="An item-method clause is an item-method equality clause or an item-method modifier clause. It applies an item method to the field of the field-condition clause in which it appears, typically to modify the field value. It then matches the result against the operand of the item-method.">Item-Method Clause (Reference)</a></li>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-20DC09A8-98DF-4473-8077-913D490A969C" title="International Standards Organization (ISO) standard 8601 describes an internationally accepted way to represent dates and times. Oracle Database supports many of the ISO 8601 date and time formats.">ISO 8601 Date and Time Support</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-36420BAE-3BE0-43EA-9C4B-5F793BCCB3F5" name="GUID-36420BAE-3BE0-43EA-9C4B-5F793BCCB3F5"></a><h3 id="ADSDI-GUID-36420BAE-3BE0-43EA-9C4B-5F793BCCB3F5" class="sect3"><span class="enumeration_section">2.6 </span>Overview of QBE Logical Combining Operators
+               </h3>
+               <div>
+                  <p>You use the query-by-example (QBE) logical combining operators, <code class="codeph">$and</code>, <code class="codeph">$or</code>, and <code class="codeph">$nor</code>, to combine conditions to form more complex QBEs. Each accepts an array of conditions as its argument.
+                  </p>
+                  <div class="section">
+                     <p>QBE logical combining operator <code class="codeph">$and</code> matches a document if each condition in its array argument matches it. For example, this QBE matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">Example 2-1</a>, because that document contains a field <code class="codeph">name</code> whose value starts with <code class="codeph">"Ja"</code>, <span class="italic">and</span> it contains a field <code class="codeph">drinks</code> whose value is <code class="codeph">"tea"</code>.
+                     </p><pre class="pre codeblock"><code>{"$and" : [ {"name" : {"$startsWith" : "Ja"}}, {"drinks" : "tea"} ]}
+</code></pre><p>Often you can omit operator <code class="codeph">$and</code> — it is implicit. For example, the following query is equivalent to the previous one:
+                     </p><pre class="pre codeblock"><code>{"name" : {"$startsWith" : "Ja"}, "drinks" : "tea"}
+</code></pre><p>QBE logical combining operator <code class="codeph">$or</code> matches a document if at least one of the conditions in its array argument matches it. 
+                     </p>
+                     <p>For example, the following QBE matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT2-9D549888">Example 2-2</a> and <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT3-9D549B5C">Example 2-3</a>, because those documents contain a field <code class="codeph">drinks</code> whose value is <code class="codeph">"soda"</code> <span class="italic">or</span> they contain a field <code class="codeph">zip</code> under a field <code class="codeph">address</code>, where the value of <code class="codeph">address.zip</code> is less than 94000, or they contain both:
+                     </p><pre class="pre codeblock"><code>{"$or" : [ {"drinks" : "soda"}, {"address.zip" : {"$le" : 94000}} ]}
+</code></pre><p>QBE logical combining operator <code class="codeph">$nor</code> matches a document if <span class="italic">no</span> condition in its array argument matches it. (Operators <code class="codeph">$nor</code> and <code class="codeph">$or</code> are logical complements.)
+                     </p>
+                     <p>The following query matches sample document 1, because in that document there is <span class="italic">neither</span> a field <code class="codeph">drinks</code> whose value is <code class="codeph">"soda"</code> <span class="italic">nor</span> a field <code class="codeph">zip</code> under a field <code class="codeph">address</code>, where the value of <code class="codeph">address.zip</code> is less than 94000:
+                     </p><pre class="pre codeblock"><code>{"$nor" : [ {"drinks" : "soda"}, {"address.zip" : {"$le" : 94000}} ]}
+</code></pre><p>Each element in the array argument of a logical combining operator is a condition. </p>
+                     <p>For example, the following condition has a single logical combining clause, with operator <code class="codeph">$and</code>. The array value of <code class="codeph">$and</code> has two conditions: the first condition restricts the value of field <code class="codeph">age</code>. The second condition has a single logical combining clause with <code class="codeph">$or</code>, and it restricts either the value of field <code class="codeph">name</code> or the value of field <code class="codeph">drinks</code>.
+                     </p><pre class="pre codeblock"><code>{ "$and" : [ <span class="bold">{</span> "age" : {"$gte" : 60} <span class="bold">}</span>,
+             <span class="bold">{</span> "$or" : [ {"name" :  "Jason"},
+                         {"drinks" : {"$in" : ["tea", "soda"]}} ] <span class="bold">}</span> ] }
+</code></pre></div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>The condition with the comparison for field <code class="codeph">age</code> matches sample document 3.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The condition with logical combining operator <code class="codeph">$or</code> matches sample documents 1 and 3.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <span class="italic">overall</span> condition matches only sample document 3, because that is the only document that satisfies <span class="italic">both</span> the condition on <code class="codeph">age</code> <span class="italic">and</span> the condition that uses <code class="codeph">$or</code>.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The following condition has two conditions in the array argument of operator <code class="codeph">$or</code>. The first of these has a single logical combining clause with <code class="codeph">$and</code>, and it restricts the values of fields <code class="codeph">name</code> and <code class="codeph">drinks</code>. The second has a single logical combining clause with <code class="codeph">$nor</code>, and it restricts the values of fields <code class="codeph">age</code> and <code class="codeph">name</code>.
+                     </p><pre class="pre codeblock"><code>{ "$or" : [ <span class="bold">{</span> "$and" : [ {"name" : "Jason"},
+                         {"drinks" : {"$in" : ["tea", "soda"]}} ] <span class="bold">}</span>,
+            <span class="bold">{</span> "$nor" : [ {"age" : {"$lt" : 65}},
+                         {"name" : "Jason"} ] <span class="bold">}</span> ] }</code></pre><ul style="list-style-type: disc;">
+                        <li>
+                           <p>The condition with operator <code class="codeph">$and</code> matches sample document 1.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The condition with operator <code class="codeph">$nor</code> matches sample document 3.
+                           </p>
+                        </li>
+                        <li>
+                           <p>The <span class="italic">overall</span> condition matches both sample documents 1 and 3, because each of these documents satisfies <span class="italic">at least one</span> condition in the <code class="codeph">$or</code> argument.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-F717922B-5D0C-4029-A7B3-488643DAB706" title="A logical combining clause combines the effects of multiple non-empty filter conditions.">Logical Combining Clause (Reference)</a></li>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-4E71F10D-F18C-49EB-97F0-651E909F94F4" title="Sometimes you can omit the use of $and.">Omitting $and</a></li>
+                        <li><a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847" title="A few sample JSON documents are presented here. They are referenced in some query-by-example (QBE) examples, as well as in some reference descriptions.">Sample JSON Documents</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-995657CE-69B4-4348-B9B3-FBA7D1D63474" name="GUID-995657CE-69B4-4348-B9B3-FBA7D1D63474"></a><h3 id="ADSDI-GUID-995657CE-69B4-4348-B9B3-FBA7D1D63474" class="sect3"><span class="enumeration_section">2.7 </span>Overview of Nested Conditions in QBEs
+               </h3>
+               <div>
+                  <p>You can use a query-by-example (QBE) with a <span class="italic">nested</span> condition to match a document that has a field with an <span class="italic">array</span> value with object elements, where a <span class="italic">given element of the array satisfies multiple criteria</span>.
+                  </p>
+                  <div class="section">
+                     <p>The following condition matches documents that have both a <code class="codeph">city</code> value of <code class="codeph">"Mono Vista"</code> and a <code class="codeph">state</code> value of<code class="codeph">"CA"</code> in the <span class="italic">same object</span> under <span class="italic">array</span> <code class="codeph">address</code>.
+                     </p><pre class="pre codeblock"><code>{"address" : { "city" : "Mono Vista", "state" : "CA"}}
+</code></pre><p>It specifies that there must be a <span class="italic">parent</span> field <code class="codeph">address</code>, and if the value of that field is an <span class="italic">array</span> then at least one object in the array must have a <code class="codeph">city</code> field with value <code class="codeph">"Mono Vista"</code> <span class="italic">and</span> a <code class="codeph">state</code> field with value <code class="codeph">"CA"</code>. Of the three sample JSON documents, this QBE matches only <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT1-9D54959D">Example 2-1</a>.
+                     </p>
+                     <p>The following QBE also matches sample document 1, but it matches <a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847__SAMPLEJSONDOCUMENT2-9D549888">Example 2-2</a> as well:
+                     </p><pre class="pre codeblock"><code>{"address.city" : "Mono Vista", "address.state" : "CA"}
+</code></pre><p>Unlike the preceding QBE, nothing here constrains the city and state to belong to the <span class="italic">same</span> address. Instead, this QBE specifies only that matching documents must have a <code class="codeph">city</code> field with value <code class="codeph">"Mono Vista"</code> <span class="italic">in some object</span> of an <code class="codeph">address</code> array and a <code class="codeph">state</code> field with value <code class="codeph">"CA"</code> <span class="italic">in some object</span> of an <code class="codeph">address</code> array. It does not specify that fields <code class="codeph">address.city</code> and <code class="codeph">address.state</code> must reside within the <span class="italic">same object</span>.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-14FB255F-F48D-4979-B642-FECE34CE03B2" title="A nested-condition clause consists of a parent field followed by a single, non-empty filter condition. All fields contained in this nested condition are scoped to the parent field.">Nested-Condition Clause (Reference)</a></li>
+                        <li><a href="overview-soda-filter-specifications-qbes.html#GUID-BF0C34CD-443C-43EC-A091-460B3C63A847" title="A few sample JSON documents are presented here. They are referenced in some query-by-example (QBE) examples, as well as in some reference descriptions.">Sample JSON Documents</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-41478908-D190-4DD4-9F3F-FF667699EE3E" name="GUID-41478908-D190-4DD4-9F3F-FF667699EE3E"></a><h3 id="ADSDI-GUID-41478908-D190-4DD4-9F3F-FF667699EE3E" class="sect3"><span class="enumeration_section">2.8 </span>Overview of QBE Operator $id
+               </h3>
+               <div>
+                  <p>Other query-by-example (QBE) operators generally look for particular JSON fields within documents and try to match their values. Operator <code class="codeph">$id</code> is an exception in that it instead matches document <span class="italic">keys</span>. It thus matches document <span class="italic">metadata</span>, not document content. You use operator <code class="codeph">$id</code> in the outermost condition of a QBE.
+                  </p>
+                  <div class="section">
+                     <p><a href="overview-soda-filter-specifications-qbes.html#GUID-41478908-D190-4DD4-9F3F-FF667699EE3E__USINGIDTOFINDDOCUMENTSTHATHAVEGIVEN-9D56F566">Example 2-4</a> shows three QBEs that use operator <code class="codeph">$id</code>. 
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-41478908-D190-4DD4-9F3F-FF667699EE3E__USINGIDTOFINDDOCUMENTSTHATHAVEGIVEN-9D56F566">
+                     <p class="titleinexample">Example 2-4 Using $id To Find Documents That Have Given Keys</p><pre class="pre codeblock"><code>// Find the unique document that has key "key1".
+{"$id" : "key1"}
+
+// Find the documents that have <span class="italic">any of the keys</span> "key1", "key2", and "key3".
+{"$id" : ["key1","key2","key3"]}
+
+// Find the documents that have <span class="italic">at least one of the keys</span> "key1" and "key2",
+// and that have an object with a field address.zip whose value is at least 94000.
+{"$and" : [{$id : ["key1", "key2"]},
+           {"address.zip" : { "$gte" : 94000 }}]}</code></pre></div>
+                  <!-- class="example" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-6C96B569-0021-46C3-B0DB-61A16EBA7CA5" title="Other query-by-example (QBE) operators generally look for particular JSON fields within the content of documents and try to match their values. An ID clause, which uses operator $id, instead matches document keys. It thus matches document metadata, not document content.">ID Clause (Reference)</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-3B182089-9A38-45DA-B7D7-8232E13C8F83" name="GUID-3B182089-9A38-45DA-B7D7-8232E13C8F83"></a><h3 id="ADSDI-GUID-3B182089-9A38-45DA-B7D7-8232E13C8F83" class="sect3"><span class="enumeration_section">2.9 </span>Overview of QBE Operator $orderby
+               </h3>
+               <div>
+                  <p>Query-by-example (QBE) operator <code class="codeph">$orderby</code> is described. It sorts query results in ascending or descending order.
+                  </p>
+                  <div class="section">
+                     <p>You can specify the sort order for individual fields and the relative sort order among fields. </p>
+                     <p>Operator <code class="codeph">$orderby</code> can be used with two alternative syntaxes: array and abbreviated.
+                     </p>
+                     <p>Regardless of  the syntax choice, when you use <code class="codeph">$orderby</code> in a filter specification together with one or more filter conditions, you must wrap those conditions with operator <code class="codeph">$query</code>. In the queries shown here, the returned documents are restricted to those that satisfy a filter condition that specifies that field <code class="codeph">age</code> must have a value greater than 40.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section" id="GUID-3B182089-9A38-45DA-B7D7-8232E13C8F83__USINGTHEORDERBYCLAUSEARRAYSYNTAX-05D32A71">
+                     <p class="subhead2">Using the Orderby Clause Array Syntax</p>
+                     <p>The <span class="italic">array</span> syntax is the more straightforward of the two. You follow <code class="codeph">$orderby</code> by an array of the fields to sort, in their <span class="italic">relative sort order</span>: the first array element specifies the first field to sort by, the second element specifies the second field to sort by, and so on. 
+                     </p>
+                     <p>The array syntax also lets you specify the <span class="italic">SQL data type to use for sorting a given field</span>, that is, how to interpret the field values, for sorting purposes.
+                     </p>
+                     <p>For example, you can specify whether a field that has numeric codes (as a string or as a number) should be sorted lexicographically (as a string of digit characters) or numerically as a sequence of digits interpreted as a number). With <code class="codeph">"varchar2"</code> as the sort data type, <code class="codeph">"100"</code> sorts, in ascending order, before <code class="codeph">"9"</code>. With <code class="codeph">"number"</code> as the sort type, <code class="codeph">"9"</code> sorts, in ascending order, before <code class="codeph">"100"</code>, since the number <code class="codeph">90</code> is smaller than the number <code class="codeph">100</code>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-3B182089-9A38-45DA-B7D7-8232E13C8F83__TOUSEADATATYPEVALUEOFDATEORDATETIME-9F65E004">
+                        <p class="notep1">Note:</p>
+                        <p>To use a <code class="codeph">datatype</code> value of <code class="codeph">date</code> or <code class="codeph">timestamp</code> you need Oracle Database Release 18c or later.
+                        </p>
+                     </div>
+                     <p>Finally, the array syntax also lets you specify, for a string-valued field, a maximum number of characters at the start of the string. An error is raised if a string value for the targeted field is too long. (A string that is too long is ignored during sorting.)</p>
+                     <p>The following QBE selects objects in which field <code class="codeph">salary</code> is between 10,000 and 20,000, inclusive. It sorts the objects first by descending <code class="codeph">age</code>, interpreted as a number, then by ascending <code class="codeph">name</code>, interpreted as a string. An error is raised if the string value of field <code class="codeph">name</code> is longer than 100 characters in any matching document. The default error handling applies here: an error is raised if the value of any of the fields is not convertible to the specified <code class="codeph">datatype</code>, but no error is raised if any of the specified fields is missing.
+                     </p><pre class="pre codeblock"><code>{ "$query"   : { "salary" : { "$gt" : 10000, "$lte" : 20000 } },
+  "$orderby" : [ { "path" : <span class="bold">"age"</span>, "datatype" : <span class="bold">"number"</span>, "order" : <span class="bold">"desc"</span> },
+                 { "path" : <span class="bold">"name"</span>, "datatype" : <span class="bold">"varchar2"</span>, "order" : <span class="bold">"asc"</span>,
+                  "maxLength" : <span class="bold">100</span> } ] }
+</code></pre><p>The following QBE is the same, except that it requires that field <code class="codeph">name</code> be present in each matching document (as well as requiring that its value be convertible to a string). Otherwise, an error is raised at query time.
+                     </p><pre class="pre codeblock"><code>{ "$query"   : { "salary" : { "$gt" : 10000, "$lte" : 20000 } },
+  "$orderby" : { "<span class="bold">$fields</span>" :
+                 [ { "path" : "age", "datatype" : "number", "order" : "desc" },
+                   { "path" : "name", "datatype" : "varchar2", "order" : "asc",
+                     "maxLength" : 100 } ],
+                 <span class="bold">"$scalarRequired" : true</span> } }</code></pre></div>
+                  <!-- class="section" -->
+                  <div class="section" id="GUID-3B182089-9A38-45DA-B7D7-8232E13C8F83__USINGTHEORDERBYCLAUSEABBREVIATEDSYN-05D32F05">
+                     <p class="subhead2">Using the Orderby Clause Abbreviated Syntax</p>
+                     <p>The abbreviated syntax lets you list the fields to sort by and their relative sort order in a succinct way. You cannot use it to specify how to interpret the values of a given field for sorting purposes, that is, which data type to interpret the values as. And you cannot specify a maximum number of characters to take into account when sorting a string field.</p>
+                     <p>The following QBE specifies the order of fields <code class="codeph">age</code> and <code class="codeph">name</code> when sorting documents where the <code class="codeph">salary</code> is between 10,000 and 20,000. A value of <code class="codeph">&#x2013;1</code> specifies <span class="italic">descending</span> order for <code class="codeph">age</code>. A value of <code class="codeph">2</code> specifies <span class="italic">ascending</span> order for <code class="codeph">name</code>. Sorting is done <span class="italic">first</span> by <code class="codeph">age</code> and then by <code class="codeph">name</code>, because the absolute value of <code class="codeph">&#x2013;1</code> is less than the absolute value of <code class="codeph">2</code> — not because <code class="codeph">-1</code> is less than <code class="codeph">2</code>, and not because field <code class="codeph">age</code> appears before field <code class="codeph">name</code> in the <code class="codeph">$orderby</code> object.
+                     </p><pre class="pre codeblock"><code>{ "$query" : { "salary" : { $between [10000, 20000] } },
+  "$orderby" :  { <span class="bold">"age"</span> : <span class="bold">-1</span>, <span class="bold">"name"</span> : <span class="bold">2</span> } }
+</code></pre></div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-8AD6237B-860C-43A7-B6B7-5C8328784322" title="A filter specification (query-by-example, or QBE) with an orderby clause returns the selected JSON documents in sorted order.">Orderby Clause Sorts Selected Objects</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="sect2"><a id="GUID-12994E27-DA98-40C7-8D4F-84341106F8D9" name="GUID-12994E27-DA98-40C7-8D4F-84341106F8D9"></a><h3 id="ADSDI-GUID-12994E27-DA98-40C7-8D4F-84341106F8D9" class="sect3"><span class="enumeration_section">2.10 </span>Overview of QBE Spatial Operators
+               </h3>
+               <div>
+                  <p>You can use query-by-example (QBE) operator <code class="codeph">$near</code>, <code class="codeph">$intersects</code>, or <code class="codeph">$within</code> to select documents that have a field whose value is a GeoJSON geometry object that is <span class="italic">near </span>a specified position, <span class="italic">intersects </span>a specified geometric object, or is <span class="italic">within </span>another specified geometric object, respectively.
+                  </p>
+                  <div class="infoboxnote" id="GUID-12994E27-DA98-40C7-8D4F-84341106F8D9__TOUSEQBESPATIALOPERATORSYOUNEEDORAC-9F60A5E9">
+                     <p class="notep1">Note:</p>
+                     <p>To use QBE spatial operators you need Oracle Database Release 12c (12.2.0.1) or later.</p>
+                  </div>
+                  <p>The following QBE selects only documents that have a <code class="codeph">location</code> field whose value is a <code class="codeph">Point</code> GeoJSON geometry object that represents a position within 50 kilometers of the coordinates [34.0162, -118.2019].
+                  </p><pre class="pre codeblock"><code>{ "location" :
+  { "<span class="bold">$near</span>" :
+    { "<span class="bold">$geometry</span>" : { "type" : "Point", "coordinates" : [34.0162, -118.2019] },
+      "<span class="bold">$distance</span>" : 50,
+      "<span class="bold">$unit</span>"     : "KM" } } }</code></pre><p>It can retrieve a document that has an object such as this one, for example:</p><pre class="pre codeblock"><code>{ "location" : { "type" : "Point", "coordinates": [<span class="bold">33.7243</span>, <span class="bold">-118.1579</span>] } }</code></pre><p>Any document that does not contain a <code class="codeph">location</code> field is ignored (skipped) without error. But if the queried collection contains a document with a <code class="codeph">location</code> field that does <span class="italic">not</span> have as value a (single) GeoJSON geometry object then an error is raised. A document with this object, for example, raises an error:
+                  </p><pre class="pre codeblock"><code>{ "location" : "1600 Pennsylvania Ave NW, Washington, DC 20500" }</code></pre><p>You can provide different (non-default) error-handling behavior for your QBE by including a <code class="codeph">true</code>-valued <code class="codeph">$scalarRequired</code> or <code class="codeph">$lax</code> field (but <span class="italic">not</span> both together) in the object that is the value of spatial operator <code class="codeph">$near</code>, <code class="codeph">$intersects</code>, or <code class="codeph">$within</code>. 
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>A <code class="codeph">true</code> value for field <code class="codeph">$scalarRequired</code> means raise an error if any document does not have a <code class="codeph">location</code> field. (An error is still also raised for a <code class="codeph">location</code> field whose value is not a geometry object.)
+                        </p>
+                     </li>
+                     <li>
+                        <p>A <code class="codeph">true</code> value for field <code class="codeph">$lax</code> means ignore not only a missing <code class="codeph">location</code> field but also a <code class="codeph">location</code> field whose value is not a GeoJSON geometry object.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>For example, this QBE raises an error if any document has <span class="italic">no</span> <code class="codeph">location</code> field or if any document has a location field whose value is not a geometry object:
+                  </p><pre class="pre codeblock"><code>{ "location" :
+  { "$near" :
+    { "$geometry"      : { "type" : "Point", "coordinates" : [34.0162, -118.2019] },
+      "$distance"      : 50,
+      "$unit"          : "KM",
+      <span class="bold">"$scalarRequired : true</span> } } }</code></pre><p>And this QBE does <span class="italic">not</span> raise an error for a document that has no <code class="codeph">location</code> field or for a document that has a <code class="codeph">location</code> field whose value is not a geometry object:
+                  </p><pre class="pre codeblock"><code>{ "location" :
+  { "$near" :
+    { "$geometry" : { "type" : "Point", "coordinates" : [34.0162, -118.2019] },
+      "$distance" : 50,
+      "$unit"     : "KM",
+      <span class="bold">"$lax"      : true</span> } } }</code></pre><div class="infoboxnote" id="GUID-12994E27-DA98-40C7-8D4F-84341106F8D9__GUID-DEB4636E-B22F-4B16-A2A8-A35277027891">
+                     <p class="notep1">Note:</p>
+                     <p>If you have created a SODA spatial index, for a field whose value is a GeoJSON <code class="codeph">geometry</code> object, and you use a QBE that targets that field, the index can be picked up for the QBE <span class="italic">only</span> if both index and QBE specify the <span class="italic">same</span> error-handling behavior for that field. Both must specify the <span class="italic">same one</span> of these:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">scalarRequired = true</code></p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">lax = true</code></p>
+                        </li>
+                        <li>
+                           <p>Neither <code class="codeph">scalarRequired = true</code> nor <code class="codeph">lax = true</code></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="soda-filter-specifications-reference.html#GUID-DE2C6C59-7406-468E-84FB-23001449842E" title="GeoJSON objects are JSON objects that represent geographic data. You can use a SODA QBE spatial clause to match GeoJSON geometry objects in your documents.">Spatial Clause (Reference)</a></li>
+                        <li><a href="soda-index-specifications-reference.html#GUID-00C06941-6FFD-4CEB-81B6-9A7FBD577A2C" title="You can index the data in JSON documents using index specifications. A detailed definition of SODA index specifications is presented.">SODA Index Specifications (Reference)</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="overview-soda-filter-specifications-qbes.html#GUID-CB09C4E3-BBB1-40DC-88A8-8417821B0FBE" title="A filter specification is a pattern expressed in JSON. You use it to select, from a collection, the JSON documents whose content matches it, meaning that the condition expressed by the pattern evaluates to true for the content of (only) those documents.">Overview of SODA Filter Specifications (QBEs)</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

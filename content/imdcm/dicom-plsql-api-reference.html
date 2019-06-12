@@ -1,0 +1,2177 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Oracle Multimedia DICOM provides a PL/SQL API, which is defined in the ORD_DICOM PL/SQL package.">
+      <meta name="description" content="Oracle Multimedia DICOM provides a PL/SQL API, which is defined in the ORD_DICOM PL/SQL package.">
+      <title>DICOM PL/SQL API Reference</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="DICOM Developer's Guide ">
+      <meta property="og:description" content="Oracle Multimedia DICOM provides a PL/SQL API, which is defined in the ORD_DICOM PL/SQL package.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="DICOM Developer's Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="multimedia-dicom-developers-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-09-07T06:10:21-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2007, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84258-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="dicom-application-development.html" title="Previous" type="text/html">
+      <link rel="next" href="ORDDicom-object-type-reference.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Multimedia DICOM Developer's Guide">
+    <meta name="dcterms.isVersionOf" content="IMDCM">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="dicom-application-development.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="ORDDicom-object-type-reference.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">DICOM Developer's Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="dicom-development-usage-and-reference.html" property="item" typeof="WebPage"><span property="name">   DICOM Development Usage and Reference </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> DICOM PL/SQL API Reference </li>
+            </ol>
+            <a id="GUID-A6CA2103-5DD8-4F46-8E30-16C00E82CAF7" name="GUID-A6CA2103-5DD8-4F46-8E30-16C00E82CAF7"></a><a id="IMDCM6000"></a>
+            
+            <h2 id="IMDCM-GUID-A6CA2103-5DD8-4F46-8E30-16C00E82CAF7" class="sect2"><span class="enumeration_chapter">6 </span> DICOM PL/SQL API Reference 
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Oracle Multimedia DICOM provides a PL/SQL API, which is defined in the ORD_DICOM PL/SQL package.</p>
+               <div class="infoboxnote" id="GUID-A6CA2103-5DD8-4F46-8E30-16C00E82CAF7__GUID-D58A0296-3F46-4671-A193-1D7F66C5FADD">
+                  <p class="notep1">Note:</p>
+                  <p>The Oracle Multimedia support for DICOM was deprecated in Oracle Database 12<span class="italic">c</span> Release 2 (12.2), and may be desupported in a future release. Oracle recommends that you stop using deprecated features as soon as possible.
+                  </p>
+               </div>
+               <p>The ORD_DICOM PL/SQL package provides functions and procedures to perform common operations such as format conversion, metadata extraction, and conformance validation. This package adds Oracle Multimedia support to medical image data stored in BLOBs and BFILEs.</p>
+               <p>Application developers who create medical imaging applications without using the Oracle Multimedia ORDDicom object type to store and manage medical image data in relational tables can use the Oracle Multimedia DICOM PL/SQL API to manage their medical image data. In addition, application developers who do not want to migrate their existing medical image applications to use Oracle Multimedia ORDDicom objects can use the DICOM PL/SQL API to manage their medical image data.</p>
+               <p>The ORD_DICOM package is defined in the <code class="codeph">ordcpksp.sql</code> file. After installation, this file is available in the Oracle home directory at:
+               </p>
+               <p><code class="codeph"><span class="variable">&lt;ORACLE_HOME&gt;</span></code><code class="codeph">/ord/im/admin</code> (on Linux and UNIX)
+               </p>
+               <p><code class="codeph"><span class="variable">&lt;ORACLE_HOME&gt;</span></code><code class="codeph">\ord\im\admin</code> (on Windows)
+               </p>
+               <p>This chapter describes the functions and procedures in the DICOM PL/SQL API.</p>
+               <p>This chapter contains these sections:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="dicom-plsql-api-reference.html#GUID-07ADE3A7-2A6A-4417-A10D-5E13BEE3F477">Examples for DICOM PL/SQL API Functions and Procedures</a></p>
+                  </li>
+                  <li>
+                     <p><a href="dicom-plsql-api-reference.html#GUID-BE04E057-E2BA-4D8B-A8FB-930C2AC5B51E">DICOM PL/SQL API Functions</a></p>
+                  </li>
+                  <li>
+                     <p><a href="dicom-plsql-api-reference.html#GUID-AC350723-2DAC-4E44-AACF-E48853EDA241">DICOM PL/SQL API Procedures</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-A6CA2103-5DD8-4F46-8E30-16C00E82CAF7__GUID-836B5817-EF04-4E3A-85BD-323C88A5AFFC">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="overview-of-dicom-development.html#GUID-3946EE95-64CE-41E7-9B69-32517644FB1F">APIs for Use With Oracle Multimedia DICOM</a></p>
+               </div>
+            </div><a id="IMDCM6100"></a><div class="props_rev_3"><a id="GUID-07ADE3A7-2A6A-4417-A10D-5E13BEE3F477" name="GUID-07ADE3A7-2A6A-4417-A10D-5E13BEE3F477"></a><h3 id="IMDCM-GUID-07ADE3A7-2A6A-4417-A10D-5E13BEE3F477" class="sect3"><span class="enumeration_section">6.1 </span>Examples for DICOM PL/SQL API Functions and Procedures
+               </h3>
+               <div>
+                  <p>The functions and procedures for the DICOM PL/SQL API described in this chapter show examples based on the MEDICAL_IMAGE_REL table. See <a href="dicom-plsql-api-reference.html#GUID-87EF060E-8B7E-4F28-AE96-7B07F11DE7CB">MEDICAL_IMAGE_REL Table Definition</a> when reading through these examples.
+                  </p>
+                  <p>Before using DICOM PL/SQL API functions and procedures, you must load some data into the table. For example, you can use SQL*Loader or the importFrom( ) procedure. Substitute your DICOM files for those in the examples.</p>
+               </div><a id="IMDCM13385"></a><div class="props_rev_3"><a id="GUID-FC8C5B8D-7D63-4233-8FB6-E02359FB5D5E" name="GUID-FC8C5B8D-7D63-4233-8FB6-E02359FB5D5E"></a><h4 id="IMDCM-GUID-FC8C5B8D-7D63-4233-8FB6-E02359FB5D5E" class="sect4"><span class="enumeration_section">6.1.1 </span>Directory Definition and Setup for DICOM PL/SQL API Examples
+                  </h4>
+                  <div>
+                     <p>Before executing the examples, issue the following statements while connected to a user with privileges to create a directory object, where <code class="codeph">c:\mydir\work</code> is the directory where the user <code class="codeph">&lt;user&gt;</code> can find the DICOM files:
+                     </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE DIRECTORY DICOMDIR as 'c:\mydir\work';
+GRANT READ, WRITE ON DIRECTORY DICOMDIR TO &lt;user&gt;;</pre><div class="infoboxnote" id="GUID-FC8C5B8D-7D63-4233-8FB6-E02359FB5D5E__GUID-528E3238-6378-4189-828A-1DF80F1D5620">
+                        <p class="notep1">Note:</p>
+                        <p>At the beginning of each database session, call the setDataModel( ) procedure.</p>
+                        <p>See the <a href="dicom-data-model-utility-reference.html#GUID-5A8F4987-DD6B-40E9-9FB1-9E35BAAEC916">setDataModel( ) Procedure</a> for more information.
+                        </p>
+                     </div>
+                  </div>
+               </div><a id="IMDCM13386"></a><div class="props_rev_3"><a id="GUID-87EF060E-8B7E-4F28-AE96-7B07F11DE7CB" name="GUID-87EF060E-8B7E-4F28-AE96-7B07F11DE7CB"></a><h4 id="IMDCM-GUID-87EF060E-8B7E-4F28-AE96-7B07F11DE7CB" class="sect4"><span class="enumeration_section">6.1.2 </span>MEDICAL_IMAGE_REL Table Definition
+                  </h4>
+                  <div>
+                     <p>Before loading data into the table, you must create the table and columns where the data is to be stored. The following PL/SQL code segment creates the  MEDICAL_IMAGE_REL table<a id="d13185e221" class="indexterm-anchor"></a> with five columns.
+                     </p><pre class="oac_no_warn" dir="ltr">CREATE TABLE MEDICAL_IMAGE_REL
+(
+ id            integer primary key,
+ blob_src      blob,
+ bfile_src     bfile,
+ image_src     ordsys.ordimage,
+ blob_dest     blob
+);
+</pre><p>where:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>blob_src: the source DICOM content in the BLOB.</p>
+                        </li>
+                        <li>
+                           <p>bfile_src: the source DICOM content in the BFILE.</p>
+                        </li>
+                        <li>
+                           <p>image_src: the source DICOM content in the ORDImage object.</p>
+                        </li>
+                        <li>
+                           <p>blob_dest: the destination DICOM content in the BLOB.</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="IMDCM6200"></a><div class="props_rev_3"><a id="GUID-BE04E057-E2BA-4D8B-A8FB-930C2AC5B51E" name="GUID-BE04E057-E2BA-4D8B-A8FB-930C2AC5B51E"></a><h3 id="IMDCM-GUID-BE04E057-E2BA-4D8B-A8FB-930C2AC5B51E" class="sect3"><span class="enumeration_section">6.2 </span>DICOM PL/SQL API Functions
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The ORD_DICOM package defines these DICOM PL/SQL API functions:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-2A21CA7B-0728-4CDC-8444-41C427342AD3">extractMetadata( ) for BFILEs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-36A7579D-44DA-4ABF-917A-20E40CFF47E9">extractMetadata( ) for BLOBs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-2A87B17D-9DB2-4F34-BC7C-B164E828E05A">extractMetadata( ) for ORDImage</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-B30D4D69-A8FF-4B20-A4E2-BE42BBACB3D8">isAnonymous( ) for BFILEs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-F8DFCE67-EA3C-4C49-B5C5-F13A8994DB5D">isAnonymous( ) for BLOBs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-B450AD19-972E-40F0-80B3-6C2EDBC4719D">isAnonymous( ) for ORDImage</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-736AC751-1310-4717-92C7-F7D4607321B3">isConformanceValid( ) for BFILEs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-34B6B361-E0C4-48D7-9F8A-0BF3BD44EECF">isConformanceValid( ) for BLOBs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-53BE23DB-FEDB-4601-9D8A-EF7A18C29BDA">isConformanceValid( ) for ORDImage</a></p>
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- class="section" -->
+               </div><a id="IMDCM13387"></a><div class="props_rev_3"><a id="GUID-2A21CA7B-0728-4CDC-8444-41C427342AD3" name="GUID-2A21CA7B-0728-4CDC-8444-41C427342AD3"></a><h4 id="IMDCM-GUID-2A21CA7B-0728-4CDC-8444-41C427342AD3" class="sect4"><span class="enumeration_section">6.2.1 </span>extractMetadata( ) for BFILEs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">extractMetadata(data IN BFILE,
+                extractOption IN VARCHAR2 DEFAULT 'ALL',
+                docName IN VARCHAR2 DEFAULT 'ordcmmp.xml')
+ RETURN SYS.XMLTYPE </pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Returns the DICOM metadata as an XML document for a specified mapping document. The default mapping document refers to the default metadata namespace <code class="codeph">http://xmlns.oracle.com/ord/dicom/metadata_1_0</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-2A21CA7B-0728-4CDC-8444-41C427342AD3__GUID-0C887835-0086-405B-8E68-D9F7FADB19E6">
+                                 <!-- --></a>data
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BFILE.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-2A21CA7B-0728-4CDC-8444-41C427342AD3__GUID-059EC05D-2960-488F-A14E-83E2CA4C7D83">
+                                 <!-- --></a>extractOption
+                           </dt>
+                           <dd>
+                              <p>A string that specifies the types of metadata to extract from the DICOM content. Valid values are: <code class="codeph">ALL</code>, <code class="codeph">MAPPED</code>, and <code class="codeph">STANDARD</code>. The default is <code class="codeph">ALL</code>.
+                              </p>
+                              <p>When the value of the extractOption parameter is <code class="codeph">ALL</code>, all attributes in the DICOM content are extracted. When the value is set to <code class="codeph">MAPPED</code>, only mapped attributes are extracted. And, when the value is set to <code class="codeph">STANDARD</code>, only attributes that conform to the DICOM standard and mapped attributes are extracted.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-2A21CA7B-0728-4CDC-8444-41C427342AD3__GUID-6D8E6B12-8AF7-4C64-B9FA-368564A6DCA6">
+                                 <!-- --></a>docName
+                           </dt>
+                           <dd>
+                              <p>The name of the mapping document. The default mapping document <code class="codeph">ordcmmp.xml</code> is loaded during installation.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>Use the preference parameter XML_SKIP_ATTR to specify size limits for DICOM attributes to be omitted when encoding into XML. See <a href="creating-dicom-configuration-documents.html#GUID-EADFE74B-50EA-4983-A865-E7EB5A592756">Defining the XML_SKIP_ATTR Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against a specific XML schema that is registered with Oracle XML DB, either as a global or local XML schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Calling this function when the value of the preference parameter VALIDATE_METADATA is set to <code class="codeph">true</code> raises an error if the metadata namespace in the mapping document is not available to the current user.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Extract metadata from the DICOM content stored in a BFILE:</p><pre class="oac_no_warn" dir="ltr">declare
+  src bfile;
+  metadata xmltype;
+begin
+  select bfile_src into src from medical_image_rel where id = 1 for update;
+  metadata := ord_dicom.extractMetadata(src, 'all', 'ordcmmp.xml');
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13388"></a><div class="props_rev_3"><a id="GUID-36A7579D-44DA-4ABF-917A-20E40CFF47E9" name="GUID-36A7579D-44DA-4ABF-917A-20E40CFF47E9"></a><h4 id="IMDCM-GUID-36A7579D-44DA-4ABF-917A-20E40CFF47E9" class="sect4"><span class="enumeration_section">6.2.2 </span>extractMetadata( ) for BLOBs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">extractMetadata(data IN BLOB,
+                extractOption IN VARCHAR2 DEFAULT 'ALL',
+                docName IN VARCHAR2 DEFAULT 'ordcmmp.xml') 
+ RETURN SYS.XMLTYPE</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Returns the DICOM metadata as an XML document for a specified mapping document. The default mapping document refers to the default metadata namespace <code class="codeph">http://xmlns.oracle.com/ord/dicom/metadata_1_0</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-36A7579D-44DA-4ABF-917A-20E40CFF47E9__GUID-E7DB23FC-A780-417B-BD6B-5342B893C2B5">
+                                 <!-- --></a>data
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BLOB.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-36A7579D-44DA-4ABF-917A-20E40CFF47E9__GUID-1B7E0762-6763-4624-BC6A-89067AEDF068">
+                                 <!-- --></a>extractOption
+                           </dt>
+                           <dd>
+                              <p>A string that specifies the types of metadata to extract from the DICOM content. Valid values are: <code class="codeph">ALL</code>, <code class="codeph">MAPPED</code>, and <code class="codeph">STANDARD</code>. The default is <code class="codeph">ALL</code>.
+                              </p>
+                              <p>When the value of the extractOption parameter is <code class="codeph">ALL</code>, all attributes in the DICOM content are extracted. When the value is set to <code class="codeph">MAPPED</code>, only mapped attributes are extracted. And, when the value is set to <code class="codeph">STANDARD</code>, only attributes that conform to the DICOM standard and mapped attributes are extracted.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-36A7579D-44DA-4ABF-917A-20E40CFF47E9__GUID-8EDEC52A-C5E9-4B70-80A4-67F8FE3B83E0">
+                                 <!-- --></a>docName
+                           </dt>
+                           <dd>
+                              <p>The name of the mapping document. The default mapping document <code class="codeph">ordcmmp.xml</code> is loaded during installation.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>Use the preference parameter XML_SKIP_ATTR to specify size limits for DICOM attributes to be omitted when encoding into XML. See <a href="creating-dicom-configuration-documents.html#GUID-EADFE74B-50EA-4983-A865-E7EB5A592756">Defining the XML_SKIP_ATTR Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against a specific XML schema that is registered with Oracle XML DB, either as a global or local XML schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Calling this function when the value of the preference parameter VALIDATE_METADATA is set to <code class="codeph">true</code> raises an error if the metadata namespace in the mapping document is not available to the current user.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Extract metadata from the DICOM content stored in a BLOB:</p><pre class="oac_no_warn" dir="ltr">declare
+  src blob;
+  metadata xmltype;
+begin
+  select blob_src into src from medical_image_rel where id = 1 for update;
+  metadata := ord_dicom.extractMetadata(src, 'all', 'ordcmmp.xml');
+end;</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13389"></a><div class="props_rev_3"><a id="GUID-2A87B17D-9DB2-4F34-BC7C-B164E828E05A" name="GUID-2A87B17D-9DB2-4F34-BC7C-B164E828E05A"></a><h4 id="IMDCM-GUID-2A87B17D-9DB2-4F34-BC7C-B164E828E05A" class="sect4"><span class="enumeration_section">6.2.3 </span>extractMetadata( ) for ORDImage
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">extractMetadata(data IN ORDSYS.ORDImage,
+                extractOption IN VARCHAR2 DEFAULT 'ALL',
+                docName IN VARCHAR2 DEFAULT 'ordcmmp.xml') 
+ RETURN SYS.XMLTYPE</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Returns the DICOM metadata as an XML document for a specified mapping document. The default mapping document refers to the default metadata namespace <code class="codeph">http://xmlns.oracle.com/ord/dicom/metadata_1_0</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-2A87B17D-9DB2-4F34-BC7C-B164E828E05A__GUID-0D721B56-376A-4A10-A26B-D1439074A3A5">
+                                 <!-- --></a>data
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in an ORDImage object.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-2A87B17D-9DB2-4F34-BC7C-B164E828E05A__GUID-9E6A2118-7F16-4EE1-9ADF-66D3B5C486D1">
+                                 <!-- --></a>extractOption
+                           </dt>
+                           <dd>
+                              <p>A string that specifies the types of metadata to extract from the DICOM content. Valid values are: <code class="codeph">ALL</code>, <code class="codeph">MAPPED</code>, and <code class="codeph">STANDARD</code>. The default is <code class="codeph">ALL</code>.
+                              </p>
+                              <p>When the value of the extractOption parameter is <code class="codeph">ALL</code>, all attributes in the DICOM content are extracted. When the value is set to <code class="codeph">MAPPED</code>, only mapped attributes are extracted. And, when the value is set to <code class="codeph">STANDARD</code>, only attributes that conform to the DICOM standard and mapped attributes are extracted.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-2A87B17D-9DB2-4F34-BC7C-B164E828E05A__GUID-93BD7F83-1010-42BF-9A56-79E0DDB2365F">
+                                 <!-- --></a>docName
+                           </dt>
+                           <dd>
+                              <p>The name of the mapping document. The default mapping document <code class="codeph">ordcmmp.xml</code> is loaded during installation.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>Use the preference parameter XML_SKIP_ATTR to specify size limits for DICOM attributes to be omitted when encoding into XML. See <a href="creating-dicom-configuration-documents.html#GUID-EADFE74B-50EA-4983-A865-E7EB5A592756">Defining the XML_SKIP_ATTR Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against a specific XML schema that is registered with Oracle XML DB, either as a global or local XML schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Calling this function when the value of the preference parameter VALIDATE_METADATA is set to <code class="codeph">true</code> raises an error if the metadata namespace in the mapping document is not available to the current user.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Extract metadata from the DICOM content stored in an ORDImage object:</p><pre class="oac_no_warn" dir="ltr">declare
+  src ordimage;
+  metadata xmltype;
+begin
+  select image_src into src from medical_image_rel where id = 1 for update;
+  metadata := ord_dicom.extractMetadata(src, 'all', 'ordcmmp.xml');
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13390"></a><div class="props_rev_3"><a id="GUID-B30D4D69-A8FF-4B20-A4E2-BE42BBACB3D8" name="GUID-B30D4D69-A8FF-4B20-A4E2-BE42BBACB3D8"></a><h4 id="IMDCM-GUID-B30D4D69-A8FF-4B20-A4E2-BE42BBACB3D8" class="sect4"><span class="enumeration_section">6.2.4 </span>isAnonymous( ) for BFILEs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">isAnonymous(src IN BFILE,
+            anonymityDocName IN VARCHAR2 DEFAULT 'ordcman.xml')
+ RETURN INTEGER </pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Determines whether the input DICOM content is anonymous, using a specified anonymity document. This function returns a value of <code class="codeph">1</code> if the data is anonymous; otherwise it returns a value of <code class="codeph">0</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-B30D4D69-A8FF-4B20-A4E2-BE42BBACB3D8__GUID-7DF38D07-7328-4D14-A7F7-09CDC50161B3">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BFILE.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-B30D4D69-A8FF-4B20-A4E2-BE42BBACB3D8__GUID-9040D401-5FB0-4402-83E6-6EF6FB7C1C9F">
+                                 <!-- --></a>anonymityDocName
+                           </dt>
+                           <dd>
+                              <p>The name of the anonymity document. The default name is <code class="codeph">ordcman.xml</code>.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Check if the DICOM content stored in a BFILE is anonymous:</p><pre class="oac_no_warn" dir="ltr">select ord_dicom.isAnonymous(t.bfile_src, 'ordcman.xml') 
+  from medical_image_rel t where id = 1;</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13391"></a><div class="props_rev_3"><a id="GUID-F8DFCE67-EA3C-4C49-B5C5-F13A8994DB5D" name="GUID-F8DFCE67-EA3C-4C49-B5C5-F13A8994DB5D"></a><h4 id="IMDCM-GUID-F8DFCE67-EA3C-4C49-B5C5-F13A8994DB5D" class="sect4"><span class="enumeration_section">6.2.5 </span>isAnonymous( ) for BLOBs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">isAnonymous(src IN BLOB,
+            anonymityDocName IN VARCHAR2 DEFAULT 'ordcman.xml') 
+ RETURN INTEGER</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Determines whether the input DICOM content is anonymous, using a specified anonymity document. This function returns a value of <code class="codeph">1</code> if the data is anonymous; otherwise it returns a value of <code class="codeph">0</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-F8DFCE67-EA3C-4C49-B5C5-F13A8994DB5D__GUID-8387E81B-50AD-4C34-8CE5-21DE37558799">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BLOB.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-F8DFCE67-EA3C-4C49-B5C5-F13A8994DB5D__GUID-7A8DE499-9092-4DF8-B7E6-1B8413EEBD69">
+                                 <!-- --></a>anonymityDocName
+                           </dt>
+                           <dd>
+                              <p>The name of the anonymity document. The default name is <code class="codeph">ordcman.xml</code>.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Check if the DICOM content stored in a BLOB is anonymous:</p><pre class="oac_no_warn" dir="ltr">select ord_dicom.isAnonymous(t.blob_src, 'ordcman.xml') 
+  from medical_image_rel t where id = 1;</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13392"></a><div class="props_rev_3"><a id="GUID-B450AD19-972E-40F0-80B3-6C2EDBC4719D" name="GUID-B450AD19-972E-40F0-80B3-6C2EDBC4719D"></a><h4 id="IMDCM-GUID-B450AD19-972E-40F0-80B3-6C2EDBC4719D" class="sect4"><span class="enumeration_section">6.2.6 </span>isAnonymous( ) for ORDImage
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">isAnonymous(src IN ORDSYS.ORDImage,
+            anonymityDocName IN VARCHAR2 DEFAULT 'ordcman.xml')  
+ RETURN INTEGER</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Determines whether the input DICOM content is anonymous, using a specified anonymity document. This function returns a value of <code class="codeph">1</code> if the data is anonymous; otherwise it returns a value of <code class="codeph">0</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-B450AD19-972E-40F0-80B3-6C2EDBC4719D__GUID-84ED227A-7F2C-40D0-BC25-1690602BA1F2">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in an ORDImage object.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-B450AD19-972E-40F0-80B3-6C2EDBC4719D__GUID-20DBC059-F76F-4850-A6D5-C730D9FC2A41">
+                                 <!-- --></a>anonymityDocName
+                           </dt>
+                           <dd>
+                              <p>The name of the anonymity document. The default name is <code class="codeph">ordcman.xml</code>.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Check if the DICOM content stored in an ORDImage object is anonymous:</p><pre class="oac_no_warn" dir="ltr">select ord_dicom.isAnonymous(t.image_src, 'ordcman.xml') 
+  from medical_image_rel t where id = 1;</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13393"></a><div class="props_rev_3"><a id="GUID-736AC751-1310-4717-92C7-F7D4607321B3" name="GUID-736AC751-1310-4717-92C7-F7D4607321B3"></a><h4 id="IMDCM-GUID-736AC751-1310-4717-92C7-F7D4607321B3" class="sect4"><span class="enumeration_section">6.2.7 </span>isConformanceValid( ) for BFILEs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">isConformanceValid(src IN BFILE,
+                   constraintName IN VARCHAR2)
+ RETURN INTEGER</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Performs a conformance validation check to determine whether the input DICOM content conforms to a specified set of constraints identified by the constraintName parameter. This function returns a value of <code class="codeph">1</code> if conformance is valid; otherwise it returns a value of <code class="codeph">0</code>.
+                        </p>
+                        <p>This function also logs error messages from the constraint documents, which can be viewed by querying the public view <a href="dicom-data-model-utility-reference.html#GUID-34F4A73E-3D62-4BBB-AB15-632BD5860C78">orddcm_conformance_vld_msgs</a>. The public view <a href="dicom-data-model-utility-reference.html#GUID-7E85B84C-A027-4BBF-8503-6B9521950EFB">orddcm_constraint_names</a> contains the list of constraint names.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-736AC751-1310-4717-92C7-F7D4607321B3__GUID-9F2CEAB3-65A3-44E0-93BC-DA46CC47AD77">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BFILE.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-736AC751-1310-4717-92C7-F7D4607321B3__GUID-A30E7110-B3C7-4801-9994-23187D28C76B">
+                                 <!-- --></a>constraintName
+                           </dt>
+                           <dd>
+                              <p>The name of the constraint to be used for conformance validation checking.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>If this function is called from a SQL query, ensure that the constraint rule definition does not contain any &lt;ACTION&gt; elements.</p>
+                        <p>Use the preference parameter EXP_IF_NULL_ATTR_IN_CONSTRAINT to indicate whether to throw exceptions when encountering missing attributes or null attribute values during conformance validation. See <a href="creating-dicom-configuration-documents.html#GUID-7BC16A71-1698-40C1-9A49-59D046086DB4">Defining the EXP_IF_NULL_ATTR_IN_CONSTRAINT Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Delete any existing conformance validation messages. Check if the DICOM content stored in a BFILE is conformance valid. Then, show any new conformance validation messages that are generated.</p><pre class="oac_no_warn" dir="ltr"> -- clear the previous conformance validation messages
+delete from orddcm_conformance_vld_msgs;
+
+-- conformance validate the DICOM content
+    declare
+      src bfile;
+    begin
+      select bfile_src into src from medical_image_rel where id = 1;
+      dbms_output.put_line('isConformanceValid(PatientModule) ' ||
+        ord_dicom.isConformanceValid(src, 'PatientModule'));
+    end;
+    /
+
+-- get the logged conformance validation messages
+select message, msg_time time from orddcm_conformance_vld_msgs
+  where rule_name='PatientModule';</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13394"></a><div class="props_rev_3"><a id="GUID-34B6B361-E0C4-48D7-9F8A-0BF3BD44EECF" name="GUID-34B6B361-E0C4-48D7-9F8A-0BF3BD44EECF"></a><h4 id="IMDCM-GUID-34B6B361-E0C4-48D7-9F8A-0BF3BD44EECF" class="sect4"><span class="enumeration_section">6.2.8 </span>isConformanceValid( ) for BLOBs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">isConformanceValid(src IN BLOB,
+                   constraintName IN VARCHAR2) 
+ RETURN INTEGER</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Performs a conformance validation check to determine whether the input DICOM content conforms to a specified set of constraints identified by the constraintName parameter. This function returns a value of <code class="codeph">1</code> if conformance is valid; otherwise it returns a value of <code class="codeph">0</code>. 
+                        </p>
+                        <p>This function also logs error messages from the constraint documents, which can be viewed by querying the public view <a href="dicom-data-model-utility-reference.html#GUID-34F4A73E-3D62-4BBB-AB15-632BD5860C78">orddcm_conformance_vld_msgs</a>. The public view <a href="dicom-data-model-utility-reference.html#GUID-7E85B84C-A027-4BBF-8503-6B9521950EFB">orddcm_constraint_names</a> contains the list of constraint names.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-34B6B361-E0C4-48D7-9F8A-0BF3BD44EECF__GUID-58E4CD63-B55A-4C1D-A20D-3E907AA48BDE">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BLOB.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-34B6B361-E0C4-48D7-9F8A-0BF3BD44EECF__GUID-1DAB8149-F4F0-4C54-8C64-BACA6C23093E">
+                                 <!-- --></a>constraintName
+                           </dt>
+                           <dd>
+                              <p>The name of the constraint to be used for conformance validation checking.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>If this function is called from a SQL query, ensure that the constraint rule definition does not contain any &lt;ACTION&gt; elements.</p>
+                        <p>Use the preference parameter EXP_IF_NULL_ATTR_IN_CONSTRAINT to indicate whether to throw exceptions when encountering missing attributes or null attribute values during conformance validation. See <a href="creating-dicom-configuration-documents.html#GUID-7BC16A71-1698-40C1-9A49-59D046086DB4">Defining the EXP_IF_NULL_ATTR_IN_CONSTRAINT Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Delete any existing conformance validation messages. Check if the DICOM content stored in a BLOB is conformance valid. Then, show any new conformance validation messages that are generated.</p><pre class="oac_no_warn" dir="ltr">-- clear the previous conformance validation messages
+delete from orddcm_conformance_vld_msgs;
+
+-- conformance validate the DICOM content
+    declare
+      src blob;
+    begin
+      select blob_src into src from medical_image_rel where id = 1;
+      dbms_output.put_line('isConformanceValid(PatientModule) ' ||
+       ord_dicom.isConformanceValid(src, 'PatientModule'));
+    end;
+    /
+
+-- get the logged conformance validation messages
+select message, msg_time time from orddcm_conformance_vld_msgs
+  where rule_name='PatientModule';</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13395"></a><div class="props_rev_3"><a id="GUID-53BE23DB-FEDB-4601-9D8A-EF7A18C29BDA" name="GUID-53BE23DB-FEDB-4601-9D8A-EF7A18C29BDA"></a><h4 id="IMDCM-GUID-53BE23DB-FEDB-4601-9D8A-EF7A18C29BDA" class="sect4"><span class="enumeration_section">6.2.9 </span>isConformanceValid( ) for ORDImage
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">isConformanceValid(src IN ORDSYS.ORDImage,
+                   constraintName IN VARCHAR2) 
+ RETURN INTEGER</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Performs a conformance validation check to determine whether the input DICOM content conforms to a specified set of constraints identified by the constraintName parameter. This function returns a value of <code class="codeph">1</code> if conformance is valid; otherwise it returns a value of <code class="codeph">0</code>. 
+                        </p>
+                        <p>This function also logs error messages from the constraint documents, which can be viewed by querying the public view <a href="dicom-data-model-utility-reference.html#GUID-34F4A73E-3D62-4BBB-AB15-632BD5860C78">orddcm_conformance_vld_msgs</a>. The public view <a href="dicom-data-model-utility-reference.html#GUID-7E85B84C-A027-4BBF-8503-6B9521950EFB">orddcm_constraint_names</a> contains the list of constraint names.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-53BE23DB-FEDB-4601-9D8A-EF7A18C29BDA__GUID-2DA80725-8EF1-4375-BE86-518EBDDC7723">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in an ORDImage object.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-53BE23DB-FEDB-4601-9D8A-EF7A18C29BDA__GUID-FD734139-4864-49F7-87C5-6F486A461A00">
+                                 <!-- --></a>constraintName
+                           </dt>
+                           <dd>
+                              <p>The name of the constraint to be used for conformance validation checking.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>If this function is called from a SQL query, ensure that the constraint rule definition does not contain any &lt;ACTION&gt; elements.</p>
+                        <p>Use the preference parameter EXP_IF_NULL_ATTR_IN_CONSTRAINT to indicate whether to throw exceptions when encountering missing attributes or null attribute values during conformance validation. See <a href="creating-dicom-configuration-documents.html#GUID-7BC16A71-1698-40C1-9A49-59D046086DB4">Defining the EXP_IF_NULL_ATTR_IN_CONSTRAINT Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Delete any existing conformance validation messages. Check if the DICOM content stored in an ORDImage object is conformance valid. Then, show any new conformance validation messages that are generated.</p><pre class="oac_no_warn" dir="ltr">-- clear the previous conformance validation messages
+delete from orddcm_conformance_vld_msgs;
+
+-- conformance validate the DICOM content
+    declare
+      src ordimage;
+    begin
+      select image_src into src from medical_image_rel where id = 1;
+      dbms_output.put_line('isConformanceValid(PatientModule) ' ||
+       ord_dicom.isConformanceValid(src, 'PatientModule'));
+    end;
+    / 
+
+-- get the logged conformance validation messages
+select message, msg_time time from orddcm_conformance_vld_msgs
+  where rule_name='PatientModule';</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="IMDCM6300"></a><div class="props_rev_3"><a id="GUID-AC350723-2DAC-4E44-AACF-E48853EDA241" name="GUID-AC350723-2DAC-4E44-AACF-E48853EDA241"></a><h3 id="IMDCM-GUID-AC350723-2DAC-4E44-AACF-E48853EDA241" class="sect3"><span class="enumeration_section">6.3 </span>DICOM PL/SQL API Procedures
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The ORD_DICOM package defines these DICOM PL/SQL API procedures:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-5ECC600B-67FD-487D-8623-2BDC24345631">createDicomImage( ) for BFILEs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-373FFB6F-66B8-4290-8A82-B4C1FFB5A567">createDicomImage( ) for BLOBs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-30B0CA9D-26E2-4BD4-9168-44E85A0B4085">createDicomImage( ) for ORDImage</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-D75EB2E7-0352-4753-B273-BBD216682EC5">export( )</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-64BA007B-2041-4470-902E-6770A59C73EC">importFrom( )</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-9160DA55-044E-442E-892E-B4AC797CAC4A">makeAnonymous( ) for BFILEs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-80452C15-21C2-4007-9134-E8FB287C6393">makeAnonymous( ) for BLOBs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-0408E77D-376E-4B4A-A133-73A188CA17E7">makeAnonymous( ) for ORDImage</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-7FB61937-22F4-4484-A9A0-B1DE11563248">processCopy( ) for BFILEs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9">processCopy( ) for BFILEs with SOP Instance UID</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-B63C59D8-40DE-450C-A7BC-8D8784CA03B7">processCopy( ) for BLOBs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62">processCopy( ) for BLOBs with SOP Instance UID</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-78604D63-AF5F-4E7A-BEC2-CA30787661D8">processCopy( ) for ORDImage</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-874A9063-98DA-4B28-AE91-F47E120F5294">processCopy( ) for ORDImage with SOP Instance UID</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-326D47E3-A969-4861-8994-E34A25B9AE15">writeMetadata( ) for BFILEs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-762DFB52-787C-4011-9525-94040E7F9E84">writeMetadata( ) for BLOBs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="dicom-plsql-api-reference.html#GUID-AB60E40A-110C-4FAF-AE1D-F414F120860C">writeMetadata( ) for ORDImage</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-AC350723-2DAC-4E44-AACF-E48853EDA241__GUID-9B7C7293-249C-42A4-9DCC-6CE6C7B1E45F">
+                        <p class="notep1">Note:</p>
+                        <p>In this section, <span class="italic">&lt;unique-UID&gt;</span> represents a 64-byte, dot-concatenated, numeric string that represents a globally unique identifier for DICOM content worldwide. The UID is commonly constructed with a root that uniquely identifies the organization producing the DICOM content, and a suffix that uniquely identifies the DICOM content within that organization. For some examples in this section, you must replace <span class="italic">&lt;unique-UID&gt;</span> with the appropriate UID.
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div><a id="IMDCM13396"></a><div class="props_rev_3"><a id="GUID-5ECC600B-67FD-487D-8623-2BDC24345631" name="GUID-5ECC600B-67FD-487D-8623-2BDC24345631"></a><h4 id="IMDCM-GUID-5ECC600B-67FD-487D-8623-2BDC24345631" class="sect4"><span class="enumeration_section">6.3.1 </span>createDicomImage( ) for BFILEs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">createDicomImage(src IN BFILE,
+                 metadata IN SYS.XMLTYPE,
+                 dest IN OUT NOCOPY BLOB)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Creates a DICOM image from a source image and DICOM metadata. If the source content that is input to this procedure is DICOM content, the resulting destination DICOM content contains only the metadata that was input to this procedure in the metadata parameter. Thus, in the destination DICOM content, the metadata in the source DICOM content is removed and replaced by the metadata that was input.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-5ECC600B-67FD-487D-8623-2BDC24345631__GUID-5157650F-3209-4F54-807B-5C40A2367389">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The source raster image stored in a BFILE.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-5ECC600B-67FD-487D-8623-2BDC24345631__GUID-29B0574E-05C3-44EE-8B9D-1EB61528F14F">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>DICOM metadata stored in data type XMLType. The metadata must include all standard and private attributes. It must include a new SOP instance UID for the destination DICOM image, ensuring that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-5ECC600B-67FD-487D-8623-2BDC24345631__GUID-90A08383-8E2D-4DDC-94AC-E52A4F561EC4">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the DICOM image created from the source image and metadata.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support image content processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Create a DICOM image from a source BFILE and DICOM metadata:</p><pre class="oac_no_warn" dir="ltr">declare
+  src bfile;
+  dest blob;
+  metadata xmltype;
+begin
+  metadata := xmltype(bfilename('DICOMDIR', 'wm_meta.xml'), 
+                      nls_charset_id('AL32UTF8'), 
+                      'http://xmlns.oracle.com/ord/dicom/metadata_1_0');
+ 
+  select bfile_src, blob_dest into src, dest from medical_image_rel 
+    where id = 1 for update;
+ 
+  ord_dicom.createDicomImage(src, metadata, dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13397"></a><div class="props_rev_3"><a id="GUID-373FFB6F-66B8-4290-8A82-B4C1FFB5A567" name="GUID-373FFB6F-66B8-4290-8A82-B4C1FFB5A567"></a><h4 id="IMDCM-GUID-373FFB6F-66B8-4290-8A82-B4C1FFB5A567" class="sect4"><span class="enumeration_section">6.3.2 </span>createDicomImage( ) for BLOBs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">createDicomImage(src IN BLOB,
+                 metadata IN SYS.XMLTYPE,
+                 dest IN OUT NOCOPY BLOB)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Creates a DICOM image from a source image and DICOM metadata. If the source content that is input to this procedure is DICOM content, the resulting destination DICOM content contains only the metadata that was input to this procedure in the metadata parameter. Thus, in the destination DICOM content, the metadata in the source DICOM content is removed and replaced by the metadata that was input.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-373FFB6F-66B8-4290-8A82-B4C1FFB5A567__GUID-319857E3-EFDB-4554-BF1D-83583C1709BE">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The source raster image stored in a BLOB.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-373FFB6F-66B8-4290-8A82-B4C1FFB5A567__GUID-53781691-E70F-4723-B9A9-2BF8BD246858">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>DICOM metadata stored in data type XMLType. The metadata must include all standard and private attributes. It must include a new SOP instance UID for the destination DICOM image, ensuring that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-373FFB6F-66B8-4290-8A82-B4C1FFB5A567__GUID-182B653A-9C5A-4BEE-95B3-71D7F0F1227A">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the DICOM image created from the source image and metadata.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support image content processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Create a DICOM image from a source BLOB and DICOM metadata:</p><pre class="oac_no_warn" dir="ltr">declare
+  src blob;
+  dest blob;
+  metadata xmltype;
+begin
+  metadata := xmltype(bfilename('DICOMDIR', 'wm_meta.xml'), 
+                      nls_charset_id('AL32UTF8'), 
+                      'http://xmlns.oracle.com/ord/dicom/metadata_1_0');
+ 
+  select blob_src, blob_dest into src, dest from medical_image_rel 
+    where id = 1 for update;
+ 
+  ord_dicom.createDicomImage(src, metadata, dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13398"></a><div class="props_rev_3"><a id="GUID-30B0CA9D-26E2-4BD4-9168-44E85A0B4085" name="GUID-30B0CA9D-26E2-4BD4-9168-44E85A0B4085"></a><h4 id="IMDCM-GUID-30B0CA9D-26E2-4BD4-9168-44E85A0B4085" class="sect4"><span class="enumeration_section">6.3.3 </span>createDicomImage( ) for ORDImage
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">createDicomImage(src IN ORDSYS.ORDImage,
+                 metadata IN SYS.XMLTYPE,
+                 dest IN OUT NOCOPY BLOB)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Creates a DICOM image from a source image and DICOM metadata. If the source content that is input to this procedure is DICOM content, the resulting destination DICOM content contains only the metadata that was input to this procedure in the metadata parameter. Thus, in the destination DICOM content, the metadata in the source DICOM content is removed and replaced by the metadata that was input.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-30B0CA9D-26E2-4BD4-9168-44E85A0B4085__GUID-96FCD2CC-4C3D-4600-9E8D-10E30DDC86D7">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The source raster image stored in an ORDImage object.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-30B0CA9D-26E2-4BD4-9168-44E85A0B4085__GUID-25B90EF8-F401-4DC2-A5DD-0255A7FC0DED">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>DICOM metadata stored in data type XMLType. The metadata must include all standard and private attributes. It must include a new SOP instance UID for the destination DICOM image, ensuring that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-30B0CA9D-26E2-4BD4-9168-44E85A0B4085__GUID-32CE7111-7BAE-4A80-B318-EC8D3DED1F73">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the DICOM image created from the source image and metadata.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support image content processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Create a DICOM image from a source ORDImage object and DICOM metadata:</p><pre class="oac_no_warn" dir="ltr">declare
+  src ordimage;
+  dest blob;
+  metadata xmltype;
+begin
+  metadata := xmltype(bfilename('DICOMDIR', 'wm_meta.xml'), 
+                      nls_charset_id('AL32UTF8'), 
+                      'http://xmlns.oracle.com/ord/dicom/metadata_1_0');
+ 
+  select image_src, blob_dest into src, dest from medical_image_rel 
+    where id = 1 for update;
+ 
+  ord_dicom.createDicomImage(src, metadata, dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13399"></a><div class="props_rev_3"><a id="GUID-D75EB2E7-0352-4753-B273-BBD216682EC5" name="GUID-D75EB2E7-0352-4753-B273-BBD216682EC5"></a><h4 id="IMDCM-GUID-D75EB2E7-0352-4753-B273-BBD216682EC5" class="sect4"><span class="enumeration_section">6.3.4 </span>export( )
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">export(src IN BLOB,
+       dest_type IN VARCHAR2,
+       dest_location IN VARCHAR2,
+       dest_name IN VARCHAR2)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Exports DICOM content in a BLOB to a specified destination. The data remains in the source BLOB when it is copied to the destination.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-D75EB2E7-0352-4753-B273-BBD216682EC5__GUID-1DD406EE-40B6-44E9-B7FA-3F869AB2C8B1">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The source location of the DICOM content.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-D75EB2E7-0352-4753-B273-BBD216682EC5__GUID-465F0BA0-91DD-44B0-9406-0E2BAB9A8D76">
+                                 <!-- --></a>dest_type
+                           </dt>
+                           <dd>
+                              <p>The type of the destination (only <code class="codeph">FILE</code> is supported).
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-D75EB2E7-0352-4753-B273-BBD216682EC5__GUID-DC00061B-F329-413A-8AE3-DA30647A435D">
+                                 <!-- --></a>dest_location
+                           </dt>
+                           <dd>
+                              <p>The location of the destination (must be a valid Oracle directory object).</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-D75EB2E7-0352-4753-B273-BBD216682EC5__GUID-E92D6DF6-2AC4-49A8-90C4-8346E0392F06">
+                                 <!-- --></a>dest_name
+                           </dt>
+                           <dd>
+                              <p>The name of the destination file.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>The export( ) procedure writes only to a database directory object that the user has privilege to access. That is, you can access a directory object that you have created using the SQL statement CREATE DIRECTORY, or one to which you have been granted READ and WRITE access.</p>
+                        <p>For example, the following SQL*Plus commands create a directory object and grant the user <code class="codeph">&lt;user&gt;</code> permission to read and write to any file within the directory <code class="codeph">c:\mydir\work</code>. Before executing these commands, you must be connected as a user with privileges to create a directory object.
+                        </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE DIRECTORY DICOMDIR AS 'c:\mydir\work';
+GRANT READ,WRITE ON DIRECTORY DICOMDIR TO &lt;user&gt;;
+</pre><p>See <a href="dicom-plsql-api-reference.html#GUID-07ADE3A7-2A6A-4417-A10D-5E13BEE3F477">Examples for DICOM PL/SQL API Functions and Procedures</a> for more information about directory and table definitions.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Export DICOM content from a BLOB to a specified file:</p><pre class="oac_no_warn" dir="ltr">declare
+  src blob;
+begin
+  select blob_src into src from medical_image_rel where id = 1;
+  ord_dicom.export(src, 'FILE', 'DICOMDIR', 'exported.dcm');
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13400"></a><div class="props_rev_3"><a id="GUID-64BA007B-2041-4470-902E-6770A59C73EC" name="GUID-64BA007B-2041-4470-902E-6770A59C73EC"></a><h4 id="IMDCM-GUID-64BA007B-2041-4470-902E-6770A59C73EC" class="sect4"><span class="enumeration_section">6.3.5 </span>importFrom( )
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">importFrom(dest IN OUT NOCOPY BLOB,
+           source_type IN VARCHAR2,
+           source_location IN VARCHAR2,
+           source_name IN VARCHAR2)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Imports DICOM content from a specified source into a BLOB.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-64BA007B-2041-4470-902E-6770A59C73EC__GUID-659816EE-F002-4075-A260-12C321715882">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>The storage destination of the imported DICOM file.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-64BA007B-2041-4470-902E-6770A59C73EC__GUID-342A6C3D-0988-4221-9D2C-54CD77DCAACC">
+                                 <!-- --></a>source_type
+                           </dt>
+                           <dd>
+                              <p>The type of the source (only <code class="codeph">FILE</code> is supported).
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-64BA007B-2041-4470-902E-6770A59C73EC__GUID-D26B018C-B254-4F1A-8A74-54A3DA1BD978">
+                                 <!-- --></a>source_location
+                           </dt>
+                           <dd>
+                              <p>The location of the source (must be a valid Oracle directory object).</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-64BA007B-2041-4470-902E-6770A59C73EC__GUID-849070E0-6845-4333-AC7C-F8B41A1353D0">
+                                 <!-- --></a>source_name
+                           </dt>
+                           <dd>
+                              <p>The name of the source file.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>The importFrom( ) procedure reads only from a database directory object that the user has privilege to access. That is, you can access a directory object that you have created using the SQL statement CREATE DIRECTORY, or one to which you have been granted READ access.</p>
+                        <p>For example, the following SQL*Plus commands create a directory object and grant the user <code class="codeph">&lt;user&gt;</code> permission to read any file within the directory <code class="codeph">c:\mydir\work</code>. Before executing these commands, you must be connected as a user with privileges to create a directory object.
+                        </p><pre class="oac_no_warn" dir="ltr">CREATE OR REPLACE DIRECTORY DICOMDIR AS 'c:\mydir\work';
+GRANT READ ON DIRECTORY DICOMDIR TO &lt;user&gt;;
+</pre><p>See <a href="dicom-plsql-api-reference.html#GUID-07ADE3A7-2A6A-4417-A10D-5E13BEE3F477">Examples for DICOM PL/SQL API Functions and Procedures</a> for more information about directory and table definitions.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Import the DICOM content into a BLOB:</p><pre class="oac_no_warn" dir="ltr">declare
+  dest blob;
+begin
+  select blob_dest into dest from medical_image_rel where id = 1 for update;
+  ord_dicom.importFrom(dest, 'file', 'DICOMDIR', 'example.dcm');
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13401"></a><div class="props_rev_3"><a id="GUID-9160DA55-044E-442E-892E-B4AC797CAC4A" name="GUID-9160DA55-044E-442E-892E-B4AC797CAC4A"></a><h4 id="IMDCM-GUID-9160DA55-044E-442E-892E-B4AC797CAC4A" class="sect4"><span class="enumeration_section">6.3.6 </span>makeAnonymous( ) for BFILEs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">makeAnonymous(src IN BFILE,
+              dest_sop_instance_uid IN VARCHAR2,
+              dest IN OUT NOCOPY BLOB,
+              anonymityDocName IN VARCHAR2 DEFAULT 'ordcman.xml')</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Removes patient identifying information from the source DICOM content after copying it into another DICOM content BLOB, based on a specified anonymity document.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-9160DA55-044E-442E-892E-B4AC797CAC4A__GUID-6D345470-5722-4B6B-918C-2D0E189EAA1B">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BFILE.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-9160DA55-044E-442E-892E-B4AC797CAC4A__GUID-5D25500C-D789-41E2-A43C-BA0444157E06">
+                                 <!-- --></a>dest_sop_instance_uid
+                           </dt>
+                           <dd>
+                              <p>The SOP instance UID of the destination DICOM content. It must ensure that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-9160DA55-044E-442E-892E-B4AC797CAC4A__GUID-D4EC864E-5B24-4DCF-B2DD-6CDE95930A6B">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the anonymous DICOM content.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-9160DA55-044E-442E-892E-B4AC797CAC4A__GUID-A1DD00BE-CBCE-425D-9DA1-9936A312F5CC">
+                                 <!-- --></a>anonymityDocName
+                           </dt>
+                           <dd>
+                              <p>The name of the anonymity document. The default name is <code class="codeph">ordcman.xml</code>.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Remove patient identifying information from the embedded DICOM content stored in a BFILE:</p>
+                        <div class="infoboxnote" id="GUID-9160DA55-044E-442E-892E-B4AC797CAC4A__GUID-9C5B508C-069F-42DA-B281-9898DD6BD218">
+                           <p class="notep1">Note:</p>
+                           <p>Replace <span class="italic">&lt;unique-UID&gt;</span> with the UID that identifies the organization producing the DICOM content and the DICOM content within that organization. 
+                           </p>
+                        </div><pre class="oac_no_warn" dir="ltr">declare
+  src bfile;
+  dest blob;
+  dest_sop_instance_uid varchar2(128) := '<span class="italic">&lt;unique-UID&gt;</span>';
+begin
+  select bfile_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.makeAnonymous(src, dest_sop_instance_uid, dest, 'ordcman.xml');
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13402"></a><div class="props_rev_3"><a id="GUID-80452C15-21C2-4007-9134-E8FB287C6393" name="GUID-80452C15-21C2-4007-9134-E8FB287C6393"></a><h4 id="IMDCM-GUID-80452C15-21C2-4007-9134-E8FB287C6393" class="sect4"><span class="enumeration_section">6.3.7 </span>makeAnonymous( ) for BLOBs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">makeAnonymous(src IN BLOB,
+              dest_sop_instance_uid IN VARCHAR2,
+              dest IN OUT NOCOPY BLOB,
+              anonymityDocName IN VARCHAR2 DEFAULT 'ordcman.xml')</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Removes patient identifying information from the source DICOM content after copying it into another DICOM content BLOB, based on a specified anonymity document.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-80452C15-21C2-4007-9134-E8FB287C6393__GUID-705AF171-2C01-448F-B394-EB851CD8042D">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BLOB.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-80452C15-21C2-4007-9134-E8FB287C6393__GUID-352C6184-88DD-4BE2-9150-159AF5E0EA33">
+                                 <!-- --></a>dest_sop_instance_uid
+                           </dt>
+                           <dd>
+                              <p>The SOP instance UID of the destination DICOM content. It must ensure that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-80452C15-21C2-4007-9134-E8FB287C6393__GUID-9B941AB4-1B56-4B88-B0AA-0DC7687313B0">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the anonymous DICOM content.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-80452C15-21C2-4007-9134-E8FB287C6393__GUID-C70E23CE-EFA3-4724-8852-B31D2E321675">
+                                 <!-- --></a>anonymityDocName
+                           </dt>
+                           <dd>
+                              <p>The name of the anonymity document. The default name is <code class="codeph">ordcman.xml</code>.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Remove patient identifying information from the embedded DICOM content stored in a BLOB:</p>
+                        <div class="infoboxnote" id="GUID-80452C15-21C2-4007-9134-E8FB287C6393__GUID-D129F675-92F1-4FC1-8335-AE363CB74848">
+                           <p class="notep1">Note:</p>
+                           <p>Replace <span class="italic">&lt;unique-UID&gt;</span> with the UID that identifies the organization producing the DICOM content and the DICOM content within that organization. 
+                           </p>
+                        </div><pre class="oac_no_warn" dir="ltr">declare
+  src blob;
+  dest blob;
+  dest_sop_instance_uid varchar2(128) := '<span class="italic">&lt;unique-UID&gt;</span>';
+begin
+  select blob_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.makeAnonymous(src, dest_sop_instance_uid, dest, 'ordcman.xml');
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13403"></a><div class="props_rev_3"><a id="GUID-0408E77D-376E-4B4A-A133-73A188CA17E7" name="GUID-0408E77D-376E-4B4A-A133-73A188CA17E7"></a><h4 id="IMDCM-GUID-0408E77D-376E-4B4A-A133-73A188CA17E7" class="sect4"><span class="enumeration_section">6.3.8 </span>makeAnonymous( ) for ORDImage
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">makeAnonymous(src IN ORDSYS.ORDImage,
+              dest_sop_instance_uid IN VARCHAR2,
+              dest IN OUT NOCOPY BLOB,
+              anonymityDocName IN VARCHAR2 DEFAULT 'ordcman.xml')</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Removes patient identifying information from the source DICOM content after copying it into another DICOM content BLOB, based on a specified anonymity document.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-0408E77D-376E-4B4A-A133-73A188CA17E7__GUID-72257C5B-125C-421C-9FA6-4F21608B3FD0">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in an ORDImage object.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-0408E77D-376E-4B4A-A133-73A188CA17E7__GUID-F2192152-81CF-4082-9F0C-5D9BF77F2321">
+                                 <!-- --></a>dest_sop_instance_uid
+                           </dt>
+                           <dd>
+                              <p>The SOP instance UID of the destination DICOM content. It must ensure that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-0408E77D-376E-4B4A-A133-73A188CA17E7__GUID-35398248-BB4F-4264-9B9E-822E22F27D0A">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the anonymous DICOM content.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-0408E77D-376E-4B4A-A133-73A188CA17E7__GUID-D10B8CC7-431E-4E64-A179-BDDA0FE1E963">
+                                 <!-- --></a>anonymityDocName
+                           </dt>
+                           <dd>
+                              <p>The name of the anonymity document. The default name is <code class="codeph">ordcman.xml</code>.
+                              </p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Remove patient identifying information from the embedded DICOM content stored in an ORDImage object:</p>
+                        <div class="infoboxnote" id="GUID-0408E77D-376E-4B4A-A133-73A188CA17E7__GUID-4515E2B9-519B-4E59-92DA-C09A216B4E7D">
+                           <p class="notep1">Note:</p>
+                           <p>Replace <span class="italic">&lt;unique-UID&gt;</span> with the UID that identifies the organization producing the DICOM content and the DICOM content within that organization. 
+                           </p>
+                        </div><pre class="oac_no_warn" dir="ltr">declare
+  src ordimage;
+  dest blob;
+  dest_sop_instance_uid varchar2(128) := '<span class="italic">&lt;unique-UID&gt;</span>';
+begin
+  select image_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.makeAnonymous(src, dest_sop_instance_uid, dest, 'ordcman.xml');
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13404"></a><div class="props_rev_3"><a id="GUID-7FB61937-22F4-4484-A9A0-B1DE11563248" name="GUID-7FB61937-22F4-4484-A9A0-B1DE11563248"></a><h4 id="IMDCM-GUID-7FB61937-22F4-4484-A9A0-B1DE11563248" class="sect4"><span class="enumeration_section">6.3.9 </span>processCopy( ) for BFILEs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">processCopy(src IN BFILE,
+            command IN VARCHAR2,
+            dest IN OUT NOCOPY BLOB)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Reads the DICOM content that is input from the source BFILE, performs the specified processing operations on the image, and then stores the resulting image in the destination BLOB. The original DICOM content in the source BFILE remains unchanged.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-7FB61937-22F4-4484-A9A0-B1DE11563248__GUID-EDEADD8C-69CB-44AD-A33C-F122626055B6">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in the source BFILE.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-7FB61937-22F4-4484-A9A0-B1DE11563248__GUID-D14C1A22-A1BF-45FC-A6FC-8C2E976E5FCF">
+                                 <!-- --></a>command
+                           </dt>
+                           <dd>
+                              <p>A command string that accepts a processing operator as input. Valid values include: <code class="codeph">fileFormat</code>, <code class="codeph">frame</code>, <code class="codeph">contentFormat</code>, <code class="codeph">compressionFormat</code>, <code class="codeph">cut</code>, <code class="codeph">scale</code>, and <code class="codeph">rotate</code>. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for information about processing operators.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-7FB61937-22F4-4484-A9A0-B1DE11563248__GUID-C56FC68B-D6E4-4112-9787-0D5C189F3921">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the destination content.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support DICOM content processing. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for more information about DICOM processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Generate a new JPEG thumbnail image from a DICOM source:</p><pre class="oac_no_warn" dir="ltr">declare
+  src bfile;
+  dest blob;
+begin
+  select bfile_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.processCopy(src, 'fileFormat=jpeg maxScale=100 100', dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13405"></a><div class="props_rev_3"><a id="GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9" name="GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9"></a><h4 id="IMDCM-GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9" class="sect4"><span class="enumeration_section">6.3.10 </span>processCopy( ) for BFILEs with SOP Instance UID
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">processCopy(src IN BFILE,
+            command IN VARCHAR2,
+            dest_sop_instance_uid IN VARCHAR2,
+            dest IN OUT NOCOPY BLOB,
+            metadata IN SYS.XMLTYPE DEFAULT NULL)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Reads the DICOM content that is input from the source BFILE, performs the specified processing operations on the image, updates it with the new metadata, and then stores the resulting image in the destination BLOB. The original DICOM content in the source BFILE remains unchanged.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9__GUID-71FE50A2-EAA2-4C3E-A1A7-26E979BFE612">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in the source BFILE.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9__GUID-383FFB02-A338-4EC0-ACAD-303CFCE6A512">
+                                 <!-- --></a>command
+                           </dt>
+                           <dd>
+                              <p>A command string that accepts a processing operator as input. Valid values include: <code class="codeph">frame</code>, <code class="codeph">contentFormat</code>, <code class="codeph">compressionFormat</code>, <code class="codeph">cut</code>, <code class="codeph">scale</code>, and <code class="codeph">rotate</code>. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for information about processing operators.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9__GUID-AB0122D0-E8B9-4FB4-AA68-CB17E1F3B383">
+                                 <!-- --></a>dest_sop_instance_uid
+                           </dt>
+                           <dd>
+                              <p>The SOP instance UID of the destination DICOM content. It must ensure that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9__GUID-4169EB56-9897-4AF6-A373-B0C6955E1C7C">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the destination content.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9__GUID-B4604759-BCE3-4FCB-8984-661E850C06D8">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>The new metadata to be written into the new DICOM content.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support DICOM content processing. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for more information about DICOM processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Generate a new compressed DICOM image:</p>
+                        <div class="infoboxnote" id="GUID-5F2EBDC1-ADD2-469D-A3B3-DB81AF425EA9__GUID-AA9297A6-062F-4E40-8EF9-AF4078E4EF7A">
+                           <p class="notep1">Note:</p>
+                           <p>Replace <span class="italic">&lt;unique-UID&gt;</span> with the UID that identifies the organization producing the DICOM content and the DICOM content within that organization. 
+                           </p>
+                        </div><pre class="oac_no_warn" dir="ltr">  src bfile;
+  dest blob;
+  dest_sop_instance_uid varchar2(128) := '<span class="italic">&lt;unique-UID&gt;</span>';
+begin
+  select bfile_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.processCopy(
+    src, 'CompressionFormat=jpeg', dest_sop_instance_uid, dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13406"></a><div class="props_rev_3"><a id="GUID-B63C59D8-40DE-450C-A7BC-8D8784CA03B7" name="GUID-B63C59D8-40DE-450C-A7BC-8D8784CA03B7"></a><h4 id="IMDCM-GUID-B63C59D8-40DE-450C-A7BC-8D8784CA03B7" class="sect4"><span class="enumeration_section">6.3.11 </span>processCopy( ) for BLOBs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">processCopy(src IN BLOB,
+            command IN VARCHAR2,
+            dest IN OUT NOCOPY BLOB)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Reads the DICOM content that is input from the source BLOB, performs the specified processing operations on the image, and then stores the resulting image in the destination BLOB. The original DICOM content in the source BLOB remains unchanged.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-B63C59D8-40DE-450C-A7BC-8D8784CA03B7__GUID-5F9B4D9C-961D-4940-804B-30C2007E66E9">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in the source BLOB.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-B63C59D8-40DE-450C-A7BC-8D8784CA03B7__GUID-8F8D66DF-3B39-4580-9A50-906AA60982B3">
+                                 <!-- --></a>command
+                           </dt>
+                           <dd>
+                              <p>A command string that accepts a processing operator as input. Valid values include: <code class="codeph">fileFormat</code>, <code class="codeph">frame</code>, <code class="codeph">contentFormat</code>, <code class="codeph">compressionFormat</code>, <code class="codeph">cut</code>, <code class="codeph">scale</code>, and <code class="codeph">rotate</code>. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for information about processing operators.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-B63C59D8-40DE-450C-A7BC-8D8784CA03B7__GUID-4490A4FD-EE06-4FAF-AC1C-968E50D7A721">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the destination content.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support DICOM content processing. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for more information about DICOM processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Create a new JPEG thumbnail image:</p><pre class="oac_no_warn" dir="ltr">  src blob;
+  dest blob;
+begin
+  select blob_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.processCopy(src, 'fileFormat=jpeg maxScale=100 100' dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13407"></a><div class="props_rev_3"><a id="GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62" name="GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62"></a><h4 id="IMDCM-GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62" class="sect4"><span class="enumeration_section">6.3.12 </span>processCopy( ) for BLOBs with SOP Instance UID
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">processCopy(src IN BLOB,
+            command IN VARCHAR2,
+            dest_sop_instance_uid IN VARCHAR2,
+            dest IN OUT NOCOPY BLOB,
+            metadata IN SYS.XMLTYPE DEFAULT NULL)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Reads the DICOM content that is input from the source BLOB, performs the specified processing operations on the image, updates it with the new metadata, and then stores the resulting image in the destination BLOB. The original DICOM content in the source BLOB remains unchanged.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62__GUID-091C6A94-BF34-4024-82DD-353C81073138">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in the source BLOB.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62__GUID-4C62C33A-858E-4EF1-B76A-27DDE8FC3AC0">
+                                 <!-- --></a>command
+                           </dt>
+                           <dd>
+                              <p>A command string that accepts a processing operator as input. Valid values include: <code class="codeph">frame</code>, <code class="codeph">contentFormat</code>, <code class="codeph">compressionFormat</code>, <code class="codeph">cut</code>, <code class="codeph">scale</code>, and <code class="codeph">rotate</code>. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for information about processing operators.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62__GUID-6DCC819E-309D-417B-A4C2-BF69588A5909">
+                                 <!-- --></a>dest_sop_instance_uid
+                           </dt>
+                           <dd>
+                              <p>The SOP instance UID of the destination DICOM content. It must ensure that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62__GUID-64F21BA5-8D6A-4C2E-947B-425E3E451EF0">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the destination content.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62__GUID-B7817B14-B074-4A97-8301-DC136D2AC740">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>The new metadata to be written into the new DICOM content.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support DICOM content processing. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for more information about DICOM processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Create a new compressed DICOM image:</p>
+                        <div class="infoboxnote" id="GUID-1290AE0E-E6C8-460C-9188-858ACFD73C62__GUID-F450753F-0A97-4315-882F-C5CFC216EFC4">
+                           <p class="notep1">Note:</p>
+                           <p>Replace <span class="italic">&lt;unique-UID&gt;</span> with the UID that identifies the organization producing the DICOM content and the DICOM content within that organization. 
+                           </p>
+                        </div><pre class="oac_no_warn" dir="ltr">declare
+  src blob;
+  dest blob;
+  dest_sop_instance_uid varchar2(128) := '<span class="italic">&lt;unique-UID&gt;</span>';
+begin
+  select blob_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.processCopy(
+    src, 'CompressionFormat=jpeg', dest_sop_instance_uid, dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13408"></a><div class="props_rev_3"><a id="GUID-78604D63-AF5F-4E7A-BEC2-CA30787661D8" name="GUID-78604D63-AF5F-4E7A-BEC2-CA30787661D8"></a><h4 id="IMDCM-GUID-78604D63-AF5F-4E7A-BEC2-CA30787661D8" class="sect4"><span class="enumeration_section">6.3.13 </span>processCopy( ) for ORDImage
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">processCopy(src IN ORDSYS.ORDImage,
+            command IN VARCHAR2,
+            dest IN OUT NOCOPY BLOB)</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Reads the DICOM content that is input from the source ORDImage object, performs the specified processing operations on the image, and then stores the resulting image in the destination BLOB. The original DICOM content in the source ORDImage object remains unchanged.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-78604D63-AF5F-4E7A-BEC2-CA30787661D8__GUID-32395ED2-863C-4BAE-995F-9852B111746C">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in the source ORDImage object.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-78604D63-AF5F-4E7A-BEC2-CA30787661D8__GUID-A210DD90-6B60-4473-949A-6873DA82AA91">
+                                 <!-- --></a>command
+                           </dt>
+                           <dd>
+                              <p>A command string that accepts an image processing operator as input. Valid values include: <code class="codeph">fileFormat</code>, <code class="codeph">frame</code>, <code class="codeph">contentFormat</code>, <code class="codeph">compressionFormat</code>, <code class="codeph">cut</code>, <code class="codeph">scale</code>, and <code class="codeph">rotate</code>. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for information about image processing operators.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-78604D63-AF5F-4E7A-BEC2-CA30787661D8__GUID-1A4AB001-8232-4D93-994F-E690C44EF5AD">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the destination content.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>Use this procedure to get a non-DICOM image that is suitable for presentation on the Web from the embedded DICOM content.</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support image content processing. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for more information about DICOM processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Create a new JPEG thumbnail image:</p><pre class="oac_no_warn" dir="ltr">declare
+  src ordimage;
+  dest blob;
+begin
+  select image_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.processCopy(src, 'fileFormat=jpeg maxScale=100 100' dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13409"></a><div class="props_rev_3"><a id="GUID-874A9063-98DA-4B28-AE91-F47E120F5294" name="GUID-874A9063-98DA-4B28-AE91-F47E120F5294"></a><h4 id="IMDCM-GUID-874A9063-98DA-4B28-AE91-F47E120F5294" class="sect4"><span class="enumeration_section">6.3.14 </span>processCopy( ) for ORDImage with SOP Instance UID
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">processCopy(src IN ORDSYS.ORDImage,
+            command IN VARCHAR2,
+            dest_sop_instance_uid IN VARCHAR2,
+            dest IN OUT NOCOPY BLOB,
+            metadata IN SYS.XMLTYPE DEFAULT NULL) </pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Reads the DICOM content that is input from the source ORDImage object, performs the specified processing operations on the image, updates it with the new metadata, and then stores the resulting image in the destination BLOB. The original DICOM content in the source ORDImage object remains unchanged.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-874A9063-98DA-4B28-AE91-F47E120F5294__GUID-DDF16702-86FB-4405-9A02-0236D1C0D88E">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in the source ORDImage object.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-874A9063-98DA-4B28-AE91-F47E120F5294__GUID-A6A54F04-3E59-4D6A-8957-7B51513E90E9">
+                                 <!-- --></a>command
+                           </dt>
+                           <dd>
+                              <p>A command string that accepts an image processing operator as input. Valid values include: <code class="codeph">frame</code>, <code class="codeph">contentFormat</code>, <code class="codeph">compressionFormat</code>, <code class="codeph">cut</code>, <code class="codeph">scale</code>, and <code class="codeph">rotate</code>. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for information about image processing operators.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-874A9063-98DA-4B28-AE91-F47E120F5294__GUID-91DA4978-6351-450D-84A2-B1AF70951675">
+                                 <!-- --></a>dest_sop_instance_uid
+                           </dt>
+                           <dd>
+                              <p>The SOP instance UID of the destination DICOM image. It must ensure that the destination DICOM content is globally unique.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-874A9063-98DA-4B28-AE91-F47E120F5294__GUID-0368E782-099D-48A2-ACB2-0F076AF76DFE">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the destination content.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-874A9063-98DA-4B28-AE91-F47E120F5294__GUID-67ED46D4-9C40-4E60-9B57-A371065D2DB8">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>The new metadata to be written into the new DICOM content.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>Use this procedure to get a non-DICOM image that is suitable for presentation on the Web from the embedded DICOM content.</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support image content processing. See <a href="dicom-processing-and-supported-formats.html#GUID-678F4EF9-3B94-43AB-BDA0-174B6FE9F199" title="This appendix describes processing operations and supported formats for DICOM content.">DICOM Processing and Supported Formats</a> for more information about DICOM processing.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Create a new compressed DICOM image:</p>
+                        <div class="infoboxnote" id="GUID-874A9063-98DA-4B28-AE91-F47E120F5294__GUID-5F7F44CC-501D-47BB-B984-0635E676604D">
+                           <p class="notep1">Note:</p>
+                           <p>Replace <span class="italic">&lt;unique-UID&gt;</span> with the UID that identifies the organization producing the DICOM content and the DICOM content within that organization. 
+                           </p>
+                        </div><pre class="oac_no_warn" dir="ltr">declare
+  src ordimage;
+  dest blob;
+  dest_sop_instance_uid varchar2(128) := '<span class="italic">&lt;unique-UID&gt;</span>';
+begin
+  select image_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+  ord_dicom.processCopy(
+    src, 'CompressionFormat=jpeg', dest_sop_instance_uid, dest);
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13410"></a><div class="props_rev_3"><a id="GUID-326D47E3-A969-4861-8994-E34A25B9AE15" name="GUID-326D47E3-A969-4861-8994-E34A25B9AE15"></a><h4 id="IMDCM-GUID-326D47E3-A969-4861-8994-E34A25B9AE15" class="sect4"><span class="enumeration_section">6.3.15 </span>writeMetadata( ) for BFILEs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">writeMetadata(src IN BFILE,
+              metadata IN SYS.XMLTYPE,
+              dest IN OUT NOCOPY BLOB),</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Writes or modifies the current DICOM content with the metadata provided by making a copy of the existing DICOM content in the destination BLOB, and then modifying the metadata. The original DICOM content remains unchanged. The attributes in the destination DICOM content are copied from the metadata that was input.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-326D47E3-A969-4861-8994-E34A25B9AE15__GUID-6AFF7E14-ADBC-4798-B196-14B7EB687B42">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BFILE.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-326D47E3-A969-4861-8994-E34A25B9AE15__GUID-D6FF34AE-D66C-4E77-937F-EE9701780092">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>The input metadata stored in data type XMLType. In the destination DICOM content, the input metadata is used to update the values for attributes that are identical to attributes in the source DICOM content, or to add any new attributes. The metadata must conform to the default metadata schema with the namespace <code class="codeph">http://xmlns.oracle.com/ord/dicom/metadata_1_0</code>. The SOP instance UID in the metadata must ensure that the destination DICOM content is globally unique.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-326D47E3-A969-4861-8994-E34A25B9AE15__GUID-7980CE48-D952-4C33-A022-0A6F9E8EF53A">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the new DICOM content with the new metadata.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support metadata extraction.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Use the preference parameter SQ_WRITE_LEN to specify how the DICOM sequence (SQ) types are encoded. See <a href="creating-dicom-configuration-documents.html#GUID-8B63CB24-29C9-43B6-A0C9-10A3CB7BC9A0">Defining the SQ_WRITE_LEN Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Write the new metadata to the copy of the DICOM content in the destination BLOB:</p><pre class="oac_no_warn" dir="ltr">declare
+  src bfile;
+  dest blob;
+  metadata xmltype;
+begin
+  metadata := xmltype(bfilename('DICOMDIR', 'wm_meta.xml'), 
+                      nls_charset_id('AL32UTF8'), 
+                      'http://xmlns.oracle.com/ord/dicom/metadata_1_0');
+ 
+  select bfile_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+ 
+  ord_dicom.writeMetadata(src, metadata, dest);
+ 
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13411"></a><div class="props_rev_3"><a id="GUID-762DFB52-787C-4011-9525-94040E7F9E84" name="GUID-762DFB52-787C-4011-9525-94040E7F9E84"></a><h4 id="IMDCM-GUID-762DFB52-787C-4011-9525-94040E7F9E84" class="sect4"><span class="enumeration_section">6.3.16 </span>writeMetadata( ) for BLOBs
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">writeMetadata(src IN BLOB,
+              metadata IN SYS.XMLTYPE,
+              dest IN OUT NOCOPY BLOB),</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Writes or modifies the current DICOM content with the metadata provided by making a copy of the existing DICOM content in the destination BLOB,  and then modifying the metadata. The original DICOM content remains unchanged. The attributes in the destination DICOM content are copied from the metadata that was input.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-762DFB52-787C-4011-9525-94040E7F9E84__GUID-3B0E00CF-7264-4646-99F3-6844757335A7">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in a BLOB.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-762DFB52-787C-4011-9525-94040E7F9E84__GUID-CE3183DD-866D-443C-A78F-9DF088DA96DF">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>The input metadata stored in data type XMLType. In the destination DICOM content, the input metadata is used to update the values for attributes that are identical to attributes in the source DICOM content, or to add any new attributes. The metadata must conform to the default metadata schema with the namespace <code class="codeph">http://xmlns.oracle.com/ord/dicom/metadata_1_0</code>. The SOP instance UID in the metadata must ensure that the destination DICOM content is globally unique.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-762DFB52-787C-4011-9525-94040E7F9E84__GUID-5BF70FED-5682-40E2-AABD-CDC212F2B947">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the new DICOM content with the new metadata.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support metadata extraction.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Use the preference parameter SQ_WRITE_LEN to specify how the DICOM sequence (SQ) types are encoded. See <a href="creating-dicom-configuration-documents.html#GUID-8B63CB24-29C9-43B6-A0C9-10A3CB7BC9A0">Defining the SQ_WRITE_LEN Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Write the new metadata to the copy of the DICOM content in the destination BLOB:</p><pre class="oac_no_warn" dir="ltr">declare
+  src blob;
+  dest blob;
+  metadata xmltype;
+begin
+  metadata := xmltype(bfilename('DICOMDIR', 'wm_meta.xml'), 
+                      nls_charset_id('AL32UTF8'), 
+                      'http://xmlns.oracle.com/ord/dicom/metadata_1_0');
+ 
+  select blob_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+ 
+  ord_dicom.writeMetadata(src, metadata, dest);
+ 
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="IMDCM13412"></a><div class="props_rev_3"><a id="GUID-AB60E40A-110C-4FAF-AE1D-F414F120860C" name="GUID-AB60E40A-110C-4FAF-AE1D-F414F120860C"></a><h4 id="IMDCM-GUID-AB60E40A-110C-4FAF-AE1D-F414F120860C" class="sect4"><span class="enumeration_section">6.3.17 </span>writeMetadata( ) for ORDImage
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p class="subhead3">Format</p><pre class="oac_no_warn" dir="ltr">writeMetadata(src IN ORDSYS.ORDImage,
+              metadata IN SYS.XMLTYPE,
+              dest IN OUT NOCOPY BLOB),</pre></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Description</p>
+                        <p>Writes or modifies the current DICOM content with the metadata provided by making a copy of the existing DICOM content in the destination BLOB, and then modifying the metadata. The original DICOM content remains unchanged. The attributes in the destination DICOM content are copied from the metadata that was input.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Parameters</p>
+                        <dl>
+                           <dt class="dlterm"><a name="GUID-AB60E40A-110C-4FAF-AE1D-F414F120860C__GUID-2AB273D0-ACD3-4B40-B26E-B07BCEF3B0DD">
+                                 <!-- --></a>src
+                           </dt>
+                           <dd>
+                              <p>The input DICOM content stored in an ORDImage object.</p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-AB60E40A-110C-4FAF-AE1D-F414F120860C__GUID-63B16253-D7A8-41EB-9B96-3412B01F67F0">
+                                 <!-- --></a>metadata
+                           </dt>
+                           <dd>
+                              <p>The input metadata stored in data type XMLType. In the destination DICOM content, the input metadata is used to update the values for attributes that are identical to attributes in the source DICOM content, or to add any new attributes. The metadata must conform to the default metadata schema with the namespace <code class="codeph">http://xmlns.oracle.com/ord/dicom/metadata_1_0</code>. The SOP instance UID in the metadata must ensure that the destination DICOM content is globally unique.
+                              </p>
+                           </dd>
+                           <dt class="dlterm"><a name="GUID-AB60E40A-110C-4FAF-AE1D-F414F120860C__GUID-6E45D91B-1FF4-4DBE-947E-9D77977AC281">
+                                 <!-- --></a>dest
+                           </dt>
+                           <dd>
+                              <p>An empty BLOB in which to store the new DICOM content with the new metadata.</p>
+                           </dd>
+                        </dl>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Pragmas</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Exceptions</p>
+                        <p>None.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Usage Notes</p>
+                        <p>See <a href="dicom-encoding-rules.html#GUID-A9BE98B8-96A8-4098-8853-8676E21C586A" title="This appendix lists the encoding rules for medical imaging.">DICOM Encoding Rules</a> for information about the encoding rules that support metadata extraction.
+                        </p>
+                        <p>Use the preference parameter VALIDATE_METADATA to specify whether the XML documents are validated against the Oracle default DICOM metadata schema. See <a href="creating-dicom-configuration-documents.html#GUID-882DDBF7-FC54-4EB6-8843-C7DA88FA42DF">Defining the VALIDATE_METADATA Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                        <p>Use the preference parameter SQ_WRITE_LEN to specify how the DICOM sequence (SQ) types are encoded. See <a href="creating-dicom-configuration-documents.html#GUID-8B63CB24-29C9-43B6-A0C9-10A3CB7BC9A0">Defining the SQ_WRITE_LEN Preference Parameter</a> for more information about this preference parameter.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Examples</p>
+                        <p>Write the new metadata to the copy of the DICOM content in the destination BLOB:</p><pre class="oac_no_warn" dir="ltr">declare
+  src ordimage;
+  dest blob;
+  metadata xmltype;
+begin
+  metadata := xmltype(bfilename('DICOMDIR', 'wm_meta.xml'), 
+                      nls_charset_id('AL32UTF8'), 
+                      'http://xmlns.oracle.com/ord/dicom/metadata_1_0');
+ 
+  select image_src, blob_dest into src, dest from medical_image_rel
+    where id = 1 for update;
+ 
+  ord_dicom.writeMetadata(src, metadata, dest);
+ 
+end;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,1888 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>N-Way Replication Example</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Extended Examples ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Extended Examples">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-extended-examples.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-24T22:39:34-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2008, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83782-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="single-source-heterogeneous-replication-example.html" title="Previous" type="text/html">
+      <link rel="next" href="single-database-capture-and-apply-example.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Extended Examples">
+    <meta name="dcterms.isVersionOf" content="STREX">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="single-source-heterogeneous-replication-example.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="single-database-capture-and-apply-example.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Extended Examples </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">   N-Way Replication Example</li>
+            </ol>
+            <a id="GUID-D540D079-4BC1-43FF-BEF8-D5C20C63974D" name="GUID-D540D079-4BC1-43FF-BEF8-D5C20C63974D"></a><a id="STREX004"></a>
+            
+            <h2 id="STREX-GUID-D540D079-4BC1-43FF-BEF8-D5C20C63974D" class="sect2"><span class="enumeration_chapter">3 </span>   N-Way Replication Example
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d8404e48" class="indexterm-anchor"></a><a id="d8404e54" class="indexterm-anchor"></a><a id="d8404e58" class="indexterm-anchor"></a><a id="d8404e62" class="indexterm-anchor"></a>This chapter illustrates an example of an n-way replication environment that can be constructed using Oracle Streams.
+               </p>
+               <p>This chapter contains these topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="n-way-replication-example.html#GUID-4FB3BDA1-CBA9-4CCA-8EE7-919D18D83AE9">Overview of the N-Way Replication Example</a></p>
+                  </li>
+                  <li>
+                     <p><a href="n-way-replication-example.html#GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41">Prerequisites</a></p>
+                  </li>
+                  <li>
+                     <p><a href="n-way-replication-example.html#GUID-EFF82CE8-949E-4F25-B483-0C2DC5BD3280">Create the hrmult Schema at the mult1.example.com Database</a></p>
+                  </li>
+                  <li>
+                     <p><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F">Create Queues and Database Links</a></p>
+                  </li>
+                  <li>
+                     <p><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07">Example Script for Configuring N-Way Replication</a></p>
+                  </li>
+                  <li>
+                     <p><a href="n-way-replication-example.html#GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984">Make DML and DDL Changes to Tables in the hrmult Schema</a></p>
+                  </li>
+               </ul>
+            </div><a id="STREX562"></a><a id="STREX561"></a><div class="props_rev_3"><a id="GUID-4FB3BDA1-CBA9-4CCA-8EE7-919D18D83AE9" name="GUID-4FB3BDA1-CBA9-4CCA-8EE7-919D18D83AE9"></a><h3 id="STREX-GUID-4FB3BDA1-CBA9-4CCA-8EE7-919D18D83AE9" class="sect3"><span class="enumeration_section">3.1 </span>Overview of the N-Way Replication Example
+               </h3>
+               <div>
+                  <p>This example illustrates using Oracle Streams to replicate data for a schema among three Oracle databases. DML and DDL changes made to tables in the <code class="codeph">hrmult</code> schema are captured at all databases in the environment and propagated to each of the other databases in the environment.
+                  </p>
+                  <p>This type of environment is called an n-way replication environment. An n-way replication environment is a type of multiple-source replication environment because more than one source database captures and replicates changes.</p>
+                  <p><a href="n-way-replication-example.html#GUID-4FB3BDA1-CBA9-4CCA-8EE7-919D18D83AE9__BCGDAICB">Figure 3-1</a> provides an overview of the environment.
+                  </p>
+                  <div class="figure" id="GUID-4FB3BDA1-CBA9-4CCA-8EE7-919D18D83AE9__BCGDAICB">
+                     <p class="titleinfigure">Figure 3-1 Sample N-Way Replication Environment</p><img width="596" src="img/strex018.gif" alt="Description of Figure 3-1 follows" title="Description of Figure 3-1 follows" longdesc="img_text/strex018.html"><br><a href="img_text/strex018.html">Description of "Figure 3-1 Sample N-Way Replication Environment"</a></div>
+                  <!-- class="figure" -->
+                  <p>As illustrated in <a href="n-way-replication-example.html#GUID-4FB3BDA1-CBA9-4CCA-8EE7-919D18D83AE9__BCGDAICB">Figure 3-1</a>, all of the databases will contain the <code class="codeph">hrmult</code> schema when the example is complete. However, at the beginning of the example, the <code class="codeph">hrmult</code> schema exists only at <code class="codeph">mult1.example.com</code>. During the example, you instantiate the <code class="codeph">hrmult</code> schema at <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code>. 
+                  </p>
+                  <p>In this example, Oracle Streams is used to perform the following series of actions:</p>
+                  <ol>
+                     <li>
+                        <p>After instantiation, the capture process at each database captures DML and DDL changes for all of the tables in the <code class="codeph">hrmult</code> schema and enqueues them into a local queue. 
+                        </p>
+                     </li>
+                     <li>
+                        <p>Propagations at each database propagate these changes to all of the other databases in the environment.</p>
+                     </li>
+                     <li>
+                        <p>The apply processes at each database apply changes in the <code class="codeph">hrmult</code> schema received from the other databases in the environment.
+                        </p>
+                     </li>
+                  </ol>
+                  <p>This example avoids sending changes back to their source database by using the default apply tag for the apply processes. When you create an apply process, the changes applied by the apply process have redo entries with a tag of <code class="codeph">'00'</code> (double zero) by default. These changes are not recaptured because, by default, rules created by the <code class="codeph">DBMS_STREAMS_ADM</code> package have an <code class="codeph">is_null_tag()='Y'</code> condition by default, and this condition ensures that each capture process captures a change in a redo entry only if the tag for the redo entry is&nbsp;<code class="codeph">NULL</code>.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-4FB3BDA1-CBA9-4CCA-8EE7-919D18D83AE9__GUID-96B59418-42A2-4498-8477-2F11E743617D">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP224"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about n-way replication environments
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/oracle-streams-tags.html#STREP008"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about tags
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STREX563"></a><div class="props_rev_3"><a id="GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41" name="GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41"></a><h3 id="STREX-GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41" class="sect3"><span class="enumeration_section">3.2 </span>Prerequisites
+               </h3>
+               <div>
+                  <p>The following prerequisites must be completed before you begin the example in this chapter.</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Set the following initialization parameters to the values indicated at each database in the Oracle Streams environment:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">GLOBAL_NAMES</code>: This parameter must be set to <code class="codeph">TRUE</code>. Ensure that the global names of the databases are <code class="codeph">mult1.example.com</code>, <code class="codeph">mult2.example.com</code>, and <code class="codeph">mult3.example.com</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">COMPATIBLE</code>: This parameter must be set to <code class="codeph">10.2.0</code> or higher.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Ensure that the <code class="codeph">PROCESSES</code> and <code class="codeph">SESSIONS</code> initialization parameters are set high enough for all of the Oracle Streams clients used in this example. This example configures one capture process, two propagations, and two apply processes at each database.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">STREAMS_POOL_SIZE</code>: Optionally set this parameter to an appropriate value for each database in the environment. This parameter specifies the size of the Oracle Streams pool. The Oracle Streams pool stores messages in a buffered queue and is used for internal communications during parallel capture and apply. When the <code class="codeph">MEMORY_TARGET</code>, <code class="codeph">MEMORY_MAX_TARGET</code>, or <code class="codeph">SGA_TARGET</code> initialization parameter is set to a nonzero value, the Oracle Streams pool size is managed automatically.
+                              </p>
+                              <div class="infoboxnote" id="GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41__GUID-5D5ABB6A-FAA9-4DD7-BA56-9CCDA98DC348">
+                                 <p class="notep1">Note:</p>
+                                 <p>You might need to modify other initialization parameter settings for this example to run properly.</p>
+                              </div>
+                           </li>
+                        </ul>
+                        <div class="infoboxnotealso" id="GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41__GUID-559E32F6-3A5D-4702-B1D6-001B1743423C">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP201"><span class="italic">Oracle Streams Replication Administrator's Guide </span></a>for information about other initialization parameters that are important in an Oracle Streams environment
+                           </p>
+                        </div>
+                     </li>
+                     <li>
+                        <p>Any database producing changes that will be captured must be running in <code class="codeph">ARCHIVELOG</code> mode. In this example, all databases are capturing changes, and so all databases must be running in <code class="codeph">ARCHIVELOG</code> mode.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41__GUID-ED3D57DF-F119-4078-AF82-7BC9ECE8AA94">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../admin/managing-archived-redo-log-files.html#ADMIN008"><span class="italic">Oracle Database Administrator's Guide </span></a>for information about running a database in <code class="codeph">ARCHIVELOG</code> mode
+                           </p>
+                        </div>
+                     </li>
+                     <li>
+                        <p>Configure your network and Oracle Net so that all three databases can communicate with each other.</p>
+                        <div class="infoboxnotealso" id="GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41__GUID-B75B9357-EC80-40AB-904A-85DB52F25EBE">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../netag/index.html"><span class="italic">Oracle Database Net Services Administrator's Guide</span></a></p>
+                        </div>
+                     </li>
+                     <li>
+                        <p>Create an Oracle Streams administrator at each database in the replication environment. In this example, the databases are <code class="codeph">mult1.example.com</code>, <code class="codeph">mult2.example.com</code>, and <code class="codeph">mult3.example.com</code>. This example assumes that the user name of the Oracle Streams administrator is <code class="codeph">strmadmin</code>.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-8CB33490-6DB6-4F5D-9E85-DA01CCE33B41__GUID-5678F879-966B-4C0D-8F10-E118529C2882">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strex&amp;id=STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for instructions about creating an Oracle Streams administrator
+                           </p>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STREX564"></a><div class="props_rev_3"><a id="GUID-EFF82CE8-949E-4F25-B483-0C2DC5BD3280" name="GUID-EFF82CE8-949E-4F25-B483-0C2DC5BD3280"></a><h3 id="STREX-GUID-EFF82CE8-949E-4F25-B483-0C2DC5BD3280" class="sect3"><span class="enumeration_section">3.3 </span>Create the hrmult Schema at the mult1.example.com Database
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>For the purposes of this example, create a new schema named <code class="codeph">hrmult</code> at the <code class="codeph">mult1.example.com</code> database. The n-way environment will replicate this new schema.
+                     </p>
+                     <p>Complete the following steps to use Data Pump export/import to create an <code class="codeph">hrmult</code> schema that is a copy of the <code class="codeph">hr</code> schema:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>In SQL*Plus, connect to the <code class="codeph">mult1.example.com</code> database as an administrative user.</span><div>
+                           <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strex&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for instructions about connecting to a database in SQL*Plus.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Create a directory object to hold the export dump file and export log file. The directory object can point to any accessible directory on the computer system. For example, the following statement creates a directory object named <code class="codeph">dp_hrmult_dir</code> that points to the <code class="codeph">/usr/tmp</code> directory:</span><div><pre class="oac_no_warn" dir="ltr">CREATE DIRECTORY dp_hrmult_dir AS '/usr/tmp';
+</pre><p>Substitute an appropriate directory on your computer system.</p>
+                        </div>
+                     </li>
+                     <li class="stepexpand" id="GUID-EFF82CE8-949E-4F25-B483-0C2DC5BD3280__CIHFAHAG"><span>Determine the current system change number (SCN) of the source database:</span><div><pre class="oac_no_warn" dir="ltr">SELECT DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER FROM DUAL;
+</pre><p>The SCN value returned by this query is specified for the <code class="codeph">FLASHBACK_SCN</code> Data Pump export parameter in Step <a href="n-way-replication-example.html#GUID-EFF82CE8-949E-4F25-B483-0C2DC5BD3280__CIHFHAEG">5</a>. Because the <code class="codeph">hr</code> schema includes foreign key constraints between tables, the <code class="codeph">FLASHBACK_SCN</code> export parameter, or a similar export parameter, must be specified during export.
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Exit SQL*Plus.</span></li>
+                     <li class="stepexpand" id="GUID-EFF82CE8-949E-4F25-B483-0C2DC5BD3280__CIHFHAEG"><span>On a command line at the <code class="codeph">mult1.example.com</code> database site, use Data Pump to export the <code class="codeph">hr</code> schema at the <code class="codeph">mult1.example.com</code> database. Ensure that you specify the SCN value returned in Step <a href="n-way-replication-example.html#GUID-EFF82CE8-949E-4F25-B483-0C2DC5BD3280__CIHFAHAG">3</a> for the <code class="codeph">FLASHBACK_SCN</code> parameter:</span><div><pre class="oac_no_warn" dir="ltr">expdp system SCHEMAS=hr DIRECTORY=dp_hrmult_dir
+DUMPFILE=hrmult_schema.dmp FLASHBACK_SCN=<span class="italic">flashback_scn_value</span>
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>On a command line at the <code class="codeph">mult1.example.com</code> database site, use Data Pump to import the import dump file <code class="codeph">hrmult_schema.dmp</code>:</span><div><pre class="oac_no_warn" dir="ltr">impdp system SCHEMAS=hr DIRECTORY=dp_hrmult_dir
+DUMPFILE=hrmult_schema.dmp REMAP_SCHEMA=hr:hrmult
+</pre></div>
+                     </li>
+                     <li class="stepexpand"><span>In SQL*Plus, connect to the <code class="codeph">mult1.example.com</code> database as an administrative user.</span></li>
+                     <li class="stepexpand"><span>Assign a password to the new <code class="codeph">hrmult</code> user at the <code class="codeph">mult1.example.com</code> database using the <code class="codeph">ALTER</code> <code class="codeph">USER</code> statement.</span><div>
+                           <p>Remember the password that you assign to the <code class="codeph">hrmult</code> user so that you can log in as the user in the future.
+                           </p>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+            </div><a id="STREX1270"></a><a id="STREX1271"></a><a id="STREX1272"></a><a id="STREX1273"></a><a id="STREX1274"></a><a id="STREX1275"></a><a id="STREX1276"></a><a id="STREX1277"></a><a id="STREX1278"></a><a id="STREX565"></a><div class="props_rev_3"><a id="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F" name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F"></a><h3 id="STREX-GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F" class="sect3"><span class="enumeration_section">3.4 </span>Create Queues and Database Links
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section illustrates how to create queues and database links for an Oracle Streams replication environment that includes three Oracle databases. The remaining parts of this example depend on the queues and database links that you configure in this section.</p>
+                     <p>Complete the following steps to create the queues and database links at all of the databases.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__GUID-15F6A627-762A-46E1-8E01-E1E92A792C7B">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGJCFJH">"Create the ANYDATA Queue at mult1.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGJGDAH">"Create the Database Links at mult1.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGFFIIF">"Prepare the Tables at mult1.example.com for Latest Time Conflict Resolution"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGDDAGJ">"Create the ANYDATA Queue at mult2.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGBAJHF">"Create the Database Links at mult2.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGJHIDH">"Create the ANYDATA Queue at mult3.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGBGAGD">"Create the Database Links at mult3.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGGBHGF">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__GUID-A9C954A0-F750-4FD4-BB3F-EEB018F97C5A">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__i1081411">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__GUID-15F6A627-762A-46E1-8E01-E1E92A792C7B">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL streams_setup_mult.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGJCFJH">
+                              <!-- --></a>Create the ANYDATA Queue at mult1.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect as the Oracle Streams administrator at <code class="codeph">mult1.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT strmadmin@mult1.example.com
+
+/*
+</pre><p>Run the <code class="codeph">SET_UP_QUEUE</code> procedure to create the following queues:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The <code class="codeph">captured_mult1</code> queue to hold changes captured at the <code class="codeph">mult1.example.com</code> database and propagated to other databases.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">from_mult2</code> queue to hold changes captured at the <code class="codeph">mult2.example.com</code> database and propagated to the <code class="codeph">mult1.example.com</code> database to be applied.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">from_mult3</code> queue to hold changes captured at the <code class="codeph">mult3.example.com</code> database and propagated to the <code class="codeph">mult1.example.com</code> database to be applied.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>Running the <code class="codeph">SET_UP_QUEUE</code> procedure performs the following actions for each queue:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a queue table that is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>) and that uses the default storage of this user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates an <code class="codeph">ANYDATA</code> queue that is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>).
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Starts the queue.</p>
+                              </li>
+                           </ul>
+                           <p></p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.captured_mult1_table',
+    queue_name   =&gt; 'strmadmin.captured_mult1');
+END;
+/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.from_mult2_table',
+    queue_name   =&gt; 'strmadmin.from_mult2');
+END;
+/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.from_mult3_table',
+    queue_name   =&gt; 'strmadmin.from_mult3');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGJGDAH">
+                              <!-- --></a>Create the Database Links at mult1.example.com
+                        </dt>
+                        <dd>
+                           <p>Create database links from the current database to the other databases in the environment.</p><pre class="oac_no_warn" dir="ltr">*/
+
+ACCEPT password PROMPT 'Enter password for user: ' HIDE
+
+CREATE DATABASE LINK mult2.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY &amp;password USING 'mult2.example.com';
+
+CREATE DATABASE LINK mult3.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY &amp;password USING 'mult3.example.com';
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGFFIIF">
+                              <!-- --></a>Prepare the Tables at mult1.example.com for Latest Time Conflict Resolution
+                        </dt>
+                        <dd>
+                           <p>This example will configure the tables in the <code class="codeph">hrmult</code> schema for conflict resolution based on the latest time for a transaction.
+                           </p>
+                           <p>Connect to <code class="codeph">mult1.example.com</code> as the <code class="codeph">hrmult</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT hrmult@mult1.example.com
+
+/*
+</pre><p>Add a <code class="codeph">time</code> column to each table in the <code class="codeph">hrmult</code> schema.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+ALTER TABLE hrmult.countries ADD (time TIMESTAMP WITH TIME ZONE);
+ALTER TABLE hrmult.departments ADD (time TIMESTAMP WITH TIME ZONE);
+ALTER TABLE hrmult.employees ADD (time TIMESTAMP WITH TIME ZONE);
+ALTER TABLE hrmult.job_history ADD (time TIMESTAMP WITH TIME ZONE);
+ALTER TABLE hrmult.jobs ADD (time TIMESTAMP WITH TIME ZONE);
+ALTER TABLE hrmult.locations ADD (time TIMESTAMP WITH TIME ZONE);
+ALTER TABLE hrmult.regions ADD (time TIMESTAMP WITH TIME ZONE);
+
+/*
+</pre><p>Create a trigger for each table in the <code class="codeph">hrmult</code> schema to insert the time of a transaction for each row inserted or updated by the transaction.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CREATE OR REPLACE TRIGGER hrmult.insert_time_countries
+BEFORE
+  INSERT OR UPDATE ON hrmult.countries FOR EACH ROW
+BEGIN
+   -- Consider time synchronization problems. The previous update to this 
+   -- row might have originated from a site with a clock time ahead of the 
+   -- local clock time.
+   IF :OLD.TIME IS NULL OR :OLD.TIME &lt; SYSTIMESTAMP THEN
+     :NEW.TIME := SYSTIMESTAMP;
+   ELSE
+     :NEW.TIME := :OLD.TIME + 1 / 86400;
+   END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER hrmult.insert_time_departments
+BEFORE
+  INSERT OR UPDATE ON hrmult.departments FOR EACH ROW
+BEGIN
+   IF :OLD.TIME IS NULL OR :OLD.TIME &lt; SYSTIMESTAMP THEN
+     :NEW.TIME := SYSTIMESTAMP;
+   ELSE
+     :NEW.TIME := :OLD.TIME + 1 / 86400;
+   END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER hrmult.insert_time_employees
+BEFORE
+  INSERT OR UPDATE ON hrmult.employees FOR EACH ROW
+BEGIN
+   IF :OLD.TIME IS NULL OR :OLD.TIME &lt; SYSTIMESTAMP THEN
+     :NEW.TIME := SYSTIMESTAMP;
+   ELSE
+     :NEW.TIME := :OLD.TIME + 1 / 86400;
+   END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER hrmult.insert_time_job_history
+BEFORE
+  INSERT OR UPDATE ON hrmult.job_history FOR EACH ROW
+BEGIN
+   IF :OLD.TIME IS NULL OR :OLD.TIME &lt; SYSTIMESTAMP THEN
+     :NEW.TIME := SYSTIMESTAMP;
+   ELSE
+     :NEW.TIME := :OLD.TIME + 1 / 86400;
+   END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER hrmult.insert_time_jobs
+BEFORE
+  INSERT OR UPDATE ON hrmult.jobs FOR EACH ROW
+BEGIN
+   IF :OLD.TIME IS NULL OR :OLD.TIME &lt; SYSTIMESTAMP THEN
+     :NEW.TIME := SYSTIMESTAMP;
+   ELSE
+     :NEW.TIME := :OLD.TIME + 1 / 86400;
+   END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER hrmult.insert_time_locations
+BEFORE
+  INSERT OR UPDATE ON hrmult.locations FOR EACH ROW
+BEGIN
+   IF :OLD.TIME IS NULL OR :OLD.TIME &lt; SYSTIMESTAMP THEN
+     :NEW.TIME := SYSTIMESTAMP;
+   ELSE
+     :NEW.TIME := :OLD.TIME + 1 / 86400;
+   END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER hrmult.insert_time_regions
+BEFORE
+  INSERT OR UPDATE ON hrmult.regions FOR EACH ROW
+BEGIN
+   IF :OLD.TIME IS NULL OR :OLD.TIME &lt; SYSTIMESTAMP THEN
+     :NEW.TIME := SYSTIMESTAMP;
+   ELSE
+     :NEW.TIME := :OLD.TIME + 1 / 86400;
+   END IF;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGDDAGJ">
+                              <!-- --></a>Create the ANYDATA Queue at mult2.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect as the Oracle Streams administrator at <code class="codeph">mult2.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT strmadmin@mult2.example.com
+
+/*
+</pre><p>Run the <code class="codeph">SET_UP_QUEUE</code> procedure to create the following queues:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The <code class="codeph">captured_mult2</code> queue to hold changes captured at the <code class="codeph">mult2.example.com</code> database and propagated to other databases.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">from_mult1</code> queue to hold changes captured at the <code class="codeph">mult1.example.com</code> database and propagated to the <code class="codeph">mult2.example.com</code> database to be applied.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">from_mult3</code> queue to hold changes captured at the <code class="codeph">mult3.example.com</code> database and propagated to the <code class="codeph">mult2.example.com</code> database to be applied.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>Running the <code class="codeph">SET_UP_QUEUE</code> procedure performs the following actions for each queue:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a queue table that is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>) and that uses the default storage of this user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates an <code class="codeph">ANYDATA</code> queue that is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>).
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Starts the queue.</p>
+                              </li>
+                           </ul>
+                           <p></p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.captured_mult2_table',
+    queue_name   =&gt; 'strmadmin.captured_mult2');
+END;
+/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.from_mult1_table',
+    queue_name   =&gt; 'strmadmin.from_mult1');
+END;
+/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.from_mult3_table',
+    queue_name   =&gt; 'strmadmin.from_mult3');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGBAJHF">
+                              <!-- --></a>Create the Database Links at mult2.example.com
+                        </dt>
+                        <dd>
+                           <p>Create database links from the current database to the other databases in the environment.</p><pre class="oac_no_warn" dir="ltr">*/
+
+CREATE DATABASE LINK mult1.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY &amp;password USING 'mult1.example.com';
+
+CREATE DATABASE LINK mult3.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY &amp;password USING 'mult3.example.com';
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGJHIDH">
+                              <!-- --></a>Create the ANYDATA Queue at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect as the Oracle Streams administrator at <code class="codeph">mult3.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+CONNECT strmadmin@mult3.example.com
+
+/*
+</pre><p>Run the <code class="codeph">SET_UP_QUEUE</code> procedure to create the following queues:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The <code class="codeph">captured_mult3</code> queue to hold changes captured at the <code class="codeph">mult3.example.com</code> database and propagated to other databases.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">from_mult1</code> queue to hold changes captured at the <code class="codeph">mult1.example.com</code> database and propagated to the <code class="codeph">mult3.example.com</code> database to be applied.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">from_mult2</code> queue to hold changes captured at the <code class="codeph">mult2.example.com</code> database and propagated to the <code class="codeph">mult3.example.com</code> database to be applied.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>Running the <code class="codeph">SET_UP_QUEUE</code> procedure performs the following actions for each queue:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a queue table that is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>) and that uses the default storage of this user.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates an <code class="codeph">ANYDATA</code> queue that is owned by the Oracle Streams administrator (<code class="codeph">strmadmin</code>).
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Starts the queue.</p>
+                              </li>
+                           </ul>
+                           <p></p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.captured_mult3_table',
+    queue_name   =&gt; 'strmadmin.captured_mult3');
+END;
+/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.from_mult1_table',
+    queue_name   =&gt; 'strmadmin.from_mult1');
+END;
+/
+
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'strmadmin.from_mult2_table',
+    queue_name   =&gt; 'strmadmin.from_mult2');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGBGAGD">
+                              <!-- --></a>Create the Database Links at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>Create database links from the current database to the other databases in the environment.</p><pre class="oac_no_warn" dir="ltr">*/
+
+CREATE DATABASE LINK mult1.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY &amp;password USING 'mult1.example.com';
+
+CREATE DATABASE LINK mult2.example.com CONNECT TO strmadmin 
+   IDENTIFIED BY &amp;password USING 'mult2.example.com';
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3EE4777D-FBC2-4A1E-A058-C5C8AA32360F__BCGGBHGF">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">streams_setup_mult.out</code> spool file to ensure that all actions finished successfully after this script is completed.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1279"></a><a id="STREX1280"></a><a id="STREX1281"></a><a id="STREX1282"></a><a id="STREX1283"></a><a id="STREX1284"></a><a id="STREX1285"></a><a id="STREX1286"></a><a id="STREX1287"></a><a id="STREX1288"></a><a id="STREX1289"></a><a id="STREX1290"></a><a id="STREX1291"></a><a id="STREX1292"></a><a id="STREX1293"></a><a id="STREX1294"></a><a id="STREX1295"></a><a id="STREX1296"></a><a id="STREX1297"></a><a id="STREX1298"></a><a id="STREX1299"></a><a id="STREX1300"></a><a id="STREX1301"></a><a id="STREX1302"></a><a id="STREX1303"></a><a id="STREX566"></a><div class="props_rev_3"><a id="GUID-66928828-4D27-40C5-953F-B92245B79D07" name="GUID-66928828-4D27-40C5-953F-B92245B79D07"></a><h3 id="STREX-GUID-66928828-4D27-40C5-953F-B92245B79D07" class="sect3"><span class="enumeration_section">3.5 </span>Example Script for Configuring N-Way Replication
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>Complete the following steps to configure an Oracle Streams n-way replication environment.</p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-149007B5-386B-4B94-B54A-EFEF21919F86">"Show Output and Spool Results"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGIFJFD">"Specify Supplemental Logging at mult1.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFCGBH">"Create the Capture Process at mult1.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGJGGCF">"Create One Apply Process at mult1.example.com for Each Source Database"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGIBGHH">"Configure Latest Time Conflict Resolution at mult1.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGHHDEI">"Configure Propagation at mult1.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGEDCIJ">"Create the Capture Process at mult2.example.com."</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGHCGBB">"Set the Instantiation SCN for mult2.example.com at the Other Databases"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGDAAFA">"Create One Apply Process at mult2.example.com for Each Source Database"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGGHIDC">"Configure Propagation at mult2.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGGEGBC">"Create the Capture Process at mult3.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGBJEEE">"Set the Instantiation SCN for mult3.example.com at the Other Databases"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGDHIIA">"Create One Apply Process at mult3.example.com for Each Source Database"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFGACE">"Configure Propagation at mult3.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGHDJFE">"Instantiate the hrmult Schema at mult2.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFBGFB">"Instantiate the hrmult Schema at mult3.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGJEJFI">"Configure Latest Time Conflict Resolution at mult2.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFCGJH">"Start the Apply Processes at mult2.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGGICEA">"Configure Latest Time Conflict Resolution at mult3.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGBDIED">"Start the Apply Processes at mult3.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGDICEA">"Start the Apply Processes at mult1.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGBJGIG">"Start the Capture Process at mult1.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGGJADB">"Start the Capture Process at mult2.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGJBJDB">"Start the Capture Process at mult3.example.com"</a></span></li>
+                     <li><span><a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGDICFE">"Check the Spool Results"</a></span></li>
+                  </ol>
+                  <div class="section">
+                     <p></p>
+                     <div class="infoboxnote" id="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-E5F10A24-7643-4ECB-A5A7-BE44D1BF7202">
+                        <p class="notep1">Note:</p>
+                        <p>If you are viewing this document online, then you can copy the text from the "BEGINNING OF SCRIPT" line after this note to the next "END OF SCRIPT" line into a text editor and then edit the text to create a script for your environment. Run the script with SQL*Plus on a computer that can connect to all of the databases in the environment.</p>
+                     </div><pre class="oac_no_warn" dir="ltr">/************************* BEGINNING OF SCRIPT ******************************</pre><dl id="GUID-66928828-4D27-40C5-953F-B92245B79D07__i1081952">
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-149007B5-386B-4B94-B54A-EFEF21919F86">
+                              <!-- --></a>Show Output and Spool Results
+                        </dt>
+                        <dd>
+                           <p>Run <code class="codeph">SET</code> <code class="codeph">ECHO</code> <code class="codeph">ON</code> and specify the spool file for the script. Check the spool file for errors after you run this script.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO ON
+SPOOL streams_mult.out
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGIFJFD">
+                              <!-- --></a>Specify Supplemental Logging at mult1.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">mult1.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult1.example.com
+
+/*
+</pre><p>Specify an unconditional supplemental log group that includes the primary key for each table and the column list for each table, as specified in <span class="q">"<a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGIBGHH">"Configure Latest Time Conflict Resolution at mult1.example.com"</a>"</span>. Because the column list for each table includes all of the columns of each table except for its primary key, this step creates a supplemental log group for each table that includes all of the columns in the table.
+                           </p>
+                           <div class="infoboxnote" id="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-53226B8D-59B7-46C1-A8E5-0A8A8365EA96">
+                              <p class="notep1">Note:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>For convenience, this example includes the primary key column(s) for each table and the columns used for update conflict resolution in a single unconditional log group. You can choose to place the primary key column(s) for each table in an unconditional log group and the columns used for update conflict resolution in a conditional log group.</p>
+                                 </li>
+                                 <li>
+                                    <p>You do not need to specify supplemental logging explicitly at <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code> in this example. When you use Data Pump to instantiate the tables in the <code class="codeph">hrmult</code> schema at these databases later in this example, the supplemental logging specifications at <code class="codeph">mult1.example.com</code> are retained at <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code>.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-B34A1C92-9768-4987-98F8-80CBED29FB1C">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strex&amp;id=STREP107"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a></p>
+                           </div><pre class="oac_no_warn" dir="ltr">*/
+
+ALTER TABLE hrmult.countries ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
+
+ALTER TABLE hrmult.departments ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
+
+ALTER TABLE hrmult.employees ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
+
+ALTER TABLE hrmult.jobs ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
+
+ALTER TABLE hrmult.job_history ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
+
+ALTER TABLE hrmult.locations ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
+
+ALTER TABLE hrmult.regions ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFCGBH">
+                              <!-- --></a>Create the Capture Process at mult1.example.com
+                        </dt>
+                        <dd>
+                           <p>Create the capture process to capture changes to the entire <code class="codeph">hrmult</code> schema at <code class="codeph">mult1.example.com</code>. This step also prepares the <code class="codeph">hrmult</code> schema at <code class="codeph">mult1.example.com</code> for instantiation. After this step is complete, users can modify tables in the <code class="codeph">hrmult</code> schema at <code class="codeph">mult1.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN   
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name    =&gt; 'hrmult',
+    streams_type   =&gt; 'capture',
+    streams_name   =&gt; 'capture_hrmult', 
+    queue_name     =&gt; 'strmadmin.captured_mult1',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp; =&gt; TRUE,
+    include_ddl &nbsp; &nbsp;=&gt; TRUE,
+    inclusion_rule =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGJGGCF">
+                              <!-- --></a>Create One Apply Process at mult1.example.com for Each Source Database
+                        </dt>
+                        <dd>
+                           <p>Configure <code class="codeph">mult1.example.com</code> to apply changes to the <code class="codeph">hrmult</code> schema at <code class="codeph">mult2.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name     =&gt; 'hrmult',   
+    streams_type    =&gt; 'apply',
+    streams_name    =&gt; 'apply_from_mult2',
+    queue_name      =&gt; 'strmadmin.from_mult2',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp; =&gt; TRUE,
+    source_database =&gt; 'mult2.example.com',
+    inclusion_rule  =&gt; TRUE);
+END;
+/
+
+/*
+</pre><p>Configure <code class="codeph">mult1.example.com</code> to apply changes to the <code class="codeph">hrmult</code> schema at <code class="codeph">mult3.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name     =&gt; 'hrmult',   
+    streams_type    =&gt; 'apply',
+    streams_name    =&gt; 'apply_from_mult3',
+    queue_name      =&gt; 'strmadmin.from_mult3',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp; =&gt; TRUE,
+    source_database =&gt; 'mult3.example.com',
+    inclusion_rule  =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGIBGHH">
+                              <!-- --></a>Configure Latest Time Conflict Resolution at mult1.example.com
+                        </dt>
+                        <dd>
+                           <p>Specify an update conflict handler for each table in the <code class="codeph">hrmult</code> schema. For each table, designate the <code class="codeph">time</code> column as the resolution column for a <code class="codeph">MAXIMUM</code> conflict handler. When an update conflict occurs, such an update conflict handler applies the transaction with the latest (or greater) time and discards the transaction with the earlier (or lesser) time. The column lists include all columns for each table, except for the primary key, because this example assumes that primary key values are never updated.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'country_name';
+  cols(2) := 'region_id';
+  cols(3) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.countries',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'department_name';
+  cols(2) := 'manager_id';
+  cols(3) := 'location_id';
+  cols(4) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.departments',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1)  := 'first_name';
+  cols(2)  := 'last_name';
+  cols(3)  := 'email';
+  cols(4)  := 'phone_number';
+  cols(5)  := 'hire_date';
+  cols(6)  := 'job_id';
+  cols(7)  := 'salary';
+  cols(8)  := 'commission_pct';
+  cols(9)  := 'manager_id';
+  cols(10) := 'department_id';
+  cols(11) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.employees',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'job_title';
+  cols(2) := 'min_salary';
+  cols(3) := 'max_salary';
+  cols(4) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.jobs',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'employee_id';
+  cols(2) := 'start_date';
+  cols(3) := 'end_date';
+  cols(4) := 'job_id';
+  cols(5) := 'department_id';
+  cols(6) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.job_history',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'street_address';
+  cols(2) := 'postal_code';
+  cols(3) := 'city';
+  cols(4) := 'state_province';
+  cols(5) := 'country_id';
+  cols(6) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.locations',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'region_name';
+  cols(2) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.regions',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGHHDEI">
+                              <!-- --></a>Configure Propagation at mult1.example.com
+                        </dt>
+                        <dd>
+                           <p>Configure and schedule propagation of DML and DDL changes in the <code class="codeph">hrmult</code> schema from the queue at <code class="codeph">mult1.example.com</code> to the queue at <code class="codeph">mult2.example.com</code>. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_PROPAGATION_RULES(
+&nbsp;&nbsp;&nbsp; schema_name               =&gt; 'hrmult', 
+&nbsp;&nbsp;&nbsp; streams_name              =&gt; 'mult1_to_mult2', &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; source_queue_name         =&gt; 'strmadmin.captured_mult1',
+&nbsp;&nbsp;&nbsp; destination_queue_name    =&gt; 'strmadmin.from_mult1@mult2.example.com',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;          &nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;          &nbsp;&nbsp; =&gt; TRUE,
+    source_database           =&gt; 'mult1.example.com',
+    inclusion_rule            =&gt; TRUE,
+    queue_to_queue            =&gt; TRUE);
+END;
+/
+
+/*
+</pre><p>Configure and schedule propagation of DML and DDL changes in the <code class="codeph">hrmult</code> schema from the queue at <code class="codeph">mult1.example.com</code> to the queue at <code class="codeph">mult3.example.com</code>. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_PROPAGATION_RULES(
+&nbsp;&nbsp;&nbsp; schema_name               =&gt; 'hrmult', 
+&nbsp;&nbsp;&nbsp; streams_name              =&gt; 'mult1_to_mult3', &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; source_queue_name         =&gt; 'strmadmin.captured_mult1',
+&nbsp;&nbsp;&nbsp; destination_queue_name    =&gt; 'strmadmin.from_mult1@mult3.example.com',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;          &nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;          &nbsp; =&gt; TRUE,
+    source_database           =&gt; 'mult1.example.com',
+    inclusion_rule            =&gt; TRUE,
+    queue_to_queue            =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGEDCIJ">
+                              <!-- --></a>Create the Capture Process at mult2.example.com.
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">mult2.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult2.example.com
+
+/*
+</pre><p>Create the capture process to capture changes to the entire <code class="codeph">hrmult</code> schema at <code class="codeph">mult2.example.com</code>. This step also prepares the <code class="codeph">hrmult</code> schema at <code class="codeph">mult2.example.com</code> for instantiation. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN   
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name    =&gt; 'hrmult',
+    streams_type   =&gt; 'capture',
+    streams_name   =&gt; 'capture_hrmult', 
+    queue_name     =&gt; 'strmadmin.captured_mult2',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp; =&gt; TRUE,
+    include_ddl &nbsp;  =&gt; TRUE,
+    inclusion_rule =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGHCGBB">
+                              <!-- --></a>Set the Instantiation SCN for mult2.example.com at the Other Databases
+                        </dt>
+                        <dd>
+                           <p>In this example, the <code class="codeph">hrmult</code> schema already exists at all of the databases. The tables in the schema exist only at <code class="codeph">mult1.example.com</code> until they are instantiated at <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code> in Step <a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFBGFB">"Instantiate the hrmult Schema at mult3.example.com"</a>. The instantiation is done using an import of the tables from <code class="codeph">mult1.example.com</code>. These import operations set the schema instantiation SCNs for <code class="codeph">mult1.example.com</code> at <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code> automatically. 
+                           </p>
+                           <p>However, the instantiation SCNs for <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code> are not set automatically at the other sites in the environment. This step sets the schema instantiation SCN for <code class="codeph">mult2.example.com</code> manually at <code class="codeph">mult1.example.com</code> and <code class="codeph">mult3.example.com</code>. The current SCN at <code class="codeph">mult2.example.com</code> is obtained by using the <code class="codeph">GET_SYSTEM_CHANGE_NUMBER</code> function in the <code class="codeph">DBMS_FLASHBACK</code> package at <code class="codeph">mult2.example.com</code>. This SCN is used at <code class="codeph">mult1.example.com</code> and <code class="codeph">mult3.example.com</code> to run the <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package.
+                           </p>
+                           <p>The <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure controls which DDL LCRs for a schema are ignored by an apply process and which DDL LCRs for a schema are applied by an apply process. If the commit SCN of a DDL LCR for a database object in a schema from a source database is less than or equal to the instantiation SCN for that database object at some destination database, then the apply process at the destination database disregards the DDL LCR. Otherwise, the apply process applies the DDL LCR. 
+                           </p>
+                           <p>Because you are running the <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure before the tables are instantiated at <code class="codeph">mult2.example.com</code>, and because the local capture process is configured already, you do not need to run the <code class="codeph">SET_TABLE_INSTANTIATION_SCN</code> for each table after the instantiation. In this example, an apply process at both <code class="codeph">mult1.example.com</code> and <code class="codeph">mult3.example.com</code> will apply transactions to the tables in the <code class="codeph">hrmult</code> schema with SCNs that were committed after the SCN obtained in this step.
+                           </p>
+                           <div class="infoboxnote" id="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-BE860D83-3F6C-49D2-AAA0-3C6EFCF4E11B">
+                              <p class="notep1">Note:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>In a case where you are instantiating a schema that does not exist, you can set the global instantiation SCN instead of the schema instantiation SCN.</p>
+                                 </li>
+                                 <li>
+                                    <p>In a case where the tables are instantiated before you set the instantiation SCN, you must set the schema instantiation SCN and the instantiation SCN for each table in the schema.</p>
+                                 </li>
+                              </ul>
+                           </div><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  iscn  NUMBER;         -- Variable to hold instantiation SCN value
+BEGIN
+  iscn := DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER();
+  DBMS_APPLY_ADM.SET_SCHEMA_INSTANTIATION_SCN@MULT1.EXAMPLE.COM(
+    source_schema_name    =&gt; 'hrmult',
+    source_database_name  =&gt; 'mult2.example.com',
+    instantiation_scn     =&gt; iscn);
+  DBMS_APPLY_ADM.SET_SCHEMA_INSTANTIATION_SCN@MULT3.EXAMPLE.COM(
+    source_schema_name    =&gt; 'hrmult',
+    source_database_name  =&gt; 'mult2.example.com',
+    instantiation_scn     =&gt; iscn);
+END;
+/
+</pre><p>/*</p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGDAAFA">
+                              <!-- --></a>Create One Apply Process at mult2.example.com for Each Source Database
+                        </dt>
+                        <dd>
+                           <p>Configure <code class="codeph">mult2.example.com</code> to apply changes to the <code class="codeph">hrmult</code> schema at <code class="codeph">mult1.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name     =&gt; 'hrmult',   
+    streams_type    =&gt; 'apply',
+    streams_name    =&gt; 'apply_from_mult1',
+    queue_name      =&gt; 'strmadmin.from_mult1',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp; =&gt; TRUE,
+    source_database =&gt; 'mult1.example.com',
+    inclusion_rule  =&gt; TRUE);
+END;
+/
+
+/*
+</pre><p>Configure <code class="codeph">mult2.example.com</code> to apply changes to the <code class="codeph">hrmult</code> schema at <code class="codeph">mult3.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name     =&gt; 'hrmult',   
+    streams_type    =&gt; 'apply',
+    streams_name    =&gt; 'apply_from_mult3',
+    queue_name      =&gt; 'strmadmin.from_mult3',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp; =&gt; TRUE,
+    source_database =&gt; 'mult3.example.com',
+    inclusion_rule  =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGGHIDC">
+                              <!-- --></a>Configure Propagation at mult2.example.com
+                        </dt>
+                        <dd>
+                           <p>Configure and schedule propagation of DML and DDL changes in the <code class="codeph">hrmult</code> schema from the queue at <code class="codeph">mult2.example.com</code> to the queue at <code class="codeph">mult1.example.com</code>. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_PROPAGATION_RULES(
+    schema_name             =&gt; 'hrmult',
+&nbsp;&nbsp;&nbsp;&nbsp;streams_name            =&gt; 'mult2_to_mult1',
+&nbsp;&nbsp;&nbsp;&nbsp;source_queue_name       =&gt; 'strmadmin.captured_mult2',
+&nbsp;&nbsp;&nbsp;&nbsp;destination_queue_name  =&gt; 'strmadmin.from_mult2@mult1.example.com',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;        &nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp;         =&gt; TRUE, 
+    source_database         =&gt; 'mult2.example.com',
+    inclusion_rule          =&gt; TRUE,
+    queue_to_queue          =&gt; TRUE);
+END;
+/
+
+/*
+</pre><p>Configure and schedule propagation of DML and DDL changes in the <code class="codeph">hrmult</code> schema from the queue at <code class="codeph">mult2.example.com</code> to the queue at <code class="codeph">mult3.example.com</code>. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_PROPAGATION_RULES(
+    schema_name             =&gt; 'hrmult',
+&nbsp;&nbsp;&nbsp;&nbsp;streams_name            =&gt; 'mult2_to_mult3',
+&nbsp;&nbsp;&nbsp;&nbsp;source_queue_name       =&gt; 'strmadmin.captured_mult2',
+&nbsp;&nbsp;&nbsp;&nbsp;destination_queue_name  =&gt; 'strmadmin.from_mult2@mult3.example.com', 
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;        &nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp;         =&gt; TRUE,
+    source_database         =&gt; 'mult2.example.com',
+    inclusion_rule          =&gt; TRUE,
+    queue_to_queue          =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGGEGBC">
+                              <!-- --></a>Create the Capture Process at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">mult3.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult3.example.com
+
+/*
+</pre><p>Create the capture process to capture changes to the entire <code class="codeph">hrmult</code> schema at <code class="codeph">mult3.example.com</code>. This step also prepares the <code class="codeph">hrmult</code> schema at <code class="codeph">mult3.example.com</code> for instantiation. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN   
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name    =&gt; 'hrmult',
+    streams_type   =&gt; 'capture',
+    streams_name   =&gt; 'capture_hrmult', 
+    queue_name     =&gt; 'strmadmin.captured_mult3',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;  =&gt; TRUE,
+    include_ddl &nbsp;  =&gt; TRUE,
+    inclusion_rule =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGBJEEE">
+                              <!-- --></a>Set the Instantiation SCN for mult3.example.com at the Other Databases
+                        </dt>
+                        <dd>
+                           <p>In this example, the <code class="codeph">hrmult</code> schema already exists at all of the databases. The tables in the schema exist only at <code class="codeph">mult1.example.com</code> until they are instantiated at <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code> in Step <a href="n-way-replication-example.html#GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFBGFB">"Instantiate the hrmult Schema at mult3.example.com"</a>. The instantiation is done using an import of the tables from <code class="codeph">mult1.example.com</code>. These import operations set the schema instantiation SCNs for <code class="codeph">mult1.example.com</code> at <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code> automatically. 
+                           </p>
+                           <p>However, the instantiation SCNs for <code class="codeph">mult2.example.com</code> and <code class="codeph">mult3.example.com</code> are not set automatically at the other sites in the environment. This step sets the schema instantiation SCN for <code class="codeph">mult3.example.com</code> manually at <code class="codeph">mult1.example.com</code> and <code class="codeph">mult2.example.com</code>. The current SCN at <code class="codeph">mult3.example.com</code> is obtained by using the <code class="codeph">GET_SYSTEM_CHANGE_NUMBER</code> function in the <code class="codeph">DBMS_FLASHBACK</code> package at <code class="codeph">mult3.example.com</code>. This SCN is used at <code class="codeph">mult1.example.com</code> and <code class="codeph">mult2.example.com</code> to run the <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package.
+                           </p>
+                           <p>The <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure controls which DDL LCRs for a schema are ignored by an apply process and which DDL LCRs for a schema are applied by an apply process. If the commit SCN of a DDL LCR for a database object in a schema from a source database is less than or equal to the instantiation SCN for that database object at some destination database, then the apply process at the destination database disregards the DDL LCR. Otherwise, the apply process applies the DDL LCR. 
+                           </p>
+                           <p>Because you are running the <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure before the tables are instantiated at <code class="codeph">mult3.example.com</code>, and because the local capture process is configured already, you do not need to run the <code class="codeph">SET_TABLE_INSTANTIATION_SCN</code> for each table after the instantiation. In this example, an apply process at both <code class="codeph">mult1.example.com</code> and <code class="codeph">mult2.example.com</code> will apply transactions to the tables in the <code class="codeph">hrmult</code> schema with SCNs that were committed after the SCN obtained in this step.
+                           </p>
+                           <div class="infoboxnote" id="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-5F754AE2-5DDF-4C0B-BC73-0323B0E555BD">
+                              <p class="notep1">Note:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>In a case where you are instantiating a schema that does not exist, you can set the global instantiation SCN instead of the schema instantiation SCN.</p>
+                                 </li>
+                                 <li>
+                                    <p>In a case where the tables are instantiated before you set the instantiation SCN, you must set the schema instantiation SCN and the instantiation SCN for each table in the schema.</p>
+                                 </li>
+                              </ul>
+                           </div><pre class="oac_no_warn" dir="ltr">*/
+
+DECLARE
+  iscn  NUMBER;         -- Variable to hold instantiation SCN value
+BEGIN
+  iscn := DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER();
+  DBMS_APPLY_ADM.SET_SCHEMA_INSTANTIATION_SCN@MULT1.EXAMPLE.COM(
+    source_schema_name    =&gt; 'hrmult',
+    source_database_name  =&gt; 'mult3.example.com',
+    instantiation_scn     =&gt; iscn);
+  DBMS_APPLY_ADM.SET_SCHEMA_INSTANTIATION_SCN@MULT2.EXAMPLE.COM(
+    source_schema_name    =&gt; 'hrmult',
+    source_database_name  =&gt; 'mult3.example.com',
+    instantiation_scn     =&gt; iscn);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGDHIIA">
+                              <!-- --></a>Create One Apply Process at mult3.example.com for Each Source Database
+                        </dt>
+                        <dd>
+                           <p>Configure <code class="codeph">mult3.example.com</code> to apply changes to the <code class="codeph">hrmult</code> schema at <code class="codeph">mult1.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name     =&gt; 'hrmult',   
+    streams_type    =&gt; 'apply',
+    streams_name    =&gt; 'apply_from_mult1',
+    queue_name      =&gt; 'strmadmin.from_mult1',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp; =&gt; TRUE,
+    source_database =&gt; 'mult1.example.com',
+    inclusion_rule  =&gt; TRUE);
+END;
+/
+
+/*
+</pre><p>Configure <code class="codeph">mult3.example.com</code> to apply changes to the <code class="codeph">hrmult</code> schema at <code class="codeph">mult2.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_RULES(
+    schema_name     =&gt; 'hrmult',   
+    streams_type    =&gt; 'apply',
+    streams_name    =&gt; 'apply_from_mult2',
+    queue_name      =&gt; 'strmadmin.from_mult2',
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp; =&gt; TRUE,
+    source_database =&gt; 'mult2.example.com',
+    inclusion_rule  =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFGACE">
+                              <!-- --></a>Configure Propagation at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>Configure and schedule propagation of DML and DDL changes in the <code class="codeph">hrmult</code> schema from the queue at <code class="codeph">mult3.example.com</code> to the queue at <code class="codeph">mult1.example.com</code>. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_PROPAGATION_RULES(
+    schema_name             =&gt; 'hrmult',
+&nbsp;&nbsp;&nbsp;&nbsp;streams_name            =&gt; 'mult3_to_mult1',
+&nbsp;&nbsp;&nbsp;&nbsp;source_queue_name       =&gt; 'strmadmin.captured_mult3',
+&nbsp;&nbsp;&nbsp;&nbsp;destination_queue_name  =&gt; 'strmadmin.from_mult3@mult1.example.com', 
+&nbsp;&nbsp;&nbsp; include_dml         &nbsp;&nbsp;&nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;          =&gt; TRUE,
+    source_database         =&gt; 'mult3.example.com',
+    inclusion_rule          =&gt; TRUE,
+    queue_to_queue          =&gt; TRUE);
+END;
+/
+
+/*
+</pre><p>Configure and schedule propagation of DML and DDL changes in the <code class="codeph">hrmult</code> schema from the queue at <code class="codeph">mult3.example.com</code> to the queue at <code class="codeph">mult2.example.com</code>. 
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_STREAMS_ADM.ADD_SCHEMA_PROPAGATION_RULES(
+    schema_name             =&gt; 'hrmult',
+&nbsp;&nbsp;&nbsp;&nbsp;streams_name            =&gt; 'mult3_to_mult2',
+&nbsp;&nbsp;&nbsp;&nbsp;source_queue_name       =&gt; 'strmadmin.captured_mult3',
+&nbsp;&nbsp;&nbsp;&nbsp;destination_queue_name  =&gt; 'strmadmin.from_mult3@mult2.example.com', 
+&nbsp;&nbsp;&nbsp; include_dml &nbsp;&nbsp;        &nbsp;&nbsp;=&gt; TRUE,
+&nbsp;&nbsp;  include_ddl &nbsp;&nbsp;&nbsp;         =&gt; TRUE,
+    source_database         =&gt; 'mult3.example.com',
+    inclusion_rule          =&gt; TRUE,
+    queue_to_queue          =&gt; TRUE);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGHDJFE">
+                              <!-- --></a>Instantiate the hrmult Schema at mult2.example.com
+                        </dt>
+                        <dd>
+                           <p>This example performs a network Data Pump import of the <code class="codeph">hrmult</code> schema from <code class="codeph">mult1.example.com</code> to <code class="codeph">mult2.example.com</code>. A network import means that Data Pump imports the database objects in the schema from <code class="codeph">mult1.example.com</code> without using an export dump file.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-1CE3C69C-6173-4494-B087-BF3E27F69FA8">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../sutil/index.html"><span class="italic">Oracle Database Utilities </span></a>for information about performing an import
+                              </p>
+                           </div>
+                           <p>Connect to <code class="codeph">mult2.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult2.example.com
+
+/*
+</pre><p>This example will do a schema-level import using the <code class="codeph">DBMS_DATAPUMP</code> package. For simplicity, exceptions from any of the API calls will not be trapped. However, Oracle recommends that you define exception handlers and call <code class="codeph">GET_STATUS</code> to retrieve more detailed error information if a failure occurs. If you want to monitor the import, then query the <code class="codeph">DBA_DATAPUMP_JOBS</code> data dictionary view at the import database.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET SERVEROUTPUT ON
+DECLARE
+  h1                 NUMBER;         -- Data Pump job handle
+  mult2_instantscn   NUMBER;         -- Variable to hold current source SCN
+  job_state          VARCHAR2(30);   -- To keep track of job state
+  js                 ku$_JobStatus;  -- The job status from GET_STATUS
+  sts                ku$_Status;     -- The status object returned by GET_STATUS
+  job_not_exist    exception;
+  pragma exception_init(job_not_exist, -31626);
+BEGIN
+-- Create a (user-named) Data Pump job to do a schema-level import.
+  h1 := DBMS_DATAPUMP.OPEN(
+          operation   =&gt; 'IMPORT',
+          job_mode    =&gt; 'SCHEMA',
+          remote_link =&gt; 'MULT1.EXAMPLE.COM',
+          job_name    =&gt; 'dp_mult2');
+-- A metadata filter is used to specify the schema that owns the tables 
+-- that will be imported.
+  DBMS_DATAPUMP.METADATA_FILTER(
+    handle    =&gt; h1,
+    name      =&gt; 'SCHEMA_EXPR',
+    value     =&gt; '=''HRMULT''');
+-- Get the current SCN of the source database, and set the FLASHBACK_SCN 
+-- parameter to this value to ensure consistency between all of the 
+-- objects in the schema.
+  mult2_instantscn := DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER@mult1.example.com();  
+  DBMS_DATAPUMP.SET_PARAMETER(
+    handle =&gt; h1,
+    name   =&gt; 'FLASHBACK_SCN',
+    value  =&gt; mult2_instantscn); 
+-- Start the job. 
+  DBMS_DATAPUMP.START_JOB(h1);
+-- The import job should be running. In the following loop, the job
+-- is monitored until it completes.
+  job_state := 'UNDEFINED';
+  BEGIN
+    WHILE (job_state != 'COMPLETED') AND (job_state != 'STOPPED') LOOP
+      sts:=DBMS_DATAPUMP.GET_STATUS(
+             handle  =&gt; h1,
+             mask    =&gt; DBMS_DATAPUMP.KU$_STATUS_JOB_ERROR +
+                        DBMS_DATAPUMP.KU$_STATUS_JOB_STATUS +
+                        DBMS_DATAPUMP.KU$_STATUS_WIP,
+             timeout =&gt; -1);
+      js := sts.job_status;
+      DBMS_LOCK.SLEEP(10);
+      job_state := js.state;
+    END LOOP;
+  -- Gets an exception when job no longer exists
+    EXCEPTION WHEN job_not_exist THEN
+      DBMS_OUTPUT.PUT_LINE('Data Pump job has completed');
+      DBMS_OUTPUT.PUT_LINE('Instantiation SCN: ' ||mult2_instantscn);
+  END;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFBGFB">
+                              <!-- --></a>Instantiate the hrmult Schema at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>This example performs a network Data Pump import of the <code class="codeph">hrmult</code> schema from <code class="codeph">mult1.example.com</code> to <code class="codeph">mult3.example.com</code>. A network import means that Data Pump imports the database objects in the schema from <code class="codeph">mult1.example.com</code> without using an export dump file.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-E95607B8-77E5-45C8-AAF2-474DEE4EE9D8">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../sutil/index.html"><span class="italic">Oracle Database Utilities </span></a>for information about performing an import
+                              </p>
+                           </div>
+                           <p>Connect to <code class="codeph">mult3.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult3.example.com
+
+/*
+</pre><p>This example will do a table import using the <code class="codeph">DBMS_DATAPUMP</code> package. For simplicity, exceptions from any of the API calls will not be trapped. However, Oracle recommends that you define exception handlers and call <code class="codeph">GET_STATUS</code> to retrieve more detailed error information if a failure occurs. If you want to monitor the import, then query the <code class="codeph">DBA_DATAPUMP_JOBS</code> data dictionary view at the import database.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET SERVEROUTPUT ON
+DECLARE
+  h1                 NUMBER;         -- Data Pump job handle
+  mult3_instantscn   NUMBER;         -- Variable to hold current source SCN
+  job_state          VARCHAR2(30);   -- To keep track of job state
+  js                 ku$_JobStatus;  -- The job status from GET_STATUS
+  sts                ku$_Status;     -- The status object returned by GET_STATUS
+  job_not_exist    exception;
+  pragma exception_init(job_not_exist, -31626);
+BEGIN
+-- Create a (user-named) Data Pump job to do a schema-level import.
+  h1 := DBMS_DATAPUMP.OPEN(
+          operation   =&gt; 'IMPORT',
+          job_mode    =&gt; 'SCHEMA',
+          remote_link =&gt; 'MULT1.EXAMPLE.COM',
+          job_name    =&gt; 'dp_mult3');
+-- A metadata filter is used to specify the schema that owns the tables 
+-- that will be imported.
+  DBMS_DATAPUMP.METADATA_FILTER(
+    handle    =&gt; h1,
+    name      =&gt; 'SCHEMA_EXPR',
+    value     =&gt; '=''HRMULT''');
+-- Get the current SCN of the source database, and set the FLASHBACK_SCN 
+-- parameter to this value to ensure consistency between all of the 
+-- objects in the schema.
+  mult3_instantscn := DBMS_FLASHBACK.GET_SYSTEM_CHANGE_NUMBER@mult1.example.com();
+  DBMS_DATAPUMP.SET_PARAMETER(
+    handle =&gt; h1,
+    name   =&gt; 'FLASHBACK_SCN',
+    value  =&gt; mult3_instantscn); 
+-- Start the job. 
+  DBMS_DATAPUMP.START_JOB(h1);
+-- The import job should be running. In the following loop, the job
+-- is monitored until it completes.
+  job_state := 'UNDEFINED';
+  BEGIN
+    WHILE (job_state != 'COMPLETED') AND (job_state != 'STOPPED') LOOP
+      sts:=DBMS_DATAPUMP.GET_STATUS(
+             handle  =&gt; h1,
+             mask    =&gt; DBMS_DATAPUMP.KU$_STATUS_JOB_ERROR +
+                        DBMS_DATAPUMP.KU$_STATUS_JOB_STATUS +
+                        DBMS_DATAPUMP.KU$_STATUS_WIP,
+             timeout =&gt; -1);
+      js := sts.job_status;
+      DBMS_LOCK.SLEEP(10);
+      job_state := js.state;
+    END LOOP;
+  -- Gets an exception when job no longer exists
+    EXCEPTION WHEN job_not_exist THEN
+      DBMS_OUTPUT.PUT_LINE('Data Pump job has completed');
+      DBMS_OUTPUT.PUT_LINE('Instantiation SCN: ' ||mult3_instantscn);
+  END;
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGJEJFI">
+                              <!-- --></a>Configure Latest Time Conflict Resolution at mult2.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">mult2.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult2.example.com
+
+/*
+</pre><p>Specify an update conflict handler for each table in the <code class="codeph">hrmult</code> schema. For each table, designate the <code class="codeph">time</code> column as the resolution column for a <code class="codeph">MAXIMUM</code> conflict handler. When an update conflict occurs, such an update conflict handler applies the transaction with the latest (or greater) time and discards the transaction with the earlier (or lesser) time.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'country_name';
+  cols(2) := 'region_id';
+  cols(3) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.countries',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'department_name';
+  cols(2) := 'manager_id';
+  cols(3) := 'location_id';
+  cols(4) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.departments',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1)  := 'first_name';
+  cols(2)  := 'last_name';
+  cols(3)  := 'email';
+  cols(4)  := 'phone_number';
+  cols(5)  := 'hire_date';
+  cols(6)  := 'job_id';
+  cols(7)  := 'salary';
+  cols(8)  := 'commission_pct';
+  cols(9)  := 'manager_id';
+  cols(10) := 'department_id';
+  cols(11) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.employees',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'job_title';
+  cols(2) := 'min_salary';
+  cols(3) := 'max_salary';
+  cols(4) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.jobs',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'employee_id';
+  cols(2) := 'start_date';
+  cols(3) := 'end_date';
+  cols(4) := 'job_id';
+  cols(5) := 'department_id';
+  cols(6) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.job_history',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'street_address';
+  cols(2) := 'postal_code';
+  cols(3) := 'city';
+  cols(4) := 'state_province';
+  cols(5) := 'country_id';
+  cols(6) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.locations',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'region_name';
+  cols(2) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.regions',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGFCGJH">
+                              <!-- --></a>Start the Apply Processes at mult2.example.com
+                        </dt>
+                        <dd>
+                           <p>Start both of the apply processes at <code class="codeph">mult2.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_from_mult1');
+END;
+/
+
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_from_mult3');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGGICEA">
+                              <!-- --></a>Configure Latest Time Conflict Resolution at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">mult3.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult3.example.com
+
+/*
+</pre><p>Specify an update conflict handler for each table in the <code class="codeph">hrmult</code> schema. For each table, designate the <code class="codeph">time</code> column as the resolution column for a <code class="codeph">MAXIMUM</code> conflict handler. When an update conflict occurs, such an update conflict handler applies the transaction with the latest (or greater) time and discards the transaction with the earlier (or lesser) time.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'country_name';
+  cols(2) := 'region_id';
+  cols(3) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.countries',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'department_name';
+  cols(2) := 'manager_id';
+  cols(3) := 'location_id';
+  cols(4) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.departments',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1)  := 'first_name';
+  cols(2)  := 'last_name';
+  cols(3)  := 'email';
+  cols(4)  := 'phone_number';
+  cols(5)  := 'hire_date';
+  cols(6)  := 'job_id';
+  cols(7)  := 'salary';
+  cols(8)  := 'commission_pct';
+  cols(9)  := 'manager_id';
+  cols(10) := 'department_id';
+  cols(11) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.employees',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'job_title';
+  cols(2) := 'min_salary';
+  cols(3) := 'max_salary';
+  cols(4) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.jobs',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'employee_id';
+  cols(2) := 'start_date';
+  cols(3) := 'end_date';
+  cols(4) := 'job_id';
+  cols(5) := 'department_id';
+  cols(6) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.job_history',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'street_address';
+  cols(2) := 'postal_code';
+  cols(3) := 'city';
+  cols(4) := 'state_province';
+  cols(5) := 'country_id';
+  cols(6) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.locations',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+DECLARE
+  cols  DBMS_UTILITY.NAME_ARRAY;
+BEGIN
+  cols(1) := 'region_name';
+  cols(2) := 'time';
+  DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER(
+    object_name           =&gt;  'hrmult.regions',
+    method_name           =&gt;  'MAXIMUM',
+    resolution_column     =&gt;  'time',
+    column_list           =&gt;  cols);
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGBDIED">
+                              <!-- --></a>Start the Apply Processes at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>Start both of the apply processes at <code class="codeph">mult3.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_from_mult1');
+END;
+/
+
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_from_mult2');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGDICEA">
+                              <!-- --></a>Start the Apply Processes at mult1.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">mult1.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult1.example.com
+
+/*
+</pre><p>Start both of the apply processes at <code class="codeph">mult1.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_from_mult2');
+END;
+/
+
+BEGIN
+  DBMS_APPLY_ADM.START_APPLY(
+    apply_name  =&gt; 'apply_from_mult3');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGBJGIG">
+                              <!-- --></a>Start the Capture Process at mult1.example.com
+                        </dt>
+                        <dd>
+                           <p>Start the capture process at <code class="codeph">mult1.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+    capture_name  =&gt; 'capture_hrmult');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGGJADB">
+                              <!-- --></a>Start the Capture Process at mult2.example.com
+                        </dt>
+                        <dd>
+                           <p>Connect to <code class="codeph">mult2.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult2.example.com
+
+/*
+</pre><p>Start the capture process at <code class="codeph">mult2.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+    capture_name  =&gt; 'capture_hrmult');
+END;
+/
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGJBJDB">
+                              <!-- --></a>Start the Capture Process at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>	Connect to <code class="codeph">mult3.example.com</code> as the <code class="codeph">strmadmin</code> user.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+ 
+CONNECT strmadmin@mult3.example.com
+
+/*
+</pre><p>Start the capture process at <code class="codeph">mult3.example.com</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+BEGIN
+  DBMS_CAPTURE_ADM.START_CAPTURE(
+    capture_name  =&gt; 'capture_hrmult');
+END;
+/
+
+SET ECHO OFF
+
+/*</pre></dd>
+                        <dt class="dlterm"><a name="GUID-66928828-4D27-40C5-953F-B92245B79D07__BCGDICFE">
+                              <!-- --></a>Check the Spool Results
+                        </dt>
+                        <dd>
+                           <p>Check the <code class="codeph">streams_mult.out</code> spool file to ensure that all actions finished successfully after this script is completed.
+                           </p><pre class="oac_no_warn" dir="ltr">*/
+
+SET ECHO OFF
+SPOOL OFF
+
+/*************************** END OF SCRIPT ******************************/</pre></dd>
+                     </dl>
+                     <div class="infoboxnotealso" id="GUID-66928828-4D27-40C5-953F-B92245B79D07__GUID-559A097A-03F0-4BC2-9984-51276C8D63CE">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strex&amp;id=STREP058"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for general instructions that explain how to add database objects or databases to the replication environment
+                        </p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div><a id="STREX1304"></a><a id="STREX1305"></a><a id="STREX1306"></a><a id="STREX1307"></a><a id="STREX567"></a><div class="props_rev_3"><a id="GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984" name="GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984"></a><h3 id="STREX-GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984" class="sect3"><span class="enumeration_section">3.6 </span>Make DML and DDL Changes to Tables in the hrmult Schema
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>You can make DML and DDL changes to the tables in the <code class="codeph">hrmult</code> schema at any of the databases in the environment. These changes will be replicated to the other databases in the environment, and you can run queries to view the replicated data. 
+                     </p>
+                     <p>For example, complete the following steps to make DML changes to the <code class="codeph">hrmult.employees</code> table at <code class="codeph">mult1.example.com</code> and <code class="codeph">mult2.example.com</code>. To see the update conflict handler you configured earlier resolve an update conflict, you can make a change to the same row in these two databases and commit the changes at nearly the same time. You can query the changed row at each database in the environment to confirm that the changes were captured, propagated, and applied correctly.
+                     </p>
+                     <p>You can also make a DDL change to the <code class="codeph">hrmult.jobs</code> table at <code class="codeph">mult3.example.com</code> and then confirm that the change was captured at <code class="codeph">mult3.example.com</code>, propagated to the other databases in the environment, and applied at these databases.
+                     </p>
+                     <dl>
+                        <dt><strong></strong></dt>
+                        <dt class="dlterm"><a name="GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984__BCGHAAGF">
+                              <!-- --></a>Make a DML Change to hrmult.employees at mult.example.com and mult2.example.com
+                        </dt>
+                        <dd>
+                           <p>Make the following changes. To simulate a conflict, try to commit them at nearly the same time, but commit the change at <code class="codeph">mult2.example.com</code> after you commit the change at <code class="codeph">mult1.example.com</code>. The update conflict handler at each database will resolve the conflict.
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT hrmult@mult1.example.com
+Enter password: <span class="italic">password</span>
+
+UPDATE hrmult.employees SET salary=9000 WHERE employee_id=206;
+COMMIT;
+
+CONNECT hrmult@mult2.example.com
+Enter password: <span class="italic">password</span>
+
+UPDATE hrmult.employees SET salary=10000 WHERE employee_id=206;
+COMMIT;</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984__BCGBDFFH">
+                              <!-- --></a>Alter the hrmult.jobs Table at mult3.example.com
+                        </dt>
+                        <dd>
+                           <p>Alter the <code class="codeph">hrmult.jobs</code> table by renaming the <code class="codeph">job_title</code> column to <code class="codeph">job_name</code>:
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT hrmult@mult3.example.com
+Enter password: <span class="italic">password</span>
+
+ALTER TABLE hrmult.jobs RENAME COLUMN job_title TO job_name;</pre></dd>
+                        <dt class="dlterm"><a name="GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984__GUID-82EAEA51-4EBD-49CF-BD84-E10B6B215F78">
+                              <!-- --></a>Query the hrmult.employees Table at Each Database
+                        </dt>
+                        <dd>
+                           <p>After some time passes to allow for capture, propagation, and apply of the changes performed in Step <a href="n-way-replication-example.html#GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984__BCGHAAGF">"Make a DML Change to hrmult.employees at mult.example.com and mult2.example.com"</a>, run the following query to confirm that the <code class="codeph">UPDATE</code> changes have been applied at each database. 
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT hrmult@mult1.example.com
+Enter password: <span class="italic">password</span>
+
+SELECT salary FROM hrmult.employees WHERE employee_id=206;
+
+CONNECT hrmult@mult2.example.com
+Enter password: <span class="italic">password</span>
+
+SELECT salary FROM hrmult.employees WHERE employee_id=206;
+
+CONNECT hrmult@mult3.example.com
+Enter password: <span class="italic">password</span>
+
+SELECT salary FROM hrmult.employees WHERE employee_id=206;
+</pre><p>All of the queries should show <code class="codeph">10000</code> for the value of the salary. The update conflict handler at each database has resolved the conflict by using the latest change to the row. In this case, the latest change to the row was made at the <code class="codeph">mult2.example.com</code> database in Step <a href="n-way-replication-example.html#GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984__BCGHAAGF">"Make a DML Change to hrmult.employees at mult.example.com and mult2.example.com"</a>.
+                           </p>
+                        </dd>
+                        <dt class="dlterm"><a name="GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984__GUID-6D2B5128-452E-4C92-B4B5-0CBD5736AAD3">
+                              <!-- --></a>Describe the hrmult.jobs Table at Each Database
+                        </dt>
+                        <dd>
+                           <p>After some time passes to allow for capture, propagation, and apply of the change performed in Step <a href="n-way-replication-example.html#GUID-3B789648-3A59-43A5-B970-D1DFDF4A6984__BCGBDFFH">"Alter the hrmult.jobs Table at mult3.example.com"</a>, describe the <code class="codeph">hrmult.jobs</code> table at each database to confirm that the <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> change was propagated and applied correctly.
+                           </p><pre class="oac_no_warn" dir="ltr">CONNECT hrmult@mult1.example.com
+Enter password: <span class="italic">password</span>
+
+DESC hrmult.jobs
+
+CONNECT hrmult@mult2.example.com
+Enter password: <span class="italic">password</span>
+
+DESC hrmult.jobs
+
+CONNECT hrmult@mult3.example.com
+Enter password: <span class="italic">password</span>
+
+DESC hrmult.jobs
+</pre><p>Each database should show <code class="codeph">job_name</code> as the second column in the table.
+                           </p>
+                           <p></p>
+                        </dd>
+                     </dl>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

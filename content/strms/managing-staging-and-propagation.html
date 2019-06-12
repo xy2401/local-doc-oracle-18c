@@ -1,0 +1,699 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Managing Staging and Propagation</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="managing-oracle-streams-implicit-capture.html" title="Previous" type="text/html">
+      <link rel="next" href="managing-oracle-streams-information-consumption.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="managing-oracle-streams-implicit-capture.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="managing-oracle-streams-information-consumption.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="oracle-streams-administration.html" property="item" typeof="WebPage"><span property="name">    Oracle Streams Administration </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Managing Staging and Propagation</li>
+            </ol>
+            <a id="GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29" name="GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29"></a><a id="STRMS011"></a>
+            
+            <h2 id="STRMS-GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29" class="sect2"><span class="enumeration_chapter">16 </span> Managing Staging and Propagation
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d76339e125" class="indexterm-anchor"></a><a id="d76339e129" class="indexterm-anchor"></a><a id="d76339e131" class="indexterm-anchor"></a>The following topics describe managing <a href="strms_glossary.html#GUID-6A60BF27-6419-4518-800F-9C17D952DF46"><span class="xrefglossterm">ANYDATA queue</span></a>s and <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="managing-staging-and-propagation.html#GUID-868E73A3-D956-460B-ACBF-B9796CEB3889">Managing Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-staging-and-propagation.html#GUID-138AAD67-94D5-4475-91EF-5EE7A78B4F49">Managing Oracle Streams Propagations and Propagation Jobs</a></p>
+                  </li>
+               </ul>
+               <p>Each task described in this chapter should be completed by an Oracle Streams administrator that has been granted the appropriate privileges, unless specified otherwise.</p>
+               <div class="infoboxnotealso" id="GUID-AE5E9042-C7B3-4F39-87C6-D458225E6D29__GUID-597EBCBE-D66A-47C4-B383-AFFDF0B776EC">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-staging-and-propagation.html#GUID-4DDA26DF-0603-4461-8311-B7C73FCDF36F"> Oracle Streams Staging and Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an Oracle Streams administrator
+                        </p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-899C629F-61FD-4054-8C01-EA5BB8A405E6">Monitoring Queues and Messaging</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-F1B5E12C-21C0-416E-8D6C-CB1B6B6A93B2">Monitoring Oracle Streams Propagations and Propagation Jobs</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-propagation.html#GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08"> Troubleshooting Propagation</a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS101"></a><div class="props_rev_3"><a id="GUID-868E73A3-D956-460B-ACBF-B9796CEB3889" name="GUID-868E73A3-D956-460B-ACBF-B9796CEB3889"></a><h3 id="STRMS-GUID-868E73A3-D956-460B-ACBF-B9796CEB3889" class="sect3"><span class="enumeration_section">16.1 </span>Managing Queues
+               </h3>
+               <div>
+                  <p>An <code class="codeph">ANYDATA</code> queue stages <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s whose payloads are of <code class="codeph">ANYDATA</code> type. Therefore, an <code class="codeph">ANYDATA</code> queue can stage a message with a payload of nearly any type, if the payload is wrapped in an <code class="codeph">ANYDATA</code> wrapper. Each Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, and <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a> is associated with one <code class="codeph">ANYDATA</code> queue, and each Oracle Streams <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> is associated with one <code class="codeph">ANYDATA</code> <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> and one <code class="codeph">ANYDATA</code> <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>.
+                  </p>
+                  <p>This section contains instructions for completing the following tasks related to queues:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-E35C379E-13EF-4031-888E-1F943B7DAF9C">Enabling a User to Perform Operations on a Secure Queue</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-0D01D5DB-3222-486B-A5B6-D54754FBD592">Disabling a User from Performing Operations on a Secure Queue</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-E2AF2FDD-DD1C-4BEE-97E1-67F7EED28CA5">Removing a Queue</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS678"></a><div class="props_rev_3"><a id="GUID-E35C379E-13EF-4031-888E-1F943B7DAF9C" name="GUID-E35C379E-13EF-4031-888E-1F943B7DAF9C"></a><h4 id="STRMS-GUID-E35C379E-13EF-4031-888E-1F943B7DAF9C" class="sect4"><span class="enumeration_section">16.1.1 </span>Enabling a User to Perform Operations on a Secure Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>For a user to perform <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> operations, such as enqueue and dequeue, on a <a href="strms_glossary.html#GUID-B70AC3A1-F93B-445D-9BD1-342A94A9EDDE"><span class="xrefglossterm">secure queue</span></a>, the user must be configured as a secure queue user of the queue. If you use the <code class="codeph">SET_UP_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create the secure queue, then the queue owner and the user specified by the <code class="codeph">queue_user</code> parameter are configured as secure users of the queue automatically. If you want to enable other users to perform operations on the queue, then you can configure these users in one of the following ways:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Run <code class="codeph">SET_UP_QUEUE</code> and specify a <code class="codeph">queue_user</code>. Queue creation is skipped if the queue already exists, but a new queue user is configured if one is specified.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Associate the user with an Oracle Database Advanced Queuing (AQ) agent manually.</p>
+                           </li>
+                        </ul>
+                        <p>The following example illustrates associating a user with an Oracle Streams AQ agent manually. Suppose you want to enable the <code class="codeph">oe</code> user to perform queue operations on a queue named <code class="codeph">streams_queue</code>. The following steps configure the <code class="codeph">oe</code> user as a secure queue user of <code class="codeph">streams_queue</code>:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>In SQL*Plus, connect as an administrative user who can create Oracle Streams AQ agents and alter users.</span><div>
+                              <p>See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADMIN00102"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about connecting to a database in SQL*Plus.
+                              </p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Create an agent:</span><div><pre class="oac_no_warn" dir="ltr">EXEC DBMS_AQADM.CREATE_AQ_AGENT(agent_name =&gt; 'streams_queue_agent');
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>If the user must be able to dequeue <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s from queue, then make the agent a subscriber of the secure queue:</span><div><pre class="oac_no_warn" dir="ltr">DECLARE
+  subscriber SYS.AQ$_AGENT;
+BEGIN
+  subscriber :=  SYS.AQ$_AGENT('streams_queue_agent', NULL, NULL);  
+  DBMS_AQADM.ADD_SUBSCRIBER(
+    queue_name          =&gt;  'strmadmin.streams_queue',
+    subscriber          =&gt;  subscriber,
+    rule                =&gt;  NULL,
+    transformation      =&gt;  NULL);
+END;
+/
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Associate the user with the agent:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_AQADM.ENABLE_DB_ACCESS(
+    agent_name  =&gt; 'streams_queue_agent',
+    db_username =&gt; 'oe');
+END;
+/
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Grant the user <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">DBMS_STREAMS_MESSAGING</code> package or the <code class="codeph">DBMS_AQ</code> package, if the user is not already granted these privileges:</span><div><pre class="oac_no_warn" dir="ltr">GRANT EXECUTE ON DBMS_STREAMS_MESSAGING TO oe;
+
+GRANT EXECUTE ON DBMS_AQ TO oe;
+</pre></div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <p>When these steps are complete, the <code class="codeph">oe</code> user is a secure user of the <code class="codeph">streams_queue</code> queue and can perform operations on the queue. You still must grant the user specific privileges to perform queue operations, such as enqueue and dequeue privileges.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-E35C379E-13EF-4031-888E-1F943B7DAF9C__GUID-622AD6C3-A499-4996-B922-E2008EDD7FD7">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="advanced-queue-concepts.html#GUID-3D560C85-168F-45D9-BF1C-35E5AE857848">Secure Queues</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about Oracle Streams AQ agents and using the <code class="codeph">DBMS_AQADM</code> package
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS679"></a><div class="props_rev_3"><a id="GUID-0D01D5DB-3222-486B-A5B6-D54754FBD592" name="GUID-0D01D5DB-3222-486B-A5B6-D54754FBD592"></a><h4 id="STRMS-GUID-0D01D5DB-3222-486B-A5B6-D54754FBD592" class="sect4"><span class="enumeration_section">16.1.2 </span>Disabling a User from Performing Operations on a Secure Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You might want to disable a user from performing <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> operations on a <a href="strms_glossary.html#GUID-B70AC3A1-F93B-445D-9BD1-342A94A9EDDE"><span class="xrefglossterm">secure queue</span></a> for the following reasons:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>You dropped a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> or a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, but you did not drop the queue that was used by the capture process or synchronous capture, and you do not want the user who was the <a href="strms_glossary.html#GUID-33DECAE2-C00F-4805-909D-E9C1C383ECDF"><span class="xrefglossterm">capture user</span></a> to be able to perform operations on the remaining secure queue.
+                              </p>
+                           </li>
+                           <li>
+                              <p>You dropped an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, but you did not drop the queue that was used by the apply process, and you do not want the user who was the <a href="strms_glossary.html#GUID-87C6D214-6D80-452F-87A2-EA39B884189E"><span class="xrefglossterm">apply user</span></a> to be able to perform operations on the remaining secure queue.
+                              </p>
+                           </li>
+                           <li>
+                              <p>You used the <code class="codeph">ALTER_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package to change the <code class="codeph">apply_user</code> for an apply process, and you do not want the old <code class="codeph">apply_user</code> to be able to perform operations on the apply process's queue.
+                              </p>
+                           </li>
+                           <li>
+                              <p>You enabled a user to perform operations on a secure queue by completing the steps described in <a href="managing-staging-and-propagation.html#GUID-E35C379E-13EF-4031-888E-1F943B7DAF9C">Enabling a User to Perform Operations on a Secure Queue</a>, but you no longer want this user to be able to perform operations on the secure queue.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>To disable a secure queue user, you can revoke <code class="codeph">ENQUEUE</code> and <code class="codeph">DEQUEUE</code> privilege on the queue from the user, or you can run the <code class="codeph">DISABLE_DB_ACCESS</code> procedure in the <code class="codeph">DBMS_AQADM</code> package. For example, suppose you want to disable the <code class="codeph">oe</code> user from performing queue operations on a queue named <code class="codeph">streams_queue</code>. 
+                        </p>
+                        <div class="infoboxnote" id="GUID-0D01D5DB-3222-486B-A5B6-D54754FBD592__GUID-50F0BD5E-00D4-4047-9BC7-023B0AC1F854">
+                           <p class="notep1">Note:</p>
+                           <p>If an Oracle Streams AQ agent is used for multiple secure queues, then running <code class="codeph">DISABLE_DB_ACCESS</code> for the agent prevents the user associated with the agent from performing operations on all of these queues.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Run the following procedure to disable the <code class="codeph">oe</code> user from performing queue operations on the secure queue <code class="codeph">streams_queue</code>:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_AQADM.DISABLE_DB_ACCESS(
+    agent_name  =&gt; 'streams_queue_agent',
+    db_username =&gt; 'oe');
+END;
+/
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>If the agent is no longer needed, you can drop the agent:</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_AQADM.DROP_AQ_AGENT(
+    agent_name  =&gt; 'streams_queue_agent');
+END;
+/
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Revoke privileges on the queue from the user, if the user no longer needs these privileges.</span><div><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_AQADM.REVOKE_QUEUE_PRIVILEGE (
+   privilege   =&gt; 'ALL',
+   queue_name  =&gt; 'strmadmin.streams_queue',
+   grantee     =&gt; 'oe');
+END;
+/
+</pre></div>
+                        </li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnotealso" id="GUID-0D01D5DB-3222-486B-A5B6-D54754FBD592__GUID-45E0225A-193A-4433-945F-3A1C09E5FD73">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="advanced-queue-concepts.html#GUID-3D560C85-168F-45D9-BF1C-35E5AE857848">Secure Queues</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about Oracle Streams AQ agents and using the <code class="codeph">DBMS_AQADM</code> package
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS680"></a><div class="props_rev_3"><a id="GUID-E2AF2FDD-DD1C-4BEE-97E1-67F7EED28CA5" name="GUID-E2AF2FDD-DD1C-4BEE-97E1-67F7EED28CA5"></a><h4 id="STRMS-GUID-E2AF2FDD-DD1C-4BEE-97E1-67F7EED28CA5" class="sect4"><span class="enumeration_section">16.1.3 </span>Removing a Queue
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You use the <code class="codeph">REMOVE_QUEUE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to remove an existing <code class="codeph">ANYDATA</code> queue. When you run the <code class="codeph">REMOVE_QUEUE</code> procedure, it waits until any existing <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s in the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> are consumed. Next, it stops the queue, which means that no further enqueues into the queue or dequeues from the queue are allowed. When the queue is stopped, it drops the queue.
+                        </p>
+                        <p>You can also drop the <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a> for the queue if it is empty and is not used by another queue. To do so, specify <code class="codeph">TRUE</code>, the default, for the <code class="codeph">drop_unused_queue_table</code> parameter.
+                        </p>
+                        <p>In addition, you can drop any <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s that use the queue by setting the <code class="codeph">cascade</code> parameter to <code class="codeph">TRUE</code>. By default, the <code class="codeph">cascade</code> parameter is set to <code class="codeph">FALSE</code>.
+                        </p>
+                        <p>For example, to remove an <code class="codeph">ANYDATA</code> queue named <code class="codeph">streams_queue</code> in the <code class="codeph">strmadmin</code> schema and drop its empty queue table, run the following procedure:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.REMOVE_QUEUE(
+    queue_name              =&gt; 'strmadmin.streams_queue',
+    cascade                 =&gt; FALSE,
+    drop_unused_queue_table =&gt; TRUE);
+END;
+/
+</pre><p>In this case, because the <code class="codeph">cascade</code> parameter is set to <code class="codeph">FALSE</code>, this procedure drops the <code class="codeph">streams_queue</code> only if no Oracle Streams clients use the queue. If the <code class="codeph">cascade</code> parameter is set to <code class="codeph">FALSE</code> and any Oracle Streams client uses the queue, then an error is raised.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS691"></a><a id="STRMS_MANAGING_PROPAGATIONS"></a><div class="props_rev_3"><a id="GUID-138AAD67-94D5-4475-91EF-5EE7A78B4F49" name="GUID-138AAD67-94D5-4475-91EF-5EE7A78B4F49"></a><h3 id="STRMS-GUID-138AAD67-94D5-4475-91EF-5EE7A78B4F49" class="sect3"><span class="enumeration_section">16.2 </span>Managing Oracle Streams Propagations and Propagation Jobs
+               </h3>
+               <div>
+                  <p>A <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> propagates <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s from an Oracle Streams <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> to an Oracle Streams <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>. This section provides instructions for completing the following tasks:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-929FE82A-BA04-4EE8-80B0-480B0C8E71B7">Starting a Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-4CBA0FBC-A8C3-480E-9BD0-C91795694EEF">Stopping a Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-44DD74F5-AD3A-486E-98E2-968AE0A5CCAE">Altering the Schedule of a Propagation Job</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-ACCDEFE5-ECCE-478B-A601-98717E3C6204">Specifying the Rule Set for a Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-AFAE1131-0479-4618-AA45-8DC3A8EEE6D3">Adding Rules to the Rule Set for a Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-4066DD51-B519-4DCD-A56E-249F21D32BA7">Removing a Rule from the Rule Set for a Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-536F54A7-2989-4B2C-A03D-26B6862E31DE">Removing a Rule Set for a Propagation</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-staging-and-propagation.html#GUID-3AF0D355-2310-4525-AB57-B0FB4B2522FC">Dropping a Propagation</a></p>
+                     </li>
+                  </ul>
+                  <p>In addition, you can use the features of Oracle Database Advanced Queuing (AQ) to manage Oracle Streams propagations.</p>
+                  <div class="infoboxnotealso" id="GUID-138AAD67-94D5-4475-91EF-5EE7A78B4F49__GUID-0D4CB6F9-F62E-4CE5-AB25-1D3771331BFA">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a>"</span></p>
+                        </li>
+                        <li>
+                           <p>The Oracle Enterprise Manager Cloud Control online help for instructions on managing propagations with Oracle Enterprise Manager Cloud Control</p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADQUE0800"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for more information about managing propagations with the features of Oracle Streams AQ
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS692"></a><div class="props_rev_3"><a id="GUID-929FE82A-BA04-4EE8-80B0-480B0C8E71B7" name="GUID-929FE82A-BA04-4EE8-80B0-480B0C8E71B7"></a><h4 id="STRMS-GUID-929FE82A-BA04-4EE8-80B0-480B0C8E71B7" class="sect4"><span class="enumeration_section">16.2.1 </span>Starting a Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You run the <code class="codeph">START_PROPAGATION</code> procedure in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package to start an existing <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>. For example, the following procedure starts a propagation named <code class="codeph">strm01_propagation</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.START_PROPAGATION(
+ &nbsp;&nbsp;&nbsp;propagation_name =&gt; 'strm01_propagation');
+END;
+/
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS693"></a><div class="props_rev_3"><a id="GUID-4CBA0FBC-A8C3-480E-9BD0-C91795694EEF" name="GUID-4CBA0FBC-A8C3-480E-9BD0-C91795694EEF"></a><h4 id="STRMS-GUID-4CBA0FBC-A8C3-480E-9BD0-C91795694EEF" class="sect4"><span class="enumeration_section">16.2.2 </span>Stopping a Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You run the <code class="codeph">STOP_PROPAGATION</code> procedure in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package to stop an existing <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>. For example, the following procedure stops a propagation named <code class="codeph">strm01_propagation</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.STOP_PROPAGATION(
+ &nbsp;&nbsp;&nbsp;propagation_name =&gt; 'strm01_propagation',
+    force            =&gt; FALSE);
+END;
+/
+</pre><p>To clear the statistics for the propagation when it is stopped, set the <code class="codeph">force</code> parameter to <code class="codeph">TRUE</code>. If there is a problem with a propagation, then stopping the propagation with the <code class="codeph">force</code> parameter set to <code class="codeph">TRUE</code> and restarting the propagation might correct the problem. If the <code class="codeph">force</code> parameter is set to <code class="codeph">FALSE</code>, then the statistics for the propagation are not cleared.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS696"></a><div class="props_rev_3"><a id="GUID-44DD74F5-AD3A-486E-98E2-968AE0A5CCAE" name="GUID-44DD74F5-AD3A-486E-98E2-968AE0A5CCAE"></a><h4 id="STRMS-GUID-44DD74F5-AD3A-486E-98E2-968AE0A5CCAE" class="sect4"><span class="enumeration_section">16.2.3 </span>Altering the Schedule of a Propagation Job
+                  </h4>
+                  <div>
+                     <p>To alter the schedule of an existing <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a>, use the <code class="codeph">ALTER_PROPAGATION_SCHEDULE</code> procedure in the <code class="codeph">DBMS_AQADM</code> package. The following sections contain examples that alter the schedule of a propagation job for a queue-to-queue <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> and for a queue-to-dblink propagation. These examples set the propagation job to propagate <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s every 15 minutes (900 seconds), with each propagation lasting 300 seconds, and a 25-second wait before new messages in a completely propagated <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> are propagated.
+                     </p>
+                     <p>This section contains these topics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-041C8850-5386-4B4A-8F67-B1F65A3FE882">Altering the Schedule of a Propagation Job for a Queue-to-Queue Propagation</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-02213F9D-3490-41F7-803A-009CEC3DCA84">Altering the Schedule of a Propagation Job for a Queue-to-Dblink Propagation</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-44DD74F5-AD3A-486E-98E2-968AE0A5CCAE__GUID-FBD75828-3F79-4187-86D5-76857EC1EE74">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ADQUE0800"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for more information about using the <code class="codeph">ALTER_PROPAGATION_SCHEDULE</code> procedure
+                              </p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-0789FE44-E2AE-4D2D-9BBD-FA637BCA3A58">Queue-to-Queue Propagations</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="advanced-propagation-concepts.html#GUID-73673B79-2BC2-41B0-84C2-D55CDB2848AA">Propagation Jobs</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS697"></a><div class="props_rev_3"><a id="GUID-041C8850-5386-4B4A-8F67-B1F65A3FE882" name="GUID-041C8850-5386-4B4A-8F67-B1F65A3FE882"></a><h5 id="STRMS-GUID-041C8850-5386-4B4A-8F67-B1F65A3FE882" class="sect5"><span class="enumeration_section">16.2.3.1 </span>Altering the Schedule of a Propagation Job for a Queue-to-Queue Propagation
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To alter the schedule of a propagation job for a queue-to-queue propagation that propagates messages from the <code class="codeph">strmadmin.strm_a_queue</code> source queue to the <code class="codeph">strmadmin.strm_b_queue</code> <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a> using the <code class="codeph">dbs2.example.com</code> database link, run the following procedure: 
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_AQADM.ALTER_PROPAGATION_SCHEDULE(
+   queue_name        =&gt; 'strmadmin.strm_a_queue',
+   destination       =&gt; 'dbs2.example.com',
+   duration          =&gt; 300,
+   next_time         =&gt; 'SYSDATE + 900/86400',
+   latency           =&gt; 25,
+   destination_queue =&gt; 'strmadmin.strm_b_queue'); 
+END;
+/
+</pre><p>Because each queue-to-queue propagation has its own propagation job, this procedure alters only the schedule of the propagation that propagates messages between the two queues specified. The <code class="codeph">destination_queue</code> parameter must specify the name of the destination queue to alter the <a href="strms_glossary.html#GUID-AC57AF6F-D7A0-4128-8CE8-C0F434AF7C9E"><span class="xrefglossterm">propagation schedule</span></a> of a queue-to-queue propagation.
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS698"></a><div class="props_rev_3"><a id="GUID-02213F9D-3490-41F7-803A-009CEC3DCA84" name="GUID-02213F9D-3490-41F7-803A-009CEC3DCA84"></a><h5 id="STRMS-GUID-02213F9D-3490-41F7-803A-009CEC3DCA84" class="sect5"><span class="enumeration_section">16.2.3.2 </span>Altering the Schedule of a Propagation Job for a Queue-to-Dblink Propagation
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To alter the schedule of a propagation job for a queue-to-dblink propagation that propagates messages from the <code class="codeph">strmadmin.streams_queue</code> source queue using the <code class="codeph">dbs3.example.com</code> database link, run the following procedure: 
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_AQADM.ALTER_PROPAGATION_SCHEDULE(
+   queue_name  =&gt; 'strmadmin.streams_queue',
+   destination =&gt; 'dbs3.example.com',
+   duration    =&gt; 300,
+   next_time   =&gt; 'SYSDATE + 900/86400',
+   latency     =&gt; 25); 
+END;
+/
+</pre><p>Because the propagation is a queue-to-dblink propagation, the <code class="codeph">destination_queue</code> parameter is not specified. Completing this task affects all queue-to-dblink propagations that propagate messages from the source queue to all destination queues that use the <code class="codeph">dbs3.example.com</code> database link.
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS701"></a><div class="props_rev_3"><a id="GUID-ACCDEFE5-ECCE-478B-A601-98717E3C6204" name="GUID-ACCDEFE5-ECCE-478B-A601-98717E3C6204"></a><h4 id="STRMS-GUID-ACCDEFE5-ECCE-478B-A601-98717E3C6204" class="sect4"><span class="enumeration_section">16.2.4 </span>Specifying the Rule Set for a Propagation
+                  </h4>
+                  <div>
+                     <p>You can specify one <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> and one <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>. The propagation propagates a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> if it evaluates to <code class="codeph">TRUE</code> for at least one <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> in the positive rule set and discards a change if it evaluates to <code class="codeph">TRUE</code> for at least one rule in the negative rule set. The negative rule set is evaluated before the positive rule set.
+                     </p>
+                     <p>This section contains these topics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-73E396A7-797D-48C4-B5C9-0560F0D44BBD">Specifying a Positive Rule Set for a Propagation</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-45B5F1FE-92F1-4B44-AB13-6C69FB24FC26">Specifying a Negative Rule Set for a Propagation</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-ACCDEFE5-ECCE-478B-A601-98717E3C6204__GUID-F44C4948-1CF5-4A20-BB33-994B9BC8F09F">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                           </li>
+                           <li>
+                              <p><a href="advanced-rule-concepts.html#GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D"> Advanced Rule Concepts</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS702"></a><div class="props_rev_3"><a id="GUID-73E396A7-797D-48C4-B5C9-0560F0D44BBD" name="GUID-73E396A7-797D-48C4-B5C9-0560F0D44BBD"></a><h5 id="STRMS-GUID-73E396A7-797D-48C4-B5C9-0560F0D44BBD" class="sect5"><span class="enumeration_section">16.2.4.1 </span>Specifying a Positive Rule Set for a Propagation
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You specify an existing <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> as the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> for an existing <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> using the <code class="codeph">rule_set_name</code> parameter in the <code class="codeph">ALTER_PROPAGATION</code> procedure. This procedure is in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package. 
+                           </p>
+                           <p>For example, the following procedure sets the positive rule set for a propagation named <code class="codeph">strm01_propagation</code> to <code class="codeph">strm02_rule_set</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.ALTER_PROPAGATION(
+    propagation_name  =&gt; 'strm01_propagation',
+    rule_set_name     =&gt; 'strmadmin.strm02_rule_set');
+END;
+/</pre></div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS703"></a><div class="props_rev_3"><a id="GUID-45B5F1FE-92F1-4B44-AB13-6C69FB24FC26" name="GUID-45B5F1FE-92F1-4B44-AB13-6C69FB24FC26"></a><h5 id="STRMS-GUID-45B5F1FE-92F1-4B44-AB13-6C69FB24FC26" class="sect5"><span class="enumeration_section">16.2.4.2 </span>Specifying a Negative Rule Set for a Propagation
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You specify an existing <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> as the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for an existing <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> using the <code class="codeph">negative_rule_set_name</code> parameter in the <code class="codeph">ALTER_PROPAGATION</code> procedure. This procedure is in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package. 
+                           </p>
+                           <p>For example, the following procedure sets the negative rule set for a propagation named <code class="codeph">strm01_propagation</code> to <code class="codeph">strm03_rule_set</code>.
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.ALTER_PROPAGATION(
+    propagation_name        =&gt; 'strm01_propagation',
+    negative_rule_set_name  =&gt; 'strmadmin.strm03_rule_set');
+END;
+/</pre></div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS704"></a><div class="props_rev_3"><a id="GUID-AFAE1131-0479-4618-AA45-8DC3A8EEE6D3" name="GUID-AFAE1131-0479-4618-AA45-8DC3A8EEE6D3"></a><h4 id="STRMS-GUID-AFAE1131-0479-4618-AA45-8DC3A8EEE6D3" class="sect4"><span class="enumeration_section">16.2.5 </span>Adding Rules to the Rule Set for a Propagation
+                  </h4>
+                  <div>
+                     <p>To add <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s to the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> of a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, you can run one of the following procedures:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS316"><code class="codeph">DBMS_STREAMS_ADM.ADD_TABLE_PROPAGATION_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS394"><code class="codeph">DBMS_STREAMS_ADM.ADD_SUBSET_PROPAGATION_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS317"><code class="codeph">DBMS_STREAMS_ADM.ADD_SCHEMA_PROPAGATION_RULES</code></a></p>
+                        </li>
+                        <li>
+                           <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS318"><code class="codeph">DBMS_STREAMS_ADM.ADD_GLOBAL_PROPAGATION_RULES</code></a></p>
+                        </li>
+                     </ul>
+                     <p>Excluding the <code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code> procedure, these procedures can add rules to the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> or <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for a propagation. The <code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code> procedure can add rules only to the positive rule set for a propagation.
+                     </p>
+                     <p>This section contains these topics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-FCBE0A88-A17E-4E83-8FCB-4C1BA1274C84">Adding Rules to the Positive Rule Set for a Propagation</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-staging-and-propagation.html#GUID-AE218078-64C1-4BAA-A66C-6A4229EAA1AB">Adding Rules to the Negative Rule Set for a Propagation</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-AFAE1131-0479-4618-AA45-8DC3A8EEE6D3__GUID-AA466514-9EAB-45FC-B93F-F77C8C6204EE">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-staging-and-propagation.html#GUID-8B86A9B3-04B8-4CBF-BF61-587881F45E7F">Message Propagation Between Queues</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-979FB5C9-7EE7-4E0B-9D28-15696A78DC89">System-Created Rules</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS705"></a><div class="props_rev_3"><a id="GUID-FCBE0A88-A17E-4E83-8FCB-4C1BA1274C84" name="GUID-FCBE0A88-A17E-4E83-8FCB-4C1BA1274C84"></a><h5 id="STRMS-GUID-FCBE0A88-A17E-4E83-8FCB-4C1BA1274C84" class="sect5"><span class="enumeration_section">16.2.5.1 </span>Adding Rules to the Positive Rule Set for a Propagation
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The following example runs the <code class="codeph">ADD_TABLE_PROPAGATION_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add rules to the positive rule set of an existing propagation named <code class="codeph">strm01_propagation</code>:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_PROPAGATION_RULES(
+    table_name              =&gt; 'hr.locations',
+    streams_name            =&gt; 'strm01_propagation',
+    source_queue_name       =&gt; 'strmadmin.strm_a_queue',
+    destination_queue_name  =&gt; 'strmadmin.strm_b_queue@dbs2.example.com',
+    include_dml &nbsp;           =&gt; TRUE,
+    include_ddl             =&gt; TRUE,
+    source_database         =&gt; 'dbs1.example.com',
+    inclusion_rule          =&gt; TRUE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates two rules. One rule evaluates to <code class="codeph">TRUE</code> for row LCRs that contain the results of DML changes to the <code class="codeph">hr.locations</code> table. The other rule evaluates to <code class="codeph">TRUE</code> for DDL LCRs that contain DDL changes to the <code class="codeph">hr.locations</code> table. The rule names are system generated.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Specifies that both rules evaluate to <code class="codeph">TRUE</code> only for LCRs whose changes originated at the <code class="codeph">dbs1.example.com</code> <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Adds the two rules to the positive rule set associated with the propagation because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">TRUE</code>.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS706"></a><div class="props_rev_3"><a id="GUID-AE218078-64C1-4BAA-A66C-6A4229EAA1AB" name="GUID-AE218078-64C1-4BAA-A66C-6A4229EAA1AB"></a><h5 id="STRMS-GUID-AE218078-64C1-4BAA-A66C-6A4229EAA1AB" class="sect5"><span class="enumeration_section">16.2.5.2 </span>Adding Rules to the Negative Rule Set for a Propagation
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The following example runs the <code class="codeph">ADD_TABLE_PROPAGATION_RULES</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package to add rules to the negative rule set of an existing propagation named <code class="codeph">strm01_propagation</code>:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.ADD_TABLE_PROPAGATION_RULES(
+    table_name              =&gt; 'hr.departments',
+    streams_name            =&gt; 'strm01_propagation',
+    source_queue_name       =&gt; 'strmadmin.strm_a_queue',
+    destination_queue_name  =&gt; 'strmadmin.strm_b_queue@dbs2.example.com',
+    include_dml &nbsp;           =&gt; TRUE,
+    include_ddl             =&gt; TRUE,
+    source_database         =&gt; 'dbs1.example.com',
+    inclusion_rule          =&gt; FALSE);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates two rules. One rule evaluates to <code class="codeph">TRUE</code> for row LCRs that contain the results of DML changes to the <code class="codeph">hr.departments</code> table, and the other rule evaluates to <code class="codeph">TRUE</code> for DDL LCRs that contain DDL changes to the <code class="codeph">hr.departments</code> table. The rule names are system generated.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Specifies that both rules evaluate to <code class="codeph">TRUE</code> only for LCRs whose changes originated at the <code class="codeph">dbs1.example.com</code> source database.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Adds the two rules to the negative rule set associated with the propagation because the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">FALSE</code>.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS707"></a><div class="props_rev_3"><a id="GUID-4066DD51-B519-4DCD-A56E-249F21D32BA7" name="GUID-4066DD51-B519-4DCD-A56E-249F21D32BA7"></a><h4 id="STRMS-GUID-4066DD51-B519-4DCD-A56E-249F21D32BA7" class="sect4"><span class="enumeration_section">16.2.6 </span>Removing a Rule from the Rule Set for a Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You remove a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> from the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> for an existing <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> by running the <code class="codeph">REMOVE_RULE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package. For example, the following procedure removes a rule named <code class="codeph">departments3</code> from the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> of a propagation named <code class="codeph">strm01_propagation</code>.
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_STREAMS_ADM.REMOVE_RULE(
+    rule_name        =&gt; 'departments3',
+    streams_type     =&gt; 'propagation',
+    streams_name     =&gt; 'strm01_propagation',
+    drop_unused_rule =&gt; TRUE,
+    inclusion_rule   =&gt; TRUE);
+END;
+/
+</pre><p>In this example, the <code class="codeph">drop_unused_rule</code> parameter in the <code class="codeph">REMOVE_RULE</code> procedure is set to <code class="codeph">TRUE</code>, which is the default setting. Therefore, if the rule being removed is not in any other rule set, then it will be dropped from the database. If the <code class="codeph">drop_unused_rule</code> parameter is set to <code class="codeph">FALSE</code>, then the rule is removed from the rule set, but it is not dropped from the database even if it is not in any other rule set.
+                        </p>
+                        <p>If the <code class="codeph">inclusion_rule</code> parameter is set to <code class="codeph">FALSE</code>, then the <code class="codeph">REMOVE_RULE</code> procedure removes the rule from the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for the propagation, not the positive rule set.
+                        </p>
+                        <p>To remove all of the rules in the rule set for the propagation, then specify <code class="codeph">NULL</code> for the <code class="codeph">rule_name</code> parameter when you run the <code class="codeph">REMOVE_RULE</code> procedure.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-4066DD51-B519-4DCD-A56E-249F21D32BA7__GUID-59107F39-A645-4AEE-8D10-B2A45E091CC2">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="how-rules-are-used-in-oracle-streams.html#GUID-594815E2-3F64-4BC2-92D1-EE7A7C4CA88E">Oracle Streams Client with One or More Empty Rule Sets</a>"</span></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS708"></a><div class="props_rev_3"><a id="GUID-536F54A7-2989-4B2C-A03D-26B6862E31DE" name="GUID-536F54A7-2989-4B2C-A03D-26B6862E31DE"></a><h4 id="STRMS-GUID-536F54A7-2989-4B2C-A03D-26B6862E31DE" class="sect4"><span class="enumeration_section">16.2.7 </span>Removing a Rule Set for a Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You remove a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> from a <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> using the <code class="codeph">ALTER_PROPAGATION</code> procedure in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package. This procedure can remove the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a>, <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a>, or both. Specify <code class="codeph">TRUE</code> for the <code class="codeph">remove_rule_set</code> parameter to remove the positive rule set for the propagation. Specify <code class="codeph">TRUE</code> for the <code class="codeph">remove_negative_rule_set</code> parameter to remove the negative rule set for the propagation.
+                        </p>
+                        <p>For example, the following procedure removes both the positive and the negative rule set from a propagation named <code class="codeph">strm01_propagation</code>.
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.ALTER_PROPAGATION(
+    propagation_name         =&gt; 'strm01_propagation',
+    remove_rule_set          =&gt; TRUE,
+    remove_negative_rule_set =&gt; TRUE);
+END;
+/
+</pre><div class="infoboxnote" id="GUID-536F54A7-2989-4B2C-A03D-26B6862E31DE__GUID-09FF23F0-DE4C-4441-BA95-B23F6439D66E">
+                           <p class="notep1">Note:</p>
+                           <p>If a propagation does not have a positive or negative rule set, then the propagation propagates all <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s in the <a href="strms_glossary.html#GUID-FF907FD2-BD9E-4622-A33C-A6D400ED2CAF"><span class="xrefglossterm">source queue</span></a> to the <a href="strms_glossary.html#GUID-584772DA-C868-4F6B-9B7F-9E665F2D6F85"><span class="xrefglossterm">destination queue</span></a>.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS709"></a><div class="props_rev_3"><a id="GUID-3AF0D355-2310-4525-AB57-B0FB4B2522FC" name="GUID-3AF0D355-2310-4525-AB57-B0FB4B2522FC"></a><h4 id="STRMS-GUID-3AF0D355-2310-4525-AB57-B0FB4B2522FC" class="sect4"><span class="enumeration_section">16.2.8 </span>Dropping a Propagation
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You run the <code class="codeph">DROP_PROPAGATION</code> procedure in the <code class="codeph">DBMS_PROPAGATION_ADM</code> package to drop an existing <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>. For example, the following procedure drops a propagation named <code class="codeph">strm01_propagation</code>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_PROPAGATION_ADM.DROP_PROPAGATION(
+ &nbsp;&nbsp;&nbsp;propagation_name      =&gt; 'strm01_propagation',
+    drop_unused_rule_sets =&gt; TRUE);
+END;
+/
+</pre><p>Because the <code class="codeph">drop_unused_rule_sets</code> parameter is set to <code class="codeph">TRUE</code>, this procedure also drops any <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s used by the propagation <code class="codeph">strm01_propagation</code>, unless a rule set is used by another <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>. If the <code class="codeph">drop_unused_rule_sets</code> parameter is set to <code class="codeph">TRUE</code>, then both the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> and <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for the propagation might be dropped. If this procedure drops a rule set, then it also drops any <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s in the rule set that are not in another rule set.
+                        </p>
+                        <div class="infoboxnote" id="GUID-3AF0D355-2310-4525-AB57-B0FB4B2522FC__GUID-30722E11-A0F4-4968-B62F-C2EB2F2D5E1D">
+                           <p class="notep1">Note:</p>
+                           <p>When you drop a propagation, the <a href="strms_glossary.html#GUID-151DCBBA-D3E3-455A-B475-9669A14C554B"><span class="xrefglossterm">propagation job</span></a> used by the propagation is dropped automatically, if no other propagations are using the propagation job.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

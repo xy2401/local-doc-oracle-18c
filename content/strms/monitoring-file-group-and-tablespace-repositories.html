@@ -1,0 +1,513 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Monitoring File Group and Tablespace Repositories</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="using-information-provisioning.html" title="Previous" type="text/html">
+      <link rel="next" href="appendixes.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="using-information-provisioning.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="appendixes.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="oracle-streams-information-provisioning.html" property="item" typeof="WebPage"><span property="name">    Oracle Streams Information Provisioning </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Monitoring File Group and Tablespace Repositories</li>
+            </ol>
+            <a id="GUID-8C2F429A-6216-410C-B50B-E30A9B45665D" name="GUID-8C2F429A-6216-410C-B50B-E30A9B45665D"></a><a id="STRMS1140"></a>
+            
+            <h2 id="STRMS-GUID-8C2F429A-6216-410C-B50B-E30A9B45665D" class="sect2"><span class="enumeration_chapter">37 </span> Monitoring File Group and Tablespace Repositories
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d144776e125" class="indexterm-anchor"></a><a id="d144776e129" class="indexterm-anchor"></a><a id="d144776e133" class="indexterm-anchor"></a><a id="d144776e137" class="indexterm-anchor"></a>A <a href="strms_glossary.html#GUID-F76D0C68-7DC4-44A6-9648-6D80E19C6C46"><span class="xrefglossterm">file group repository</span></a> can contain multiple <a href="strms_glossary.html#GUID-19D9EE8E-5E3A-4BDA-B526-4832FDE42F1B"><span class="xrefglossterm">file group</span></a>s and multiple versions of a particular file group. A <a href="strms_glossary.html#GUID-EE42AF07-7149-471E-A2D7-47AE2CCD7155"><span class="xrefglossterm">tablespace repository</span></a> is a collection of tablespace sets in a file group repository. Tablespace repositories are built on file group repositories, but tablespace repositories only contain the files required to move or copy tablespaces between databases. This chapter provides sample queries that you can use to monitor file group repositories and tablespace repositories.
+               </p>
+               <p>The following topics describe monitoring file group and tablespace repositories:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="monitoring-file-group-and-tablespace-repositories.html#GUID-53061FEC-3B91-4D38-97EF-A8FC57F52179">Monitoring a File Group Repository</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-file-group-and-tablespace-repositories.html#GUID-30C18843-EB04-42C9-B8FF-97D32BCE79FC">Monitoring a Tablespace Repository</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-8C2F429A-6216-410C-B50B-E30A9B45665D__GUID-3E8CD7CF-E58B-48DF-A163-1458D23A4E6D">
+                  <p class="notep1">Note:</p>
+                  <p>The Oracle Streams tool in Oracle Enterprise Manager Cloud Control is also an excellent way to monitor an Oracle Streams environment. See the online Help for the Oracle Streams tool for more information.</p>
+               </div>
+               <div class="infoboxnotealso" id="GUID-8C2F429A-6216-410C-B50B-E30A9B45665D__GUID-ECD562D4-EEAE-49AA-8B1A-3966B41DB33F">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="information-provisioning-concepts.html#GUID-61AE59ED-B087-49E4-BD9F-7602935285F9"> Information Provisioning Concepts</a></p>
+                     </li>
+                     <li>
+                        <p><a href="using-information-provisioning.html#GUID-672D3744-E09A-4FE3-9708-9AB0EA3AE9D7">     Using Information Provisioning</a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN"><span class="italic">Oracle Database Reference </span></a>for information about the data dictionary views described in this chapter
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS1141"></a><div class="props_rev_3"><a id="GUID-53061FEC-3B91-4D38-97EF-A8FC57F52179" name="GUID-53061FEC-3B91-4D38-97EF-A8FC57F52179"></a><h3 id="STRMS-GUID-53061FEC-3B91-4D38-97EF-A8FC57F52179" class="sect3"><span class="enumeration_section">37.1 </span>Monitoring a File Group Repository
+               </h3>
+               <div>
+                  <p>The queries in the following sections provide examples for monitoring a <a href="strms_glossary.html#GUID-F76D0C68-7DC4-44A6-9648-6D80E19C6C46"><span class="xrefglossterm">file group repository</span></a>:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-file-group-and-tablespace-repositories.html#GUID-A3BC0BA3-D176-435C-B996-0F4C3BAD7816">Displaying General Information About the File Groups in a Database</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-file-group-and-tablespace-repositories.html#GUID-72873613-D25B-45B0-BD4A-70A04A60EA4B">Displaying Information About File Group Versions</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-file-group-and-tablespace-repositories.html#GUID-A02E776E-376A-4EFF-9D41-0107FDF2D852">Displaying Information About File Group Files</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-53061FEC-3B91-4D38-97EF-A8FC57F52179__GUID-7F482DBF-36F5-4C0D-BFC6-CBD453C6B5BB">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="information-provisioning-concepts.html#GUID-4C8EBE9E-8EBD-49CD-9397-3A27C6B4C633">File Group Repository</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="using-information-provisioning.html#GUID-F4634DA4-A4BB-4C53-B9D6-0E747D38C299">Using a File Group Repository</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS1142"></a><div class="props_rev_3"><a id="GUID-A3BC0BA3-D176-435C-B996-0F4C3BAD7816" name="GUID-A3BC0BA3-D176-435C-B996-0F4C3BAD7816"></a><h4 id="STRMS-GUID-A3BC0BA3-D176-435C-B996-0F4C3BAD7816" class="sect4"><span class="enumeration_section">37.1.1 </span>Displaying General Information About the File Groups in a Database
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information for each <a href="strms_glossary.html#GUID-19D9EE8E-5E3A-4BDA-B526-4832FDE42F1B"><span class="xrefglossterm">file group</span></a> in the local database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The file group owner</p>
+                           </li>
+                           <li>
+                              <p>The file group name</p>
+                           </li>
+                           <li>
+                              <p>Whether the files in a <a href="strms_glossary.html#GUID-6D149D24-FA88-45A4-AE92-BAE212116D38"><span class="xrefglossterm">version</span></a> of the file group are kept on disk if the version is purged
+                              </p>
+                           </li>
+                           <li>
+                              <p>The minimum number of versions of the file group allowed</p>
+                           </li>
+                           <li>
+                              <p>The maximum number of versions of the file group allowed</p>
+                           </li>
+                           <li>
+                              <p>The number of days to retain a file group version after it is created</p>
+                           </li>
+                        </ul>
+                        <p>Run the following query to display this information for the local database:</p><pre class="oac_no_warn" dir="ltr">COLUMN FILE_GROUP_OWNER HEADING 'File Group|Owner' FORMAT A10
+COLUMN FILE_GROUP_NAME HEADING 'File Group|Name' FORMAT A10
+COLUMN KEEP_FILES HEADING 'Keep|Files?' FORMAT A10
+COLUMN MIN_VERSIONS HEADING 'Minimum|Number|of Versions' FORMAT 9999
+COLUMN MAX_VERSIONS HEADING 'Maximum|Number|of Versions' FORMAT 9999999999
+COLUMN RETENTION_DAYS HEADING 'Days to|Retain|a Version' FORMAT 9999999999.99
+
+SELECT FILE_GROUP_OWNER,
+       FILE_GROUP_NAME,
+       KEEP_FILES,
+       MIN_VERSIONS,
+       MAX_VERSIONS,
+       RETENTION_DAYS
+  FROM DBA_FILE_GROUPS;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                                     Minimum     Maximum        Days to
+File Group File Group Keep            Number      Number         Retain
+Owner      Name       Files?     of Versions of Versions      a Version
+---------- ---------- ---------- ----------- ----------- --------------
+STRMADMIN  REPORTS    Y                    2  4294967295  4294967295.00
+</pre><p>This output shows that the database has one file group with the following characteristics:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The file group owner is <code class="codeph">strmadmin</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The file group name is <code class="codeph">reports</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The files in a version are kept on disk if a version is purged because the <code class="codeph">"Keep Files?"</code> is <code class="codeph">"Y"</code> for the file group.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The minimum number of versions allowed is 2. If the file group automatically purges versions, then it will not purge a version if the purge would cause the total number of versions to drop below 2.</p>
+                           </li>
+                           <li>
+                              <p>The file group allows an infinite number of versions. The number 4294967295 means an infinite number of versions.</p>
+                           </li>
+                           <li>
+                              <p>The file group retains a version of an infinite number of days. The number 4294967295 means an infinite number of days.</p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1143"></a><div class="props_rev_3"><a id="GUID-72873613-D25B-45B0-BD4A-70A04A60EA4B" name="GUID-72873613-D25B-45B0-BD4A-70A04A60EA4B"></a><h4 id="STRMS-GUID-72873613-D25B-45B0-BD4A-70A04A60EA4B" class="sect4"><span class="enumeration_section">37.1.2 </span>Displaying Information About File Group Versions
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information for each <a href="strms_glossary.html#GUID-19D9EE8E-5E3A-4BDA-B526-4832FDE42F1B"><span class="xrefglossterm">file group</span></a> <a href="strms_glossary.html#GUID-6D149D24-FA88-45A4-AE92-BAE212116D38"><span class="xrefglossterm">version</span></a> in the local database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The owner of the file group that contains the version</p>
+                           </li>
+                           <li>
+                              <p>The name of the file group that contains the version</p>
+                           </li>
+                           <li>
+                              <p>The version name</p>
+                           </li>
+                           <li>
+                              <p>The version number</p>
+                           </li>
+                           <li>
+                              <p>The name of the user who created the version</p>
+                           </li>
+                           <li>
+                              <p>Comments for the version</p>
+                           </li>
+                        </ul>
+                        <p>Run the following query to display this information for the local database:</p><pre class="oac_no_warn" dir="ltr">COLUMN FILE_GROUP_OWNER HEADING 'File Group|Owner' FORMAT A10
+COLUMN FILE_GROUP_NAME HEADING 'File Group|Name' FORMAT A10
+COLUMN VERSION_NAME HEADING 'Version Name' FORMAT A20
+COLUMN VERSION HEADING 'Version|Number' FORMAT 99999999
+COLUMN CREATOR HEADING 'Creator' FORMAT A10
+COLUMN COMMENTS HEADING 'Comments' FORMAT A14
+
+SELECT FILE_GROUP_OWNER,
+       FILE_GROUP_NAME,
+       VERSION_NAME,
+       VERSION,
+       CREATOR,
+       COMMENTS
+  FROM DBA_FILE_GROUP_VERSIONS;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">File Group File Group                        Version
+Owner      Name       Version Name            Number Creator    Comments
+---------- ---------- -------------------- --------- ---------- --------------
+STRMADMIN  REPORTS    SALES_REPORTS_V1             1 STRMADMIN  Sales reports
+                                                                for week of 06
+                                                                -FEB-2005
+ 
+STRMADMIN  REPORTS    SALES_REPORTS_V2             2 STRMADMIN  Sales reports
+                                                                for week of 13
+                                                                -FEB-2005
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1144"></a><div class="props_rev_3"><a id="GUID-A02E776E-376A-4EFF-9D41-0107FDF2D852" name="GUID-A02E776E-376A-4EFF-9D41-0107FDF2D852"></a><h4 id="STRMS-GUID-A02E776E-376A-4EFF-9D41-0107FDF2D852" class="sect4"><span class="enumeration_section">37.1.3 </span>Displaying Information About File Group Files
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information about each file in a <a href="strms_glossary.html#GUID-19D9EE8E-5E3A-4BDA-B526-4832FDE42F1B"><span class="xrefglossterm">file group</span></a> <a href="strms_glossary.html#GUID-6D149D24-FA88-45A4-AE92-BAE212116D38"><span class="xrefglossterm">version</span></a> in the local database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The owner of the file group that contains the file</p>
+                           </li>
+                           <li>
+                              <p>The name of the file group that contains the file</p>
+                           </li>
+                           <li>
+                              <p>The name of the version in the file group that contains the file</p>
+                           </li>
+                           <li>
+                              <p>The file name</p>
+                           </li>
+                           <li>
+                              <p>The directory object that contains the file</p>
+                           </li>
+                        </ul><pre class="oac_no_warn" dir="ltr">COLUMN FILE_GROUP_OWNER HEADING 'File Group|Owner' FORMAT A10
+COLUMN FILE_GROUP_NAME HEADING 'File Group|Name' FORMAT A10
+COLUMN VERSION_NAME HEADING 'Version Name' FORMAT A20
+COLUMN FILE_NAME HEADING 'File Name' FORMAT A15
+COLUMN FILE_DIRECTORY HEADING 'File Directory|Object' FORMAT A15
+
+SELECT FILE_GROUP_OWNER,
+       FILE_GROUP_NAME,
+       VERSION_NAME,
+       FILE_NAME,
+       FILE_DIRECTORY
+  FROM DBA_FILE_GROUP_FILES;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">File Group File Group                                      File Directory
+Owner      Name       Version Name         File Name       Object
+---------- ---------- -------------------- --------------- ---------------
+STRMADMIN  REPORTS    SALES_REPORTS_V1     book_sales.htm  SALES_REPORTS1
+STRMADMIN  REPORTS    SALES_REPORTS_V1     music_sales.htm SALES_REPORTS1
+STRMADMIN  REPORTS    SALES_REPORTS_V2     book_sales.htm  SALES_REPORTS2
+STRMADMIN  REPORTS    SALES_REPORTS_V2     music_sales.htm SALES_REPORTS2
+</pre><p>Query the <code class="codeph">DBA_DIRECTORIES</code> data dictionary view to determine the corresponding file system directory for a directory object.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS1145"></a><div class="props_rev_3"><a id="GUID-30C18843-EB04-42C9-B8FF-97D32BCE79FC" name="GUID-30C18843-EB04-42C9-B8FF-97D32BCE79FC"></a><h3 id="STRMS-GUID-30C18843-EB04-42C9-B8FF-97D32BCE79FC" class="sect3"><span class="enumeration_section">37.2 </span>Monitoring a Tablespace Repository
+               </h3>
+               <div>
+                  <p>The queries in the following sections provide examples for monitoring a <a href="strms_glossary.html#GUID-EE42AF07-7149-471E-A2D7-47AE2CCD7155"><span class="xrefglossterm">tablespace repository</span></a>:
+                  </p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-file-group-and-tablespace-repositories.html#GUID-B67FA455-2C64-4670-BCFE-C064FC5A84DC">Displaying Information About the Tablespaces in a Tablespace Repository</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-file-group-and-tablespace-repositories.html#GUID-5C00CB7C-7787-4FEB-81A3-C655443299DD">Displaying Information About the Tables in a Tablespace Repository</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-file-group-and-tablespace-repositories.html#GUID-7077EF9D-8CDD-4AB7-A4FA-2A19EE336C03">Displaying Export Information About Versions in a Tablespace Repository</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-30C18843-EB04-42C9-B8FF-97D32BCE79FC__GUID-12AC24CE-B830-41E0-9F64-8239CD15803F">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="information-provisioning-concepts.html#GUID-596F4291-042B-4D0A-A4B7-03B8CDBBFA09">Tablespace Repository</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="using-information-provisioning.html#GUID-8CCF73CD-A1A2-4C2D-B8B8-6425FB287AA0">Using a Tablespace Repository</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS1146"></a><div class="props_rev_3"><a id="GUID-B67FA455-2C64-4670-BCFE-C064FC5A84DC" name="GUID-B67FA455-2C64-4670-BCFE-C064FC5A84DC"></a><h4 id="STRMS-GUID-B67FA455-2C64-4670-BCFE-C064FC5A84DC" class="sect4"><span class="enumeration_section">37.2.1 </span>Displaying Information About the Tablespaces in a Tablespace Repository
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information about each tablespace in the <a href="strms_glossary.html#GUID-EE42AF07-7149-471E-A2D7-47AE2CCD7155"><span class="xrefglossterm">tablespace repository</span></a> in the local database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The owner of the <a href="strms_glossary.html#GUID-19D9EE8E-5E3A-4BDA-B526-4832FDE42F1B"><span class="xrefglossterm">file group</span></a> that contains the tablespace in the tablespace repository
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the file group that contains the tablespace in the tablespace repository</p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-6D149D24-FA88-45A4-AE92-BAE212116D38"><span class="xrefglossterm">version</span></a> that contains the tablespace
+                              </p>
+                           </li>
+                           <li>
+                              <p>The tablespace name</p>
+                           </li>
+                        </ul><pre class="oac_no_warn" dir="ltr">COLUMN FILE_GROUP_OWNER HEADING 'File Group|Owner' FORMAT A15
+COLUMN FILE_GROUP_NAME HEADING 'File Group|Name' FORMAT A15
+COLUMN VERSION_NAME HEADING 'Version Name' FORMAT A15
+COLUMN VERSION HEADING 'Version|Number' FORMAT 99999999
+COLUMN TABLESPACE_NAME HEADING 'Tablespace Name' FORMAT A15
+
+SELECT FILE_GROUP_OWNER,
+       FILE_GROUP_NAME,
+       VERSION_NAME,
+       VERSION,
+       TABLESPACE_NAME
+  FROM DBA_FILE_GROUP_TABLESPACES;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">File Group      File Group                        Version
+Owner           Name            Version Name       Number Tablespace Name
+--------------- --------------- --------------- --------- ---------------
+STRMADMIN       SALES           V_Q1FY2005              1 SALES_TBS1
+STRMADMIN       SALES           V_Q1FY2005              1 SALES_TBS2
+STRMADMIN       SALES           V_Q2FY2005              3 SALES_TBS1
+STRMADMIN       SALES           V_Q2FY2005              3 SALES_TBS2
+STRMADMIN       SALES           V_Q1FY2005_R            4 SALES_TBS1
+STRMADMIN       SALES           V_Q1FY2005_R            4 SALES_TBS2
+STRMADMIN       SALES           V_Q2FY2005_R            5 SALES_TBS1
+STRMADMIN       SALES           V_Q2FY2005_R            5 SALES_TBS2</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1147"></a><div class="props_rev_3"><a id="GUID-5C00CB7C-7787-4FEB-81A3-C655443299DD" name="GUID-5C00CB7C-7787-4FEB-81A3-C655443299DD"></a><h4 id="STRMS-GUID-5C00CB7C-7787-4FEB-81A3-C655443299DD" class="sect4"><span class="enumeration_section">37.2.2 </span>Displaying Information About the Tables in a Tablespace Repository
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information about each table in the <a href="strms_glossary.html#GUID-EE42AF07-7149-471E-A2D7-47AE2CCD7155"><span class="xrefglossterm">tablespace repository</span></a> in the local database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The owner of the <a href="strms_glossary.html#GUID-19D9EE8E-5E3A-4BDA-B526-4832FDE42F1B"><span class="xrefglossterm">file group</span></a> that contains the table in the tablespace repository
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the file group that contains the table in the tablespace repository</p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-6D149D24-FA88-45A4-AE92-BAE212116D38"><span class="xrefglossterm">version</span></a> that contains the table
+                              </p>
+                           </li>
+                           <li>
+                              <p>The table owner</p>
+                           </li>
+                           <li>
+                              <p>The table name</p>
+                           </li>
+                           <li>
+                              <p>The tablespace that contains the table</p>
+                           </li>
+                        </ul><pre class="oac_no_warn" dir="ltr">COLUMN FILE_GROUP_OWNER HEADING 'File Group|Owner' FORMAT A10
+COLUMN FILE_GROUP_NAME HEADING 'File Group|Name' FORMAT A10
+COLUMN VERSION_NAME HEADING 'Version Name' FORMAT A15
+COLUMN OWNER HEADING 'Table|Owner' FORMAT A10
+COLUMN TABLE_NAME HEADING 'Table Name' FORMAT A15
+COLUMN TABLESPACE_NAME HEADING 'Tablespace Name' FORMAT A15
+
+SELECT FILE_GROUP_OWNER,
+       FILE_GROUP_NAME,
+       VERSION_NAME,
+       OWNER,
+       TABLE_NAME,
+       TABLESPACE_NAME
+  FROM DBA_FILE_GROUP_TABLES;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">File Group File Group                 Table
+Owner      Name       Version Name    Owner      Table Name      Tablespace Name
+---------- ---------- --------------- ---------- --------------- ---------------
+STRMADMIN  SALES      V_Q1FY2005      SL         ORDERS          SALES_TBS1
+STRMADMIN  SALES      V_Q1FY2005      SL         ORDER_ITEMS     SALES_TBS1
+STRMADMIN  SALES      V_Q1FY2005      SL         CUSTOMERS       SALES_TBS2
+STRMADMIN  SALES      V_Q2FY2005      SL         ORDERS          SALES_TBS1
+STRMADMIN  SALES      V_Q2FY2005      SL         ORDER_ITEMS     SALES_TBS1
+STRMADMIN  SALES      V_Q2FY2005      SL         CUSTOMERS       SALES_TBS2
+STRMADMIN  SALES      V_Q1FY2005_R    SL         ORDERS          SALES_TBS1
+STRMADMIN  SALES      V_Q1FY2005_R    SL         ORDER_ITEMS     SALES_TBS1
+STRMADMIN  SALES      V_Q1FY2005_R    SL         CUSTOMERS       SALES_TBS2
+STRMADMIN  SALES      V_Q2FY2005_R    SL         ORDERS          SALES_TBS1
+STRMADMIN  SALES      V_Q2FY2005_R    SL         ORDER_ITEMS     SALES_TBS1
+STRMADMIN  SALES      V_Q2FY2005_R    SL         CUSTOMERS       SALES_TBS2
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1148"></a><div class="props_rev_3"><a id="GUID-7077EF9D-8CDD-4AB7-A4FA-2A19EE336C03" name="GUID-7077EF9D-8CDD-4AB7-A4FA-2A19EE336C03"></a><h4 id="STRMS-GUID-7077EF9D-8CDD-4AB7-A4FA-2A19EE336C03" class="sect4"><span class="enumeration_section">37.2.3 </span>Displaying Export Information About Versions in a Tablespace Repository
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>To display export information about the versions in the <a href="strms_glossary.html#GUID-EE42AF07-7149-471E-A2D7-47AE2CCD7155"><span class="xrefglossterm">tablespace repository</span></a> in the local database, query the <code class="codeph">DBA_FILE_GROUP_EXPORT_INFO</code> data dictionary view. This view only displays information for versions that contain a valid Data Pump export dump file. The query in this section displays the following export information about each <a href="strms_glossary.html#GUID-6D149D24-FA88-45A4-AE92-BAE212116D38"><span class="xrefglossterm">version</span></a> in the local database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-19D9EE8E-5E3A-4BDA-B526-4832FDE42F1B"><span class="xrefglossterm">file group</span></a> that contains the version
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the version</p>
+                           </li>
+                           <li>
+                              <p>The export version of the export dump file. The export version corresponds to the version of Data Pump that performed the export.</p>
+                           </li>
+                           <li>
+                              <p>The platform on which the export was performed</p>
+                           </li>
+                           <li>
+                              <p>The date and time of the export</p>
+                           </li>
+                           <li>
+                              <p>The global name of the exporting database</p>
+                           </li>
+                        </ul><pre class="oac_no_warn" dir="ltr">COLUMN FILE_GROUP_NAME HEADING 'File Group|Name' FORMAT A10
+COLUMN VERSION_NAME HEADING 'Version Name' FORMAT A13
+COLUMN EXPORT_VERSION HEADING 'Export|Version' FORMAT A7
+COLUMN PLATFORM_NAME HEADING 'Export Platform' FORMAT A17
+COLUMN EXPORT_TIME HEADING 'Export Time' FORMAT A17
+COLUMN SOURCE_GLOBAL_NAME HEADING 'Export|Database' FORMAT A10
+
+SELECT FILE_GROUP_NAME,
+       VERSION_NAME,
+       EXPORT_VERSION,
+       PLATFORM_NAME,
+       TO_CHAR(EXPORT_TIME, 'HH24:MI:SS MM/DD/YY') EXPORT_TIME,
+       SOURCE_GLOBAL_NAME
+  FROM DBA_FILE_GROUP_EXPORT_INFO;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">File Group               Export                                      Export
+Name       Version Name  Version Export Platform   Export Time       Database
+---------- ------------- ------- ----------------- ----------------- ----------
+SALES      V_Q1FY2005    10.2.0  Linux IA (32-bit) 12:23:52 03/08/05 INST1.EXAM
+                                                                     PLE.COM   
+SALES      V_Q2FY2005    10.2.0  Linux IA (32-bit) 12:27:37 03/08/05 INST1.EXAM
+                                                                     PLE.COM   
+SALES      V_Q1FY2005_R  10.2.0  Linux IA (32-bit) 12:39:50 03/08/05 INST2.EXAM
+                                                                     PLE.COM
+SALES      V_Q2FY2005_R  10.2.0  Linux IA (32-bit) 12:46:04 03/08/05 INST2.EXAM
+                                                                     PLE.COM
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

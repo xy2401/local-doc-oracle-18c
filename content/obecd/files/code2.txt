@@ -1,0 +1,19 @@
+declare
+  dp_handle NUMBER;
+  job_status VARCHAR2(30);
+  dir_name varchar2(30);
+begin
+  dir_name := 'DP_DIR'; 
+  dp_handle := dbms_datapump.open (operation => 'IMPORT', job_mode  => 'FULL');
+  dbms_datapump.add_file (handle => dp_handle, filename => 'exp_corrupt.dmp', directory => dir_name, filetype => 1);
+  dbms_datapump.add_file (handle => dp_handle, filename => 'EXP.LOG', directory => dir_name, filetype => 3);
+  dbms_datapump.set_parallel (dp_handle, 1);
+  dbms_datapump.set_parameter (handle => dp_handle, name => 'TABLE_EXISTS_ACTION', value => 'REPLACE');							   
+  dbms_datapump.set_parameter (handle => dp_handle, name => 'DATA_OPTIONS', value => DBMS_DATAPUMP.KU$_DATAOPT_CONT_LD_ON_FMT_ERR);  
+  dbms_datapump.metadata_remap(handle => dp_handle, name => 'REMAP_TABLESPACE', old_value => 'TBS_6', value => 'SYSTEM', object_type => 'TABLE');
+  dbms_datapump.start_job (dp_handle);
+  dbms_datapump.wait_for_job (handle => dp_handle, job_state => job_status);
+  dbms_output.put_line ('DataPump Export - '|| to_char (sysdate, 'DD/MM/YYYY HH24:MI:SS')|| ' Status '||job_status);
+  dbms_datapump.detach (handle => dp_handle);
+end;
+/

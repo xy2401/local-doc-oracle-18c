@@ -1,0 +1,17 @@
+DECLARE
+  ret INTEGER;
+BEGIN
+  ret := DBMS_HS_PASSTHROUGH.EXECUTE_IMMEDIATE@fdslink('
+CREATE PROCEDURE [dbo].[TESTPROC] (@parm_id INTEGER, @parm_flags INTEGER)
+AS
+  SELECT * FROM [dbo].[REMOTE_TABLE]
+    WHERE id > @parm_id AND flags=@parm_flags');
+END;
+/
+COMMIT;
+  
+PL/SQL procedure successfully completed.
+
+Commit complete.
+
+Copyright © 2018, Oracle and/or its affiliates. All rights reserved.

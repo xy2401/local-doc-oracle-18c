@@ -1,0 +1,864 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Monitoring Other Oracle Streams Components</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="monitoring-rule-based-transformations.html" title="Previous" type="text/html">
+      <link rel="next" href="troubleshooting-an-oracle-streams-environment.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="monitoring-rule-based-transformations.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="troubleshooting-an-oracle-streams-environment.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="monitoring-oracle-streams.html" property="item" typeof="WebPage"><span property="name">    Monitoring Oracle Streams </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Monitoring Other Oracle Streams Components</li>
+            </ol>
+            <a id="GUID-00FB7C16-34CD-4580-9CF7-32C593B1711A" name="GUID-00FB7C16-34CD-4580-9CF7-32C593B1711A"></a><a id="STRMS1001"></a>
+            
+            <h2 id="STRMS-GUID-00FB7C16-34CD-4580-9CF7-32C593B1711A" class="sect2"><span class="enumeration_chapter">29 </span> Monitoring Other Oracle Streams Components
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>This chapter provides sample queries that you can use to monitor various Oracle Streams components.</p>
+               <p>The following topics describe monitoring various Oracle Streams components:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="monitoring-other-oracle-streams-components.html#GUID-B624F2DF-1EF5-4AE8-9293-34C7544A8790">Monitoring Oracle Streams Administrators and Other Oracle Streams Users</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-other-oracle-streams-components.html#GUID-45BE2052-DABC-46E2-A4DD-77678D1B39FB">Monitoring the Oracle Streams Pool</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-other-oracle-streams-components.html#GUID-9B94561D-23C9-43E2-A311-A6F3BC3A39B0">Monitoring Compatibility in an Oracle Streams Environment</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-other-oracle-streams-components.html#GUID-16408DAC-9B7A-45E3-B15E-C649FBAC9E2A">Monitoring Oracle Streams Performance Using AWR and Statspack</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-00FB7C16-34CD-4580-9CF7-32C593B1711A__GUID-A9C4B3F4-C0D2-435A-B828-B3B0633F8C83">
+                  <p class="notep1">Note:</p>
+                  <p>The Oracle Streams tool in Oracle Enterprise Manager Cloud Control is also an excellent way to monitor an Oracle Streams environment. See the online Help for the Oracle Streams tool for more information.</p>
+               </div>
+               <div class="infoboxnotealso" id="GUID-00FB7C16-34CD-4580-9CF7-32C593B1711A__GUID-F733FAC1-0FBA-4D1A-A6F4-C0A6FB80C48F">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for information about the data dictionary views described in this chapter
+                  </p>
+               </div>
+            </div><a id="STRMS1002"></a><div class="props_rev_3"><a id="GUID-B624F2DF-1EF5-4AE8-9293-34C7544A8790" name="GUID-B624F2DF-1EF5-4AE8-9293-34C7544A8790"></a><h3 id="STRMS-GUID-B624F2DF-1EF5-4AE8-9293-34C7544A8790" class="sect3"><span class="enumeration_section">29.1 </span>Monitoring Oracle Streams Administrators and Other Oracle Streams Users
+               </h3>
+               <div>
+                  <p>The following sections contain queries that you can run to list Oracle Streams administrators and other users who allow access to remote Oracle Streams administrators:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-other-oracle-streams-components.html#GUID-A0156654-C410-4EA2-96BC-0C1371BDBDEB">Listing Local Oracle Streams Administrators</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-other-oracle-streams-components.html#GUID-99D0CB69-D2A1-4085-AFB8-16FF6FCB7C4C">Listing Users Who Allow Access to Remote Oracle Streams Administrators</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-B624F2DF-1EF5-4AE8-9293-34C7544A8790__GUID-29BA1D34-E28F-443D-A50E-4E7ACC192D7B">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../arpls/DBMS_STREAMS_AUTH.html#ARPLS514"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about configuring Oracle Streams administrators and other Oracle Streams users using the <code class="codeph">DBMS_STREAMS_AUTH</code> package
+                     </p>
+                  </div>
+               </div><a id="STRMS1003"></a><div class="props_rev_3"><a id="GUID-A0156654-C410-4EA2-96BC-0C1371BDBDEB" name="GUID-A0156654-C410-4EA2-96BC-0C1371BDBDEB"></a><h4 id="STRMS-GUID-A0156654-C410-4EA2-96BC-0C1371BDBDEB" class="sect4"><span class="enumeration_section">29.1.1 </span>Listing Local Oracle Streams Administrators
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can grant privileges to a local Oracle Streams administrator by running the <code class="codeph">GRANT_ADMIN_PRIVILEGE</code> procedure in the <code class="codeph">DBMS_STREAMS_AUTH</code> package. The <code class="codeph">DBA_STREAMS_ADMINISTRATOR</code> data dictionary view contains only the local Oracle Streams administrators created with the <code class="codeph">grant_privileges</code> parameter set to <code class="codeph">TRUE</code> when the <code class="codeph">GRANT_ADMIN_PRIVILEGE</code> procedure was run for the user. If you created an Oracle Streams administrator using generated scripts and set the <code class="codeph">grant_privileges</code> parameter to <code class="codeph">FALSE</code> when the <code class="codeph">GRANT_ADMIN_PRIVILEGE</code> procedure was run for the user, then the <code class="codeph">DBA_STREAMS_ADMINISTRATOR</code> data dictionary view does not list the user as an Oracle Streams administrator.
+                        </p>
+                        <p>To list the local Oracle Streams administrators created with the <code class="codeph">grant_privileges</code> parameter set to <code class="codeph">TRUE</code> when running the <code class="codeph">GRANT_ADMIN_PRIVILEGE</code> procedure, run the following query:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN USERNAME HEADING 'Local Streams Administrator' FORMAT A30
+
+SELECT USERNAME FROM DBA_STREAMS_ADMINISTRATOR
+  WHERE LOCAL_PRIVILEGES = 'YES';
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Local Streams Administrator
+------------------------------
+STRMADMIN
+</pre><p>The <code class="codeph">GRANT_ADMIN_PRIVILEGE</code> might not have been run on a user who is an Oracle Streams administrator. Such administrators are not returned by the query in this section. Also, you can change the privileges for the users listed after the <code class="codeph">GRANT_ADMIN_PRIVILEGE</code> procedure has been run for them. The <code class="codeph">DBA_STREAMS_ADMINISTRATOR</code> view does not track these changes unless they are performed by the <code class="codeph">DBMS_STREAMS_AUTH</code> package. For example, you can revoke the privileges granted by the <code class="codeph">GRANT_ADMIN_PRIVILEGE</code> procedure for a particular user using the <code class="codeph">REVOKE</code> SQL statement, but this user would be listed when you query the <code class="codeph">DBA_STREAMS_ADMINISTRATOR</code> view. 
+                        </p>
+                        <p>Oracle recommends using the <code class="codeph">REVOKE_ADMIN_PRIVILEGE</code> procedure in the <code class="codeph">DBMS_STREAMS_AUTH</code> package to revoke privileges from a user listed by the query in this section. When you revoke privileges from a user using this procedure, the user is removed from the <code class="codeph">DBA_STREAMS_ADMINISTRATOR</code> view.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-A0156654-C410-4EA2-96BC-0C1371BDBDEB__GUID-5E31FB57-A205-4AA0-A8A8-16B5AC2ED017">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an Oracle Streams administrator
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1004"></a><div class="props_rev_3"><a id="GUID-99D0CB69-D2A1-4085-AFB8-16FF6FCB7C4C" name="GUID-99D0CB69-D2A1-4085-AFB8-16FF6FCB7C4C"></a><h4 id="STRMS-GUID-99D0CB69-D2A1-4085-AFB8-16FF6FCB7C4C" class="sect4"><span class="enumeration_section">29.1.2 </span>Listing Users Who Allow Access to Remote Oracle Streams Administrators
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can configure a user to allow access to remote Oracle Streams administrators by running the <code class="codeph">GRANT_REMOTE_ADMIN_ACCESS</code> procedure in the <code class="codeph">DBMS_STREAMS_AUTH</code> package. Such a user allows the remote Oracle Streams administrator to perform administrative actions in the local database using a database link. 
+                        </p>
+                        <p>Typically, you configure such a user at a local <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> if a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> captures changes originating at the local source database. The Oracle Streams administrator at a downstream capture database administers the source database using this connection.
+                        </p>
+                        <p>To list the users who allow to remote Oracle Streams administrators, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN USERNAME HEADING 'Users Who Allow Remote Access' FORMAT A30
+
+SELECT USERNAME FROM DBA_STREAMS_ADMINISTRATOR
+  WHERE ACCESS_FROM_REMOTE = 'YES'; 
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Users Who Allow Remote Access
+------------------------------
+STRMREMOTE</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS147"></a><div class="props_rev_3"><a id="GUID-45BE2052-DABC-46E2-A4DD-77678D1B39FB" name="GUID-45BE2052-DABC-46E2-A4DD-77678D1B39FB"></a><h3 id="STRMS-GUID-45BE2052-DABC-46E2-A4DD-77678D1B39FB" class="sect3"><span class="enumeration_section">29.2 </span>Monitoring the Oracle Streams Pool
+               </h3>
+               <div>
+                  <p>The <a href="strms_glossary.html#GUID-34E20CD1-AD4B-4B77-9F96-717397CFC1C4"><span class="xrefglossterm">Oracle Streams pool</span></a> is a portion of memory in the System Global Area (SGA) that is used by Oracle Streams. The Oracle Streams pool stores enqueued <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s in memory, and it provides memory for <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es. The Oracle Streams pool always stores LCRs captured by a capture process, and it can store other types of messages that are enqueued manually into a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a>.
+                  </p>
+                  <p>The Oracle Streams pool size is managed automatically when the <code class="codeph">MEMORY_TARGET</code>, <code class="codeph">MEMORY_MAX_TARGET</code>, or <code class="codeph">SGA_TARGET</code> initialization parameter is set to a nonzero value. If these parameters are all set to <code class="codeph">0</code> (zero), then you can specify the size of the Oracle Streams pool in bytes using the <code class="codeph">STREAMS_POOL_SIZE</code> initialization parameter. In this case, the <code class="codeph">V$STREAMS_POOL_ADVICE</code> dynamic performance view provides information about an appropriate setting for the <code class="codeph">STREAMS_POOL_SIZE</code> initialization parameter.
+                  </p>
+                  <p>This section contains example queries that show when you should increase, retain, or decrease the size of the Oracle Streams pool. Each query shows the following information about the Oracle Streams pool:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><code class="codeph">STREAMS_POOL_SIZE_FOR_ESTIMATE</code> shows the size, in megabytes, of the Oracle Streams pool for the estimate. The size ranges from values smaller than the current Oracle Streams pool size to values larger than the current Oracle Streams pool size, and there is a separate row for each increment. There always is an entry that shows the current Oracle Streams pool size, and there always are 20 increments. The range and the size of the increments depend on the current size of the Oracle Streams pool.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">STREAMS_POOL_SIZE_FACTOR</code> shows the size factor of an estimate as it relates to the current size of the Oracle Streams pool. For example, a size factor of.2 means that the estimate is for 20% of the current size of the Oracle Streams pool, while a size factor of 1.6 means that the estimate is for 160% of the current size of the Oracle Streams pool. The row with a size factor of 1.0 shows the current size of the Oracle Streams pool.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ESTD_SPILL_COUNT</code> shows the estimated number messages that will spill from memory to the <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a> for each <code class="codeph">STREAMS_POOL_SIZE_FOR_ESTIMATE</code> and <code class="codeph">STREAMS_POOL_SIZE_FACTOR</code> returned by the query.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ESTD_SPILL_TIME</code> shows the estimated elapsed time, in seconds, spent spilling messages from memory to the queue table for each <code class="codeph">STREAMS_POOL_SIZE_FOR_ESTIMATE</code> and <code class="codeph">STREAMS_POOL_SIZE_FACTOR</code> returned by the query.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ESTD_UNSPILL_COUNT</code> shows the estimated number messages that will unspill from the queue table back into memory for each <code class="codeph">STREAMS_POOL_SIZE_FOR_ESTIMATE</code> and <code class="codeph">STREAMS_POOL_SIZE_FACTOR</code> returned by the query.
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="codeph">ESTD_UNSPILL_TIME</code> shows the estimated elapsed time, in seconds, spent unspilling messages from the queue table back into memory for each <code class="codeph">STREAMS_POOL_SIZE_FOR_ESTIMATE</code> and <code class="codeph">STREAMS_POOL_SIZE_FACTOR</code> returned by the query.
+                        </p>
+                     </li>
+                  </ul>
+                  <p>If any capture processes, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s, or apply processes are disabled when you query the <code class="codeph">V$STREAMS_POOL_ADVICE</code> view, and you plan to enable them in the future, then ensure that you consider the memory resources required by these <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s before you decrease the size of the Oracle Streams pool.
+                  </p>
+                  <div class="infoboxnote" id="GUID-45BE2052-DABC-46E2-A4DD-77678D1B39FB__GUID-5AE06B68-D317-48B4-B262-D24205C12CDC">
+                     <p class="notep1">Note:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>In general, the best size for the Oracle Streams pool is the smallest size for which spilled and unspilled messages and times are close to zero.</p>
+                        </li>
+                        <li>
+                           <p>For the most accurate results, you should run a query on the <code class="codeph">V$STREAMS_POOL_ADVICE</code> view when there is a typical amount of dequeue activity by propagations and apply processes in a database. If dequeue activity is far lower than typical, or far higher than typical, then the query results might not be a good guide for adjusting the size of the Oracle Streams pool.
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="infoboxnotealso" id="GUID-45BE2052-DABC-46E2-A4DD-77678D1B39FB__GUID-AC52614D-B287-41F4-B04E-6D696C890695">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP202"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring the Oracle Streams pool
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP201"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about the <code class="codeph">STREAMS_POOL_SIZE</code> initialization parameter
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS1005"></a><div class="props_rev_3"><a id="GUID-17E95CFB-8820-46E2-8FFD-02886B584DDE" name="GUID-17E95CFB-8820-46E2-8FFD-02886B584DDE"></a><h4 id="STRMS-GUID-17E95CFB-8820-46E2-8FFD-02886B584DDE" class="sect4"><span class="enumeration_section">29.2.1 </span>Query Result that Advises Increasing the Oracle Streams Pool Size
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Consider the following results returned by the <code class="codeph">V$STREAMS_POOL_ADVICE</code> view:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN STREAMS_POOL_SIZE_FOR_ESTIMATE HEADING 'Oracle Streams Pool Size|for Estimate(MB)'
+  FORMAT 999999999999
+COLUMN STREAMS_POOL_SIZE_FACTOR HEADING 'Oracle Streams Pool|Size|Factor' FORMAT 99.9
+COLUMN ESTD_SPILL_COUNT HEADING 'Estimated|Spill|Count' FORMAT 99999999
+COLUMN ESTD_SPILL_TIME HEADING 'Estimated|Spill|Time' FORMAT 99999999.99
+COLUMN ESTD_UNSPILL_COUNT HEADING 'Estimated|Unspill|Count' FORMAT 99999999
+COLUMN ESTD_UNSPILL_TIME HEADING 'Estimated|Unspill|Time' FORMAT 99999999.99
+
+SELECT STREAMS_POOL_SIZE_FOR_ESTIMATE,
+       STREAMS_POOL_SIZE_FACTOR, 
+       ESTD_SPILL_COUNT, 
+       ESTD_SPILL_TIME, 
+       ESTD_UNSPILL_COUNT,
+       ESTD_UNSPILL_TIME
+  FROM V$STREAMS_POOL_ADVICE;
+
+                         Oracle Streams Pool Estimated    Estimated Estimated
+Oracle Streams Pool Size                Size     Spill        Spill   Unspill
+        for Estimate(MB)              Factor     Count         Time     Count
+------------------------ ------------------- --------- ------------ ---------
+               24           .1       158        62.00         0          .00
+               48           .2       145        59.00         0          .00
+               72           .3       137        53.00         0          .00
+               96           .4       122        50.00         0          .00
+              120           .5       114        48.00         0          .00
+              144           .6       103        45.00         0          .00
+              168           .7        95        39.00         0          .00
+              192           .8        87        32.00         0          .00
+              216           .9        74        26.00         0          .00
+              240          1.0        61        21.00         0          .00
+              264          1.1        56        17.00         0          .00
+              288          1.2        43        15.00         0          .00
+              312          1.3        36        11.00         0          .00
+              336          1.4        22         8.00         0          .00
+              360          1.5         9         2.00         0          .00
+              384          1.6         0          .00         0          .00
+              408          1.7         0          .00         0          .00
+              432          1.8         0          .00         0          .00
+              456          1.9         0          .00         0          .00
+              480          2.0         0          .00         0          .00
+</pre><p>Based on these results, 384 megabytes, or 160% of the size of the current <a href="strms_glossary.html#GUID-34E20CD1-AD4B-4B77-9F96-717397CFC1C4"><span class="xrefglossterm">Oracle Streams pool</span></a>, is the optimal size for the Oracle Streams pool. That is, this size is the smallest size for which the estimated number of spilled and unspilled <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s is zero.
+                        </p>
+                        <div class="infoboxnote" id="GUID-17E95CFB-8820-46E2-8FFD-02886B584DDE__GUID-C89A4E1E-DCE1-420C-B125-644C12A3E6F5">
+                           <p class="notep1">Note:</p>
+                           <p>After you adjust the size of the Oracle Streams pool, it might take some time for the new size to result in new output for the <code class="codeph">V$STREAMS_POOL_ADVICE</code> view.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1006"></a><div class="props_rev_3"><a id="GUID-1E684B91-C35E-4CE0-9E90-48CF9C91AD21" name="GUID-1E684B91-C35E-4CE0-9E90-48CF9C91AD21"></a><h4 id="STRMS-GUID-1E684B91-C35E-4CE0-9E90-48CF9C91AD21" class="sect4"><span class="enumeration_section">29.2.2 </span>Query Result that Advises Retaining the Current Oracle Streams Pool Size
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Consider the following results returned by the <code class="codeph">V$STREAMS_POOL_ADVICE</code> view:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN STREAMS_POOL_SIZE_FOR_ESTIMATE  HEADING 'Oracle Streams Pool|Size for Estimate'
+  FORMAT 999999999999
+COLUMN STREAMS_POOL_SIZE_FACTOR HEADING 'Oracle Streams Pool|Size|Factor' FORMAT 99.9
+COLUMN ESTD_SPILL_COUNT HEADING 'Estimated|Spill|Count' FORMAT 99999999
+COLUMN ESTD_SPILL_TIME HEADING 'Estimated|Spill|Time' FORMAT 99999999.99
+COLUMN ESTD_UNSPILL_COUNT HEADING 'Estimated|Unspill|Count' FORMAT 99999999
+COLUMN ESTD_UNSPILL_TIME HEADING 'Estimated|Unspill|Time' FORMAT 99999999.99
+ 
+SELECT STREAMS_POOL_SIZE_FOR_ESTIMATE,
+       STREAMS_POOL_SIZE_FACTOR, 
+       ESTD_SPILL_COUNT, 
+       ESTD_SPILL_TIME, 
+       ESTD_UNSPILL_COUNT,
+       ESTD_UNSPILL_TIME
+  FROM V$STREAMS_POOL_ADVICE;
+
+                         Oracle Streams Pool Estimated    Estimated Estimated
+Oracle Streams Pool Size                Size     Spill        Spill   Unspill
+        for Estimate(MB)              Factor     Count         Time     Count
+------------------------ ------------------- --------- ------------ ---------
+               24           .1        89        52.00         0          .00
+               48           .2        78        48.00         0          .00
+               72           .3        71        43.00         0          .00
+               96           .4        66        37.00         0          .00
+              120           .5        59        32.00         0          .00
+              144           .6        52        26.00         0          .00
+              168           .7        39        20.00         0          .00
+              192           .8        27        12.00         0          .00
+              216           .9        15         5.00         0          .00
+              240          1.0         0          .00         0          .00
+              264          1.1         0          .00         0          .00
+              288          1.2         0          .00         0          .00
+              312          1.3         0          .00         0          .00
+              336          1.4         0          .00         0          .00
+              360          1.5         0          .00         0          .00
+              384          1.6         0          .00         0          .00
+              408          1.7         0          .00         0          .00
+              432          1.8         0          .00         0          .00
+              456          1.9         0          .00         0          .00
+              480          2.0         0          .00         0          .00
+</pre><p>Based on these results, the current size of the <a href="strms_glossary.html#GUID-34E20CD1-AD4B-4B77-9F96-717397CFC1C4"><span class="xrefglossterm">Oracle Streams pool</span></a> is the optimal size. That is, this size is the smallest size for which the estimated number of spilled and unspilled <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s is zero.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1007"></a><div class="props_rev_3"><a id="GUID-E3D8D144-B65A-48CB-8935-09A28EE3ADAF" name="GUID-E3D8D144-B65A-48CB-8935-09A28EE3ADAF"></a><h4 id="STRMS-GUID-E3D8D144-B65A-48CB-8935-09A28EE3ADAF" class="sect4"><span class="enumeration_section">29.2.3 </span>Query Result that Advises Decreasing the Oracle Streams Pool Size
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Consider the following results returned by the <code class="codeph">V$STREAMS_POOL_ADVICE</code> view:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN STREAMS_POOL_SIZE_FOR_ESTIMATE  HEADING 'Oracle Streams Pool|Size for Estimate'
+  FORMAT 999999999999
+COLUMN STREAMS_POOL_SIZE_FACTOR HEADING 'Oracle Streams Pool|Size|Factor' FORMAT 99.9
+COLUMN ESTD_SPILL_COUNT HEADING 'Estimated|Spill|Count' FORMAT 99999999
+COLUMN ESTD_SPILL_TIME HEADING 'Estimated|Spill|Time' FORMAT 99999999.99
+COLUMN ESTD_UNSPILL_COUNT HEADING 'Estimated|Unspill|Count' FORMAT 99999999
+COLUMN ESTD_UNSPILL_TIME HEADING 'Estimated|Unspill|Time' FORMAT 99999999.99
+ 
+SELECT STREAMS_POOL_SIZE_FOR_ESTIMATE,
+       STREAMS_POOL_SIZE_FACTOR, 
+       ESTD_SPILL_COUNT, 
+       ESTD_SPILL_TIME, 
+       ESTD_UNSPILL_COUNT,
+       ESTD_UNSPILL_TIME
+  FROM V$STREAMS_POOL_ADVICE;
+
+                         Oracle Streams Pool Estimated    Estimated Estimated
+Oracle Streams Pool Size                Size     Spill        Spill   Unspill
+        for Estimate(MB)              Factor     Count         Time     Count
+------------------------ ------------------- --------- ------------ ---------
+               24           .1       158        62.00         0          .00
+               48           .2       145        59.00         0          .00
+               72           .3       137        53.00         0          .00
+               96           .4       122        50.00         0          .00
+              120           .5       114        48.00         0          .00
+              144           .6       103        45.00         0          .00
+              168           .7         0          .00         0          .00
+              192           .8         0          .00         0          .00
+              216           .9         0          .00         0          .00
+              240          1.0         0          .00         0          .00
+              264          1.1         0          .00         0          .00
+              288          1.2         0          .00         0          .00
+              312          1.3         0          .00         0          .00
+              336          1.4         0          .00         0          .00
+              360          1.5         0          .00         0          .00
+              384          1.6         0          .00         0          .00
+              408          1.7         0          .00         0          .00
+              432          1.8         0          .00         0          .00
+              456          1.9         0          .00         0          .00
+              480          2.0         0          .00         0          .00
+</pre><p>Based on these results, 168 megabytes, or 70% of the size of the current <a href="strms_glossary.html#GUID-34E20CD1-AD4B-4B77-9F96-717397CFC1C4"><span class="xrefglossterm">Oracle Streams pool</span></a>, is the optimal size for the Oracle Streams pool. That is, this size is the smallest size for which the estimated number of spilled and unspilled messages is zero.
+                        </p>
+                        <div class="infoboxnote" id="GUID-E3D8D144-B65A-48CB-8935-09A28EE3ADAF__GUID-D5BBC1FA-AA3D-498D-85F6-C0CC136246BB">
+                           <p class="notep1">Note:</p>
+                           <p>After you adjust the size of the Oracle Streams pool, it might take some time for the new size to result in new output for the <code class="codeph">V$STREAMS_POOL_ADVICE</code> view.
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS172"></a><div class="props_rev_3"><a id="GUID-9B94561D-23C9-43E2-A311-A6F3BC3A39B0" name="GUID-9B94561D-23C9-43E2-A311-A6F3BC3A39B0"></a><h3 id="STRMS-GUID-9B94561D-23C9-43E2-A311-A6F3BC3A39B0" class="sect3"><span class="enumeration_section">29.3 </span>Monitoring Compatibility in an Oracle Streams Environment
+               </h3>
+               <div>
+                  <p>Some database objects and data types are not compatible with Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s, and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es. If one of these <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s tries to process an unsupported database object or data type, errors result.
+                  </p>
+                  <p>The queries in the following sections show Oracle Streams compatibility for database objects and columns in the local database:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-other-oracle-streams-components.html#GUID-68EED915-5EFE-4BD3-9301-B6CFEE0488CC">Monitoring Compatibility for Capture Processes</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-other-oracle-streams-components.html#GUID-C805B775-B1D1-4308-889F-3FF1E321D449">Listing Database Objects and Columns Not Compatible with Synchronous Captures</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-other-oracle-streams-components.html#GUID-D19D5E11-A911-4558-BC0F-2DC92773D36C">Monitoring Compatibility for Apply Processes</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS1008"></a><div class="props_rev_3"><a id="GUID-68EED915-5EFE-4BD3-9301-B6CFEE0488CC" name="GUID-68EED915-5EFE-4BD3-9301-B6CFEE0488CC"></a><h4 id="STRMS-GUID-68EED915-5EFE-4BD3-9301-B6CFEE0488CC" class="sect4"><span class="enumeration_section">29.3.1 </span>Monitoring Compatibility for Capture Processes
+                  </h4>
+                  <div>
+                     <p>This section contains these topics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="monitoring-other-oracle-streams-components.html#GUID-04AAFA72-7912-49E1-9FD1-A2F63C2DEEE1">Listing the Database Objects That Are Not Compatible with Capture Processes</a></p>
+                        </li>
+                        <li>
+                           <p><a href="monitoring-other-oracle-streams-components.html#GUID-2EB0AACE-66AB-4E18-B12E-1CBA9EC3005B">Listing the Database Objects Recently Compatible with Capture Processes</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS1009"></a><div class="props_rev_3"><a id="GUID-04AAFA72-7912-49E1-9FD1-A2F63C2DEEE1" name="GUID-04AAFA72-7912-49E1-9FD1-A2F63C2DEEE1"></a><h5 id="STRMS-GUID-04AAFA72-7912-49E1-9FD1-A2F63C2DEEE1" class="sect5"><span class="enumeration_section">29.3.1.1 </span>Listing the Database Objects That Are Not Compatible with Capture Processes
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>A database object is not compatible with <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es if capture processes cannot capture changes to it. The query in this section displays the following information about database objects that are not compatible with capture processes:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The object owner</p>
+                              </li>
+                              <li>
+                                 <p>The object name</p>
+                              </li>
+                              <li>
+                                 <p>The reason why the object is not compatible with capture processes</p>
+                              </li>
+                              <li>
+                                 <p>Whether capture processes automatically filter out changes to the database object (<code class="codeph">AUTO_FILTERED</code> column)
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>If capture processes automatically filter out changes to a database object, then the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s used by the capture processes do not need to filter them out explicitly. For example, capture processes automatically filter out changes to domain indexes. However, if changes to incompatible database objects are not filtered out automatically, then the rule sets used by the capture process must filter them out to avoid errors.
+                           </p>
+                           <p>For example, suppose the rule sets for a capture process instruct the capture process to capture all of the changes made to a specific schema. Also suppose that the query in this section shows that one object in this schema is not compatible with capture processes, and that changes to the object are not filtered out automatically. In this case, you can add a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> to the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for the capture process to filter out changes to the incompatible database object.
+                           </p>
+                           <p>Run the following query to list the database objects in the local database that are not compatible with capture processes:</p><pre class="oac_no_warn" dir="ltr">COLUMN OWNER HEADING 'Object|Owner' FORMAT A8
+COLUMN TABLE_NAME HEADING 'Object Name' FORMAT A30
+COLUMN REASON HEADING 'Reason' FORMAT A30
+COLUMN AUTO_FILTERED HEADING 'Auto|Filtered?' FORMAT A9
+
+SELECT OWNER, TABLE_NAME, REASON, AUTO_FILTERED FROM DBA_STREAMS_UNSUPPORTED;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Object                                                                 Auto
+Owner    Object Name                    Reason                         Filtered?
+-------- ------------------------------ ------------------------------ ---------
+IX       AQ$_ORDERS_QUEUETABLE_G        column with user-defined type  NO
+IX       AQ$_ORDERS_QUEUETABLE_H        unsupported column exists      NO
+IX       AQ$_ORDERS_QUEUETABLE_I        unsupported column exists      NO
+IX       AQ$_ORDERS_QUEUETABLE_L        AQ queue table                 NO
+IX       AQ$_ORDERS_QUEUETABLE_S        AQ queue table                 NO
+IX       AQ$_ORDERS_QUEUETABLE_T        AQ queue table                 NO
+IX       AQ$_STREAMS_QUEUE_TABLE_C      AQ queue table                 NO
+IX       AQ$_STREAMS_QUEUE_TABLE_G      column with user-defined type  NO
+IX       AQ$_STREAMS_QUEUE_TABLE_H      unsupported column exists      NO
+IX       AQ$_STREAMS_QUEUE_TABLE_I      unsupported column exists      NO
+IX       AQ$_STREAMS_QUEUE_TABLE_L      AQ queue table                 NO
+IX       AQ$_STREAMS_QUEUE_TABLE_S      AQ queue table                 NO
+IX       AQ$_STREAMS_QUEUE_TABLE_T      AQ queue table                 NO
+IX       ORDERS_QUEUETABLE              column with user-defined type  NO
+IX       STREAMS_QUEUE_TABLE            column with user-defined type  NO
+OE       ACTION_TABLE                   column with user-defined type  NO
+OE       CATEGORIES_TAB                 column with user-defined type  NO
+.
+.
+.
+</pre><p><a id="d128997e1951" class="indexterm-anchor"></a>Notice that the <code class="codeph">Auto</code> <code class="codeph">Filtered?</code> column is <code class="codeph">YES</code> for the <code class="codeph">sh.dr$sup_text_indx$i</code> domain index. A capture process automatically filters out data manipulation language (DML) changes to this database object, even if the rules sets for a capture process instruct the capture process to capture changes to it. By default, a capture process also filters out data definition language (DDL) changes to these database objects. However, if you want to capture these DDL changes, then use the <code class="codeph">DBMS_CAPTURE_ADM.SET_PARAMETER</code> procedure to set the <code class="codeph">set_autofiltered_table_ddl</code> capture process parameter to <code class="codeph">N</code> and configure the capture process rule sets to capture these DDL changes.
+                           </p>
+                           <p>Because the <code class="codeph">Auto</code> <code class="codeph">Filtered?</code> column is <code class="codeph">NO</code> for other database objects listed in the example output, capture processes do not filter out changes to these database objects automatically. If a capture process attempts to process changes to these unsupported database objects, then the capture process raises an error. However, you can avoid these errors by configuring rules sets that instruct the capture process not to capture changes to these unsupported objects.
+                           </p>
+                           <div class="infoboxnote" id="GUID-04AAFA72-7912-49E1-9FD1-A2F63C2DEEE1__GUID-CA850386-0CCF-41A4-8111-0A9D64D4A9ED">
+                              <p class="notep1">Note:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The results of the query in this section depend on the compatibility level of the database. More database objects are incompatible with capture processes at lower compatibility levels. The <code class="codeph">COMPATIBLE</code> initialization parameter controls the compatibility level of the database.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>For capture processes, you cannot use <a href="strms_glossary.html#GUID-18697C88-84CA-4F47-8F47-DD5D37E9543B"><span class="xrefglossterm">rule-based transformation</span></a>s to exclude a column of an unsupported data type. The entire database object must be excluded to avoid capture errors.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The <code class="codeph">DBA_STREAMS_UNSUPPORTED</code> view only pertains to capture processes in Oracle Database 11<span class="italic">g</span> Release 1 (11.1) and later databases. This view does not pertain to <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-04AAFA72-7912-49E1-9FD1-A2F63C2DEEE1__GUID-B8CE878F-DACE-47D6-B269-6892C9CE1E82">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../refrn/COMPATIBLE.html#REFRN10019"><span class="italic">Oracle Database Reference </span></a>and<a href="../upgrd/compatibility-interoperability-between-database-releases.html#UPGRD005"><span class="italic"> Oracle Database Upgrade Guide</span></a> for more information about the <code class="codeph">COMPATIBLE</code> initialization parameter
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../arpls/DBMS_CAPTURE_ADM.html#ARPLS306"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about the <code class="codeph">DBMS_CAPTURE_ADM.SET_PARAMETER</code> procedure
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1010"></a><div class="props_rev_3"><a id="GUID-2EB0AACE-66AB-4E18-B12E-1CBA9EC3005B" name="GUID-2EB0AACE-66AB-4E18-B12E-1CBA9EC3005B"></a><h5 id="STRMS-GUID-2EB0AACE-66AB-4E18-B12E-1CBA9EC3005B" class="sect5"><span class="enumeration_section">29.3.1.2 </span>Listing the Database Objects Recently Compatible with Capture Processes
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The query in this section displays the following information about database objects that have become compatible with <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es in a recent release of Oracle Database:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The object owner</p>
+                              </li>
+                              <li>
+                                 <p>The object name</p>
+                              </li>
+                              <li>
+                                 <p>The reason why the object was not compatible with capture processes in previous releases of&nbsp;Oracle Database</p>
+                              </li>
+                              <li>
+                                 <p>The Oracle Database release in which the object became compatible with capture processes</p>
+                              </li>
+                           </ul>
+                           <p>Run the following query to display this information for the local database:</p><pre class="oac_no_warn" dir="ltr">COLUMN OWNER HEADING 'Owner' FORMAT A10
+COLUMN TABLE_NAME HEADING 'Object Name' FORMAT A20
+COLUMN REASON HEADING 'Reason' FORMAT A30
+COLUMN COMPATIBLE HEADING 'Compatible' FORMAT A10
+
+SELECT OWNER, TABLE_NAME, REASON, COMPATIBLE FROM DBA_STREAMS_NEWLY_SUPPORTED;
+</pre><p>The following is a sample of the output from this query:</p><pre class="oac_no_warn" dir="ltr">Owner      Object Name          Reason                         Compatible
+---------- -------------------- ------------------------------ ----------
+HR         COUNTRIES            IOT                            10.1
+OE         WAREHOUSES           table with XMLType column      11.1
+SH         CAL_MONTH_SALES_MV   materialized view              10.1
+SH         FWEEK_PSCAT_SALES_MV materialized view              10.1
+</pre><p>The <code class="codeph">Compatible</code> column shows the minimum database compatibility for capture processes to support the database object. If the local database compatibility is equal to or higher than the value in the <code class="codeph">Compatible</code> column for a database object, then capture processes can capture changes to the database object successfully. You control the compatibility of a database using the <code class="codeph">COMPATIBLE</code> initialization parameter.
+                           </p>
+                           <p>If your Oracle Streams environment includes databases that are running different versions of the Oracle Database, then you can configure <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s that use the <code class="codeph">GET_COMPATIBLE</code> member function for LCRs to filter out LCRs that are not compatible with particular databases. These rules can be added to the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s of capture processes, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s, and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es to filter out incompatible LCRs wherever necessary in a stream.
+                           </p>
+                           <div class="infoboxnote" id="GUID-2EB0AACE-66AB-4E18-B12E-1CBA9EC3005B__GUID-F81B9986-DC73-4727-8D4E-AF2C6727528E">
+                              <p class="notep1">Note:</p>
+                              <p>The <code class="codeph">DBA_STREAMS_NEWLY_SUPPORTED</code> view only pertains to capture processes in Oracle Database 11<span class="italic">g</span> Release 1 (11.1) and later databases. This view does not pertain to synchronous captures and apply processes.
+                              </p>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-2EB0AACE-66AB-4E18-B12E-1CBA9EC3005B__GUID-DAE4DD9F-88B5-4BD0-9057-B40253D3C9F9">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN10019"><span class="italic">Oracle Database Reference </span></a>and<a href="../upgrd/compatibility-interoperability-between-database-releases.html#UPGRD005"><span class="italic"> Oracle Database Upgrade Guide</span></a> for more information about the <code class="codeph">COMPATIBLE</code> initialization parameter
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="monitoring-other-oracle-streams-components.html#GUID-04AAFA72-7912-49E1-9FD1-A2F63C2DEEE1">Listing the Database Objects That Are Not Compatible with Capture Processes</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-A58CCA07-2550-4CE5-88FC-0486C86B202C">Rule Conditions that Instruct Oracle Streams Clients to Discard Unsupported LCRs</a>"</span> for information about creating rules that use the <code class="codeph">GET_COMPATIBLE</code> member function for LCRs
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS1011"></a><div class="props_rev_3"><a id="GUID-C805B775-B1D1-4308-889F-3FF1E321D449" name="GUID-C805B775-B1D1-4308-889F-3FF1E321D449"></a><h4 id="STRMS-GUID-C805B775-B1D1-4308-889F-3FF1E321D449" class="sect4"><span class="enumeration_section">29.3.2 </span>Listing Database Objects and Columns Not Compatible with Synchronous Captures
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A database object or a column in a table is not compatible with <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s if synchronous captures cannot capture changes to it. For example, synchronous captures cannot capture changes to object tables. Synchronous captures can capture changes to relational tables, but they cannot capture changes to columns of some data types.
+                        </p>
+                        <p>The query in this section displays the following information about database objects and columns that are not compatible with synchronous captures:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The object owner</p>
+                           </li>
+                           <li>
+                              <p>The object name</p>
+                           </li>
+                           <li>
+                              <p>The column name</p>
+                           </li>
+                           <li>
+                              <p>The reason why the column is not compatible with synchronous captures</p>
+                           </li>
+                        </ul>
+                        <p>To list the columns that are not compatible with synchronous captures in the local database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN OWNER HEADING 'Object|Owner' FORMAT A8
+COLUMN TABLE_NAME HEADING 'Object Name' FORMAT A20
+COLUMN COLUMN_NAME HEADING 'Column Name' FORMAT A20
+COLUMN SYNC_CAPTURE_REASON HEADING 'Synchronous|Capture Reason' FORMAT A25
+ 
+SELECT OWNER,
+       TABLE_NAME,
+       COLUMN_NAME,
+       SYNC_CAPTURE_REASON
+ FROM DBA_STREAMS_COLUMNS
+ WHERE SYNC_CAPTURE_VERSION IS NULL;
+</pre><p>When a query on the <code class="codeph">DBA_STREAMS_COLUMNS</code> view returns <code class="codeph">NULL</code> for <code class="codeph">SYNC_CAPTURE_VERSION</code>, it means that synchronous captures do not support the column. The <code class="codeph">WHERE</code> clause in the query ensures that the query only returns columns that are not supported by synchronous captures.
+                        </p>
+                        <p>The following is a sample of the output from this query:</p><pre class="oac_no_warn" dir="ltr">Object                                             Synchronous
+Owner    Object Name          Column Name          Capture Reason
+-------- -------------------- -------------------- -------------------------
+.
+.
+.
+SH       SALES_TRANSACTIONS_E UNIT_COST            external table
+         XT
+OE       LINEITEM_TABLE       SYS_XDBPD$           object table
+OE       LINEITEM_TABLE       ITEMNUMBER           object table
+PM       PRINT_MEDIA          AD_FINALTEXT         table with nested table c
+                                                   olumn
+.
+.
+.
+</pre><p>To avoid synchronous capture errors, configure the synchronous capture <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> to ensure that the synchronous capture does not try to capture changes to an unsupported database object, such as an object table. To avoid synchronous capture errors while capturing changes to relational tables, you have the following options:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Configure the synchronous capture rule set to ensure that the synchronous capture does not try to capture changes to a table that contains one or more unsupported columns.</p>
+                           </li>
+                           <li>
+                              <p>Configure <a href="strms_glossary.html#GUID-18697C88-84CA-4F47-8F47-DD5D37E9543B"><span class="xrefglossterm">rule-based transformation</span></a>s to exclude columns that are not supported by synchronous captures.
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-C805B775-B1D1-4308-889F-3FF1E321D449__GUID-A69EAB83-946C-4A5A-BF6D-D2F8908161C4">
+                           <p class="notep1">Note:</p>
+                           <p>Synchronous capture is available in Oracle Database 11<span class="italic">g</span> Release 1 (11.1) and later databases. It is not available in previous releases of Oracle Database.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-C805B775-B1D1-4308-889F-3FF1E321D449__GUID-1DB82CB4-75D8-4673-8D0E-1B4362A3E6B6">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-DB19CE72-5275-488E-B3CC-A556C4CED4BE">Data Types Captured by Synchronous Capture</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                              </li>
+                              <li>
+                                 <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1012"></a><div class="props_rev_3"><a id="GUID-D19D5E11-A911-4558-BC0F-2DC92773D36C" name="GUID-D19D5E11-A911-4558-BC0F-2DC92773D36C"></a><h4 id="STRMS-GUID-D19D5E11-A911-4558-BC0F-2DC92773D36C" class="sect4"><span class="enumeration_section">29.3.3 </span>Monitoring Compatibility for Apply Processes
+                  </h4>
+                  <div>
+                     <p>This section contains these topics:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="monitoring-other-oracle-streams-components.html#GUID-CF461633-BF7E-44FE-8EA8-2B5F1C5AD288">Listing Database Objects and Columns Not Compatible with Apply Processes</a></p>
+                        </li>
+                        <li>
+                           <p><a href="monitoring-other-oracle-streams-components.html#GUID-E97F51FA-A999-4D4B-904D-AFCF14F291FC">Listing Columns That Have Become Compatible with Apply Processes Recently</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS1013"></a><div class="props_rev_3"><a id="GUID-CF461633-BF7E-44FE-8EA8-2B5F1C5AD288" name="GUID-CF461633-BF7E-44FE-8EA8-2B5F1C5AD288"></a><h5 id="STRMS-GUID-CF461633-BF7E-44FE-8EA8-2B5F1C5AD288" class="sect5"><span class="enumeration_section">29.3.3.1 </span>Listing Database Objects and Columns Not Compatible with Apply Processes
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>A database object or a column in a table is not compatible with <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es if apply processes cannot apply changes to it. For example, apply processes cannot apply changes to object tables. Apply processes can apply changes to relational tables, but they cannot apply changes to columns of some data types.
+                           </p>
+                           <p>The query in this section displays the following information about database objects and columns that are not compatible with apply processes:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The object owner</p>
+                              </li>
+                              <li>
+                                 <p>The object name</p>
+                              </li>
+                              <li>
+                                 <p>The column name</p>
+                              </li>
+                              <li>
+                                 <p>The reason why the column is not compatible with apply processes</p>
+                              </li>
+                           </ul>
+                           <p>To list the columns that are not compatible with apply processes in the local database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN OWNER HEADING 'Object|Owner' FORMAT A8
+COLUMN TABLE_NAME HEADING 'Object Name' FORMAT A20
+COLUMN COLUMN_NAME HEADING 'Column Name' FORMAT A20
+COLUMN APPLY_REASON HEADING 'Apply Process Reason' FORMAT A25
+ 
+SELECT OWNER,
+       TABLE_NAME,
+       COLUMN_NAME,
+       APPLY_REASON
+ FROM DBA_STREAMS_COLUMNS
+ WHERE APPLY_VERSION IS NULL;
+</pre><p>When a query on the <code class="codeph">DBA_STREAMS_COLUMNS</code> view returns <code class="codeph">NULL</code> for <code class="codeph">APPLY_VERSION</code>, it means that apply processes do not support the column. The <code class="codeph">WHERE</code> clause in the query ensures that the query only returns columns that are not supported by apply processes.
+                           </p>
+                           <p>The following is a sample of the output from this query:</p><pre class="oac_no_warn" dir="ltr">Object
+Owner    Object Name          Column Name          Apply Process Reason
+-------- -------------------- -------------------- -------------------------
+.
+.
+.
+SH       SALES_TRANSACTIONS_E CHANNEL_ID           external table
+         XT
+OE       ACTION_TABLE         ACTIONED_BY          object table
+OE       LINEITEM_TABLE       PART                 object table
+PM       ONLINE_MEDIA         PRODUCT_AUDIO        ADT column
+OE       CATEGORIES_TAB       CATEGORY_DESCRIPTION object table
+.
+.
+.
+</pre><p>To avoid apply errors, configure the apply process <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s to ensure that the apply process does not try to apply changes to an unsupported database object, such as an object table. To avoid apply errors while applying changes to relational tables, you have the following options:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Configure the apply process rule sets to ensure that the apply process does not try to apply changes to a table that contains one or more unsupported columns.</p>
+                              </li>
+                              <li>
+                                 <p>Configure <a href="strms_glossary.html#GUID-18697C88-84CA-4F47-8F47-DD5D37E9543B"><span class="xrefglossterm">rule-based transformation</span></a>s to exclude columns that are not supported by apply processes.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Configure <a href="strms_glossary.html#GUID-8F26223B-B771-4E5B-9C57-0F748A0904F1"><span class="xrefglossterm">procedure DML handler</span></a>s to exclude columns that are not supported by apply processes.
+                                 </p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnotealso" id="GUID-CF461633-BF7E-44FE-8EA8-2B5F1C5AD288__GUID-909D935F-B3F3-47CE-87C4-CB2997EC74BF">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-553EAC52-C16C-49DE-AA19-0A994EC84EFB">Data Types Applied</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-FD7C80F9-A30E-4B76-83F3-2C789E2BAEA7">DML Handlers</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14"> How Rules Are Used in Oracle Streams</a></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1014"></a><div class="props_rev_3"><a id="GUID-E97F51FA-A999-4D4B-904D-AFCF14F291FC" name="GUID-E97F51FA-A999-4D4B-904D-AFCF14F291FC"></a><h5 id="STRMS-GUID-E97F51FA-A999-4D4B-904D-AFCF14F291FC" class="sect5"><span class="enumeration_section">29.3.3.2 </span>Listing Columns That Have Become Compatible with Apply Processes Recently
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The query in this section displays the following information about database objects and columns that have become compatible with <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es in a recent release of Oracle Database:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The object owner</p>
+                              </li>
+                              <li>
+                                 <p>The object name</p>
+                              </li>
+                              <li>
+                                 <p>The column name</p>
+                              </li>
+                              <li>
+                                 <p>The reason why the object was not compatible with apply processes in previous releases of&nbsp;Oracle Database</p>
+                              </li>
+                              <li>
+                                 <p>The Oracle Database release in which the object became compatible with apply processes</p>
+                              </li>
+                           </ul>
+                           <p>Run the following query to display this information for the local database:</p><pre class="oac_no_warn" dir="ltr">COLUMN OWNER HEADING 'Object|Owner' FORMAT A8
+COLUMN TABLE_NAME HEADING 'Object Name' FORMAT A15
+COLUMN COLUMN_NAME HEADING 'Column Name' FORMAT A15
+COLUMN APPLY_VERSION HEADING 'Apply|Process|Vesion' FORMAT 99.9
+COLUMN APPLY_REASON HEADING 'Apply|Process Reason' FORMAT A25
+ 
+SELECT OWNER,
+       TABLE_NAME,
+       COLUMN_NAME,
+       APPLY_VERSION,
+       APPLY_REASON
+ FROM DBA_STREAMS_COLUMNS
+ WHERE APPLY_VERSION &gt; 11;
+</pre><p>When a query on the <code class="codeph">DBA_STREAMS_COLUMNS</code> view returns a non-<code class="codeph">NULL</code> value for <code class="codeph">APPLY_VERSION</code>, it means that apply processes support the column. The <code class="codeph">WHERE</code> clause in the query ensures that the query only returns columns that are supported by apply processes. This query returns the columns that have become supported by apply processes in Oracle Database 11<span class="italic">g</span> Release 1 and later.
+                           </p>
+                           <p>The following is a sample of the output from this query:</p><pre class="oac_no_warn" dir="ltr">                                           Apply
+Object                                   Process Apply
+Owner    Object Name     Column Name      Vesion Process Reason
+-------- --------------- --------------- ------- -------------------------
+OE       WAREHOUSES      WAREHOUSE_SPEC     11.1 XMLType column
+</pre><p>The <code class="codeph">Apply</code> <code class="codeph">Process</code> <code class="codeph">Version</code> column shows the minimum database compatibility for apply processes to support the column. If the local database compatibility is equal to or higher than the value in the <code class="codeph">Apply</code> <code class="codeph">Process</code> <code class="codeph">Version</code> column for a column, then apply processes can apply changes to the column successfully. You control the compatibility of a database using the <code class="codeph">COMPATIBLE</code> initialization parameter.
+                           </p>
+                           <p>If your Oracle Streams environment includes databases that are running different versions of the Oracle Database, then you can configure <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s that use the <code class="codeph">GET_COMPATIBLE</code> member function for LCRs to filter out LCRs that are not compatible with particular databases. These rules can be added to the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s of <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es, <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s, and apply processes to filter out incompatible LCRs wherever necessary in a stream.
+                           </p>
+                           <div class="infoboxnote" id="GUID-E97F51FA-A999-4D4B-904D-AFCF14F291FC__GUID-743A9039-5FDE-4221-BDA9-CE539299EB58">
+                              <p class="notep1">Note:</p>
+                              <p>When this query returns <code class="codeph">NULL</code> for <code class="codeph">Apply</code> <code class="codeph">Process</code> <code class="codeph">Reason</code>, it means that the column has always been supported by apply processes since the first Oracle Database release that included Oracle Streams.
+                              </p>
+                           </div>
+                           <div class="infoboxnotealso" id="GUID-E97F51FA-A999-4D4B-904D-AFCF14F291FC__GUID-ADB05F4F-F1C2-4230-A656-20859AE2E9B6">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="../refrn/COMPATIBLE.html#REFRN10019"><span class="italic">Oracle Database Reference </span></a>and<a href="../upgrd/compatibility-interoperability-between-database-releases.html#UPGRD005"><span class="italic"> Oracle Database Upgrade Guide</span></a> for more information about the <code class="codeph">COMPATIBLE</code> initialization parameter
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="monitoring-other-oracle-streams-components.html#GUID-CF461633-BF7E-44FE-8EA8-2B5F1C5AD288">Listing Database Objects and Columns Not Compatible with Apply Processes</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-A58CCA07-2550-4CE5-88FC-0486C86B202C">Rule Conditions that Instruct Oracle Streams Clients to Discard Unsupported LCRs</a>"</span> for information about creating rules that use the <code class="codeph">GET_COMPATIBLE</code> member function for LCRs
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS1015"></a><div class="props_rev_3"><a id="GUID-16408DAC-9B7A-45E3-B15E-C649FBAC9E2A" name="GUID-16408DAC-9B7A-45E3-B15E-C649FBAC9E2A"></a><h3 id="STRMS-GUID-16408DAC-9B7A-45E3-B15E-C649FBAC9E2A" class="sect3"><span class="enumeration_section">29.4 </span>Monitoring Oracle Streams Performance Using AWR and Statspack
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>You can use Automatic Workload Repository (AWR) to monitor performance statistics related to Oracle Streams. If AWR is not available on your database, then you can use the Statspack package to monitor performance statistics related to Oracle Streams. The most current instructions and information about installing and using the Statspack package are contained in the <code class="codeph">spdoc.txt</code> file installed with your database. Refer to that file for Statspack information. On UNIX systems, the file is located in the <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/rdbms/admin</code> directory. On Windows systems, the file is located in the <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">\rdbms\admin</code> directory.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-16408DAC-9B7A-45E3-B15E-C649FBAC9E2A__GUID-B989876E-7521-40DE-817A-DABC49762459">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=TGDBA169"><span class="italic">Oracle Database Performance Tuning Guide</span></a> for more information about AWR
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="monitoring-the-oracle-streams-topology-and-performance.html#GUID-B82FF940-CCC3-4481-9145-ECB71D648D68">   Monitoring the Oracle Streams Topology and Performance</a> for information about monitoring performance using the Oracle Streams Performance Advisor
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

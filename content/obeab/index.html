@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: E92601-01 -->
+    <!-- Published date: April 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Managing Private Temporary Tables</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to manage private temporary tables in your session.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-08-07T06:50:52+00:00">
+    <meta name="dcterms.title" content="Managing private temporary tables">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBEAB">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E92601-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Managing
+        Private Temporary Tables</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32"> Before You Begin</h2>
+              <p>This 15-minute tutorial shows you how create and use private
+                temporary tables and how to manage them in your session. </p>
+              <h3>Background</h3>
+              <p>Prior to Oracle Database 18c, only Global Temporary Tables
+                existed. A global temporary table is a persistent database
+                object, visible to all the sessions, until user drops it
+                explicitly using <code> DROP TABLE </code> statement. Data is
+                only visible to the session which inserts it. The main
+                motivators for the feature are reporting applications that store
+                temporary data in transient tables that are typically populated
+                once, read few times and then are automatically released by
+                RDBMS upon the end of a transaction or end of a session.</p>
+              <p>Private Temporary Tables (PTTs) are local to a specific
+                session. In contrast with Global Temporary Tables, the
+                definition and content are local to the session that creates the
+                PTT only and are not visible to other sessions. Hence an
+                application can create the PTT with the same name in different
+                sessions. At the end of a transaction or end of a session, the
+                PTT is automatically dropped.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Oracle Database 18c installed</li>
+                <li>A container database (CDB) with one pluggable database (PDB)</li>
+                <li><code>HR </code> schema installed in <code> PDB1 </code>
+                  as an example of application tables, or any other table that
+                  you created. If you want to use the <code> HR.EMPLOYEES </code>
+                  table, use the <a href="files/hr.sql" target="_blank">
+                    hr.sql. </a> Download the SQL script to the labs directory
+                  created on your server <code> /home/oracle/labs. </code> In
+                  the script, update the password of the user connected to the
+                  database.</li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Create
+                PTTs</h2>
+              <ol>
+                <li>Log in to <code> PDB_ORCL </code> and start a session as <code>
+                    HR. </code> This is <em> Session1. </em><br>
+                  <pre><code>sqlplus hr@PDB_ORCL
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Create a simple table with some data values.<br>
+                  <pre><code>CREATE TABLE test (x NUMBER, y VARCHAR2(10));
+INSERT INTO test VALUES (1,'A');
+COMMIT;</code></pre>
+                </li>
+                <li>Create a PTT.
+                  <pre><code>CREATE PRIVATE TEMPORARY TABLE mine (x NUMBER, y VARCHAR2(10));
+CREATE PRIVATE TEMPORARY TABLE mine (x NUMBER, y VARCHAR2(10))
+*
+ERROR at line 1:
+ORA-00903: invalid table name<em></em></code></pre>
+                </li>
+                <li>All PTT must have a predefined prefix. Check the prefix
+                  defined by default. Open another terminal window and log in to
+                  another session as <code> SYSTEM. </code>
+                  <pre><code>sqlplus system@PDB_ORCL
+Enter password: <em>password</em></code></pre>
+                  <pre><code>SHOW PARAMETER PRIVATE_TEMP_TABLE_PREFIX 
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+private_temp_table_prefix            string      ORA$PTT_</code></pre>
+                </li>
+                <li>In the initial <code> HR </code> session, create a PTT
+                  with the appropriate prefix.
+                  <pre><code>CREATE PRIVATE TEMPORARY TABLE ora$ptt_mine (x NUMBER, y VARCHAR2(10));</code></pre>
+                </li>
+                <li>Insert rows in the PTT.
+                  <pre><code>INSERT INTO ora$ptt_mine VALUES (1,'Work1');</code></pre>
+                </li>
+                <li>Display data from the PTT.
+                  <pre><code>SELECT * FROM ora$ptt_mine;
+
+         X Y
+---------- ----------
+         1 Work1</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Identify
+                PTTs Between Sessions</h2>
+              <p>In this section, you verify that only the session that created
+                a PTT can see its definition and content.</p>
+              <ol>
+                <li>In <em> Session1, </em> describe the <code> ORA$PTT_mine
+                  </code> PTT.
+                  <pre><code>DESC hr.ORA$PTT_mine 
+Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ X                                                  NUMBER
+ Y                                                  VARCHAR2(10)
+</code></pre> </li>
+                <li>Find all information related to the PTT.
+                  <pre><code>SELECT sid, serial#, table_name, tablespace_name, duration
+FROM   user_private_temp_tables;
+
+ SID SERIAL# TABLE_NAME   TABLESPACE_NAME DURATION    
+---- ------- ------------ --------------- ----------- 
+  43   28813 ORA$PTT_MINE TEMP            <strong>TRANSACTION </strong>
+</code></pre>
+                  <p class="note"> Observe that the PTT is of TRANSACTION type.
+                    This is the default duration type. This means that the PTT
+                    is automatically dropped at the end of the transaction in
+                    which the PTT has been created.</p>
+                </li>
+                <li>Log in to <code> PDB_ORCL </code> in another terminal
+                  window and start a session as <code> HR. </code> This is <em>
+                    Session2. </em> Verify that the PTT created by <em>
+                    Session1 </em> is not visible to <em> Session2. </em>
+                  <pre><code>sqlplus hr@PDB_ORCL
+Enter password: <em>password</em></code></pre>
+                  <pre><code>DESC hr.ORA$PTT_mine
+ERROR:
+ORA-04043: object hr.ORA$PTT_mine does not exist</code><code></code><code><code></code></code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Use
+                PTTs</h2>
+              <ol>
+                <li>In <em> Session1, </em> insert a row into <code> TEST </code>
+                  and rollback the transaction.
+                  <pre><code>INSERT INTO test VALUES (2,'B');
+ROLLBACK;</code></pre>
+                </li>
+                <li>What happens to the PTT?
+                  <pre><code>SELECT sid, serial#, table_name, tablespace_name, duration
+FROM   user_private_temp_tables; 
+
+no rows selected </code></pre>
+                  <p class="note"> Observe that the <code> TRANSACTION </code>
+                    duration type PTT is automatically dropped with the <code>
+                      ROLLBACK </code> statement. A <code> COMMIT </code>
+                    would have also dropped the PTT.</p>
+                </li>
+                <li>Create a new PTT of <code> SESSION </code> duration type
+                  that will last until your session ends.
+                  <pre><code>CREATE PRIVATE TEMPORARY TABLE ora$ptt_mine2 
+              (x NUMBER, y VARCHAR2(10)) ON COMMIT PRESERVE DEFINITION;</code></pre>
+                </li>
+                <li>Find all information related to the PTT.
+                  <pre><code>SELECT sid, serial#, table_name, tablespace_name, duration
+FROM   user_private_temp_tables; 
+
+ SID SERIAL# TABLE_NAME    TABLESPACE_NAME DURATION    
+---- ------- ------------- --------------- ----------- 
+  43   28813 ORA$PTT_MINE2 TEMP            <strong>SESSION               </strong>
+</code></pre></li>
+                <li>Insert rows in the PTT.
+                  <pre><code>INSERT INTO ora$ptt_mine2 VALUES (2,'Work2');</code></pre>
+                </li>
+                <li>Display data from the PTT.
+                  <pre><code>SELECT * FROM ora$ptt_mine2;
+
+         X Y
+---------- ----------
+         2 Work2</code></pre>
+                </li>
+                <li>Insert a row into <code> TEST </code> and commit the
+                  transaction.
+                  <pre><code>INSERT INTO test VALUES (3,'C');
+COMMIT;
+</code></pre></li>
+                <li>What happens to the PTT?
+                  <pre><code>SELECT sid, serial#, table_name, tablespace_name, duration
+FROM   user_private_temp_tables;
+
+ SID SERIAL# TABLE_NAME    TABLESPACE_NAME DURATION    
+---- ------- ------------- --------------- -----------
+  43   28813 ORA$PTT_MINE2 TEMP            SESSION  </code></pre>
+                </li>
+                <li>Display data from the PTT.
+                  <pre><code>SELECT * FROM ora$ptt_mine2;
+
+         X Y
+---------- ----------
+         2 Work2</code></pre>
+                </li>
+                <li>Quit <em> Session1 </em> and verify that the PTT is
+                  automatically dropped.
+                  <pre><code>EXIT </code></pre>
+                </li>
+                <li>Verify that the PTT is automatically dropped.
+                  <pre><code>sqlplus hr@PDB_ORCL
+Enter password: <em>password</em></code></pre>
+                  <pre><code>SELECT * FROM user_private_temp_tables;
+
+no rows selected</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_4" role="button" style="text-align: left;"><img src="./img/32_4.png" alt="section 4" class="num_circ" height="32" width="32">Use
+                PTTs With Savepoints</h2>
+              <ol>
+                <li>Use the <a href="files/hr.sql" target="_blank"> hr.sql </a>
+                  to create the <code> HR </code> user and <code> EMPLOYEES </code>
+                  table.
+                  <pre><code>@/home/oracle/labs/hr.sql</code></pre>
+                </li>
+                <li>Create the <code> EMP </code> table with <code> EMPLOYEES
+                  </code> rows. The first command may return an error stating
+                  that the table does not exist, depending on the setup.
+                  <pre><code>DROP TABLE emp PURGE;
+CREATE TABLE emp AS SELECT * FROM employees;
+</code></pre></li>
+                <li>Create a transaction duration PTT with the 107 rows of <code>
+                    EMP. </code>
+                  <pre><code>CREATE PRIVATE TEMPORARY TABLE ora$ptt_emp AS SELECT * FROM emp;</code></pre>
+                </li>
+                <li>Insert another set of rows.
+                  <pre><code>INSERT INTO ora$ptt_emp SELECT * FROM emp;
+
+107 rows created.
+</code></pre></li>
+                <li>Create a first savepoint.
+                  <pre><code>SAVEPOINT point1;</code></pre>
+                </li>
+                <li>Count the number of rows in the PTT.
+                  <pre><code>SELECT count(*) FROM ora$ptt_emp;
+
+  COUNT(*)
+----------
+       214
+</code></pre> </li>
+                <li>Find all information related to the PTT.
+                  <pre><code>SELECT sid, serial#, table_name, tablespace_name, duration, num_rows
+FROM   user_private_temp_tables;
+
+ SID SERIAL# TABLE_NAME    TABLESPACE_NAME DURATION      NUM_ROWS
+---- ------- ------------- --------------- ----------- ----------
+  39   56869 ORA$PTT_EMP   TEMP            TRANSACTION        107   
+</code></pre>
+                  <p class="note"> The number of rows corresponds to the number
+                    of rows in the PTT at the PTT's creation.</p>
+                </li>
+                <li>Insert another bunch of rows.
+                  <pre><code>INSERT INTO ora$ptt_emp SELECT * FROM emp;
+107 rows created.</code></pre>
+                </li>
+                <li>Count the number of rows in the PTT.
+                  <pre><code>SELECT count(*) FROM ora$ptt_emp;
+
+  COUNT(*)
+----------
+       321
+</code></pre> </li>
+                <li>Create the second savepoint.
+                  <pre><code>SAVEPOINT point2;</code></pre>
+                </li>
+                <li>Insert another set of rows.
+                  <pre><code>INSERT INTO ora$ptt_emp SELECT * FROM emp;
+
+107 rows created.</code></pre>
+                </li>
+                <li>Count the number of rows in the PTT.
+                  <pre><code>SELECT count(*) FROM ora$ptt_emp;
+
+  COUNT(*)
+----------
+       428
+</code></pre> </li>
+                <li>You discover that you should keep only the first set of rows
+                  inserted in step 3. Rollback to <code> point1. </code>.
+                  <pre><code>ROLLBACK TO point1;
+</code></pre>
+                  <p class="note"> What would have happened if you had used the
+                    <code> ROLLBACK </code> command? The PTT would have been
+                    dropped.</p>
+                </li>
+                <li>Count the number of rows in the PTT.
+                  <pre><code>SELECT count(*) FROM ora$ptt_emp;
+
+  COUNT(*)
+----------
+       214
+</code></pre> </li>
+                <li>You can insert the temporary rows into <code> EMP. </code>
+                  <pre><code>INSERT INTO emp SELECT * FROM ORA$PTT_emp;
+
+214 rows created.</code></pre>
+                </li>
+                <li>Commit.
+                  <pre><code>COMMIT;</code></pre>
+                </li>
+                <li>Count the number of rows in <code> EMP. </code>
+                  <pre><code>SELECT count(*) FROM emp;
+
+  COUNT(*)
+----------
+       321
+</code></pre></li>
+                <li>Does the PTT exist?
+                  <pre><code>SELECT sid, serial#, table_name, tablespace_name, duration, num_rows
+FROM  user_private_temp_tables;
+
+no rows selected
+</code></pre></li>
+                <li>Quit the session after dropping the HR schema.
+                  <pre><code>DROP USER hr CASCADE;</code></pre>
+                  <pre><code>EXIT</code></pre>
+                </li>
+              </ol>
+            </section>
+          </article>
+        </div>
+        <code> <br class="clearfloat">
+        </code></div>
+    </div>
+    <code>
+      <!--close main-->
+      <!--end content-->
+      <div class="footer-container ">
+        <div style="max-width: 994px; padding:10px 0 0 17px;">
+          <footer class="footer-list">
+            <ul>
+              <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                  Oracle</a> </li>
+              <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+              <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                  Notices</a> </li>
+              <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                  of Use</a> </li>
+              <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your Privacy Rights</a> </li>
+              <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                  © 2017, 2018, Oracle and/or its affiliates. All rights
+                  reserved.</a></li>
+            </ul>
+          </footer>
+        </div>
+        <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+      </div>
+    </code>
+  </body>
+</html>

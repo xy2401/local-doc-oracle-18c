@@ -1,0 +1,994 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Optimizer defaults are adequate for most operations, but not all.">
+      <meta name="description" content="Optimizer defaults are adequate for most operations, but not all.">
+      <title>Influencing the Optimizer</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="SQL Tuning Guide ">
+      <meta property="og:description" content="Optimizer defaults are adequate for most operations, but not all.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="SQL Tuning Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="sql-tuning-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2019-01-11T12:42:59-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2013, 2019">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84296-04">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="optimizer-controls.html" title="Previous" type="text/html">
+      <link rel="next" href="improving-rwp-cursor-sharing.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="SQL Tuning Guide">
+    <meta name="dcterms.isVersionOf" content="TGSQL">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="optimizer-controls.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="improving-rwp-cursor-sharing.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">SQL Tuning Guide </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="optimizer-controls.html" property="item" typeof="WebPage"><span property="name">Optimizer Controls </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Influencing the Optimizer </li>
+            </ol>
+            <a id="GUID-8758EF88-1CC6-41BD-8581-246702414D1D" name="GUID-8758EF88-1CC6-41BD-8581-246702414D1D"></a><a id="TGSQL246"></a>
+            
+            <h2 id="TGSQL-GUID-8758EF88-1CC6-41BD-8581-246702414D1D" class="sect2"><span class="enumeration_chapter">19 </span>Influencing the Optimizer 
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Optimizer defaults are adequate for most operations, but not all.</p>
+               <p>In some cases you may have information unknown to the optimizer, or need to tune the optimizer for a specific type of statement or workload. In such cases, influencing the optimizer may provide better performance.</p>
+               <p>This chapter contains the following topics:</p>
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-FD82C6F7-C338-41E3-8AE1-F8ADFB882ECF">Techniques for Influencing the Optimizer</a><br>You can influence the optimizer using several techniques, including SQL profiles, SQL Plan Management, initialization parameters, and hints. 
+                  </li>
+                  <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C">Influencing the Optimizer with Initialization Parameters</a><br>This chapter explains which initialization parameters affect optimization, and how to set them.
+                  </li>
+                  <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-C558F7CF-446E-4078-B045-0B3BB026CB3C">Influencing the Optimizer with Hints</a><br>Optimizer hints are special comments in a SQL statement that pass instructions to the optimizer.
+                  </li>
+               </ul>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="optimizer-controls.html#GUID-12325D58-595B-473A-A6C7-C6A4430894CA" title="You can use hints and initialization parameter to influence optimizer decisions and behavior.">Optimizer Controls</a></p>
+                  </div>
+               </div>
+            </div>
+            <a id="TGSQL248"></a><a id="TGSQL247"></a><div class="props_rev_3"><a id="GUID-FD82C6F7-C338-41E3-8AE1-F8ADFB882ECF" name="GUID-FD82C6F7-C338-41E3-8AE1-F8ADFB882ECF"></a><h3 id="TGSQL-GUID-FD82C6F7-C338-41E3-8AE1-F8ADFB882ECF" class="sect3"><span class="enumeration_section">19.1 </span>Techniques for Influencing the Optimizer
+               </h3>
+               <div>
+                  <p>You can influence the optimizer using several techniques, including SQL profiles, SQL Plan Management, initialization parameters, and hints. </p>
+                  <p>The following figure shows the principal techniques for influencing the optimizer. </p>
+                  <div class="figure" id="GUID-FD82C6F7-C338-41E3-8AE1-F8ADFB882ECF__BBAGGHDF">
+                     <p class="titleinfigure">Figure 19-1 Techniques for Influencing the Optimizer</p><img src="img/tgsql_vm_014.png" alt="Description of Figure 19-1 follows" title="Description of Figure 19-1 follows" longdesc="img_text/tgsql_vm_014.html"><br><a href="img_text/tgsql_vm_014.html">Description of "Figure 19-1 Techniques for Influencing the Optimizer"</a></div>
+                  <!-- class="figure" -->
+                  <p>The overlapping squares in the preceding diagram show that SQL plan management uses both initialization parameters and hints. SQL profiles also technically include hints.</p>
+                  <div class="infoboxnote" id="GUID-FD82C6F7-C338-41E3-8AE1-F8ADFB882ECF__GUID-769C1EA0-1114-4B11-A699-A5267BB78DDE">
+                     <p class="notep1">Note:</p>
+                     <p>A <a href="glossary.html#GUID-A1BD6A75-73B9-4F68-8FD6-A89057E95ADF"><span class="xrefglossterm">stored outline</span></a> is a legacy technique that serve a similar purpose to SQL plan baselines.
+                     </p>
+                  </div>
+                  <p>You can use the following techniques to influence the optimizer:</p>
+                  <div class="tblformal" id="GUID-FD82C6F7-C338-41E3-8AE1-F8ADFB882ECF__GUID-59550DFB-08E3-467B-B3AD-18C5DA37754D">
+                     <p class="titleintable">Table 19-1 Optimizer Techniques</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Optimizer Techniques" summary="This table describes techniques for influencing the optimizer." frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="20%" id="d103952e265">Technique</th>
+                              <th align="left" valign="bottom" width="20%" id="d103952e267">Description</th>
+                              <th align="left" valign="bottom" width="20%" id="d103952e269">To Learn More</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d103952e273" headers="d103952e265 ">
+                                 <p>Initialization parameters</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e273 d103952e267 ">
+                                 <p>Parameters influence many types of optimizer behavior at the database instance and session level.</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e273 d103952e269 ">
+                                 <p><span class="q">"<a href="influencing-the-optimizer.html#GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C" title="This chapter explains which initialization parameters affect optimization, and how to set them.">Influencing the Optimizer with Initialization Parameters</a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d103952e288" headers="d103952e265 ">
+                                 <p>Hints</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e288 d103952e267 ">
+                                 <p>A <a href="glossary.html#GUID-7EB56A29-EA19-4D81-B487-6940960A3CDC"><span class="xrefglossterm">hint</span></a> is a commented instruction in a SQL statement. Hints control a wide range of behavior.
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e288 d103952e269 ">
+                                 <p><span class="q">"<a href="influencing-the-optimizer.html#GUID-C558F7CF-446E-4078-B045-0B3BB026CB3C" title="Optimizer hints are special comments in a SQL statement that pass instructions to the optimizer.">Influencing the Optimizer with Hints</a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d103952e306" headers="d103952e265 ">
+                                 <p><code class="codeph">DBMS_STATS</code></p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e306 d103952e267 ">
+                                 <p>This package updates and manages optimizer statistics. The more accurate the statistics, the better the optimizer estimates. This chapter does not cover <code class="codeph">DBMS_STATS</code>. 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e306 d103952e269 ">
+                                 <p><span class="q">"<a href="gathering-optimizer-statistics.html#GUID-245F23B2-24AF-44D8-9F12-99FD1215E878" title="This chapter explains how to use the DBMS_STATS.GATHER_*_STATS program units.">Gathering Optimizer Statistics</a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d103952e328" headers="d103952e265 ">
+                                 <p>SQL profiles</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e328 d103952e267 ">
+                                 <p>A <a href="glossary.html#GUID-79F91289-6DD0-49BC-AEA2-3427F5D52F41"><span class="xrefglossterm">SQL profile</span></a> is a database object that contains auxiliary statistics specific to a SQL statement. Conceptually, a SQL profile is to a SQL statement what a set of object-level statistics is to a table or index. A SQL profile can correct suboptimal optimizer estimates discovered during SQL tuning. 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e328 d103952e269 ">
+                                 <p><span class="q">"<a href="managing-sql-profiles.html#GUID-C7FE0936-63B8-46EF-A03E-7E59F704606E" title="When warranted, SQL Tuning Advisor recommends a SQL profile. You can use DBMS_SQLTUNE to implement, alter, drop, and transport SQL profiles.">Managing SQL Profiles</a>"</span></p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d103952e349" headers="d103952e265 ">
+                                 <p>SQL plan management and stored outlines</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e349 d103952e267 ">
+                                 <p><a href="glossary.html#GUID-7504D0DE-9297-476C-808B-EDCDB1EF43E0"><span class="xrefglossterm">SQL plan management</span></a> is a preventative mechanism that enables the optimizer to automatically manage execution plans, ensuring that the database uses only known or verified plans. This chapter does not cover SQL plan management.
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d103952e349 d103952e269 ">
+                                 <p><span class="q">"<a href="managing-sql-plan-baselines.html#GUID-7024369A-F98D-48E4-921C-C899485C954F" title="This chapter explains the concepts and tasks relating to SQL plan management using the DBMS_SPM package.">Managing SQL Plan Baselines</a>"</span></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>In some cases, multiple techniques optimize the same behavior. For example, you can set optimizer goals using both initialization parameters and hints.</p>
+               </div>
+               <div>
+                  <div class="infoboxnotealso" id="GUID-FD82C6F7-C338-41E3-8AE1-F8ADFB882ECF__GUID-1EE02555-D805-43C2-A360-9690B6732BA2">
+                     <p class="notep1">See Also:</p>
+                     <p><span class="q">"<a href="migrating-stored-outlines.html#GUID-E1CBB4DA-2F83-4F4D-845B-CAAA8333DF1A" title="Stored outline migration is the user-initiated process of converting stored outlines to SQL plan baselines. A SQL plan baseline is a set of plans proven to provide optimal performance.">Migrating Stored Outlines to SQL Plan Baselines</a>"</span> to learn how to migrate stored outlines to SQL plan baselines
+                     </p>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-8758EF88-1CC6-41BD-8581-246702414D1D" title="Optimizer defaults are adequate for most operations, but not all.">Influencing the Optimizer</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="TGSQL250"></a><div class="props_rev_3"><a id="GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C" name="GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C"></a><h3 id="TGSQL-GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C" class="sect3"><span class="enumeration_section">19.2 </span>Influencing the Optimizer with Initialization Parameters
+               </h3>
+               <div>
+                  <p>This chapter explains which initialization parameters affect optimization, and how to set them.</p>
+                  <p>This section contains the following topics:</p>
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-C1C85DEA-3583-40FE-B5BB-6AC8F76FFE34">About Optimizer Initialization Parameters</a><br>Oracle Database provides initialization parameters to influence various aspects of optimizer behavior, including cursor sharing, adaptive optimization, and the optimizer mode.
+                     </li>
+                     <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-325A3D6A-47B8-4AAF-8BB0-4037553D02FE">Enabling Optimizer Features</a><br>The <code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> initialization parameter (or hint) controls a set of optimizer-related features, depending on the database release.
+                     </li>
+                     <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-2D3EEFD3-C4C6-4D2F-B24A-8DC0C1E1CBA1">Choosing an Optimizer Goal</a><br>The <strong class="term">optimizer goal</strong> is the prioritization of resource usage by the optimizer.
+                     </li>
+                     <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-DAFB7D07-E8B3-4219-A09D-214BD943AFF9">Controlling Adaptive Optimization</a><br>In Oracle Database, <strong class="term">adaptive query optimization</strong> is the process by which the optimizer adapts an execution plan based on statistics collected at run time.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-8758EF88-1CC6-41BD-8581-246702414D1D" title="Optimizer defaults are adequate for most operations, but not all.">Influencing the Optimizer</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="TGSQL252"></a><a id="TGSQL94575"></a><a id="TGSQL10108"></a><a id="TGSQL251"></a><div class="props_rev_3"><a id="GUID-C1C85DEA-3583-40FE-B5BB-6AC8F76FFE34" name="GUID-C1C85DEA-3583-40FE-B5BB-6AC8F76FFE34"></a><h4 id="TGSQL-GUID-C1C85DEA-3583-40FE-B5BB-6AC8F76FFE34" class="sect4"><span class="enumeration_section">19.2.1 </span>About Optimizer Initialization Parameters
+                  </h4>
+                  <div>
+                     <p>Oracle Database provides initialization parameters to influence various aspects of optimizer behavior, including cursor sharing, adaptive optimization, and the optimizer mode.</p>
+                     <div class="section">
+                        <p>The following table lists some of the most important optimizer parameters. Note that this table does not include the approximate query initialization parameters, which are described in <span class="q">"<a href="query-optimizer-concepts.html#GUID-DB2B2D98-B47E-4D44-8F94-E44DCFAEF305" title="You can implement approximate query processing without changing existing code by using the APPROX_FOR_* initialization parameters.">Approximate Query Initialization Parameters</a>"</span>.
+                        </p>
+                        <div class="tblformalwide" id="GUID-C1C85DEA-3583-40FE-B5BB-6AC8F76FFE34__BBAIEADC">
+                           <p class="titleintable">Table 19-2 Initialization Parameters That Control Optimizer Behavior</p>
+                           <table cellpadding="4" cellspacing="0" class="FormalWide" title="Initialization Parameters That Control Optimizer Behavior" summary="This two-column table describes initialization parameters that control optimizer behavior. Column 1 is the parameter. Column 2 describes that parameter. " width="100%" frame="hsides" border="1" rules="rows">
+                              <thead>
+                                 <tr align="left" valign="top">
+                                    <th align="left" valign="bottom" width="46%" id="d103952e674">Initialization Parameter</th>
+                                    <th align="left" valign="bottom" width="54%" id="d103952e677">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e682" headers="d103952e674 "><code class="codeph">CURSOR_INVALIDATION</code></td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e682 d103952e677 ">Provides the default cursor invalidation level for DDL statements.
+                                       <p><code class="codeph">IMMEDIATE</code> sets the same cursor invalidation behavior for DDL as in releases before <span>Oracle Database 12c</span> Release 2 (12.2). This is the default.
+                                       </p>
+                                       <p><code class="codeph">DEFERRED</code> allows an application to take advantage of the reduced cursor invalidation for DDL without making any application changes. Deferred invalidation reduces the number of cursor invalidations and spreads the recompilation workload over time. For this reason, a cursor may run with a suboptimal plan until it is recompiled, and may incur small execution-time overhead.
+                                       </p>
+                                       <p>You can set this parameter at the <code class="codeph">SYSTEM</code> or <code class="codeph">SESSION</code> level. See <span class="q">"<a href="improving-rwp-cursor-sharing.html#GUID-E04CF45D-CC70-4122-9BAC-EAB5B4D0E17A" title="The database allocates a new shared SQL area when the optimizer parses a new SQL statement that is not DDL. The amount of memory required depends on the statement complexity.">About the Life Cycle of Shared Cursors</a>"</span>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e714" headers="d103952e674 ">
+                                       <p><code class="codeph">CURSOR_SHARING</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e714 d103952e677 ">
+                                       <p>Converts literal values in SQL statements to bind variables. Converting the values improves cursor sharing and can affect the execution plans of SQL statements. The optimizer generates the execution plan based on the presence of the bind variables and not the actual literal values.</p>
+                                       <p>Set to <code class="codeph">FORCE</code> to enable the creation of a new cursor when sharing an existing cursor, or when the cursor plan is not optimal. Set to <code class="codeph">EXACT</code> to allow only statements with identical text to share the same cursor.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e730" headers="d103952e674 ">
+                                       <p><code class="codeph">DB_FILE_MULTIBLOCK_READ_COUNT</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e730 d103952e677 ">
+                                       <p>Specifies the number of blocks that are read in a single I/O during a full table scan or index fast full scan. The optimizer uses the value of this parameter to calculate the cost of full table scans and index fast full scans. Larger values result in a lower cost for full table scans, which may result in the optimizer choosing a full table scan over an index scan. </p>
+                                       <p>The default value of this parameter corresponds to the maximum I/O size that the database can perform efficiently. This value is platform-dependent and is 1 MB for most platforms. Because the parameter is expressed in blocks, it is set to a value equal to the maximum I/O size that can be performed efficiently divided by the standard block size. If the number of sessions is extremely large, then the multiblock read count value decreases to avoid the buffer cache getting flooded with too many table scan buffers.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e740" headers="d103952e674 ">
+                                       <p><code class="codeph">OPTIMIZER_ADAPTIVE_PLANS</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e740 d103952e677 ">
+                                       <p>Controls adaptive plans. An adaptive plan has alternative choices. The optimizer decides on a plan at run time based on statistics collected as the query executes.</p>
+                                       <p>By default, this parameter is <code class="codeph">true</code>, which means adaptive plans are enabled. Setting to this parameter to <code class="codeph">false</code> disables the following features:
+                                       </p>
+                                       <ul style="list-style-type: disc;">
+                                          <li>
+                                             <p>Nested loops and hash join selection</p>
+                                          </li>
+                                          <li>
+                                             <p>Star transformation bitmap pruning</p>
+                                          </li>
+                                          <li>
+                                             <p>Adaptive parallel distribution method</p>
+                                          </li>
+                                       </ul>
+                                       <p>See <span class="q">"<a href="query-optimizer-concepts.html#GUID-6E0BFF94-D8EF-45B0-9667-0DCDE58C64B3" title="An adaptive query plan contains multiple predetermined subplans, and an optimizer statistics collector. Based on the statistics collected during execution, the dynamic plan coordinator chooses the best plan at run time.">About Adaptive Query Plans</a>"</span>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e775" headers="d103952e674 ">
+                                       <p><code class="codeph">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e775 d103952e677 ">
+                                       <p>Controls the reporting mode for automatic reoptimization and adaptive plans (see <span class="q">"<a href="query-optimizer-concepts.html#GUID-5A1EB094-1A9E-4B69-9BE5-39BDA2B3253C" title="An adaptive query plan enables the optimizer to make a plan decision for a statement during execution.">Adaptive Query Plans</a>"</span>). By default, reporting mode is off (<code class="codeph">false</code>), which means that adaptive optimizations are enabled. 
+                                       </p>
+                                       <p>If set to <code class="codeph">true</code>, then adaptive optimizations run in reporting-only mode. In this case, the database gathers information required for an adaptive optimization, but takes no action to change the plan. For example, an adaptive plan always choose the default plan, but the database collects information about which plan the database would use if the parameter were set to <code class="codeph">false</code>. You can view the report by using <code class="codeph">DBMS_XPLAN.DISPLAY_CURSOR</code>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e807" headers="d103952e674 ">
+                                       <p><code class="codeph">OPTIMIZER_ADAPTIVE_STATISTICS</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e807 d103952e677 ">
+                                       <p>Controls adaptive statistics. The optimizer can use adaptive statistics when query predicates are too complex to rely on base table statistics alone.</p>
+                                       <p>By default, <code class="codeph">OPTIMIZER_ADAPTIVE_STATISTICS</code> is <code class="codeph">false</code>, which means that the following features are disabled:
+                                       </p>
+                                       <ul style="list-style-type: disc;">
+                                          <li>
+                                             <p>SQL plan directives</p>
+                                          </li>
+                                          <li>
+                                             <p>Statistics feedback</p>
+                                          </li>
+                                          <li>
+                                             <p>Adaptive dynamic sampling</p>
+                                          </li>
+                                       </ul>
+                                       <p>See <span class="q">"<a href="query-optimizer-concepts.html#GUID-298EDC61-405A-4E25-AEF6-C795E32AAC93" title="The optimizer can use adaptive statistics when query predicates are too complex to rely on base table statistics alone. By default, adaptive statistics are disabled (OPTIMIZER_ADAPTIVE_STATISTICS is false).">Adaptive Statistics</a>"</span>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e851" headers="d103952e674 ">
+                                       <p><code class="codeph">OPTIMIZER_MODE</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e851 d103952e677 ">
+                                       <p>Sets the optimizer mode at database instance startup. Possible values are <code class="codeph">ALL_ROWS</code>, <code class="codeph">FIRST_ROWS_</code><span class="italic"><code class="codeph">n</code></span>, and <code class="codeph">FIRST_ROWS</code>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e871" headers="d103952e674 ">
+                                       <p><code class="codeph">OPTIMIZER_INDEX_CACHING</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e871 d103952e677 ">
+                                       <p>Controls the cost analysis of an index probe with a nested loop. The range of values <code class="codeph">0</code> to <code class="codeph">100</code> indicates percentage of index blocks in the buffer cache, which modifies optimizer assumptions about index caching for nested loops and IN-list iterators. A value of <code class="codeph">100</code> infers that 100% of the index blocks are likely to be found in the buffer cache, so the optimizer adjusts the cost of an index probe or nested loop accordingly. Use caution when setting this parameter because execution plans can change in favor of index caching.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e888" headers="d103952e674 ">
+                                       <p><code class="codeph">OPTIMIZER_INDEX_COST_ADJ</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e888 d103952e677 ">
+                                       <p>Adjusts the cost of index probes. The range of values is <code class="codeph">1</code> to <code class="codeph">10000</code>. The default value is <code class="codeph">100</code>, which means that the optimizer evaluates indexes as an access path based on the normal cost model. A value of <code class="codeph">10</code> means that the cost of an index access path is one-tenth the normal cost of an index access path.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e908" headers="d103952e674 ">
+                                       <p><code class="codeph">OPTIMIZER_INMEMORY_AWARE</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e908 d103952e677 ">
+                                       <p>This parameter enables (<code class="codeph">TRUE</code>) or disables (<code class="codeph">FALSE</code>) all Oracle Database In-Memory (Database In-Memory) optimizer features, including the cost model for the IM column store, table expansion, Bloom filters, and so on. Setting the parameter to <code class="codeph">FALSE</code> causes the optimizer to ignore the <code class="codeph">INMEMORY</code> property of tables during the optimization of SQL statements.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e928" headers="d103952e674 ">
+                                       <p><code class="codeph">OPTIMIZER_USE_INVISIBLE_INDEXES</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e928 d103952e677 ">
+                                       <p>Enables or disables the use of invisible indexes.</p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e937" headers="d103952e674 ">
+                                       <p><code class="codeph">QUERY_REWRITE_ENABLED</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e937 d103952e677 ">
+                                       <p>Enables or disables the query rewrite feature of the optimizer.</p>
+                                       <p><code class="codeph">TRUE</code>, which is the default, enables the optimizer to utilize materialized views to enhance performance. <code class="codeph">FALSE</code> disables the query rewrite feature of the optimizer and directs the optimizer not to rewrite queries using materialized views even when the estimated query cost of the unoptimized query is lower. <code class="codeph">FORCE</code> enables the query rewrite feature of the optimizer and directs the optimizer to rewrite queries using materialized views even when the estimated query cost of the unoptimized query is lower.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e955" headers="d103952e674 ">
+                                       <p><code class="codeph">QUERY_REWRITE_INTEGRITY</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e955 d103952e677 ">
+                                       <p>Determines the degree to which query rewrite is enforced.</p>
+                                       <p>By default, the integrity level is set to <code class="codeph">ENFORCED</code>. In this mode, all constraints must be validated. The database does not use query rewrite transformations that rely on unenforced constraints. Therefore, if you use <code class="codeph">ENABLE NOVALIDATE RELY</code>, some types of query rewrite might not work.
+                                       </p>
+                                       <p>To enable query rewrite when constraints are in <code class="codeph">NOVALIDATE</code> mode, the integrity level must be <code class="codeph">TRUSTED</code> or <code class="codeph">STALE_TOLERATED</code>. In <code class="codeph">TRUSTED</code> mode, the optimizer trusts that the relationships declared in dimensions and <code class="codeph">RELY</code> constraints are correct. In <code class="codeph">STALE_TOLERATED</code> mode, the optimizer uses materialized views that are valid but contain stale data as well as those that contain fresh data. This mode offers the maximum rewrite capability but creates the risk of generating inaccurate results.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e992" headers="d103952e674 ">
+                                       <p><code class="codeph">RESULT_CACHE_MODE</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e992 d103952e677 ">
+                                       <p>Controls whether the database uses the SQL query result cache for all queries, or only for the queries that are annotated with the result cache hint. When set to <code class="codeph">MANUAL</code> (the default), you must use the <code class="codeph">RESULT_CACHE</code> hint to specify that a specific result is to be stored in the cache. When set to <code class="codeph">FORCE</code>, the database stores all results in the cache.
+                                       </p>
+                                       <p>When setting this parameter, consider how the result cache handles PL/SQL functions. The database invalidates query results in the result cache using the same mechanism that tracks data dependencies for PL/SQL functions, but otherwise permits caching of queries that contain PL/SQL functions. Because PL/SQL function result cache invalidation does not track all kinds of dependencies (such as on sequences, <code class="codeph">SYSDATE</code>, <code class="codeph">SYS_CONTEXT</code>, and package variables), indiscriminate use of the query result cache on queries calling such functions can result in changes to results, that is, incorrect results. Thus, consider correctness and performance when choosing to enable the result cache, especially when setting <code class="codeph">RESULT_CACHE_MODE</code> to <code class="codeph">FORCE</code>. 
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e1023" headers="d103952e674 ">
+                                       <p><code class="codeph">RESULT_CACHE_MAX_SIZE</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e1023 d103952e677 ">
+                                       <p>Changes the memory allocated to the result cache. If you set this parameter to <code class="codeph">0</code>, then the result cache is disabled. The value of this parameter is rounded to the largest multiple of 32 KB that is not greater than the specified value. If the rounded value is <code class="codeph">0</code>, then the feature is disabled.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e1037" headers="d103952e674 ">
+                                       <p><code class="codeph">RESULT_CACHE_MAX_RESULT</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e1037 d103952e677 ">
+                                       <p>Specifies the maximum amount of cache memory that any single result can use. The default value is 5%, but you can specify any percentage value between <code class="codeph">1</code> and <code class="codeph">100</code>.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e1051" headers="d103952e674 ">
+                                       <p><code class="codeph">RESULT_CACHE_REMOTE_EXPIRATION</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e1051 d103952e677 ">
+                                       <p>Specifies the number of minutes for which a result that depends on remote database objects remains valid. The default is <code class="codeph">0</code>, which implies that the database should not cache results using remote objects. Setting this parameter to a nonzero value can produce stale answers, such as if a remote database modifies a table that is referenced in a result.
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr align="left" valign="top">
+                                    <td align="left" valign="top" width="46%" id="d103952e1062" headers="d103952e674 ">
+                                       <p><code class="codeph">STAR_TRANSFORMATION_ENABLED</code></p>
+                                    </td>
+                                    <td align="left" valign="top" width="54%" headers="d103952e1062 d103952e677 ">
+                                       <p>Enables the optimizer to cost a star transformation for star queries (if <code class="codeph">true</code>). The star transformation combines the bitmap indexes on the various fact table columns. 
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                        <!-- class="inftblhruleinformal" -->
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-C1C85DEA-3583-40FE-B5BB-6AC8F76FFE34__GUID-BFFC3C67-0C50-4725-BA1C-23BE1A00E944">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../refrn/initialization-parameters.html#REFRN001" target="_blank"><span><cite>Oracle Database Reference</cite></span></a> for complete information about the preceding initialization parameters
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../tgdba/tuning-result-cache.html#TGDBA616" target="_blank"><span><cite>Oracle Database Performance Tuning Guide</cite></span></a> to learn how to tune the query result cache
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../dwhsg/data-warehouse-optimizations-techniques.html#DWHSG9070" target="_blank"><span><cite>Oracle Database Data Warehousing Guide</cite></span></a></p> to learn more about star transformations and query rewrite
+                           </li>
+                           <li>
+                              <p><a href="../inmem/intro-to-in-memory-column-store.html#GUID-BFA53515-7643-41E5-A296-654AB4A9F9E7" target="_blank"><span><cite>Oracle Database In-Memory Guide</cite></span></a> to learn more about Database In-Memory features
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C" title="This chapter explains which initialization parameters affect optimization, and how to set them.">Influencing the Optimizer with Initialization Parameters</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL254"></a><a id="TGSQL253"></a><div class="props_rev_3"><a id="GUID-325A3D6A-47B8-4AAF-8BB0-4037553D02FE" name="GUID-325A3D6A-47B8-4AAF-8BB0-4037553D02FE"></a><h4 id="TGSQL-GUID-325A3D6A-47B8-4AAF-8BB0-4037553D02FE" class="sect4"><span class="enumeration_section">19.2.2 </span>Enabling Optimizer Features
+                  </h4>
+                  <div>
+                     <p>The <code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> initialization parameter (or hint) controls a set of optimizer-related features, depending on the database release.
+                     </p>
+                     <div class="section">
+                        <p>The parameter accepts one of a list of valid string values corresponding to the release numbers, such as <code class="codeph">11.2.0.2</code> or <code class="codeph">12.2.0.1</code>. You can use this parameter to preserve the old behavior of the optimizer after a database upgrade. For example, if you upgrade <span>Oracle Database 12c</span> Release 1 (12.1.0.2) to <span>Oracle Database 12c</span> Release 2 (12.2.0.1), then the default value of the <code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> parameter changes from <code class="codeph">12.1.0.2</code> to <code class="codeph">12.2.0.1</code>.
+                        </p>
+                        <p>For backward compatibility, you may not want the execution plans to change because of new optimizer features in a new release. In such cases, you can set <code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> to an earlier version. If you upgrade to a new release, and if you <span class="italic">want</span> to enable the features in the new release, then you do <span class="italic">not</span> need to explicitly set the <code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> initialization parameter.
+                        </p>
+                        <div class="infoboxnote" id="GUID-325A3D6A-47B8-4AAF-8BB0-4037553D02FE__GUID-5D64CCA8-8994-4E55-B850-D675F102F70A">
+                           <p class="notep1">Caution:</p>
+                           <p>Oracle does not recommend explicitly setting the <code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> initialization parameter to an earlier release. To avoid SQL performance regression that may result from execution plan changes, consider using SQL plan management instead. 
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-325A3D6A-47B8-4AAF-8BB0-4037553D02FE__GUID-41B9E3C7-A9C6-40CC-9606-F859FF4F761F">Assumptions</p>
+                        <p>This tutorial assumes the following:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>You recently upgraded the database from <span>Oracle Database 12c</span> Release 1 (12 1.0.2) to <span>Oracle Database 12c</span> Release 2 (12.2.0.1).
+                              </p>
+                           </li>
+                           <li>
+                              <p>You want to preserve the optimizer behavior from the earlier release.</p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-325A3D6A-47B8-4AAF-8BB0-4037553D02FE__GUID-3C758CEA-2108-4241-9E73-8807D3E8C48D">To enable query optimizer features for a specific release:</p>
+                        <ol>
+                           <li>
+                              <p>Log in to the database with the appropriate privileges, and then query the current optimizer features settings.</p>
+                              <p>For example, run the following SQL*Plus command:</p><pre class="pre codeblock"><code>SQL&gt; SHOW PARAMETER optimizer_features_enable
+ 
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- --------
+optimizer_features_enable            string      12.2.0.1
+</code></pre></li>
+                           <li>
+                              <p>Set the optimizer features setting at the instance or session level.</p>
+                              <p>For example, run the following SQL statement to set the optimizer version to <code class="codeph">12.1.0.2</code>:
+                              </p><pre class="pre codeblock"><code>SQL&gt; ALTER SYSTEM SET OPTIMIZER_FEATURES_ENABLE='12.1.0.2';</code></pre><p>The preceding statement restores the optimizer functionality that existed in <span>Oracle Database 12c</span> Release 1 (12.1.0.2).
+                              </p>
+                           </li>
+                        </ol>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-325A3D6A-47B8-4AAF-8BB0-4037553D02FE__GUID-1C8FF1FB-9B9E-4791-8E78-09AF2D7BF7E3">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="managing-sql-plan-baselines.html#GUID-7024369A-F98D-48E4-921C-C899485C954F" title="This chapter explains the concepts and tasks relating to SQL plan management using the DBMS_SPM package.">Managing SQL Plan Baselines</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../refrn/OPTIMIZER_FEATURES_ENABLE.html#REFRN10141" target="_blank"><span><cite>Oracle Database Reference</cite></span></a> to learn about optimizer features enabled when you set <code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> to different release values
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C" title="This chapter explains which initialization parameters affect optimization, and how to set them.">Influencing the Optimizer with Initialization Parameters</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL256"></a><a id="TGSQL255"></a><div class="props_rev_3"><a id="GUID-2D3EEFD3-C4C6-4D2F-B24A-8DC0C1E1CBA1" name="GUID-2D3EEFD3-C4C6-4D2F-B24A-8DC0C1E1CBA1"></a><h4 id="TGSQL-GUID-2D3EEFD3-C4C6-4D2F-B24A-8DC0C1E1CBA1" class="sect4"><span class="enumeration_section">19.2.3 </span>Choosing an Optimizer Goal
+                  </h4>
+                  <div>
+                     <p>The <strong class="term">optimizer goal</strong> is the prioritization of resource usage by the optimizer.
+                     </p>
+                     <div class="section">
+                        <p> Using the <code class="codeph">OPTIMIZER_MODE</code> initialization parameter, you can set the following optimizer goals:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Best <a href="glossary.html#GUID-BFB3B290-B7BF-4E9C-B2EB-F318EAC34DAF"><span class="xrefglossterm">throughput</span></a> (default)
+                              </p>
+                              <p>When you set the <code class="codeph">OPTIMIZER_MODE</code> value to <code class="codeph">ALL_ROWS</code>, the database uses the least amount of resources necessary to process all rows that the statement accessed.
+                              </p>
+                              <p>For batch applications such as Oracle Reports, optimize for best throughput. Usually, throughput is more important in batch applications because the user is only concerned with the time necessary for the application to complete. Response time is less important because the user does not examine the results of individual statements while the application is running.</p>
+                           </li>
+                           <li>
+                              <p>Best <a href="glossary.html#GUID-371FCA7E-6CDB-4D4C-9BD6-90944AD21E3A"><span class="xrefglossterm">response time</span></a></p>
+                              <p>When you set the <code class="codeph">OPTIMIZER_MODE</code> value to <code class="codeph">FIRST_ROWS_</code><span class="italic"><code class="codeph">n</code></span>, the database optimizes with a goal of best response time to return the first <span class="italic">n</span> rows, where <span class="italic">n</span> equals <code class="codeph">1</code>, <code class="codeph">10</code>, <code class="codeph">100</code>, or <code class="codeph">1000</code>.
+                              </p>
+                              <p>For interactive applications in Oracle Forms or SQL*Plus, optimize for response time. Usually, response time is important because the interactive user is waiting to see the first row or rows that the statement accessed.</p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-2D3EEFD3-C4C6-4D2F-B24A-8DC0C1E1CBA1__GUID-12C0D5FB-ED95-48E3-A5E4-7408AF42478A">Assumptions</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>This tutorial assumes the following:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The primary application is interactive, so you want to set the optimizer goal for the database instance to minimize response time.</p>
+                           </li>
+                           <li>
+                              <p>For the current session only, you want to run a report and optimize for throughput.</p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-2D3EEFD3-C4C6-4D2F-B24A-8DC0C1E1CBA1__GUID-384C8691-EBE3-45DE-AC16-21DA7772C88C">To enable query optimizer features for a specific release:</p>
+                        <ol>
+                           <li>
+                              <p>Connect SQL*Plus to the database with the appropriate privileges, and then query the current optimizer mode.</p>
+                              <p>For example, run the following SQL*Plus command:</p><pre class="pre codeblock"><code>dba1@PROD&gt; SHOW PARAMETER OPTIMIZER_MODE
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- --------
+optimizer_mode                       string      ALL_ROWS
+</code></pre></li>
+                           <li>
+                              <p>At the instance level, optimize for response time.</p>
+                              <p>For example, run the following SQL statement to configure the system to retrieve the first 10 rows as quickly as possible:</p><pre class="pre codeblock"><code>SQL&gt; ALTER SYSTEM SET OPTIMIZER_MODE='FIRST_ROWS_10';
+</code></pre></li>
+                           <li>
+                              <p>At the session level only, optimize for throughput before running a report.</p>
+                              <p>For example, run the following SQL statement to configure only this session to optimize for throughput:</p><pre class="pre codeblock"><code>SQL&gt; ALTER SESSION SET OPTIMIZER_MODE='ALL_ROWS';</code></pre></li>
+                        </ol>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"></div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-2D3EEFD3-C4C6-4D2F-B24A-8DC0C1E1CBA1__GUID-EDCA5927-0CF2-4345-97E5-CD2BF40AD41C">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../refrn/OPTIMIZER_FEATURES_ENABLE.html#REFRN10141" target="_blank"><span><cite>Oracle Database Reference</cite></span></a><span class="italic"> </span>to learn about the <code class="codeph">OPTIMIZER_MODE</code> initialization parameter
+                        </p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C" title="This chapter explains which initialization parameters affect optimization, and how to set them.">Influencing the Optimizer with Initialization Parameters</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="TGSQL258"></a><a id="TGSQL257"></a><div class="props_rev_3"><a id="GUID-DAFB7D07-E8B3-4219-A09D-214BD943AFF9" name="GUID-DAFB7D07-E8B3-4219-A09D-214BD943AFF9"></a><h4 id="TGSQL-GUID-DAFB7D07-E8B3-4219-A09D-214BD943AFF9" class="sect4"><span class="enumeration_section">19.2.4 </span>Controlling Adaptive Optimization
+                  </h4>
+                  <div>
+                     <p>In Oracle Database, <strong class="term">adaptive query optimization</strong> is the process by which the optimizer adapts an execution plan based on statistics collected at run time.
+                     </p>
+                     <div class="section"></div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>Adaptive plans are enabled when the following initialization parameters are set:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">OPTIMIZER_ADAPTIVE_PLANS</code> is <code class="codeph">TRUE</code> (default)
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> is <code class="codeph">12.1.0.1</code> or later
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</code> is <code class="codeph">FALSE</code> (default)
+                              </p>
+                           </li>
+                        </ul>
+                        <p>If <code class="codeph">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</code> is set to <code class="codeph">true</code>, then adaptive optimization runs in reporting-only mode. In this case, the database gathers information required for adaptive optimization, but does not change the plans. An adaptive plan always chooses the default plan, but the database collects information about the execution <span class="italic">as if</span> the parameter were set to <code class="codeph">false</code>.
+                        </p>
+                        <p>Adaptive statistics are enabled when the following initialization parameters are set:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">OPTIMIZER_ADAPTIVE_STATISTICS</code> is <code class="codeph">TRUE</code> (the default is <code class="codeph">FALSE</code>)
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> is <code class="codeph">12.1.0.1</code> or later
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-DAFB7D07-E8B3-4219-A09D-214BD943AFF9__GUID-536E1AFC-98B6-4107-91B9-B88F15142C07">Assumptions</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p>This tutorial assumes the following:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The <code class="codeph">OPTIMIZER_FEATURES_ENABLE</code> initialization parameter is set to <code class="codeph">12.1.0.1</code> or later.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <code class="codeph">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</code> initialization parameter is set to <code class="codeph">false</code> (default).
+                              </p>
+                           </li>
+                           <li>
+                              <p>You want to disable adaptive plans for testing purposes so that the database generates only reports.</p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3" id="GUID-DAFB7D07-E8B3-4219-A09D-214BD943AFF9__GUID-B12B8FC7-ADEF-49EF-BAB2-49F578CFF3F9">To disable adaptive plans:</p>
+                        <ol>
+                           <li>
+                              <p>Connect SQL*Plus to the database as <code class="codeph">SYSTEM</code>, and then query the current settings.
+                              </p>
+                              <p>For example, run the following SQL*Plus command:</p><pre class="pre codeblock"><code>SHOW PARAMETER OPTIMIZER_ADAPTIVE_REPORTING_ONLY
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- -----
+optimizer_adaptive_reporting_only    boolean     FALSE
+</code></pre></li>
+                           <li>
+                              <p>At the session level, set the <code class="codeph">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</code> initialization parameter to <code class="codeph">true</code>.
+                              </p>
+                              <p>For example, in SQL*Plus run the following SQL statement:</p><pre class="pre codeblock"><code>ALTER SESSION SET OPTIMIZER_ADAPTIVE_REPORTING_ONLY=true;
+</code></pre></li>
+                           <li>
+                              <p>Run a query.</p>
+                           </li>
+                           <li>
+                              <p>Run <code class="codeph">DBMS_XPLAN.DISPLAY_CURSOR</code> with the <code class="codeph">+REPORT</code> parameter.
+                              </p>
+                              <p>When the <code class="codeph">+REPORT</code> parameter is set, the report shows the plan the optimizer would have picked if automatic reoptimization had been enabled.
+                              </p>
+                           </li>
+                        </ol>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"></div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-DAFB7D07-E8B3-4219-A09D-214BD943AFF9__GUID-FFCA53E0-3BDF-43F7-A4C3-2F26E27CF5A1">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="query-optimizer-concepts.html#GUID-F368C89A-5CAE-432C-845C-CC38C7F93A03" title="In Oracle Database, adaptive query optimization enables the optimizer to make run-time adjustments to execution plans and discover additional information that can lead to better statistics.">About Adaptive Query Optimization</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../refrn/OPTIMIZER_ADAPTIVE_REPORTING_ONLY.html#REFRN10327" target="_blank"><span class="italic">Oracle Database Reference</span></a><span class="italic"> </span>to learn about the <code class="codeph">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</code> initialization parameter
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_XPLAN.html#ARPLS70136" target="_blank"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> to learn about the <code class="codeph">+REPORT</code> parameter of the <code class="codeph">DBMS_XPLAN.DISPLAY_CURSOR</code> function
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-125341C0-DBA3-4FAB-B4DB-8857CC36015C" title="This chapter explains which initialization parameters affect optimization, and how to set them.">Influencing the Optimizer with Initialization Parameters</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div><a id="TGSQL259"></a><div class="props_rev_3"><a id="GUID-C558F7CF-446E-4078-B045-0B3BB026CB3C" name="GUID-C558F7CF-446E-4078-B045-0B3BB026CB3C"></a><h3 id="TGSQL-GUID-C558F7CF-446E-4078-B045-0B3BB026CB3C" class="sect3"><span class="enumeration_section">19.3 </span>Influencing the Optimizer with Hints
+               </h3>
+               <div>
+                  <p>Optimizer hints are special comments in a SQL statement that pass instructions to the optimizer.</p>
+                  <p>The optimizer uses hints to choose an execution plan for the statement unless prevented by some condition.</p>
+                  <p>This section contains the following topics:</p>
+                  <div class="infoboxnote" id="GUID-C558F7CF-446E-4078-B045-0B3BB026CB3C__GUID-C301E0C5-DC7D-439B-8DBB-FF69F4F5775D">
+                     <p class="notep1">Note:</p>
+                     <p><a href="../sqlrf/Comments.html#SQLRF00219" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> contains a complete reference for all SQL hints
+                     </p>
+                  </div>
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-B198573A-C64B-4071-9CD8-738355A20DD7">About Optimizer Hints</a><br>Use hints to influence the optimizer mode, query transformation, access path, join order, and join methods. 
+                     </li>
+                     <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-5976D09A-257A-49F3-94E0-247B1247270A">Guidelines for Join Order Hints</a><br>In some cases, you can specify join order hints in a SQL statement so that it does not access rows that have no effect on the result.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-8758EF88-1CC6-41BD-8581-246702414D1D" title="Optimizer defaults are adequate for most operations, but not all.">Influencing the Optimizer</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="TGSQL261"></a><a id="TGSQL260"></a><div class="props_rev_3"><a id="GUID-B198573A-C64B-4071-9CD8-738355A20DD7" name="GUID-B198573A-C64B-4071-9CD8-738355A20DD7"></a><h4 id="TGSQL-GUID-B198573A-C64B-4071-9CD8-738355A20DD7" class="sect4"><span class="enumeration_section">19.3.1 </span>About Optimizer Hints
+                  </h4>
+                  <div>
+                     <p>Use hints to influence the optimizer mode, query transformation, access path, join order, and join methods. </p>
+                     <p>For example, The following figure shows how you can use a hint to tell the optimizer to use a specific index for a specific statement. </p>
+                     <div class="figure" id="GUID-B198573A-C64B-4071-9CD8-738355A20DD7__BBAFCGBD">
+                        <p class="titleinfigure">Figure 19-2 Optimizer Hint</p><img src="img/tgsql_vm_013.png" alt="Description of Figure 19-2 follows" title="Description of Figure 19-2 follows" longdesc="img_text/tgsql_vm_013.html"><br><a href="img_text/tgsql_vm_013.html">Description of "Figure 19-2 Optimizer Hint"</a></div>
+                     <!-- class="figure" -->
+                     <p>The advantage of hints is that they enable you to make decisions normally made by the optimizer. In a test environment, hints are useful for testing the performance of a specific access path. For example, you may know that an index is more selective for certain queries, as in <a href="influencing-the-optimizer.html#GUID-B198573A-C64B-4071-9CD8-738355A20DD7__BBAFCGBD">Figure 19-2</a>. In this case, the hint may cause the optimizer to generate a better plan.
+                     </p>
+                     <p>The disadvantage of hints is the extra code that you must manage, check, and control. Hints were introduced in Oracle7, when users had little recourse if the optimizer generated suboptimal plans. Because changes in the database and host environment can make hints obsolete or have negative consequences, a good practice is to test using hints, but use other techniques to manage execution plans.</p>
+                     <p>Oracle provides several tools, including SQL Tuning Advisor, SQL plan management, and SQL Performance Analyzer, to address performance problems not solved by the optimizer. Oracle strongly recommends that you use these tools instead of hints because they provide fresh solutions as the data and database environment change.</p>
+                     <p>This section contains the following topics:</p>
+                  </div>
+                  <div>
+                     <ul class="ullinks">
+                        <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-2C09E9BF-A05B-4F02-8BB6-B858F599CAEA">Types of Hints</a><br>You can use hints for tables, query blocks, and statements.
+                        </li>
+                        <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-688C8907-696A-4051-819C-18AA9B48219C">Scope of Hints</a><br>When you specify a hint in a statement block, the hint applies to the appropriate query block, table, or entire statement in the statement block. The hint overrides any instance-level or session-level parameters.
+                        </li>
+                        <li class="ulchildlink"><a href="influencing-the-optimizer.html#GUID-C18EA0A0-7792-4220-A1C1-3EC856A19BA7">Guidelines for Hints</a><br>You must enclose hints within a SQL comment.
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-B198573A-C64B-4071-9CD8-738355A20DD7__GUID-4C540F3F-92A9-4992-9606-C4F8A70A7ECA">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../sqlrf/Comments.html#SQLRF51107" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for the most common hints by functional category.
+                        </p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-C558F7CF-446E-4078-B045-0B3BB026CB3C" title="Optimizer hints are special comments in a SQL statement that pass instructions to the optimizer.">Influencing the Optimizer with Hints</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  <a id="TGSQL262"></a><div class="props_rev_3"><a id="GUID-2C09E9BF-A05B-4F02-8BB6-B858F599CAEA" name="GUID-2C09E9BF-A05B-4F02-8BB6-B858F599CAEA"></a><h5 id="TGSQL-GUID-2C09E9BF-A05B-4F02-8BB6-B858F599CAEA" class="sect5"><span class="enumeration_section">19.3.1.1 </span>Types of Hints
+                     </h5>
+                     <div>
+                        <p>You can use hints for tables, query blocks, and statements.</p>
+                        <p>Hints fall into the following types:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Single-table</p>
+                              <p>Single-table hints are specified on one table or view. <a href="../sqlrf/Comments.html#SQLRF50405" target="_blank"><code class="codeph">INDEX</code></a> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=SQLRF50701" target="_blank"><code class="codeph">USE_NL</code></a> are examples of single-table hints. The following statement uses a single-table hint:
+                              </p><pre class="pre codeblock"><code>SELECT <span class="bold">/*+ INDEX (employees emp_department_ix)*/</span> employee_id, department_id
+FROM   employees 
+WHERE  department_id &gt; 50;
+</code></pre></li>
+                           <li>
+                              <p>Multitable</p>
+                              <p>Multitable hints are like single-table hints except that the hint can specify multiple tables or views. <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=SQLRF50705" target="_blank"><code class="codeph">LEADING</code></a> is an example of a multitable hint. The following statement uses a multitable hint:
+                              </p><pre class="pre codeblock"><code>SELECT <span class="bold">/*+ LEADING(e j) */</span> *
+FROM   employees e, departments d, job_history j
+WHERE  e.department_id = d.department_id
+AND    e.hire_date = j.start_date;</code></pre><div class="infoboxnote" id="GUID-2C09E9BF-A05B-4F02-8BB6-B858F599CAEA__GUID-AAF8FA92-886B-4484-984E-244B2DBAFA3F">
+                                 <p class="notep1">Note:</p>
+                                 <p><a href="../sqlrf/Comments.html#SQLRF50701" target="_blank"><code class="codeph">USE_NL(table1 table2)</code></a> is not considered a multitable hint because it is a shortcut for <code class="codeph">USE_NL(table1)</code> and <code class="codeph">USE_NL(table2)</code>.
+                                 </p>
+                              </div>
+                           </li>
+                           <li>
+                              <p>Query block</p>
+                              <p>Query block hints operate on single query blocks. <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/tgsql&amp;id=SQLRF50508" target="_blank"><code class="codeph">STAR_TRANSFORMATION</code></a> and <a href="../sqlrf/Comments.html#SQLRF50905" target="_blank"><code class="codeph">UNNEST</code></a> are examples of query block hints. The following statement uses a query block hint to specify that the <code class="codeph">FULL</code> hint applies only to the query block that references <code class="codeph">employees</code>:
+                              </p><pre class="pre codeblock"><code>SELECT /*+ INDEX(t1) FULL(@sel$2 t1) */ COUNT(*)
+FROM   jobs t1
+WHERE t1.job_id IN (SELECT job_id FROM employees t1);</code></pre></li>
+                           <li>
+                              <p>Statement</p>
+                              <p>Statement hints apply to the entire SQL statement. <a href="../sqlrf/Comments.html#SQLRF50301" target="_blank"><code class="codeph">ALL_ROWS</code></a> is an example of a statement hint. The following statement uses a statement hint:
+                              </p><pre class="pre codeblock"><code>SELECT <span class="bold">/*+ ALL_ROWS */</span> * FROM sales;</code></pre></li>
+                        </ul>
+                     </div>
+                     <div>
+                        <div class="infoboxnotealso" id="GUID-2C09E9BF-A05B-4F02-8BB6-B858F599CAEA__GUID-4C540F3F-92A9-4992-9606-C4F8A70A7ECA">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../sqlrf/Comments.html#SQLRF51107" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for the most common hints by functional category.
+                           </p>
+                        </div>
+                        <div class="familylinks">
+                           <div class="parentlink">
+                              <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-B198573A-C64B-4071-9CD8-738355A20DD7" title="Use hints to influence the optimizer mode, query transformation, access path, join order, and join methods.">About Optimizer Hints</a></p>
+                           </div>
+                        </div>
+                     </div>
+                     
+                  </div><a id="TGSQL264"></a><a id="TGSQL263"></a><div class="props_rev_3"><a id="GUID-688C8907-696A-4051-819C-18AA9B48219C" name="GUID-688C8907-696A-4051-819C-18AA9B48219C"></a><h5 id="TGSQL-GUID-688C8907-696A-4051-819C-18AA9B48219C" class="sect5"><span class="enumeration_section">19.3.1.2 </span>Scope of Hints
+                     </h5>
+                     <div>
+                        <p>When you specify a hint in a statement block, the hint applies to the appropriate query block, table, or entire statement in the statement block. The hint overrides any instance-level or session-level parameters.</p>
+                        <p>A <strong class="term">statement block</strong> is one of the following:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>A simple <code class="codeph">MERGE</code>, <code class="codeph">SELECT</code>, <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, or <code class="codeph">DELETE</code> statement
+                              </p>
+                           </li>
+                           <li>
+                              <p>A parent statement or a subquery of a complex statement</p>
+                           </li>
+                           <li>
+                              <p>A part of a query using set operators (<code class="codeph">UNION</code>, <code class="codeph">MINUS</code>, <code class="codeph">INTERSECT</code>)
+                              </p>
+                           </li>
+                        </ul>
+                        <div class="example" id="GUID-688C8907-696A-4051-819C-18AA9B48219C__BBAHABHI">
+                           <p class="titleinexample">Example 19-1 Query Using a Set Operator</p>
+                           <p>The following query consists of two component queries and the <code class="codeph">UNION</code> operator:
+                           </p><pre class="pre codeblock"><code>SELECT /*+ FIRST_ROWS(10) */ prod_id, time_id FROM 2010_sales
+UNION ALL
+SELECT /*+ ALL_ROWS */ prod_id, time_id FROM current_year_sales;</code></pre><p>The preceding statement has two blocks, one for each component query. Hints in the first component query apply only to its optimization, not to the optimization of the second component query. For example, in the first week of 2015 you query current year and last year sales. You apply <code class="codeph">FIRST_ROWS(10)</code> to the query of last year's (2014) sales and the <code class="codeph">ALL_ROWS</code> hint to the query of this year's (2015) sales.
+                           </p>
+                        </div>
+                        <!-- class="example" -->
+                     </div>
+                     <div>
+                        <div class="infoboxnotealso" id="GUID-688C8907-696A-4051-819C-18AA9B48219C__GUID-C13CCCC8-35F7-408E-8A4D-34CC646B9F75">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../sqlrf/Comments.html#SQLRF00219" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> for an overview of hints
+                           </p>
+                        </div>
+                        <div class="familylinks">
+                           <div class="parentlink">
+                              <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-B198573A-C64B-4071-9CD8-738355A20DD7" title="Use hints to influence the optimizer mode, query transformation, access path, join order, and join methods.">About Optimizer Hints</a></p>
+                           </div>
+                        </div>
+                     </div>
+                     
+                  </div><a id="TGSQL266"></a><a id="TGSQL265"></a><div class="props_rev_3"><a id="GUID-C18EA0A0-7792-4220-A1C1-3EC856A19BA7" name="GUID-C18EA0A0-7792-4220-A1C1-3EC856A19BA7"></a><h5 id="TGSQL-GUID-C18EA0A0-7792-4220-A1C1-3EC856A19BA7" class="sect5"><span class="enumeration_section">19.3.1.3 </span>Guidelines for Hints
+                     </h5>
+                     <div>
+                        <p>You must enclose hints within a SQL comment.</p>
+                        <div class="section">
+                           <p>The hint comment must immediately follow the first keyword of a SQL statement block. You can use either style of comment: a slash-star (<code class="codeph">/*</code>) or pair of dashes (<code class="codeph">--</code>). The plus-sign (+) hint delimiter must come immediately after the comment delimiter, as in the following fragment:
+                           </p><pre class="oac_no_warn" dir="ltr">SELECT /*+ <span class="italic">hint_text</span> */ ...
+</pre><p>The database ignores incorrectly specified hints. The database also ignores combinations of conflicting hints, even if these hints are correctly specified. If one hint is incorrectly specified, but a hint in the same comment is correctly specified, then the database considers the correct hint.</p>
+                           <div class="infoboxnote" id="GUID-C18EA0A0-7792-4220-A1C1-3EC856A19BA7__GUID-420B9864-FC7A-4083-968E-597B9C96DFC5">
+                              <p class="notep1">Caution:</p>
+                              <p>The database does not issue error messages for hints that it ignores.</p>
+                           </div>
+                           <p>A statement block can have only one comment containing hints, but it can contain many space-separated hints. For example, a complex query may include multiple table joins. If you specify only the <code class="codeph">INDEX</code> hint for a specified table, then the optimizer must determine the remaining access paths and corresponding join methods. The optimizer may not use the <code class="codeph">INDEX</code> hint because the join methods and access paths prevent it. <a href="influencing-the-optimizer.html#GUID-C18EA0A0-7792-4220-A1C1-3EC856A19BA7__BBAJCBJF">Example 19-2</a> uses multiple hints to specify the exact join order.
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="example" id="GUID-C18EA0A0-7792-4220-A1C1-3EC856A19BA7__BBAJCBJF">
+                           <p class="titleinexample">Example 19-2 Multiple Hints</p><pre class="pre codeblock"><code>SELECT   /*+ LEADING(e2 e1) USE_NL(e1) INDEX(e1 emp_emp_id_pk) 
+           USE_MERGE(j) FULL(j) */
+         e1.first_name, e1.last_name, j.job_id, sum(e2.salary) total_sal
+FROM     employees e1, employees e2, job_history j
+WHERE    e1.employee_id = e2.manager_id
+AND      e1.employee_id = j.employee_id
+AND      e1.hire_date = j.start_date
+GROUP BY e1.first_name, e1.last_name, j.job_id
+ORDER BY total_sal;</code></pre></div>
+                        <!-- class="example" -->
+                     </div>
+                     <div>
+                        <div class="infoboxnotealso" id="GUID-C18EA0A0-7792-4220-A1C1-3EC856A19BA7__GUID-86E57995-8B27-477C-9F6F-A304E48BE013">
+                           <p class="notep1">See Also:</p>
+                           <p> <a href="../sqlrf/Comments.html#SQLRF51098" target="_blank"><span><cite>Oracle Database SQL Language Reference</cite></span></a> to learn about the syntax rules for comments and hints
+                           </p>
+                        </div>
+                        <div class="familylinks">
+                           <div class="parentlink">
+                              <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-B198573A-C64B-4071-9CD8-738355A20DD7" title="Use hints to influence the optimizer mode, query transformation, access path, join order, and join methods.">About Optimizer Hints</a></p>
+                           </div>
+                        </div>
+                     </div>
+                     
+                  </div>
+               </div><a id="TGSQL267"></a><div class="props_rev_3"><a id="GUID-5976D09A-257A-49F3-94E0-247B1247270A" name="GUID-5976D09A-257A-49F3-94E0-247B1247270A"></a><h4 id="TGSQL-GUID-5976D09A-257A-49F3-94E0-247B1247270A" class="sect4"><span class="enumeration_section">19.3.2 </span>Guidelines for Join Order Hints
+                  </h4>
+                  <div>
+                     <p>In some cases, you can specify join order hints in a SQL statement so that it does not access rows that have no effect on the result.</p>
+                     <div class="section">
+                        <p>The <a href="glossary.html#GUID-8D98E7F2-8BAD-4AE2-8C72-DCD0733CB9CE"><span class="xrefglossterm">driving table</span></a> in a join is the table to which other tables are joined. In general, the driving table contains the <a href="glossary.html#GUID-73A2A2BA-68CB-4036-BB5C-3CBB5D799286"><span class="xrefglossterm">filter condition</span></a> that eliminates the highest percentage of rows in the table. The <strong class="term">join order</strong> can have a significant effect on the performance of a SQL statement. 
+                        </p>
+                        <p>Consider the following guidelines:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Avoid a full table scan when an index retrieves the requested rows more efficiently.</p>
+                           </li>
+                           <li>
+                              <p>Avoid using an index that fetches many rows from the driving table when you can use a different index that fetches a small number of rows.</p>
+                           </li>
+                           <li>
+                              <p>Choose the join order so that you join fewer rows to tables later in the join order.</p>
+                           </li>
+                        </ul>
+                        <p>The following example shows how to tune join order effectively:</p><pre class="pre codeblock"><code>SELECT *
+FROM   taba a, 
+       tabb b, 
+       tabc c
+WHERE  a.acol BETWEEN   100 AND   200
+AND    b.bcol BETWEEN 10000 AND 20000
+AND    c.ccol BETWEEN 10000 AND 20000
+AND    a.key1 = b.key1
+AND    a.key2 = c.key2;</code></pre><ol>
+                           <li>
+                              <p>Choose the driving table and the driving index (if any).</p>
+                              <p>Each of the first three conditions in the previous example is a filter condition that applies to a single table. The last two conditions are join conditions. </p>
+                              <p>Filter conditions dominate the choice of driving table and index. In general, the driving table contains the filter condition that eliminates the highest percentage of rows. Because the range of 100 to 200 is narrow compared with the range of <code class="codeph">acol</code>, but the ranges of 10000 and 20000 are relatively large, <code class="codeph">taba</code> is the driving table, all else being equal.
+                              </p>
+                              <p>With nested loops joins, the joins occur through the join indexes, which are the indexes on the primary or foreign keys used to connect that table to an earlier table in the join tree. Rarely do you use the indexes on the non-join conditions, except for the driving table. Thus, after <code class="codeph">taba</code> is chosen as the driving table, use the indexes on <code class="codeph">b.key1</code> and <code class="codeph">c.key2</code> to drive into <code class="codeph">tabb</code> and <code class="codeph">tabc</code>, respectively.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Choose the best join order, driving to the best unused filters earliest. </p>
+                              <p>You can reduce the work of the following join by first joining to the table with the best still-unused filter. Therefore, if <code class="codeph">bcol BETWEEN</code> is more restrictive (rejects a higher percentage of the rows) than <code class="codeph">ccol BETWEEN</code>, then the last join becomes easier (with fewer rows) if <code class="codeph">tabb</code> is joined before <code class="codeph">tabc</code>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>You can use the <code class="codeph">ORDERED</code> or <code class="codeph">STAR</code> hint to force the join order.
+                              </p>
+                           </li>
+                        </ol>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+                  <div>
+                     <div class="infoboxnotealso" id="GUID-5976D09A-257A-49F3-94E0-247B1247270A__GUID-0436C9CA-8AE2-42D9-B4BD-B9781A1AD566">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="../refrn/OPTIMIZER_FEATURES_ENABLE.html#REFRN10141" target="_blank"><span><cite>Oracle Database Reference</cite></span> </a> to learn about <code class="codeph">OPTIMIZER_MODE</code></p>
+                     </div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="influencing-the-optimizer.html#GUID-C558F7CF-446E-4078-B045-0B3BB026CB3C" title="Optimizer hints are special comments in a SQL statement that pass instructions to the optimizer.">Influencing the Optimizer with Hints</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

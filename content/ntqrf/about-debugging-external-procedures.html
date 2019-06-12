@@ -1,0 +1,151 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Usually, when an external procedure fails, its C prototype is faulty.">
+      <meta name="description" content="Usually, when an external procedure fails, its C prototype is faulty.">
+      <title>About Debugging External Procedures</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Administrator's Reference ">
+      <meta property="og:description" content="Usually, when an external procedure fails, its C prototype is faulty.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Administrator's Reference for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="administrators-reference-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-02T05:05:35-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83889-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="overview-of-multithreaded-agent-architecture.html" title="Previous" type="text/html">
+      <link rel="next" href="about-accessing-text-files-with-utl-file.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Administrator's Reference Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="NTQRF">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="overview-of-multithreaded-agent-architecture.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="about-accessing-text-files-with-utl-file.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Administrator's Reference </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="developing-applications-for-windows.html" property="item" typeof="WebPage"><span property="name">Developing Applications for Windows</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">About Debugging External Procedures</li>
+            </ol>
+            <a id="GUID-60BD9F96-6261-400E-9DFB-97ADF92F23B6" name="GUID-60BD9F96-6261-400E-9DFB-97ADF92F23B6"></a><a id="NTQRF488"></a>
+            
+            <h2 id="NTQRF-GUID-60BD9F96-6261-400E-9DFB-97ADF92F23B6" class="sect2">About Debugging External Procedures</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Usually, when an external procedure fails, its C prototype is faulty.</p>
+               <p>That is, the prototype does not match the one generated internally by PL/SQL. This can happen if you specify an incompatible C data type. For example, to pass an <code class="codeph">OUT</code> parameter of type <code class="codeph">REAL</code>, you must specify <code class="codeph">float</code> <code class="codeph">*</code>. Specifying <code class="codeph">float</code>, <code class="codeph">double</code> <code class="codeph">*</code>, or any other C data type results in a mismatch. 
+               </p>
+               <p>In such cases, you get a <code class="codeph">lost</code> <code class="codeph">RPC</code> <code class="codeph">connection</code> <code class="codeph">to</code> <code class="codeph">external</code> <code class="codeph">procedure</code> <code class="codeph">agent</code> error, which means that agent <code class="codeph">extproc</code> terminated abnormally because the external procedure caused a core dump. 
+               </p>
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="about-debugging-external-procedures.html#GUID-18A1B4CA-2B21-402B-A599-57980123C452">Using Package DEBUG_EXTPROC</a><br>To help you debug external procedures, PL/SQL provides the utility package <code class="codeph">DEBUG_</code><code class="codeph">EXTPROC</code>.
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-60BD9F96-6261-400E-9DFB-97ADF92F23B6__GUID-77E46575-3676-45B4-9CD2-8A59DDE71431">
+                  <p class="notep1">See Also:</p><a href="../addci/implementing-data-cartridges-in-C-CPP-and-java.html#ADDCI4358" target="_blank"><span class="italic">Oracle Database Data Cartridge Developer's Guide.</span></a> for information on how to avoid errors when declaring C prototype parameters
+               </div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="developing-applications-for-windows.html#GUID-87C43994-ECCF-4801-90BC-FFF1622B1621">Developing Applications for Windows</a></p>
+                  </div>
+               </div>
+            </div>
+            <a id="NTQRF489"></a><div class="props_rev_3"><a id="GUID-18A1B4CA-2B21-402B-A599-57980123C452" name="GUID-18A1B4CA-2B21-402B-A599-57980123C452"></a><h3 id="NTQRF-GUID-18A1B4CA-2B21-402B-A599-57980123C452" class="sect3">Using Package DEBUG_EXTPROC</h3>
+               <div>
+                  <p>To help you debug external procedures, PL/SQL provides the utility package <code class="codeph">DEBUG_</code><code class="codeph">EXTPROC</code>.
+                  </p>
+                  <div class="section">
+                     <p>To install the package, run the script <code class="codeph">dbgextp.sql</code>, which you can find in the PL/SQL demo directory. 
+                     </p>
+                     <p>To use the package, follow instructions in <code class="codeph">dbgextp.sql</code>. Your Oracle Database account must have <code class="codeph">EXECUTE</code> privileges on the package and <code class="codeph">CREATE</code> <code class="codeph">LIBRARY</code> privileges.
+                     </p>
+                     <p>To debug external procedures: </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>From Windows Task Manager, in the Processes dialog, select <span class="bold">ExtProc.exe</span>. </span></li>
+                     <li class="stepexpand"><span>Right click, and select <span class="bold">Debug</span>. </span></li>
+                     <li class="stepexpand"><span>Click <span class="bold">OK</span> in the message window. </span><div>
+                           <p>If you have built your DLL in a debug fashion with Microsoft Visual C++, then Visual C++ is activated. </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>In the Visual C++ window, select <span class="bold">Edit</span> <code class="codeph">&gt;</code> <span class="bold">Breakpoints</span>. </span><div>
+                           <p>Use the breakpoint identified in <code class="codeph">dbgextp.sql</code> in the PL/SQL demo directory.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-18A1B4CA-2B21-402B-A599-57980123C452__GUID-ED7D07B0-55D3-4B7C-9882-536193A6D729">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">\rdbms\extproc\readme.doc</code> (explains how to run the sample and provides debugging advice)
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../lnpls/CREATE-LIBRARY-statement.html#LNPLS99948" target="_blank"><span class="italic">Oracle Database PL/SQL Language Reference</span></a></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../jjdev/Java-applications-in-database.html#JJDEV02000" target="_blank"><span class="italic">Oracle Database Java Developer's Guide</span></a></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../adfns/design_basics.html#ADFNS010" target="_blank"><span class="italic">Oracle Database Development Guide</span></a> for more information about "Calling External Procedures"
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../addci/implementing-data-cartridges-in-C-CPP-and-java.html#ADDCI4343" target="_blank"><span class="italic">Oracle Database Data Cartridge Developer's Guide</span></a></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </li>
+                  </ol>
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="about-debugging-external-procedures.html#GUID-60BD9F96-6261-400E-9DFB-97ADF92F23B6" title="Usually, when an external procedure fails, its C prototype is faulty.">About Debugging External Procedures</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

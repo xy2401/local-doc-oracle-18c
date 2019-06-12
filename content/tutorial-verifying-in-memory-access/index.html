@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: F10682-01 -->
+    <!-- Published date: September 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Verifying In-Memory Access</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="This tutorial shows how to populate tables in the In-Memory column store, query the tables, and then read the execution plan to determine whether the IM column store was accessed.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="contentid" content="10772">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-10-16T08:55:21+00:00">
+    <meta name="dcterms.title" content="Verifying In-Memory Access">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="TUTORIAL-VERIFYING-IN-MEMORY-ACCESS">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="F10682-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Verifying
+        In-Memory Access</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p>This 10-minute tutorial shows you how to populate tables in the
+                In-Memory Column Store (IM column store), query them, and then
+                read the execution plan to determine whether the query accessed
+                In-Memory data.</p>
+              <h3>Background</h3>
+              <p>The IM column store maintains copies of tables, partitions, and
+                individual columns in a special compressed columnar format that
+                is optimized for rapid scans. The IM column store resides in the
+                In-Memory Area, which is an optional portion of the system
+                global area (SGA).<br>
+                <br>
+                You use DDL statements to populate tables and partitions into
+                the IM column store. To find out whether tables and partitions
+                are fully populated, query <code>V$IM_SEGMENTS</code>. To find
+                out whether a query accessed a populated table, look for the
+                keyword <code>INMEMORY</code> in the Operation column of the
+                query plan.</p>
+              <p>This tutorial illustrates a performance optimization known as a
+                <strong>Bloom filter</strong>. The database creates an array by
+                scanning one table, and then uses the array to filter rows while
+                scanning another table. In-Memory queries often use Bloom
+                filters.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Oracle Database 18c test database</li>
+                <li>A database administrator account</li>
+                <li>Sample schemas installed</li>
+                <li>IM column store enabled</li>
+                <li>Familiarity with IM column store table creation and
+                  population</li>
+                <li>Familiarity with displaying and reading execution plans</li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Set Up
+                the Environment</h2>
+              <ol>
+                <li>Log in to the database as an administrator.
+                  <pre><code>CONNECT SYSTEM
+Password: *******</code></pre>
+                </li>
+                <li>Ensure that the IM column store is enabled by querying its
+                  size.<br>
+                  <pre><code>SQL&gt; COL NAME FORMAT a20<br>SQL&gt; SELECT NAME, VALUE/(1024*1024) AS SIZE_MB FROM V$SGA WHERE NAME='In-Memory Area';
+
+NAME                    SIZE_MB
+-------------------- ----------
+In-Memory Area              352</code></pre>
+                </li>
+                <li>Remove any existing cursors and memory buffers.<br>
+                  <pre><code>SQL&gt; ALTER SYSTEM FLUSH SHARED_POOL;
+<br>System altered<br><br>SQL&gt; ALTER SYSTEM FLUSH BUFFER_CACHE;
+
+System altered.
+</code></pre> </li>
+                <li>Disable adaptive statistics and SQL plan management, so they
+                  won't be used when you rerun the sample query.<br>
+                  <pre><code>SQL&gt; ALTER SYSTEM SET OPTIMIZER_ADAPTIVE_STATISTICS=FALSE SCOPE=</code><code><code>MEMORY</code>;
+
+System altered.<br><br>SQL&gt; ALTER SYSTEM SET OPTIMIZER_CAPTURE_SQL_PLAN_BASELINES=FALSE SCOPE=</code><code><code>MEMORY</code>;
+
+System altered.</code></pre>
+                </li>
+                <li>Set the level of statistics gathering to <code>ALL</code>
+                  so that all plan statistics are gathered.<br>
+                  <pre><code>SQL&gt; ALTER SYSTEM SET STATISTICS_LEVEL=ALL SCOPE=MEMORY;
+
+System altered.</code></pre>
+                </li>
+                <li>Insert 100,000 rows into <code>customers</code>.<br>
+                  <pre><code>SQL&gt; INSERT INTO sh.customers <br>  2    SELECT rownum+104500,'Shivani','Balasubramanian','F',1966,null,'1234 Southland Drive',99922,'Los Angeles',51806,'CA',52567,52790,'777-222-5555',null,null,null,'Customer total',52772,null,null,null,null <br>  3    FROM DUAL <br>  4    CONNECT BY ROWNUM&lt;100001;
+
+100000 rows created.<br><br>SQL&gt; COMMIT<br></code></pre>
+                </li>
+                <li>Gather optimizer statistics for <code>sales</code> and <code>customers</code>.<br>
+                  <pre><code>SQL&gt; EXEC DBMS_STATS.GATHER_TABLE_STATS ('SH', 'SALES');
+
+PL/SQL procedure successfully completed.<br>
+SQL&gt; EXEC DBMS_STATS.GATHER_TABLE_STATS ('SH', 'CUSTOMERS');
+
+PL/SQL procedure successfully completed.<br></code></pre>
+                </li>
+                <li>Ensure that <code>sales</code> and <code>customers</code>
+                  are not currently populated.<br>
+                  <pre><code>SQL&gt; ALTER TABLE sh.sales NO INMEMORY;<br><br>Table altered.
+<br>SQL&gt; ALTER TABLE sh.customers NO INMEMORY;<br><br>Table altered.<br></code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Populate
+                sales into the IM Column Store</h2>
+              <ol>
+                <li>Enable <code>sales</code>, but not <code>customers</code>,
+                  for In-Memory access.<br>
+                  <pre><code>SQL&gt; ALTER TABLE sh.sales INMEMORY;
+
+Table altered.
+</code></pre> The <code>sales</code> table has the default priority level of <code>NONE</code>.
+                  The database won't automatically populate the table, so you
+                  need to populate manually.<br>
+                </li>
+                <li>Use the <code>FULL</code> hint to force a full scan of <code>sales</code>,
+                  which initiates population.<br>
+                  <pre><code>SQL&gt; SET LINESIZE 170
+SQL&gt; SET PAGESIZE 5000
+SQL&gt; SELECT /*+ FULL(sales) NO_PARALLEL(sales) */ COUNT(*) FROM sh.sales;
+
+  COUNT(*)
+----------
+    918843</code></pre>
+                </li>
+                <li>Confirm that all 16 <code>sales</code> partitions are
+                  populated in the IM column store.<br>
+                  <pre><code>SQL&gt; SELECT COUNT(*) FROM V$IM_SEGMENTS WHERE SEGMENT_NAME = 'SALES' AND POPULATE_STATUS = 'COMPLETED';
+
+  COUNT(*)
+----------
+        16<br></code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Test
+                Query Access of the IM Column Store</h2>
+              <ol>
+                <li>Join <code>sales</code> to <code>customers</code>,
+                  filtering on the <code>cust_last_name</code> column. The <code>PRE_IMPOP</code>
+                  comment enables you to identify the query in <code>V$SQL</code>.<br>
+                  <pre><code>SQL&gt; COL cust_last_name FORMAT a15
+SQL&gt; COL cust_first_name FORMAT a15
+SQL&gt; SELECT /* PRE_IMPOP */ c.cust_id, c.cust_last_name, c.cust_first_name, SUM(s.amount_sold)
+  2  FROM sh.sales s, sh.customers c
+  3  WHERE s.cust_id = c.cust_id
+  4  AND c.cust_last_name LIKE 'Aa%'
+  5  GROUP BY c.cust_id, c.cust_last_name, c.cust_first_name
+  6  ORDER BY c.cust_id;
+</code></pre> <br>
+                  The first 5 rows of the output are shown below:
+                  <pre><code>    CUST_ID CUST_LAST_NAME  CUST_FIRST_NAME SUM(S.AMOUNT_SOLD)
+---------- --------------- --------------- ------------------
+       451 Aaron           Dalila                    17181.64
+      1271 Aaron           Tara                      14873.47
+      1981 Aaron           Opal                      26258.07
+      3404 Aaron           Dolly                     18217.73
+      4115 Aaron           Abel                       4872.26
+...<br></code></pre>
+                </li>
+                <li>Display the query plan. <br>
+                  <pre><code>SQL&gt; SET PAGESIZE 0
+SQL&gt; SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(FORMAT=&gt;'TYPICAL')); <br></code></pre>
+                  The complete output is in <a href="files/code1.txt" target="_blank">code1.txt</a>.</li>
+                <li>Read the plan to determine whether the query accessed the IM
+                  column store.<br>
+                  <br>
+                  The plan steps are shown below:<br>
+                  <pre><code>------------------------------------------------------------------------------------------------------------
+| Id  | Operation                      | Name      | Rows  | Bytes | Cost (%CPU)| Time     | Pstart| Pstop |
+------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT               |           |       |       |   951 (100)|          |       |       |
+|   1 |  SORT GROUP BY                 |           |  3280 |   115K|   951   (2)| 00:00:01 |       |       |
+|*  2 |   HASH JOIN                    |           | 22267 |   782K|   950   (2)| 00:00:01 |       |       |
+|   3 |    JOIN FILTER CREATE          | :BF0000   |   171 |  4446 |   917   (1)| 00:00:01 |       |       |
+|*  4 |     <strong>TABLE ACCESS FULL</strong>          | CUSTOMERS |   171 |  4446 |   917   (1)| 00:00:01 |       |       |
+|   5 |    JOIN FILTER USE             | :BF0000   |   918K|  8973K|    31  (20)| 00:00:01 |       |       |
+|   6 |     PARTITION RANGE ALL        |           |   918K|  8973K|    31  (20)| 00:00:01 |     1 |    28 |
+|*  7 |      TABLE ACCESS <strong>INMEMORY </strong>FULL| SALES     |   918K|  8973K|    31  (20)| 00:00:01 |     1 |    28 |<br></code></pre>
+                  Step 2 indicates a hash join. In Step 4, the database scans <code>customers</code>.
+                  The operation <code>TABLE ACCESS FULL</code> does <em>not</em>
+                  include the keyword <code>INMEMORY</code>, which means that
+                  the database reads from the buffer cache, not the IM column
+                  store. Note that the cost of the <code>customers</code> scan
+                  is 917, which is 96% of the total query cost of 951. <br>
+                  <br>
+                  Step 7 includes the keyword <code>INMEMORY</code>, meaning
+                  that the database scans <code>sales</code> in the IM column
+                  store. In Step 3, the database creates a Bloom filter named <code>:BF0000</code>.
+                  Step 5 indicates that the query uses the Bloom filter created
+                  in Step 3 to filter rows while scanning the <code>sales</code>
+                  table. The cost of the full scan of <code>sales</code> is
+                  only 3% of the cost of the full scan of <code>customers</code>,
+                  even though <code>sales</code> has around 6 times as many
+                  rows.</li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_4" role="button" style="text-align: left;"><img src="./img/32_4.png" alt="section 4" class="num_circ" height="32" width="32">Populate
+                customers into the IM Column Store</h2>
+              <ol>
+                <li>Flush the shared pool again so that the second query has a
+                  similar environment to the first query.<br>
+                  <pre><code>SQL&gt; ALTER SYSTEM FLUSH BUFFER_CACHE;
+
+System altered.</code></pre>
+                </li>
+                <li><code></code> Enable <code>customers</code> for In-Memory
+                  access.<br>
+                  <pre><code>SQL&gt; ALTER TABLE sh.customers INMEMORY;
+
+Table altered.
+</code><code></code></pre></li>
+                <li>Use the <code>FULL</code> hint to force a full scan of <code>customers</code>.<br>
+                  <pre><code>SQL&gt; SET LINESIZE 170
+SQL&gt; SET PAGESIZE 5000
+SQL&gt; SELECT /*+ FULL(customers) NO_PARALLEL(customers) */ COUNT(*) FROM sh.customers;
+
+  COUNT(*)
+----------
+    155500</code></pre>
+                </li>
+                <li>Confirm that <code>customers</code> is fully populated in
+                  the IM column store.<br>
+                  <pre><code>SQL&gt; SELECT COUNT(*) FROM V$IM_SEGMENTS WHERE SEGMENT_NAME = 'CUSTOMERS' AND POPULATE_STATUS = 'COMPLETED';
+
+  COUNT(*)
+----------
+         1</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_5" role="button" style="text-align: left;"><img src="./img/32_5.png" alt="section 5" class="num_circ" height="32" width="32">Re-Execute
+                the Query</h2>
+              <ol>
+                <li>Rerun the join query. The <code>POST_IMPOP</code> comment
+                  enables you to identify the query in <code>V$SQL</code>.<br>
+                  <pre><code><code>SQL&gt; COL cust_last_name FORMAT a15
+SQL&gt; COL cust_first_name FORMAT a15
+SQL&gt; SELECT /* POST_IMPOP */ c.cust_id, c.cust_last_name, c.cust_first_name, SUM(s.amount_sold)
+  2  FROM sh.sales s, sh.customers c
+  3  WHERE s.cust_id = c.cust_id
+  4  AND c.cust_last_name LIKE 'Aa%'
+  5  GROUP BY c.cust_id, c.cust_last_name, c.cust_first_name
+  6  ORDER BY c.cust_id;</code>
+</code></pre> </li>
+                <li>View the query plan stored in the cursor. <br>
+                  <pre><code>SQL&gt; SET PAGESIZE 0
+SQL&gt; SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(FORMAT=&gt;'TYPICAL')); 
+</code></pre>The complete output is shown in <a href="files/code2.txt" target="_blank">code2.txt</a>.
+                </li>
+                <li>Read the plan to determine whether the query accessed the IM
+                  column store.<br>
+                  <br>
+                  The plan steps are shown below:<br>
+                  <pre><code>------------------------------------------------------------------------------------------------------------
+| Id  | Operation                      | Name      | Rows  | Bytes | Cost (%CPU)| Time     | Pstart| Pstop |
+------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT               |           |       |       |    71 (100)|          |       |       |
+|   1 |  SORT GROUP BY                 |           |  3280 |   115K|    71  (17)| 00:00:01 |       |       |
+|*  2 |   HASH JOIN                    |           | 22267 |   782K|    69  (15)| 00:00:01 |       |       |
+|   3 |    JOIN FILTER CREATE          | :BF0000   |   171 |  4446 |    36   (6)| 00:00:01 |       |       |
+|*  4 |     TABLE ACCESS <strong>INMEMORY</strong> FULL | CUSTOMERS |   171 |  4446 |    36   (6)| 00:00:01 |       |       |
+|   5 |    JOIN FILTER USE             | :BF0000   |   918K|  8973K|    31  (20)| 00:00:01 |       |       |
+|   6 |     PARTITION RANGE ALL        |           |   918K|  8973K|    31  (20)| 00:00:01 |     1 |    28 |
+|*  7 |      TABLE ACCESS INMEMORY FULL| SALES     |   918K|  8973K|    31  (20)| 00:00:01 |     1 |    28 |
+</code></pre>The operations are the same except for Step 4. Now the operation <code>TABLE
+                    ACCESS FULL</code> includes the keyword <code>INMEMORY</code>,
+                  which means that the operation scans <code>customers</code>
+                  in the IM column store. <br>
+                  <br>
+                  The cost of the full scan of <code>customers</code> is now
+                  about half of the total cost of the query, as compared to 96%
+                  of the total cost in the first query. The cost of the <code>customers</code>
+                  scan is now only slightly higher than the cost of the <code>sales</code>
+                  scan. Accessing <code>customers</code> in the IM column store
+                  makes the query more efficient.<br>
+                </li>
+              </ol>
+              <ol>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_6" role="button" style="text-align: left;"><img src="./img/32_6.png" alt="section 6" class="num_circ" height="32" width="32">Compare
+                the Query Times</h2>
+              <ol>
+                <li>Query <code>V$SQL</code><code></code> for the elapsed times
+                  of the two queries.<br>
+                  <pre><code>SQL&gt; SET PAGESIZE 5000
+SQL&gt; COL SQL_TEXT FORMAT a45
+SQL&gt; SELECT /* SYSQUERY */ SUBSTR(SQL_TEXT,1,45) AS SQL_TEXT, ELAPSED_TIME
+  2  FROM V$SQL
+  3  WHERE SQL_TEXT LIKE '%IMPOP%'
+  4  AND SQL_TEXT NOT LIKE '%SYSQUERY%'
+  5  ORDER BY ELAPSED_TIME;
+
+SQL_TEXT                                      ELAPSED_TIME
+--------------------------------------------- ------------
+SELECT /* POST_IMPOP */ c.cust_id, c.cust_las        51610
+SELECT /* PRE_IMPOP */ c.cust_id, c.cust_last       193338
+</code></pre>The second query, which accessed only In-Memory data, ran almost 4
+                  times as fast as the first query.</li>
+              </ol>
+              <ol>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_7" role="button" style="text-align: left;"><img src="./img/32_7.png" alt="section 7" class="num_circ" height="32" width="32">Clean
+                Up</h2>
+              <ol>
+                <li>Reset initialization parameters to default values.<br>
+                  <pre><code>SQL&gt; ALTER SYSTEM RESET OPTIMIZER_ADAPTIVE_STATISTICS SCOPE=MEMORY;
+
+System altered.
+
+SQL&gt; ALTER SYSTEM RESET OPTIMIZER_CAPTURE_SQL_PLAN_BASELINES SCOPE=MEMORY;
+
+System altered.
+
+SQL&gt; ALTER SYSTEM RESET STATISTICS_LEVEL SCOPE=MEMORY;
+
+System altered.</code></pre>
+                </li>
+                <li>Remove the In-Memory representations of <code>sales</code>
+                  and <code>customers</code> from the IM column store.<br>
+                  <pre><code></code><code>SQL&gt; ALTER TABLE sh.sales NO INMEMORY;<br><br>Table altered.
+<br>SQL&gt; ALTER TABLE sh.customers NO INMEMORY;<br><br>Table altered.</code></pre>
+                </li>
+                <li>Delete the added rows from <code>customers</code>.<br>
+                  <pre><code>SQL&gt; DELETE FROM sh.customers WHERE cust_id &gt; 104500;<br><br>100000 rows deleted.<br>
+SQL&gt; COMMIT</code><code></code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr><!-- Include the More Information section only in a single or the final lab or tutorial in a series -->
+            <section>
+              <h2 id="more_info" role="button" style="text-align: left;"><img src="./img/32_more.png" alt="more information" class="num_circ" height="32" width="32">Want
+                to Learn More?</h2>
+              <ul>
+                <li><a href="http://www.oracle.com/pls/topic/lookup?ctx=dblatest&amp;id=INMEM-GUID-C5F856BF-70E3-41C6-A1BA-1E94D7D230B8" target="_blank">Enabling Objects for In-Memory Population<br>
+                  </a></li>
+                <li><a href="http://www.oracle.com/pls/topic/lookup?ctx=dblatest&amp;id=TGSQL-GUID-60E30B1C-342B-4D71-B154-C26623D6A3B1" target="_blank">Explaining and Displaying Execution Plans</a></li>
+                <li><a href="http://www.oracle.com/pls/topic/lookup?ctx=dblatest&amp;id=GUID-C9E0663B-822E-4733-8016-E56A73D903F3" target="_blank">Bloom Filters</a></li>
+              </ul>
+            </section>
+            <hr> </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+  </body>
+</html>

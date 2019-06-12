@@ -1,0 +1,128 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="Follow this procedure to prepare, create, and run Oracle Database instances on Leaf Nodes.">
+      <meta name="description" content="Follow this procedure to prepare, create, and run Oracle Database instances on Leaf Nodes.">
+      <title>Running Oracle Database Instances on Leaf Nodes</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Installation Guide">
+      <meta property="og:description" content="Follow this procedure to prepare, create, and run Oracle Database instances on Leaf Nodes.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Installation Guide for Linux and UNIX">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="real-application-clusters-installation-guide-linux-and-unix.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-07-16T02:54:22-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2013, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84128-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="using-dbca-to-create-an-oracle-rac-one-node-database.html" title="Previous" type="text/html">
+      <link rel="next" href="installing-the-oracle-database-vault-option.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Real Application Clusters Installation Guide for Linux and UNIX">
+    <meta name="dcterms.isVersionOf" content="RILIN">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="using-dbca-to-create-an-oracle-rac-one-node-database.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="installing-the-oracle-database-vault-option.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Installation Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="selecting-dbca-options-to-create-oracle-rac-or-oracle-rac-one-node-databases-with-dbca.html" property="item" typeof="WebPage"><span property="name">Creating Oracle RAC or Oracle RAC One Node Databases with DBCA </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Running Oracle Database Instances on Leaf Nodes</li>
+            </ol>
+            <a id="GUID-35BDCD41-375D-4EB2-B0FC-49345AF6C572" name="GUID-35BDCD41-375D-4EB2-B0FC-49345AF6C572"></a>
+            
+            <h2 id="RILIN-GUID-35BDCD41-375D-4EB2-B0FC-49345AF6C572" class="sect2">Running Oracle Database Instances on Leaf Nodes</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Follow this procedure to prepare, create, and run Oracle Database instances on Leaf Nodes.</p>
+               <div class="section">You can use Leaf Nodes to host Oracle RAC database instances that run in read-only mode. These nodes are called reader nodes. You can optimize these nodes for parallel query operations by provisioning nodes with a large amount of memory so that data is cached in the Leaf Node.</div>
+               <!-- class="section" -->
+               <ol>
+                  <li class="stepexpand"><span>Prepare the nodes as follows:</span><ol type="a">
+                        <li class="substepexpand"><span>Connect Leaf Nodes to storage, if not already connected. </span><div>Running database instances on Leaf Nodes requires that they have direct storage access. </div>
+                        </li>
+                        <li class="substepexpand"><span>Install Oracle Database home on all required nodes, and at least one Hub Node. See the topic <cite>Using Oracle Universal Installer to Install Oracle RAC</cite> for the procedure to install Oracle RAC.</span><div>To run a database instance on a Leaf Node, you must install a database home, similar to any other node.</div>
+                        </li>
+                        <li class="substepexpand"><span>Extend public network to Leaf Nodes:</span><div><pre class="pre codeblock"><code>srvctl modify network -netnum 1 -extendtoleaf YES
+srvctl add vip -node <span class="variable">leaf_node</span> -netnum 1 -address
+<span class="variable">leaf_node_vip</span>
+srvctl start vip -node <span class="variable">leaf_node</span>
+srvctl modify listener -extendtoleaf YES</code></pre><p>If you use Grid Naming Service (GNS) and Dynamic Host Configuration Protocol (DHCP) for your cluster, then run the following, instead of the above command:</p>
+                              <div class="p"><pre class="pre codeblock"><code>srvctl modify network -netnum 1 -extendtoleaf YES
+srvctl start nodeapps
+</code></pre></div>
+                           </div>
+                        </li>
+                        <li class="substepexpand"><span>Check if the Leaf Node is an Oracle RAC Reader Node:</span><div><pre class="pre codeblock"><code>crsctl get cluster type</code></pre></div>
+                        </li>
+                     </ol>
+                  </li>
+                  <li class="stepexpand"><span>Create a policy-managed Oracle RAC database using Oracle Database Configuration Assistant (DBCA).</span><div>Oracle RAC Reader Nodes and Massive Parallel Query Oracle RAC require a policy-managed database. You cannot extend admin-managed databases to Leaf Nodes.</div>
+                     <ol type="a">
+                        <li><span>For Massive Parallel Query RAC, create new server pools along with the database. Ensure that you create one Parallel Query server pool.</span></li>
+                        <li><span>For Oracle RAC Reader Nodes, create databases on Hub Nodes. The addition of database instances on Leaf nodes is dynamic and is managed from the command line. </span></li>
+                     </ol>
+                  </li>
+                  <li class="stepexpand"><span>For Oracle RAC Reader Nodes, add a Reader Farm server pool <code class="codeph">RF1POOL</code> to the system using the <code>add service</code> command:</span><div><pre class="pre codeblock"><code>srvctl add srvpool -serverpool RF1POOL -category LEAF
+srvctl add service -database rfdb -service RFWL -rfpool RF1POOL
+srvctl start service -database rfdb -service RFWL
+srvctl status service -d rfdb</code></pre></div>
+                  </li>
+                  <li class="stepexpand"><span>Connect to the database:</span><div><pre class="pre codeblock"><code>sqlplus 
+CONNECT system/mypassword@mydbserver.mydomain.com</code></pre><p>If you use a Leaf node for massive Parallel Query Oracle RAC, then you cannot connect directly to the Leaf node instance.</p>
+                     </div>
+                  </li>
+               </ol>
+            </div>
+            <div>
+               <div class="relinfo">
+                  <p><strong>Related Topics</strong></p>
+                  <ul>
+                     <li><a href="creating-an-oracle-rac-or-oracle-rac-one-node-database-with-dbca.html#GUID-8B2CB0F2-7C9C-487B-BCA6-F86E9CE1D288">Selecting DBCA Options to Create an Oracle RAC or Oracle RAC One Node Database</a></li>
+                     <li><a href="selecting-server-pool-option-in-dbca.html#GUID-4B77950D-7061-4D79-9D6E-FC52C874DDB1">Selecting Server Pool Option with DBCA</a></li>
+                     <li><a href="../cwadd/policy-based-cluster-and-capacity-management.html#CWADD-GUID-E5103867-6683-4D5C-9343-1F1F2522FEF3" target="_blank"><span class="italic">Oracle Clusterware Administration and Deployment Guide</span></a></li>
+                  </ul>
+               </div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="selecting-dbca-options-to-create-oracle-rac-or-oracle-rac-one-node-databases-with-dbca.html#GUID-46C46315-9ADD-48D1-BB98-39ACE50D1E83" title="Use Oracle Database Configuration Assistant (DBCA) in standalone mode to create and delete Oracle Real Application Clusters (Oracle RAC) databases.">Creating Oracle RAC or Oracle RAC One Node Databases with DBCA</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

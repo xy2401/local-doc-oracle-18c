@@ -1,0 +1,1863 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Monitoring Oracle Streams Implicit Capture</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="monitoring-the-oracle-streams-topology-and-performance.html" title="Previous" type="text/html">
+      <link rel="next" href="monitoring-oracle-streams-queues-and-propagations.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="monitoring-the-oracle-streams-topology-and-performance.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="monitoring-oracle-streams-queues-and-propagations.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="monitoring-oracle-streams.html" property="item" typeof="WebPage"><span property="name">    Monitoring Oracle Streams </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Monitoring Oracle Streams Implicit Capture </li>
+            </ol>
+            <a id="GUID-B7863B6C-DD48-4399-98DA-B784494493E2" name="GUID-B7863B6C-DD48-4399-98DA-B784494493E2"></a><a id="STRMS877"></a>
+            
+            <h2 id="STRMS-GUID-B7863B6C-DD48-4399-98DA-B784494493E2" class="sect2"><span class="enumeration_chapter">24 </span> Monitoring Oracle Streams Implicit Capture 
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Both <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es and <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s perform <a href="strms_glossary.html#GUID-04C4D4DA-E8A9-443C-BA48-5D89A435D642"><span class="xrefglossterm">implicit capture</span></a>.
+               </p>
+               <p>The following topics describe monitoring Oracle Streams implicit capture:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-F763BE4D-CE6B-4C91-9FBF-73F9E75D5A62">Monitoring a Capture Process</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-667ADD9A-6516-49B1-9616-C2BC5A0131DE">Monitoring a Synchronous Capture</a></p>
+                  </li>
+                  <li>
+                     <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-C49D27E4-F401-4D91-82E7-6DD23D46006C">Viewing the Extra Attributes Captured by Implicit Capture</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-B7863B6C-DD48-4399-98DA-B784494493E2__GUID-60AA7C3E-E870-4F4C-B8C8-06AB425BCF62">
+                  <p class="notep1">Note:</p>
+                  <p>The Oracle Streams tool in Oracle Enterprise Manager Cloud Control is also an excellent way to monitor an Oracle Streams environment. See the online Help for the Oracle Streams tool for more information.</p>
+               </div>
+               <div class="infoboxnotealso" id="GUID-B7863B6C-DD48-4399-98DA-B784494493E2__GUID-D80B0917-544D-4524-8863-6E8A76DD3477">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-streams-information-capture.html#GUID-DADEDB32-7F0F-40F2-A5A5-81327102B00B"> Oracle Streams Information Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-implicit-capture.html#GUID-90617FF2-BB08-4FAF-BF19-8A65E146231E">     Managing Oracle Streams Implicit Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-implicit-capture.html#GUID-FEBDFF33-DBD9-442E-B767-D421074F4A54"> Troubleshooting Implicit Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="../refrn/index.html"><span class="italic">Oracle Database Reference </span></a>for information about the data dictionary views described in this chapter
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS878"></a><div class="props_rev_3"><a id="GUID-F763BE4D-CE6B-4C91-9FBF-73F9E75D5A62" name="GUID-F763BE4D-CE6B-4C91-9FBF-73F9E75D5A62"></a><h3 id="STRMS-GUID-F763BE4D-CE6B-4C91-9FBF-73F9E75D5A62" class="sect3"><span class="enumeration_section">24.1 </span>Monitoring a Capture Process
+               </h3>
+               <div>
+                  <p><a id="d114995e311" class="indexterm-anchor"></a><a id="d114995e315" class="indexterm-anchor"></a>This section provides sample queries that you can use to monitor Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es.
+                  </p>
+                  <p>This section contains these topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-5CD50973-870B-4873-A7D9-7A943695B680">Displaying the Queue, Rule Sets, and Status of Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-966C1A0E-ED2B-4FE7-B970-23AE80E14D77">Displaying Session Information About Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-C411554D-E789-4412-A8C7-E134FBA01460">Displaying Change Capture Information About Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-1934A1C3-EF4C-462E-8F99-B585D0413F44">Displaying State Change and Message Creation Time for Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-6A6396D3-12C9-4012-9892-9292A86547DB">Displaying Elapsed Time Performing Capture Operations for Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-252C8ABC-A493-4D44-9FCA-AF1A1DF88589">Displaying Information About Each Downstream Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-76DB43BF-5A8D-42FE-B703-FAA2CECAF03B">Displaying the Registered Redo Log Files for Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-5E8CA83A-78FD-4BD2-9F24-7669BA06CFBF">Displaying the Redo Log Files That Are Required by Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-0D2F70A7-744F-471E-AFFD-E4870A41152C">Displaying SCN Values for Each Redo Log File Used by Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-8420908E-57FF-4531-9373-08F0837DCF34">Displaying the Last Archived Redo Entry Available to Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-2443FA13-069F-4593-9439-33569F8F8962">Listing the Parameter Settings for Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-F093B60F-D952-4E78-B049-9DA686E4C087">Determining the Applied SCN for All Capture Processes in a Database</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-AD51C935-72DA-410B-B186-5C03BB43F436">Determining Redo Log Scanning Latency for Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-C8238AA2-DB5B-4C77-B7E8-0191BE681099">Determining Message Enqueuing Latency for Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-D0DDFE4E-00A1-4B54-B365-DFC8E6174C68">Displaying Information About Rule Evaluations for Each Capture Process</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-EFBDD862-0102-4BA7-80BC-60A80F3FBF3F">Determining Which Capture Processes Use Combined Capture and Apply</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-49F03EE3-1234-4C44-A1A8-92814072384C">Displaying Information About Split and Merge Operations</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-14568F8A-2CC6-44AF-A0FB-C04960ECA4A3">Monitoring Supplemental Logging</a></p>
+                     </li>
+                  </ul>
+               </div><a id="STRMS879"></a><div class="props_rev_3"><a id="GUID-5CD50973-870B-4873-A7D9-7A943695B680" name="GUID-5CD50973-870B-4873-A7D9-7A943695B680"></a><h4 id="STRMS-GUID-5CD50973-870B-4873-A7D9-7A943695B680" class="sect4"><span class="enumeration_section">24.1.1 </span>Displaying the Queue, Rule Sets, and Status of Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can display the following information about each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> in a database by running the query in this section: 
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The capture process name</p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> used by the capture process
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> used by the capture process
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> used by the capture process
+                              </p>
+                           </li>
+                           <li>
+                              <p>The status of the capture process, which can be <code class="codeph">ENABLED</code>, <code class="codeph">DISABLED</code>, or <code class="codeph">ABORTED</code></p>
+                           </li>
+                        </ul>
+                        <p>To display this general information about each capture process in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Process|Name' FORMAT A15
+COLUMN QUEUE_NAME HEADING 'Capture|Process|Queue' FORMAT A15
+COLUMN RULE_SET_NAME HEADING 'Positive|Rule Set' FORMAT A15
+COLUMN NEGATIVE_RULE_SET_NAME HEADING 'Negative|Rule Set' FORMAT A15
+COLUMN STATUS HEADING 'Capture|Process|Status' FORMAT A15
+
+SELECT CAPTURE_NAME, QUEUE_NAME, RULE_SET_NAME, NEGATIVE_RULE_SET_NAME, STATUS 
+   FROM DBA_CAPTURE;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture         Capture                                         Capture
+Process         Process         Positive        Negative        Process
+Name            Queue           Rule Set        Rule Set        Status
+--------------- --------------- --------------- --------------- ---------------
+STRM01_CAPTURE  STREAMS_QUEUE   RULESET$_25     RULESET$_36     ENABLED
+</pre><p>If the status of a capture process is <code class="codeph">ABORTED</code>, then you can query the <code class="codeph">ERROR_NUMBER</code> and <code class="codeph">ERROR_MESSAGE</code> columns in the <code class="codeph">DBA_CAPTURE</code> data dictionary view to determine the error.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-5CD50973-870B-4873-A7D9-7A943695B680__GUID-985C0FAD-3516-4279-B8B4-2281E36F522B">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="troubleshooting-implicit-capture.html#GUID-46A5B8C0-288D-4B75-B64B-185FA30F293F">Is the Capture Process Enabled?</a>"</span> for an example query that shows the error number and error message if a capture process is aborted
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1687"></a><div class="props_rev_3"><a id="GUID-966C1A0E-ED2B-4FE7-B970-23AE80E14D77" name="GUID-966C1A0E-ED2B-4FE7-B970-23AE80E14D77"></a><h4 id="STRMS-GUID-966C1A0E-ED2B-4FE7-B970-23AE80E14D77" class="sect4"><span class="enumeration_section">24.1.2 </span>Displaying Session Information About Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following session information about each session associated with a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> in a database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The capture process component</p>
+                           </li>
+                           <li>
+                              <p>The session identifier</p>
+                           </li>
+                           <li>
+                              <p>The serial number</p>
+                           </li>
+                           <li>
+                              <p>The operating system process identification number</p>
+                           </li>
+                           <li>
+                              <p>The process name of the capture process in the form <code class="codeph">CP</code><span class="italic"><code class="codeph">nn</code></span>, where <span class="italic"><code class="codeph">nn</code></span> can include letters and numbers
+                              </p>
+                           </li>
+                        </ul>
+                        <p>To display this information for each capture process in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN ACTION HEADING 'Capture Process Component' FORMAT A25
+COLUMN SID HEADING 'Session ID' FORMAT 99999
+COLUMN SERIAL# HEADING 'Session|Serial|Number' FORMAT 99999999
+COLUMN PROCESS HEADING 'Operating System|Process Number' FORMAT A20
+COLUMN PROCESS_NAME HEADING 'Process|Name' FORMAT A7
+ 
+SELECT /*+PARAM('_module_action_old_length',0)*/ ACTION,
+       SID,
+       SERIAL#,
+       PROCESS,
+       SUBSTR(PROGRAM,INSTR(PROGRAM,'(')+1,4) PROCESS_NAME
+  FROM V$SESSION
+  WHERE MODULE ='Streams' AND
+        ACTION LIKE '%Capture%';
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                                       Session
+                                        Serial Operating System     Process
+Capture Process Component Session ID    Number Process Number       Name
+------------------------- ---------- --------- -------------------- -------
+EMDBA$CAP - Capture               74         9 10019                CP01
+</pre><div class="infoboxnotealso" id="GUID-966C1A0E-ED2B-4FE7-B970-23AE80E14D77__GUID-5EC41035-6D2B-45B5-BB19-3F6B400F2D24">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-00C97579-1532-4535-8CB3-A4CDF5A99097">Capture Process Subcomponents</a>"</span> for information about capture process parallelism
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS880"></a><div class="props_rev_3"><a id="GUID-C411554D-E789-4412-A8C7-E134FBA01460" name="GUID-C411554D-E789-4412-A8C7-E134FBA01460"></a><h4 id="STRMS-GUID-C411554D-E789-4412-A8C7-E134FBA01460" class="sect4"><span class="enumeration_section">24.1.3 </span>Displaying Change Capture Information About Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information about each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> in a database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the capture process.</p>
+                           </li>
+                           <li>
+                              <p>The process number <code class="codeph">CP</code><span class="italic"><code class="codeph">nn</code></span>, where <span class="italic"><code class="codeph">nn</code></span> can include letters and numbers
+                              </p>
+                           </li>
+                           <li>
+                              <p>The session identifier.</p>
+                           </li>
+                           <li>
+                              <p>The serial number of the session.</p>
+                           </li>
+                           <li>
+                              <p>The current state of the capture process</p>
+                              <p>See <span class="q">"<a href="oracle-streams-information-capture.html#GUID-6EFCAFE0-E325-4C9F-B9A7-5F9493344DFC">Capture Process States</a>"</span>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The total number of redo entries passed by LogMiner to the capture process for detailed <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> evaluation. A capture process converts a redo entry into a <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> and performs detailed rule evaluation on the message when capture process prefiltering cannot discard the change.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The total number LCRs enqueued since the capture process was last started.</p>
+                           </li>
+                        </ul>
+                        <p>To display this information for each capture process in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Name' FORMAT A7
+COLUMN PROCESS_NAME HEADING 'Capture|Process|Number' FORMAT A7
+COLUMN SID HEADING 'Session|ID' FORMAT 9999
+COLUMN SERIAL# HEADING 'Session|Serial|Number' FORMAT 9999
+COLUMN STATE HEADING 'State' FORMAT A20
+COLUMN TOTAL_MESSAGES_CAPTURED HEADING 'Redo|Entries|Evaluated|In Detail' FORMAT 9999999
+COLUMN TOTAL_MESSAGES_ENQUEUED HEADING 'Total|LCRs|Enqueued' FORMAT 9999999999
+
+SELECT c.CAPTURE_NAME,
+       SUBSTR(s.PROGRAM,INSTR(s.PROGRAM,'(')+1,4) PROCESS_NAME, 
+       c.SID,
+       c.SERIAL#, 
+       c.STATE,
+       c.TOTAL_MESSAGES_CAPTURED,
+       c.TOTAL_MESSAGES_ENQUEUED 
+  FROM V$STREAMS_CAPTURE c, V$SESSION s
+  WHERE c.SID = s.SID AND
+        c.SERIAL# = s.SERIAL#;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                                                          Redo
+        Capture         Session                        Entries       Total
+Capture Process Session  Serial                      Evaluated        LCRs
+Name    Number       ID  Number State                In Detail    Enqueued
+------- ------- ------- ------- -------------------- --------- -----------
+CAPTURE CP01        954       3 CAPTURING CHANGES      3719085     3389713
+_HNS
+</pre><p>The number of redo entries scanned can be higher than the number of DML and DDL redo entries captured by a capture process. Only DML and DDL redo entries that satisfy the <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s of a capture process are captured and enqueued into the capture process <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>. Also, the total LCRs enqueued includes LCRs that contain transaction control statements. These row LCRs contain directives such as <code class="codeph">COMMIT</code> and <code class="codeph">ROLLBACK</code>. Therefore, the total LCRs enqueued is a number higher than the number of row changes and DDL changes enqueued by a capture process.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-C411554D-E789-4412-A8C7-E134FBA01460__GUID-BA44168D-AC0B-47B8-B809-884BE5028E13">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-326872EA-5C68-4BDA-B0A3-4E191A8E726C">Row LCRs</a>"</span> for more information about transaction control statements
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS881"></a><div class="props_rev_3"><a id="GUID-1934A1C3-EF4C-462E-8F99-B585D0413F44" name="GUID-1934A1C3-EF4C-462E-8F99-B585D0413F44"></a><h4 id="STRMS-GUID-1934A1C3-EF4C-462E-8F99-B585D0413F44" class="sect4"><span class="enumeration_section">24.1.4 </span>Displaying State Change and Message Creation Time for Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information for each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> in a database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the capture process</p>
+                           </li>
+                           <li>
+                              <p>The current state of the capture process</p>
+                              <p>See <span class="q">"<a href="oracle-streams-information-capture.html#GUID-6EFCAFE0-E325-4C9F-B9A7-5F9493344DFC">Capture Process States</a>"</span>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The date and time when the capture process state last changed</p>
+                           </li>
+                           <li>
+                              <p>The date and time when the capture process last created an LCR</p>
+                           </li>
+                        </ul>
+                        <p>To display this information for each capture process in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Name' FORMAT A15
+COLUMN STATE HEADING 'State' FORMAT A27
+COLUMN STATE_CHANGED HEADING 'State|Change Time'
+COLUMN CREATE_MESSAGE HEADING 'Last Message|Create Time'
+
+SELECT CAPTURE_NAME,
+       STATE,
+       TO_CHAR(STATE_CHANGED_TIME, 'HH24:MI:SS MM/DD/YY') STATE_CHANGED,
+       TO_CHAR(CAPTURE_MESSAGE_CREATE_TIME, 'HH24:MI:SS MM/DD/YY') CREATE_MESSAGE
+  FROM V$STREAMS_CAPTURE;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Capture                                     State             Last Message
+Name            State                       Change Time       Create Time
+--------------- --------------------------- ----------------- -----------------
+CAPTURE_SIMP    CAPTURING CHANGES           13:24:42 11/08/04 13:24:41 11/08/04
+</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS882"></a><div class="props_rev_3"><a id="GUID-6A6396D3-12C9-4012-9892-9292A86547DB" name="GUID-6A6396D3-12C9-4012-9892-9292A86547DB"></a><h4 id="STRMS-GUID-6A6396D3-12C9-4012-9892-9292A86547DB" class="sect4"><span class="enumeration_section">24.1.5 </span>Displaying Elapsed Time Performing Capture Operations for Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The query in this section displays the following information for each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> in a database:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the capture process</p>
+                           </li>
+                           <li>
+                              <p>The elapsed capture time, which is the amount of time (in seconds) spent scanning for changes in the redo log since the capture process was last started</p>
+                           </li>
+                           <li>
+                              <p>The elapsed <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> evaluation time, which is the amount of time (in seconds) spent evaluating rules since the capture process was last started
+                              </p>
+                           </li>
+                           <li>
+                              <p>The elapsed enqueue time, which is the amount of time (in seconds) spent enqueuing <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s since the capture process was last started
+                              </p>
+                           </li>
+                           <li>
+                              <p>The elapsed LCR creation time, which is the amount of time (in seconds) spent creating logical change records (LCRs) since the capture process was last started</p>
+                           </li>
+                           <li>
+                              <p>The elapsed pause time, which is the amount of time (in seconds) spent paused for flow control since the capture process was last started</p>
+                           </li>
+                        </ul>
+                        <div class="infoboxnote" id="GUID-6A6396D3-12C9-4012-9892-9292A86547DB__GUID-6D4B5CC0-DCC2-4E4A-BA59-0D4F430C366D">
+                           <p class="notep1">Note:</p>
+                           <p>All times for this query are displayed in seconds. The <code class="codeph">V$STREAMS_CAPTURE</code> view displays elapsed time in centiseconds by default. A centisecond is one-hundredth of a second. The query in this section divides each elapsed time by one hundred to display the elapsed time in seconds.
+                           </p>
+                        </div>
+                        <p>To display this information for each capture process in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Name' FORMAT A15
+COLUMN ELAPSED_CAPTURE_TIME HEADING 'Elapsed|Capture|Time' FORMAT 99999999.99
+COLUMN ELAPSED_RULE_TIME HEADING 'Elapsed|Rule|Evaluation|Time' FORMAT 99999999.99
+COLUMN ELAPSED_ENQUEUE_TIME HEADING 'Elapsed|Enqueue|Time' FORMAT 99999999.99
+COLUMN ELAPSED_LCR_TIME HEADING 'Elapsed|LCR|Creation|Time' FORMAT 99999999.99
+COLUMN ELAPSED_PAUSE_TIME HEADING 'Elapsed|Pause|Time' FORMAT 99999999.99
+
+SELECT CAPTURE_NAME,
+       (ELAPSED_CAPTURE_TIME/100) ELAPSED_CAPTURE_TIME,
+       (ELAPSED_RULE_TIME/100) ELAPSED_RULE_TIME,
+       (ELAPSED_ENQUEUE_TIME/100) ELAPSED_ENQUEUE_TIME,
+       (ELAPSED_LCR_TIME/100) ELAPSED_LCR_TIME,
+       (ELAPSED_PAUSE_TIME/100) ELAPSED_PAUSE_TIME
+  FROM V$STREAMS_CAPTURE;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                                  Elapsed                   Elapsed
+                     Elapsed         Rule      Elapsed          LCR      Elapsed
+Capture              Capture   Evaluation      Enqueue     Creation        Pause
+Name                    Time         Time         Time         Time         Time
+--------------- ------------ ------------ ------------ ------------ ------------
+STM1$CAP             1213.92          .04        33.84       185.25       600.60</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS883"></a><div class="props_rev_3"><a id="GUID-252C8ABC-A493-4D44-9FCA-AF1A1DF88589" name="GUID-252C8ABC-A493-4D44-9FCA-AF1A1DF88589"></a><h4 id="STRMS-GUID-252C8ABC-A493-4D44-9FCA-AF1A1DF88589" class="sect4"><span class="enumeration_section">24.1.6 </span>Displaying Information About Each Downstream Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A downstream capture is a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> that runs on a database other than the <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a>. You can display the following information about each <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a> in a database by running the query in this section: 
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The capture process name</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> of the changes captured by the capture process
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> used by the capture process
+                              </p>
+                           </li>
+                           <li>
+                              <p>The status of the capture process, which can be <code class="codeph">ENABLED</code>, <code class="codeph">DISABLED</code>, or <code class="codeph">ABORTED</code></p>
+                           </li>
+                           <li>
+                              <p>Whether the downstream capture process uses a database link to the source database for administrative actions</p>
+                           </li>
+                        </ul>
+                        <p>To display this information about each downstream capture process in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Process|Name' FORMAT A15
+COLUMN SOURCE_DATABASE HEADING 'Source|Database' FORMAT A15
+COLUMN QUEUE_NAME HEADING 'Capture|Process|Queue' FORMAT A15
+COLUMN STATUS HEADING 'Capture|Process|Status' FORMAT A15
+COLUMN USE_DATABASE_LINK HEADING 'Uses|Database|Link?' FORMAT A8
+
+SELECT CAPTURE_NAME, 
+       SOURCE_DATABASE, 
+       QUEUE_NAME, 
+       STATUS, 
+       USE_DATABASE_LINK
+   FROM DBA_CAPTURE
+   WHERE CAPTURE_TYPE = 'DOWNSTREAM';
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture                              Capture         Capture         Uses
+Process         Source               Process         Process         Database
+Name            Database             Queue           Status          Link?
+--------------- -------------------- --------------- --------------- --------
+STRM03_CAPTURE  DBS1.EXAMPLE.COM     STRM03_QUEUE    ENABLED         YES
+</pre><p>In this case, the source database for the capture process is <code class="codeph">dbs1.example.com</code>, but the local database running the capture process is not <code class="codeph">dbs1.example.com</code>. Also, the capture process returned by this query uses a database link to the source database to perform administrative actions. The database link name is the same as the global name of the source database, which is <code class="codeph">dbs1.example.com</code> in this case.
+                        </p>
+                        <p>If the status of a capture process is <code class="codeph">ABORTED</code>, then you can query the <code class="codeph">ERROR_NUMBER</code> and <code class="codeph">ERROR_MESSAGE</code> columns in the <code class="codeph">DBA_CAPTURE</code> data dictionary view to determine the error.
+                        </p>
+                        <div class="infoboxnote" id="GUID-252C8ABC-A493-4D44-9FCA-AF1A1DF88589__GUID-B9DDE5A3-C44E-4CD7-A975-2604FACBC9A7">
+                           <p class="notep1">Note:</p>
+                           <p><a id="d114995e1620" class="indexterm-anchor"></a>At the source database for an Oracle Streams downstream capture process, you can query the <code class="codeph">V$ARCHIVE_DEST_STATUS</code> view to display information about the downstream database. The following columns in the view relate to the downstream database:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The <code class="codeph">TYPE</code> column shows <code class="codeph">DOWNSTREAM</code> if redo log information is being shipped to a downstream capture database.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">DESTINATION</code> column shows the name of the downstream capture database.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-252C8ABC-A493-4D44-9FCA-AF1A1DF88589__GUID-A534E86B-2EB0-4AF0-9D32-D381024B9836">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-5C1059F3-DA6E-4B0A-8179-D5304423656E">Local Capture and Downstream Capture</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating a capture process
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="troubleshooting-implicit-capture.html#GUID-46A5B8C0-288D-4B75-B64B-185FA30F293F">Is the Capture Process Enabled?</a>"</span> for an example query that shows the error number and error message if a capture process is aborted
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS884"></a><div class="props_rev_3"><a id="GUID-76DB43BF-5A8D-42FE-B703-FAA2CECAF03B" name="GUID-76DB43BF-5A8D-42FE-B703-FAA2CECAF03B"></a><h4 id="STRMS-GUID-76DB43BF-5A8D-42FE-B703-FAA2CECAF03B" class="sect4"><span class="enumeration_section">24.1.7 </span>Displaying the Registered Redo Log Files for Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can display information about the archived redo log files that are registered for each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> in a database by running the query in this section. This query displays information about these files for both <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a>es and <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a>es.
+                        </p>
+                        <p>The query displays the following information for each registered archived redo log file: </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of a capture process that uses the file</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> of the file
+                              </p>
+                           </li>
+                           <li>
+                              <p>The sequence number of the file</p>
+                           </li>
+                           <li>
+                              <p>The name and location of the file at the local site</p>
+                           </li>
+                           <li>
+                              <p>Whether the file contains the beginning of a data dictionary build</p>
+                           </li>
+                           <li>
+                              <p>Whether the file contains the end of a data dictionary build</p>
+                           </li>
+                        </ul>
+                        <p>To display this information about each registered archive redo log file in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CONSUMER_NAME HEADING 'Capture|Process|Name' FORMAT A15
+COLUMN SOURCE_DATABASE HEADING 'Source|Database' FORMAT A10
+COLUMN SEQUENCE# HEADING 'Sequence|Number' FORMAT 99999
+COLUMN NAME HEADING 'Archived Redo Log|File Name' FORMAT A20
+COLUMN DICTIONARY_BEGIN HEADING 'Dictionary|Build|Begin' FORMAT A10
+COLUMN DICTIONARY_END HEADING 'Dictionary|Build|End' FORMAT A10
+
+SELECT r.CONSUMER_NAME,
+       r.SOURCE_DATABASE,
+       r.SEQUENCE#, 
+       r.NAME, 
+       r.DICTIONARY_BEGIN, 
+       r.DICTIONARY_END 
+  FROM DBA_REGISTERED_ARCHIVED_LOG r, DBA_CAPTURE c
+  WHERE r.CONSUMER_NAME = c.CAPTURE_NAME;  
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture                                                  Dictionary Dictionary
+Process         Source     Sequence Archived Redo Log    Build      Build
+Name            Database     Number File Name            Begin      End
+--------------- ---------- -------- -------------------- ---------- ----------
+STRM02_CAPTURE  DBS2.EXAMP       15 /orc/dbs/log/arch2_1 NO         NO
+                LE.COM              _15_478347508.arc
+STRM02_CAPTURE  DBS2.EXAMP       16 /orc/dbs/log/arch2_1 NO         NO
+                LE.COM              _16_478347508.arc 
+STRM03_CAPTURE  DBS1.EXAMP       45 /remote_logs/arch1_1 YES        YES
+                LE.COM              _45_478347335.arc
+STRM03_CAPTURE  DBS1.EXAMP       46 /remote_logs/arch1_1 NO         NO
+                LE.COM              _46_478347335.arc
+STRM03_CAPTURE  DBS1.EXAMP       47 /remote_logs/arch1_1 NO         NO
+                LE.COM              _47_478347335.arc
+</pre><p>Assume that this query was run at the <code class="codeph">dbs2.example.com</code> database, and that <code class="codeph">strm02_capture</code> is a <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a>, and <code class="codeph">strm03_capture</code> is a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a>. The <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> for the <code class="codeph">strm03_capture</code> downstream capture process is <code class="codeph">dbs1.example.com</code>. This query shows that there are two registered archived redo log files for <code class="codeph">strm02_capture</code> and three registered archived redo log files for <code class="codeph">strm03_capture</code>. This query shows the name and location of each of these files in the local file system.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-76DB43BF-5A8D-42FE-B703-FAA2CECAF03B__GUID-F96E8163-9D7A-4E39-9EB8-263F1C0F1CA1">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-657B8E26-C99D-403E-BF74-B15E122F0734">The LogMiner Data Dictionary for a Capture Process</a>"</span> for more information about data dictionary builds
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-5C1059F3-DA6E-4B0A-8179-D5304423656E">Local Capture and Downstream Capture</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP209"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring a capture process
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD">ARCHIVELOG Mode and a Capture Process</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS885"></a><div class="props_rev_3"><a id="GUID-5E8CA83A-78FD-4BD2-9F24-7669BA06CFBF" name="GUID-5E8CA83A-78FD-4BD2-9F24-7669BA06CFBF"></a><h4 id="STRMS-GUID-5E8CA83A-78FD-4BD2-9F24-7669BA06CFBF" class="sect4"><span class="enumeration_section">24.1.8 </span>Displaying the Redo Log Files That Are Required by Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> needs the redo log file that includes the <a href="strms_glossary.html#GUID-C3EC3C70-C86C-4F1F-8DDA-8C972D0EEFC2"><span class="xrefglossterm">required checkpoint SCN</span></a>, and all subsequent redo log files. You can query the <code class="codeph">REQUIRED_CHECKPOINT_SCN</code> column in the <code class="codeph">DBA_CAPTURE</code> data dictionary view to determine the required checkpoint SCN for a capture process. Redo log files before the redo log file that contains the required checkpoint SCN are no longer needed by the capture process. These redo log files can be stored offline if they are no longer needed for any other purpose. If you reset the <a href="strms_glossary.html#GUID-531018E6-B24E-4835-A4F5-179E2E427906"><span class="xrefglossterm">start SCN</span></a> for a capture process to a lower value in the future, then these redo log files might be needed.
+                        </p>
+                        <p>The query displays the following information for each required archived redo log file:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of a capture process that uses the file</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-B5BB35D0-9179-4301-BA50-5B9CE22E362D"><span class="xrefglossterm">source database</span></a> of the file
+                              </p>
+                           </li>
+                           <li>
+                              <p>The sequence number of the file</p>
+                           </li>
+                           <li>
+                              <p>The name and location of the required redo log file at the local site</p>
+                           </li>
+                        </ul>
+                        <p>To display this information about each required archive redo log file in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CONSUMER_NAME HEADING 'Capture|Process|Name' FORMAT A15
+COLUMN SOURCE_DATABASE HEADING 'Source|Database' FORMAT A10
+COLUMN SEQUENCE# HEADING 'Sequence|Number' FORMAT 99999
+COLUMN NAME HEADING 'Required|Archived Redo Log|File Name' FORMAT A40
+
+SELECT r.CONSUMER_NAME,
+       r.SOURCE_DATABASE,
+       r.SEQUENCE#, 
+       r.NAME 
+  FROM DBA_REGISTERED_ARCHIVED_LOG r, DBA_CAPTURE c
+  WHERE r.CONSUMER_NAME =  c.CAPTURE_NAME AND
+        r.NEXT_SCN      &gt;= c.REQUIRED_CHECKPOINT_SCN;  
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture                             Required
+Process         Source     Sequence Archived Redo Log
+Name            Database     Number File Name
+--------------- ---------- -------- ----------------------------------------
+STRM02_CAPTURE  DBS2.EXAMP       16 /orc/dbs/log/arch2_1_16_478347508.arc
+                LE.COM
+STRM03_CAPTURE  DBS1.EXAMP       47 /remote_logs/arch1_1_47_478347335.arc
+                LE.COM
+</pre><div class="infoboxnotealso" id="GUID-5E8CA83A-78FD-4BD2-9F24-7669BA06CFBF__GUID-378F9BB6-A4ED-4F12-8625-F17CD93D481F">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-10FBDE76-4A33-4655-8944-197126C7A38C">Required Checkpoint SCN</a>"</span></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS886"></a><div class="props_rev_3"><a id="GUID-0D2F70A7-744F-471E-AFFD-E4870A41152C" name="GUID-0D2F70A7-744F-471E-AFFD-E4870A41152C"></a><h4 id="STRMS-GUID-0D2F70A7-744F-471E-AFFD-E4870A41152C" class="sect4"><span class="enumeration_section">24.1.9 </span>Displaying SCN Values for Each Redo Log File Used by Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can display information about the SCN values for archived redo log files that are registered for each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> in a database by running the query in this section. This query displays information the SCN values for these files for both <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a>es and <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a>es. This query also identifies redo log files that are no longer needed by any capture process at the local database.
+                        </p>
+                        <p>The query displays the following information for each registered archived redo log file: </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The capture process name of a capture process that uses the file</p>
+                           </li>
+                           <li>
+                              <p>The name and location of the file at the local site</p>
+                           </li>
+                           <li>
+                              <p>The lowest SCN value for the information contained in the redo log file</p>
+                           </li>
+                           <li>
+                              <p>The lowest SCN value for the next redo log file in the sequence</p>
+                           </li>
+                           <li>
+                              <p>Whether the redo log file is purgeable</p>
+                           </li>
+                        </ul>
+                        <p>To display this information about each registered archive redo log file in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CONSUMER_NAME HEADING 'Capture|Process|Name' FORMAT A15
+COLUMN NAME HEADING 'Archived Redo Log|File Name' FORMAT A25
+COLUMN FIRST_SCN HEADING 'First SCN' FORMAT 99999999999
+COLUMN NEXT_SCN HEADING 'Next SCN' FORMAT 99999999999
+COLUMN PURGEABLE HEADING 'Purgeable?' FORMAT A10
+ 
+SELECT r.CONSUMER_NAME,
+       r.NAME, 
+       r.FIRST_SCN,
+       r.NEXT_SCN,
+       r.PURGEABLE 
+  FROM DBA_REGISTERED_ARCHIVED_LOG r, DBA_CAPTURE c
+  WHERE r.CONSUMER_NAME = c.CAPTURE_NAME;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture
+Process         Archived Redo Log
+Name            File Name                    First SCN     Next SCN Purgeable?
+--------------- ------------------------- ------------ ------------ ----------
+CAPTURE_SIMP    /private1/ARCHIVE_LOGS/1_       509686       549100 YES
+                3_502628294.dbf
+ 
+CAPTURE_SIMP    /private1/ARCHIVE_LOGS/1_       549100       587296 YES
+                4_502628294.dbf
+ 
+CAPTURE_SIMP    /private1/ARCHIVE_LOGS/1_       587296       623107 NO
+                5_502628294.dbf
+</pre><p>The redo log files with <code class="codeph">YES</code> for <code class="codeph">Purgeable?</code> for all capture processes will never be needed by any capture process at the local database. These redo log files can be removed without affecting any existing capture process at the local database. The redo log files with <code class="codeph">NO</code> for <code class="codeph">Purgeable?</code> for one or more capture processes must be retained.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-0D2F70A7-744F-471E-AFFD-E4870A41152C__GUID-333D5EE8-783A-4A8A-88C5-1FEA11B6BCEA">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-D0FD5BD5-2931-4F5C-A8CC-D28F22DC61BD">ARCHIVELOG Mode and a Capture Process</a>"</span></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS887"></a><div class="props_rev_3"><a id="GUID-8420908E-57FF-4531-9373-08F0837DCF34" name="GUID-8420908E-57FF-4531-9373-08F0837DCF34"></a><h4 id="STRMS-GUID-8420908E-57FF-4531-9373-08F0837DCF34" class="sect4"><span class="enumeration_section">24.1.10 </span>Displaying the Last Archived Redo Entry Available to Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>For a <a href="strms_glossary.html#GUID-B03D3B40-9AE1-4C52-BC23-C8496CB5548F"><span class="xrefglossterm">local capture process</span></a>, the last archived redo entry available is the last entry from the online redo log flushed to an archived log file. For a <a href="strms_glossary.html#GUID-5AC0675A-963F-4A19-A210-24184EE61C7E"><span class="xrefglossterm">downstream capture process</span></a>, the last archived redo entry available is the redo entry with the most recent system change number (SCN) in the last archived log file added to the LogMiner session used by the capture process.
+                        </p>
+                        <p>You can display the following information about the last redo entry that was made available to each capture process by running the query in this section:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the capture process</p>
+                           </li>
+                           <li>
+                              <p>The identification number of the LogMiner session used by the capture process</p>
+                           </li>
+                           <li>
+                              <p>The highest SCN available for the capture process</p>
+                              <p>For local capture, this SCN is the last redo SCN flushed to the log files. For downstream capture, this SCN is the last SCN added to LogMiner through the archive logs.</p>
+                           </li>
+                           <li>
+                              <p>The timestamp of the highest SCN available for the capture process</p>
+                              <p>For local capture, this timestamp is the time the SCN was written to the log file. For downstream capture, this timestamp is the time of the most recent archive log (containing the most recent SCN) available to LogMiner.</p>
+                           </li>
+                        </ul>
+                        <p>The information displayed by this query is valid only for an enabled capture process.</p>
+                        <p>Run the following query to display this information for each capture process:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Name' FORMAT A20
+COLUMN LOGMINER_ID HEADING 'LogMiner ID' FORMAT 9999
+COLUMN AVAILABLE_MESSAGE_NUMBER HEADING 'Highest|Available SCN' FORMAT 9999999999
+COLUMN AVAILABLE_MESSAGE_CREATE_TIME HEADING 'Time of|Highest|Available SCN'
+
+SELECT CAPTURE_NAME,
+       LOGMINER_ID,
+       AVAILABLE_MESSAGE_NUMBER,
+       TO_CHAR(AVAILABLE_MESSAGE_CREATE_TIME, 'HH24:MI:SS MM/DD/YY') 
+         AVAILABLE_MESSAGE_CREATE_TIME
+  FROM V$STREAMS_CAPTURE;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                                               Time of
+Capture                                Highest Highest
+Name                 LogMiner ID Available SCN Available SCN
+-------------------- ----------- ------------- -----------------
+DB1$CAP                        1       1506751 09:46:11 06/29/09</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS890"></a><div class="props_rev_3"><a id="GUID-2443FA13-069F-4593-9439-33569F8F8962" name="GUID-2443FA13-069F-4593-9439-33569F8F8962"></a><h4 id="STRMS-GUID-2443FA13-069F-4593-9439-33569F8F8962" class="sect4"><span class="enumeration_section">24.1.11 </span>Listing the Parameter Settings for Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following query displays the current setting for each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> parameter for each capture process in a database:
+                        </p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Process|Name' FORMAT A25
+COLUMN PARAMETER HEADING 'Parameter' FORMAT A30
+COLUMN VALUE HEADING 'Value' FORMAT A10
+COLUMN SET_BY_USER HEADING 'Set by|User?' FORMAT A10
+
+SELECT CAPTURE_NAME,
+       PARAMETER, 
+       VALUE,
+       SET_BY_USER  
+  FROM DBA_CAPTURE_PARAMETERS;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture
+Process                                                             Set by
+Name                      Parameter                      Value      User?
+------------------------- ------------------------------ ---------- ----------
+DA$CAP                    CAPTURE_IDKEY_OBJECTS          N          NO
+DA$CAP                    CAPTURE_SEQUENCE_NEXTVAL       N          NO
+DA$CAP                    DISABLE_ON_LIMIT               N          NO
+DA$CAP                    DOWNSTREAM_REAL_TIME_MINE      Y          NO
+DA$CAP                    EXCLUDETRANS                              NO
+DA$CAP                    EXCLUDEUSER                               NO
+DA$CAP                    EXCLUDEUSERID                             NO
+DA$CAP                    GETAPPLOPS                     Y          NO
+DA$CAP                    GETREPLICATES                  N          NO
+DA$CAP                    IGNORE_TRANSACTION                        NO
+DA$CAP                    IGNORE_UNSUPPORTED_TABLE       *          NO
+DA$CAP                    MAXIMUM_SCN                    INFINITE   NO
+DA$CAP                    MAX_SGA_SIZE                   INFINITE   NO
+DA$CAP                    MERGE_THRESHOLD                60         NO
+DA$CAP                    MESSAGE_LIMIT                  INFINITE   NO
+DA$CAP                    MESSAGE_TRACKING_FREQUENCY     2000000    NO
+DA$CAP                    PARALLELISM                    1          NO
+DA$CAP                    SKIP_AUTOFILTERED_TABLE_DDL    Y          NO
+DA$CAP                    SPLIT_THRESHOLD                1800       NO
+DA$CAP                    STARTUP_SECONDS                0          NO
+DA$CAP                    TIME_LIMIT                     INFINITE   NO
+DA$CAP                    TRACE_LEVEL                    0          NO
+DA$CAP                    WRITE_ALERT_LOG                Y          NO
+DA$CAP                    XOUT_CLIENT_EXISTS             N          NO
+</pre><div class="infoboxnote" id="GUID-2443FA13-069F-4593-9439-33569F8F8962__GUID-28DC08C6-B717-4C14-837F-6A067F79913F">
+                           <p class="notep1">Note:</p>
+                           <p>If the <code class="codeph">Set</code> <code class="codeph">by</code> <code class="codeph">User?</code> column is <code class="codeph">NO</code> for a parameter, then the parameter is set to its default value. If the <code class="codeph">Set</code> <code class="codeph">by</code> <code class="codeph">User?</code> column is <code class="codeph">YES</code> for a parameter, then the parameter was set by a user and might or might not be set to its default value.
+                           </p>
+                        </div>
+                        <div class="infoboxnotealso" id="GUID-2443FA13-069F-4593-9439-33569F8F8962__GUID-BD95C848-E8B3-4C2C-9430-F234B8E1A131">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-00C97579-1532-4535-8CB3-A4CDF5A99097">Capture Process Subcomponents</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-44B88D46-C551-4C17-A1A0-B68842A87C44">Setting a Capture Process Parameter</a>"</span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS891"></a><div class="props_rev_3"><a id="GUID-F093B60F-D952-4E78-B049-9DA686E4C087" name="GUID-F093B60F-D952-4E78-B049-9DA686E4C087"></a><h4 id="STRMS-GUID-F093B60F-D952-4E78-B049-9DA686E4C087" class="sect4"><span class="enumeration_section">24.1.12 </span>Determining the Applied SCN for All Capture Processes in a Database
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The applied system change number (SCN) for a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> is the SCN of the most recent <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> dequeued by the relevant <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es. All changes below this <a href="strms_glossary.html#GUID-474E76AE-5246-43C3-9B05-F4C00CD1A6BD"><span class="xrefglossterm">applied SCN</span></a> have been dequeued by all apply processes that apply changes captured by the capture process.
+                        </p>
+                        <p>To display the applied SCN for all of the capture processes in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture Process Name' FORMAT A30
+COLUMN APPLIED_SCN HEADING 'Applied SCN' FORMAT 99999999999
+
+SELECT CAPTURE_NAME, APPLIED_SCN FROM DBA_CAPTURE;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture Process Name           Applied SCN
+------------------------------ -----------
+CAPTURE_EMP                         177154</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS892"></a><div class="props_rev_3"><a id="GUID-AD51C935-72DA-410B-B186-5C03BB43F436" name="GUID-AD51C935-72DA-410B-B186-5C03BB43F436"></a><h4 id="STRMS-GUID-AD51C935-72DA-410B-B186-5C03BB43F436" class="sect4"><span class="enumeration_section">24.1.13 </span>Determining Redo Log Scanning Latency for Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can find the following information about each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> by running the query in this section: 
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The redo log scanning latency, which specifies the number of seconds between the creation time of the most recent redo log entry scanned by a capture process and the current time. This number might be relatively large immediately after you start a capture process.</p>
+                           </li>
+                           <li>
+                              <p>The seconds since last recorded status, which is the number of seconds since a capture process last recorded its status.</p>
+                           </li>
+                           <li>
+                              <p>The current capture process time, which is the latest time when the capture process recorded its status.</p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> creation time, which is the time when the data manipulation language (DML) or data definition language (DDL) change generated the redo data at the source database for the most recently <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>The information displayed by this query is valid only for an enabled capture process.</p>
+                        <p>Run the following query to determine the redo scanning latency for each capture process:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Process|Name' FORMAT A10
+COLUMN LATENCY_SECONDS HEADING 'Latency|in|Seconds' FORMAT 999999
+COLUMN LAST_STATUS HEADING 'Seconds Since|Last Status' FORMAT 999999
+COLUMN CAPTURE_TIME HEADING 'Current|Process|Time'
+COLUMN CREATE_TIME HEADING 'Message|Creation Time' FORMAT 999999
+
+SELECT CAPTURE_NAME,
+       ((SYSDATE - CAPTURE_MESSAGE_CREATE_TIME)*86400) LATENCY_SECONDS,
+       ((SYSDATE - CAPTURE_TIME)*86400) LAST_STATUS,
+       TO_CHAR(CAPTURE_TIME, 'HH24:MI:SS MM/DD/YY') CAPTURE_TIME,       
+       TO_CHAR(CAPTURE_MESSAGE_CREATE_TIME, 'HH24:MI:SS MM/DD/YY') CREATE_TIME
+  FROM V$STREAMS_CAPTURE;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Capture    Latency               Current
+Process         in Seconds Since Process           Message
+Name       Seconds   Last Status Time              Creation Time
+---------- ------- ------------- ----------------- -----------------
+DA$CAP           1             1 12:33:39 07/14/10 12:33:39 07/14/10
+</pre><p>The <code class="codeph">"Latency</code> <code class="codeph">in</code> <code class="codeph">Seconds"</code> returned by this query is the difference between the current time (<code class="codeph">SYSDATE</code>) and the <code class="codeph">"Message</code> <code class="codeph">Creation</code> <code class="codeph">Time."</code> The <code class="codeph">"Seconds</code> <code class="codeph">Since</code> <code class="codeph">Last</code> <code class="codeph">Status"</code> returned by this query is the difference between the current time (<code class="codeph">SYSDATE</code>) and the <code class="codeph">"Current</code> <code class="codeph">Process</code> <code class="codeph">Time."</code></p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS893"></a><div class="props_rev_3"><a id="GUID-C8238AA2-DB5B-4C77-B7E8-0191BE681099" name="GUID-C8238AA2-DB5B-4C77-B7E8-0191BE681099"></a><h4 id="STRMS-GUID-C8238AA2-DB5B-4C77-B7E8-0191BE681099" class="sect4"><span class="enumeration_section">24.1.14 </span>Determining Message Enqueuing Latency for Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can find the following information about each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> by running the query in this section:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a> enqueuing latency, which specifies the number of seconds between when an entry was recorded in the redo log at the source database and when the message was enqueued by the capture process
+                              </p>
+                           </li>
+                           <li>
+                              <p>The message creation time, which is the time when the data manipulation language (DML) or data definition language (DDL) change generated the redo data at the source database for the most recently enqueued message</p>
+                           </li>
+                           <li>
+                              <p>The enqueue time, which is when the capture process enqueued the message into its <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a></p>
+                           </li>
+                           <li>
+                              <p>The message number of the enqueued message</p>
+                           </li>
+                        </ul>
+                        <p>The information displayed by this query is valid only for an enabled capture process.</p>
+                        <p>Run the following query to determine the message capturing latency for each capture process:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Process|Name' FORMAT A10
+COLUMN LATENCY_SECONDS HEADING 'Latency|in|Seconds' FORMAT 999999
+COLUMN CREATE_TIME HEADING 'Message Creation|Time' FORMAT A20
+COLUMN ENQUEUE_TIME HEADING 'Enqueue Time' FORMAT A20
+COLUMN ENQUEUE_MESSAGE_NUMBER HEADING 'Message|Number' FORMAT 9999999999
+
+SELECT CAPTURE_NAME,
+       (ENQUEUE_TIME-ENQUEUE_MESSAGE_CREATE_TIME)*86400 LATENCY_SECONDS, 
+       TO_CHAR(ENQUEUE_MESSAGE_CREATE_TIME, 'HH24:MI:SS MM/DD/YY') CREATE_TIME,
+       TO_CHAR(ENQUEUE_TIME, 'HH24:MI:SS MM/DD/YY') ENQUEUE_TIME,
+       ENQUEUE_MESSAGE_NUMBER
+  FROM V$STREAMS_CAPTURE;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture    Latency
+Process         in Message Creation                            Message
+Name       Seconds Time                 Enqueue Time          Number
+---------- ------- -------------------- -------------------- -------
+CAPTURE          0 10:56:51 03/01/02    10:56:51 03/01/02     253962
+</pre><p>The <code class="codeph">"Latency</code> <code class="codeph">in</code> <code class="codeph">Seconds"</code> returned by this query is the difference between the <code class="codeph">"Enqueue</code> <code class="codeph">Time"</code> and the <code class="codeph">"Message</code> <code class="codeph">Creation</code> <code class="codeph">Time."</code></p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS894"></a><div class="props_rev_3"><a id="GUID-D0DDFE4E-00A1-4B54-B365-DFC8E6174C68" name="GUID-D0DDFE4E-00A1-4B54-B365-DFC8E6174C68"></a><h4 id="STRMS-GUID-D0DDFE4E-00A1-4B54-B365-DFC8E6174C68" class="sect4"><span class="enumeration_section">24.1.15 </span>Displaying Information About Rule Evaluations for Each Capture Process
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can display the following information about <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> evaluation for each <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> by running the query in this section:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of the capture process.</p>
+                           </li>
+                           <li>
+                              <p>The number of changes discarded during prefiltering since the capture process was last started. The capture process determined that these changes definitely did not satisfy the capture process <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s during prefiltering.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The number of changes kept during prefiltering since the capture process was last started. The capture process determined that these changes definitely satisfied the capture process rule sets during prefiltering. Such changes are converted into LCRs and enqueued into the capture process <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a>.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The total number of prefilter evaluations since the capture process was last started.</p>
+                           </li>
+                           <li>
+                              <p>The number of undecided changes after prefiltering since the capture process was last started. These changes might or might not satisfy the capture process rule sets. Some of these changes might be filtered out after prefiltering without requiring full evaluation. Other changes require full evaluation to determine whether they satisfy the capture process rule sets.</p>
+                           </li>
+                           <li>
+                              <p>The number of full evaluations since the capture process was last started. Full evaluations can be expensive. Therefore, capture process performance is best when this number is relatively low.</p>
+                           </li>
+                        </ul>
+                        <p>The information displayed by this query is valid only for an enabled capture process.</p>
+                        <p>Run the following query to display this information for each capture process:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture|Name' FORMAT A15
+COLUMN TOTAL_PREFILTER_DISCARDED HEADING 'Prefilter|Changes|Discarded' 
+  FORMAT 9999999999
+COLUMN TOTAL_PREFILTER_KEPT HEADING 'Prefilter|Changes|Kept' FORMAT 9999999999
+COLUMN TOTAL_PREFILTER_EVALUATIONS HEADING 'Prefilter|Evaluations' 
+  FORMAT 9999999999
+COLUMN UNDECIDED HEADING 'Undecided|After|Prefilter' FORMAT 9999999999
+COLUMN TOTAL_FULL_EVALUATIONS HEADING 'Full|Evaluations' FORMAT 9999999999
+
+SELECT CAPTURE_NAME,
+       TOTAL_PREFILTER_DISCARDED,
+       TOTAL_PREFILTER_KEPT,
+       TOTAL_PREFILTER_EVALUATIONS,
+       (TOTAL_PREFILTER_EVALUATIONS - 
+         (TOTAL_PREFILTER_KEPT + TOTAL_PREFILTER_DISCARDED)) UNDECIDED,
+       TOTAL_FULL_EVALUATIONS
+  FROM V$STREAMS_CAPTURE;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">                 Prefilter   Prefilter               Undecided
+Capture            Changes     Changes   Prefilter       After        Full
+Name             Discarded        Kept Evaluations   Prefilter Evaluations
+--------------- ---------- ----------- ----------- ----------- -----------
+CAPTURE_HNS         927409     3271491     4198900           0           9
+</pre><p>The total number of prefilter evaluations equals the sum of the prefilter changes discarded, the prefilter changes kept, and the undecided changes.</p>
+                        <div class="infoboxnotealso" id="GUID-D0DDFE4E-00A1-4B54-B365-DFC8E6174C68__GUID-EF79B55E-6B13-488E-97FF-E17A98AF56E4">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="advanced-capture-process-concepts.html#GUID-22A5BB2B-AB53-4F46-9B30-D4A3053367D8">Capture Process Rule Evaluation</a>"</span></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS895"></a><div class="props_rev_3"><a id="GUID-EFBDD862-0102-4BA7-80BC-60A80F3FBF3F" name="GUID-EFBDD862-0102-4BA7-80BC-60A80F3FBF3F"></a><h4 id="STRMS-GUID-EFBDD862-0102-4BA7-80BC-60A80F3FBF3F" class="sect4"><span class="enumeration_section">24.1.16 </span>Determining Which Capture Processes Use Combined Capture and Apply
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>A combined capture and apply environment is efficient because the <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> acts as the propagation sender, and the <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a> is optimized to make replication of changes more efficient.
+                        </p>
+                        <p>When a capture process uses combined capture and apply, the <code class="codeph">OPTIMIZATION</code> column in the <code class="codeph">V$STREAMS_CAPTURE</code> data dictionary view is greater than zero. When a capture process does not use combined capture and apply, the <code class="codeph">OPTIMIZATION</code> column is 0 (zero).
+                        </p>
+                        <p>To determine whether a capture process uses combined capture and apply, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture Name' FORMAT A30
+COLUMN OPTIMIZATION HEADING 'Optimized?' FORMAT A10
+
+SELECT CAPTURE_NAME, 
+       DECODE(OPTIMIZATION,
+                0, 'No',
+                   'Yes') OPTIMIZATION
+  FROM V$STREAMS_CAPTURE;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Capture Name                   Optimized?
+------------------------------ ----------
+CAPTURE_HNS                    Yes
+</pre><p>This output indicates that the <code class="codeph">capture_hns</code> capture process uses combined capture and apply.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-EFBDD862-0102-4BA7-80BC-60A80F3FBF3F__GUID-E634D731-5992-43A4-BA11-A439315830BE">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="combined-capture-and-apply-optimization.html#GUID-12B8EF20-C7BB-431A-BB5C-1F619EF9362F"> Combined Capture and Apply Optimization</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS1603"></a><div class="props_rev_3"><a id="GUID-49F03EE3-1234-4C44-A1A8-92814072384C" name="GUID-49F03EE3-1234-4C44-A1A8-92814072384C"></a><h4 id="STRMS-GUID-49F03EE3-1234-4C44-A1A8-92814072384C" class="sect4"><span class="enumeration_section">24.1.17 </span>Displaying Information About Split and Merge Operations
+                  </h4>
+                  <div>
+                     <p>Splitting and merging an Oracle Streams destination is useful under the following conditions:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>A single capture process captures changes that are sent to two or more apply processes.</p>
+                        </li>
+                        <li>
+                           <p>An apply process stops accepting changes captured by the capture process. The apply process might stop accepting changes if, for example, the apply process is disabled, the database that contains the apply process goes down, there is a network problem, the computer system running the database that contains the apply process goes down, or for some other reason.</p>
+                        </li>
+                     </ul>
+                     <p>When these conditions are met, it is best to split the problem destination stream off from the other destination streams to avoid degraded performance. When the problem is corrected, the destination stream that was split off can be merged back into the other destination streams for the capture process.</p>
+                     <p>By default, split and merge operations are performed automatically when Oracle Streams detects a problem destination. Two capture process parameters, <code class="codeph">split_threshold</code> and <code class="codeph">merge_threshold</code>, control automatic split and merge operations.
+                     </p>
+                     <p>The following sections contain queries that you can run to monitor current and past automatic split and merge operations:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-9BEEB912-673D-43F1-A6A8-497485A752B0">Displaying the Names of the Original and Cloned Oracle Streams Components</a></p>
+                        </li>
+                        <li>
+                           <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-3ADE4DCC-94A6-4037-ADD7-A8C1786ACB3D">Displaying the Actions and Thresholds for Split and Merge Operations</a></p>
+                        </li>
+                        <li>
+                           <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-1702EE92-4B47-4D0D-8E05-9A9EB35D7DD5">Displaying the Lag Time of the Cloned Capture Process</a></p>
+                        </li>
+                        <li>
+                           <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-E7CBF186-34D3-41BD-83F0-607197C34005">Displaying Information About the Split and Merge Jobs</a></p>
+                        </li>
+                        <li>
+                           <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-F3BC6226-64D5-47AE-9984-CF2A18631642">Displaying Information About Past Split and Merge Operations</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnote" id="GUID-49F03EE3-1234-4C44-A1A8-92814072384C__GUID-8130AE90-F8F7-4165-9DB0-DB5FEEFD9DE7">
+                        <p class="notep1">Note:</p>
+                        <p>The queries in these sections only show information about automatic split and merge operations. These queries do not show information about operations that split streams manually using the <code class="codeph">SPLIT_STREAMS</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package.
+                        </p>
+                     </div>
+                     <div class="infoboxnotealso" id="GUID-49F03EE3-1234-4C44-A1A8-92814072384C__GUID-A198E6E1-50B6-4272-BDA8-47AA2413D6E1">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP434"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about split and merge operations
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS306"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about capture process parameters
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS1604"></a><div class="props_rev_3"><a id="GUID-9BEEB912-673D-43F1-A6A8-497485A752B0" name="GUID-9BEEB912-673D-43F1-A6A8-497485A752B0"></a><h5 id="STRMS-GUID-9BEEB912-673D-43F1-A6A8-497485A752B0" class="sect5"><span class="enumeration_section">24.1.17.1 </span>Displaying the Names of the Original and Cloned Oracle Streams Components
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The query in this section shows the following information about the Oracle Streams components that are involved in a split and merge operation:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The name of the original capture process from which a destination stream was split off</p>
+                              </li>
+                              <li>
+                                 <p>The name of the cloned capture process that captures changes for the problem destination</p>
+                              </li>
+                              <li>
+                                 <p>The name of the original propagation or apply process that was part of the stream that was split off</p>
+                                 <p>In a multiple-database configuration, a propagation sends changes from the capture process's queue to the apply process's queue, and a propagation is shown in this query. In a single-database configuration, an apply process dequeues changes from the queue that is used by the capture process, and an apply process is shown in this query.</p>
+                              </li>
+                              <li>
+                                 <p>The name of the cloned propagation or apply process that processes changes for the problem destination</p>
+                              </li>
+                              <li>
+                                 <p>The type of the Oracle Streams component that receives changes from the capture process, either <code class="codeph">PROPAGATION</code> or <code class="codeph">APPLY</code></p>
+                              </li>
+                           </ul>
+                           <p>Run the following query to display this information:</p><pre class="oac_no_warn" dir="ltr">COLUMN ORIGINAL_CAPTURE_NAME HEADING 'Original|Capture|Process' FORMAT A15
+COLUMN CLONED_CAPTURE_NAME HEADING 'Cloned|Capture|Process' FORMAT A15
+COLUMN ORIGINAL_STREAMS_NAME HEADING 'Original|Streams|Name' FORMAT A15
+COLUMN CLONED_STREAMS_NAME HEADING 'Cloned|Streams|Name' FORMAT A15
+COLUMN STREAMS_TYPE HEADING 'Streams|Type' FORMAT A11
+ 
+SELECT ORIGINAL_CAPTURE_NAME,
+       CLONED_CAPTURE_NAME,
+       ORIGINAL_STREAMS_NAME,
+       CLONED_STREAMS_NAME,
+       STREAMS_TYPE
+ FROM DBA_STREAMS_SPLIT_MERGE;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Original        Cloned          Original        Cloned
+Capture         Capture         Streams         Streams         Streams
+Process         Process         Name            Name            Type
+--------------- --------------- --------------- --------------- -----------
+DB$CAP          CLONED$_DB$CAP_ PROPAGATION$_17 CLONED$_PROPAGA PROPAGATION
+                1                               TION$_17_2
+</pre><div class="infoboxnotealso" id="GUID-9BEEB912-673D-43F1-A6A8-497485A752B0__GUID-0BEFDAEB-3881-4500-A5C0-72681D73B133">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP434"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about split and merge operations
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1605"></a><div class="props_rev_3"><a id="GUID-3ADE4DCC-94A6-4037-ADD7-A8C1786ACB3D" name="GUID-3ADE4DCC-94A6-4037-ADD7-A8C1786ACB3D"></a><h5 id="STRMS-GUID-3ADE4DCC-94A6-4037-ADD7-A8C1786ACB3D" class="sect5"><span class="enumeration_section">24.1.17.2 </span>Displaying the Actions and Thresholds for Split and Merge Operations
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The query in this section shows the following information about the actions performed by the split and merge operation and the thresholds that were set for splitting and merging a problem destination:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The name of the original capture process from which a destination stream was split off</p>
+                              </li>
+                              <li>
+                                 <p>The script status of the split or merge job, either <code class="codeph">GENERATING</code>, <code class="codeph">NOT</code> <code class="codeph">EXECUTED</code>, <code class="codeph">EXECUTING</code>, <code class="codeph">EXECUTED</code>, or <code class="codeph">ERROR</code></p>
+                              </li>
+                              <li>
+                                 <p>The type of action performed by the job, either <code class="codeph">SPLIT</code>, <code class="codeph">MERGE</code>, or <code class="codeph">MONITOR</code></p>
+                                 <p>When a <code class="codeph">SPLIT</code> job determines that a split must be performed, a row with <code class="codeph">SPLIT</code> action type is inserted into the <code class="codeph">DBA_STREAMS_SPLIT_MERGE</code> view.
+                                 </p>
+                                 <p>When the split operation is complete, the <code class="codeph">SPLIT</code> action type row is copied to the <code class="codeph">DBA_STREAMS_SPLIT_MERGE_HIST</code> view, and a <code class="codeph">MERGE</code> job is created. A row with <code class="codeph">MERGE</code> action type is inserted into the <code class="codeph">DBA_STREAMS_SPLIT_MERGE</code> view. When merge operation is complete, the <code class="codeph">MERGE</code> action type row is moved to the <code class="codeph">DBA_STREAMS_SPLIT_MERGE_HIST</code> view, and the <code class="codeph">SPLIT</code> action type row is deleted from the <code class="codeph">DBA_STREAMS_SPLIT_MERGE</code> view. The <code class="codeph">SPLIT</code> action type row was previously copied to the <code class="codeph">DBA_STREAMS_SPLIT_MERGE_HIST</code> view.
+                                 </p>
+                                 <p>Each original capture process has a <code class="codeph">SPLIT</code> job that monitors all of its destinations. This type of job displays the <code class="codeph">MONITOR</code> action type in rows in the <code class="codeph">DBA_STREAMS_SPLIT_MERGE</code> view. <code class="codeph">MONITOR</code> action type rows are moved to the <code class="codeph">DBA_STREAMS_SPLIT_MERGE_HIST</code> view only if the <code class="codeph">SPLIT</code> job is disabled. A <code class="codeph">SPLIT</code> job can be disabled either by setting the <code class="codeph">split_threshold</code> capture process parameter to <code class="codeph">INFINITE</code> or by dropping the capture process.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The capture process parameter threshold set for the operation, in seconds</p>
+                                 <p>For <code class="codeph">SPLIT</code> jobs, the threshold is set by the <code class="codeph">split_threshold</code> capture process parameter. For <code class="codeph">MERGE</code> jobs, the threshold is set by the <code class="codeph">merge_threshold</code> capture process parameter.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The status of the action</p>
+                                 <p>For <code class="codeph">SPLIT</code> actions, the status can be <code class="codeph">SPLITTING</code>, <code class="codeph">SPLIT</code> <code class="codeph">DONE</code>, or <code class="codeph">ERROR</code>. The <code class="codeph">SPLITTING</code> status indicates that the split operation is being performed. The <code class="codeph">SPLIT</code> <code class="codeph">DONE</code> status indicates that the split operation is complete. The <code class="codeph">ERROR</code> status indicates that an error was returned during the split operation.
+                                 </p>
+                                 <p>For <code class="codeph">MERGE</code> actions, the status can be <code class="codeph">NOTHING</code> <code class="codeph">TO</code> <code class="codeph">MERGE</code>, <code class="codeph">MERGING</code>, <code class="codeph">MERGE</code> <code class="codeph">DONE</code>, or <code class="codeph">ERROR</code>. The <code class="codeph">NOTHING</code> <code class="codeph">TO</code> <code class="codeph">MERGE</code> status indicates that a split was performed but the split stream is not yet ready to merge. The <code class="codeph">MERGING</code> status indicates that the merge operation is being performed. The <code class="codeph">MERGE</code> <code class="codeph">DONE</code> status indicates that the merge operation is complete. The <code class="codeph">ERROR</code> status indicates that an error was returned during the merge operation.
+                                 </p>
+                                 <p>For <code class="codeph">MONITOR</code> actions, the status can be any of the <code class="codeph">SPLIT</code> and <code class="codeph">MERGE</code> status values. In addition, a <code class="codeph">MONITOR</code> action can show <code class="codeph">NOTHING</code> <code class="codeph">TO</code> <code class="codeph">SPLIT</code> or <code class="codeph">NONSPLITTABLE</code> for its status. The <code class="codeph">NOTHING</code> <code class="codeph">TO</code> <code class="codeph">SPLIT</code> status indicates that the streams flowing from the capture process are being processed at all destinations, and no stream should be split. The <code class="codeph">NONSPLITTABLE</code> status indicates that it is not possible to split the stream for the capture process. A <code class="codeph">NONSPLITTABLE</code> status is possible in the following cases:
+                                 </p>
+                                 <ul style="list-style-type: disc;">
+                                    <li>
+                                       <p>The capture process is disabled or aborted.</p>
+                                    </li>
+                                    <li>
+                                       <p>The capture process's queue has at least one publisher in addition to the capture process. The additional publisher can be another capture process or a propagation that sends messages to the queue.</p>
+                                    </li>
+                                    <li>
+                                       <p>The capture process has only one destination. Split and merge operations are possible only when there are two or more destinations for the changes captured by the capture process.</p>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li>
+                                 <p>The date and time when the job status was last updated</p>
+                              </li>
+                           </ul>
+                           <p>Run the following query to display this information:</p><pre class="oac_no_warn" dir="ltr">COLUMN ORIGINAL_CAPTURE_NAME HEADING 'Original|Capture|Process' FORMAT A10
+COLUMN SCRIPT_STATUS HEADING 'Script|Status' FORMAT A12
+COLUMN ACTION_TYPE HEADING 'Action|Type' FORMAT A7
+COLUMN ACTION_THRESHOLD HEADING 'Action|Threshold' FORMAT A15
+COLUMN STATUS HEADING 'Status' FORMAT A16
+COLUMN STATUS_UPDATE_TIME HEADING 'Status|Update|Time' FORMAT A15
+ 
+SELECT ORIGINAL_CAPTURE_NAME,
+       SCRIPT_STATUS,
+       ACTION_TYPE,
+       ACTION_THRESHOLD,
+       STATUS,
+       STATUS_UPDATE_TIME
+ FROM DBA_STREAMS_SPLIT_MERGE
+ ORDER BY STATUS_UPDATE_TIME DESC;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Original                                                         Status
+Capture    Script       Action  Action                           Update
+Process    Status       Type    Threshold       Status           Time
+---------- ------------ ------- --------------- ---------------- ---------------
+DB$CAP     EXECUTED     SPLIT   1800            SPLIT DONE       31-MAR-09 01.31
+                                                                 .37.133788 PM
+</pre><div class="infoboxnotealso" id="GUID-3ADE4DCC-94A6-4037-ADD7-A8C1786ACB3D__GUID-0884DFBC-3F7A-4535-9A7F-40C4C5C64FB9">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="../strep/managing-oracle-streams-replication.html#STREP434"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about split and merge operations
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../arpls/DBMS_CAPTURE_ADM.html#ARPLS306"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a> for more information about capture process parameters
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1606"></a><div class="props_rev_3"><a id="GUID-1702EE92-4B47-4D0D-8E05-9A9EB35D7DD5" name="GUID-1702EE92-4B47-4D0D-8E05-9A9EB35D7DD5"></a><h5 id="STRMS-GUID-1702EE92-4B47-4D0D-8E05-9A9EB35D7DD5" class="sect5"><span class="enumeration_section">24.1.17.3 </span>Displaying the Lag Time of the Cloned Capture Process
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>After a stream is split off from a capture process for a problem destination, you must correct the problem at the destination and ensure that the cloned capture process is enabled. When the cloned capture process is sending changes to the problem destination, and the apply process at the problem destination is applying these changes, an Oracle Scheduler job runs the <code class="codeph">MERGE_STREAMS_JOB</code> procedure according to its schedule.
+                           </p>
+                           <p>The <code class="codeph">MERGE_STREAMS_JOB</code> procedure queries the <code class="codeph">CAPTURE_MESSAGE_CREATE_TIME</code> in the <code class="codeph">GV$STREAMS_CAPTURE</code> view. When the difference between <code class="codeph">CAPTURE_MESSAGE_CREATE_TIME</code> of the cloned capture process and the original capture process is less than or equal to the value of the <code class="codeph">merge_threshold</code> capture process parameter, the <code class="codeph">MERGE_STREAMS_JOB</code> procedure determines that the streams are ready to merge. The <code class="codeph">MERGE_STREAMS_JOB</code> procedure runs the <code class="codeph">MERGE_STREAMS</code> procedure automatically to merge the streams.
+                           </p>
+                           <p>The <code class="codeph">LAG</code> column in the <code class="codeph">DBA_STREAMS_SPLIT_MERGE</code> view tracks the time in seconds that the cloned capture process lags behind the original capture process. The following query displays the lag time:
+                           </p><pre class="oac_no_warn" dir="ltr">COLUMN ORIGINAL_CAPTURE_NAME HEADING 'Original Capture Process' FORMAT A25
+COLUMN CLONED_CAPTURE_NAME HEADING 'Cloned Capture Process' FORMAT A25
+COLUMN LAG HEADING 'Lag' FORMAT 999999999999999
+ 
+SELECT ORIGINAL_CAPTURE_NAME,
+       CLONED_CAPTURE_NAME,
+       LAG
+ FROM DBA_STREAMS_SPLIT_MERGE;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Original Capture Process  Cloned Capture Process                 Lag
+------------------------- ------------------------- ----------------
+DB$CAP                    CLONED$_DB$CAP_1                       526
+</pre><p>When the <code class="codeph">MERGE_STREAMS_JOB</code> runs and the lag time is less than or equal to the value of the <code class="codeph">merge_threshold</code> capture process parameter, the merge operation begins.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-1702EE92-4B47-4D0D-8E05-9A9EB35D7DD5__GUID-00129C57-3974-44F9-8667-EF2FD7ED0EF6">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../strep/managing-oracle-streams-replication.html#STREP434"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about split and merge operations
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1607"></a><div class="props_rev_3"><a id="GUID-E7CBF186-34D3-41BD-83F0-607197C34005" name="GUID-E7CBF186-34D3-41BD-83F0-607197C34005"></a><h5 id="STRMS-GUID-E7CBF186-34D3-41BD-83F0-607197C34005" class="sect5"><span class="enumeration_section">24.1.17.4 </span>Displaying Information About the Split and Merge Jobs
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The query in this section shows the following information about split and merge jobs:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The name of the original capture process from which a destination stream was split off</p>
+                              </li>
+                              <li>
+                                 <p>The owner of the job</p>
+                              </li>
+                              <li>
+                                 <p>The name of the job</p>
+                              </li>
+                              <li>
+                                 <p>The current state of the job, either <code class="codeph">DISABLED</code>, <code class="codeph">RETRY</code> <code class="codeph">SCHEDULED</code>, <code class="codeph">SCHEDULED</code>, <code class="codeph">RUNNING</code>, <code class="codeph">COMPLETED</code>, <code class="codeph">BROKEN</code>, <code class="codeph">FAILED</code>, <code class="codeph">REMOTE</code>, <code class="codeph">SUCCEEDED</code>, or <code class="codeph">CHAIN_STALLED</code></p>
+                                 <p>See <a href="../admin/administering-oracle-scheduler.html#ADMIN12038"><span class="italic">Oracle Database Administrator's Guide</span></a> for information about these job states.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The date and time when the job will run next</p>
+                              </li>
+                           </ul>
+                           <p>Run the following query to display this information:</p><pre class="oac_no_warn" dir="ltr">COLUMN ORIGINAL_CAPTURE_NAME HEADING 'Original|Capture|Process' FORMAT A10
+COLUMN JOB_OWNER HEADING 'Job Owner' FORMAT A10
+COLUMN JOB_NAME HEADING 'Job Name' FORMAT A15
+COLUMN JOB_STATE HEADING 'Job State' FORMAT A15
+COLUMN JOB_NEXT_RUN_DATE HEADING 'Job Next|Run Date' FORMAT A20
+ 
+SELECT ORIGINAL_CAPTURE_NAME,
+       JOB_OWNER,
+       JOB_NAME,
+       JOB_STATE,
+       JOB_NEXT_RUN_DATE
+ FROM DBA_STREAMS_SPLIT_MERGE;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Original
+Capture                                               Job Next
+Process    Job Owner  Job Name        Job State       Run Date
+---------- ---------- --------------- --------------- --------------------
+DB$CAP     SYS        STREAMS_SPLITJO SCHEDULED       01-APR-09 01.14.55.0
+                      B$_3                            00000 PM -07:00
+DB$CAP     SYS        STREAMS_MERGEJO SCHEDULED       01-APR-09 01.17.08.0
+                      B$_6                            00000 PM -07:00
+</pre><div class="infoboxnotealso" id="GUID-E7CBF186-34D3-41BD-83F0-607197C34005__GUID-916D67FD-01B8-4839-B2F9-C64BEC4EA5E3">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../strep/managing-oracle-streams-replication.html#STREP434"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about split and merge operations
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1608"></a><div class="props_rev_3"><a id="GUID-F3BC6226-64D5-47AE-9984-CF2A18631642" name="GUID-F3BC6226-64D5-47AE-9984-CF2A18631642"></a><h5 id="STRMS-GUID-F3BC6226-64D5-47AE-9984-CF2A18631642" class="sect5"><span class="enumeration_section">24.1.17.5 </span>Displaying Information About Past Split and Merge Operations
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>The query in this section shows the following historical information about split and merge operations that were performed in the past:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The name of the original capture process from which a destination stream was split off</p>
+                              </li>
+                              <li>
+                                 <p>The script status of split or merge job</p>
+                              </li>
+                              <li>
+                                 <p>The type of action performed by the job, either <code class="codeph">SPLIT</code> or <code class="codeph">MERGE</code></p>
+                              </li>
+                              <li>
+                                 <p>The status of the action performed by the job</p>
+                                 <p>See <span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-3ADE4DCC-94A6-4037-ADD7-A8C1786ACB3D">Displaying the Actions and Thresholds for Split and Merge Operations</a>"</span> for information about the status values.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The owner of the job</p>
+                              </li>
+                              <li>
+                                 <p>The name of the job</p>
+                              </li>
+                              <li>
+                                 <p>The recoverable script ID</p>
+                              </li>
+                           </ul>
+                           <p>Run the following query to display this information:</p><pre class="oac_no_warn" dir="ltr">COLUMN ORIGINAL_CAPTURE_NAME HEADING 'Original|Capture|Process' FORMAT A8
+COLUMN SCRIPT_STATUS HEADING 'Script|Status' FORMAT A12
+COLUMN ACTION_TYPE HEADING 'Action|Type' FORMAT A8
+COLUMN STATUS HEADING 'Status' FORMAT A10
+COLUMN JOB_OWNER HEADING 'Job Owner' FORMAT A10
+COLUMN JOB_NAME HEADING 'Job Name' FORMAT A10
+COLUMN RECOVERABLE_SCRIPT_ID HEADING 'Recoverable|Script ID' FORMAT A15
+ 
+SELECT ORIGINAL_CAPTURE_NAME,
+       SCRIPT_STATUS,
+       ACTION_TYPE,
+       STATUS,
+       JOB_OWNER,
+       JOB_NAME,
+       RECOVERABLE_SCRIPT_ID
+ FROM DBA_STREAMS_SPLIT_MERGE_HIST;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Original
+Capture  Script       Action                                    Recoverable
+Process  Status       Type     Status     Job Owner  Job Name   Script ID
+-------- ------------ -------- ---------- ---------- ---------- ---------------
+DB1$CAP  EXECUTED     SPLIT    SPLIT DONE SYS        STREAMS_SP 6E5C6C49CDB5798
+                                                     LITJOB$_9  3E040578C891704
+                                                                87
+ 
+DB1$CAP  EXECUTED     MERGE    MERGE DONE SYS        STREAMS_ME 6E5BA57554F1C4C
+                                                     RGEJOB$_12 3E040578C89170A
+                                                                1F
+</pre><div class="infoboxnotealso" id="GUID-F3BC6226-64D5-47AE-9984-CF2A18631642__GUID-F997E5F5-4374-4E23-AA56-2FE01AB5D7B8">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../strep/managing-oracle-streams-replication.html#STREP434"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about split and merge operations
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS208"></a><div class="props_rev_3"><a id="GUID-14568F8A-2CC6-44AF-A0FB-C04960ECA4A3" name="GUID-14568F8A-2CC6-44AF-A0FB-C04960ECA4A3"></a><h4 id="STRMS-GUID-14568F8A-2CC6-44AF-A0FB-C04960ECA4A3" class="sect4"><span class="enumeration_section">24.1.18 </span>Monitoring Supplemental Logging
+                  </h4>
+                  <div>
+                     <p>The following sections contain queries that you can run to monitor supplemental logging at a source database:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-BDE80E4E-6068-4101-BA23-E603E107B5C8">Displaying Supplemental Log Groups at a Source Database </a></p>
+                        </li>
+                        <li>
+                           <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-940C97D1-C049-4765-AABC-F833CAD94AB4">Displaying Database Supplemental Logging Specifications</a></p>
+                        </li>
+                        <li>
+                           <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-49107CA4-E317-4DBD-9CBE-0981D589D1EB">Displaying Supplemental Logging Specified During Preparation for Instantiation</a></p>
+                        </li>
+                     </ul>
+                     <p>The total supplemental logging at a database is determined by the results shown in all three of the queries in these sections combined. For example, supplemental logging can be enabled for columns in a table even if no results for the table are returned by the query in the <span class="q">"<a href="monitoring-oracle-streams-implicit-capture.html#GUID-BDE80E4E-6068-4101-BA23-E603E107B5C8">Displaying Supplemental Log Groups at a Source Database </a>"</span> section. That is, supplemental logging can be enabled for the table if database supplemental logging is enabled or if the table is in a schema for which supplemental logging was enabled during preparation for instantiation.
+                     </p>
+                     <p>Supplemental logging places additional column data into a redo log when an operation is performed. A capture process captures this additional information and places it in LCRs. An apply process that applies these captured LCRs might need this additional information to schedule or apply changes correctly.</p>
+                     <div class="infoboxnotealso" id="GUID-14568F8A-2CC6-44AF-A0FB-C04960ECA4A3__GUID-FA7D51BD-4061-41A1-86A0-6746FA4C3BB0">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-57570826-D941-4820-977D-D60092EAD599">Supplemental Logging in an Oracle Streams Environment</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../strep/preparing-for-oracle-streams-replication.html#STREP107"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS896"></a><div class="props_rev_3"><a id="GUID-BDE80E4E-6068-4101-BA23-E603E107B5C8" name="GUID-BDE80E4E-6068-4101-BA23-E603E107B5C8"></a><h5 id="STRMS-GUID-BDE80E4E-6068-4101-BA23-E603E107B5C8" class="sect5"><span class="enumeration_section">24.1.18.1 </span>Displaying Supplemental Log Groups at a Source Database 
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To check whether one or more log groups are specified for the table at the source database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN LOG_GROUP_NAME HEADING 'Log Group' FORMAT A20
+COLUMN TABLE_NAME HEADING 'Table' FORMAT A15
+COLUMN ALWAYS HEADING 'Conditional or|Unconditional' FORMAT A14
+COLUMN LOG_GROUP_TYPE HEADING 'Type of Log Group' FORMAT A20
+
+SELECT 
+    LOG_GROUP_NAME, 
+    TABLE_NAME, 
+    DECODE(ALWAYS,
+             'ALWAYS', 'Unconditional',
+             'CONDITIONAL', 'Conditional') ALWAYS,
+    LOG_GROUP_TYPE
+  FROM DBA_LOG_GROUPS;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                                     Conditional or
+Log Group            Table           Unconditional  Type of Log Group
+-------------------- --------------- -------------- --------------------
+LOG_GROUP_DEP_PK     DEPARTMENTS     Unconditional  USER LOG GROUP
+SYS_C002105          REGIONS         Unconditional  PRIMARY KEY LOGGING
+SYS_C002106          REGIONS         Conditional    FOREIGN KEY LOGGING
+SYS_C002110          LOCATIONS       Unonditional   ALL COLUMN LOGGING
+SYS_C002111          COUNTRIES       Conditional    ALL COLUMN LOGGING
+LOG_GROUP_JOBS_CR    JOBS            Conditional    USER LOG GROUP
+</pre><p>If the output for the type of log group shows how the log group was created:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>If the output is <code class="codeph">USER</code> <code class="codeph">LOG</code> <code class="codeph">GROUP</code>, then the log group was created using the <code class="codeph">ADD</code> <code class="codeph">SUPPLEMENTAL</code> <code class="codeph">LOG</code> <code class="codeph">GROUP</code> clause of the <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> statement. 
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Otherwise, the log group was created using the <code class="codeph">ADD</code> <code class="codeph">SUPPLEMENTAL</code> <code class="codeph">LOG</code> <code class="codeph">DATA</code> clause of the <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> statement.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>If the type of log group is <code class="codeph">USER</code> <code class="codeph">LOG</code> <code class="codeph">GROUP</code>, then you can list the columns in the log group by querying the <code class="codeph">DBA_LOG_GROUP_COLUMNS</code> data dictionary view. 
+                           </p>
+                           <div class="infoboxnote" id="GUID-BDE80E4E-6068-4101-BA23-E603E107B5C8__GUID-4EE37378-6F21-420C-9095-CFE0D826A61B">
+                              <p class="notep1">Note:</p>
+                              <p>If the type of log group is not <code class="codeph">USER</code> <code class="codeph">LOG</code> <code class="codeph">GROUP</code>, then the <code class="codeph">DBA_LOG_GROUP_COLUMNS</code> data dictionary view does not contain information about the columns in the log group. Instead, Oracle supplementally logs the correct columns when an operation is performed on the table. For example, if the type of log group is <code class="codeph">PRIMARY</code> <code class="codeph">KEY</code> <code class="codeph">LOGGING</code>, then Oracle logs the current primary key column(s) when a change is performed on the table.
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS897"></a><div class="props_rev_3"><a id="GUID-940C97D1-C049-4765-AABC-F833CAD94AB4" name="GUID-940C97D1-C049-4765-AABC-F833CAD94AB4"></a><h5 id="STRMS-GUID-940C97D1-C049-4765-AABC-F833CAD94AB4" class="sect5"><span class="enumeration_section">24.1.18.2 </span>Displaying Database Supplemental Logging Specifications
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To display the database supplemental logging specifications, query the <code class="codeph">V$DATABASE</code> dynamic performance view, as in the following example:
+                           </p><pre class="oac_no_warn" dir="ltr">COLUMN log_min HEADING 'Minimum|Supplemental|Logging?' FORMAT A12
+COLUMN log_pk HEADING 'Primary Key|Supplemental|Logging?' FORMAT A12
+COLUMN log_fk HEADING 'Foreign Key|Supplemental|Logging?' FORMAT A12
+COLUMN log_ui HEADING 'Unique|Supplemental|Logging?' FORMAT A12
+COLUMN log_all HEADING 'All Columns|Supplemental|Logging?' FORMAT A12
+
+SELECT SUPPLEMENTAL_LOG_DATA_MIN log_min, 
+       SUPPLEMENTAL_LOG_DATA_PK log_pk, 
+       SUPPLEMENTAL_LOG_DATA_FK log_fk,
+       SUPPLEMENTAL_LOG_DATA_UI log_ui,
+       SUPPLEMENTAL_LOG_DATA_ALL log_all
+  FROM V$DATABASE;  
+  </pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Minimum      Primary Key  Foreign Key  Unique        All Columns
+Supplemental Supplemental Supplemental Supplemental  Supplemental
+Logging?     Logging?     Logging?     Logging?      Logging?
+------------ ------------ ------------ ------------- ------------
+YES          YES          YES          YES           NO
+</pre><p>These results show that minimum, primary key, foreign key, and unique key columns are being supplementally logged for all of the tables in the database. Because unique key columns are supplementally logged, bitmap index columns also are supplementally logged. However, all columns are not being supplementally logged.</p>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS898"></a><div class="props_rev_3"><a id="GUID-49107CA4-E317-4DBD-9CBE-0981D589D1EB" name="GUID-49107CA4-E317-4DBD-9CBE-0981D589D1EB"></a><h5 id="STRMS-GUID-49107CA4-E317-4DBD-9CBE-0981D589D1EB" class="sect5"><span class="enumeration_section">24.1.18.3 </span>Displaying Supplemental Logging Specified During Preparation for Instantiation
+                     </h5>
+                     <div>
+                        <p>Supplemental logging can be enabled when database objects are prepared for instantiation using one of the three procedures in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. A data dictionary view displays the supplemental logging enabled by each of these procedures: <code class="codeph">PREPARE_TABLE_INSTANTIATION</code>, <code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code>, and <code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code>.
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The <code class="codeph">DBA_CAPTURE_PREPARED_TABLES</code> view displays the supplemental logging enabled by the <code class="codeph">PREPARE_TABLE_INSTANTIATION</code> procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <code class="codeph">DBA_CAPTURE_PREPARED_SCHEMAS</code> view displays the supplemental logging enabled by the <code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code> procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <code class="codeph">DBA_CAPTURE_PREPARED_DATABASE</code> view displays the supplemental logging enabled by the <code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code> procedure.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Each of these views has the following columns:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">SUPPLEMENTAL_LOG_DATA_PK</code> shows whether primary key supplemental logging was enabled by a procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">SUPPLEMENTAL_LOG_DATA_UI</code> shows whether unique key and bitmap index supplemental logging was enabled by a procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">SUPPLEMENTAL_LOG_DATA_FK</code> shows whether foreign key supplemental logging was enabled by a procedure.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">SUPPLEMENTAL_LOG_DATA_ALL</code> shows whether supplemental logging for all columns was enabled by a procedure.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>Each of these columns can display one of the following values:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">IMPLICIT</code> means that the relevant procedure enabled supplemental logging for the columns.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">EXPLICIT</code> means that supplemental logging was enabled for the columns manually using an <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> or <code class="codeph">ALTER</code> <code class="codeph">DATABASE</code> statement with an <code class="codeph">ADD</code> <code class="codeph">SUPPLEMENTAL</code> <code class="codeph">LOG</code> <code class="codeph">DATA</code> clause.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">NO</code> means that supplemental logging was not enabled for the columns using a prepare procedure or an <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> or <code class="codeph">ALTER</code> <code class="codeph">DATABASE</code> statement with an <code class="codeph">ADD</code> <code class="codeph">SUPPLEMENTAL</code> <code class="codeph">LOG</code> <code class="codeph">DATA</code> clause. Supplemental logging might not be enabled for the columns. However, supplemental logging might be enabled for the columns at another level (table, schema, or database), or it might have been enabled using an <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> statement with an <code class="codeph">ADD</code> <code class="codeph">SUPPLEMENTAL</code> <code class="codeph">LOG</code> <code class="codeph">GROUP</code> clause.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>The following sections contain queries that display the supplemental logging enabled by these procedures:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-325114A3-D973-46D6-AF0D-5C832AC91694">Displaying Supplemental Logging Enabled by PREPARE_TABLE_INSTANTIATION</a></p>
+                           </li>
+                           <li>
+                              <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-CC90CB74-440A-44E6-BA0C-B80ECD9E76CA">Displaying Supplemental Logging Enabled by PREPARE_SCHEMA_INSTANTIATION</a></p>
+                           </li>
+                           <li>
+                              <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-23124A8D-C324-49D3-A6D5-19B6DF2BA5DD">Displaying Supplemental Logging Enabled by PREPARE_GLOBAL_INSTANTIATION</a></p>
+                           </li>
+                        </ul>
+                     </div><a id="STRMS899"></a><div class="props_rev_3"><a id="GUID-325114A3-D973-46D6-AF0D-5C832AC91694" name="GUID-325114A3-D973-46D6-AF0D-5C832AC91694"></a><h6 id="STRMS-GUID-325114A3-D973-46D6-AF0D-5C832AC91694" class="sect6"><span class="enumeration_section">24.1.18.3.1 </span>Displaying Supplemental Logging Enabled by PREPARE_TABLE_INSTANTIATION
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>The following query displays the supplemental logging enabled by the <code class="codeph">PREPARE_TABLE_INSTANTIATION</code> procedure for the tables in the <code class="codeph">hr</code> schema:
+                              </p><pre class="oac_no_warn" dir="ltr">COLUMN TABLE_NAME HEADING 'Table Name' FORMAT A15
+COLUMN log_pk HEADING 'Primary Key|Supplemental|Logging' FORMAT A12
+COLUMN log_fk HEADING 'Foreign Key|Supplemental|Logging' FORMAT A12
+COLUMN log_ui HEADING 'Unique|Supplemental|Logging' FORMAT A12
+COLUMN log_all HEADING 'All Columns|Supplemental|Logging' FORMAT A12
+
+SELECT TABLE_NAME,
+       SUPPLEMENTAL_LOG_DATA_PK log_pk, 
+       SUPPLEMENTAL_LOG_DATA_FK log_fk,
+       SUPPLEMENTAL_LOG_DATA_UI log_ui,
+       SUPPLEMENTAL_LOG_DATA_ALL log_all
+  FROM DBA_CAPTURE_PREPARED_TABLES
+  WHERE TABLE_OWNER = 'HR';  
+  </pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                Primary Key  Foreign Key  Unique         All Columns
+                Supplemental Supplemental Supplemental   Supplemental
+Table Name      Logging      Logging      Logging        Logging
+--------------- ------------ ------------ -------------- ------------
+COUNTRIES       NO           NO           NO             NO
+REGIONS         IMPLICIT     IMPLICIT     IMPLICIT       NO
+DEPARTMENTS     IMPLICIT     IMPLICIT     IMPLICIT       NO
+LOCATIONS       EXPLICIT     NO           NO             NO
+EMPLOYEES       NO           NO           NO             IMPLICIT
+JOB_HISTORY     NO           NO           NO             NO
+JOBS            NO           NO           NO             NO
+</pre><p>These results show the following:</p>
+                           </div>
+                           <!-- class="section" -->
+                           <div class="section">
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The <code class="codeph">PREPARE_TABLE_INSTANTIATION</code> procedure enabled supplemental logging for the primary key, unique key, bitmap index, and foreign key columns in the <code class="codeph">hr.regions</code> and <code class="codeph">hr.departments</code> tables.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The <code class="codeph">PREPARE_TABLE_INSTANTIATION</code> procedure enabled supplemental logging for all columns in the <code class="codeph">hr.employees</code> table.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>An <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> statement with an <code class="codeph">ADD</code> <code class="codeph">SUPPLEMENTAL</code> <code class="codeph">LOG</code> <code class="codeph">DATA</code> clause enabled primary key supplemental logging for the <code class="codeph">hr.locations</code> table.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <div class="infoboxnote" id="GUID-325114A3-D973-46D6-AF0D-5C832AC91694__GUID-38BA503E-6EDA-46CB-BFB0-B76D269A59BC">
+                                 <p class="notep1">Note:</p>
+                                 <p>Omit the <code class="codeph">WHERE</code> clause in the query to list the information for all of the tables in the database.
+                                 </p>
+                              </div>
+                           </div>
+                           <!-- class="section" -->
+                        </div>
+                     </div><a id="STRMS900"></a><div class="props_rev_3"><a id="GUID-CC90CB74-440A-44E6-BA0C-B80ECD9E76CA" name="GUID-CC90CB74-440A-44E6-BA0C-B80ECD9E76CA"></a><h6 id="STRMS-GUID-CC90CB74-440A-44E6-BA0C-B80ECD9E76CA" class="sect6"><span class="enumeration_section">24.1.18.3.2 </span>Displaying Supplemental Logging Enabled by PREPARE_SCHEMA_INSTANTIATION
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>The following query displays the supplemental logging enabled by the <code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code> procedure:
+                              </p><pre class="oac_no_warn" dir="ltr">COLUMN SCHEMA_NAME HEADING 'Schema Name' FORMAT A20
+COLUMN log_pk HEADING 'Primary Key|Supplemental|Logging' FORMAT A12
+COLUMN log_fk HEADING 'Foreign Key|Supplemental|Logging' FORMAT A12
+COLUMN log_ui HEADING 'Unique|Supplemental|Logging' FORMAT A12
+COLUMN log_all HEADING 'All Columns|Supplemental|Logging' FORMAT A12
+
+SELECT SCHEMA_NAME,
+       SUPPLEMENTAL_LOG_DATA_PK log_pk, 
+       SUPPLEMENTAL_LOG_DATA_FK log_fk,
+       SUPPLEMENTAL_LOG_DATA_UI log_ui,
+       SUPPLEMENTAL_LOG_DATA_ALL log_all
+  FROM DBA_CAPTURE_PREPARED_SCHEMAS;
+  </pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">                     Primary Key  Foreign Key  Unique         All Columns
+                     Supplemental Supplemental Supplemental   Supplemental
+Schema Name          Logging      Logging      Logging        Logging
+-------------------- ------------ ------------ -------------- ------------
+HR                   NO           NO           NO             IMPLICIT
+OE                   IMPLICIT     IMPLICIT     IMPLICIT       NO
+</pre><p>These results show the following:</p>
+                           </div>
+                           <!-- class="section" -->
+                           <div class="section">
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>The <code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code> procedure enabled supplemental logging for all columns in tables in the <code class="codeph">hr</code> schema.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>The <code class="codeph">PREPARE_SCHEMA_INSTANTIATION</code> procedure enabled supplemental logging for the primary key, unique key, bitmap index, and foreign key columns in the tables in the <code class="codeph">oe</code> schema.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                           <!-- class="section" -->
+                        </div>
+                     </div><a id="STRMS901"></a><div class="props_rev_3"><a id="GUID-23124A8D-C324-49D3-A6D5-19B6DF2BA5DD" name="GUID-23124A8D-C324-49D3-A6D5-19B6DF2BA5DD"></a><h6 id="STRMS-GUID-23124A8D-C324-49D3-A6D5-19B6DF2BA5DD" class="sect6"><span class="enumeration_section">24.1.18.3.3 </span>Displaying Supplemental Logging Enabled by PREPARE_GLOBAL_INSTANTIATION
+                        </h6>
+                        <div>
+                           <div class="section">
+                              <p>The following query displays the supplemental logging enabled by the <code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code> procedure:
+                              </p><pre class="oac_no_warn" dir="ltr">COLUMN log_pk HEADING 'Primary Key|Supplemental|Logging' FORMAT A12
+COLUMN log_fk HEADING 'Foreign Key|Supplemental|Logging' FORMAT A12
+COLUMN log_ui HEADING 'Unique|Supplemental|Logging' FORMAT A12
+COLUMN log_all HEADING 'All Columns|Supplemental|Logging' FORMAT A12
+
+SELECT SUPPLEMENTAL_LOG_DATA_PK log_pk,
+       SUPPLEMENTAL_LOG_DATA_FK log_fk,
+       SUPPLEMENTAL_LOG_DATA_UI log_ui,
+       SUPPLEMENTAL_LOG_DATA_ALL log_all
+  FROM DBA_CAPTURE_PREPARED_DATABASE;
+  </pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Primary Key  Foreign Key  Unique         All Columns
+Supplemental Supplemental Supplemental   Supplemental
+Logging      Logging      Logging        Logging
+------------ ------------ -------------- ------------
+IMPLICIT     IMPLICIT     IMPLICIT       NO
+</pre><p>These results show that the <code class="codeph">PREPARE_GLOBAL_INSTANTIATION</code> procedure enabled supplemental logging for the primary key, unique key, bitmap index, and foreign key columns in all of the tables in the database.
+                              </p>
+                           </div>
+                           <!-- class="section" -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="STRMS902"></a><div class="props_rev_3"><a id="GUID-667ADD9A-6516-49B1-9616-C2BC5A0131DE" name="GUID-667ADD9A-6516-49B1-9616-C2BC5A0131DE"></a><h3 id="STRMS-GUID-667ADD9A-6516-49B1-9616-C2BC5A0131DE" class="sect3"><span class="enumeration_section">24.2 </span>Monitoring a Synchronous Capture
+               </h3>
+               <div>
+                  <p>This section provides sample queries that you can use to monitor Oracle Streams <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>s.
+                  </p>
+                  <p>This section contains these topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-21750890-40B8-415D-8DD4-E1B094164ABA">Displaying the Queue and Rule Set of Each Synchronous Capture</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-implicit-capture.html#GUID-E54A2297-2631-4168-BA59-4739DBE70169">Displaying the Tables For Which Synchronous Capture Captures Changes</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-667ADD9A-6516-49B1-9616-C2BC5A0131DE__GUID-4EBA411A-34D2-45C6-BC52-5D28738AA1D1">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-9C81303F-69B5-4817-AB1D-493972C4F096">Implicit Capture with Synchronous Capture</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/configuring-implicit-capture.html#STREP208"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring synchronous capture
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-9B578DC0-B8F6-4097-B1A8-1ACC3800BB41">Managing a Synchronous Capture</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/simple-oracle-streams-replication-configuration.html#STREP641"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for an example that configures a replication environment that uses synchronous capture
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS903"></a><div class="props_rev_3"><a id="GUID-21750890-40B8-415D-8DD4-E1B094164ABA" name="GUID-21750890-40B8-415D-8DD4-E1B094164ABA"></a><h4 id="STRMS-GUID-21750890-40B8-415D-8DD4-E1B094164ABA" class="sect4"><span class="enumeration_section">24.2.1 </span>Displaying the Queue and Rule Set of Each Synchronous Capture
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can display the following information about each <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> in a database by running the query in this section: 
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The synchronous capture name</p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> used by the synchronous capture
+                              </p>
+                           </li>
+                           <li>
+                              <p>The name of the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> used by the synchronous capture
+                              </p>
+                           </li>
+                           <li>
+                              <p>The <a href="strms_glossary.html#GUID-33DECAE2-C00F-4805-909D-E9C1C383ECDF"><span class="xrefglossterm">capture user</span></a> for the synchronous capture
+                              </p>
+                           </li>
+                        </ul>
+                        <p>To display this general information about each synchronous capture in a database, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Synchronous|Capture Name' FORMAT A20
+COLUMN QUEUE_NAME HEADING 'Synchronous|Capture Queue' FORMAT A20
+COLUMN RULE_SET_NAME HEADING 'Positive Rule Set' FORMAT A20
+COLUMN CAPTURE_USER HEADING 'Capture User' FORMAT A15
+
+SELECT CAPTURE_NAME, QUEUE_NAME, RULE_SET_NAME, CAPTURE_USER
+   FROM DBA_SYNC_CAPTURE;
+
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Synchronous          Synchronous
+Capture Name         Capture Queue        Positive Rule Set    Capture User
+-------------------- -------------------- -------------------- ---------------
+SYNC01_CAPTURE       STRM01_QUEUE         RULESET$_21          STRMADMIN
+SYNC02_CAPTURE       STRM02_QUEUE         SYNC02_RULE_SET      HR</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS904"></a><div class="props_rev_3"><a id="GUID-E54A2297-2631-4168-BA59-4739DBE70169" name="GUID-E54A2297-2631-4168-BA59-4739DBE70169"></a><h4 id="STRMS-GUID-E54A2297-2631-4168-BA59-4739DBE70169" class="sect4"><span class="enumeration_section">24.2.2 </span>Displaying the Tables For Which Synchronous Capture Captures Changes
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The <code class="codeph">DBA_SYNC_CAPTURE_TABLES</code> view displays the tables whose DML changes are captured by any synchronous capture in the local database. The <code class="codeph">DBA_STREAMS_TABLE_RULES</code> view has information about each synchronous capture name and the rules used by each synchronous capture. You can display the following information by running the query in this section:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>The name of each synchronous capture</p>
+                           </li>
+                           <li>
+                              <p>The name of each <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> used by the synchronous capture
+                              </p>
+                           </li>
+                           <li>
+                              <p>If the rule is a <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a>, then the type of subsetting operation covered by the rule
+                              </p>
+                           </li>
+                           <li>
+                              <p>The owner of each table specified in each rule</p>
+                           </li>
+                           <li>
+                              <p>The name of each table specified in each rule</p>
+                           </li>
+                           <li>
+                              <p>Whether synchronous capture is enabled or disabled for the table. If the synchronous capture is enabled for a table, then it captures DML changes made to the table. If synchronous capture is not enabled for a table, then it does not capture DML changes made to the table.</p>
+                           </li>
+                        </ul>
+                        <p>To display this information, run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN STREAMS_NAME HEADING 'Synchronous|Capture Name' FORMAT A15
+COLUMN RULE_NAME HEADING 'Rule Name' FORMAT A15
+COLUMN SUBSETTING_OPERATION HEADING 'Subsetting|Operation' FORMAT A10
+COLUMN TABLE_OWNER HEADING 'Table|Owner' FORMAT A10
+COLUMN TABLE_NAME HEADING 'Table Name' FORMAT A15
+COLUMN ENABLED HEADING 'Enabled?' FORMAT A8
+
+SELECT r.STREAMS_NAME, 
+       r.RULE_NAME, 
+       r.SUBSETTING_OPERATION,
+       t.TABLE_OWNER, 
+       t.TABLE_NAME, 
+       t.ENABLED
+   FROM DBA_STREAMS_TABLE_RULES r,
+        DBA_SYNC_CAPTURE_TABLES t
+   WHERE r.STREAMS_TYPE = 'SYNC_CAPTURE' AND
+         r.TABLE_OWNER  = t.TABLE_OWNER AND
+         r.TABLE_NAME   = t.TABLE_NAME;
+</pre><p>Your output looks similar to the following:</p><pre class="oac_no_warn" dir="ltr">Synchronous                     Subsetting Table
+Capture Name    Rule Name       Operation  Owner      Table Name      Enabled?
+--------------- --------------- ---------- ---------- --------------- --------
+SYNC01_CAPTURE  EMPLOYEES20                HR         EMPLOYEES       YES
+SYNC02_CAPTURE  DEPARTMENTS24   DELETE     HR         DEPARTMENTS     YES
+SYNC02_CAPTURE  DEPARTMENTS23   UPDATE     HR         DEPARTMENTS     YES
+SYNC02_CAPTURE  DEPARTMENTS22   INSERT     HR         DEPARTMENTS     YES
+</pre><p>This output indicates that synchronous capture <code class="codeph">sync01_capture</code> captures DML changes made to the <code class="codeph">hr.employees</code> table. This output also indicates that synchronous capture <code class="codeph">sync02_capture</code> captures a subset of the changes to the <code class="codeph">hr.departments</code> table.
+                        </p>
+                        <p>If the <code class="codeph">ENABLED</code> column shows <code class="codeph">NO</code> for a table, then synchronous capture does not capture changes to the table. The <code class="codeph">ENABLED</code> column shows <code class="codeph">NO</code> when a table rule is added to a synchronous capture rule set by a procedure other than <code class="codeph">ADD_TABLE_RULES</code> or <code class="codeph">ADD_SUBSET_RULES</code> in the <code class="codeph">DBMS_STREAMS_ADM</code> package. For example, if the <code class="codeph">ADD_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package adds a table rule to a synchronous capture rule set, then the table appears when you query the <code class="codeph">DBA_SYNC_CAPTURE_TABLES</code> view, but synchronous capture does not capture DML changes to the table. No results appear in the <code class="codeph">DBA_SYNC_CAPTURE_TABLES</code> view for schema and global rules.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS905"></a><div class="props_rev_3"><a id="GUID-C49D27E4-F401-4D91-82E7-6DD23D46006C" name="GUID-C49D27E4-F401-4D91-82E7-6DD23D46006C"></a><h3 id="STRMS-GUID-C49D27E4-F401-4D91-82E7-6DD23D46006C" class="sect3"><span class="enumeration_section">24.3 </span>Viewing the Extra Attributes Captured by Implicit Capture
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>You can use the <code class="codeph">INCLUDE_EXTRA_ATTRIBUTE</code> procedure in the <code class="codeph">DBMS_CAPTURE_ADM</code> package to instruct a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> or <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a> to capture one or more extra attributes and include the extra attributes in LCRs. The following query displays the extra attributes included in the LCRs captured by each capture process and synchronous capture in the local database:
+                     </p><pre class="oac_no_warn" dir="ltr">COLUMN CAPTURE_NAME HEADING 'Capture Process or|Synchronous Capture' FORMAT A20
+COLUMN ATTRIBUTE_NAME HEADING 'Attribute Name' FORMAT A15
+COLUMN INCLUDE HEADING 'Include Attribute in LCRs?' FORMAT A30
+
+SELECT CAPTURE_NAME, ATTRIBUTE_NAME, INCLUDE 
+  FROM DBA_CAPTURE_EXTRA_ATTRIBUTES
+  ORDER BY CAPTURE_NAME;
+</pre><p>Your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Capture Process or   Attribute Name  Include Attribute in LCRs?
+Synchronous Capture
+-------------------- --------------- ------------------------------
+SYNC_CAPTURE         ROW_ID          NO
+SYNC_CAPTURE         SERIAL#         NO
+SYNC_CAPTURE         SESSION#        NO
+SYNC_CAPTURE         THREAD#         NO
+SYNC_CAPTURE         TX_NAME         YES
+SYNC_CAPTURE         USERNAME        NO
+</pre><p>Based on this output, the capture process or synchronous capture named <code class="codeph">sync_capture</code> includes the transaction name (<code class="codeph">tx_name</code>) in the LCRs that it captures, but this capture process or synchronous capture does not include any other extra attributes in the LCRs that it captures. To determine whether name returned by the <code class="codeph">CAPTURE_NAME</code> column is a capture process or a synchronous capture, query the <code class="codeph">DBA_CAPTURE</code> and <code class="codeph">DBA_SYNC_CAPTURE</code> views.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-C49D27E4-F401-4D91-82E7-6DD23D46006C__GUID-D7862E0D-6E56-4FF6-A409-74483446D665">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-7CAA1711-DC69-469A-A54B-30629C3FCE2F">Extra Information in LCRs</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-DFD1EF15-C0C3-4314-8C5D-1D8C3AF8F228">Managing Extra Attributes in Captured LCRs</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_CAPTURE_ADM.html#ARPLS522"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">INCLUDE_EXTRA_ATTRIBUTE</code> procedure
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

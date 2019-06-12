@@ -1,0 +1,1495 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Package Traversal for XML C APIs</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="XML C API Reference">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="XML C API Reference">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="xml-c-api-reference.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T04:10:27-08:00">
+      <meta name="dcterms.title" content="XML C API Reference">
+      <meta name="dcterms.dateCopyrighted" content="2001, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83819-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="package-SOAP-API.html" title="Previous" type="text/html">
+      <link rel="next" href="package-XML-API.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.isVersionOf" content="CAXML">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="package-SOAP-API.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="package-XML-API.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">XML C API Reference</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Package Traversal for XML C APIs</li>
+            </ol>
+            <a id="GUID-03CED6E0-7A89-4B23-916F-C273ABB4A797" name="GUID-03CED6E0-7A89-4B23-916F-C273ABB4A797"></a><a id="CAXML01100"></a>
+            
+            <h2 id="CAXML-GUID-03CED6E0-7A89-4B23-916F-C273ABB4A797" class="sect2"><span class="enumeration_chapter">10 </span>Package Traversal for XML C APIs
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>Package Traversal contains APIs that implement the rules and behavior of traversal. For convenience, we grouped the APIs under four general interfaces types:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="package-Traversal-API.html#GUID-285E308C-B66C-4ABD-B1DA-9E649BDE307C">DocumentTraversal Interface</a></p>
+                  </li>
+                  <li>
+                     <p><a href="package-Traversal-API.html#GUID-82E39E87-AD2C-4D33-9535-21CA0B3F1A03">NodeFilter Interface</a></p>
+                  </li>
+                  <li>
+                     <p><a href="package-Traversal-API.html#GUID-FE76EFDB-E9FA-4C9B-9CEF-4452E5CC6DE9">NodeIterator Interface</a></p>
+                  </li>
+                  <li>
+                     <p><a href="package-Traversal-API.html#GUID-B4FF13BA-0820-4D34-9158-E27AE23C7F72">TreeWalker Interface</a></p>
+                  </li>
+               </ul>
+            </div><a id="CAXML6087"></a><a id="CAXML6086"></a><div class="props_rev_3"><a id="GUID-285E308C-B66C-4ABD-B1DA-9E649BDE307C" name="GUID-285E308C-B66C-4ABD-B1DA-9E649BDE307C"></a><h3 id="CAXML-GUID-285E308C-B66C-4ABD-B1DA-9E649BDE307C" class="sect3"><span class="enumeration_section">10.1 </span>DocumentTraversal Interface for Traversal XML C APIs
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following table summarizes the methods available through the <code class="codeph">DocumentTraversal</code> interface of <code class="codeph">Traversal</code> for XML C APIs.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-285E308C-B66C-4ABD-B1DA-9E649BDE307C__CIHGCBEG">
+                     <p class="titleintable">Table 10-1 Summary of DocumentTraversal Traversal Methods for XML C Implementation</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of DocumentTraversal Traversal Methods for XML C Implementation" summary="First column lists interfaces; second column provides a brief description of these interfaces." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="43%" id="d109773e105">Function</th>
+                              <th align="left" valign="bottom" width="57%" id="d109773e108">Summary</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="43%" id="d109773e113" headers="d109773e105 ">
+                                 <p><a href="package-Traversal-API.html#GUID-1E33E20D-83AA-4E74-B62C-E6420643CA62">XmlDomCreateNodeIter()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="57%" headers="d109773e113 d109773e108 ">
+                                 <p>Create node iterator object.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="43%" id="d109773e122" headers="d109773e105 ">
+                                 <p><a href="package-Traversal-API.html#GUID-6C2940BB-0861-454B-B2D9-16E0AFA7ACA8">XmlDomCreateTreeWalker()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="57%" headers="d109773e122 d109773e108 ">
+                                 <p>Create a tree walker object.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div><a id="CAXML6089"></a><a id="CAXML6090"></a><a id="CAXML6088"></a><div class="props_rev_3"><a id="GUID-1E33E20D-83AA-4E74-B62C-E6420643CA62" name="GUID-1E33E20D-83AA-4E74-B62C-E6420643CA62"></a><h4 id="CAXML-GUID-1E33E20D-83AA-4E74-B62C-E6420643CA62" class="sect4"><span class="enumeration_section">10.1.1 </span>XmlDomCreateNodeIter()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>One of two methods of <code class="codeph">DocumentTraversal</code> interface, used to create a <code class="codeph">NodeIterator</code> object. This method is identical to <a href="package-Traversal-API.html#GUID-6C2940BB-0861-454B-B2D9-16E0AFA7ACA8">XmlDomCreateTreeWalker()</a> except for the type of object returned.
+                        </p>
+                        <p>The <code class="codeph">whatToShow</code> argument is a mask of flag bits, one for each node type. The value <code class="codeph">XMLDOM_SHOW_ALL</code> passes all node types through, otherwise only the types whose bits are set will be passed.
+                        </p>
+                        <p><code class="codeph">Entity</code> reference expansion is controlled by the <code class="codeph">entrefExpansion</code> flag. If <code class="codeph">TRUE</code>, entity references are replaced with their final content; if <code class="codeph">FALSE</code>, entity references are left as nodes.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmliter* XmlDomCreateNodeIter(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx,
+&nbsp;&nbsp;&nbsp;xmliter *iter,
+&nbsp;&nbsp;&nbsp;xmlnode *root,
+ &nbsp;&nbsp;xmlshowbits whatToShow, 
+&nbsp;&nbsp;&nbsp;XMLDOM_ACCEPT_NODE_F(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*nodeFilter), 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xctx, 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;node),
+&nbsp;&nbsp;&nbsp;boolean entrefExpand);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-1E33E20D-83AA-4E74-B62C-E6420643CA62__GUID-9A2F0305-D342-4A18-B20D-62FD6923ED7A">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e219">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e222">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e225">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e230" headers="d109773e219 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e230 d109773e222 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e230 d109773e225 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e240" headers="d109773e219 "><pre class="oac_no_warn" dir="ltr">iter</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e240 d109773e222 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e240 d109773e225 ">
+                                    <p>existing NodeIterator to set, <code class="codeph">NULL</code> to create
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e253" headers="d109773e219 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e253 d109773e222 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e253 d109773e225 ">
+                                    <p>root node for NodeIterator</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e263" headers="d109773e219 "><pre class="oac_no_warn" dir="ltr">whatToShow</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e263 d109773e222 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e263 d109773e225 ">
+                                    <p>mask of <code class="codeph">XMLDOM_SHOW_</code><span class="italic"><code class="codeph">XXX</code></span> flag bits
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e279" headers="d109773e219 "><pre class="oac_no_warn" dir="ltr">nodeFilter</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e279 d109773e222 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e279 d109773e225 ">
+                                    <p>node filter to be used, <code class="codeph">NULL</code> if none
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e292" headers="d109773e219 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e292 d109773e222 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e292 d109773e225 ">
+                                    <p>whether to expand entity reference nodes</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmliter *)</code> original or new <code class="codeph">NodeIterator</code> object
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-1E33E20D-83AA-4E74-B62C-E6420643CA62__GUID-0AA936F1-5995-4A28-8322-5AE2147CB138">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-6C2940BB-0861-454B-B2D9-16E0AFA7ACA8">XmlDomCreateTreeWalker()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6092"></a><a id="CAXML6093"></a><a id="CAXML6091"></a><div class="props_rev_3"><a id="GUID-6C2940BB-0861-454B-B2D9-16E0AFA7ACA8" name="GUID-6C2940BB-0861-454B-B2D9-16E0AFA7ACA8"></a><h4 id="CAXML-GUID-6C2940BB-0861-454B-B2D9-16E0AFA7ACA8" class="sect4"><span class="enumeration_section">10.1.2 </span>XmlDomCreateTreeWalker()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>One of two methods of DocumentTraversal interface, used to create a <code class="codeph">TreeWalker</code> object. This method is identical to <a href="package-Traversal-API.html#GUID-1E33E20D-83AA-4E74-B62C-E6420643CA62">XmlDomCreateNodeIter()</a> except for the type of object returned.
+                        </p>
+                        <p>The <code class="codeph">whatToShow</code> argument is a mask of flag bits, one for each node type. The value <code class="codeph">XMLDOM_SHOW_ALL</code> passes all node types through, otherwise only the types whose bits are set will be passed.
+                        </p>
+                        <p><code class="codeph">Entity</code> reference expansion is controlled by the <code class="codeph">entrefExpansion</code> flag. If <code class="codeph">TRUE</code>, entity references are replaced with their final content; if <code class="codeph">FALSE</code>, entity references are left as nodes.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlwalk* XmlDomCreateTreeWalker(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk* walker, 
+&nbsp;&nbsp;&nbsp;xmlnode *root,
+&nbsp;&nbsp;&nbsp;xmlshowbits whatToShow,
+&nbsp;&nbsp;&nbsp;XMLDOM_ACCEPT_NODE_F(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*nodeFilter),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xctx,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;node),
+&nbsp;&nbsp;&nbsp;boolean entrefExpansion);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-6C2940BB-0861-454B-B2D9-16E0AFA7ACA8__GUID-309F6520-B33F-41D1-8449-D7CE563E7BBE">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e403">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e406">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e409">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e414" headers="d109773e403 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e414 d109773e406 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e414 d109773e409 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e424" headers="d109773e403 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e424 d109773e406 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e424 d109773e409 ">
+                                    <p>existing <code class="codeph">TreeWalker</code> to set, <code class="codeph">NULL</code> to create
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e440" headers="d109773e403 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e440 d109773e406 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e440 d109773e409 ">
+                                    <p>root node for <code class="codeph">TreeWalker</code></p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e452" headers="d109773e403 "><pre class="oac_no_warn" dir="ltr">whatToShow</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e452 d109773e406 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e452 d109773e409 ">
+                                    <p>mask of <code class="codeph">XMLDOM_SHOW_</code><span class="italic"><code class="codeph">XXX</code></span> flag bits
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e468" headers="d109773e403 "><pre class="oac_no_warn" dir="ltr">nodeFilter</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e468 d109773e406 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e468 d109773e409 ">
+                                    <p>node filter to be used, <code class="codeph">NULL</code> if none
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e481" headers="d109773e403 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e481 d109773e406 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e481 d109773e409 ">
+                                    <p>whether to expand entity reference nodes</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlwalk *)</code> new <code class="codeph">TreeWalker</code> object
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-6C2940BB-0861-454B-B2D9-16E0AFA7ACA8__GUID-A0D9ADB1-7FB6-435F-A0B2-5B0C6DE180F5">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-1E33E20D-83AA-4E74-B62C-E6420643CA62">XmlDomCreateNodeIter()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="CAXML6095"></a><a id="CAXML6094"></a><div class="props_rev_3"><a id="GUID-82E39E87-AD2C-4D33-9535-21CA0B3F1A03" name="GUID-82E39E87-AD2C-4D33-9535-21CA0B3F1A03"></a><h3 id="CAXML-GUID-82E39E87-AD2C-4D33-9535-21CA0B3F1A03" class="sect3"><span class="enumeration_section">10.2 </span>NodeFilter Interface for Traversal XML C APIs
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following table summarizes the methods available through the <code class="codeph">NodeFilter</code> interface of <code class="codeph">Traversal</code> for XML C APIs.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-82E39E87-AD2C-4D33-9535-21CA0B3F1A03__CHDJAGDA">
+                     <p class="titleintable">Table 10-2 Summary of NodeFilter Traversal Methods for XML C Implementation</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of NodeFilter Traversal Methods for XML C Implementation" summary="First column lists interfaces; second column provides a brief description of these interfaces." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="42%" id="d109773e552">Function</th>
+                              <th align="left" valign="bottom" width="58%" id="d109773e555">Summary</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="42%" id="d109773e560" headers="d109773e552 ">
+                                 <p><a href="package-Traversal-API.html#GUID-7DCBF59C-69E4-4B9B-9421-8B11ACE085E7">XMLDOM_ACCEPT_NODE_F()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="58%" headers="d109773e560 d109773e555 ">
+                                 <p>Determines the filtering action based on node adn filter.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div><a id="CAXML6097"></a><a id="CAXML6098"></a><a id="CAXML6096"></a><div class="props_rev_3"><a id="GUID-7DCBF59C-69E4-4B9B-9421-8B11ACE085E7" name="GUID-7DCBF59C-69E4-4B9B-9421-8B11ACE085E7"></a><h4 id="CAXML-GUID-7DCBF59C-69E4-4B9B-9421-8B11ACE085E7" class="sect4"><span class="enumeration_section">10.2.1 </span>XMLDOM_ACCEPT_NODE_F()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Sole method of <code class="codeph">NodeFilter</code> interface. Given a node and a filter, determines the filtering action to perform.
+                        </p>
+                        <p>This function pointer is passed to the node iterator/tree walker methods, as needed.</p>
+                        <p>Values for xmlerr are:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">XMLERR_OK</code> Accept the node. Navigation methods defined for <code class="codeph">NodeIterator</code> or <code class="codeph">TreeWalker</code> will return this node.
+                              </p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">XMLERR_FILTER_REJECT</code> Reject the node. Navigation methods defined for <code class="codeph">NodeIterator</code> or <code class="codeph">TreeWalker</code> will not return this node. For <code class="codeph">TreeWalker</code>, the children of this node will also be rejected. <code class="codeph">NodeIterator</code>s treat this as a synonym for <code class="codeph">XMLDOM_FILTER_SKIP</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">XMLERR_FILTER_SKIP</code> Skip this single node. Navigation methods defined for <code class="codeph">NodeIterator</code> or <code class="codeph">TreeWalker</code> will not return this node. For both <code class="codeph">NodeIterator</code> and <code class="codeph">TreeWalker</code>, the children of this node will still be considered.
+                              </p>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">#define XMLDOM_ACCEPT_NODE_F(func, xctx, node)
+xmlerr func(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx,
+&nbsp;&nbsp;&nbsp;xmlnode *node);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-7DCBF59C-69E4-4B9B-9421-8B11ACE085E7__GUID-8943B26F-024E-4456-AC18-8589F7A7B187">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e681">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e684">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e687">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e692" headers="d109773e681 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e692 d109773e684 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e692 d109773e687 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e702" headers="d109773e681 "><pre class="oac_no_warn" dir="ltr">node</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e702 d109773e684 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e702 d109773e687 ">
+                                    <p>node to test</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlerr)</code> filtering result
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="CAXML6100"></a><a id="CAXML6099"></a><div class="props_rev_3"><a id="GUID-FE76EFDB-E9FA-4C9B-9CEF-4452E5CC6DE9" name="GUID-FE76EFDB-E9FA-4C9B-9CEF-4452E5CC6DE9"></a><h3 id="CAXML-GUID-FE76EFDB-E9FA-4C9B-9CEF-4452E5CC6DE9" class="sect3"><span class="enumeration_section">10.3 </span>NodeIterator Interface for Traversal XML C APIs
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>The following table summarizes the methods available through the <code class="codeph">NodeIterator</code> interface of <code class="codeph">Traversal</code> for XML C APIs.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-FE76EFDB-E9FA-4C9B-9CEF-4452E5CC6DE9__CIHJBHED">
+                     <p class="titleintable">Table 10-3 Summary of NodeIterator Traversal Methods for XML C Implementation</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of NodeIterator Traversal Methods for XML C Implementation" summary="First column lists interfaces; second column provides a brief description of these interfaces." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="43%" id="d109773e766">Function</th>
+                              <th align="left" valign="bottom" width="57%" id="d109773e769">Summary</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="43%" id="d109773e774" headers="d109773e766 ">
+                                 <p><a href="package-Traversal-API.html#GUID-BE41C32E-0E38-4DEF-A8E5-0229D05C048F">XmlDomIterDetach()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="57%" headers="d109773e774 d109773e769 ">
+                                 <p>Detach a node iterator (deactivate it).</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="43%" id="d109773e783" headers="d109773e766 ">
+                                 <p><a href="package-Traversal-API.html#GUID-AAA73DCA-892A-4F90-8823-33EF7EBF6E61">XmlDomIterNextNode()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="57%" headers="d109773e783 d109773e769 ">
+                                 <p>Returns next node for iterator.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="43%" id="d109773e792" headers="d109773e766 ">
+                                 <p><a href="package-Traversal-API.html#GUID-B192D9BF-7B1E-4DD5-A18C-3BB8C3FB1016">XmlDomIterPrevNode()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="57%" headers="d109773e792 d109773e769 ">
+                                 <p>Returns previous node for iterator.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div><a id="CAXML6102"></a><a id="CAXML6101"></a><div class="props_rev_3"><a id="GUID-BE41C32E-0E38-4DEF-A8E5-0229D05C048F" name="GUID-BE41C32E-0E38-4DEF-A8E5-0229D05C048F"></a><h4 id="CAXML-GUID-BE41C32E-0E38-4DEF-A8E5-0229D05C048F" class="sect4"><span class="enumeration_section">10.3.1 </span>XmlDomIterDetach()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Detaches the <code class="codeph">NodeIterator</code> from the set which it iterated over, releasing any resources and placing the iterator in the <code class="codeph">INVALID</code> state. After detach has been invoked, calls to <code class="codeph">XmlDomIterNextNode</code> or <code class="codeph">XmlDomIterPrevNode</code> will raise the exception <code class="codeph">XMLERR_ITER_DETACHED</code>.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlerr XmlDomIterDetach(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmliter *iter);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-BE41C32E-0E38-4DEF-A8E5-0229D05C048F__GUID-0C2071F7-E966-4CD2-8A2F-9D82A01C6507">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e872">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e875">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e878">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e883" headers="d109773e872 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e883 d109773e875 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e883 d109773e878 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e893" headers="d109773e872 "><pre class="oac_no_warn" dir="ltr">iter</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e893 d109773e875 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e893 d109773e878 ">
+                                    <p>node iterator object</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <div class="infoboxnotealso" id="GUID-BE41C32E-0E38-4DEF-A8E5-0229D05C048F__GUID-15C906E9-C7AB-4E92-AD24-41798FCDB56F">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-AAA73DCA-892A-4F90-8823-33EF7EBF6E61">XmlDomIterNextNode()</a>, <a href="package-Traversal-API.html#GUID-B192D9BF-7B1E-4DD5-A18C-3BB8C3FB1016">XmlDomIterPrevNode()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6104"></a><a id="CAXML6105"></a><a id="CAXML6103"></a><div class="props_rev_3"><a id="GUID-AAA73DCA-892A-4F90-8823-33EF7EBF6E61" name="GUID-AAA73DCA-892A-4F90-8823-33EF7EBF6E61"></a><h4 id="CAXML-GUID-AAA73DCA-892A-4F90-8823-33EF7EBF6E61" class="sect4"><span class="enumeration_section">10.3.2 </span>XmlDomIterNextNode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Returns the next node in the set and advances the position of the iterator in the set. After a node iterator is created, the first call to <code class="codeph">XmlDomIterNextNode</code> returns the first node in the set. It assumed that the reference node (current iterator position) is never deleted. Otherwise, changes in the underlying DOM tree do not invalidate the iterator.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomIterNextNode(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmliter *iter, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-AAA73DCA-892A-4F90-8823-33EF7EBF6E61__GUID-CB0A5DCE-E9C3-46DA-A3A0-2C6FAAD1F1C1">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e973">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e976">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e979">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e984" headers="d109773e973 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e984 d109773e976 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e984 d109773e979 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e994" headers="d109773e973 "><pre class="oac_no_warn" dir="ltr">iter</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e994 d109773e976 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e994 d109773e979 ">
+                                    <p>node iterator object</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1004" headers="d109773e973 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1004 d109773e976 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1004 d109773e979 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> next node in set being iterated over [or <code class="codeph">NULL</code>]
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-AAA73DCA-892A-4F90-8823-33EF7EBF6E61__GUID-F75F46E8-7A0B-4BEA-BC71-6B4077C4F157">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-B192D9BF-7B1E-4DD5-A18C-3BB8C3FB1016">XmlDomIterPrevNode()</a>, <a href="package-Traversal-API.html#GUID-BE41C32E-0E38-4DEF-A8E5-0229D05C048F">XmlDomIterDetach()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6107"></a><a id="CAXML6108"></a><a id="CAXML6106"></a><div class="props_rev_3"><a id="GUID-B192D9BF-7B1E-4DD5-A18C-3BB8C3FB1016" name="GUID-B192D9BF-7B1E-4DD5-A18C-3BB8C3FB1016"></a><h4 id="CAXML-GUID-B192D9BF-7B1E-4DD5-A18C-3BB8C3FB1016" class="sect4"><span class="enumeration_section">10.3.3 </span>XmlDomIterPrevNode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Returns the previous node in the set and moves the position of the iterator backward in the set.</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomIterPrevNode(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmliter *iter, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-B192D9BF-7B1E-4DD5-A18C-3BB8C3FB1016__GUID-57A91732-3D0A-4596-B485-1BA37A2568AA">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e1092">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e1095">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e1098">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1103" headers="d109773e1092 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1103 d109773e1095 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1103 d109773e1098 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1113" headers="d109773e1092 "><pre class="oac_no_warn" dir="ltr">iter</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1113 d109773e1095 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1113 d109773e1098 ">
+                                    <p>node iterator object</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1123" headers="d109773e1092 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1123 d109773e1095 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1123 d109773e1098 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> previous node in set being iterated over [or <code class="codeph">NULL</code>]
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-B192D9BF-7B1E-4DD5-A18C-3BB8C3FB1016__GUID-127272A9-176C-42D0-91B9-977E661BF79C">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-AAA73DCA-892A-4F90-8823-33EF7EBF6E61">XmlDomIterNextNode()</a>, <a href="package-Traversal-API.html#GUID-BE41C32E-0E38-4DEF-A8E5-0229D05C048F">XmlDomIterDetach()</a></p>
+                        </div>
+                        <p></p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="CAXML6110"></a><a id="CAXML6109"></a><div class="props_rev_3"><a id="GUID-B4FF13BA-0820-4D34-9158-E27AE23C7F72" name="GUID-B4FF13BA-0820-4D34-9158-E27AE23C7F72"></a><h3 id="CAXML-GUID-B4FF13BA-0820-4D34-9158-E27AE23C7F72" class="sect3"><span class="enumeration_section">10.4 </span>TreeWalker Interface for Traversal XML C APIs
+               </h3>
+               <div>
+                  <div class="section">
+                     <p><a href="package-Traversal-API.html#GUID-B4FF13BA-0820-4D34-9158-E27AE23C7F72__Summarytraversal" title="First column lists interfaces; second column provides a brief description of these interfaces.">Table 10-4</a> summarizes the methods available through the <code class="codeph">TreeWalker</code> interface of <code class="codeph">Traversal</code> for XML C APIs.
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="tblformal" id="GUID-B4FF13BA-0820-4D34-9158-E27AE23C7F72__Summarytraversal">
+                     <p class="titleintable">Table 10-4 Summary of TreeWalker Traversal Methods for XML C Implementation</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Summary of TreeWalker Traversal Methods for XML C Implementation" summary="First column lists interfaces; second column provides a brief description of these interfaces." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="52%" id="d109773e1203">Function</th>
+                              <th align="left" valign="bottom" width="48%" id="d109773e1206">Summary</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1211" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-9357BC40-2E18-432A-9A15-0FED0E7B7BEB">XmlDomWalkerFirstChild()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1211 d109773e1206 ">
+                                 <p>Return first visible child of current node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1220" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-9CEF5D7A-BCBF-45A1-B5AD-A3E699671514">XmlDomWalkerGetCurrentNode()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1220 d109773e1206 ">
+                                 <p>Return current node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1229" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-BDFD4508-E67E-4B69-9B61-AC641DB3CCAC">XmlDomWalkerGetRoot()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1229 d109773e1206 ">
+                                 <p>Return root node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1238" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-6B8043A5-548F-447B-A1EA-3BD86C6FE381">XmlDomWalkerLastChild()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1238 d109773e1206 ">
+                                 <p>Return last visible child of current node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1247" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5">XmlDomWalkerNextNode()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1247 d109773e1206 ">
+                                 <p>Return next visible node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1256" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-809B788D-0FD9-477D-83C1-9C9A86A10293">XmlDomWalkerNextSibling()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1256 d109773e1206 ">
+                                 <p>Return next sibling node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1265" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-4C511FA3-68B4-4DC8-9849-87274A06353F">XmlDomWalkerParentNode()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1265 d109773e1206 ">
+                                 <p>Return parent node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1274" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE">XmlDomWalkerPrevNode()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1274 d109773e1206 ">
+                                 <p>Return previous node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1283" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442">XmlDomWalkerPrevSibling()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1283 d109773e1206 ">
+                                 <p>Return previous sibling node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1292" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-385E6208-E6DF-496E-A3F8-A962031EAC7B">XmlDomWalkerSetCurrentNode()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1292 d109773e1206 ">
+                                 <p>Set current node.</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="52%" id="d109773e1301" headers="d109773e1203 ">
+                                 <p><a href="package-Traversal-API.html#GUID-25573158-8484-4B02-946B-91CEF3E0114B">XmlDomWalkerSetRoot()</a></p>
+                              </td>
+                              <td align="left" valign="top" width="48%" headers="d109773e1301 d109773e1206 ">
+                                 <p>Set the root node.</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div><a id="CAXML6112"></a><a id="CAXML6113"></a><a id="CAXML6111"></a><div class="props_rev_3"><a id="GUID-9357BC40-2E18-432A-9A15-0FED0E7B7BEB" name="GUID-9357BC40-2E18-432A-9A15-0FED0E7B7BEB"></a><h4 id="CAXML-GUID-9357BC40-2E18-432A-9A15-0FED0E7B7BEB" class="sect4"><span class="enumeration_section">10.4.1 </span>XmlDomWalkerFirstChild()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Moves the <code class="codeph">TreeWalker</code> to the first visible child of the current node, and returns the new node. If the current node has no visible children, returns <code class="codeph">NULL</code>, and retains the current node.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerFirstChild(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx,
+&nbsp;&nbsp;&nbsp;xmlwalk *walker,
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-9357BC40-2E18-432A-9A15-0FED0E7B7BEB__GUID-99475790-12F5-485F-8790-7B41582F96B5">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e1373">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e1376">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e1379">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1384" headers="d109773e1373 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1384 d109773e1376 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1384 d109773e1379 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1394" headers="d109773e1373 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1394 d109773e1376 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1394 d109773e1379 ">
+                                    <p><code class="codeph">TreeWalker</code> object
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1406" headers="d109773e1373 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1406 d109773e1376 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1406 d109773e1379 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> first visible child [or <code class="codeph">NULL</code>]
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-9357BC40-2E18-432A-9A15-0FED0E7B7BEB__GUID-E1C273F7-45E5-419E-90A7-22606A05A6E9">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-6B8043A5-548F-447B-A1EA-3BD86C6FE381">XmlDomWalkerLastChild()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6115"></a><a id="CAXML6116"></a><a id="CAXML6114"></a><div class="props_rev_3"><a id="GUID-9CEF5D7A-BCBF-45A1-B5AD-A3E699671514" name="GUID-9CEF5D7A-BCBF-45A1-B5AD-A3E699671514"></a><h4 id="CAXML-GUID-9CEF5D7A-BCBF-45A1-B5AD-A3E699671514" class="sect4"><span class="enumeration_section">10.4.2 </span>XmlDomWalkerGetCurrentNode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Return (get) current node, or <code class="codeph">NULL</code> on error.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerGetCurrentNode(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-9CEF5D7A-BCBF-45A1-B5AD-A3E699671514__GUID-3AA803AD-B828-4E88-9435-057D30ED5E38">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e1492">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e1495">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e1498">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1503" headers="d109773e1492 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1503 d109773e1495 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1503 d109773e1498 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1513" headers="d109773e1492 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1513 d109773e1495 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1513 d109773e1498 ">
+                                    <p><code class="codeph">TreeWalker</code> object
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1525" headers="d109773e1492 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1525 d109773e1495 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1525 d109773e1498 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> current node
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6118"></a><a id="CAXML6119"></a><a id="CAXML6117"></a><div class="props_rev_3"><a id="GUID-BDFD4508-E67E-4B69-9B61-AC641DB3CCAC" name="GUID-BDFD4508-E67E-4B69-9B61-AC641DB3CCAC"></a><h4 id="CAXML-GUID-BDFD4508-E67E-4B69-9B61-AC641DB3CCAC" class="sect4"><span class="enumeration_section">10.4.3 </span>XmlDomWalkerGetRoot()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Return (get) root node, or <code class="codeph">NULL</code> on error. Since the current node can be removed from under the root node together with a subtree where it belongs to, the current root node in a walker might have no relation to the current node any more. The <code class="codeph">TreeWalker</code> iterations are based on the current node. However, the root node defines the space of an iteration. This function checks if the root node is still in the root node (ancestor) relation to the current node. If so, it returns this root node. Otherwise, it finds the root of the tree where the current node belongs to, and sets and returns this root as the root node of the walker. It returns <code class="codeph">NULL</code> if the walker is a <code class="codeph">NULL</code> pointer.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerGetRoot(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-BDFD4508-E67E-4B69-9B61-AC641DB3CCAC__GUID-B10032CF-6F48-42FE-B48D-D6CAAE1C9089">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e1613">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e1616">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e1619">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1624" headers="d109773e1613 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1624 d109773e1616 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1624 d109773e1619 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1634" headers="d109773e1613 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1634 d109773e1616 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1634 d109773e1619 ">
+                                    <p>TreeWalker object</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1644" headers="d109773e1613 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1644 d109773e1616 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1644 d109773e1619 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> root node
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6121"></a><a id="CAXML6122"></a><a id="CAXML6120"></a><div class="props_rev_3"><a id="GUID-6B8043A5-548F-447B-A1EA-3BD86C6FE381" name="GUID-6B8043A5-548F-447B-A1EA-3BD86C6FE381"></a><h4 id="CAXML-GUID-6B8043A5-548F-447B-A1EA-3BD86C6FE381" class="sect4"><span class="enumeration_section">10.4.4 </span>XmlDomWalkerLastChild()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Moves the <code class="codeph">TreeWalker</code> to the last visible child of the current node, and returns the new node. If the current node has no visible children, returns <code class="codeph">NULL</code>, and retains the current node.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerLastChild(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker,
+&nbsp;&nbsp;&nbsp; xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-6B8043A5-548F-447B-A1EA-3BD86C6FE381__GUID-AF9ABB11-C07B-46BB-B9D3-DC07C32263B7">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e1725">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e1728">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e1731">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1736" headers="d109773e1725 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1736 d109773e1728 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1736 d109773e1731 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1746" headers="d109773e1725 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1746 d109773e1728 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1746 d109773e1731 ">
+                                    <p>TreeWalker object</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1756" headers="d109773e1725 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1756 d109773e1728 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1756 d109773e1731 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> last visible children [or <code class="codeph">NULL</code>]
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6124"></a><a id="CAXML6125"></a><a id="CAXML6123"></a><div class="props_rev_3"><a id="GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5" name="GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5"></a><h4 id="CAXML-GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5" class="sect4"><span class="enumeration_section">10.4.5 </span>XmlDomWalkerNextNode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Moves the <code class="codeph">TreeWalker</code> to the next visible node in document order relative to the current node, and returns the new node. If the current node has no next node, or if the search for the next node attempts to step upward from the <code class="codeph">TreeWalker</code>'s root node, returns <code class="codeph">NULL</code>, and retains the current node.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerNextNode(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5__GUID-3C944F74-4B5B-477B-A813-00AC2825A810">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="25%" id="d109773e1843">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e1846">In/Out</th>
+                                 <th align="left" valign="bottom" width="63%" id="d109773e1849">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="25%" id="d109773e1854" headers="d109773e1843 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1854 d109773e1846 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="63%" headers="d109773e1854 d109773e1849 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="25%" id="d109773e1864" headers="d109773e1843 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1864 d109773e1846 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="63%" headers="d109773e1864 d109773e1849 ">
+                                    <p>TreeWalker object</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="25%" id="d109773e1874" headers="d109773e1843 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1874 d109773e1846 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="63%" headers="d109773e1874 d109773e1849 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> next node [or <code class="codeph">NULL</code>]
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5__GUID-239BCBEB-6C22-4BB3-A48A-4F2C3E590AD8">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE">XmlDomWalkerPrevNode()</a>, <a href="package-Traversal-API.html#GUID-809B788D-0FD9-477D-83C1-9C9A86A10293">XmlDomWalkerNextSibling()</a>, <a href="package-Traversal-API.html#GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442">XmlDomWalkerPrevSibling()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6127"></a><a id="CAXML6128"></a><a id="CAXML6126"></a><div class="props_rev_3"><a id="GUID-809B788D-0FD9-477D-83C1-9C9A86A10293" name="GUID-809B788D-0FD9-477D-83C1-9C9A86A10293"></a><h4 id="CAXML-GUID-809B788D-0FD9-477D-83C1-9C9A86A10293" class="sect4"><span class="enumeration_section">10.4.6 </span>XmlDomWalkerNextSibling()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Moves the <code class="codeph">TreeWalker</code> to the next sibling of the current node, and returns the new node. If the current node has no visible next sibling, returns <code class="codeph">NULL</code>, and retains the current node.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerNextSibling(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-809B788D-0FD9-477D-83C1-9C9A86A10293__GUID-45FAABD3-E117-45D0-B186-AE080E63E5AD">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e1972">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e1975">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e1978">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1983" headers="d109773e1972 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1983 d109773e1975 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1983 d109773e1978 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e1993" headers="d109773e1972 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e1993 d109773e1975 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e1993 d109773e1978 ">
+                                    <p><code class="codeph">TreeWalker</code> object
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2005" headers="d109773e1972 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2005 d109773e1975 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2005 d109773e1978 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> next sibling [or <code class="codeph">NULL</code>]
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-809B788D-0FD9-477D-83C1-9C9A86A10293__GUID-02247D92-2D5D-4D28-B74E-45CFEC77536A">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5">XmlDomWalkerNextNode()</a>, <a href="package-Traversal-API.html#GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE">XmlDomWalkerPrevNode()</a>, <a href="package-Traversal-API.html#GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442">XmlDomWalkerPrevSibling()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6130"></a><a id="CAXML6131"></a><a id="CAXML6129"></a><div class="props_rev_3"><a id="GUID-4C511FA3-68B4-4DC8-9849-87274A06353F" name="GUID-4C511FA3-68B4-4DC8-9849-87274A06353F"></a><h4 id="CAXML-GUID-4C511FA3-68B4-4DC8-9849-87274A06353F" class="sect4"><span class="enumeration_section">10.4.7 </span>XmlDomWalkerParentNode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Moves to and returns the closest visible ancestor node of the current node. If the search for the parent node attempts to step upward from the <code class="codeph">TreeWalker</code>'s root node, or if it fails to find a visible ancestor node, this method retains the current position and returns null.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerParentNode(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-4C511FA3-68B4-4DC8-9849-87274A06353F__GUID-AFBF3E4C-4A6B-4B4E-86E7-53E53C9E2ED5">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e2099">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e2102">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e2105">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2110" headers="d109773e2099 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2110 d109773e2102 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2110 d109773e2105 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2120" headers="d109773e2099 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2120 d109773e2102 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2120 d109773e2105 ">
+                                    <p>TreeWalker object</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2130" headers="d109773e2099 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2130 d109773e2102 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2130 d109773e2105 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> parent node [or <code class="codeph">NULL</code>]
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6133"></a><a id="CAXML6134"></a><a id="CAXML6132"></a><div class="props_rev_3"><a id="GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE" name="GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE"></a><h4 id="CAXML-GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE" class="sect4"><span class="enumeration_section">10.4.8 </span>XmlDomWalkerPrevNode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Moves the <code class="codeph">TreeWalker</code> to the previous visible node in document order relative to the current node, and returns the new node. If the current node has no previous node, or if the search for the previous node attempts to step upward from the <code class="codeph">TreeWalker</code>'s root node, returns <code class="codeph">NULL</code>, and retains the current node.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerPrevNode(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE__GUID-AFAC3096-70A5-4988-A64A-889EEDAD5C22">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e2217">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e2220">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e2223">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2228" headers="d109773e2217 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2228 d109773e2220 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2228 d109773e2223 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2238" headers="d109773e2217 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2238 d109773e2220 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2238 d109773e2223 ">
+                                    <p><code class="codeph">TreeWalker</code> object
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2250" headers="d109773e2217 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2250 d109773e2220 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2250 d109773e2223 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> previous node [or <code class="codeph">NULL</code>]
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE__GUID-93165268-EEAF-4A35-B634-ECCBFF3D56A4">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5">XmlDomWalkerNextNode()</a>, <a href="package-Traversal-API.html#GUID-809B788D-0FD9-477D-83C1-9C9A86A10293">XmlDomWalkerNextSibling()</a>, <a href="package-Traversal-API.html#GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442">XmlDomWalkerPrevSibling()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6136"></a><a id="CAXML6137"></a><a id="CAXML6135"></a><div class="props_rev_3"><a id="GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442" name="GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442"></a><h4 id="CAXML-GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442" class="sect4"><span class="enumeration_section">10.4.9 </span>XmlDomWalkerPrevSibling()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Moves the <code class="codeph">TreeWalker</code> to the previous sibling of the current node, and returns the new node. If the current node has no visible previous sibling, returns <code class="codeph">NULL</code>, and retains the current node.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerPrevSibling(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442__GUID-53532E14-83F7-4050-8772-EE7228FCA6C2">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e2348">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e2351">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e2354">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2359" headers="d109773e2348 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2359 d109773e2351 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2359 d109773e2354 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2369" headers="d109773e2348 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2369 d109773e2351 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2369 d109773e2354 ">
+                                    <p><code class="codeph">TreeWalker</code> object
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2381" headers="d109773e2348 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2381 d109773e2351 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2381 d109773e2354 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> previous sibling [or <code class="codeph">NULL</code>]
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-A7BFD9C9-3C73-490E-B79A-B72770A6E442__GUID-6ECA4E98-F2FE-4E87-B0CB-D710367FB4C6">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="package-Traversal-API.html#GUID-1631C4C1-3CA6-488A-95A6-5F70069885B5">XmlDomWalkerNextNode()</a>, <a href="package-Traversal-API.html#GUID-2986F215-0670-4824-ABE4-C9EDCA23B7EE">XmlDomWalkerPrevNode()</a>, <a href="package-Traversal-API.html#GUID-809B788D-0FD9-477D-83C1-9C9A86A10293">XmlDomWalkerNextSibling()</a></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6139"></a><a id="CAXML6140"></a><a id="CAXML6138"></a><div class="props_rev_3"><a id="GUID-385E6208-E6DF-496E-A3F8-A962031EAC7B" name="GUID-385E6208-E6DF-496E-A3F8-A962031EAC7B"></a><h4 id="CAXML-GUID-385E6208-E6DF-496E-A3F8-A962031EAC7B" class="sect4"><span class="enumeration_section">10.4.10 </span>XmlDomWalkerSetCurrentNode()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Sets and returns new current node. It also checks if the root node is an ancestor of the new current node. If not it does not set the current node, returns <code class="codeph">NULL</code>, and sets retval to <code class="codeph">XMLDOM_WALKER_BAD_NEW_CUR</code>. Returns <code class="codeph">NULL</code> if an error.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerSetCurrentNode(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlnode *node, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-385E6208-E6DF-496E-A3F8-A962031EAC7B__GUID-3DFA187D-9C22-4B9D-A31E-E1A5A55F123B">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e2481">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e2484">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e2487">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2492" headers="d109773e2481 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2492 d109773e2484 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2492 d109773e2487 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2502" headers="d109773e2481 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2502 d109773e2484 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2502 d109773e2487 ">
+                                    <p><code class="codeph">TreeWalker</code> object
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2514" headers="d109773e2481 "><pre class="oac_no_warn" dir="ltr">node</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2514 d109773e2484 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2514 d109773e2487 ">
+                                    <p>new current node</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2524" headers="d109773e2481 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2524 d109773e2484 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2524 d109773e2487 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> new current node
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="CAXML6142"></a><a id="CAXML6143"></a><a id="CAXML6141"></a><div class="props_rev_3"><a id="GUID-25573158-8484-4B02-946B-91CEF3E0114B" name="GUID-25573158-8484-4B02-946B-91CEF3E0114B"></a><h4 id="CAXML-GUID-25573158-8484-4B02-946B-91CEF3E0114B" class="sect4"><span class="enumeration_section">10.4.11 </span>XmlDomWalkerSetRoot()
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>Set the root node. Returns new root node if it is an ancestor of the current node. If not it signals an error and checks if the current root node is an ancestor of the current node. If yes it returns it. Otherwise it sets the root node to and returns the root of the tree where the current node belongs to. It returns <code class="codeph">NULL</code> if the walker or the root node parameter is a <code class="codeph">NULL</code> pointer.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p class="subhead3">Syntax</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section"><pre class="oac_no_warn" dir="ltr">xmlnode* XmlDomWalkerSetRoot(
+&nbsp;&nbsp;&nbsp;xmlctx *xctx, 
+&nbsp;&nbsp;&nbsp;xmlwalk *walker, 
+&nbsp;&nbsp;&nbsp;xmlnode *node, 
+&nbsp;&nbsp;&nbsp;xmlerr *xerr);</pre></div>
+                     <!-- class="section" -->
+                     <div class="tblformal" id="GUID-25573158-8484-4B02-946B-91CEF3E0114B__GUID-523AA2E6-34F3-49A5-9CE8-A538ABCD99CA">
+                        <table cellpadding="4" cellspacing="0" class="Formal" title summary="Parameter Table; column 1 has parameters, column 2 has the binding (IN, OUT, or IN/OUT), and column 2 has the descriptions." width="100%" frame="hsides" border="1" rules="rows">
+                           <thead>
+                              <tr align="left" valign="top">
+                                 <th align="left" valign="bottom" width="26%" id="d109773e2605">Parameter</th>
+                                 <th align="left" valign="bottom" width="12%" id="d109773e2608">In/Out</th>
+                                 <th align="left" valign="bottom" width="62%" id="d109773e2611">Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2616" headers="d109773e2605 "><pre class="oac_no_warn" dir="ltr">xctx</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2616 d109773e2608 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2616 d109773e2611 ">
+                                    <p>XML context</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2626" headers="d109773e2605 "><pre class="oac_no_warn" dir="ltr">walker</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2626 d109773e2608 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2626 d109773e2611 ">
+                                    <p><code class="codeph">TreeWalker</code> object
+                                    </p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2638" headers="d109773e2605 "><pre class="oac_no_warn" dir="ltr">node</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2638 d109773e2608 "><pre class="oac_no_warn" dir="ltr">IN</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2638 d109773e2611 ">
+                                    <p>new root node</p>
+                                 </td>
+                              </tr>
+                              <tr align="left" valign="top">
+                                 <td align="left" valign="top" width="26%" id="d109773e2648" headers="d109773e2605 "><pre class="oac_no_warn" dir="ltr">xerr</pre></td>
+                                 <td align="left" valign="top" width="12%" headers="d109773e2648 d109773e2608 "><pre class="oac_no_warn" dir="ltr">OUT</pre></td>
+                                 <td align="left" valign="top" width="62%" headers="d109773e2648 d109773e2611 ">
+                                    <p>numeric return error code</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <!-- class="inftblhruleinformal" -->
+                     <div class="section">
+                        <p class="subhead3">Returns</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <p><code class="codeph">(xmlnode *)</code> new root node
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

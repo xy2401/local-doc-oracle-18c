@@ -1,0 +1,411 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="The technique for backing up a database depends on the archiving mode of the database and whether you are making a component-based or a volume-based backup.">
+      <meta name="description" content="The technique for backing up a database depends on the archiving mode of the database and whether you are making a component-based or a volume-based backup.">
+      <title>About Backing Up a Database</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Administrator's Reference ">
+      <meta property="og:description" content="The technique for backing up a database depends on the archiving mode of the database and whether you are making a component-based or a volume-based backup.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Administrator's Reference for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="administrators-reference-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-02T05:05:35-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83889-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="about-installing-and-uninstalling-the-oracle-vss-writer-service.html" title="Previous" type="text/html">
+      <link rel="next" href="about-restoring-and-recovering-a-database.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Administrator's Reference Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="NTQRF">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="about-installing-and-uninstalling-the-oracle-vss-writer-service.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="about-restoring-and-recovering-a-database.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Administrator's Reference </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="performing-database-backup-and-recovery-with-vss.html" property="item" typeof="WebPage"><span property="name">Performing Database Backup and Recovery with VSS </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">About Backing Up a Database</li>
+            </ol>
+            <a id="GUID-A0C9B31A-5B89-4A93-8C7E-0C1E04700F8F" name="GUID-A0C9B31A-5B89-4A93-8C7E-0C1E04700F8F"></a><a id="NTQRF694"></a><a id="NTQRF296"></a>
+            
+            <h2 id="NTQRF-GUID-A0C9B31A-5B89-4A93-8C7E-0C1E04700F8F" class="sect2">About Backing Up a Database</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>The technique for backing up a database depends on the archiving mode of the database and whether you are making a component-based or a volume-based backup.</p>
+               <p>Oracle recommends shadow copies taken in a component mode for backing up the Oracle Database using VSS writer. The Oracle VSS writer defines the components that include the set of database files. The Oracle VSS writer then saves the redo generated during hot backup mode when the snapshot was created in the backup writer metadata document. </p>
+               <p>The component hierarchy defined by the Oracle VSS writer is illustrated in Oracle VSS Writer Component Hierarchy.</p>
+               <div class="figure" id="GUID-A0C9B31A-5B89-4A93-8C7E-0C1E04700F8F__BEIHAAJE">
+                  <p class="titleinfigure">Figure 9-1 Oracle VSS Writer Component Hierarchy</p><img src="img/comp.gif" alt="Description of Figure 9-1 follows" title="Description of Figure 9-1 follows" longdesc="img_text/comp.html"><br><a href="img_text/comp.html">Description of "Figure 9-1 Oracle VSS Writer Component Hierarchy"</a></div>
+               <!-- class="figure" -->
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="about-backing-up-a-database.html#GUID-E55E197E-3AD5-410A-8615-D70B35C1CBF3">About Component-Based Backups</a><br>The components supported by the Oracle VSS writer are listed in Components Backed Up by the Oracle VSS Writer.
+                  </li>
+                  <li class="ulchildlink"><a href="about-backing-up-a-database.html#GUID-EB71FAAD-DC64-494A-B001-50177A6621F6">About Backing Up a Database in ARCHIVELOG Mode</a><br>Learn about backing up a database in ARCHIVELOG mode.
+                  </li>
+                  <li class="ulchildlink"><a href="about-backing-up-a-database.html#GUID-86BDE2B3-C8E6-449B-96B6-44E52C2E936F">About Backing Up a Database in NOARCHIVELOG Mode</a><br>Learn about backing up a database in NOARCHIVELOG mode.
+                  </li>
+               </ul>
+               <div class="relinfo">
+                  <p><strong>Related Topics</strong></p>
+                  <ul>
+                     <li><a href="about-backing-up-a-database.html#GUID-E55E197E-3AD5-410A-8615-D70B35C1CBF3" title="The components supported by the Oracle VSS writer are listed in Components Backed Up by the Oracle VSS Writer.">About Component-Based Backups</a></li>
+                  </ul>
+               </div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="performing-database-backup-and-recovery-with-vss.html#GUID-B97FED01-7746-4C7A-9F9E-3EE2C147E4AF">Performing Database Backup and Recovery with VSS</a></p>
+                  </div>
+               </div>
+            </div><a id="NTQRF298"></a><a id="NTQRF297"></a><div class="props_rev_3"><a id="GUID-E55E197E-3AD5-410A-8615-D70B35C1CBF3" name="GUID-E55E197E-3AD5-410A-8615-D70B35C1CBF3"></a><h3 id="NTQRF-GUID-E55E197E-3AD5-410A-8615-D70B35C1CBF3" class="sect3">About Component-Based Backups</h3>
+               <div>
+                  <p>The components supported by the Oracle VSS writer are listed in Components Backed Up by the Oracle VSS Writer.</p>
+                  <p>The name of the component is the value returned by an <code class="codeph">OnIdentify</code> VSS message. The Selectable for Backup column indicates whether a component is eligible to be selected in VSS shadow copies. 
+                  </p>
+                  <div class="tblformal" id="GUID-E55E197E-3AD5-410A-8615-D70B35C1CBF3__BEIFBJBC">
+                     <p class="titleintable">Table 9-2 Components Backed Up by the Oracle VSS Writer</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Components Backed Up by the Oracle VSS Writer" summary="This table describes components defined by the Oracle VSS writer. The table has the following columns: Component, Excluded, and Description." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="21%" id="d29151e227">Component</th>
+                              <th align="left" valign="bottom" width="62%" id="d29151e230">Description</th>
+                              <th align="left" valign="bottom" width="17%" id="d29151e233">Selectable for Backup</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e238" headers="d29151e227 ">
+                                 <p>Oracle Database</p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e238 d29151e230 ">
+                                 <p>Contains the database files, control files, and server parameter file.</p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e238 d29151e233 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e248" headers="d29151e227 ">
+                                 <p>Control File</p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e248 d29151e230 ">
+                                 <p>Contains the snapshot location of the control file for a database running in <code class="codeph">ARCHIVELOG</code> mode, or the current control file locations when all database files are recovered to a consistent SCN.
+                                 </p>
+                                 <p><span class="bold">Note:</span> The files included in the Control File component determine whether current control files or snapshot control files are excluded. For example, if the database is opened in read-only mode, then the snapshot control file location is excluded from the snapshot.
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e248 d29151e233 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e265" headers="d29151e227 ">
+                                 <p>Server Parameter File</p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e265 d29151e230 ">
+                                 <p>Contains the location of the server parameter file, if the instance is using one.</p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e265 d29151e233 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e275" headers="d29151e227 ">
+                                 <p>All TableSpaces</p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e275 d29151e230 ">
+                                 <p>Includes all tablespaces in a snapshot.</p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e275 d29151e233 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e285" headers="d29151e227 ">
+                                 <p><span class="italic">tablespace_name</span>s
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e285 d29151e230 ">
+                                 <p>Selects individual TableSpaces.</p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e285 d29151e233 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e297" headers="d29151e227 ">
+                                 <p>Data file number=<span class="italic">n</span></p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e297 d29151e230 ">
+                                 <p>Selects individual data files. The metadata contains <code class="codeph">RESETLOGS</code> information, tablespace number, tablespace name, and DBID.
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e297 d29151e233 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e312" headers="d29151e227 ">
+                                 <p>ArchiveLogDest_<span class="italic">n</span></p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e312 d29151e230 ">
+                                 <p>Selects individual local archiving destinations other than the fast recovery area.</p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e312 d29151e233 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e324" headers="d29151e227 ">
+                                 <p>Fast Recovery Area</p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e324 d29151e230 ">
+                                 <p>Includes all backup files and archived logs in the Fast Recovery Area in the VSS snapshot.</p>
+                                 <p>Files backed up by VSS from the Fast Recovery Area can be subjected to deletion under space constraints.</p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e324 d29151e233 ">
+                                 <p>Yes</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e336" headers="d29151e227 ">
+                                 <p>Archived Logs</p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e336 d29151e230 ">
+                                 <p>Logs in Fast Recovery Area</p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e336 d29151e233 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="21%" id="d29151e346" headers="d29151e227 ">
+                                 <p>Backup Files</p>
+                              </td>
+                              <td align="left" valign="top" width="62%" headers="d29151e346 d29151e230 ">
+                                 <p>Backs up from Fast Recovery Area</p>
+                              </td>
+                              <td align="left" valign="top" width="17%" headers="d29151e346 d29151e233 ">
+                                 <p>No</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>You can select only <code class="codeph">Oracle Database</code>, <code class="codeph">ArchiveLogDest_</code><span class="italic"><code class="codeph">n</code></span>, and <code class="codeph">Fast Recovery Area,</code> exposed by the Oracle VSS writer during a backup. The availability of the components in Components Backed Up by the Oracle VSS Writer may depend on the database state. For example, if the database is in <code class="codeph">NOARCHIVELOG</code> mode, then the <code class="codeph">Archived Logs</code> component is not returned. Likewise, if the instance is not started with a server parameter file, then the <code class="codeph">Server Parameter File</code> component is not returned.
+                  </p>
+                  <div class="infoboxnote" id="GUID-E55E197E-3AD5-410A-8615-D70B35C1CBF3__GUID-1E5B16F5-9067-4DEB-AD81-285B6FC28A5E">
+                     <p class="notep1">Note:</p>
+                     <p>The components that are not marked as Selectable for Backup are implicitly included by components marked as Selectable for Backup.</p>
+                  </div>
+                  <p>When you select <code class="codeph">Oracle</code> <code class="codeph">Database</code> component for backup or restore, all other components are implicitly selected for backup or restore. This implies that all files that are part of the selected component are candidates for backup or restore.
+                  </p>
+                  <p><code class="codeph">ArchiveLogDest_n</code> and <code class="codeph">Fast</code> <code class="codeph">Recovery</code> <code class="codeph">Area</code> components are defined to contain only log or incremental files. This means that the requester must backup files from these components only when creating a log for incremental or differential backup. Likewise, the requester must restore files from these components only when restoring from log or incremental or differential backups.
+                  </p>
+                  <p>The files in all other components other than <code class="codeph">ArchiveLogDest_n</code> and <code class="codeph">Fast</code> <code class="codeph">Recovery</code> <code class="codeph">Area</code> define database files. This means that the requester must backup files from these components only when creating a full or copy backup. Likewise, the requester must restore files from these components only when restoring from full or copy backup. 
+                  </p>
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="about-backing-up-a-database.html#GUID-A0C9B31A-5B89-4A93-8C7E-0C1E04700F8F" title="The technique for backing up a database depends on the archiving mode of the database and whether you are making a component-based or a volume-based backup.">About Backing Up a Database</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div><a id="NTQRF299"></a><div class="props_rev_3"><a id="GUID-EB71FAAD-DC64-494A-B001-50177A6621F6" name="GUID-EB71FAAD-DC64-494A-B001-50177A6621F6"></a><h3 id="NTQRF-GUID-EB71FAAD-DC64-494A-B001-50177A6621F6" class="sect3">About Backing Up a Database in ARCHIVELOG Mode</h3>
+               <div>
+                  <p>Learn about backing up a database in ARCHIVELOG mode.</p>
+                  <div class="section">
+                     <p>The procedures assume that the database is open read/write. You can also make closed and consistent backups. </p>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="about-backing-up-a-database.html#GUID-9654268D-D97A-4F60-AD4C-ED6CBEE3D197">Making Component-Based Backups of an ARCHIVELOG Database</a><br>Explains how to back up the entire database. You can back up only <code class="codeph">Oracle Database,</code> <code class="codeph">ArchiveLogDest_</code><span class="italic"><code class="codeph">n</code></span>, and <code class="codeph">Fast Recovery Area</code>, listed in Components Backed Up by the Oracle VSS Writer.
+                     </li>
+                     <li class="ulchildlink"><a href="about-backing-up-a-database.html#GUID-9318D90C-E026-4B1D-9D2E-65F4231F7D92">Making Volume-Based Backups of an ARCHIVELOG Database</a><br>To make volume-based shadow copies of Oracle database when the database is open in read/write mode, the archived redo logs must be physically located on a separate volume from the volume containing the Oracle data files, control files, server parameter file, and online redo logs.
+                     </li>
+                  </ul>
+                  <div class="relinfo">
+                     <p><strong>Related Topics</strong></p>
+                     <ul>
+                        <li><a href="about-backing-up-a-database.html#GUID-86BDE2B3-C8E6-449B-96B6-44E52C2E936F" title="Learn about backing up a database in NOARCHIVELOG mode.">About Backing Up a Database in NOARCHIVELOG Mode</a></li>
+                     </ul>
+                  </div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="about-backing-up-a-database.html#GUID-A0C9B31A-5B89-4A93-8C7E-0C1E04700F8F" title="The technique for backing up a database depends on the archiving mode of the database and whether you are making a component-based or a volume-based backup.">About Backing Up a Database</a></p>
+                     </div>
+                  </div>
+               </div><a id="NTQRF300"></a><div class="props_rev_3"><a id="GUID-9654268D-D97A-4F60-AD4C-ED6CBEE3D197" name="GUID-9654268D-D97A-4F60-AD4C-ED6CBEE3D197"></a><h4 id="NTQRF-GUID-9654268D-D97A-4F60-AD4C-ED6CBEE3D197" class="sect4">Making Component-Based Backups of an ARCHIVELOG Database</h4>
+                  <div>
+                     <p>Explains how to back up the entire database. You can back up only <code class="codeph">Oracle Database,</code> <code class="codeph">ArchiveLogDest_</code><span class="italic"><code class="codeph">n</code></span>, and <code class="codeph">Fast Recovery Area</code>, listed in Components Backed Up by the Oracle VSS Writer.
+                     </p>
+                     <div class="section">
+                        <p>To back up the entire database:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Start a SQL*Plus session on the target database and make sure the database is open <code class="codeph">READ WRITE</code>.</span></li>
+                        <li class="stepexpand"><span>Use a third-party VSS requester to select the <code class="codeph">Oracle Database</code> component. </span></li>
+                        <li class="stepexpand"><span>Create a snapshot of the database. </span><div>
+                              <p>Oracle VSS writer includes the server parameter file, control file, and data files in the snapshot. The online redo logs are not included in the snapshot.</p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-backing-up-a-database.html#GUID-EB71FAAD-DC64-494A-B001-50177A6621F6" title="Learn about backing up a database in ARCHIVELOG mode.">About Backing Up a Database in ARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF301"></a><div class="props_rev_3"><a id="GUID-9318D90C-E026-4B1D-9D2E-65F4231F7D92" name="GUID-9318D90C-E026-4B1D-9D2E-65F4231F7D92"></a><h4 id="NTQRF-GUID-9318D90C-E026-4B1D-9D2E-65F4231F7D92" class="sect4">Making Volume-Based Backups of an ARCHIVELOG Database</h4>
+                  <div>
+                     <p>To make volume-based shadow copies of Oracle database when the database is open in read/write mode, the archived redo logs must be physically located on a separate volume from the volume containing the Oracle data files, control files, server parameter file, and online redo logs.</p>
+                     <div class="section">
+                        <p>To back up the database and archived redo logs by volume:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Start a SQL*Plus session on the target database and make sure the database is open <code class="codeph">READ WRITE</code>.</span></li>
+                        <li class="stepexpand"><span>Use a third-party VSS requester to select the volumes where the data files, control files, and server parameter file are physically located.</span></li>
+                        <li class="stepexpand"><span>Create a snapshot of the database files. </span><div>
+                              <p>Oracle VSS writer includes the server parameter file, control file, and data files in the snapshot. The online redo logs are not included in the snapshot. Note that you can restore the server parameter file individually, but the control files and data files must be always restored together.</p>
+                           </div>
+                        </li>
+                        <li class="stepexpand"><span>Use a third-party VSS requester to select the volumes where all of the archived redo logs (or the fast recovery area) are physically located.</span></li>
+                        <li class="stepexpand"><span>Create a snapshot of the archived redo logs.</span></li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-backing-up-a-database.html#GUID-EB71FAAD-DC64-494A-B001-50177A6621F6" title="Learn about backing up a database in ARCHIVELOG mode.">About Backing Up a Database in ARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div><a id="NTQRF302"></a><div class="props_rev_3"><a id="GUID-86BDE2B3-C8E6-449B-96B6-44E52C2E936F" name="GUID-86BDE2B3-C8E6-449B-96B6-44E52C2E936F"></a><h3 id="NTQRF-GUID-86BDE2B3-C8E6-449B-96B6-44E52C2E936F" class="sect3">About Backing Up a Database in NOARCHIVELOG Mode</h3>
+               <div>
+                  <p>Learn about backing up a database in NOARCHIVELOG mode.</p>
+                  <p>For an Oracle database running in <code class="codeph">NOARCHIVELOG</code> mode, the database must be in a consistent state when you create a VSS snapshot. Backups made while the database is open read/write are not supported.
+                  </p>
+               </div>
+               <div>
+                  <ul class="ullinks">
+                     <li class="ulchildlink"><a href="about-backing-up-a-database.html#GUID-865A998B-7CB3-4D5D-9D8E-8E43167588BA">Making Component-Based Backups of a NOARCHIVELOG Database</a><br>For an Oracle database in <code class="codeph">NOARCHIVELOG</code> mode, the only supported component-based VSS snapshot is of <code class="codeph">Oracle Database</code> when the type is full, default, or copy.
+                     </li>
+                     <li class="ulchildlink"><a href="about-backing-up-a-database.html#GUID-35650C59-3580-47DB-85E7-4F094616F4B4">Making Volume-Based Backups of a NOARCHIVELOG Database</a><br>Learn how to make volume-based backups of a NOARCHIVELOG database.
+                     </li>
+                  </ul>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="about-backing-up-a-database.html#GUID-A0C9B31A-5B89-4A93-8C7E-0C1E04700F8F" title="The technique for backing up a database depends on the archiving mode of the database and whether you are making a component-based or a volume-based backup.">About Backing Up a Database</a></p>
+                     </div>
+                  </div>
+               </div>
+               <a id="NTQRF303"></a><div class="props_rev_3"><a id="GUID-865A998B-7CB3-4D5D-9D8E-8E43167588BA" name="GUID-865A998B-7CB3-4D5D-9D8E-8E43167588BA"></a><h4 id="NTQRF-GUID-865A998B-7CB3-4D5D-9D8E-8E43167588BA" class="sect4">Making Component-Based Backups of a NOARCHIVELOG Database</h4>
+                  <div>
+                     <p>For an Oracle database in <code class="codeph">NOARCHIVELOG</code> mode, the only supported component-based VSS snapshot is of <code class="codeph">Oracle Database</code> when the type is full, default, or copy.
+                     </p>
+                     <div class="section">
+                        <p>To back up the database by component:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Start a SQL*Plus session on the target database and place the database in a consistent state. For example, enter the following commands:</span><div><pre class="oac_no_warn" dir="ltr">SHUTDOWN
+STARTUP MOUNT
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Use a third-party VSS requester to select the <code class="codeph">Oracle Database</code> component.</span></li>
+                        <li class="stepexpand"><span>Create a volume-based VSS snapshot.</span><div>
+                              <p>Oracle VSS writer includes the server parameter file, control file, and data files in the snapshot. The online redo logs are not included in the snapshot.</p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-backing-up-a-database.html#GUID-86BDE2B3-C8E6-449B-96B6-44E52C2E936F" title="Learn about backing up a database in NOARCHIVELOG mode.">About Backing Up a Database in NOARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div><a id="NTQRF304"></a><div class="props_rev_3"><a id="GUID-35650C59-3580-47DB-85E7-4F094616F4B4" name="GUID-35650C59-3580-47DB-85E7-4F094616F4B4"></a><h4 id="NTQRF-GUID-35650C59-3580-47DB-85E7-4F094616F4B4" class="sect4">Making Volume-Based Backups of a NOARCHIVELOG Database</h4>
+                  <div>
+                     <p>Learn how to make volume-based backups of a NOARCHIVELOG database.</p>
+                     <div class="section">
+                        <p>To back up the database by volume:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li class="stepexpand"><span>Start a SQL*Plus session on the target database and place the database in a consistent state. For example, enter the following commands:</span><div><pre class="oac_no_warn" dir="ltr">SHUTDOWN
+STARTUP MOUNT
+</pre></div>
+                        </li>
+                        <li class="stepexpand"><span>Use a third-party VSS requester to select the volumes where the data files, control files, and server parameter file are physically located.</span></li>
+                        <li class="stepexpand"><span>Create a volume-based VSS snapshot.</span><div>
+                              <p>Oracle VSS writer includes the server parameter file, control file, and data files in the snapshot. The online redo logs are not included in the snapshot. Note that you can restore the server parameter file individually, but the control files and data files must be always restored together.</p>
+                           </div>
+                        </li>
+                     </ol>
+                  </div>
+                  <div>
+                     <div class="familylinks">
+                        <div class="parentlink">
+                           <p><strong>Parent topic:</strong> <a href="about-backing-up-a-database.html#GUID-86BDE2B3-C8E6-449B-96B6-44E52C2E936F" title="Learn about backing up a database in NOARCHIVELOG mode.">About Backing Up a Database in NOARCHIVELOG Mode</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

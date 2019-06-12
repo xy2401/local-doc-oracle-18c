@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: E98869-01 -->
+    <!-- Published date: June 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Creating, Altering, and Setting Lockdown Profiles in Container
+      Databases</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to create and use lockdown profiles at different levels in CDBs.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-08-03T18:46:29+00:00">
+    <meta name="dcterms.title" content="Creating and Using Lockdown Profiles at Different Levels in CDB">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBEZY">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E98869-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a>
+      </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Creating,
+        Altering, and Setting Lockdown Profiles in Container Databases</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32">Before You Begin</h2>
+              <p>This 15-minute tutorial shows you how to create, alter, and set
+                lockdown profiles at different levels in a container database
+                (CDB), in the CDB root, in application roots, and application
+                pluggable databases (PDB).</p>
+              <h3>Background</h3>
+              <p> You can set Oracle Database 12c lockdown profiles only in a
+                CDB root, whereas you can set Oracle Database 18c lockdown
+                profiles in application roots and application PDBs.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Familiarity with Oracle Database 12c lockdown profiles</li>
+                <li>Oracle Database 18c installed</li>
+                <li>A container database</li>
+                <li>A regular pluggable database</li>
+                <li>The <a href="files/hr_root.sh" target="_blank">hr_root.sh </a>
+                  shell script and the <a href="files/create_hr_root.sql" target="_blank">
+                    create_hr_root.sql, </a> <a href="files/create_hr_app.sql" target="_blank">create_hr_app.sql, </a><a href="files/create_operations.sql" target="_blank">create_operations.sql, </a> <a href="files/create_sales.sql" target="_blank">create_sales.sql, </a> and <a href="files/sync.sql" target="_blank">sync.sql </a> SQL scripts downloaded to the
+                  <code> /home/oracle/labs </code> directory with passwords
+                  updated in those scripts.</li>
+              </ul>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_1" role="button" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">Create
+                Lockdown Profiles in the CDB and Application Roots</h2>
+              <ol>
+                <li>Ensure that&nbsp;<code> tnsnames.ora </code> is updated
+                  with entries for <code> HR_ROOT, OPERATIONS, </code> and <code>
+                    SALES </code> PDBs.</li>
+                <li>Verify the value of <code>ORACLE_HOME </code> on your
+                  server. If necessary update the <code>/home/oracle/labs/hr_root.sh
+                    </code> shell script. </li>
+                <li>Create the <code> HR_ROOT </code> application root and its
+                  two application PDBs (<code>SALES </code> and <code>
+                    OPERATIONS). </code>
+                  <pre><code>/home/oracle/labs/hr_root.sh</code></pre>
+                </li>
+                <li>Log in to the CDB root.
+                  <pre><code>sqlplus / AS SYSDBA</code></pre>
+                </li>
+                <li>Create the <code> CDB_prof1 </code> lockdown profile and
+                  its attributes.
+                  <pre><code>CREATE LOCKDOWN PROFILE CDB_prof1;
+ALTER LOCKDOWN PROFILE CDB_prof1 DISABLE STATEMENT = ('alter system');
+ALTER LOCKDOWN PROFILE CDB_prof1 ENABLE STATEMENT = ('alter system')
+                                 CLAUSE = ('set');</code></pre>
+                </li>
+                <li>Create the <code>CDB_prof2 </code> lockdown profile and
+                  its attributes.
+                  <pre><code>CREATE LOCKDOWN PROFILE CDB_prof2;
+ALTER LOCKDOWN PROFILE CDB_prof2 DISABLE STATEMENT = ('alter pluggable database');
+</code></pre> </li>
+                <li>Verify that the lockdown profiles were created in the CDB
+                  root.
+                  <pre><code>SELECT profile_name, rule, clause, status FROM cdb_lockdown_profiles
+WHERE  profile_name LIKE 'CDB%';
+
+PROFILE_NAME   RULE                     CLAUSE             STATUS
+-------------- ------------------------ ------------------ -------
+CDB_PROF1      ALTER SYSTEM                                DISABLE
+CDB_PROF1      ALTER SYSTEM             SET                ENABLE
+CDB_PROF2      ALTER PLUGGABLE DATABASE                    DISABLE
+</code></pre> </li>
+                <li>Log in to the <code> HR_ROOT </code> application root as <code>
+                    HR_LOCK_MGR.</code>
+                  <pre><code>CONNECT hr_lock_mgr@HR_ROOT</code> 
+Enter password: <em>password</em></pre>
+                </li>
+                <li> Create the <code> app_root_prof </code> lockdown profile
+                  and its attributes.
+                  <pre>CREATE LOCKDOWN PROFILE app_root_prof;
+ALTER LOCKDOWN PROFILE app_root_prof DISABLE STATEMENT = ('alter system');
+ALTER LOCKDOWN PROFILE app_root_prof ENABLE STATEMENT = ('alter system')
+               CLAUSE = ('flush shared_pool');</pre>
+                </li>
+                <li>Verify that the lockdown profile was created in the
+                  application root.
+                  <pre><code>SELECT profile_name, rule, clause, status FROM cdb_lockdown_profiles;
+  
+PROFILE_NAME   RULE                     CLAUSE             STATUS
+-------------- ------------------------ ------------------ -------
+APP_ROOT_PROF  ALTER SYSTEM                                DISABLE
+APP_ROOT_PROF  ALTER SYSTEM             FLUSH SHARED_POOL  ENABLE
+</code></pre> </li>
+                <li>Create a lockdown profile for the <code> SALES </code>
+                  application PDB.
+                  <pre><code>CREATE LOCKDOWN PROFILE sales_prof;
+ALTER LOCKDOWN PROFILE sales_prof                        
+DISABLE STATEMENT = ('alter pluggable database');</code></pre>
+                </li>
+                <li>Verify that the lockdown profile was created in the
+                  application root.
+                  <pre><code>SELECT profile_name, rule, clause, status FROM cdb_lockdown_profiles;
+
+PROFILE_NAME   RULE                     CLAUSE             STATUS
+-------------- ------------------------ ------------------ -------
+APP_ROOT_PROF  ALTER SYSTEM                                DISABLE
+APP_ROOT_PROF  ALTER SYSTEM             FLUSH SHARED_POOL  ENABLE
+SALES_PROF     ALTER PLUGGABLE DATABASE                    DISABLE</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Set a
+                Lockdown Profile in the CDB Root</h2>
+              <ol>
+                <li>Connect to the CDB root.
+                  <pre><code>CONNECT / AS SYSDBA</code></pre>
+                </li>
+                <li>Check which lockdown profile is set in the CDB root.
+                  <pre><code>SHOW PARAMETER pdb_lockdown
+NAME                    TYPE        VALUE
+----------------------- ----------- ------------------------------
+pdb_lockdown            string</code></pre>
+                </li>
+                <li>Set the <code> CDB_prof1 </code> lockdown profile in the
+                  CDB root.
+                  <pre><code>ALTER SYSTEM SET pdb_lockdown = CDB_prof1 SCOPE = both;</code></pre>
+                  <pre><code>SHOW PARAMETER pdb_lockdown
+NAME                    TYPE        VALUE
+----------------------- ----------- ------------------------------
+pdb_lockdown            string      CDB_prof1</code>
+</pre> </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">
+                Execute Allowed and Disallowed Commands in PDBs</h2>
+              <ol>
+                <li>Log in to <code> PDB1. </code>
+                  <pre><code>CONNECT sys@PDB1 AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Display the inherited lockdown profile.
+                  <pre><code>SHOW PARAMETER pdb_lockdown
+NAME                    TYPE        VALUE
+----------------------- ----------- ------------------------------
+pdb_lockdown            string      CDB_prof1</code>
+</pre> </li>
+                <li>Execute a command that is allowed by the CDB root lockdown
+                  profile.
+                  <pre><code>ALTER SYSTEM SET ddl_lock_timeout=30 scope=both;
+
+System altered.</code></pre>
+                </li>
+                <li>Execute a command that is disallowed by the CDB root
+                  lockdown profile.
+                  <pre><code>ALTER SYSTEM flush shared_pool;
+ALTER SYSTEM flush shared_pool
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li>Execute another command that is disallowed by the CDB root
+                  lockdown profile.
+                  <pre><code>ALTER SYSTEM CHECKPOINT;
+ALTER SYSTEM CHECKPOINT
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li>Log in to <code>HR_ROOT. </code>
+                  <pre><code>CONNECT sys@HR_ROOT AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Display the inherited lockdown profile.
+                  <pre><code>SHOW PARAMETER pdb_lockdown
+----------------------- ----------- ------------------------------
+NAME                    TYPE        VALUE
+pdb_lockdown            string      CDB_prof1</code>
+</pre> </li>
+                <li>Execute the command that is allowed by the CDB root lockdown
+                  profile.
+                  <pre><code>ALTER SYSTEM SET ddl_lock_timeout=30 scope=both;
+
+System altered.</code></pre>
+                </li>
+                <li>Execute a command that is disallowed by the CDB root
+                  lockdown profile.
+                  <pre><code>ALTER SYSTEM flush shared_pool;
+ALTER SYSTEM flush shared_pool
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li>Execute another command that is disallowed by the CDB root
+                  lockdown profile.
+                  <pre><code>ALTER SYSTEM CHECKPOINT;
+ALTER SYSTEM CHECKPOINT
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li>Log in to the <code> SALES </code> application PDB.
+                  <pre><code>CONNECT sys@SALES AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Display the inherited lockdown profile.
+                  <pre><code>SHOW PARAMETER pdb_lockdown
+NAME                    TYPE        VALUE
+----------------------- ----------- ------------------------------
+pdb_lockdown            string      CDB_prof1</code>
+</pre></li>
+                <li>Execute the command allowed by the CDB root lockdown
+                  profile.
+                  <pre><code>ALTER SYSTEM SET ddl_lock_timeout=30 scope=both;</code></pre>
+                </li>
+                <li>Execute a command disallowed by the CDB root lockdown
+                  profile.
+                  <pre><code>ALTER SYSTEM flush shared_pool;
+ALTER SYSTEM flush shared_pool
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre></li>
+                <li>Execute another command disallowed by the CDB root lockdown
+                  profile.
+                  <pre><code>ALTER SYSTEM CHECKPOINT;
+ALTER SYSTEM CHECKPOINT
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre></li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_4.png" alt="section 4" class="num_circ" height="32" width="32"> Set a
+                Lockdown Profile in the Application Root</h2>
+              <ol>
+                <li>Connect to the <code> HR_ROOT </code> application root as
+                  <code> HR_LOCK_MGR. </code>
+                  <pre><code>CONNECT hr_lock_mgr@HR_ROOT
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Check which lockdown profile is set in the application root.
+                  <pre><code>SHOW PARAMETER pdb_lockdown
+NAME                    TYPE        VALUE
+----------------------- ----------- ------------------------------
+pdb_lockdown            string      CDB_PROF1</code></pre>
+                </li>
+                <li>Set the <code> CDB_prof1 </code> lockdown profile in the
+                  application root.
+                  <pre><code>ALTER SYSTEM SET pdb_lockdown = app_root_prof SCOPE = both;</code></pre>
+                  <pre><code>SHOW PARAMETER pdb_lockdown
+NAME                    TYPE        VALUE
+----------------------- ----------- ------------------------------
+pdb_lockdown            string       APP_ROOT_PROF
+</code></pre> </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_5" role="button" style="text-align: left;"><img src="./img/32_5.png" alt="section 5" class="num_circ" height="32" width="32">
+                Execute Allowed and Disallowed Commands in PDBs</h2>
+              <ol>
+                <li>Connect to <code> HR_ROOT </code> as <code> SYSTEM. </code>
+                  <pre><code>CONNECT system@HR_ROOT
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Execute a command allowed by the application lockdown
+                  profile. The <code> app_root_prof </code> lockdown profile
+                  affects all application PDBs in the application container, but
+                  the application root still inherits the rules of its nearest
+                  ancestor, <code> CDB_prof1. </code>
+                  <pre><code>ALTER SYSTEM SET ddl_lock_timeout=30 scope=both;</code></pre>
+                </li>
+                <li>Execute a command that is disallowed by the CDB root
+                  lockdown profile.
+                  <pre><code>ALTER SYSTEM flush shared_pool;
+ALTER SYSTEM flush shared_pool
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li>Execute another command that is disallowed by the CDB root
+                  lockdown profile.
+                  <pre><code>ALTER SYSTEM CHECKPOINT;
+ALTER SYSTEM CHECKPOINT
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li>Connect to <code> SALES </code> as <code> SYS </code>
+                  and display the inherited lockdown profile.
+                  <pre><code>CONNECT sys@SALES AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                  <pre><code>SHOW PARAMETER pdb_lockdown
+----------------------- ----------- ------------------------------
+NAME                    TYPE        VALUE
+pdb_lockdown            string      APP_ROOT_PROF
+</code></pre></li>
+                <li>Execute the commands that are disallowed by the application
+                  root lockdown profile.
+                  <pre><code>ALTER SYSTEM SET ddl_lock_timeout=30 scope=both;
+ALTER SYSTEM SET ddl_lock_timeout=30 scope=both
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges</code></pre>
+                </li>
+                <li>Execute another command that is disallowed by the
+                  application lockdown profile whose restrictions are inherited
+                  from the CDB root profile.
+                  <pre><code>ALTER SYSTEM flush shared_pool;
+ALTER SYSTEM flush shared_pool
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li>Execute another command that is disallowed by the
+                  application lockdown profile whose restrictions are inherited
+                  from the CDB root profile.
+                  <pre><code>ALTER SYSTEM CHECKPOINT;
+ALTER SYSTEM CHECKPOINT
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_6" role="button" style="text-align: left;"><img src="./img/32_6.png" alt="section 6" class="num_circ" height="32" width="32"> Set a
+                Lockdown Profile in the Application PDB</h2>
+              <ol>
+                <li>In the <code> SALES </code> application PDB, set the <code>
+                    sales_prof </code> lockdown profile.
+                  <pre><code>ALTER SYSTEM SET pdb_lockdown = sales_prof SCOPE = both;
+ALTER SYSTEM SET pdb_lockdown = sales_prof SCOPE = both
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li><code></code> Connect to <code> HR_ROOT. </code>
+                  <pre><code>CONNECT hr_lock_mgr@HR_ROOT
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Unset the <code> app_root_prof </code> lockdown profile.
+                  <pre><code>ALTER SYSTEM SET pdb_lockdown = '' SCOPE = both;</code></pre>
+                </li>
+                <li>Connect to <code> SALES. </code>
+                  <pre><code>CONNECT hr_lock_mgr@SALES
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Set the application lockdown profile at the application PDB
+                  level.
+                  <pre><code>ALTER SYSTEM SET pdb_lockdown = sales_prof SCOPE = both;</code></pre>
+                </li>
+                <li>Connect to <code> HR_ROOT. </code>
+                  <pre><code>CONNECT hr_lock_mgr@HR_ROOT
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Reset the application lockdown profile in the application
+                  root.
+                  <pre><code>ALTER SYSTEM SET pdb_lockdown = app_root_prof SCOPE = both;</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_7" role="button" style="text-align: left;"><img src="./img/32_7.png" alt="section 7" class="num_circ" height="32" width="32">
+                Execute Allowed and Disallowed Commands in PDBs</h2>
+              <ol>
+                <li>Connect to <code> SALES. </code>
+                  <pre><code>CONNECT sys@SALES AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li> Execute a command that is disallowed by the application PDB
+                  lockdown profile.
+                  <pre><code>ALTER PLUGGABLE DATABASE sales CLOSE;
+ALTER PLUGGABLE DATABASE sales CLOSE
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre> </li>
+                <li>Execute a command that is allowed by the CDB root lockdown
+                  profile.
+                  <pre><code>ALTER SYSTEM SET ddl_lock_timeout=30 scope=both;
+</code></pre></li>
+                <li>Execute the commands that are disallowed by the CDB root
+                  lockdown profile.
+                  <pre><code>ALTER SYSTEM flush shared_pool;
+ALTER SYSTEM flush shared_pool
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges</code></pre>
+                  <pre><code>ALTER SYSTEM CHECKPOINT;
+ALTER SYSTEM CHECKPOINT
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+</code></pre>
+                  <p class="note"> Because a lockdown profile is set in the
+                    application PDB, the application PDB inherits the
+                    restrictions of the application PDB lockdown profile and the
+                    CDB root lockdown profile. It does not inherit restrictions
+                    from the application root lockdown profile.</p>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_8" role="button" style="text-align: left;"><img 8 src="./img/32_8.png" alt="section 8" class="num_circ" height="32" width="32">Drop
+                Lockdown Profiles</h2>
+              <ol>
+                <li>Connect to the CDB root.
+                  <pre><code>CONNECT / AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Unset the <code> CDB_prof1 </code> lockdown profile.
+                  <pre><code>ALTER SYSTEM SET pdb_lockdown = '' SCOPE = both;
+</code></pre> </li>
+                <li>Drop the <code> CDB_prof1 </code> and <code> CDB_prof2 </code>
+                  lockdown profiles.
+                  <pre><code>DROP LOCKDOWN PROFILE CDB_prof1;</code></pre>
+                  <pre><code>DROP LOCKDOWN PROFILE CDB_prof2;</code></pre>
+                </li>
+                <li>Connect to <code> SALES. </code>
+                  <pre><code>CONNECT sys@SALES AS SYSDBA
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Unset the <code> sales_prof </code> lockdown profile.
+                  <pre><code>ALTER SYSTEM SET pdb_lockdown = '' SCOPE = both;
+</code></pre> </li>
+                <li>Connect to <code> HR_ROOT </code> and drop the <code>
+                    sales_prof </code> lockdown profile.
+                  <pre><code>CONNECT hr_lock_mgr@HR_ROOT 
+Enter password: <em>password</em></code></pre>
+                  <pre><code>DROP LOCKDOWN PROFILE sales_prof;</code></pre>
+                </li>
+                <li>To remove the <code> ALTER SYSTEM SET </code> restriction,
+                  update the existing <code> app_root_prof </code> lockdown
+                  profile.
+                  <pre><code>ALTER LOCKDOWN PROFILE app_root_prof
+               ENABLE STATEMENT = ('alter system') CLAUSE = ('set');</code></pre>
+                </li>
+                <li>Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+              </ol>
+            </section>
+          </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+  </body>
+</html>

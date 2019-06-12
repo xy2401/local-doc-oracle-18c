@@ -1,0 +1,222 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Installing and Configuring Oracle Grid Infrastructure for a Standalone Server</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Installation Guide ">
+      <meta property="og:description" content>
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Installation Guide for Microsoft Windows">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-installation-guide-microsoft-windows.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-08-02T04:55:56-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83888-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="managing-ussser-accounts-with-user-account-control.html" title="Previous" type="text/html">
+      <link rel="next" href="requirements-for-an-oracle-grid-infrastructure-for-a-standalone-server-oracle-restart-installation.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Database Installation Guide for Microsoft Windows">
+    <meta name="dcterms.isVersionOf" content="NTDBI">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="managing-ussser-accounts-with-user-account-control.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="requirements-for-an-oracle-grid-infrastructure-for-a-standalone-server-oracle-restart-installation.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Installation Guide </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Installing and Configuring Oracle Grid Infrastructure for a Standalone Server</li>
+            </ol>
+            <a id="GUID-105F493E-9621-4532-848E-FB28888A75A3" name="GUID-105F493E-9621-4532-848E-FB28888A75A3"></a><a id="NTDBI999"></a>
+            
+            <h2 id="NTDBI-GUID-105F493E-9621-4532-848E-FB28888A75A3" class="sect2"><span class="enumeration_chapter">5 </span>Installing and Configuring Oracle Grid Infrastructure for a Standalone Server
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>If you intend to use Oracle Automatic Storage Management (Oracle ASM), then you must install Oracle Restart before installing your database.</p>
+               <p>Oracle Grid Infrastructure for a standalone server is a version of Oracle Grid Infrastructure that supports single instance databases. This support includes volume management, file system, and automatic restart capabilities. Oracle Grid Infrastructure for a standalone server includes Oracle Restart and Oracle Automatic Storage Management. Oracle combined the two infrastructure products into a single set of binaries that is installed into an Oracle Restart home.</p>
+               <p> </p>
+               <p>Oracle Restart is a feature provided as part of Oracle Grid Infrastructure. Oracle Restart monitors and can restart Oracle Database instances, Oracle Net Listeners, and Oracle ASM instances. Oracle Restart is currently restricted to manage single instance Oracle Databases and Oracle ASM instances only, and is subject to desupport in future releases. Oracle continues to provide Oracle ASM as part of the Oracle Grid Infrastructure installation for a standalone server and Cluster deployments.</p>
+               <p> </p>
+               <p>Oracle Automatic Storage Management is a volume manager and a file system for Oracle Database files that supports single-instance Oracle Database and Oracle Real Application Clusters (Oracle RAC) configurations. Oracle Automatic Storage Management also supports a general purpose file system for your application needs, including Oracle Database binaries. Oracle Automatic Storage Management is Oracle's recommended storage management solution that provides an alternative to conventional volume managers and file systems.</p>
+               <p>Oracle Restart<a id="d12007e84" class="indexterm-anchor"></a><a id="d12007e88" class="indexterm-anchor"></a><a id="d12007e92" class="indexterm-anchor"></a> improves the availability of your Oracle database because of the following:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>When there is a hardware or a software failure, Oracle Restart automatically starts all Oracle components, including the Oracle database instance, Oracle Net Listener, database services, and Oracle ASM.</p>
+                  </li>
+                  <li>
+                     <p>Oracle Restart starts components in the proper order when the database host is restarted.</p>
+                  </li>
+                  <li>
+                     <p>Oracle Restart runs periodic checks to monitor the status of Oracle components. If a check operation fails for a component, then the component is shut down and restarted.</p>
+                  </li>
+               </ul>
+               <div class="infoboxnote" id="GUID-105F493E-9621-4532-848E-FB28888A75A3__GUID-A100530A-F99D-4360-8B83-AAF8A130B813">
+                  <p class="notep1">Note:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>You can neither install Oracle Restart on an Oracle Grid Infrastructure cluster member node, nor add an Oracle Restart server to an Oracle Grid Infrastructure cluster member node. Oracle Restart supports single-instance databases on one server, while Oracle Grid Infrastructure for a Cluster supports single-instance or Oracle RAC databases on a cluster.</p>
+                     </li>
+                     <li>
+                        <p>If you install Oracle Grid Infrastructure for a standalone server on a host computer on which a database already exists, then you must manually add the database, the listener, the Oracle ASM instance, and other components to the Oracle Restart configuration before you are able to configure automatic database restarts.</p>
+                     </li>
+                     <li>
+                        <p>You can use the Oracle Restart implementation of Oracle Grid Infrastructure only in single-instance (nonclustered) environments. Use Oracle Grid Infrastructure with Oracle Clusterware for clustered environments.</p>
+                     </li>
+                     <li>
+                        <p>Oracle Grid Infrastructure for a standalone server can support multiple single-instance databases on a single host computer.</p>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div>
+               <ul class="ullinks">
+                  <li class="ulchildlink"><a href="requirements-for-an-oracle-grid-infrastructure-for-a-standalone-server-oracle-restart-installation.html#GUID-6A4D9B35-2C0B-47FC-AFA9-CA85D6660186">Requirements for an Oracle Restart Installation</a><br><span>Before you install Oracle Restart, ensure that your </span><span>system meets the following requirements:</span></li>
+                  <li class="ulchildlink"><a href="oracle-acfs-and-oracle-advm.html#GUID-4A04ACA0-7975-4C25-8D9A-FE495E80C103">Oracle ACFS and Oracle ADVM</a><br>Oracle Automatic Storage Management Cluster File System (Oracle ACFS) is a multi-platform, scalable file system, and storage management technology that extends Oracle Automatic Storage Management (Oracle ASM) functionality to support all file types.
+                  </li>
+                  <li class="ulchildlink"><a href="oracle-automatic-storage-management-storage-configuration.html#GUID-8192C6FD-6602-4CAF-BE15-5BF6E541A95D">Oracle Automatic Storage Management Storage Configuration</a><br>Review the following sections for information on Oracle Automatic Storage Management (Oracle ASM) storage configuration:
+                  </li>
+                  <li class="ulchildlink"><a href="upgrading-existing-oracle-asm-instances.html#GUID-6B161231-C942-4F19-B3B7-E960B8392CCD">About Upgrading Existing Oracle Automatic Storage Management Instances</a><br>Oracle Automatic Storage Management (Oracle ASM) upgrades are carried out during an Oracle Grid Infrastructure upgrade.
+                  </li>
+                  <li class="ulchildlink"><a href="configuring-oracle-automatic-storage-management-disk-groups-manually-using-oracle-asmca.html#GUID-18909531-2B44-4A52-A386-5284FD5C376A">Configuring Oracle Automatic Storage Management Disk Groups Manually Using Oracle ASMCA</a><br>The Oracle Automatic Storage Management Configuration Assistant utility creates a new Oracle Automatic Storage Management instance if there is no Oracle Automatic Storage Management instance currently configured on this computer.
+                  </li>
+                  <li class="ulchildlink"><a href="about-image-based-oracle-grid-infrastructure-installation.html#GUID-D991F940-7626-4615-908D-231D79740A5F">About Image-Based Oracle Grid Infrastructure Installation</a><br>Starting with Oracle Grid Infrastructure 12<span class="italic">c</span> Release 2 (12.2), installation and configuration of Oracle Grid Infrastructure software is simplified with image-based installation. 
+                  </li>
+                  <li class="ulchildlink"><a href="setup-wizard-installation-options.html#GUID-BB8713B0-0B79-497A-9341-729B6C8B924C">Setup Wizard Installation Options for Creating Images</a><br>Before you start the setup wizards for your Oracle Database or Oracle Grid Infrastructure installation, decide if you want to use any of the available image-creation options.
+                  </li>
+                  <li class="ulchildlink"><a href="install-configure-oracle-grid-infrastructure-standalone-server.html#GUID-FABF5051-F7B9-4BAB-B23B-6ABD85E66AFF">Installing Oracle Grid Infrastructure for a Standalone Server with a New Database Installation</a><br>Complete these steps to install Oracle Restart and then create a database that is managed by Oracle Restart.
+                  </li>
+                  <li class="ulchildlink"><a href="install-configure-oracle-grid-infrastructure-standalone-server.html#GUID-30328B1C-7DCE-4D5A-B921-66BFC98B3756">Installing Oracle Grid Infrastructure for a Standalone Server for an Existing Database</a><br>Follow the high-level instructions in this section to install Oracle Grid Infrastructure and configure it for an existing Oracle database.
+                  </li>
+                  <li class="ulchildlink"><a href="installing-oracle-grid-infrastructure-for-a-standalone-server-using-a-software-only-installation.html#GUID-43FBE864-289F-44F8-AD1D-0791AB043E66">Installing Oracle Grid Infrastructure for a Standalone Server Using a Software-Only Installation</a><br>A software-only installation only installs the Oracle Restart binaries at the specified location. You must complete a few manual configuration steps to enable Oracle Grid Infrastructure after you install the software.
+                  </li>
+                  <li class="ulchildlink"><a href="testing-the-oracle-automatic-storage-management-installation.html#GUID-B017F1D5-03D9-4E69-B75A-354CDBB57EA9">Testing the Oracle Automatic Storage Management Installation</a><br>After installing Oracle Grid Infrastructure for a single instance, use the ASMCMD command-line utility to test the Oracle ASM installation.
+                  </li>
+                  <li class="ulchildlink"><a href="modifying-oracle-grid-infrastructure-for-a-standalone-server-binaries-after-installation.html#GUID-23587E8E-71A9-4217-912B-DBE4ECB02037">Modifying Oracle Grid Infrastructure for a Standalone Server Binaries After Installation</a><br>After installation, you must first stop the Oracle Restart stack to modify the software installed in your Grid home.
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-105F493E-9621-4532-848E-FB28888A75A3__GUID-EAA60D00-5594-49AF-997F-ACB52B4FF785">
+                  <p class="notep1">See Also:</p><a href="https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=258113192006335&amp;id=1584742.1&amp;displayIndex=1&amp;_afrWindowMode=0&amp;_adf.ctrl-state=kphwf35ym_4" target="_blank">My Oracle Support Note 1584742.1</a></div>
+            </div>
+            
+            <div class="props_rev_3"><a id="GUID-FABF5051-F7B9-4BAB-B23B-6ABD85E66AFF" name="GUID-FABF5051-F7B9-4BAB-B23B-6ABD85E66AFF"></a><h3 id="NTDBI-GUID-FABF5051-F7B9-4BAB-B23B-6ABD85E66AFF" class="sect3">Installing Oracle Grid Infrastructure for a Standalone Server with a New Database Installation</h3>
+               <div>
+                  <p>Complete these steps to install Oracle Restart and then create a database that is managed by Oracle Restart.</p>
+                  <div class="section">
+                     <p>Install Oracle Restart, which installs Oracle Restart and Oracle ASM, and creates one disk group. </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li class="stepexpand"><span>Log in as the Oracle Restart software owner user (<code class="codeph">grid</code>).</span></li>
+                     <li class="stepexpand"><span>Download the Oracle Grid Infrastructure installation image files, create the Grid home directory, and extract the image files in this Grid home directory.</span><div>
+                           <p>For example:</p>
+                           <p><code class="codeph">C:\&gt; mkdir \app\oracle\product\18.0.0\grid</code></p>
+                           <p><code class="codeph">C:\&gt; icacls grid:oinstall \app\oracle\product\18.0.0\grid</code></p>
+                           <p><code class="codeph">C:\&gt; cd \app\oracle\product\18.0.0\grid</code></p>
+                           <p><code class="codeph">C:\&gt; unzip -q download_location\grid_home.zip</code></p>
+                           <div class="infoboxnote" id="GUID-FABF5051-F7B9-4BAB-B23B-6ABD85E66AFF__GUID-9AA5B3F6-69F1-46F3-AC9C-F1F20379D4D4">
+                              <p class="notep1">Note:</p>
+                              <p>Ensure that the Grid home directory path you create is in compliance with the Oracle Optimal Flexible Architecture recommendations. Also, unzip the installation image files only in this Grid home directory that you created.</p>
+                           </div>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Run <code class="codeph">setup.exe</code> to start the Oracle Grid Infrastructure installation wizard.</span><div>
+                           <p><code class="codeph">C:&gt;</code> <span class="italic"><code class="codeph">Grid_home</code></span><code class="codeph">\setup.exe</code></p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>In the Select Configuration Option screen, select the <span class="bold">Configure Oracle Restart</span> option to install and configure Oracle Restart and Oracle ASM. Click <span class="bold">Next.</span></span></li>
+                     <li class="stepexpand"><span>During installation, disk paths mounted on Oracle ASM and registered on Oracle ASMFD with the string <code class="codeph">ORCL:*</code> are listed as default database storage candidate disks.</span></li>
+                     <li class="stepexpand"><span>Configure Oracle ASM as needed with additional disk groups. </span><div>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>The default Disk Group Name is DATA. You can enter a new name for the disk group, or use the default name.</p>
+                              </li>
+                              <li>
+                                 <p>Any additional disk devices that you create must be owned by the user performing the grid installation.</p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Respond to the configuration prompts as needed to configure Oracle Grid Infrastructure. Click <span class="bold">Help</span> for information.</span></li>
+                     <li class="stepexpand"><span>Provide information to automate root scripts, or run scripts as root when prompted by Oracle Universal Installer. </span><div>
+                           <p>If you configure automation for running root scripts, and a root script fails, then you can fix the problem manually, and click <span class="bold">Retry</span> to run the root script again
+                           </p>
+                        </div>
+                     </li>
+                     <li class="stepexpand"><span>Start the Oracle Database installation, and select Oracle ASM disk groups for Oracle Database files storage. For assistance during installation, click <span class="bold">Help</span> on the Oracle Universal Installer page where you need more information.</span></li>
+                  </ol>
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="install-configure-oracle-grid-infrastructure-standalone-server.html#GUID-105F493E-9621-4532-848E-FB28888A75A3">Installing and Configuring Oracle Grid Infrastructure for a Standalone Server</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <div class="props_rev_3"><a id="GUID-30328B1C-7DCE-4D5A-B921-66BFC98B3756" name="GUID-30328B1C-7DCE-4D5A-B921-66BFC98B3756"></a><h3 id="NTDBI-GUID-30328B1C-7DCE-4D5A-B921-66BFC98B3756" class="sect3">Installing Oracle Grid Infrastructure for a Standalone Server for an Existing Database</h3>
+               <div>
+                  <p>Follow the high-level instructions in this section to install Oracle Grid Infrastructure and configure it for an existing Oracle database.</p>
+                  <div class="section">Oracle Restart 18c can only manage resources from the same release. For this reason, you can install Oracle Restart to provide services only for Oracle Database 18c. However, previous release Oracle Databases can coexist on the same server without being managed by Oracle Restart.</div>
+                  <!-- class="section" -->
+                  <div class="section">To install Oracle Restart for a database that is already installed:
+                     <ol>
+                        <li>
+                           <p>On the same host computer as the database, install Oracle Restart, and select<span class="bold"> Configure Oracle Grid Infrastructure for a Standalone Server (Oracle Restart) </span> as the installation option. See, Installing Oracle Restart with a New Database Installation in <cite>Oracle Database Installation Guide.</cite></p>
+                           <p>The Oracle Restart components are installed in an Oracle Grid Infrastructure Oracle home (Grid home), which is in a different location from existing Oracle Database homes.</p>
+                        </li>
+                        <li>
+                           <div class="p">If you have an existing Oracle Database, then register it for High Availability with Oracle Restart using the <code>srvctl</code> command:<pre class="pre codeblock"><code><span class="italic">DRIVE_LETTER</span>:\&gt; cd <span class="italic">ORACLE_HOME</span>\bin
+<span class="italic">DRIVE_LETTER</span>:\&gt; srvctl add database -db <span class="variable">dbname</span> -o <span class="variable">oracle_home_path</span> -dbtype SINGLE</code></pre></div>
+                        </li>
+                     </ol>
+                  </div>
+                  <!-- class="section" -->
+               </div>
+               <div>
+                  <div class="familylinks">
+                     <div class="parentlink">
+                        <p><strong>Parent topic:</strong> <a href="install-configure-oracle-grid-infrastructure-standalone-server.html#GUID-105F493E-9621-4532-848E-FB28888A75A3">Installing and Configuring Oracle Grid Infrastructure for a Standalone Server</a></p>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="You may need to rename or drop AUDIT_ADMIN and AUDIT_VIEWER roles before upgrading.">
+      <meta name="description" content="You may need to rename or drop AUDIT_ADMIN and AUDIT_VIEWER roles before upgrading.">
+      <title>Unified Auditing AUDIT_ADMIN and AUDIT_VIEWER Roles Changes</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Database Upgrade Guide">
+      <meta property="og:description" content="You may need to rename or drop AUDIT_ADMIN and AUDIT_VIEWER roles before upgrading.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Database Upgrade Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="database-upgrade-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-11-27T11:59:18-08:00">
+      <meta name="dcterms.title" content="Database Upgrade Guide">
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E88788-06">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="parallel-upgrade-utility-batch-scripts-oracle-database-12c-r2.html" title="Previous" type="text/html">
+      <link rel="next" href="oracle-update-batching-batch-size-disabled.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.isVersionOf" content="UPGRD">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="parallel-upgrade-utility-batch-scripts-oracle-database-12c-r2.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="oracle-update-batching-batch-size-disabled.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Database Upgrade Guide</span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="changes-oracle-database-earlier-releases.html" property="item" typeof="WebPage"><span property="name"> Changes for Earlier Releases of Oracle Database </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="behavior-changes-oracle-database-12c-122.html" property="item" typeof="WebPage"><span property="name">Behavior Changes in Oracle Database 12c Release 2 (12.2.0.1)</span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Unified Auditing AUDIT_ADMIN and AUDIT_VIEWER Roles Changes</li>
+            </ol>
+            <a id="GUID-0867243D-4F4B-49B4-A7A5-C5EA98F59172" name="GUID-0867243D-4F4B-49B4-A7A5-C5EA98F59172"></a><a id="UPGRD60010"></a>
+            
+            <h2 id="UPGRD-GUID-0867243D-4F4B-49B4-A7A5-C5EA98F59172" class="sect2">Unified Auditing AUDIT_ADMIN and AUDIT_VIEWER Roles Changes</h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>You may need to rename or drop <code class="codeph">AUDIT_ADMIN</code> and <code class="codeph">AUDIT_VIEWER</code> roles before upgrading.
+               </p>
+               <p>In Oracle Database 12<span class="italic">c</span>, if you use Unified Auditing, then two AUDSYS roles may exist in your Oracle Database 11<span class="italic">g</span> release 2 (11.2.0.4) and earlier releases that affect upgrading: <code class="codeph">AUDIT_ADMIN</code> and <code class="codeph">AUDIT_VIEWER</code>. Because of changes in these roles, you must drop these earlier release users or user roles before you can upgrade to Oracle Database 12<span class="italic">c</span> release 1 (12.1) or later.
+               </p>
+               <p>If you have created <code class="codeph">AUDIT_ADMIN</code> and <code class="codeph">AUDIT_VIEWER</code> users or roles with Oracle Database 12<span class="italic">c</span> release 1 (12.1), then you do not need to drop these users or roles.
+               </p>
+               <p>Only drop the AUDSYS schema and the AUDIT_ADMIN and AUDIT_VIEWER roles if both of the following conditions are true:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>The version from which you are upgrading is earlier than Oracle Database 12<span class="italic">c</span> release 1 (12.1)
+                     </p>
+                  </li>
+                  <li>
+                     <p>You have created a custom schema with the name AUDSYS</p>
+                  </li>
+               </ul>
+               <p>If you are affected by this requirement, and you cannot drop these AUDSYS roles, then select the <code class="codeph">UNIFIED_AUDIT_TRAIL</code> view, create your own table, using similar definitions, and use this table to take a backup of the Unified Audit data. Oracle recommends that you carry out this procedure also if you may want to downgrade to your earlier release database. 
+               </p>
+               <p>The Pre-Upgrade Information Tool and DBUA perform a pre-upgrade check to make sure these users or roles do not exist in the database. Oracle recommends that you do not use these names in your databases. If these users or roles exist, then you should rename or drop them as appropriate before upgrading to Oracle Database 12<span class="italic">c</span>.
+               </p>
+            </div>
+            <div>
+               <div class="infoboxnotealso" id="GUID-0867243D-4F4B-49B4-A7A5-C5EA98F59172__ORACLEDATABASESECURITYGUIDEFORINFOR-7BD35C3A">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="../dbseg/configuring-privilege-and-role-authorization.html#DBSEG004" target="_blank"><span><cite>Oracle Database Security Guide</cite></span></a> for information on configuring privilege and role authorization for database security
+                  </p>
+               </div>
+               <div class="familylinks">
+                  <div class="parentlink">
+                     <p><strong>Parent topic:</strong> <a href="behavior-changes-oracle-database-12c-122.html#GUID-2E7494A9-18C5-483D-95C6-7A13ECF879DF" title="Review for descriptions of Oracle Database 12c release 1 (12.1) changes.">Behavior Changes in Oracle Database 12c Release 2 (12.2.0.1)</a></p>
+                  </div>
+               </div>
+            </div>
+            
+         </div>
+      </article>
+   </body>
+</html>

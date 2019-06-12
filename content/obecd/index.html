@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: E92602-01 -->
+    <!-- Published date: April 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Continuing Importing After Data Stream Error Detection</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to use Data Pump import to detect a data stream error and continue loading.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-08-03T18:46:33+00:00">
+    <meta name="dcterms.title" content="Importing and continuing after error">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBECD">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E92602-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Continuing
+        Importing After Data Stream Error Detection</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32"> Before You Begin</h2>
+              <p>This 15-minute tutorial shows you how to use Data Pump import
+                to detect a data stream error and still load records instead of
+                aborting the operation. </p>
+              <h3>Background</h3>
+              <p>Prior to Oracle Database 18c, when a stream format error is
+                detected, Data Pump import aborts and all the rows already
+                loaded are rolled back. Oracle Database 18c introduces a new
+                value for the <code>DATA_OPTIONS</code> parameter for <code>
+                  impdp. </code> When a stream format error is detected and the
+                <code> CONTINUE_LOAD_ON_FORMAT_ERROR </code> option is
+                specified for the <code> DATA_OPTIONS </code> parameter for <code>
+                  impdp,</code> the Data Pump jumps ahead and continue loading
+                from the next granule. Oracle Data Pump has a directory of
+                granules for the data stream for a table or partition. Each
+                granule has a complete set of rows. Data for a row does not
+                cross granule boundaries. The directory is a list of offsets
+                into the stream of where a new granule, and therefore a new row,
+                begins. Any number of stream format errors may occur. Data Pump
+                import resumes loading resumes at the next granule. Using this
+                parameter for a table or partition that has stream format errors
+                means that rows from the export database will not be loaded.
+                This could be hundreds or thousands of rows. Nevertheless, all
+                rows that do not present a stream format errors are loaded which
+                could be hundreds or thousands of rows. </p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Oracle Database 18c installed</li>
+                <li>A container database (CDB) with one pluggable database (PDB)</li>
+                <li>A directory in the PDB to store the dump files to import</li>
+                <li>The dumpfile with corrupted data stream <code>
+                    exp_corrupt.dmp. </code> Download <a href="files/exp_corrupt.dmp" target="_blank"> exp_corrupt.dmp </a> to the labs directory
+                  created on your server <code> /home/oracle/labs.</code></li>
+                <li>Two open sessions, one referenced as Session Sqlplus and one
+                  called Session Import </li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2 id="section_1" style="text-align: left;"><img src="./img/32_1.png" alt="section 1" class="num_circ" height="32" width="32">
+                Detect Rows With Errors and Continue Importing</h2>
+              <ol>
+                <li>Before importing data with Data Pump import, connect to <code>
+                    PDB_ORCL </code> to create a logical directory where the
+                  dump file resides. and grant the READ and WRITE privileges on
+                  the directory to <code> SCOTT. </code> This is completed in
+                  a terminal window called Session Sqlplus.
+                  <pre><code>sqlplus system@PDB_ORCL
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Create the logical directory where the dump file will
+                  reside.
+                  <pre><code>CREATE DIRECTORY dp_dir as '/home/oracle/labs';</code></pre>
+                </li>
+                <li>Create user <code>SCOTT. </code>
+                  <pre><code>CREATE USER scott IDENTIFIED BY <em>password</em>;</code></pre>
+                </li>
+                <li>Grant the <code> DBA </code> role to <code> SCOTT. </code>
+                  <pre><code>GRANT dba TO scott;</code></pre>
+                </li>
+                <li>Grant the READ and WRITE privileges on the directory to <code>
+                    SCOTT. </code>
+                  <pre><code>GRANT read, write ON DIRECTORY dp_dir TO scott;</code></pre>
+                </li>
+                <li>Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+                <li>In another terminal window called Session Import, import as
+                  <code> SYSTEM </code> into <code> PDB_ORCL </code>
+                  corrupted data by using a corrupted dump file that loads rows
+                  into <code> SCOTT.L_FACT_PAGE </code> table.
+                  <pre><code>impdp system@PDB_ORCL FULL=y dumpfile=exp_corrupt.dmp directory=dp_dir table_exists_action=replace REMAP_TABLESPACE=tbs_6:system
+Enter password: <em>password</em><br>...
+Processing object type TABLE_EXPORT/TABLE/TABLE
+Processing object type TABLE_EXPORT/TABLE/TABLE_DATA</code></pre>
+                </li>
+                <li>Display the import progress.
+                  <pre><code>...
+<strong>ORA-02374: conversion error loading table "SCOTT"."L_FACT_PAGE"</strong>
+<strong>ORA-26093: input data column size (63) exceeds the maximum input size (40)</strong>
+<strong>ORA-02372: data for row: REFER_PAGE_NAME : 0X'5B5D0B4C6974657261747572652F02C102018002C102018009'
+</strong>...
+<strong>ORA-31693: Table data object "SCOTT"."L_FACT_PAGE" failed to load/unload and is being skipped due to error:</strong>
+ORA-02354: error in exporting/importing data
+<strong>ORA-39840: A data load operation has detected data stream format error 3000.</strong>
+
+Job "SYSTEM"."SYS_IMPORT_FULL_01" completed with 1 error(s) at Fri Nov 10 08:20:06 2017 elapsed 0 00:00:33</code></pre>
+                </li>
+                <li>In Session Sqlplus, check if the <code> SCOTT.L_FACT_PAGE </code>
+                  table is partially loaded.
+                  <pre><code>SELECT count(*) FROM scott.l_fact_page;
+
+  COUNT(*)
+----------
+         0</code></pre>
+                </li>
+                <li>In Session Import, re-import the data into <code>
+                    SCOTT.L_FACT_PAGE </code> table skipping the corrupted
+                  records. Use the <code> CONTINUE_LOAD_ON_FORMAT_ERROR </code>
+                  value of <code> DATA_OPTIONS </code> parameter.
+                  <pre><code>impdp system@PDB_ORCL FULL=y DUMPFILE=exp_corrupt.dmp DIRECTORY=dp_dir TABLE_EXISTS_ACTION=replace REMAP_TABLESPACE=tbs_6:system DATA_OPTIONS=<strong>CONTINUE_LOAD_ON_FORMAT_ERROR</strong>
+Enter password: <em>password</em>
+...
+Processing object type TABLE_EXPORT/TABLE/TABLE_DATA
+ORA-02374: conversion error loading table "SCOTT"."L_FACT_PAGE"</code></pre>
+                </li>
+                <li>Display the import progress.
+                  <pre><code><strong>ORA-26093: input data column size (63) exceeds the maximum input size (40)</strong>
+ORA-02372: data for row: REFER_PAGE_NAME : 0X'5B5D0B4C6974657261747572652F02C102018002C102018009'
+...
+ORA-02374: conversion error loading table "SCOTT"."L_FACT_PAGE"
+<strong>ORA-39840: A data load operation has detected data stream format error 3000.</strong>
+ORA-02372: data for row: REFER_PAGE_NAME : 0X'5B5D0B4C6974657261747572652F02C102018002C102018009'
+...
+ORA-39840: A data load operation has detected data stream format error 3000.
+. . imported "SCOTT"."L_FACT_PAGE"                       18.06 MB   <strong>91538 out of 200000 rows</strong>
+Job "SYSTEM"."SYS_IMPORT_FULL_01" successfully completed at Fri Nov 10 08:27:37 2017 elapsed 0 00:00:07</code></pre>
+                </li>
+                <li>In Session_Sqlplus, check that the <code> SCOTT.L_FACT_PAGE
+                  </code> table is partially loaded with 91538 rows as the
+                  import log mentions.
+                  <pre><code>SELECT count(*) FROM scott.l_fact_page;
+
+  COUNT(*)
+----------
+     91538
+</code></pre></li>
+                <li>Drop the table before completing another import.
+                  <pre><code>DROP TABLE scott.l_fact_page;</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_2" role="button" style="text-align: left;"><img src="./img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Import
+                Using the DBMS_DATAPUMP Package</h2>
+              <p>In this section, use the <code> DBMS_DATAPUMP </code> package
+                to import a corrupted dump file to load rows into <code>
+                  SCOTT.L_FACT_PAGE </code> table.</p>
+              <ol>
+                <li>Set <code> SERVEROUTPUT ON </code> in your session.
+                  <pre><code>SET SERVEROUTPUT ON</code></pre>
+                </li>
+                <li>Execute the following PL/SQL block from <a href="files/code1.txt" target="_blank">code1</a> which uses only pre-18c
+                  parameters.</li>
+                <li>Display the result after execution of <a href="files/code1.txt" target="_blank">code1. </a>
+                  <pre><code>DataPump Export - 10/11/2017 08:52:19 Status COMPLETED
+
+PL/SQL procedure successfully completed.
+</code></pre> </li>
+                <li>Check if the <code> SCOTT.L_FACT_PAGE </code> table is
+                  partially loaded.
+                  <pre><code>SELECT count(*) FROM scott.l_fact_page;
+
+  COUNT(*)
+----------
+         0</code></pre>
+                </li>
+                <li>Use the following PL/SQL block from <a href="files/code2.txt" target="_blank">code2</a> with the new <code>
+                    DBMS_DATAPUMP.KU$_DATAOPT_CONT_LD_ON_FMT_ERR </code>
+                  argument.</li>
+                <li>Display the result after execution of <a href="files/code2.txt" target="_blank">code2. </a>
+                  <pre><code>DataPump Export - 10/11/2017 08:54:51 Status COMPLETED
+
+PL/SQL procedure successfully completed.
+</code></pre> </li>
+                <li>Check that the <code> SCOTT.L_FACT_PAGE </code> table is
+                  partially loaded.
+                  <pre><code>SELECT count(*) FROM scott.l_fact_page;  
+
+  COUNT(*)
+----------
+     91538
+</code></pre></li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2 id="section_3" role="button" style="text-align: left;"><img src="./img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Clean
+                up the Environment</h2>
+              <ol>
+                <li>Drop the user <code>SCOTT.</code>
+                  <pre><code>DROP USER scott CASCADE;</code></pre>
+                </li>
+                <li>Quit the session.
+                  <pre><code>EXIT</code></pre>
+                </li>
+                <li>Remove the dump file.
+                  <pre><code>rm </code><code>/home/oracle/labs/exp_corrupt.dmp</code></pre>
+                </li>
+              </ol>
+            </section>
+          </article>
+        </div>
+        <br class="clearfloat">
+      </div>
+    </div>
+    <!--close main-->
+    <!--end content-->
+    <div class="footer-container ">
+      <div style="max-width: 994px; padding:10px 0 0 17px;">
+        <footer class="footer-list">
+          <ul>
+            <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                Oracle</a> </li>
+            <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                Notices</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms
+                of Use</a> </li>
+            <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your
+                Privacy Rights</a> </li>
+            <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                © 2017, 2018, Oracle and/or its affiliates. All rights reserved.</a></li>
+          </ul>
+        </footer>
+      </div>
+      <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+    </div>
+  </body>
+</html>

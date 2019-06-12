@@ -1,0 +1,977 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Troubleshooting Apply</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="troubleshooting-propagation.html" title="Previous" type="text/html">
+      <link rel="next" href="troubleshooting-rules-and-rule-based-transformations.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="troubleshooting-propagation.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="troubleshooting-rules-and-rule-based-transformations.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="troubleshooting-an-oracle-streams-environment.html" property="item" typeof="WebPage"><span property="name">   Troubleshooting an Oracle Streams Environment </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Troubleshooting Apply</li>
+            </ol>
+            <a id="GUID-D65CBC5C-5C21-4D02-89B9-D08C75F829F2" name="GUID-D65CBC5C-5C21-4D02-89B9-D08C75F829F2"></a><a id="STRMS1048"></a>
+            
+            <h2 id="STRMS-GUID-D65CBC5C-5C21-4D02-89B9-D08C75F829F2" class="sect2"><span class="enumeration_chapter">33 </span> Troubleshooting Apply
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d134393e125" class="indexterm-anchor"></a><a id="d134393e129" class="indexterm-anchor"></a><a id="d134393e133" class="indexterm-anchor"></a><a id="d134393e137" class="indexterm-anchor"></a>The following topics describe identifying and resolving common <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> problems in an Oracle Streams environment:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-119C72E2-F426-4299-8BDF-2324631F4D92">Is the Apply Process Enabled?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-00DC9C25-1C99-45C3-93AD-E22201333636">Is the Apply Process Current?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-281FA5AF-AF84-4FB7-9239-30D9B43A4B32">Does the Apply Process Apply Captured LCRs?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-77FB2735-BC32-479D-81A3-96BA0F2A4656">Is the Apply Process's Queue Receiving the Messages to be Applied?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-2A2748A8-2DA5-4A5A-BF19-49C0CAAA6726">Is a Custom Apply Handler Specified?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-E0172D38-100A-4799-AE2C-8811D8BA3FC3">Is the AQ_TM_PROCESSES Initialization Parameter Set to Zero?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-ED1AAE54-128B-4540-ADA2-2AB94403248F">Does the Apply User Have the Required Privileges?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-C1921242-C3A1-4B3E-ADA5-0446B70FD264">Is the Apply Process Encountering Contention?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-39826EC1-909A-4ADE-B898-498C1FEC2960">Is the Apply Process Waiting for a Dependent Transaction?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-9F4FEC20-E2C9-4611-9D9B-9686540FA322">Is an Apply Server Performing Poorly for Certain Transactions?</a></p>
+                  </li>
+                  <li>
+                     <p><a href="troubleshooting-apply.html#GUID-329ED4AF-750C-456D-994D-B1103729B4EE">Are There Any Apply Errors in the Error Queue?</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-D65CBC5C-5C21-4D02-89B9-D08C75F829F2__GUID-0B6AD1D3-22C0-4D8E-9F11-09F403A3B7B0">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-40F2B660-C0DA-4DE4-BBC6-D8C47BE535ED">Implicit Consumption with an Apply Process</a>"</span></p>
+                     </li>
+                     <li>
+                        <p><a href="../strep/configuring-implicit-apply.html#STREP206"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring apply
+                        </p>
+                     </li>
+                     <li>
+                        <p><a href="managing-oracle-streams-information-consumption.html#GUID-9DEB34C0-21DC-41E0-96CE-699D279F8C42"> Managing Oracle Streams Information Consumption</a></p>
+                     </li>
+                     <li>
+                        <p><a href="monitoring-oracle-streams-apply-processes.html#GUID-F371ACB8-C66F-4580-9DD0-491997F6DF80"> Monitoring Oracle Streams Apply Processes</a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS1049"></a><div class="props_rev_3"><a id="GUID-119C72E2-F426-4299-8BDF-2324631F4D92" name="GUID-119C72E2-F426-4299-8BDF-2324631F4D92"></a><h3 id="STRMS-GUID-119C72E2-F426-4299-8BDF-2324631F4D92" class="sect3"><span class="enumeration_section">33.1 </span>Is the Apply Process Enabled?
+               </h3>
+               <div>
+                  <p>An <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> applies changes only when it is enabled.
+                  </p>
+                  <p>You can check whether an apply process is enabled, disabled, or aborted by querying the <code class="codeph">DBA_APPLY</code> data dictionary view. For example, to check whether an apply process named <code class="codeph">apply</code> is enabled, run the following query:
+                  </p><pre class="oac_no_warn" dir="ltr">SELECT STATUS FROM DBA_APPLY WHERE APPLY_NAME = 'APPLY';
+</pre><p>If the apply process is disabled, then your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">STATUS
+--------
+DISABLED
+</pre><p>If the apply process is disabled, then try restarting it. If the apply process is aborted, then you might need to correct an error before you can restart it successfully. If the apply process did not shut down cleanly, then it might not restart. In this case, it returns the following error:</p><pre class="oac_no_warn" dir="ltr">ORA-26666 cannot alter STREAMS process
+</pre><p>If this happens then, then run the <code class="codeph">STOP_APPLY</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package with the <code class="codeph">force</code> parameter set to <code class="codeph">TRUE</code>. Next, restart the apply process.
+                  </p>
+                  <p>To determine why an apply process aborted, query the <code class="codeph">DBA_APPLY</code> data dictionary view or check the trace files for the apply process. The following query shows when the apply process aborted and the error that caused it to abort:
+                  </p><pre class="oac_no_warn" dir="ltr">COLUMN APPLY_NAME HEADING 'APPLY|Process|Name' FORMAT A10
+COLUMN STATUS_CHANGE_TIME HEADING 'Abort Time'
+COLUMN ERROR_NUMBER HEADING 'Error Number' FORMAT 99999999
+COLUMN ERROR_MESSAGE HEADING 'Error Message' FORMAT A40
+
+SELECT APPLY_NAME, STATUS_CHANGE_TIME, ERROR_NUMBER, ERROR_MESSAGE
+  FROM DBA_APPLY WHERE STATUS='ABORTED';
+</pre><div class="infoboxnotealso" id="GUID-119C72E2-F426-4299-8BDF-2324631F4D92__GUID-E8504369-1312-49FC-A5CD-9E000849E0CE">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-99793C11-1703-4A3A-BA60-80F91E5E4448">Starting an Apply Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-B2BCDB9E-5B7C-457C-8AB1-B5A7F1711148">Displaying Detailed Information About Apply Errors</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-7D02B3F6-23FD-436E-B0F4-AA60128DF77A">Checking the Trace Files and Alert Log for Problems</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="how-oracle-streams-works-with-other-database-components.html#GUID-8F1577E3-E3BB-455D-BB36-C8F8635BF494">Apply Processes and Oracle Real Application Clusters</a>"</span> for information about restarting an apply process in an Oracle Real Application Clusters (Oracle RAC) environment
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1053"></a><div class="props_rev_3"><a id="GUID-00DC9C25-1C99-45C3-93AD-E22201333636" name="GUID-00DC9C25-1C99-45C3-93AD-E22201333636"></a><h3 id="STRMS-GUID-00DC9C25-1C99-45C3-93AD-E22201333636" class="sect3"><span class="enumeration_section">33.2 </span>Is the Apply Process Current?
+               </h3>
+               <div>
+                  <p>If an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> has not applied recent changes, then the problem might be that the apply process has fallen behind. If apply process latency is high, then you might be able to improve performance by adjusting the setting of the <code class="codeph">parallelism</code> apply process parameter.
+                  </p>
+                  <p>You can check apply process latency by querying the <code class="codeph">V$STREAMS_APPLY_COORDINATOR</code> dynamic performance view.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-00DC9C25-1C99-45C3-93AD-E22201333636__GUID-BC31C4FD-3660-45FF-959B-E3CB6F30D442">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-09CA815A-2B88-4180-AA08-57FFFA9B4AA7">Determining the Capture to Apply Latency for a Message for Each Apply Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-8222F401-A0FD-405D-85BA-FCD0C7DB929C">Apply Process Parameters</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-A24A2FCA-845A-43EA-A7E2-033335CBE558">Setting an Apply Process Parameter</a>"</span></p>
+                        </li>
+                        <li>
+                           <p>The <code class="codeph">DBMS_APPLY_ADM.SET_PARAMETER</code> procedure in the<a href="../arpls/DBMS_APPLY_ADM.html#ARPLS314"><span class="italic"> Oracle Database PL/SQL Packages and Types Reference </span></a>for detailed information about the apply process parameters
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1054"></a><div class="props_rev_3"><a id="GUID-281FA5AF-AF84-4FB7-9239-30D9B43A4B32" name="GUID-281FA5AF-AF84-4FB7-9239-30D9B43A4B32"></a><h3 id="STRMS-GUID-281FA5AF-AF84-4FB7-9239-30D9B43A4B32" class="sect3"><span class="enumeration_section">33.3 </span>Does the Apply Process Apply Captured LCRs?
+               </h3>
+               <div>
+                  <p>An <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> can apply either <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s from its <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a>, or it can apply messages from its <a href="strms_glossary.html#GUID-8D447372-AA6C-4326-8A8F-2E13F9350AF1"><span class="xrefglossterm">persistent queue</span></a>, but not both types of messages. Messages in a persistent queue can be <a href="strms_glossary.html#GUID-32700BD5-7584-46D3-8224-B534FAC20DD7"><span class="xrefglossterm">persistent LCR</span></a>s and <a href="strms_glossary.html#GUID-8F1FA1C4-ADB5-4A4D-9374-B50AADB53066"><span class="xrefglossterm">persistent user message</span></a>s. An apply process might not be applying messages of a one type because it was configured to apply the other type of messages.
+                  </p>
+                  <p>You can check the type of messages applied by an apply process by querying the <code class="codeph">DBA_APPLY</code> data dictionary view. For example, to check whether an apply process named <code class="codeph">apply</code> applies <a href="strms_glossary.html#GUID-0D2E5DAF-804E-4089-9E0E-987C96F59706"><span class="xrefglossterm">captured LCR</span></a>s or not, run the following query:
+                  </p><pre class="oac_no_warn" dir="ltr">COLUMN APPLY_CAPTURED HEADING 'Type of Messages Applied' FORMAT A25
+
+SELECT DECODE(APPLY_CAPTURED,
+                'YES', 'Captured',
+                'NO',  'Messages from Persistent Queue') APPLY_CAPTURED
+  FROM DBA_APPLY
+  WHERE APPLY_NAME = 'APPLY';
+</pre><p>If the apply process applies captured LCRs, then your output looks similar to the following: </p><pre class="oac_no_warn" dir="ltr">Type of Messages Applied
+-------------------------
+Captured
+</pre><p>If an apply process is not applying the expected type of messages, then you might need to create an apply process to apply these messages.</p>
+                  <div class="infoboxnotealso" id="GUID-281FA5AF-AF84-4FB7-9239-30D9B43A4B32__GUID-B4B1D73F-6CA1-47F0-833B-983D20B1F279">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-265C3D8E-63FD-4CF9-8704-A8859FEC80B4">Ways to Consume Information with Oracle Streams</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../strep/toc.htm"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about configuring Oracle Streams replication
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1056"></a><div class="props_rev_3"><a id="GUID-77FB2735-BC32-479D-81A3-96BA0F2A4656" name="GUID-77FB2735-BC32-479D-81A3-96BA0F2A4656"></a><h3 id="STRMS-GUID-77FB2735-BC32-479D-81A3-96BA0F2A4656" class="sect3"><span class="enumeration_section">33.4 </span>Is the Apply Process's Queue Receiving the Messages to be Applied?
+               </h3>
+               <div>
+                  <p>An <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> must receive messages in its <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> before it can apply these messages. Therefore, if an apply process is applying messages captured by a <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a> or a <a href="strms_glossary.html#GUID-5CA58899-A02D-422A-AE15-E8FCD004EB17"><span class="xrefglossterm">synchronous capture</span></a>, then the capture process or synchronous capture that captures these messages must be configured properly. If it is a capture process, then it must also be enabled. Similarly, if messages are propagated from one or more databases before reaching the apply process, then each <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a> must be enabled and must be configured properly. If a capture process, a synchronous capture, or a propagation on which the apply process depends is not enabled or is not configured properly, then the messages might never reach the apply process's queue.
+                  </p>
+                  <p>The <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s used by all <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s, including capture processes, synchronous captures, and propagations, determine the behavior of these Oracle Streams clients. Therefore, ensure that the rule sets for any capture processes, synchronous capture, or propagations on which an apply process depends contain the correct <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s. If the <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s for these Oracle Streams clients are not configured properly, then the apply process's queue might never receive the appropriate messages. Also, a message traveling through a stream is the composition of all of the transformations done along the path. For example, if a capture process uses <a href="strms_glossary.html#GUID-98C794CB-0AAB-4020-AC81-3A96FC02235A"><span class="xrefglossterm">subset rule</span></a>s and performs <a href="strms_glossary.html#GUID-DD0C1CF9-3357-4464-A102-F4790BD5BD91"><span class="xrefglossterm">row migration</span></a> during capture of a message, and a propagation uses a <a href="strms_glossary.html#GUID-18697C88-84CA-4F47-8F47-DD5D37E9543B"><span class="xrefglossterm">rule-based transformation</span></a> on the message to change the table name, then, when the message reaches an apply process, the apply process rules must account for these transformations.
+                  </p>
+                  <p>In an environment where a capture process or synchronous capture captures changes that are propagated and applied at multiple databases, you can use the following guidelines to determine whether a problem is caused by a capture process, a synchronous capture, or a propagation on which an apply process depends or by the apply process itself:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>If no other <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>s of a capture process or synchronous capture are applying the changes, then the problem is most likely caused by the capture process or synchronous capture, or by a propagation near the capture process. In this case, first ensure that the capture process or synchronous capture is configured properly, and then ensure that the propagations nearest the capture process or synchronous capture are enabled and configured properly. For a capture process, also ensure that the capture process is enabled.
+                        </p>
+                     </li>
+                     <li>
+                        <p>If other destination databases of a capture process or synchronous capture are applying the changes, then the problem is most likely caused by the apply process itself or a propagation near the apply process. In this case, first ensure that the apply process is enabled and configured properly, and then ensure that the propagations nearest the apply process are enabled and configured properly.</p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-77FB2735-BC32-479D-81A3-96BA0F2A4656__GUID-E930B589-0CC6-4B1F-83A6-F65A6104D3D8">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="troubleshooting-implicit-capture.html#GUID-B4A2F6C5-09CC-4BE7-8716-BB6A97C7C9B8">Troubleshooting Capture Process Problems</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-propagation.html#GUID-CEB89AC6-CC07-41D2-B316-9FB39A0F9D08"> Troubleshooting Propagation</a></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-AEF9C9AE-9735-4688-925B-5C967BAC783F"> Troubleshooting Rules and Rule-Based Transformations</a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1057"></a><div class="props_rev_3"><a id="GUID-2A2748A8-2DA5-4A5A-BF19-49C0CAAA6726" name="GUID-2A2748A8-2DA5-4A5A-BF19-49C0CAAA6726"></a><h3 id="STRMS-GUID-2A2748A8-2DA5-4A5A-BF19-49C0CAAA6726" class="sect3"><span class="enumeration_section">33.5 </span>Is a Custom Apply Handler Specified?
+               </h3>
+               <div>
+                  <p>You can use <a href="strms_glossary.html#GUID-4CEA651A-4197-4731-93D4-315BCB5CBE70"><span class="xrefglossterm">apply handler</span></a>s to handle messages dequeued by an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> in a customized way. These handlers include <a href="strms_glossary.html#GUID-97540303-85CC-46DF-9237-AFDEFB57D400"><span class="xrefglossterm">statement DML handler</span></a>s, <a href="strms_glossary.html#GUID-8F26223B-B771-4E5B-9C57-0F748A0904F1"><span class="xrefglossterm">procedure DML handler</span></a>s, <a href="strms_glossary.html#GUID-A0F15933-FEC6-404F-88AF-DB5120D7EC48"><span class="xrefglossterm">DDL handler</span></a>s, <a href="strms_glossary.html#GUID-7BE64BB2-BE69-47CC-9D6D-CE065A04E22F"><span class="xrefglossterm">precommit handler</span></a>s, and <a href="strms_glossary.html#GUID-28E08694-4A8E-4D30-A805-876E82C4906A"><span class="xrefglossterm">message handler</span></a>s. If an apply process is not behaving as expected, then check the handlers used by the apply process, and correct any flaws. You might need to modify a SQL statement in a statement DML handler to correct an apply problem. You also might need to modify a PL/SQL procedure or remove it to correct an apply problem.
+                  </p>
+                  <p>You can find the names of these procedures by querying the <code class="codeph">DBA_APPLY_DML_HANDLERS</code> and <code class="codeph">DBA_APPLY</code> data dictionary views.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-2A2748A8-2DA5-4A5A-BF19-49C0CAAA6726__GUID-38C6E5DC-A992-425D-8C4E-8B4FD42AD757">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-91C26D01-385D-4BD0-A29F-C2A0BFED0360">Message Processing Options for an Apply Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-oracle-streams-information-consumption.html#GUID-9DEB34C0-21DC-41E0-96CE-699D279F8C42"> Managing Oracle Streams Information Consumption</a></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-DD9A0342-88B2-4960-ADCA-9FC12FE8D716">Displaying Information About Apply Handlers</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1058"></a><div class="props_rev_3"><a id="GUID-E0172D38-100A-4799-AE2C-8811D8BA3FC3" name="GUID-E0172D38-100A-4799-AE2C-8811D8BA3FC3"></a><h3 id="STRMS-GUID-E0172D38-100A-4799-AE2C-8811D8BA3FC3" class="sect3"><span class="enumeration_section">33.6 </span>Is the AQ_TM_PROCESSES Initialization Parameter Set to Zero?
+               </h3>
+               <div>
+                  <p>The <code class="codeph">AQ_TM_PROCESSES</code> initialization parameter controls time monitoring on <a href="strms_glossary.html#GUID-8D7B2770-B1EC-44C7-B861-B78E571CADA6"><span class="xrefglossterm">queue</span></a> messages and controls processing of messages with delay and expiration properties specified. In Oracle Database 10<span class="italic">g</span> or later, the database automatically controls these activities when the <code class="codeph">AQ_TM_PROCESSES</code> initialization parameter is not set.
+                  </p>
+                  <p>If an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> is not applying messages, but there are messages that satisfy the apply process <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s in the apply process's queue, then ensure that the <code class="codeph">AQ_TM_PROCESSES</code> initialization parameter is not set to zero at the <a href="strms_glossary.html#GUID-C73813B0-D8A7-46D5-85B2-15BAB0A146B5"><span class="xrefglossterm">destination database</span></a>. If this parameter is set to zero, then unset this parameter or set it to a nonzero value and monitor the apply process to see if it begins to apply messages.
+                  </p>
+                  <p>To determine whether there are messages in a <a href="strms_glossary.html#GUID-9ABDA00F-83A1-435F-8E93-315D3D05E4B7"><span class="xrefglossterm">buffered queue</span></a>, you can query the <code class="codeph">V$BUFFERED_QUEUES</code> and <code class="codeph">V$BUFFERED_SUBSCRIBERS</code> dynamic performance views. To determine whether there are messages in a <a href="strms_glossary.html#GUID-8D447372-AA6C-4326-8A8F-2E13F9350AF1"><span class="xrefglossterm">persistent queue</span></a>, you can query the <a href="strms_glossary.html#GUID-AEF42D36-AFC0-4198-8904-B12531197320"><span class="xrefglossterm">queue table</span></a> for the queue.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-E0172D38-100A-4799-AE2C-8811D8BA3FC3__GUID-2D1DB8C1-C848-42E4-82B5-92CB7FF4ED00">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-23354BAF-6658-42CF-A25D-5787F9C99F5A">Viewing the Contents of Messages in a Persistent Queue</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-queues-and-propagations.html#GUID-856FBF7C-3736-4F60-BE15-90034CAE4ACA">Monitoring Buffered Queues</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../adque/aq-basic-components.html#ADQUE0200"><span class="italic">Oracle Database Advanced Queuing User's Guide </span></a>for information about the <code class="codeph">AQ_TM_PROCESSES</code> initialization parameter
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1059"></a><div class="props_rev_3"><a id="GUID-ED1AAE54-128B-4540-ADA2-2AB94403248F" name="GUID-ED1AAE54-128B-4540-ADA2-2AB94403248F"></a><h3 id="STRMS-GUID-ED1AAE54-128B-4540-ADA2-2AB94403248F" class="sect3"><span class="enumeration_section">33.7 </span>Does the Apply User Have the Required Privileges?
+               </h3>
+               <div>
+                  <p>If the apply user does not have explicit <code class="codeph">EXECUTE</code> privilege on an apply handler procedure or custom rule-based transformation function, then an <code class="codeph">ORA-26808</code> error might result when the apply user tries to run the procedure or function. Typically, this error is causes the apply process to abort without adding errors to the <code class="codeph">DBA_APPLY_ERROR</code> view. However, the trace file for the apply coordinator reports the error. Specifically, an error similar to the following appears in the trace file:
+                  </p><pre class="oac_no_warn" dir="ltr">ORA-26808: Apply process AP01 died unexpectedly
+</pre><p>Typically, error messages surround this message, and one or more of these messages contain the name of the procedure or function. To correct the problem, grant the required <code class="codeph">EXECUTE</code> privilege to the apply user.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-ED1AAE54-128B-4540-ADA2-2AB94403248F__GUID-35783961-7AC6-4C2C-A72F-A0F49CBCFBA6">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-FA07061A-A574-450E-8791-878BDA3FEC03">Apply User</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-oracle-streams-information-consumption.html#GUID-9DEB34C0-21DC-41E0-96CE-699D279F8C42"> Managing Oracle Streams Information Consumption</a></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-4657348D-7CC3-461A-B067-B43B73B971C7">Does an Apply Process Trace File Contain Messages About Apply Problems?</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1060"></a><div class="props_rev_3"><a id="GUID-C1921242-C3A1-4B3E-ADA5-0446B70FD264" name="GUID-C1921242-C3A1-4B3E-ADA5-0446B70FD264"></a><h3 id="STRMS-GUID-C1921242-C3A1-4B3E-ADA5-0446B70FD264" class="sect3"><span class="enumeration_section">33.8 </span>Is the Apply Process Encountering Contention?
+               </h3>
+               <div>
+                  <p>An apply server is a component of an apply process. Apply servers apply DML and DDL changes to database objects at a destination database. An apply process can use one or more apply servers, and the <code class="codeph">parallelism</code> apply process parameter specifies the number of apply servers that can concurrently apply transactions. For example, if <code class="codeph">parallelism</code> is set to <code class="codeph">5</code>, then an apply process uses a total of five apply servers.
+                  </p>
+                  <p>An apply server encounters contention when the apply server must wait for a resource that is being used by another session. Contention can result from logical dependencies. For example, when an apply server tries to apply a change to a row that a user has locked, then the apply server must wait for the user. Contention can also result from physical dependencies. For example, interested transaction list (ITL) contention results when two transactions that are being applied, which might not be logically dependent, are trying to lock the same block on disk. In this case, one apply server locks rows in the block, and the other apply server must wait for access to the block, even though the second apply server is trying to lock different rows. See <span class="q">"<a href="troubleshooting-apply.html#GUID-39826EC1-909A-4ADE-B898-498C1FEC2960">Is the Apply Process Waiting for a Dependent Transaction?</a>"</span> for detailed information about ITL contention.
+                  </p>
+                  <p>When an apply server encounters contention that does not involve another apply server in the same apply process, it waits until the contention clears. When an apply server encounters contention that involves another apply server in the same apply process, one of the two apply servers is rolled back. An apply process that is using multiple apply servers might be applying multiple transactions at the same time. The apply process tracks the state of the apply server that is applying the transaction with the lowest commit SCN. If there is a dependency between two transactions, then an apply process always applies the transaction with the lowest commit SCN first. The transaction with the higher commit SCN waits for the other transaction to commit. Therefore, if the apply server with the lowest commit SCN transaction is encountering contention, then the contention results from something other than a dependent transaction. In this case, you can monitor the apply server with the lowest commit SCN transaction to determine the cause of the contention.</p>
+                  <p>The following four wait states are possible for an apply server:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><span class="bold">Not waiting:</span> The apply server is not encountering contention and is not waiting. No action is necessary in this case.
+                        </p>
+                     </li>
+                     <li>
+                        <p><span class="bold">Waiting for an event that is not related to another session:</span> An example of an event that is not related to another session is a <code class="codeph">log</code> <code class="codeph">file</code> <code class="codeph">sync</code> event, where redo data must be flushed because of a commit or rollback. In these cases, Oracle Database writes nothing to the log initially because such waits are common and are usually transient. If the apply server is waiting for the same event after a certain interval of time, then the apply server writes a message to the alert log and apply process trace file. For example, an apply server <code class="codeph">AS01</code> might write a message similar to the following:
+                        </p><pre class="oac_no_warn" dir="ltr">AS01: warning -- apply server 1, sid 26 waiting for event:
+AS01: [log file sync] ...
+</pre><p>Oracle Database writes this output to the alert log at intervals until the problem is rectified.</p>
+                     </li>
+                     <li>
+                        <p><span class="bold">Waiting for an event that is related to a non apply server session:</span> The apply server writes a message to the alert log and apply process trace file immediately. For example, an apply server <code class="codeph">AS01</code> might write a message similar to the following:
+                        </p><pre class="oac_no_warn" dir="ltr">AS01: warning -- apply server 1, sid 10 waiting on user sid 36 for event:
+AS01: [enq: TM - contention] name|mode=544d0003, object #=a078, 
+      table/partition=0
+</pre><p>Oracle Database writes this output to the alert log at intervals until the problem is rectified.</p>
+                     </li>
+                     <li>
+                        <p><span class="bold">Waiting for another apply server session:</span> This state can be caused by interested transaction list (ITL) contention, but it can also be caused by more serious issues, such as an apply handler that obtains conflicting locks. In this case, the apply server that is blocked by another apply server prints only once to the alert log and the trace file for the apply process, and the blocked apply server issues a rollback to the blocking apply server. When the blocking apply server rolls back, another message indicating that the apply server has been rolled back is printed to the log files, and the rolled back transaction is reassigned by the coordinator process for the apply process. 
+                        </p>
+                        <p>For example, if apply server 1 of apply process <code class="codeph">AP01</code> is blocked by apply server&nbsp;2 of the same apply process (<code class="codeph">AP01</code>), then the apply process writes the following messages to the log files:
+                        </p><pre class="oac_no_warn" dir="ltr">AP01: apply server 1 blocked on server 2
+AP01: [enq: TX - row lock contention] name|mode=54580006, usn&lt;&lt;16 | 
+      slot=1000e, sequence=1853
+AP01: apply server 2 rolled back
+</pre><p>You can determine the total number of times an apply server was rolled back since the apply process last started by querying the <code class="codeph">TOTAL_ROLLBACKS</code> column in the <code class="codeph">V$STREAMS_APPLY_COORDINATOR</code> dynamic performance view.
+                        </p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-C1921242-C3A1-4B3E-ADA5-0446B70FD264__GUID-04C85D21-03E9-4C7D-9243-5738BBB19D5C">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../tgdba/index.html"><span class="italic">Oracle Database Performance Tuning Guide </span></a>for more information about contention and about resolving different types of&nbsp;contention
+                           </p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-7D02B3F6-23FD-436E-B0F4-AA60128DF77A">Checking the Trace Files and Alert Log for Problems</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1061"></a><div class="props_rev_3"><a id="GUID-39826EC1-909A-4ADE-B898-498C1FEC2960" name="GUID-39826EC1-909A-4ADE-B898-498C1FEC2960"></a><h3 id="STRMS-GUID-39826EC1-909A-4ADE-B898-498C1FEC2960" class="sect3"><span class="enumeration_section">33.9 </span>Is the Apply Process Waiting for a Dependent Transaction?
+               </h3>
+               <div>
+                  <p>If you set the <code class="codeph">parallelism</code> parameter for an apply process to a value greater than&nbsp;<code class="codeph">1</code>, and you set the <code class="codeph">commit_serialization</code> parameter of the apply process to <code class="codeph">FULL</code>, then the apply process can detect interested transaction list (ITL) contention if there is a transaction that is dependent on another transaction with a higher SCN. ITL contention occurs if the session that created the transaction waited for an ITL slot in a block. This happens when the session wants to lock a row in the block, but one or more other sessions have rows locked in the same block, and there is no free ITL slot in the block.
+                  </p>
+                  <p>ITL contention also is possible if the session is waiting due to a shared bitmap index fragment. Bitmap indexes index key values and a range of rowids. Each entry in a bitmap index can cover many rows in the actual table. If two sessions want to update rows covered by the same bitmap index fragment, then the second session waits for the first transaction to either <code class="codeph">COMMIT</code> or <code class="codeph">ROLLBACK</code>.
+                  </p>
+                  <p>When an apply process detects such a dependency, it resolves the ITL contention automatically and records information about it in the alert log and apply process trace file for the database. ITL contention can negatively affect the performance of an apply process because there might not be any progress while it is detecting the deadlock.</p>
+                  <p>To avoid the problem in the future, perform one of the following actions:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p>Increase the number of ITLs available. You can do so by changing the <code class="codeph">INITRANS</code> setting for the table using the <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> statement.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Set the <code class="codeph">commit_serialization</code> parameter to <code class="codeph">DEPENDENT_TRANSACTIONS</code> for the apply process.
+                        </p>
+                     </li>
+                     <li>
+                        <p>Set the <code class="codeph">parallelism</code> apply process parameter to <code class="codeph">1</code> for the apply process.
+                        </p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-39826EC1-909A-4ADE-B898-498C1FEC2960__GUID-86753745-BA86-4D62-A245-9BF3B1618CFD">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="identifying-problems-in-an-oracle-streams-environment.html#GUID-7D02B3F6-23FD-436E-B0F4-AA60128DF77A">Checking the Trace Files and Alert Log for Problems</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><a href="../arpls/DBMS_APPLY_ADM.html#ARPLS314"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for information about apply process parameters
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../admin/index.html"><span class="italic">Oracle Database Administrator's Guide </span></a>and<a href="../sqlrf/index.html"><span class="italic"> Oracle Database SQL Language Reference </span></a>for more information about <code class="codeph">INITRANS</code></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div><a id="STRMS1062"></a><div class="props_rev_3"><a id="GUID-9F4FEC20-E2C9-4611-9D9B-9686540FA322" name="GUID-9F4FEC20-E2C9-4611-9D9B-9686540FA322"></a><h3 id="STRMS-GUID-9F4FEC20-E2C9-4611-9D9B-9686540FA322" class="sect3"><span class="enumeration_section">33.10 </span>Is an Apply Server Performing Poorly for Certain Transactions?
+               </h3>
+               <div>
+                  <p>If an apply process is not performing well, then the reason might be that one or more apply servers used by the apply process are taking an inordinate amount of time to apply certain transactions. The following query displays information about the transactions being applied by each apply server used by an apply process named <code class="codeph">strm01_apply</code>:
+                  </p><pre class="oac_no_warn" dir="ltr">COLUMN SERVER_ID HEADING 'Apply Server ID' FORMAT 99999999
+COLUMN STATE HEADING 'Apply Server State' FORMAT A20
+COLUMN APPLIED_MESSAGE_NUMBER HEADING 'Applied Message|Number' FORMAT 99999999
+COLUMN MESSAGE_SEQUENCE HEADING 'Message Sequence|Number' FORMAT 99999999
+
+SELECT SERVER_ID, STATE, APPLIED_MESSAGE_NUMBER, MESSAGE_SEQUENCE 
+  FROM V$STREAMS_APPLY_SERVER
+  WHERE APPLY_NAME = 'STRM01_APPLY'
+  ORDER BY SERVER_ID;
+</pre><p>If you run this query repeatedly, then over time the apply server state, applied message number, and message sequence number should continue to change for each apply server as it applies transactions. If these values do not change for one or more apply servers, then the apply server might not be performing well. In this case, you should ensure that, for each table to which the apply process applies changes, every key column has an index.</p>
+                  <p>If you have many such tables, then you might need to determine the specific table and DML or DDL operation that is causing an apply server to perform poorly. To do so, run the following query when an apply server is taking an inordinately long time to apply a transaction. In this example, assume that the name of the apply process is <code class="codeph">strm01_apply</code> and that apply server number two is performing poorly:
+                  </p><pre class="oac_no_warn" dir="ltr">COLUMN OPERATION HEADING 'Operation' FORMAT A20
+COLUMN OPTIONS HEADING 'Options' FORMAT A20
+COLUMN OBJECT_OWNER HEADING 'Object|Owner' FORMAT A10
+COLUMN OBJECT_NAME HEADING 'Object|Name' FORMAT A10
+COLUMN COST HEADING 'Cost' FORMAT 99999999
+
+SELECT p.OPERATION, p.OPTIONS, p.OBJECT_OWNER, p.OBJECT_NAME, p.COST
+  FROM V$SQL_PLAN p, V$SESSION s, V$STREAMS_APPLY_SERVER a
+  WHERE a.APPLY_NAME = 'STRM01_APPLY' AND a.SERVER_ID = 2
+    AND s.SID = a.SID
+    AND p.HASH_VALUE = s.SQL_HASH_VALUE;
+</pre><p>This query returns the operation being performed currently by the specified apply server. The query also returns the owner and name of the table on which the operation is being performed and the cost of the operation. Ensure that each key column in this table has an index. If the results show <code class="codeph">FULL</code> for the <code class="codeph">COST</code> column, then the operation is causing full table scans, and indexing the table's key columns might solve the problem.
+                  </p>
+                  <p>In addition, you can run the following query to determine the specific DML or DDL SQL statement that is causing an apply server to perform poorly, assuming that the name of the apply process is <code class="codeph">strm01_apply</code> and that apply server number two is performing poorly: 
+                  </p><pre class="oac_no_warn" dir="ltr">SELECT t.SQL_TEXT
+  FROM V$SESSION s, V$SQLTEXT t, V$STREAMS_APPLY_SERVER a
+  WHERE a.APPLY_NAME = 'STRM01_APPLY' AND a.SERVER_ID = 2
+    AND s.SID = a.SID
+    AND s.SQL_ADDRESS = t.ADDRESS
+    AND s.SQL_HASH_VALUE = t.HASH_VALUE
+    ORDER BY PIECE;
+</pre><p>This query returns the SQL statement being run currently by the specified apply server. The statement includes the name of the table to which the transaction is being applied. Ensure that each key column in this table has an index. </p>
+                  <p>If the SQL statement returned by the previous query is less than one thousand characters long, then you can run the following simplified query instead: </p><pre class="oac_no_warn" dir="ltr">SELECT t.SQL_TEXT
+  FROM V$SESSION s, V$SQLAREA t, V$STREAMS_APPLY_SERVER a
+  WHERE a.APPLY_NAME = 'STRM01_APPLY' AND a.SERVER_ID = 2
+    AND s.SID = a.SID
+    AND s.SQL_ADDRESS = t.ADDRESS
+    AND s.SQL_HASH_VALUE = t.HASH_VALUE;
+</pre><div class="infoboxnotealso" id="GUID-9F4FEC20-E2C9-4611-9D9B-9686540FA322__GUID-CCC3AB85-2F8E-467C-96F2-BD458C3190F0">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../tgsql/introduction-to-sql-tuning.html#TGSQL112"><span class="italic">Oracle Database Performance Tuning Guide </span></a>and<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=REFRN30250"><span class="italic"> Oracle Database Reference </span></a>for more information about the <code class="codeph">V$SQL_PLAN</code> dynamic performance view
+                     </p>
+                  </div>
+               </div>
+            </div><a id="STRMS209"></a><div class="props_rev_3"><a id="GUID-329ED4AF-750C-456D-994D-B1103729B4EE" name="GUID-329ED4AF-750C-456D-994D-B1103729B4EE"></a><h3 id="STRMS-GUID-329ED4AF-750C-456D-994D-B1103729B4EE" class="sect3"><span class="enumeration_section">33.11 </span>Are There Any Apply Errors in the Error Queue?
+               </h3>
+               <div>
+                  <p>When an <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a> cannot apply a message, it moves the message and all of the other messages in the same transaction into the error queue. You should check for apply errors periodically to see if there are any transactions that could not be applied.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-329ED4AF-750C-456D-994D-B1103729B4EE__GUID-2F897CEF-278B-42EB-A660-AEA0A4BA52DB">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-B3E9BD13-C4A2-4E7F-9571-A9687AEB5E07">Checking for Apply Errors</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-B2BCDB9E-5B7C-457C-8AB1-B5A7F1711148">Displaying Detailed Information About Apply Errors</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS1063"></a><div class="props_rev_3"><a id="GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1" name="GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1"></a><h4 id="STRMS-GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1" class="sect4"><span class="enumeration_section">33.11.1 </span>Using a DML Handler to Correct Error Transactions
+                  </h4>
+                  <div>
+                     <p>When an apply process moves a transaction to the error queue, you can examine the transaction to analyze the feasibility reexecuting the transaction successfully. If an abnormality is found in the transaction, then you might be able to configure a statement DML handler or a procedure DML handler to correct the problem. In this case, configure the DML handler to run when you reexecute the error transaction. </p>
+                     <p>When a DML handler is used to correct a problem in an error transaction, the apply process that uses the DML handler should be stopped to prevent the DML handler from acting on LCRs that are not involved with the error transaction. After successful reexecution, if the DML handler is no longer needed, then remove it. Also, correct the problem that caused the transaction to moved to the error queue to prevent future error transactions.</p>
+                     <div class="infoboxnotealso" id="GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1__GUID-CE6E8D69-5A57-40E4-B4F5-3075C0313D40">
+                        <p class="notep1">See Also:</p>
+                        <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-A6074063-2D66-4FB9-864D-D5228624732A">Managing a DML Handler</a>"</span></p>
+                     </div>
+                  </div>
+               </div><a id="STRMS1064"></a><div class="props_rev_3"><a id="GUID-CF1BB556-40E4-4017-BC81-CEC0F3FF962F" name="GUID-CF1BB556-40E4-4017-BC81-CEC0F3FF962F"></a><h4 id="STRMS-GUID-CF1BB556-40E4-4017-BC81-CEC0F3FF962F" class="sect4"><span class="enumeration_section">33.11.2 </span>Troubleshooting Specific Apply Errors
+                  </h4>
+                  <div>
+                     <p>You might encounter the following types of apply process errors for LCRs:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-C80B3117-9638-4A1E-A859-CE1F92444F6E">ORA-01031 Insufficient Privileges</a></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-D85C4926-E3DC-4D4A-B73D-8E670061C065">ORA-01403 No Data Found</a></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-E9936218-6754-4F82-8E6E-746A011DD358">ORA-23605 Invalid Value for Oracle Streams Parameter</a>*
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-527F6687-FD57-44AA-910E-75848490298E">ORA-23607 Invalid Column</a>*
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-5FF28F58-BBF2-406B-8D89-25CC587CE481">ORA-24031 Invalid Value, parameter_name Should Be Non-NULL</a>*
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-A6E3281B-38A3-4E78-BC57-26E90AE5A604">ORA-26687 Instantiation SCN Not Set</a></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-F32AC993-3F12-46E3-9D36-2F6B3AABCCE0">ORA-26688 Missing Key in LCR</a></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-73FE0B17-BD3C-4DA4-8DB1-137E0C88616D">ORA-26689 Column Type Mismatch</a>*
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-5FA38F3B-8491-4D8C-88A6-DEF9B9A19C3A">ORA-26786 A row with key exists but has conflicting column(s) in table</a></p>
+                        </li>
+                        <li>
+                           <p><a href="troubleshooting-apply.html#GUID-8DD57D49-35D4-462E-B67F-4AE9F9AB1AEB">ORA-26787 The row with key column_value does not exist in table table_name</a></p>
+                        </li>
+                     </ul>
+                     <p>The errors marked with an asterisk (*) in the previous list often result from a problem with an apply handler or a rule-based transformation.</p>
+                     <div class="infoboxnotealso" id="GUID-CF1BB556-40E4-4017-BC81-CEC0F3FF962F__GUID-2D8B1910-0B05-427A-8A56-C17EF61F0FA0">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-B3E9BD13-C4A2-4E7F-9571-A9687AEB5E07">Checking for Apply Errors</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-3C45493C-6DD6-478F-98D7-71A857D17FDD">Managing Apply Errors</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-0996F5C0-F684-4495-A20E-02FD995FDAD8">The Error Queue</a>"</span></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div><a id="STRMS1065"></a><div class="props_rev_3"><a id="GUID-C80B3117-9638-4A1E-A859-CE1F92444F6E" name="GUID-C80B3117-9638-4A1E-A859-CE1F92444F6E"></a><h5 id="STRMS-GUID-C80B3117-9638-4A1E-A859-CE1F92444F6E" class="sect5"><span class="enumeration_section">33.11.2.1 </span>ORA-01031 Insufficient Privileges
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>An <code class="codeph">ORA-01031</code> error occurs when the user designated as the apply user does not have the necessary privileges to perform SQL operations on the replicated objects. The apply user privileges can be granted directly or through a role.
+                           </p>
+                           <p>Specifically, the following privileges are required: </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>For table level DML changes, the <code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, <code class="codeph">DELETE</code>, and <code class="codeph">SELECT</code> privileges must be granted. 
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>For table level DDL changes, the <code class="codeph">ALTER</code> <code class="codeph">TABLE</code> privilege must be granted. 
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>For schema level changes, the <code class="codeph">CREATE</code> <code class="codeph">ANY</code> <code class="codeph">TABLE</code>, <code class="codeph">CREATE</code> <code class="codeph">ANY</code> <code class="codeph">INDEX</code>, <code class="codeph">CREATE</code> <code class="codeph">ANY</code> <code class="codeph">PROCEDURE</code>, <code class="codeph">ALTER</code> <code class="codeph">ANY</code> <code class="codeph">TABLE</code>, and <code class="codeph">ALTER</code> <code class="codeph">ANY</code> <code class="codeph">PROCEDURE</code> privileges must be granted.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>For global level changes, <code class="codeph">ALL</code> <code class="codeph">PRIVILEGES</code> must be granted to the apply user.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>To correct this error, complete the following steps:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li><span>Connect as the apply user on the destination database.</span></li>
+                           <li><span>Query the <code class="codeph">SESSION_PRIVS</code> data dictionary view to determine which required privileges are not granted to the apply user.</span></li>
+                           <li><span>Connect as an administrative user who can grant privileges.</span></li>
+                           <li><span>Grant the necessary privileges to the apply user.</span></li>
+                           <li><span>Reexecute the error transactions in the error queue for the apply process.</span></li>
+                        </ol>
+                        <div class="section">
+                           <div class="infoboxnotealso" id="GUID-C80B3117-9638-4A1E-A859-CE1F92444F6E__GUID-F0EE73E4-BFFA-4B01-831C-B2D313BB57A4">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="oracle-streams-information-consumption.html#GUID-FA07061A-A574-450E-8791-878BDA3FEC03">Apply User</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-FDCC01D7-244E-4BEE-B0AB-6D011BC0F487">Retrying Apply Error Transactions</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1066"></a><div class="props_rev_3"><a id="GUID-D85C4926-E3DC-4D4A-B73D-8E670061C065" name="GUID-D85C4926-E3DC-4D4A-B73D-8E670061C065"></a><h5 id="STRMS-GUID-D85C4926-E3DC-4D4A-B73D-8E670061C065" class="sect5"><span class="enumeration_section">33.11.2.2 </span>ORA-01403 No Data Found
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Typically, an <code class="codeph">ORA-01403</code> error occurs when an apply process tries to update an existing row and the <code class="codeph">OLD_VALUES</code> in the row LCR do not match the current values at the destination database.
+                           </p>
+                           <p>Typically, one of the following conditions causes this error:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Supplemental logging is not specified for columns that require supplemental logging at the source database. In this case, LCRs from the source database might not contain values for key columns. You can use a procedure DML handler to modify the LCR so that it contains the necessary supplemental data. See <span class="q">"<a href="troubleshooting-apply.html#GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1">Using a DML Handler to Correct Error Transactions</a>"</span>. Also, specify the necessary supplemental logging at the source database to prevent future errors.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>There is a problem with the primary key in the table for which an LCR is applying a change. In this case, ensure that the primary key is enabled by querying the <code class="codeph">DBA_CONSTRAINTS</code> data dictionary view. If no primary key exists for the table, or if the target table has a different primary key than the source table, then specify substitute key columns using the <code class="codeph">SET_KEY_COLUMNS</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. You also might encounter error <code class="codeph">ORA-23416</code> if a table being applied does not have a primary key. After you make these changes, you can reexecute the error transaction.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The transaction being applied depends on another transaction which has not yet executed. For example, if a transaction tries to update an employee with an <code class="codeph">employee_id</code> of <code class="codeph">300</code>, but the row for this employee has not yet been inserted into the <code class="codeph">employees</code> table, then the update fails. In this case, execute the transaction on which the error transaction depends. Then, reexecute the error transaction.
+                                 </p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnotealso" id="GUID-D85C4926-E3DC-4D4A-B73D-8E670061C065__GUID-A2322F9F-A0BF-4441-9D87-55BD031415B0">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-57570826-D941-4820-977D-D60092EAD599">Supplemental Logging in an Oracle Streams Environment</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="advanced-apply-process-concepts.html#GUID-D46B0023-8D39-466A-9EFD-F69EB6F79BA2">Considerations for Applying DML Changes to Tables</a>"</span> for information about possible causes of apply errors
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="monitoring-oracle-streams-apply-processes.html#GUID-B2BCDB9E-5B7C-457C-8AB1-B5A7F1711148">Displaying Detailed Information About Apply Errors</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-3C45493C-6DD6-478F-98D7-71A857D17FDD">Managing Apply Errors</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../strep/oracle-streams-tags.html#STREP008"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about Oracle Streams tags
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1067"></a><div class="props_rev_3"><a id="GUID-E9936218-6754-4F82-8E6E-746A011DD358" name="GUID-E9936218-6754-4F82-8E6E-746A011DD358"></a><h5 id="STRMS-GUID-E9936218-6754-4F82-8E6E-746A011DD358" class="sect5"><span class="enumeration_section">33.11.2.3 </span>ORA-23605 Invalid Value for Oracle Streams Parameter
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>When calling row LCR (<code class="codeph">SYS.LCR$_ROW_RECORD</code> type) member subprograms, an <code class="codeph">ORA-23605</code> error might be raised if the values of the parameters passed by the member subprogram do not match the row LCR. For example, an error results if a member subprogram tries to add an old column value to an insert row LCR, or if a member subprogram tries to set the value of a LOB column to a number.
+                           </p>
+                           <p>Row LCRs should contain the following old and new values, depending on the operation:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>A row LCR for an <code class="codeph">INSERT</code> operation should contain new values but no old values.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>A row LCR for an <code class="codeph">UPDATE</code> operation can contain both new values and old values.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>A row LCR for a <code class="codeph">DELETE</code> operation should contain old values but no new values.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>Verify that the correct parameter type (<code class="codeph">OLD</code>, or <code class="codeph">NEW</code>, or both) is specified for the row LCR operation (<code class="codeph">INSERT</code>, <code class="codeph">UPDATE</code>, or <code class="codeph">DELETE</code>). For example, if a procedure DML handler or custom rule-based transformation changes an <code class="codeph">UPDATE</code> row LCR into an <code class="codeph">INSERT</code> row LCR, then the handler or transformation should remove the old values in the row&nbsp;LCR.
+                           </p>
+                           <p>If an apply handler caused the error, then correct the apply handler and reexecute the error transaction. If a custom rule-based transformation caused the error, then you might be able to create a DML handler to correct the problem. See <span class="q">"<a href="troubleshooting-apply.html#GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1">Using a DML Handler to Correct Error Transactions</a>"</span>. Also, correct the rule-based transformation to avoid future errors.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-E9936218-6754-4F82-8E6E-746A011DD358__GUID-B9F02B15-DFB0-4640-9A76-D79B7CA18709">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1068"></a><div class="props_rev_3"><a id="GUID-527F6687-FD57-44AA-910E-75848490298E" name="GUID-527F6687-FD57-44AA-910E-75848490298E"></a><h5 id="STRMS-GUID-527F6687-FD57-44AA-910E-75848490298E" class="sect5"><span class="enumeration_section">33.11.2.4 </span>ORA-23607 Invalid Column
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>An <code class="codeph">ORA-23607</code> error is raised by a row LCR (<code class="codeph">SYS.LCR$_ROW_RECORD</code> type) member subprogram, when the value of the <code class="codeph">column_name</code> parameter in the member subprogram does not match the name of any of the columns in the row LCR. Check the column names in the row LCR.
+                           </p>
+                           <p>If an apply handler caused the error, then correct the apply handler and reexecute the error transaction. If a custom rule-based transformation caused the error, then you might be able to create a DML handler to correct the problem. See <span class="q">"<a href="troubleshooting-apply.html#GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1">Using a DML Handler to Correct Error Transactions</a>"</span>. Also, correct the rule-based transformation to avoid future errors.
+                           </p>
+                           <p>An apply handler or custom rule-based transformation can cause this error by using one of the following row LCR member procedures:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><code class="codeph">DELETE_COLUMN</code>, if this procedure tries to delete a column from a row LCR that does not exist in the row LCR
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>		<code class="codeph">RENAME_COLUMN</code>, if this procedure tries to rename a column that does not exist in the row LCR
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>In this case, to avoid similar errors in the future, perform one of the following actions:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Instead of using an apply handler or custom rule-based transformation to delete or rename a column in row LCRs, use a declarative rule-based transformation. If a declarative rule-based transformation tries to delete or rename a column that does not exist, then the declarative rule-based transformation does not raise an error. You can specify a declarative rule-based transformation that deletes a column using the <code class="codeph">DBMS_STREAMS_ADM.DELETE_COLUMN</code> procedure and a declarative rule-based transformation that renames a column using the <code class="codeph">DBMS_STREAMS_ADM.RENAME_COLUMN</code> procedure. You can use a declarative rule-based transformation in combination with apply handlers and custom rule-based transformations.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>If you want to continue to use an apply handler or custom rule-based transformation to delete or rename a column in row LCRs, then modify the handler or transformation to prevent future errors. For example, modify the handler or transformation to verify that a column exists before trying to rename or delete the column.</p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnotealso" id="GUID-527F6687-FD57-44AA-910E-75848490298E__GUID-DE97086F-B498-4851-A950-164A89DB4973">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="../arpls/Logical-Change-Record-TYPEs.html#ARPLS368"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">DELETE_COLUMN</code> and <code class="codeph">RENAME_COLUMN</code> member procedures for row LCRs
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1069"></a><div class="props_rev_3"><a id="GUID-5FF28F58-BBF2-406B-8D89-25CC587CE481" name="GUID-5FF28F58-BBF2-406B-8D89-25CC587CE481"></a><h5 id="STRMS-GUID-5FF28F58-BBF2-406B-8D89-25CC587CE481" class="sect5"><span class="enumeration_section">33.11.2.5 </span>ORA-24031 Invalid Value, <span class="italic">parameter_name</span> Should Be Non-NULL
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>An <code class="codeph">ORA-24031</code> error can occur when an apply handler or a custom rule-based transformation passes a <code class="codeph">NULL</code> value to an LCR member subprogram instead of an <code class="codeph">ANYDATA</code> value that contains a <code class="codeph">NULL</code>. 
+                           </p>
+                           <p>For example, the following call to the <code class="codeph">ADD_COLUMN</code> member procedure for row LCRs can result in this error:
+                           </p><pre class="oac_no_warn" dir="ltr">new_lcr.ADD_COLUMN('OLD','LANGUAGE',NULL);
+</pre><p>The following example shows the correct way to call the <code class="codeph">ADD_COLUMN</code> member procedure for row LCRs:
+                           </p><pre class="oac_no_warn" dir="ltr">new_lcr.ADD_COLUMN('OLD','LANGUAGE',ANYDATA.ConvertVarchar2(NULL));
+</pre><p>If an apply handler caused the error, then correct the apply handler and reexecute the error transaction. If a custom rule-based transformation caused the error, then you might be able to create a DML handler to correct the problem. See <span class="q">"<a href="troubleshooting-apply.html#GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1">Using a DML Handler to Correct Error Transactions</a>"</span>. Also, correct the rule-based transformation to avoid future errors.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-5FF28F58-BBF2-406B-8D89-25CC587CE481__GUID-893B6405-F216-4E3F-9816-81266CA54208">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1070"></a><div class="props_rev_3"><a id="GUID-A6E3281B-38A3-4E78-BC57-26E90AE5A604" name="GUID-A6E3281B-38A3-4E78-BC57-26E90AE5A604"></a><h5 id="STRMS-GUID-A6E3281B-38A3-4E78-BC57-26E90AE5A604" class="sect5"><span class="enumeration_section">33.11.2.6 </span>ORA-26687 Instantiation SCN Not Set
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Typically, an <code class="codeph">ORA-26687</code> error occurs because the instantiation SCN is not set on an object for which an apply process is attempting to apply changes. You can query the <code class="codeph">DBA_APPLY_INSTANTIATED_OBJECTS</code> data dictionary view to list the objects that have an instantiation&nbsp;SCN.
+                           </p>
+                           <p>You can set an instantiation SCN for one or more objects by exporting the objects at the source database, and then importing them at the destination database. You can use Data Pump export/import. If you do not want to use export/import, then you can run one or more of the following procedures in the <code class="codeph">DBMS_APPLY_ADM</code> package:
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><code class="codeph">SET_TABLE_INSTANTIATION_SCN</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code></p>
+                              </li>
+                              <li>
+                                 <p><code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code></p>
+                              </li>
+                           </ul>
+                           <p>Some of the common reasons why an instantiation SCN is not set for an object at a destination database include the following:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>You used export/import for instantiation, and you exported the objects from the source database before preparing the objects for instantiation. You can prepare objects for instantiation either by creating Oracle Streams rules for the objects with the <code class="codeph">DBMS_STREAMS_ADM</code> package or by running a procedure or function in the <code class="codeph">DBMS_CAPTURE_ADM</code> package. If the objects were not prepared for instantiation before the export, then the instantiation SCN information will not be available in the export file, and the instantiation SCNs will not be set.
+                                 </p>
+                                 <p>In this case, prepare the database objects for instantiation at the source database. Next, set the instantiation SCN for the database objects at the destination database.</p>
+                              </li>
+                              <li>
+                                 <p>Instead of using export/import for instantiation, you set the instantiation SCN explicitly with the appropriate procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. When the instantiation SCN is set explicitly by the database administrator, responsibility for the correctness of the data is assumed by the administrator.
+                                 </p>
+                                 <p>In this case, set the instantiation SCN for the database objects explicitly. Alternatively, you can choose to perform a metadata-only export/import to set the instantiation SCNs.</p>
+                              </li>
+                              <li>
+                                 <p>You want to apply DDL changes, but you did not set the instantiation SCN at the schema or global level.</p>
+                                 <p>In this case, set the instantiation SCN for the appropriate schemas by running the <code class="codeph">SET_SCHEMA_INSTANTIATION_SCN</code> procedure, or set the instantiation SCN for the source database by running the <code class="codeph">SET_GLOBAL_INSTANTIATION_SCN</code> procedure. Both of these procedures are in the <code class="codeph">DBMS_APPLY_ADM</code> package.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>After you correct the condition that caused the error, whether you should reexecute the error transaction or delete it depends on whether the changes included in the transaction were executed at the destination database when you corrected the error condition. Follow these guidelines when you decide whether you should reexecute the transaction in the error queue or delete it:</p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>If you performed a new export/import, and the new export includes the transaction in the error queue, then delete the transaction in the error queue.</p>
+                              </li>
+                              <li>
+                                 <p>If you set instantiation SCNs explicitly or reimported an existing export dump file, then reexecute the transaction in the error queue.</p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnotealso" id="GUID-A6E3281B-38A3-4E78-BC57-26E90AE5A604__GUID-67B62667-17D7-447D-B207-AB815433F8F7">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="../strep/instantiation-and-oracle-streams-replication.html#STREP012"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for more information about instantiation
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-FDCC01D7-244E-4BEE-B0AB-6D011BC0F487">Retrying Apply Error Transactions</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1071"></a><div class="props_rev_3"><a id="GUID-F32AC993-3F12-46E3-9D36-2F6B3AABCCE0" name="GUID-F32AC993-3F12-46E3-9D36-2F6B3AABCCE0"></a><h5 id="STRMS-GUID-F32AC993-3F12-46E3-9D36-2F6B3AABCCE0" class="sect5"><span class="enumeration_section">33.11.2.7 </span>ORA-26688 Missing Key in LCR
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Typically, an <code class="codeph">ORA-26688</code> error occurs because of one of the following conditions: 
+                           </p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>At least one LCR in a transaction does not contain enough information for the apply process to apply it. For dependency computation, an apply process always needs values for the defined primary key column(s) at the destination database. Also, if the parallelism of any apply process that will apply the changes is greater than 1, then the apply process needs values for any indexed column at a destination database, which includes unique or non unique index columns, foreign key columns, and bitmap index columns. </p>
+                                 <p>If an apply process needs values for a column, and the column exists at the source database, then this error results when supplemental logging is not specified for one or more of these columns at the source database. In this case, specify the necessary supplemental logging at the source database to prevent apply errors.</p>
+                                 <p>However, the definition of the source database table might be different than the definition of the corresponding destination database table. If an apply process needs values for a column, and the column exists at the destination database but <span class="italic">does not exist</span> at the source database, then you can configure a rule-based transformation to add the required values to the LCRs from the source database to prevent apply errors.
+                                 </p>
+                                 <p>To correct a transaction placed in the error queue because of this error, you can use a procedure DML handler to modify the LCRs so that they contain the necessary supplemental data. See <span class="q">"<a href="troubleshooting-apply.html#GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1">Using a DML Handler to Correct Error Transactions</a>"</span>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>There is a problem with the primary key in the table for which an LCR is applying a change. In this case, ensure that the primary key is enabled by querying the <code class="codeph">DBA_CONSTRAINTS</code> data dictionary view. If no primary key exists for the table, or if the destination table has a different primary key than the source table, then specify substitute key columns using the <code class="codeph">SET_KEY_COLUMNS</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package. You can also encounter error <code class="codeph">ORA-23416</code> if a table does not have a primary key. After you make these changes, you can reexecute the error transaction.
+                                 </p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnotealso" id="GUID-F32AC993-3F12-46E3-9D36-2F6B3AABCCE0__GUID-AA564FAF-5CE3-4B92-9388-48D418DE0986">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-57570826-D941-4820-977D-D60092EAD599">Supplemental Logging in an Oracle Streams Environment</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="advanced-apply-process-concepts.html#GUID-F98E9A40-8FF4-4E42-A8C4-9DEBD6597340">Substitute Key Columns</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1072"></a><div class="props_rev_3"><a id="GUID-73FE0B17-BD3C-4DA4-8DB1-137E0C88616D" name="GUID-73FE0B17-BD3C-4DA4-8DB1-137E0C88616D"></a><h5 id="STRMS-GUID-73FE0B17-BD3C-4DA4-8DB1-137E0C88616D" class="sect5"><span class="enumeration_section">33.11.2.8 </span>ORA-26689 Column Type Mismatch
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>Typically, an <code class="codeph">ORA-26689</code> error occurs because one or more columns at a table in the source database do not match the corresponding columns at the destination database. The LCRs from the source database might contain more columns than the table at the destination database, or there might be a column name or column type mismatch for one or more columns. If the columns differ at the databases, then you can use rule-based transformations to avoid future errors.
+                           </p>
+                           <p>If you use an apply handler or a custom rule-based transformation, then ensure that any <code class="codeph">ANYDATA</code> conversion functions match the data type in the LCR that is being converted. For example, if the column is specified as <code class="codeph">VARCHAR2</code>, then use <code class="codeph">ANYDATA.CONVERTVARCHAR2</code> function to convert the data from type <code class="codeph">ANY</code> to <code class="codeph">VARCHAR2</code>.
+                           </p>
+                           <p>Also, ensure that you use the correct character case in rule conditions, apply handlers, and rule-based transformations. For example, if a column name has all uppercase characters in the data dictionary, then you should specify the column name with all uppercase characters in rule conditions, apply handlers, and rule-based transformations</p>
+                           <p>This error can also occur because supplemental logging is not specified where it is required for nonkey columns at the source database. In this case, LCRs from the source database might not contain needed values for these nonkey columns.</p>
+                           <p>You might be able to configure a DML handler to apply the error transaction. See <span class="q">"<a href="troubleshooting-apply.html#GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1">Using a DML Handler to Correct Error Transactions</a>"</span>.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-73FE0B17-BD3C-4DA4-8DB1-137E0C88616D__GUID-F3F93A4B-B9A6-4E5F-ACF3-1C50C235E947">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="advanced-apply-process-concepts.html#GUID-D46B0023-8D39-466A-9EFD-F69EB6F79BA2">Considerations for Applying DML Changes to Tables</a>"</span> for information about possible causes of apply errors
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="oracle-streams-information-capture.html#GUID-57570826-D941-4820-977D-D60092EAD599">Supplemental Logging in an Oracle Streams Environment</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1073"></a><div class="props_rev_3"><a id="GUID-5FA38F3B-8491-4D8C-88A6-DEF9B9A19C3A" name="GUID-5FA38F3B-8491-4D8C-88A6-DEF9B9A19C3A"></a><h5 id="STRMS-GUID-5FA38F3B-8491-4D8C-88A6-DEF9B9A19C3A" class="sect5"><span class="enumeration_section">33.11.2.9 </span>ORA-26786 A row with key exists but has conflicting column(s) in table
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>An <code class="codeph">ORA-26786</code> error occurs when the values of some columns in the destination table row do not match the old values of the corresponding columns in the row LCR.
+                           </p>
+                           <p>To avoid future apply errors, you can either configure a conflict handler, a DML handler, or an error handler. The handler should resolve the mismatched column in a way that is appropriate for your replication environment.</p>
+                           <p>In addition, you might be able to configure a DML handler to apply existing error transactions that resulted from this error. See <span class="q">"<a href="troubleshooting-apply.html#GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1">Using a DML Handler to Correct Error Transactions</a>"</span>.
+                           </p>
+                           <p>Alternatively, you can update the current values in the row so that the row LCR can be applied successfully. If changes to the row are captured by a capture process or synchronous capture at the destination database, then you probably do not want to replicate this manual change to other destination databases. In this case, complete the following steps:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand"><span>Set a tag in the session that corrects the row. Ensure that you set the tag to a value that prevents the manual change from being replicated. For example, the tag can prevent the change from being captured by a capture process or synchronous capture.</span><div><pre class="oac_no_warn" dir="ltr">EXEC DBMS_STREAMS.SET_TAG(tag =&gt; HEXTORAW('17'));
+</pre><p>In some environments, you might need to set the tag to a different value.</p>
+                              </div>
+                           </li>
+                           <li class="stepexpand"><span>Update the row in the table so that the data matches the old values in the&nbsp;LCR.</span></li>
+                           <li class="stepexpand"><span>Reexecute the error or reexecute all errors. To reexecute an error, run the <code class="codeph">EXECUTE_ERROR</code> procedure in the <code class="codeph">DBMS_APPLY_ADM</code> package, and specify the transaction identifier for the transaction that caused the error. For example:</span><div><pre class="oac_no_warn" dir="ltr">EXEC DBMS_APPLY_ADM.EXECUTE_ERROR(local_transaction_id =&gt; '5.4.312');
+</pre><p>Or, execute all errors for the apply process by running the <code class="codeph">EXECUTE_ALL_ERRORS</code> procedure:
+                                 </p><pre class="oac_no_warn" dir="ltr">EXEC DBMS_APPLY_ADM.EXECUTE_ALL_ERRORS(apply_name =&gt; 'APPLY');
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>If you are going to make other changes in the current session that you want to replicate destination databases, then reset the tag for the session to an appropriate value, as in the following example:</span><div><pre class="oac_no_warn" dir="ltr">EXEC DBMS_STREAMS.SET_TAG(tag =&gt; NULL);
+</pre><p>In some environments, you might need to set the tag to a value other than&nbsp;<code class="codeph">NULL</code>.
+                                 </p>
+                              </div>
+                           </li>
+                        </ol>
+                        <div class="section">
+                           <div class="infoboxnotealso" id="GUID-5FA38F3B-8491-4D8C-88A6-DEF9B9A19C3A__GUID-A3B447B1-0EB9-41F5-9EBF-D45BD91D31DA">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="../strep/oracle-streams-conflict-resolution.html#STREP001"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about conflict resolution
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-A6074063-2D66-4FB9-864D-D5228624732A">Managing a DML Handler</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS1074"></a><div class="props_rev_3"><a id="GUID-8DD57D49-35D4-462E-B67F-4AE9F9AB1AEB" name="GUID-8DD57D49-35D4-462E-B67F-4AE9F9AB1AEB"></a><h5 id="STRMS-GUID-8DD57D49-35D4-462E-B67F-4AE9F9AB1AEB" class="sect5"><span class="enumeration_section">33.11.2.10 </span>ORA-26787 The row with key <span class="italic">column_value</span> does not exist in table <span class="italic">table_name</span></h5>
+                     <div>
+                        <div class="section">
+                           <p>An <code class="codeph">ORA-26787</code> error occurs when the row that a row LCR is trying to update or delete does not exist in the destination table.
+                           </p>
+                           <p>To avoid future apply errors, you can either configure a conflict handler, a DML handler, or an error handler. The handler should resolve row LCRs that do not have corresponding table rows in a way that is appropriate for your replication environment.</p>
+                           <p>In addition, you might be able to configure a DML handler to apply existing error transactions that resulted from this error. See <span class="q">"<a href="troubleshooting-apply.html#GUID-475622A8-FED0-4CD4-BD64-DD2762AD4DC1">Using a DML Handler to Correct Error Transactions</a>"</span>.
+                           </p>
+                           <p>Alternatively, you can update the current values in the row so that the row LCR can be applied successfully. See <span class="q">"<a href="troubleshooting-apply.html#GUID-5FA38F3B-8491-4D8C-88A6-DEF9B9A19C3A">ORA-26786 A row with key exists but has conflicting column(s) in table</a>"</span> for more information.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-8DD57D49-35D4-462E-B67F-4AE9F9AB1AEB__GUID-487C8BE1-42A7-4917-A42A-007977E55E6D">
+                              <p class="notep1">See Also:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><a href="../strep/oracle-streams-conflict-resolution.html#STREP001"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about conflict resolution
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-A6074063-2D66-4FB9-864D-D5228624732A">Managing a DML Handler</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

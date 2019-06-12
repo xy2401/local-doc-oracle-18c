@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <!-- Part number: E92603-01 -->
+    <!-- Published date: April 2018 -->
+    <!-- See this link for directions on getting a part number: https://confluence.oraclecorp.com/confluence/display/DLPP/Archive+an+OBE -->
+    <!-- Template date: 10/18/17 -->
+    <title>Converting Partitions Online</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="INDEX, FOLLOW">
+    <meta name="description" content="Learn how to convert the partitioning method of partitioned tables online.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/obe-lite.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="js/jquery.tocify.jd.js"></script>
+    <script src="js/leftnav.js"></script>
+  
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-08-03T18:46:30+00:00">
+    <meta name="dcterms.title" content="Converting partitions online">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="OBEEF">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E92603-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+  <body>
+    <header>
+      <div class="w1024" style="min-height:55px; display:block;"> <a href="https://docs.oracle.com" class="oracle-logo"> <img src="./img/oracle_doc_logo.png" alt="Oracle Documentation" style="max-width: none;" height="22" width="236"></a> </div>
+    </header>
+    <!--end header-->
+    <div id="content">
+      <h1><img src="./img/obe_tag.png" alt="Oracle by Example branding" align="middle">Converting
+        Partitions Online</h1>
+      <div class="w1024" style="clear:both; position:relative; margin-top:40px;">
+        <div class="navbackwide border-right"><!-- --></div>
+        <div id="shownav" title="Show Navigation" tabindex="0"><span class="fa fa-list"></span></div>
+        <div id="sidebar"><!-- -->
+          <div class="left-nav-tut"><!-- -->
+            <div id="hidenavw" title="Hide Navigation" tabindex="0"><span class="fa fa-close"></span></div>
+            <div id="navbar" class="left-nav-w"><!-- -->
+              <div id="toc" class="tocify"><!-- --></div>
+            </div>
+          </div>
+        </div>
+        <div id="bookContainer">
+          <article>
+            <section>
+              <h2><img src="./img/32_begin.png" alt="section 0" class="num_circ" height="32" width="32"> Before You Begin</h2>
+              <p>This 15-minute tutorial shows you how to convert the
+                partitioning method of a partitioned table, online.</p>
+              <h3>Background</h3>
+              <p>Before Oracle Database 18c, you had to manually convert the
+                partitioning method of a table. Now you can use a simple ALTER
+                TABLE SQL statement to convert a partitioning method online. In
+                Oracle Database 18c, you can change a partitioning method
+                online. For example, you can now convert the HASH method to the
+                RANGE method, or add or remove sub-partitioning to a partitioned
+                table to reflect a new workload and for more manageability of
+                data. Repartitioning a table can improve performance, such as
+                changing the partitioning key to get more partition pruning.
+                This avoids a big downtime during the conversion of large
+                partitioned tables. The <code> ALTER TABLE MODIFY </code>
+                statement supports a completely non-blocking DDL to repartition
+                a table.</p>
+              <h3>What Do You Need?</h3>
+              <ul>
+                <li>Oracle Database 18c installed</li>
+                <li>A container database (CDB) and a pluggable database (PDB)</li>
+              </ul>
+            </section>
+            <!-- ========================================================================================================================= -->
+            <section>
+              <hr>
+              <h2><img src="./img/32_1.png" alt="section 1" class="num_circ" height="32" width="32"> Convert HASH To RANGE Partitioned Tables Online</h2>
+              <ol>
+                <li>Log in to <code> PDB1 </code> PDB (<em> Session1) </em>
+                  to create the <code> SH1 </code> and <code> HR1 </code>
+                  users.
+                  <pre><code>sqlplus system@PDB1
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Create the <code> SH1 </code> and <code> HR1 </code>
+                  users.
+                  <pre><code>DROP USER sh1 CASCADE;
+CREATE USER sh1 IDENTIFIED BY <em>password</em>;
+DROP USER hr1 CASCADE;
+CREATE USER hr1 IDENTIFIED BY <em>password</em>;</code></pre>
+                </li>
+                <li>Grant the users the CREATE SESSION, CREATE TABLE, UNLIMITED
+                  TABLESPACE system privileges and read and write privilege on
+                  the <code> DP_PDB1 </code> logical directory.
+                  <pre><code>GRANT create session, create table, unlimited tablespace TO sh1, hr1;</code></pre>
+                  <pre><code>CREATE DIRECTORY dp_pdb1 as '/home/oracle/labs';
+GRANT read , write ON DIRECTORY dp_pdb1 TO sh1, hr1;</code></pre>
+                </li>
+                <li>Create the <code> HR1.EMP </code> HASH partitioned table.
+                  <pre><code>CREATE TABLE hr1.emp (empno NUMBER NOT NULL, ename VARCHAR2(10),
+                      job VARCHAR2(9), mgr NUMBER(4), sal NUMBER(7,2))
+       PARTITION BY HASH (sal) PARTITIONS 4;</code></pre>
+                </li>
+                <li>Insert rows into the <code> HR1.EMP </code> table.
+                  <pre><code>INSERT INTO hr1.emp VALUES (100, 'Adam','Clerk',202,54320);
+INSERT INTO hr1.emp VALUES (101, 'Joe','Admin',202,24321);
+INSERT INTO hr1.emp VALUES (103, 'Peter','Admin',202,95432);
+INSERT INTO hr1.emp VALUES (104, 'Scott','Clerk',202,44324);
+INSERT INTO hr1.emp VALUES (105, 'Luis','Salesman',208,24325);
+INSERT INTO hr1.emp VALUES (106,'John','Salesman',208,33326);
+INSERT INTO hr1.emp VALUES (202, 'Miles','Manager',208,81000);
+INSERT INTO hr1.emp VALUES (208, 'Kale','Manager',null,85000);
+COMMIT;
+</code></pre> </li>
+                <li>Create three indexes on the partitioned table: </li>
+                <ul>
+                  <li>The local <code> I1_SAL </code> index on <code> SAL </code>
+                    column</li>
+                  <li>The global unique <code> I2_EMPNO </code> index on <code>
+                      EMPNO </code> column</li>
+                  <li>The global <code> I3_MGR </code> index on <code> MGR </code>
+                    column </li>
+                </ul>
+                <pre><code>CREATE INDEX hr1.i1_sal ON hr1.emp (sal) LOCAL;
+CREATE UNIQUE INDEX hr1.i2_empno ON hr1.emp (empno);
+CREATE INDEX hr1.i3_mgr ON hr1.emp (mgr);</code></pre>
+                <li>Display the partitioning method of the table.
+                  <pre><code>SELECT owner, table_name, partitioning_type AS type, 
+       autolist, interval, interval_subpartition, 
+       autolist_subpartition
+FROM   dba_part_tables 
+WHERE  owner='HR1';
+
+OWNER  TABLE_NAME TYPE  AUTOLIST INTERVAL        INTERVAL_SUB AUTOLIST_SUB
+------ ---------- ----- -------- --------------- ------------ ------------
+HR1    EMP        <strong>HASH  </strong>NO                                    NO</code></pre>
+                </li>
+                <li>Display the partitions of the table.
+                  <pre><code>SELECT composite, partition_name, high_value 
+FROM   dba_tab_partitions
+WHERE  table_name = 'EMP' AND table_owner='HR1';
+
+COM PARTITION_NAME HIGH_VALUE
+--- -------------- --------------
+NO  SYS_P248
+NO  SYS_P249
+NO  SYS_P250
+NO  SYS_P251</code></pre>
+                </li>
+                <li>Display the list of indexes and whether they are partitioned
+                  or not.
+                  <pre><code>SELECT index_name, PARTITIONED 
+FROM   dba_indexes WHERE index_name LIKE 'I%' and owner='HR1';
+
+INDEX_NAME                 PAR
+-------------------------- ---
+<strong>I1_SAL                     YES</strong>
+I3_MGR                     NO
+I2_EMPNO                   NO</code></pre>
+                </li>
+                <li>Display the type of partitioning of the partitioned indexes.
+                  <pre><code>SELECT index_name, locality, partitioning_type AS type, autolist, interval, 
+       interval_subpartition, autolist_subpartition
+FROM   dba_part_indexes WHERE owner='HR1';
+
+INDEX_NAME LOCALI TYPE  AUTOLIST INTERVAL INTERVAL_SUB AUTOLIST_SUB
+---------- ------ ----- -------- -------- ------------ ------------
+I1_SAL     LOCAL  <strong>HASH  </strong>NO                             NO
+</code></pre> </li>
+                <li>Display the partitions of the index.
+                  <pre><code>SELECT index_name, partition_name, high_value
+FROM   dba_ind_partitions
+WHERE  index_name IN ('I1_SAL','I2_EMPNO','I3_MGR') AND index_owner = 'HR1';</code></pre>
+                </li>
+                <li>Read the query result.
+                  <pre><code>INDEX_NAME PARTITION_NAME HIGH_VALUE     
+---------- -------------- -------------- 
+I1_SAL     SYS_P248                     
+I1_SAL     SYS_P249                      
+I1_SAL     SYS_P250                      
+I1_SAL     SYS_P251                      
+</code></pre></li>
+                <li>In another terminal window, log in to <code> PDB1 </code>
+                  as <code> HR1 </code> to update the employees' salary. <em>
+                    (Session2</em>)
+                  <pre><code>sqlplus hr1@PDB1
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Update the employees' salary.
+                  <pre><code>UPDATE hr1.emp SET mgr=208 WHERE empno=100;
+
+1 row updated.</code></pre>
+                </li>
+                <li> In <em> Session1, </em> attempt to convert the HASH
+                  partitioned table to a RANGE partitioned table.
+                  <pre><code>ALTER TABLE hr1.emp MODIFY
+   PARTITION BY RANGE (empno) INTERVAL (100)
+   (PARTITION p1 VALUES LESS THAN (200), PARTITION p2 VALUES LESS THAN (500))  
+     UPDATE INDEXES 
+      (hr1.i1_sal LOCAL, hr1.i2_empno GLOBAL PARTITION BY RANGE (empno) 
+      (PARTITION ip1 VALUES LESS THAN (MAXVALUE)));
+ALTER TABLE hr.emp MODIFY
+*
+ERROR at line 1:
+ORA-00054: resource busy and acquire with NOWAIT specified or timeout expired</code></pre>
+                </li>
+                <li> Since the <code> ONLINE </code> keyword is not added to
+                  the statement, the operation cannot get the exclusive lock.
+                  Re-execute the operation with the <code> ONLINE </code>
+                  keyword.
+                  <pre><code>ALTER TABLE hr1.emp MODIFY
+   PARTITION BY RANGE (empno) INTERVAL (100)
+   (PARTITION p1 VALUES LESS THAN (200), PARTITION p2 VALUES LESS THAN (500)) 
+<strong>ONLINE</strong>
+   UPDATE INDEXES 
+   (hr1.i1_sal LOCAL, hr1.i2_empno GLOBAL PARTITION BY RANGE (empno)
+    (PARTITION ip1 VALUES LESS THAN (MAXVALUE)));</code></pre>
+                </li>
+                <li> The statement waits for the <code>UPDATE </code>in the <em>
+                    Session2 </em> to complete. In <em> Session2, </em>
+                  commit the <code> UPDATE </code> statement.
+                  <pre><code>COMMIT;</code></pre>
+                </li>
+                <li>In <em> Session1, </em> previously entered <code> ALTER
+                    TABLE </code> statement completes.
+                  <pre><code>ALTER TABLE hr1.emp MODIFY
+   PARTITION BY RANGE (empno) INTERVAL (100)
+   (PARTITION p1 VALUES LESS THAN (200), PARTITION p2 VALUES LESS THAN (500)) <strong>  
+ONLINE</strong>
+    UPDATE INDEXES  
+(hr1.i1_sal LOCAL, hr1.i2_empno GLOBAL PARTITION BY RANGE (empno)
+      (PARTITION ip1 VALUES LESS THAN (MAXVALUE)));
+
+Table altered.</code></pre>
+                </li>
+                <li>Display the new partitioning method of the table.
+                  <pre><code>SELECT owner, table_name, partitioning_type AS type, 
+       autolist, interval, interval_subpartition, 
+       autolist_subpartition
+FROM   dba_part_tables WHERE  owner='HR1';
+
+OWNER TABLE_NAME    TYPE  AUTOLIST INTERVAL INTERVAL_SUB AUTOLIST_SUB
+----- ------------- ----- -------- -------- ------------ ------------
+HR1   EMP           <strong>RANGE </strong>NO       100                   NO
+</code></pre></li>
+                <li>Display the new partitions of the table.
+                  <pre><code>SELECT partition_name, high_value FROM dba_tab_partitions
+WHERE  table_name = 'EMP' and table_owner='HR1';
+
+PARTITION_NAME HIGH_VALUE
+-------------- --------------
+P1             200
+P2             500</code></pre>
+                </li>
+                <li>Display the list of indexes and whether they are partitioned
+                  or not.
+                  <pre><code>SELECT index_name, partitioned FROM dba_indexes 
+WHERE  index_name LIKE 'I%' and owner='HR1';
+
+INDEX_NAME PAR
+---------- ---
+I1_SAL     YES
+<strong>I2_EMPNO   YES</strong>
+I3_MGR     NO
+</code></pre></li>
+                <li>Display the type of partitioning of the partitioned indexes.
+                  <pre><code>SELECT index_name, locality, partitioning_type AS type, autolist, 
+interval, interval_subpartition, autolist_subpartition
+FROM   dba_part_indexes WHERE  owner='HR1' ;
+
+INDEX_NAME LOCALI TYPE  AUTOLIST INTERVAL INTERVAL_SUB AUTOLIST_SUB
+---------- ------ ----- -------- -------- ------------ ------------
+I2_EMPNO   <strong>GLOBAL RANGE </strong>NO                             NO
+I1_SAL     <strong>LOCAL  RANGE </strong>NO       100                   NO</code></pre>
+                </li>
+                <li>Display the type of partitioning of the partitioned indexes.
+                  <pre><code>SELECT index_name,partition_name, high_value 
+FROM   dba_ind_partitions
+WHERE  index_name IN ('I1_SAL','I2_EMPNO','I3_MGR') AND index_owner='HR1';
+
+INDEX_NAME PARTITION_NAME HIGH_VALUE     
+---------- -------------- -------------- 
+I1_SAL     P1             200            
+I1_SAL     P2             500            
+I2_EMPNO   IP1            MAXVALUE       </code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2><img src="./img/32_2.png" alt="section 2" class="num_circ" height="32" width="32">Convert LIST To LIST AUTOMATIC Partitioned Tables
+                Online</h2>
+              <ol>
+                <li>Create the <code> SH1.SALES_BY_REGION_AND_CHANNEL </code>
+                  LIST partitioned table. The table is partitioned by LIST on
+                  two keys, <code> STATE </code> and <code> CHANNEL. </code>
+                  <pre><code>CREATE TABLE sh1.sales_by_region_and_channel
+    ( deptno number, deptname varchar2(20), quarterly_sales number(10, 2), 
+      state varchar2(2), channel varchar2(1))
+      PARTITION BY LIST (state, channel)
+       (PARTITION q1_northwest_direct VALUES (('OR', 'D'), ('WA','D')),
+        PARTITION q1_northwest_indirect VALUES (('OR', 'I'), ('WA','I')),
+        PARTITION q1_southwest_direct VALUES (('AZ', 'D'), ('UT', 'D'), 
+('NM','D')),
+        PARTITION q1_ca_direct VALUES ('CA','D'),
+        PARTITION rest VALUES (DEFAULT));</code></pre>
+                </li>
+                <li>Insert rows into the <code> SH1.SALES_BY_REGION_AND_CHANNEL
+                  </code> table and commit. Use <a href="files/code1.txt" target="_blank">code1
+                    </a> to complete this operation.</li>
+                <li>Display the partitioning method of the table.
+                  <pre><code>SELECT owner, table_name, partitioning_type AS type, autolist, interval
+FROM   dba_part_tables 
+WHERE  table_name = 'SALES_BY_REGION_AND_CHANNEL' ;  
+
+OWNER TABLE_NAME                  TYPE  AUTOLIST INTERVAL
+----- --------------------------- ----- -------- --------
+SH1   SALES_BY_REGION_AND_CHANNEL <strong>LIST  </strong>NO</code></pre>
+                </li>
+                <li>Display the partitions of the table and the high values in
+                  each partition.
+                  <pre><code>SELECT partition_name, high_value FROM dba_tab_partitions
+WHERE  table_name = 'SALES_BY_REGION_AND_CHANNEL';
+</code></pre></li>
+                <li>Read the query result.
+                  <pre><code>PARTITION_NAME        HIGH_VALUE
+--------------------- --------------------------------------------
+Q1_CA_DIRECT          ( 'CA', 'D' )
+Q1_NORTHWEST_DIRECT   ( 'OR', 'D' ), ( 'WA', 'D' )
+Q1_NORTHWEST_INDIRECT ( 'OR', 'I' ), ( 'WA', 'I' )
+Q1_SOUTHWEST_DIRECT   ( 'AZ', 'D' ), ( 'UT', 'D' ), ( 'NM', 'D' )
+REST                  DEFAULT
+</code></pre></li>
+                <li>In <em> Session2, </em> connect to in <code> PDB1 </code>
+                  as <code> SH1 </code>to increase the quarterly sales.
+                  <pre><code>CONNECT sh1@PDB1
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Increase the quarterly sales.
+                  <pre><code>UPDATE sh1.sales_by_region_and_channel 
+SET quarterly_sales=quarterly_sales*10;
+
+7 rows updated.</code></pre>
+                </li>
+                <li> In <em>Session1, </em> attempt to convert the LIST
+                  partitioned table on two keys to a LIST AUTOMATIC partitioned
+                  table on one key.
+                  <pre><code>ALTER TABLE sh1.sales_by_region_and_channel MODIFY  
+    PARTITION BY LIST (state) AUTOMATIC
+     (PARTITION northwest VALUES ('OR', 'WA'),
+      PARTITION southwest VALUES ('AZ', 'UT', 'NM'),
+      PARTITION california VALUES ('CA'),
+   PARTITION rest VALUES (DEFAULT)) ONLINE;   
+*
+ERROR at line 1:
+ORA-14851: DEFAULT [sub]partition cannot be specified for AUTOLIST
+[sub]partitioned objects.</code></pre>
+                </li>
+                <li>Re-execute the operation without the <code> DEFAULT </code>
+                  partition.
+                  <pre><code>ALTER TABLE sh1.sales_by_region_and_channel MODIFY  
+    PARTITION BY LIST (state) <strong>AUTOMATIC</strong>
+     (PARTITION northwest VALUES ('OR', 'WA'),
+      PARTITION southwest VALUES ('AZ', 'UT', 'NM'),
+      PARTITION california VALUES ('CA'))
+	<strong>ONLINE </strong>UPDATE INDEXES;</code></pre>
+                  <p class="note"> The statement waits for the <code> UPDATE </code>
+                    in the <em> Session2 </em> to complete.</p>
+                </li>
+                <li>In <em> Session2, </em> commit the <code> UPDATE </code>
+                  statement.
+                  <pre><code>COMMIT;</code></pre>
+                </li>
+                <li>In <em> Session1, </em> the previously entered <code>
+                    ALTER TABLE </code> statement completes.
+                  <pre><code>ALTER TABLE sh1.sales_by_region_and_channel MODIFY  
+    PARTITION BY LIST (state) <strong>AUTOMATIC</strong>
+     (PARTITION northwest VALUES ('OR', 'WA'),
+      PARTITION southwest VALUES ('AZ', 'UT', 'NM'),
+      PARTITION california VALUES ('CA'))
+	<strong>ONLINE </strong>UPDATE INDEXES;
+
+Table altered.</code></pre>
+                </li>
+                <li>Display the new partitioning method of the table.
+                  <pre><code>SELECT owner, table_name, partitioning_type AS type, autolist, interval
+FROM   dba_part_tables WHERE table_name = 'SALES_BY_REGION_AND_CHANNEL';
+
+OWNER TABLE_NAME                  TYPE  AUTOLIST INTERVAL
+----- --------------------------- ----- -------- --------
+SH1   SALES_BY_REGION_AND_CHANNEL LIST  <strong>YES</strong></code></pre>
+                </li>
+                <li>Display the partitions of the table and the high values in
+                  each partition. Compare the result with <a href="files/code2.txt" target="_blank">code2. </a>
+                  <pre><code>SELECT partition_name, high_value FROM dba_tab_partitions
+WHERE  table_name = 'SALES_BY_REGION_AND_CHANNEL';</code></pre>
+                </li>
+                <li>Drop the table.
+                  <pre><code>DROP TABLE sh1.sales_by_region_and_channel PURGE;</code></pre>
+                </li>
+              </ol>
+            </section>
+            <hr>
+            <section>
+              <h2><img src="./img/32_3.png" alt="section 3" class="num_circ" height="32" width="32">Convert LIST AUTOMATIC Partitioned To LIST
+                Subpartitioned Tables Online</h2>
+              <ol>
+                <li>Create the <code> HR1.T </code> LIST AUTOMATIC partitioned
+                  table. The table is partitioned by LIST on one key, <code>
+                    C1. </code>
+                  <pre><code>CREATE TABLE hr1.t (c1 number, c2 number)
+  PARTITION BY LIST (c1) AUTOMATIC
+  (PARTITION p1 values (1),
+   PARTITION p2 values (2),
+   PARTITION p3 values (3)); 
+</code></pre> </li>
+                <li>Insert rows into <code> HR1.T </code> table and commit
+                  from <a href="files/code3.txt" target="_blank">code3.</a></li>
+                <li>Display the partitioning method of the table.
+                  <pre><code>SELECT owner, table_name, partitioning_type AS type,
+       autolist, subpartitioning_type
+FROM   dba_part_tables WHERE table_name = 'T' ;  
+
+OWNER TABLE_NAME    TYPE      AUT SUBPARTIT
+----- ------------- --------- --- ---------
+HR1   T             <strong>LIST      YES </strong>NONE
+</code></pre></li>
+                <li>Display the partitions of the table and the high values in
+                  each partition.
+                  <pre><code>SELECT partition_name, high_value FROM dba_tab_partitions
+WHERE  table_name = 'T';  
+
+PARTITION_NAME HIGH_VALUE
+-------------- --------------
+P1             1
+P2             2
+P3             3 
+</code></pre></li>
+                <li>In <em> Session2, </em> log in to <code> PDB1 </code> as
+                  <code> HR1 </code>to increase the values in <code> C2 </code>
+                  column.
+                  <pre><code>CONNECT hr1@PDB1
+Enter password: <em>password</em></code></pre>
+                </li>
+                <li>Increase the values in <code> C2 </code> column.
+                  <pre><code>UPDATE hr1.t SET c2=c2*10;
+
+11 rows updated.</code></pre>
+                </li>
+                <li>In <em> Session1, </em> convert the LIST AUTOMATIC
+                  partitioned table to a LIST AUTOMATIC subpartitioned table.
+                  <pre><code>ALTER TABLE hr1.t MODIFY PARTITION BY LIST (c1) AUTOMATIC 
+  SUBPARTITION BY list (c2)  SUBPARTITION TEMPLATE 
+  ( SUBPARTITION sp1 VALUES (1), SUBPARTITION sp2 VALUES (2), 
+    SUBPARTITION sp3 VALUES (3), SUBPARTITION sp_unknown VALUES (DEFAULT)) 
+    (PARTITION p1 VALUES (1),  
+     PARTITION p2 VALUES (2),
+     PARTITION p3 VALUES (3))
+   <strong>ONLINE</strong>;
+</code></pre>
+                  <p class="note"> The statement waits for the <code> UPDATE </code>
+                    in the second session to complete.</p>
+                </li>
+                <li>In <em> Session2, </em> commit the <code> UPDATE </code>
+                  statement.
+                  <pre><code>COMMIT;</code><code>
+</code></pre> </li>
+                <li>In <em>Session1</em>, the previously entered <code> ALTER
+                    TABLE </code> statement completes.
+                  <pre><code>ALTER TABLE hr1.t MODIFY PARTITION BY LIST (c1) AUTOMATIC 
+  SUBPARTITION BY list (c2)  SUBPARTITION TEMPLATE 
+  ( SUBPARTITION sp1 VALUES (1), SUBPARTITION sp2 VALUES (2), 
+    SUBPARTITION sp3 VALUES (3), SUBPARTITION sp_unknown VALUES (DEFAULT)) 
+    (PARTITION p1 VALUES (1),  
+     PARTITION p2 VALUES (2),
+     PARTITION p3 VALUES (3))
+   <strong>ONLINE</strong>;
+Table altered.</code></pre>
+                </li>
+                <li>Still in <em>Session1</em>, insert rows into <code> HR1.T.
+                  </code>
+                  <pre><code>INSERT INTO hr1.t VALUES (1,2);
+INSERT INTO hr1.t VALUES (2,3);
+INSERT INTO hr1.t VALUES (3,4);
+INSERT INTO hr1.t VALUES (3,5);
+COMMIT;</code></pre>
+                </li>
+                <li>Still in <em>Session1</em>, display the new subpartitioning
+                  method of the table.
+                  <pre><code>SELECT owner, table_name, partitioning_type AS type,
+       autolist, subpartitioning_type
+FROM   dba_part_tables WHERE table_name = 'T';  
+
+OWNER TABLE_NAME    TYPE      AUT SUBPARTIT
+----- ------------- --------- --- ---------
+HR1   T             LIST      YES <strong>LIST</strong>
+</code></pre> </li>
+                <li>Display the partitions of the table and the high values in
+                  each partition and compare to <a href="files/code4.txt" target="_blank">code4.</a>
+                  <pre><code>SELECT partition_name, subpartition_name, high_value
+FROM   dba_tab_subpartitions
+WHERE  table_name = 'T'; 
+</code></pre> </li>
+                <li>Display values from the first subpartition.
+                  <pre><code>SELECT * FROM hr1.t SUBPARTITION (P1_SP2);
+
+        C1         C2
+---------- ----------
+         1          2</code></pre>
+                </li>
+                <li>Display values of the second subpartition.
+                  <pre><code>SELECT * FROM hr1.t SUBPARTITION (P2_SP3);
+
+        C1         C2
+---------- ----------
+         2          3</code></pre>
+                </li>
+                <li>Display values of the third subpartition.
+                  <pre><code>SELECT * FROM hr1.t SUBPARTITION (P2_SP_UNKNOWN);
+
+        C1         C2
+---------- ----------
+         2         10
+         2         20
+         2         20
+         2         30 </code></pre>
+                </li>
+                <li>Display values of the forth subpartition.
+                  <pre><code>SELECT * FROM hr1.t SUBPARTITION (P3_SP_UNKNOWN);
+
+        C1         C2
+---------- ----------
+         3         10
+         3         20
+         3         20
+         3          4
+         3          5</code></pre>
+                </li>
+                <li>Optionally, drop the users.
+                  <pre><code>CONNECT system@PDB1
+Enter password: <em> password </em>
+</code></pre>
+                  <pre><code>DROP USER sh1 CASCADE;</code></pre>
+                  <pre><code>DROP USER hr1 CASCADE;</code></pre>
+                </li>
+                <li>Quit the session.
+                  <pre><code>EXIT
+</code></pre> </li>
+              </ol>
+            </section>
+          </article>
+          <code> </code></div>
+        <code> <code> <br class="clearfloat">
+          </code></code></div>
+      <code> <code> </code></code></div>
+    <code> <code>
+        <!--close main-->
+        <!--end content-->
+        <div class="footer-container ">
+          <div style="max-width: 994px; padding:10px 0 0 17px;">
+            <footer class="footer-list">
+              <ul>
+                <li> <a href="https://www.oracle.com/corporate/index.html" target="_blank">About
+                    Oracle</a> </li>
+                <li> <a href="https://www.oracle.com/us/corporate/contact/index.html" target="_blank">Contact Us</a> </li>
+                <li> <a href="https://www.oracle.com/us/legal/index.html" target="_blank">Legal
+                    Notices</a> </li>
+                <li> <a href="https://www.oracle.com/us/legal/terms/index.html" target="_blank">Terms of Use</a> </li>
+                <li> <a href="https://www.oracle.com/us/legal/privacy/index.html" target="_blank">Your Privacy Rights</a> </li>
+                <li><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright
+                    © 2017, 2018, Oracle and/or its affiliates. All rights
+                    reserved.</a></li>
+              </ul>
+            </footer>
+          </div>
+          <script type="text/javascript" src="https://www.oracleimg.com/us/assets/metrics/ora_docs.js"></script>
+        </div>
+      </code> </code>
+  </body>
+</html>

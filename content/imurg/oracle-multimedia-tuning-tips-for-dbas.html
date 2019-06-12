@@ -1,0 +1,878 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="abstract" content="This chapter provides information and advice for Oracle DBAs who want to achieve more efficient storage and management of multimedia data in the database when using Oracle Multimedia.">
+      <meta name="description" content="This chapter provides information and advice for Oracle DBAs who want to achieve more efficient storage and management of multimedia data in the database when using Oracle Multimedia.">
+      <title>Oracle Multimedia Tuning Tips for DBAs</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="User's Guide ">
+      <meta property="og:description" content="This chapter provides information and advice for Oracle DBAs who want to achieve more efficient storage and management of multimedia data in the database when using Oracle Multimedia.">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="User's Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.2.2">
+      <link rel="alternate" href="multimedia-users-guide.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-09-07T03:26:44-07:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1999, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E84257-02">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      
+      <link rel="prev" href="working-with-metadata-in-oracle-multimedia-images.html" title="Previous" type="text/html">
+      <link rel="next" href="managing-oracle-multimedia-installations.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Multimedia User's Guide">
+    <meta name="dcterms.isVersionOf" content="IMURG">
+    <meta name="dcterms.release" content="Release 18">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="working-with-metadata-in-oracle-multimedia-images.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="managing-oracle-multimedia-installations.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">User's Guide </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Oracle Multimedia Tuning Tips for DBAs</li>
+            </ol>
+            <a id="GUID-35F94BDA-34BA-4E11-8CB7-93DDEE113307" name="GUID-35F94BDA-34BA-4E11-8CB7-93DDEE113307"></a><a id="IMURG8000"></a>
+            
+            <h2 id="IMURG-GUID-35F94BDA-34BA-4E11-8CB7-93DDEE113307" class="sect2"><span class="enumeration_chapter">6 </span> Oracle Multimedia Tuning Tips for DBAs
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>This chapter provides information and advice for Oracle DBAs who want to achieve more efficient storage and management of multimedia data in the database when using Oracle Multimedia.</p>
+               <p>The goals of your Oracle Multimedia application determine the resource requirements and how to allocate those resources. Because application development and design decisions have the greatest effect on performance, standard tuning methods must be applied to the system planning, design, and development phases of the project to achieve optimal results for your Oracle Multimedia application in a production environment.</p>
+               <p>Multimedia data consists of a variety of media types including images, audio clips, video clips, line drawings, and so on. All these media types are typically stored in LOBs. LOBs can be either internal BLOBs (stored in an internal database tablespace) or BFILEs (external LOBs in operating system files outside of the database tablespaces). This chapter discusses the management of audio, image, and video data stored in BLOBs only.</p>
+               <p>This chapter includes these sections:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-35510169-241F-4E00-A767-41552E415623" title="Multimedia data, and the operations that can be performed on that data, differs significantly from traditional types of data commonly stored in relational databases. A basic understanding of the performance profile of Oracle Multimedia operations can help you make better decisions when tuning your database for media performance.">Understanding the Performance Profile of Oracle Multimedia Operations</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-C9B03739-DB59-49D3-85A9-C9DA7FF9E2A0" title="The choices you make for specifying LOB storage attributes during table creation can significantly affect the performance of media load, retrieval, and processing operations.">Choosing LOB Storage Parameters for Multimedia LOBs</a></p>
+                  </li>
+                  <li>
+                     <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-0F9D247E-81FA-4B81-9355-8EFD470504FA" title="You can disable logging of LOB data at the column level to reduce the amount of I/O to the redo log. If logging cannot be disabled, additional database tuning may be required. For example, you may have to increase the size of the redo log buffer to prevent load processes from waiting.">Setting Database Initialization Parameters</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-35F94BDA-34BA-4E11-8CB7-93DDEE113307__GUID-BF5246DF-60B8-4451-8207-A184E7C756E6">
+                  <p class="notep1">See Also:</p>
+                  <p><a href="../adlob/working-with-LOBs.html#ADLOB002" target="_blank"><span class="italic">Oracle Database SecureFiles and Large Objects Developer's Guide</span></a> for more information about performance tuning when using LOBs in Oracle Database
+                  </p>
+               </div>
+            </div><a id="IMURG11677"></a><a id="IMURG11678"></a><a id="IMURG11679"></a><a id="IMURG11680"></a><a id="IMURG8100"></a><div class="props_rev_3"><a id="GUID-35510169-241F-4E00-A767-41552E415623" name="GUID-35510169-241F-4E00-A767-41552E415623"></a><h3 id="IMURG-GUID-35510169-241F-4E00-A767-41552E415623" class="sect3"><span class="enumeration_section">6.1 </span>Understanding the Performance Profile of Oracle Multimedia Operations
+               </h3>
+               <div>
+                  <p>Multimedia data, and the operations that can be performed on that data, differs significantly from traditional types of data commonly stored in relational databases. A basic understanding of the performance profile of Oracle Multimedia operations can help you make better decisions when tuning your database for media performance.</p>
+                  <p>The tables in this section summarize the general performance profiles for a set of commonly performed operations. There are two primary components to each profile. The I/O pattern is a general characterization of the primary type of I/O access and of how much of the media data the operation reads or writes. Because some operations involve two media objects, the I/O pattern is described for both the source and destination media objects. The second component is a general characterization of the level of CPU usage for the operation.</p>
+                  <div class="infoboxnote" id="GUID-35510169-241F-4E00-A767-41552E415623__GUID-38CDBC21-D659-4B08-9905-7C92A772540E">
+                     <p class="notep1">Note:</p>
+                     <p>The information in these tables describes general characterizations and I/O patterns, thus CPU usage may vary considerably for some media formats.</p>
+                  </div>
+                  <p>The following table shows the profile for loading and retrieving data, which applies to all Oracle Multimedia media types.</p>
+                  <div class="tblformal" id="GUID-35510169-241F-4E00-A767-41552E415623__CHDJCIDG">
+                     <p class="titleintable">Table 6-1 Performance Profile For All Multimedia Types</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Performance Profile For All Multimedia Types" summary="Profile for all multimedia types" width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d12945e122">Operation</th>
+                              <th align="left" valign="bottom" width="19%" id="d12945e125">I/O Pattern (Source)</th>
+                              <th align="left" valign="bottom" width="22%" id="d12945e128">I/O Pattern (Destination)</th>
+                              <th align="left" valign="bottom" width="15%" id="d12945e131">I/O Pattern (Amount)</th>
+                              <th align="left" valign="bottom" width="22%" id="d12945e134">CPU Usage</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e139" headers="d12945e122 ">
+                                 <p>Load new media data into a database</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e139 d12945e125 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e139 d12945e128 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e139 d12945e131 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e139 d12945e134 ">
+                                 <p>Low</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e155" headers="d12945e122 ">
+                                 <p>Retrieve media from a database</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e155 d12945e125 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e155 d12945e128 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e155 d12945e131 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e155 d12945e134 ">
+                                 <p>Low</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>The following table shows the profile for commonly used functions and procedures of the ORD_IMAGE PL/SQL package.</p>
+                  <div class="tblformal" id="GUID-35510169-241F-4E00-A767-41552E415623__GUID-416A2114-E1B4-4604-B306-DE1954831F81">
+                     <p class="titleintable">Table 6-2 Performance Profile for ORD_IMAGE PL/SQL Package Functions and Procedures</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Performance Profile for ORD_IMAGE PL/SQL Package Functions and Procedures" summary="Profile for ORD_IMAGE PL/SQL package functions and procedures" width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="20%" id="d12945e185">Package Procedure</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e188">I/O Pattern (Source)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e191">I/O Pattern (Destination)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e194">I/O Pattern (Amount)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e197">CPU Usage</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e202" headers="d12945e185 ">
+                                 <p>getProperties( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e202 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e202 d12945e191 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e202 d12945e194 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e202 d12945e197 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e218" headers="d12945e185 ">
+                                 <p>getMetadata( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e218 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e218 d12945e191 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e218 d12945e194 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e218 d12945e197 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e234" headers="d12945e185 ">
+                                 <p>putMetadata( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e234 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e234 d12945e191 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e234 d12945e194 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e234 d12945e197 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e250" headers="d12945e185 ">
+                                 <p>process( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e250 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e250 d12945e191 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e250 d12945e194 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e250 d12945e197 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e266" headers="d12945e185 ">
+                                 <p>processCopy( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e266 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e266 d12945e191 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e266 d12945e194 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e266 d12945e197 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e282" headers="d12945e185 ">
+                                 <p>convert( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e282 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e282 d12945e191 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e282 d12945e194 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e282 d12945e197 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e298" headers="d12945e185 ">
+                                 <p>crop( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e298 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e298 d12945e191 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e298 d12945e194 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e298 d12945e197 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e314" headers="d12945e185 ">
+                                 <p>scale( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e314 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e314 d12945e191 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e314 d12945e194 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e314 d12945e197 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e330" headers="d12945e185 ">
+                                 <p>thumbnail( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e330 d12945e188 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e330 d12945e191 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e330 d12945e194 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e330 d12945e197 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>The following table shows the profile for commonly used methods of the ORDImage type.</p>
+                  <div class="tblformal" id="GUID-35510169-241F-4E00-A767-41552E415623__CHDEAFFF">
+                     <p class="titleintable">Table 6-3 Performance Profile For ORDImage Methods</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Performance Profile For ORDImage Methods" summary="Profile for ORDImage methods" width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d12945e360">Object Method</th>
+                              <th align="left" valign="bottom" width="19%" id="d12945e363">I/O Pattern (Source)</th>
+                              <th align="left" valign="bottom" width="22%" id="d12945e366">I/O Pattern (Destination)</th>
+                              <th align="left" valign="bottom" width="15%" id="d12945e369">I/O Pattern (Amount)</th>
+                              <th align="left" valign="bottom" width="22%" id="d12945e372">CPU Usage</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e377" headers="d12945e360 ">
+                                 <p>setProperties( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e377 d12945e363 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e377 d12945e366 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e377 d12945e369 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e377 d12945e372 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e393" headers="d12945e360 ">
+                                 <p>getMetadata( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e393 d12945e363 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e393 d12945e366 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e393 d12945e369 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e393 d12945e372 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e409" headers="d12945e360 ">
+                                 <p>putMetadata( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e409 d12945e363 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e409 d12945e366 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e409 d12945e369 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e409 d12945e372 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e425" headers="d12945e360 ">
+                                 <p>process( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e425 d12945e363 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e425 d12945e366 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e425 d12945e369 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e425 d12945e372 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e441" headers="d12945e360 ">
+                                 <p>processCopy( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e441 d12945e363 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e441 d12945e366 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e441 d12945e369 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e441 d12945e372 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>The following table shows the profile for commonly used functions and procedures of the ORD_DICOM PL/SQL package.</p>
+                  <div class="tblformal" id="GUID-35510169-241F-4E00-A767-41552E415623__GUID-F351D299-ADFD-43E9-91C8-138D56AC292B">
+                     <p class="titleintable">Table 6-4 Performance Profile for ORD_DICOM PL/SQL Package Functions and Procedures</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Performance Profile for ORD_DICOM PL/SQL Package Functions and Procedures" summary="Profile for ORD_DICOM PL/SQL package functions and procedures" width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="20%" id="d12945e471">Package Procedure</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e474">I/O Pattern (Source)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e477">I/O Pattern (Destination)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e480">I/O Pattern (Amount)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e483">CPU Usage</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e488" headers="d12945e471 ">
+                                 <p>extractMetadata( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e488 d12945e474 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e488 d12945e477 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e488 d12945e480 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e488 d12945e483 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e504" headers="d12945e471 ">
+                                 <p>writeMetadata( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e504 d12945e474 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e504 d12945e477 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e504 d12945e480 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e504 d12945e483 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e520" headers="d12945e471 ">
+                                 <p>makeAnonymous( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e520 d12945e474 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e520 d12945e477 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e520 d12945e480 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e520 d12945e483 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e536" headers="d12945e471 ">
+                                 <p>process( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e536 d12945e474 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e536 d12945e477 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e536 d12945e480 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e536 d12945e483 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e552" headers="d12945e471 ">
+                                 <p>processCopy( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e552 d12945e474 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e552 d12945e477 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e552 d12945e480 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e552 d12945e483 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>The following table shows the profile for commonly used methods of the ORDDicom type.</p>
+                  <div class="tblformal" id="GUID-35510169-241F-4E00-A767-41552E415623__CHDBBBGH">
+                     <p class="titleintable">Table 6-5 Performance Profile For ORDDicom Methods</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Performance Profile For ORDDicom Methods" summary="Profile for ORDDicom methods" width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d12945e583">Object Method</th>
+                              <th align="left" valign="bottom" width="19%" id="d12945e586">I/O Pattern (Source)</th>
+                              <th align="left" valign="bottom" width="22%" id="d12945e589">I/O Pattern (Destination)</th>
+                              <th align="left" valign="bottom" width="15%" id="d12945e592">I/O Pattern (Amount)</th>
+                              <th align="left" valign="bottom" width="22%" id="d12945e595">CPU Usage</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e600" headers="d12945e583 ">
+                                 <p>setProperties( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e600 d12945e586 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e600 d12945e589 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e600 d12945e592 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e600 d12945e595 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e616" headers="d12945e583 ">
+                                 <p>extractMetadata( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e616 d12945e586 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e616 d12945e589 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e616 d12945e592 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e616 d12945e595 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e632" headers="d12945e583 ">
+                                 <p>writeMetadata( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e632 d12945e586 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e632 d12945e589 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e632 d12945e592 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e632 d12945e595 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e648" headers="d12945e583 ">
+                                 <p>makeAnonymous( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e648 d12945e586 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e648 d12945e589 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e648 d12945e592 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e648 d12945e595 ">
+                                 <p>Low to medium</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e664" headers="d12945e583 ">
+                                 <p>process( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e664 d12945e586 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e664 d12945e589 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e664 d12945e592 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e664 d12945e595 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e680" headers="d12945e583 ">
+                                 <p>processCopy( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e680 d12945e586 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e680 d12945e589 ">
+                                 <p>Sequential write</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e680 d12945e592 ">
+                                 <p>All</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e680 d12945e595 ">
+                                 <p>High</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>The following table shows the profile for commonly used procedures of the ORD_AUDIO, ORD_DOC, and ORD_VIDEO PL/SQL packages.</p>
+                  <div class="tblformal" id="GUID-35510169-241F-4E00-A767-41552E415623__GUID-D4C852AB-A4F4-444E-B3CB-AD3DBBE9B4DF">
+                     <p class="titleintable">Table 6-6 Performance Profile for ORD_AUDIO, ORD_DOC, and ORD_VIDEO PL/SQL Package Procedures</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Performance Profile for ORD_AUDIO, ORD_DOC, and ORD_VIDEO PL/SQL Package Procedures" summary="Profile for ORD_AUDIO, ORD_DOC, and ORD_VIDEO PL/SQL package procedures" width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="20%" id="d12945e710">Package Procedure</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e713">I/O Pattern (Source)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e716">I/O Pattern (Destination)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e719">I/O Pattern (Amount)</th>
+                              <th align="left" valign="bottom" width="20%" id="d12945e722">CPU Usage</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d12945e727" headers="d12945e710 ">
+                                 <p>getProperties( )</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e727 d12945e713 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e727 d12945e716 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e727 d12945e719 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="20%" headers="d12945e727 d12945e722 ">
+                                 <p>Low</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <p>The following table shows the profile for commonly used methods of the ORDAudio, ORDDoc, and ORDVideo types.</p>
+                  <div class="tblformal" id="GUID-35510169-241F-4E00-A767-41552E415623__CHDFBEEF">
+                     <p class="titleintable">Table 6-7 Performance Profile For ORDAudio, ORDDoc, and ORDVideo Methods</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Performance Profile For ORDAudio, ORDDoc, and ORDVideo Methods" summary="Profile for ORDAudio, ORDDoc, and ORDVideo methods" width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="23%" id="d12945e757">Object Method</th>
+                              <th align="left" valign="bottom" width="19%" id="d12945e760">I/O Pattern (Source)</th>
+                              <th align="left" valign="bottom" width="22%" id="d12945e763">I/O Pattern (Destination)</th>
+                              <th align="left" valign="bottom" width="15%" id="d12945e766">I/O Pattern (Amount)</th>
+                              <th align="left" valign="bottom" width="22%" id="d12945e769">CPU Usage</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e774" headers="d12945e757 ">
+                                 <p>setProperties( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e774 d12945e760 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e774 d12945e763 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e774 d12945e766 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e774 d12945e769 ">
+                                 <p>Low</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="23%" id="d12945e790" headers="d12945e757 ">
+                                 <p>getProperties( )</p>
+                              </td>
+                              <td align="left" valign="top" width="19%" headers="d12945e790 d12945e760 ">
+                                 <p>Sequential read</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e790 d12945e763 ">
+                                 <p>N/A</p>
+                              </td>
+                              <td align="left" valign="top" width="15%" headers="d12945e790 d12945e766 ">
+                                 <p>Media header</p>
+                              </td>
+                              <td align="left" valign="top" width="22%" headers="d12945e790 d12945e769 ">
+                                 <p>Low</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+               </div>
+            </div><a id="IMURG8200"></a><div class="props_rev_3"><a id="GUID-C9B03739-DB59-49D3-85A9-C9DA7FF9E2A0" name="GUID-C9B03739-DB59-49D3-85A9-C9DA7FF9E2A0"></a><h3 id="IMURG-GUID-C9B03739-DB59-49D3-85A9-C9DA7FF9E2A0" class="sect3"><span class="enumeration_section">6.2 </span>Choosing LOB Storage Parameters for Multimedia LOBs
+               </h3>
+               <div>
+                  <p>The choices you make for specifying LOB storage attributes during table creation can significantly affect the performance of media load, retrieval, and processing operations.</p>
+                  <p>This section describes the most important options to consider and shows how the performance profile of Oracle Multimedia operations can affect the choice of LOB storage parameters.</p>
+                  <p>The following subsections describe the LOB storage parameters and include examples of how to use them:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-D73E56E9-6408-4341-9688-1500BACB30B4" title="Store your media data with SecureFiles LOBs.">SecureFiles LOBs</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-E71078E6-1DD5-43EC-A8BF-F7BB2BBACD4F" title="You can achieve the best performance for LOBs by specifying storage for LOBs in a different tablespace than the one used for the table that contains the LOB.">TABLESPACE</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-C8A54E48-2FF0-4719-979C-33E3A58A4EC4" title="The cache option is a part of the STORE AS clause, and determines whether LOB pages are stored in the buffer cache.">CACHE, NOCACHE, and CACHE READS</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-FFC2A27A-5D17-40EE-A729-B51A6D3C4D03" title="The logging option is a part of the STORE AS clause, and determines if REDO data is logged when a LOB is updated.">LOGGING and NOLOGGING</a></p>
+                     </li>
+                     <li>
+                        <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-F0400AEF-D215-47AF-979D-535270FF2A93" title="This section describes a simple example that shows how to use the performance profiles of Oracle Multimedia operations to guide your usage of LOB storage options.">Example of Setting LOB Storage Options</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-C9B03739-DB59-49D3-85A9-C9DA7FF9E2A0__GUID-F5FFBED7-D986-4200-AFFD-689AC900A494">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../adlob/getting-started.html#ADLOB45132" target="_blank"><span class="italic">Oracle Database SecureFiles and Large Objects Developer's Guide</span></a> for detailed information about LOBs
+                     </p>
+                  </div>
+               </div><a id="IMURG11681"></a><div class="props_rev_3"><a id="GUID-D73E56E9-6408-4341-9688-1500BACB30B4" name="GUID-D73E56E9-6408-4341-9688-1500BACB30B4"></a><h4 id="IMURG-GUID-D73E56E9-6408-4341-9688-1500BACB30B4" class="sect4"><span class="enumeration_section">6.2.1 </span>SecureFiles LOBs
+                  </h4>
+                  <div>
+                     <p>Store your media data with SecureFiles LOBs.</p>
+                     <p>Oracle recommends using SecureFiles LOBs for storing media data whenever possible. SecureFiles LOBs are identified by specifying the SQL parameter SECUREFILE.</p>
+                  </div>
+               </div><a id="IMURG11682"></a><div class="props_rev_3"><a id="GUID-E71078E6-1DD5-43EC-A8BF-F7BB2BBACD4F" name="GUID-E71078E6-1DD5-43EC-A8BF-F7BB2BBACD4F"></a><h4 id="IMURG-GUID-E71078E6-1DD5-43EC-A8BF-F7BB2BBACD4F" class="sect4"><span class="enumeration_section">6.2.2 </span>TABLESPACE
+                  </h4>
+                  <div>
+                     <p>You can achieve the best performance for LOBs by specifying storage for LOBs in a different tablespace than the one used for the table that contains the LOB.</p>
+                     <p>If many different LOBs are to be accessed frequently, you can also specify a separate tablespace for each LOB column or attribute to reduce device contention.</p>
+                  </div>
+               </div><a id="IMURG11683"></a><div class="props_rev_3"><a id="GUID-C8A54E48-2FF0-4719-979C-33E3A58A4EC4" name="GUID-C8A54E48-2FF0-4719-979C-33E3A58A4EC4"></a><h4 id="IMURG-GUID-C8A54E48-2FF0-4719-979C-33E3A58A4EC4" class="sect4"><span class="enumeration_section">6.2.3 </span>CACHE, NOCACHE, and CACHE READS
+                  </h4>
+                  <div>
+                     <p>The cache option is a part of the STORE AS clause, and determines whether LOB pages are stored in the buffer cache.</p>
+                     <p>These are the possible values for the cache option:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>For the value <code class="codeph">CACHE</code>, Oracle places LOB pages in the buffer cache where they can be shared among multiple users. Over time and if the LOB pages are no longer accessed, the pages are eventually removed from the buffer cache.
+                           </p>
+                        </li>
+                        <li>
+                           <p>For the value <code class="codeph">NOCACHE</code>, LOB pages are not placed in the buffer cache.
+                           </p>
+                        </li>
+                        <li>
+                           <p>For the value <code class="codeph">CACHE READS</code>, LOB pages are placed in the cache for read operations only.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>If your application performs multiple read operations on a media object (for example: invoking the getProperties( ) procedure or the setProperties( ) method and then generating a thumbnail image), enable read caching for the source media LOB.</p>
+                  </div>
+               </div><a id="IMURG11684"></a><div class="props_rev_3"><a id="GUID-FFC2A27A-5D17-40EE-A729-B51A6D3C4D03" name="GUID-FFC2A27A-5D17-40EE-A729-B51A6D3C4D03"></a><h4 id="IMURG-GUID-FFC2A27A-5D17-40EE-A729-B51A6D3C4D03" class="sect4"><span class="enumeration_section">6.2.4 </span>LOGGING and NOLOGGING
+                  </h4>
+                  <div>
+                     <p>The logging option is a part of the STORE AS clause, and determines if REDO data is logged when a LOB is updated.</p>
+                     <p>If the [NO]LOGGING clause is omitted, neither NOLOGGING nor LOGGING is specified and the logging attribute of the table or table partition defaults to the logging attribute of the tablespace in which it resides.</p>
+                     <p>There is another alternative depending on how the cache option is specified.</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>If CACHE is specified and [NO]LOGGING is omitted, LOGGING is automatically implemented (because you cannot have CACHE NOLOGGING).</p>
+                        </li>
+                        <li>
+                           <p>If CACHE is not specified and [NO]LOGGING is omitted, the [NO]LOGGING value is obtained from the tablespace in which the LOB segment resides.</p>
+                        </li>
+                     </ul>
+                     <p>Specify NOLOGGING only when you do not care about media recovery. However, if the disk, tape, or storage media fails, you will not be able to recover your changes from the log because those changes were not logged.</p>
+                     <p>NOLOGGING can be useful for bulk loading of media data. For instance, when loading data into the LOB, if you do not care about the redo operation and you can start the load over if it fails, set the LOB data segment storage characteristics to NOCACHE NOLOGGING. This option provides good performance for the initial loading of data.</p>
+                     <p>After you finish loading data, if necessary, you can use the ALTER TABLE statement to modify the LOB storage characteristics for the LOB data segment for normal LOB operations (for example: to CACHE or NOCACHE LOGGING).</p>
+                     <div class="infoboxnote" id="GUID-FFC2A27A-5D17-40EE-A729-B51A6D3C4D03__GUID-A6445696-98E9-48A9-BED9-5930C7A5EAC6">
+                        <p class="notep1">Note:</p>
+                        <p>Oracle Data Guard Redo Apply technology uses logging to populate the standby database. Thus, do not specify NOLOGGING when using this Data Guard technology.</p>
+                     </div>
+                  </div>
+               </div><a id="IMURG11686"></a><div class="props_rev_3"><a id="GUID-F0400AEF-D215-47AF-979D-535270FF2A93" name="GUID-F0400AEF-D215-47AF-979D-535270FF2A93"></a><h4 id="IMURG-GUID-F0400AEF-D215-47AF-979D-535270FF2A93" class="sect4"><span class="enumeration_section">6.2.5 </span>Example of Setting LOB Storage Options
+                  </h4>
+                  <div>
+                     <p>This section describes a simple example that shows how to use the performance profiles of Oracle Multimedia operations to guide your usage of LOB storage options.</p>
+                     <div class="section">
+                        <p>In this example, Company X wants to build an archive for digital images. The archive stores a full resolution copy of the original image, and two Web-ready, JPEG format versions of the original at reduced scales, one at 50% of the original size and another at 25% of the original size. The database team plans to use the SQL*Loader utility to bulk load all the initial images. Then, they can use a PL/SQL program to initialize the image data. Initialization consists of setting the properties for the original image and generating the scaled images. After initialization, the table is prepared for the primary application, which retrieves images for Web-based users.</p>
+                        <p>The following example shows a table definition for storing the images. The table stores the binary image data using SecureFiles in tablespace <code class="codeph">tbs2</code>. All the other table data is stored in tablespace <code class="codeph">tbs1</code>. Although this example uses the ORDImage object type for storing the images, the concepts apply to images stored directly in BLOB columns.
+                        </p><pre class="oac_no_warn" dir="ltr">create table images(id        integer primary key,
+                    original  ordsys.ordimage,
+                    scale50   ordsys.ordimage,
+                    scale25   ordsys.ordimage)
+tablespace tbs1
+lob(original.source.localdata)store as secureFile (tablespace tbs2)
+lob(scale50.source.localdata)store as secureFile (tablespace tbs2)
+lob(scale25.source.localdata)store as secureFile (tablespace tbs2);
+</pre><p>After the table is created, the image data can be loaded. Loading image data generates a sequential write pattern to the LOB. Because no applications are reading the data during the load operation, caching it is not required. You can also improve load performance by disabling logging for the column that is loaded. The following command dynamically alters the table to prepare the original image column LOB for loading.</p><pre class="oac_no_warn" dir="ltr">alter table images modify lob(original.source.localdata) (nocache nologging);
+</pre><p>After loading, the next step is to set the image properties for the <code class="codeph">original</code> column and generate the scaled versions to be stored in the <code class="codeph">scale50</code> and <code class="codeph">scale25</code> columns. In this step, the source images are fully read twice to generate the scaled versions. The scaled images that are generated are written but not read. The following command dynamically alters the table to enable read caching for the source image, and disables caching and logging for the destination images.
+                        </p><pre class="oac_no_warn" dir="ltr">alter table images modify lob(original.source.localdata) (cache reads);
+alter table images modify lob(scale50.source.localdata) (nocache nologging);
+alter table images modify lob(scale25.source.localdata) (nocache nologging);
+</pre><p>After running the program to set the properties of the <code class="codeph">original</code> image and generate the scaled versions, the LOB storage attributes can be optimized for the main application that retrieves images for users to view in a Web browser. Because the archive contains millions of images, users are not expected to view the same image simultaneously. Thus, there is little benefit to caching the image data. The following command reenables logging for the LOBs and disables caching.
+                        </p><pre class="oac_no_warn" dir="ltr">alter table images modify lob(original.source.localdata) (nocache logging);
+alter table images modify lob(scale50.source.localdata) (nocache logging);
+alter table images modify lob(scale25.source.localdata) (nocache logging);</pre><div class="infoboxnotealso" id="GUID-F0400AEF-D215-47AF-979D-535270FF2A93__GUID-8F5A1D33-C51A-4C8F-B41F-BECB750B4D69">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-35510169-241F-4E00-A767-41552E415623__CHDJCIDG" title="Profile for all multimedia types">Table 6-1</a> through <a href="oracle-multimedia-tuning-tips-for-dbas.html#GUID-35510169-241F-4E00-A767-41552E415623__CHDFBEEF" title="Profile for ORDAudio, ORDDoc, and ORDVideo methods">Table 6-7</a> for more information about Oracle Multimedia performance profiles
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="IMURG8300"></a><div class="props_rev_3"><a id="GUID-0F9D247E-81FA-4B81-9355-8EFD470504FA" name="GUID-0F9D247E-81FA-4B81-9355-8EFD470504FA"></a><h3 id="IMURG-GUID-0F9D247E-81FA-4B81-9355-8EFD470504FA" class="sect3"><span class="enumeration_section">6.3 </span>Setting Database Initialization Parameters
+               </h3>
+               <div>
+                  <p>You can disable logging of LOB data at the column level to reduce the amount of I/O to the redo log. If logging cannot be disabled, additional database tuning may be required. For example, you may have to increase the size of the redo log buffer to prevent load processes from waiting.</p>
+                  <p>The initialization parameter LOG_BUFFER specifies the amount of memory (in bytes) that Oracle uses when buffering redo entries to a redo log file. Redo log entries contain a record of the changes that have been made to the database block buffers. The LGWR process writes redo log entries from the log buffer to a redo log file.</p>
+                  <div class="infoboxnotealso" id="GUID-0F9D247E-81FA-4B81-9355-8EFD470504FA__GUID-FB296729-88A7-4F7B-9D7D-F01CCADAA085">
+                     <p class="notep1">See Also:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="../tgdba/tuning-database-buffer-cache.html#TGDBA553" target="_blank"><span class="italic">Oracle Database Performance Tuning Guide</span></a> for more information about configuring the database redo log buffer
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../refrn/initialization-parameters.html#REFRN001" target="_blank"><span class="italic">Oracle Database Reference</span></a> for comprehensive information about setting database initialization parameters
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="../admin/creating-and-configuring-an-oracle-database.html#ADMIN11099" target="_blank"><span class="italic">Oracle Database Administrator's Guide</span></a> for more information about managing initialization parameters
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

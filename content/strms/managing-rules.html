@@ -1,0 +1,885 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Managing Rules</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Concepts and Administration ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Concepts and Administration">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="streams-concepts-and-administration.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-01-25T21:40:57-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="2002, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E83781-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="managing-oracle-streams-information-consumption.html" title="Previous" type="text/html">
+      <link rel="next" href="managing-rule-based-transformations.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Streams Concepts and Administration">
+    <meta name="dcterms.isVersionOf" content="STRMS">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="managing-oracle-streams-information-consumption.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="managing-rule-based-transformations.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Concepts and Administration </span></a></li>
+               <li property="itemListElement" typeof="ListItem"><a href="oracle-streams-administration.html" property="item" typeof="WebPage"><span property="name">    Oracle Streams Administration </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem"> Managing Rules</li>
+            </ol>
+            <a id="GUID-AB9D9589-CD21-4EED-959B-72CA569334F3" name="GUID-AB9D9589-CD21-4EED-959B-72CA569334F3"></a>
+            
+            <h2 id="STRMS-GUID-AB9D9589-CD21-4EED-959B-72CA569334F3" class="sect2"><span class="enumeration_chapter">18 </span> Managing Rules
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p><a id="d85555e6" class="indexterm-anchor"></a><a id="d85555e8" class="indexterm-anchor"></a>An Oracle Streams environment uses <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s to control the behavior of <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s (<a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es, and <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>s). In addition, you can create custom applications that are clients of the <a href="strms_glossary.html#GUID-EF705142-9260-491F-92B2-553E88D604BD"><span class="xrefglossterm">rules engine</span></a>. This chapter contains instructions for managing <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s, rules, and privileges related to rules.
+               </p>
+               <p>The following topics describe managing rules:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="managing-rules.html#GUID-23D03E13-356A-4EC1-A385-D2AF81B7C27B">Managing Rule Sets</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-rules.html#GUID-53F23A67-A3A6-46FE-9C5B-4041B25A52F7">Managing Rules</a></p>
+                  </li>
+                  <li>
+                     <p><a href="managing-rules.html#GUID-BD5A7DA6-F0E1-4DDA-B704-526EF05DA41F">Managing Privileges on Evaluation Contexts, Rule Sets, and Rules</a></p>
+                  </li>
+               </ul>
+               <p>Each task described in this chapter should be completed by an Oracle Streams administrator that has been granted the appropriate privileges, unless specified otherwise.</p>
+               <div class="infoboxnote" id="GUID-AB9D9589-CD21-4EED-959B-72CA569334F3__GUID-5451E156-8371-4322-8552-099938C3CC06">
+                  <p class="notep1">Note:</p>
+                  <p>Modifying the rules and rule sets used by an <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a> changes the behavior of the Oracle Streams client.
+                  </p>
+               </div>
+               <div class="infoboxnote" id="GUID-AB9D9589-CD21-4EED-959B-72CA569334F3__GUID-ECB0D859-8B39-4C88-81A7-A05B64022EE4">
+                  <p class="notep1">Note:</p>
+                  <p>This chapter does not contain examples for creating <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>s, nor does it contain examples for evaluating events using the <code class="codeph">DBMS_RULE.EVALUATE</code> procedure. See <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREX017"><span class="italic">Oracle Streams Extended Examples</span></a> for these examples.
+                  </p>
+               </div>
+               <div class="infoboxnotealso" id="GUID-AB9D9589-CD21-4EED-959B-72CA569334F3__GUID-74CFD248-5D51-4B84-AB2B-D6699E1AAA7F">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="how-rules-are-used-in-oracle-streams.html#GUID-FBC295B1-E3CD-428C-A3BF-69F74214DA14">How Rules Are Used in Oracle Streams</a></p>
+                     </li>
+                     <li>
+                        <p><a href="advanced-rule-concepts.html#GUID-5E6F0B16-C959-46EC-984E-1B5FC642A16D">Advanced Rule Concepts</a></p>
+                     </li>
+                     <li>
+                        <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4">Rule-Based Transformations</a></p>
+                     </li>
+                     <li>
+                        <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP200"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating an Oracle Streams administrator
+                        </p>
+                     </li>
+                     <li>
+                        <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-AEF9C9AE-9735-4688-925B-5C967BAC783F">Troubleshooting Rules and Rule-Based Transformations</a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="STRMS799"></a><div class="props_rev_3"><a id="GUID-23D03E13-356A-4EC1-A385-D2AF81B7C27B" name="GUID-23D03E13-356A-4EC1-A385-D2AF81B7C27B"></a><h3 id="STRMS-GUID-23D03E13-356A-4EC1-A385-D2AF81B7C27B" class="sect3"><span class="enumeration_section">18.1 </span>Managing Rule Sets
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>You can modify a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> without stopping Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s, and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es that use the rule set. Oracle Streams will detect the change immediately after it is committed. If you need precise control over which <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s use the new version of a rule set, then complete the following steps:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <ol>
+                     <li id="GUID-23D03E13-356A-4EC1-A385-D2AF81B7C27B__BABFCBDD"><span>Stop the relevant capture processes, propagations, and apply processes.</span></li>
+                     <li><span>Modify the rule set.</span></li>
+                     <li><span>Restart the <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s you stopped in Step <a href="managing-rules.html#GUID-23D03E13-356A-4EC1-A385-D2AF81B7C27B__BABFCBDD">1</a>.</span></li>
+                  </ol>
+                  <div class="section">
+                     <p>This section provides instructions for completing the following tasks:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-rules.html#GUID-9EEE7137-14AA-4AA5-A048-D2E79AA28722">Creating a Rule Set</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-rules.html#GUID-72C9B62E-EAC2-4F36-BC0F-013860CCC22E">Adding a Rule to a Rule Set</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-rules.html#GUID-3B82C5B0-9D9B-43ED-9C14-DE712CE71D3A">Removing a Rule from a Rule Set</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-rules.html#GUID-654826DB-1C72-4F0B-BFC2-BD71A069AF07">Dropping a Rule Set</a></p>
+                        </li>
+                     </ul>
+                     <div class="infoboxnotealso" id="GUID-23D03E13-356A-4EC1-A385-D2AF81B7C27B__GUID-5821947D-99AF-41CF-A852-B63140BA6AC3">
+                        <p class="notep1">See Also:</p>
+                        <p></p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-870CED1C-52EE-4D90-AC6A-157A9EC97F32">Stopping a Capture Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-4CBA0FBC-A8C3-480E-9BD0-C91795694EEF">Stopping a Propagation</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-458C5D9F-EE99-45BE-A94A-E1BC0F4A92C3">Stopping an Apply Process</a>"</span></p>
+                           </li>
+                           <li>
+                              <p><a href="troubleshooting-rules-and-rule-based-transformations.html#GUID-AEF9C9AE-9735-4688-925B-5C967BAC783F"> Troubleshooting Rules and Rule-Based Transformations</a></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+               </div><a id="STRMS800"></a><div class="props_rev_3"><a id="GUID-9EEE7137-14AA-4AA5-A048-D2E79AA28722" name="GUID-9EEE7137-14AA-4AA5-A048-D2E79AA28722"></a><h4 id="STRMS-GUID-9EEE7137-14AA-4AA5-A048-D2E79AA28722" class="sect4"><span class="enumeration_section">18.1.1 </span>Creating a Rule Set
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following example runs the <code class="codeph">CREATE_RULE_SET</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to create a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_RULE_ADM.CREATE_RULE_SET(
+    rule_set_name       =&gt; 'strmadmin.hr_capture_rules',
+  &nbsp;&nbsp;evaluation_context  =&gt; 'SYS.STREAMS$_EVALUATION_CONTEXT');
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                     </div>
+                     <!-- class="section" -->
+                     <div class="section">
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>Creates a rule set named <code class="codeph">hr_capture_rules</code> in the <code class="codeph">strmadmin</code> schema. A rule set with the same name and owner must not exist.
+                              </p>
+                           </li>
+                           <li>
+                              <p>Associates the rule set with the <code class="codeph">SYS.STREAMS$_EVALUATION_CONTEXT</code> <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>, which is the Oracle-supplied evaluation context for Oracle Streams.
+                              </p>
+                           </li>
+                        </ul>
+                        <p>You can also use the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create a rule set automatically, if one does not exist for an Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS520"><code class="codeph">ADD_MESSAGE_PROPAGATION_RULE</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS521"><code class="codeph">ADD_MESSAGE_RULE</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS316"><code class="codeph">ADD_TABLE_PROPAGATION_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS308"><code class="codeph">ADD_TABLE_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS394"><code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS329"><code class="codeph">ADD_SUBSET_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS317"><code class="codeph">ADD_SCHEMA_PROPAGATION_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS309"><code class="codeph">ADD_SCHEMA_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS318"><code class="codeph">ADD_GLOBAL_PROPAGATION_RULES</code></a></p>
+                           </li>
+                           <li>
+                              <p><a href="../arpls/DBMS_STREAMS_ADM.html#ARPLS310"><code class="codeph">ADD_GLOBAL_RULES</code></a></p>
+                           </li>
+                        </ul>
+                        <p>Except for <code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code> and <code class="codeph">ADD_SUBSET_RULES</code>, these procedures can create either a <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> or a <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for an <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>. <code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code> and <code class="codeph">ADD_SUBSET_RULES</code> can only create a positive rule set for an Oracle Streams client.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-9EEE7137-14AA-4AA5-A048-D2E79AA28722__GUID-7FFD33AD-CD10-4DD9-B8F0-9850FE1826F5">
+                           <p class="notep1">See Also:</p>
+                           <p><a href="../strep/toc.htm"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating Streams clients
+                           </p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS801"></a><div class="props_rev_3"><a id="GUID-72C9B62E-EAC2-4F36-BC0F-013860CCC22E" name="GUID-72C9B62E-EAC2-4F36-BC0F-013860CCC22E"></a><h4 id="STRMS-GUID-72C9B62E-EAC2-4F36-BC0F-013860CCC22E" class="sect4"><span class="enumeration_section">18.1.2 </span>Adding a Rule to a Rule Set
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>When you add <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s to a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, the behavior of the <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s that use the rule set changes. Ensure that you understand how rules to a rule set will affect Oracle Streams clients before proceeding.
+                        </p>
+                        <p>The following example runs the <code class="codeph">ADD_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to add the <code class="codeph">hr_dml</code> rule to the <code class="codeph">hr_capture_rules</code> rule set:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_RULE_ADM.ADD_RULE(
+    rule_name          =&gt; 'strmadmin.hr_dml', 
+    rule_set_name      =&gt; 'strmadmin.hr_capture_rules',
+    evaluation_context =&gt; NULL);
+END;
+/
+</pre><p>In this example, no <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> is specified when running the <code class="codeph">ADD_RULE</code> procedure. Therefore, if the rule does not have its own evaluation context, it will inherit the evaluation context of the <code class="codeph">hr_capture_rules</code> rule set. If you want a rule to use an evaluation context other than the one specified for the rule set, then you can set the <code class="codeph">evaluation_context</code> parameter to this evaluation context when you run the <code class="codeph">ADD_RULE</code> procedure.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS803"></a><div class="props_rev_3"><a id="GUID-3B82C5B0-9D9B-43ED-9C14-DE712CE71D3A" name="GUID-3B82C5B0-9D9B-43ED-9C14-DE712CE71D3A"></a><h4 id="STRMS-GUID-3B82C5B0-9D9B-43ED-9C14-DE712CE71D3A" class="sect4"><span class="enumeration_section">18.1.3 </span>Removing a Rule from a Rule Set
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>When you remove a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> from a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, the behavior of the <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s that use the rule set changes. Ensure that you understand how removing a rule from a rule set will affect Oracle Streams clients before proceeding.
+                        </p>
+                        <p>The following example runs the <code class="codeph">REMOVE_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to remove the <code class="codeph">hr_dml</code> rule from the <code class="codeph">hr_capture_rules</code> rule set:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_RULE_ADM.REMOVE_RULE(
+    rule_name     =&gt; 'strmadmin.hr_dml', 
+    rule_set_name =&gt; 'strmadmin.hr_capture_rules');
+END;
+/
+</pre><p>After running the <code class="codeph">REMOVE_RULE</code> procedure, the rule still exists in the database and, if it was in any other rule sets, it remains in those rule sets.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-3B82C5B0-9D9B-43ED-9C14-DE712CE71D3A__GUID-1AEA9575-E7E9-484E-9090-FB1E57437B98">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="managing-rules.html#GUID-C0EC7A5D-DF8A-4BF6-85F9-1210C5EDD874">Dropping a Rule</a>"</span></p>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS805"></a><div class="props_rev_3"><a id="GUID-654826DB-1C72-4F0B-BFC2-BD71A069AF07" name="GUID-654826DB-1C72-4F0B-BFC2-BD71A069AF07"></a><h4 id="STRMS-GUID-654826DB-1C72-4F0B-BFC2-BD71A069AF07" class="sect4"><span class="enumeration_section">18.1.4 </span>Dropping a Rule Set
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following example runs the <code class="codeph">DROP_RULE_SET</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to drop the <code class="codeph">hr_capture_rules</code> <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> from the database:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_RULE_ADM.DROP_RULE_SET(
+    rule_set_name =&gt; 'strmadmin.hr_capture_rules', 
+    delete_rules  =&gt; FALSE);
+END;
+/
+</pre><p>In this example, the <code class="codeph">delete_rules</code> parameter in the <code class="codeph">DROP_RULE_SET</code> procedure is set to <code class="codeph">FALSE</code>, which is the default setting. Therefore, if the rule set contains any <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s, then these rules are not dropped. If the <code class="codeph">delete_rules</code> parameter is set to <code class="codeph">TRUE</code>, then any rules in the rule set that are not in another rule set are dropped from the database automatically. Rules in the rule set that are in one or more other rule sets are not dropped.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS_MANAGING_RULES"></a><a id="STRMS012"></a><a id="STRMS806"></a><div class="props_rev_3"><a id="GUID-53F23A67-A3A6-46FE-9C5B-4041B25A52F7" name="GUID-53F23A67-A3A6-46FE-9C5B-4041B25A52F7"></a><h3 id="STRMS-GUID-53F23A67-A3A6-46FE-9C5B-4041B25A52F7" class="sect3"><span class="enumeration_section">18.2 </span>Managing Rules
+               </h3>
+               <div>
+                  <p>You can modify a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> without stopping Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>es, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>s, and <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>es that use the rule. Oracle Streams will detect the change immediately after it is committed. If you need precise control over which <a href="strms_glossary.html#GUID-62ABA207-07D4-453A-AC59-B0C780A3FB59"><span class="xrefglossterm">message</span></a>s use the new version of a rule, then complete the following steps:
+                  </p>
+                  <ol>
+                     <li id="GUID-53F23A67-A3A6-46FE-9C5B-4041B25A52F7__BABGFJCH">
+                        <p>Stop the relevant capture processes, propagations, and apply processes.</p>
+                     </li>
+                     <li>
+                        <p>Modify the rule.</p>
+                     </li>
+                     <li>
+                        <p>Restart the <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>s you stopped in Step <a href="managing-rules.html#GUID-53F23A67-A3A6-46FE-9C5B-4041B25A52F7__BABGFJCH">1</a>.
+                        </p>
+                     </li>
+                  </ol>
+                  <p>This section provides instructions for completing the following tasks:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-rules.html#GUID-49903A6E-1E62-4F02-B944-CB4933944E71">Creating a Rule</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rules.html#GUID-548A721C-A976-4908-8861-96F5F89AB8BC">Altering a Rule</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rules.html#GUID-C9DB7CFB-07DB-4CC2-BE0D-7DECB1D16939">Modifying System-Created Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rules.html#GUID-C0EC7A5D-DF8A-4BF6-85F9-1210C5EDD874">Dropping a Rule</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-53F23A67-A3A6-46FE-9C5B-4041B25A52F7__GUID-A82F52B0-16F2-477D-9E41-D70E0B361AC8">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="managing-oracle-streams-implicit-capture.html#GUID-870CED1C-52EE-4D90-AC6A-157A9EC97F32">Stopping a Capture Process</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-staging-and-propagation.html#GUID-4CBA0FBC-A8C3-480E-9BD0-C91795694EEF">Stopping a Propagation</a>"</span></p>
+                        </li>
+                        <li>
+                           <p><span class="q">"<a href="managing-oracle-streams-information-consumption.html#GUID-458C5D9F-EE99-45BE-A94A-E1BC0F4A92C3">Stopping an Apply Process</a>"</span></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS807"></a><div class="props_rev_3"><a id="GUID-49903A6E-1E62-4F02-B944-CB4933944E71" name="GUID-49903A6E-1E62-4F02-B944-CB4933944E71"></a><h4 id="STRMS-GUID-49903A6E-1E62-4F02-B944-CB4933944E71" class="sect4"><span class="enumeration_section">18.2.1 </span>Creating a Rule
+                  </h4>
+                  <div>
+                     <p>The following examples use the <code class="codeph">CREATE_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to create a <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> without an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a> and a rule with an action context:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-rules.html#GUID-F012288C-6CF0-4F75-999A-59753BD97265">Creating a Rule without an Action Context</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-rules.html#GUID-87652E9E-0703-4727-83D8-26A7B0C8B5AB">Creating a Rule with an Action Context</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS812"></a><div class="props_rev_3"><a id="GUID-F012288C-6CF0-4F75-999A-59753BD97265" name="GUID-F012288C-6CF0-4F75-999A-59753BD97265"></a><h5 id="STRMS-GUID-F012288C-6CF0-4F75-999A-59753BD97265" class="sect5"><span class="enumeration_section">18.2.1.1 </span>Creating a Rule without an Action Context
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To create a rule without an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a>, run the <code class="codeph">CREATE_RULE</code> procedure and specify the rule name using the <code class="codeph">rule_name</code> parameter and the <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a> using the <code class="codeph">condition</code> parameter, as in the following example:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN  
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name  =&gt; 'strmadmin.hr_dml',
+    condition  =&gt; ' :dml.get_object_owner() = ''HR'' ');
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a rule named <code class="codeph">hr_dml</code> in the <code class="codeph">strmadmin</code> schema. A rule with the same name and owner must not exist.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates a condition that evaluates to <code class="codeph">TRUE</code> for any DML change to a table in the <code class="codeph">hr</code> schema.
+                                 </p>
+                              </li>
+                           </ul>
+                           <p>In this example, no <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a> is specified for the rule. Therefore, the rule will either inherit the evaluation context of any <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> to which it is added, or it will be assigned an evaluation context explicitly when the <code class="codeph">DBMS_RULE_ADM.ADD_RULE</code> procedure is run to add it to a rule set. At this point, the rule cannot be evaluated because it is not part of any rule set.
+                           </p>
+                           <p>You can also use the following procedures in the <code class="codeph">DBMS_STREAMS_ADM</code> package to create rules and add them to a rule set automatically:
+                           </p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS520"><code class="codeph">ADD_MESSAGE_PROPAGATION_RULE</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS521"><code class="codeph">ADD_MESSAGE_RULE</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS316"><code class="codeph">ADD_TABLE_PROPAGATION_RULES</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS308"><code class="codeph">ADD_TABLE_RULES</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS394"><code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS329"><code class="codeph">ADD_SUBSET_RULES</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS317"><code class="codeph">ADD_SCHEMA_PROPAGATION_RULES</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS309"><code class="codeph">ADD_SCHEMA_RULES</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS318"><code class="codeph">ADD_GLOBAL_PROPAGATION_RULES</code></a></p>
+                              </li>
+                              <li>
+                                 <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS310"><code class="codeph">ADD_GLOBAL_RULES</code></a></p>
+                              </li>
+                           </ul>
+                           <p>Except for <code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code> and <code class="codeph">ADD_SUBSET_RULES</code>, these procedures can add rules to either the <a href="strms_glossary.html#GUID-A810B839-61A2-4DEB-85C9-8F2F09455268"><span class="xrefglossterm">positive rule set</span></a> or the <a href="strms_glossary.html#GUID-F44D0886-397B-4E00-A666-A19F96F3C242"><span class="xrefglossterm">negative rule set</span></a> for an <a href="strms_glossary.html#GUID-1ADE5718-8C94-4762-85E9-6B032F124365"><span class="xrefglossterm">Oracle Streams client</span></a>. <code class="codeph">ADD_SUBSET_PROPAGATION_RULES</code> and <code class="codeph">ADD_SUBSET_RULES</code> can add rules only to the positive rule set for an Oracle Streams client.
+                           </p>
+                           <div class="infoboxnotealso" id="GUID-F012288C-6CF0-4F75-999A-59753BD97265__GUID-12AC1CFF-872F-4061-BB93-8AF7A021830B">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=STREP"><span class="italic">Oracle Streams Replication Administrator's Guide</span></a> for information about creating Streams clients
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS813"></a><div class="props_rev_3"><a id="GUID-87652E9E-0703-4727-83D8-26A7B0C8B5AB" name="GUID-87652E9E-0703-4727-83D8-26A7B0C8B5AB"></a><h5 id="STRMS-GUID-87652E9E-0703-4727-83D8-26A7B0C8B5AB" class="sect5"><span class="enumeration_section">18.2.1.2 </span>Creating a Rule with an Action Context
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To create a rule with an <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a>, run the <code class="codeph">CREATE_RULE</code> procedure and specify the rule name using the <code class="codeph">rule_name</code> parameter, the rule condition using the <code class="codeph">condition</code> parameter, and the rule action context using the <code class="codeph">action_context</code> parameter. You add a name-value pair to an action context using the <code class="codeph">ADD_PAIR</code> member procedure of the <code class="codeph">RE$NV_LIST</code> type
+                           </p>
+                           <p>The following example creates a rule with a non-<code class="codeph">NULL</code> action context: 
+                           </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  ac  SYS.RE$NV_LIST;
+BEGIN
+  ac := SYS.RE$NV_LIST(NULL);
+  ac.ADD_PAIR('course_number', ANYDATA.CONVERTNUMBER(1057));
+  DBMS_RULE_ADM.CREATE_RULE(
+    rule_name      =&gt; 'strmadmin.rule_dep_10',
+    condition      =&gt; ' :dml.get_object_owner()=''HR'' AND ' || 
+       ' :dml.get_object_name()=''EMPLOYEES'' AND ' || 
+       ' (:dml.get_value(''NEW'', ''DEPARTMENT_ID'').AccessNumber()=10) AND ' || 
+       ' :dml.get_command_type() = ''INSERT'' ',
+    action_context =&gt; ac);
+END;
+/
+</pre><p>Running this procedure performs the following actions:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <div class="section">
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p>Creates a rule named <code class="codeph">rule_dep_10</code> in the <code class="codeph">strmadmin</code> schema. A rule with the same name and owner must not exist.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates a condition that evaluates to <code class="codeph">TRUE</code> for any insert into the <code class="codeph">hr.employees</code> table where the <code class="codeph">department_id</code> is <code class="codeph">10</code>.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>Creates an action context with one name-value pair that has <code class="codeph">course_number</code> for the name and <code class="codeph">1057</code> for the value.
+                                 </p>
+                              </li>
+                           </ul>
+                           <div class="infoboxnotealso" id="GUID-87652E9E-0703-4727-83D8-26A7B0C8B5AB__GUID-4528219F-B1D9-4F78-A6B9-C1FA21DBFD70">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-F80AF321-89CA-4130-B22C-7247E18A789A">Rule Action Context</a>"</span> for a scenario that uses such a name-value pair in an action context
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS814"></a><div class="props_rev_3"><a id="GUID-548A721C-A976-4908-8861-96F5F89AB8BC" name="GUID-548A721C-A976-4908-8861-96F5F89AB8BC"></a><h4 id="STRMS-GUID-548A721C-A976-4908-8861-96F5F89AB8BC" class="sect4"><span class="enumeration_section">18.2.2 </span>Altering a Rule
+                  </h4>
+                  <div>
+                     <p>You can use the <code class="codeph">ALTER_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to alter an existing <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>. Specifically, you can use this procedure to do the following:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Change a <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a></p>
+                        </li>
+                        <li>
+                           <p>Change a rule <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a></p>
+                        </li>
+                        <li>
+                           <p>Remove a rule evaluation context</p>
+                        </li>
+                        <li>
+                           <p>Modify a name-value pair in a rule <a href="strms_glossary.html#GUID-1F2E6C1D-EA5A-4E0C-BC0F-E4CAEE6F2E5C"><span class="xrefglossterm">action context</span></a></p>
+                        </li>
+                        <li>
+                           <p>Add a name-value pair to a rule action context</p>
+                        </li>
+                        <li>
+                           <p>Remove a name-value pair from a rule action context</p>
+                        </li>
+                        <li>
+                           <p>Change the comment for a rule</p>
+                        </li>
+                        <li>
+                           <p>Remove the comment for a rule</p>
+                        </li>
+                     </ul>
+                     <p>The following topics contains examples for some of these alterations:</p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="managing-rules.html#GUID-2B34024B-F564-40CA-B869-059B4A6A6BE5">Changing a Rule Condition</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-rules.html#GUID-BFFC3F83-6F27-445E-B5F5-DD17C7ED0FC2">Modifying a Name-Value Pair in a Rule Action Context</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-rules.html#GUID-E162475F-7E54-45FD-BE56-37925645502A">Adding a Name-Value Pair to a Rule Action Context</a></p>
+                        </li>
+                        <li>
+                           <p><a href="managing-rules.html#GUID-B8858B1E-D86E-4EF9-9247-C8CC746149F1">Removing a Name-Value Pair from a Rule Action Context</a></p>
+                        </li>
+                     </ul>
+                  </div><a id="STRMS816"></a><div class="props_rev_3"><a id="GUID-2B34024B-F564-40CA-B869-059B4A6A6BE5" name="GUID-2B34024B-F564-40CA-B869-059B4A6A6BE5"></a><h5 id="STRMS-GUID-2B34024B-F564-40CA-B869-059B4A6A6BE5" class="sect5"><span class="enumeration_section">18.2.2.1 </span>Changing a Rule Condition
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You use the <code class="codeph">condition</code> parameter in the <code class="codeph">ALTER_RULE</code> procedure to change the condition of an existing rule. For example, suppose you want to change the condition of the rule created in <span class="q">"<a href="managing-rules.html#GUID-49903A6E-1E62-4F02-B944-CB4933944E71">Creating a Rule</a>"</span>. The condition in the existing <code class="codeph">hr_dml</code> rule evaluates to <code class="codeph">TRUE</code> for any DML change to any object in the <code class="codeph">hr</code> schema. If you want to exclude changes to the <code class="codeph">employees</code> table in this schema, then you can alter the rule so that it evaluates to <code class="codeph">FALSE</code> for DML changes to the <code class="codeph">hr.employees</code> table, but continues to evaluate to <code class="codeph">TRUE</code> for DML changes to any other table in this schema. The following procedure alters the rule in this way:
+                           </p><pre class="oac_no_warn" dir="ltr">BEGIN  
+  DBMS_RULE_ADM.ALTER_RULE(
+    rule_name          =&gt; 'strmadmin.hr_dml',
+    condition          =&gt; ' :dml.get_object_owner() = ''HR'' AND NOT ' ||
+                          ' :dml.get_object_name() = ''EMPLOYEES'' ',
+    evaluation_context =&gt; NULL);
+END;
+/</pre><div class="infoboxnote" id="GUID-2B34024B-F564-40CA-B869-059B4A6A6BE5__GUID-CD80AFBE-917A-4968-B992-7A7AD190B2AA">
+                              <p class="notep1">Note:</p>
+                              <p></p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p>Changing the condition of a rule affects all <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s that contain the rule.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p>To alter a rule but retain the rule action context, specify <code class="codeph">NULL</code> for <code class="codeph">action_context</code> parameter in the <code class="codeph">ALTER_RULE</code> procedure. <code class="codeph">NULL</code> is the default value for the <code class="codeph">action_context</code> parameter.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <p><a id="d85555e2523" class="indexterm-anchor"></a>When a rule is in the rule set for a synchronous capture, do not change the following rule conditions: <code class="codeph">:dml.get_object_name</code> and <code class="codeph">:dml.get_object_owner</code>. Changing these conditions can cause the synchronous capture not to capture changes to the database object. You can change other conditions in synchronous capture rules.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS817"></a><div class="props_rev_3"><a id="GUID-BFFC3F83-6F27-445E-B5F5-DD17C7ED0FC2" name="GUID-BFFC3F83-6F27-445E-B5F5-DD17C7ED0FC2"></a><h5 id="STRMS-GUID-BFFC3F83-6F27-445E-B5F5-DD17C7ED0FC2" class="sect5"><span class="enumeration_section">18.2.2.2 </span>Modifying a Name-Value Pair in a Rule Action Context
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>To modify a name-value pair in a rule action context, you first remove the name-value pair from the rule action context and then add a different name-value pair to the rule action context.</p>
+                           <p>This example modifies a name-value pair for rule <code class="codeph">rule_dep_10</code> by first removing the name-value pair with the name <code class="codeph">course_name</code> from the rule action context and then adding a different name-value pair back to the rule action context with the same name (<code class="codeph">course_name</code>) but a different value. This name-value pair being modified was added to the rule in the example in <span class="q">"<a href="managing-rules.html#GUID-87652E9E-0703-4727-83D8-26A7B0C8B5AB">Creating a Rule with an Action Context</a>"</span>.
+                           </p>
+                           <p>If an action context contains name-value pairs in addition to the name-value pair that you are modifying, then be cautious when you modify the action context so that you do not change or remove any of the other name-value pairs.</p>
+                           <p>Complete the following steps to modify a name-value pair in an action context:</p>
+                        </div>
+                        <!-- class="section" -->
+                        <ol>
+                           <li class="stepexpand" id="GUID-BFFC3F83-6F27-445E-B5F5-DD17C7ED0FC2__BABEJHIF"><span>You can view the name-value pairs in the action context of a rule by performing the following query:</span><div><pre class="oac_no_warn" dir="ltr">COLUMN ACTION_CONTEXT_NAME HEADING 'Action Context Name' FORMAT A25
+COLUMN AC_VALUE_NUMBER HEADING 'Action Context Number Value' FORMAT 9999
+
+SELECT 
+    AC.NVN_NAME ACTION_CONTEXT_NAME, 
+    AC.NVN_VALUE.ACCESSNUMBER() AC_VALUE_NUMBER
+  FROM DBA_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  WHERE RULE_NAME = 'RULE_DEP_10';
+</pre><p>This query displays output similar to the following:</p><pre class="oac_no_warn" dir="ltr">Action Context Name       Action Context Number Value
+------------------------- ---------------------------
+course_number                                    1057
+</pre></div>
+                           </li>
+                           <li class="stepexpand"><span>Modify the name-value pair. Ensure that no other users are modifying the action context at the same time. This step first removes the name-value pair containing the name <code class="codeph">course_number</code> from the action context for the <code class="codeph">rule_dep_10</code> rule using the <code class="codeph">REMOVE_PAIR</code> member procedure of the <code class="codeph">RE$NV_LIST</code> type. Next, this step adds a name-value pair containing the new name-value pair to the rule action context using the <code class="codeph">ADD_PAIR</code> member procedure of this type. In this case, the name is <code class="codeph">course_number</code> and the value is <code class="codeph">1108</code> for the added name-value pair.</span><div>
+                                 <p>To preserve any existing name-value pairs in the rule action context, this example selects the rule action context into a variable before altering it: </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  action_ctx       SYS.RE$NV_LIST;
+  ac_name          VARCHAR2(30) := 'course_number';
+BEGIN
+  SELECT RULE_ACTION_CONTEXT
+    INTO action_ctx
+    FROM DBA_RULES R
+    WHERE RULE_OWNER='STRMADMIN' AND RULE_NAME='RULE_DEP_10';
+  action_ctx.REMOVE_PAIR(ac_name);
+  action_ctx.ADD_PAIR(ac_name,
+                 ANYDATA.CONVERTNUMBER(1108));
+  DBMS_RULE_ADM.ALTER_RULE(
+    rule_name       =&gt;  'strmadmin.rule_dep_10',
+    action_context  =&gt; action_ctx);
+END;
+/
+</pre><p>To ensure that the name-value pair was altered properly, you can rerun the query in Step <a href="managing-rules.html#GUID-BFFC3F83-6F27-445E-B5F5-DD17C7ED0FC2__BABEJHIF">1</a>. The query should display output similar to the following:
+                                 </p><pre class="oac_no_warn" dir="ltr">Action Context Name       Action Context Number Value
+------------------------- ---------------------------
+course_number                                    1108</pre></div>
+                           </li>
+                        </ol>
+                     </div>
+                  </div><a id="STRMS818"></a><div class="props_rev_3"><a id="GUID-E162475F-7E54-45FD-BE56-37925645502A" name="GUID-E162475F-7E54-45FD-BE56-37925645502A"></a><h5 id="STRMS-GUID-E162475F-7E54-45FD-BE56-37925645502A" class="sect5"><span class="enumeration_section">18.2.2.3 </span>Adding a Name-Value Pair to a Rule Action Context
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You can preserve the existing name-value pairs in the action context by selecting the action context into a variable before adding a new pair using the <code class="codeph">ADD_PAIR</code> member procedure of the <code class="codeph">RE$NV_LIST</code> type. Ensure that no other users are modifying the action context at the same time. The following example preserves the existing name-value pairs in the action context of the <code class="codeph">rule_dep_10</code> rule and adds a new name-value pair with <code class="codeph">dist_list</code> for the name and <code class="codeph">admin_list</code> for the value:
+                           </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  action_ctx       SYS.RE$NV_LIST;
+  ac_name          VARCHAR2(30) := 'dist_list';
+BEGIN
+  action_ctx := SYS.RE$NV_LIST(SYS.RE$NV_ARRAY());
+  SELECT RULE_ACTION_CONTEXT
+    INTO action_ctx
+    FROM DBA_RULES R
+    WHERE RULE_OWNER='STRMADMIN' AND RULE_NAME='RULE_DEP_10';
+  action_ctx.ADD_PAIR(ac_name,
+                 ANYDATA.CONVERTVARCHAR2('admin_list'));
+  DBMS_RULE_ADM.ALTER_RULE(
+    rule_name       =&gt;  'strmadmin.rule_dep_10',
+    action_context  =&gt; action_ctx);
+END;
+/
+</pre><p>To ensure that the name-value pair was added successfully, you can run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN ACTION_CONTEXT_NAME HEADING 'Action Context Name' FORMAT A25
+COLUMN AC_VALUE_NUMBER HEADING 'Action Context|Number Value' FORMAT 9999
+COLUMN AC_VALUE_VARCHAR2 HEADING 'Action Context|Text Value' FORMAT A25
+
+SELECT 
+    AC.NVN_NAME ACTION_CONTEXT_NAME, 
+    AC.NVN_VALUE.ACCESSNUMBER() AC_VALUE_NUMBER,
+    AC.NVN_VALUE.ACCESSVARCHAR2() AC_VALUE_VARCHAR2
+  FROM DBA_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  WHERE RULE_NAME = 'RULE_DEP_10';
+</pre><p>This query should display output similar to the following:</p><pre class="oac_no_warn" dir="ltr">                          Action Context Action Context
+Action Context Name         Number Value Text Value
+------------------------- -------------- -------------------------
+course_number                       1088
+dist_list                                admin_list
+</pre><div class="infoboxnotealso" id="GUID-E162475F-7E54-45FD-BE56-37925645502A__GUID-B07F2531-255E-4D4A-B1A6-517747837BB8">
+                              <p class="notep1">See Also:</p>
+                              <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-F80AF321-89CA-4130-B22C-7247E18A789A">Rule Action Context</a>"</span> for a scenario that uses similar name-value pairs in an action context
+                              </p>
+                           </div>
+                        </div>
+                        <!-- class="section" -->
+                     </div>
+                  </div><a id="STRMS819"></a><div class="props_rev_3"><a id="GUID-B8858B1E-D86E-4EF9-9247-C8CC746149F1" name="GUID-B8858B1E-D86E-4EF9-9247-C8CC746149F1"></a><h5 id="STRMS-GUID-B8858B1E-D86E-4EF9-9247-C8CC746149F1" class="sect5"><span class="enumeration_section">18.2.2.4 </span>Removing a Name-Value Pair from a Rule Action Context
+                     </h5>
+                     <div>
+                        <div class="section">
+                           <p>You remove a name-value pair in the action context of a rule using the <code class="codeph">REMOVE_PAIR</code> member procedure of the <code class="codeph">RE$NV_LIST</code> type. Ensure that no other users are modifying the action context at the same time. 
+                           </p>
+                           <p>Removing a name-value pair means altering the action context of a rule. If an action context contains name-value pairs in addition to the name-value pair being removed, then be cautious when you modify the action context so that you do not change or remove any other name-value pairs.</p>
+                           <p>This example assumes that the <code class="codeph">rule_dep_10</code> rule has the following name-value pairs:
+                           </p>
+                           <div class="tblformal" id="GUID-B8858B1E-D86E-4EF9-9247-C8CC746149F1__GUID-157BB4C2-67F6-4956-861D-FA28A511D468">
+                              <table cellpadding="4" cellspacing="0" class="Formal" title="" summary="This table contains the name-value pairs for the rule_dep_10 rule." width="100%" frame="hsides" border="1" rules="rows">
+                                 <thead>
+                                    <tr align="left" valign="top">
+                                       <th align="left" valign="bottom" width="50%" id="d85555e3120">Name</th>
+                                       <th align="left" valign="bottom" width="50%" id="d85555e3123">Value</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr align="left" valign="top">
+                                       <td align="left" valign="top" width="50%" id="d85555e3128" headers="d85555e3120 ">
+                                          <p><code class="codeph">course_number</code></p>
+                                       </td>
+                                       <td align="left" valign="top" width="50%" headers="d85555e3128 d85555e3123 ">
+                                          <p><code class="codeph">1088</code></p>
+                                       </td>
+                                    </tr>
+                                    <tr align="left" valign="top">
+                                       <td align="left" valign="top" width="50%" id="d85555e3137" headers="d85555e3120 ">
+                                          <p><code class="codeph">dist_list</code></p>
+                                       </td>
+                                       <td align="left" valign="top" width="50%" headers="d85555e3137 d85555e3123 ">
+                                          <p><code class="codeph">admin_list</code></p>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                           <!-- class="inftblhruleinformal" -->
+                           <div class="infoboxnotealso" id="GUID-B8858B1E-D86E-4EF9-9247-C8CC746149F1__GUID-145EB614-7DE0-4E3A-AE19-8126C4590F8A">
+                              <p class="notep1">See Also:</p>
+                              <p>You added these name-value pairs to the <code class="codeph">rule_dep_10</code> rule if you completed the examples in the following sections: 
+                              </p>
+                              <ul style="list-style-type: disc;">
+                                 <li>
+                                    <p><span class="q">"<a href="managing-rules.html#GUID-87652E9E-0703-4727-83D8-26A7B0C8B5AB">Creating a Rule with an Action Context</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="managing-rules.html#GUID-BFFC3F83-6F27-445E-B5F5-DD17C7ED0FC2">Modifying a Name-Value Pair in a Rule Action Context</a>"</span></p>
+                                 </li>
+                                 <li>
+                                    <p><span class="q">"<a href="managing-rules.html#GUID-E162475F-7E54-45FD-BE56-37925645502A">Adding a Name-Value Pair to a Rule Action Context</a>"</span></p>
+                                 </li>
+                              </ul>
+                           </div>
+                           <p>This example preserves existing name-value pairs in the action context of the <code class="codeph">rule_dep_10</code> rule that should not be removed by selecting the existing action context into a variable and then removing the name-value pair with <code class="codeph">dist_list</code> for the name.
+                           </p><pre class="oac_no_warn" dir="ltr">DECLARE
+  action_ctx       SYS.RE$NV_LIST;
+  ac_name          VARCHAR2(30) := 'dist_list';
+BEGIN
+  SELECT RULE_ACTION_CONTEXT
+    INTO action_ctx
+    FROM DBA_RULES R
+    WHERE RULE_OWNER='STRMADMIN' AND RULE_NAME='RULE_DEP_10';
+  action_ctx.REMOVE_PAIR(ac_name);
+  DBMS_RULE_ADM.ALTER_RULE(
+    rule_name       =&gt;  'strmadmin.rule_dep_10',
+    action_context  =&gt;  action_ctx);
+END;
+/
+</pre><p>To ensure that the name-value pair was removed successfully without removing any other name-value pairs in the action context, you can run the following query:</p><pre class="oac_no_warn" dir="ltr">COLUMN ACTION_CONTEXT_NAME HEADING 'Action Context Name' FORMAT A25
+COLUMN AC_VALUE_NUMBER HEADING 'Action Context|Number Value' FORMAT 9999
+COLUMN AC_VALUE_VARCHAR2 HEADING 'Action Context|Text Value' FORMAT A25
+
+SELECT 
+    AC.NVN_NAME ACTION_CONTEXT_NAME, 
+    AC.NVN_VALUE.ACCESSNUMBER() AC_VALUE_NUMBER,
+    AC.NVN_VALUE.ACCESSVARCHAR2() AC_VALUE_VARCHAR2
+  FROM DBA_RULES R, TABLE(R.RULE_ACTION_CONTEXT.ACTX_LIST) AC
+  WHERE RULE_NAME = 'RULE_DEP_10';
+</pre><p>This query should display output similar to the following:</p><pre class="oac_no_warn" dir="ltr">                          Action Context Action Context
+Action Context Name         Number Value Text Value
+------------------------- -------------- -------------------------
+course_number                       1108</pre></div>
+                        <!-- class="section" -->
+                     </div>
+                  </div>
+               </div><a id="STRMS820"></a><div class="props_rev_3"><a id="GUID-C9DB7CFB-07DB-4CC2-BE0D-7DECB1D16939" name="GUID-C9DB7CFB-07DB-4CC2-BE0D-7DECB1D16939"></a><h4 id="STRMS-GUID-C9DB7CFB-07DB-4CC2-BE0D-7DECB1D16939" class="sect4"><span class="enumeration_section">18.2.3 </span>Modifying System-Created Rules
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>System-created <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s are rules created by running a procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package. If you cannot create a rule with the exact <a href="strms_glossary.html#GUID-103148AB-F5B0-47DC-B803-90919571C800"><span class="xrefglossterm">rule condition</span></a> you need using the <code class="codeph">DBMS_STREAMS_ADM</code> package, then you can create a rule with a condition based on a <a href="strms_glossary.html#GUID-53B877C4-24D6-4D27-B80D-C1256A08A87A"><span class="xrefglossterm">system-created rule</span></a> by following these general steps:
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                     <ol>
+                        <li><span>Copy the rule condition of the system-created rule. You can view the rule condition of a system-created rule by querying the <code class="codeph">DBA_STREAMS_RULES</code> data dictionary view.</span></li>
+                        <li><span>Modify the condition.</span></li>
+                        <li><span>Create a rule with the modified condition. </span></li>
+                        <li><span>Add the new rule to a <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a> for an Oracle Streams <a href="strms_glossary.html#GUID-7E24C191-B4E0-45F2-A55B-9F76D4F9E8B0"><span class="xrefglossterm">capture process</span></a>, <a href="strms_glossary.html#GUID-13E35632-96B9-4A58-8990-EF95ECE9746E"><span class="xrefglossterm">propagation</span></a>, <a href="strms_glossary.html#GUID-8FCB69CE-7655-4991-B988-0373A0A20085"><span class="xrefglossterm">apply process</span></a>, or <a href="strms_glossary.html#GUID-9EAF35D2-24C0-4E0B-ACC4-9EDC22A169C1"><span class="xrefglossterm">messaging client</span></a>. </span></li>
+                        <li><span>Remove the original rule if it is no longer needed using the <code class="codeph">REMOVE_RULE</code> procedure in the <code class="codeph">DBMS_STREAMS_ADM</code> package. </span></li>
+                     </ol>
+                     <div class="section">
+                        <div class="infoboxnotealso" id="GUID-C9DB7CFB-07DB-4CC2-BE0D-7DECB1D16939__GUID-673686A0-CF00-4C33-B905-1B1ECC34D0DA">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="rule-based-transformations.html#GUID-3B2ECFEA-B6EC-4102-B005-6A4182234CC4"> Rule-Based Transformations </a></p>
+                              </li>
+                              <li>
+                                 <p><a href="monitoring-an-oracle-streams-environment.html#GUID-045F7FFD-95FE-4B24-A058-8C3D441B21CB"> Monitoring an Oracle Streams Environment</a> for more information about the data dictionary views related to Oracle Streams
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS821"></a><div class="props_rev_3"><a id="GUID-C0EC7A5D-DF8A-4BF6-85F9-1210C5EDD874" name="GUID-C0EC7A5D-DF8A-4BF6-85F9-1210C5EDD874"></a><h4 id="STRMS-GUID-C0EC7A5D-DF8A-4BF6-85F9-1210C5EDD874" class="sect4"><span class="enumeration_section">18.2.4 </span>Dropping a Rule
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>The following example runs the <code class="codeph">DROP_RULE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to drop the <code class="codeph">hr_dml</code> <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a> from the database:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_RULE_ADM.DROP_RULE(
+    rule_name =&gt; 'strmadmin.hr_dml', 
+    force     =&gt; FALSE);
+END;
+/
+</pre><p>In this example, the <code class="codeph">force</code> parameter in the <code class="codeph">DROP_RULE</code> procedure is set to <code class="codeph">FALSE</code>, which is the default setting. Therefore, the rule cannot be dropped if it is in one or more <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s. If the <code class="codeph">force</code> parameter is set to <code class="codeph">TRUE</code>, then the rule is dropped from the database and automatically removed from any rule sets that contain it.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div><a id="STRMS823"></a><div class="props_rev_3"><a id="GUID-BD5A7DA6-F0E1-4DDA-B704-526EF05DA41F" name="GUID-BD5A7DA6-F0E1-4DDA-B704-526EF05DA41F"></a><h3 id="STRMS-GUID-BD5A7DA6-F0E1-4DDA-B704-526EF05DA41F" class="sect3"><span class="enumeration_section">18.3 </span>Managing Privileges on Evaluation Contexts, Rule Sets, and Rules
+               </h3>
+               <div>
+                  <p>This section provides instructions for completing the following tasks:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="managing-rules.html#GUID-4D75E4B7-E328-4610-B7C8-1BEC190F609B">Granting System Privileges on Evaluation Contexts, Rule Sets, and Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rules.html#GUID-C506A14A-DDF9-4F49-B593-558EE5284824">Granting Object Privileges on an Evaluation Context, Rule Set, or Rule</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rules.html#GUID-452784B5-F83B-4B3E-9D7A-F07EB7A4F7A6">Revoking System Privileges on Evaluation Contexts, Rule Sets, and Rules</a></p>
+                     </li>
+                     <li>
+                        <p><a href="managing-rules.html#GUID-B22E52F3-E867-425E-9BD1-3E17D01C7E80">Revoking Object Privileges on an Evaluation Context, Rule Set, or Rule</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-BD5A7DA6-F0E1-4DDA-B704-526EF05DA41F__GUID-E72A30F4-A27A-49BB-920B-FAAEAC3A16F3">
+                     <p class="notep1">See Also:</p>
+                     <p></p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><span class="q">"<a href="advanced-rule-concepts.html#GUID-29608B7A-5D6E-4181-A793-F3AA227F94F8">Database Objects and Privileges Related to Rules</a>"</span></p>
+                        </li>
+                        <li>
+                           <p>The <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS331"><code class="codeph">GRANT_SYSTEM_PRIVILEGE</code></a> and <a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS330"><code class="codeph">GRANT_OBJECT_PRIVILEGE</code></a> procedures in the <code class="codeph">DBMS_RULE_ADM</code> package in<a href="https://www.oracle.com/pls/topic/lookup?ctx=en/database/oracle/oracle-database/18/strms&amp;id=ARPLS304"><span class="italic"> Oracle Database PL/SQL Packages and Types Reference</span></a></p>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="STRMS824"></a><div class="props_rev_3"><a id="GUID-4D75E4B7-E328-4610-B7C8-1BEC190F609B" name="GUID-4D75E4B7-E328-4610-B7C8-1BEC190F609B"></a><h4 id="STRMS-GUID-4D75E4B7-E328-4610-B7C8-1BEC190F609B" class="sect4"><span class="enumeration_section">18.3.1 </span>Granting System Privileges on Evaluation Contexts, Rule Sets, and Rules
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can use the <code class="codeph">GRANT_SYSTEM_PRIVILEGE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to grant system privileges on <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>s, <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s, and <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s to users and roles. These privileges enable a user to create, alter, execute, or drop these objects in the user's own schema or, if the "ANY" version of the privilege is granted, in any schema.
+                        </p>
+                        <p>For example, to grant the <code class="codeph">hr</code> user the privilege to create an evaluation context in the user's own schema, enter the following while connected as a user who can grant privileges and alter users:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_RULE_ADM.GRANT_SYSTEM_PRIVILEGE(
+    privilege    =&gt; SYS.DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ,
+    grantee      =&gt; 'hr', 
+    grant_option =&gt; FALSE);
+END;
+/
+</pre><p>In this example, the <code class="codeph">grant_option</code> parameter in the <code class="codeph">GRANT_SYSTEM_PRIVILEGE</code> procedure is set to <code class="codeph">FALSE</code>, which is the default setting. Therefore, the <code class="codeph">hr</code> user cannot grant the <code class="codeph">CREATE_EVALUATION_CONTEXT_OBJ</code> system privilege to other users or roles. If the <code class="codeph">grant_option</code> parameter were set to <code class="codeph">TRUE</code>, then the <code class="codeph">hr</code> user could grant this system privilege to other users or roles.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS825"></a><div class="props_rev_3"><a id="GUID-C506A14A-DDF9-4F49-B593-558EE5284824" name="GUID-C506A14A-DDF9-4F49-B593-558EE5284824"></a><h4 id="STRMS-GUID-C506A14A-DDF9-4F49-B593-558EE5284824" class="sect4"><span class="enumeration_section">18.3.2 </span>Granting Object Privileges on an Evaluation Context, Rule Set, or Rule
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can use the <code class="codeph">GRANT_OBJECT_PRIVILEGE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to grant object privileges on a specific <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>, <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, or <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>. These privileges enable a user to alter or execute the specified object.
+                        </p>
+                        <p>For example, to grant the <code class="codeph">hr</code> user the privilege to both alter and execute a rule set named <code class="codeph">hr_capture_rules</code> in the <code class="codeph">strmadmin</code> schema, enter the following:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_RULE_ADM.GRANT_OBJECT_PRIVILEGE(
+    privilege    =&gt; SYS.DBMS_RULE_ADM.ALL_ON_RULE_SET,
+    object_name  =&gt; 'strmadmin.hr_capture_rules',
+    grantee      =&gt; 'hr', 
+    grant_option =&gt; FALSE);
+END;
+/
+</pre><p>In this example, the <code class="codeph">grant_option</code> parameter in the <code class="codeph">GRANT_OBJECT_PRIVILEGE</code> procedure is set to <code class="codeph">FALSE</code>, which is the default setting. Therefore, the <code class="codeph">hr</code> user cannot grant the <code class="codeph">ALL_ON_RULE_SET</code> object privilege for the specified rule set to other users or roles. If the <code class="codeph">grant_option</code> parameter were set to <code class="codeph">TRUE</code>, then the <code class="codeph">hr</code> user could grant this object privilege to other users or roles.
+                        </p>
+                     </div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS826"></a><div class="props_rev_3"><a id="GUID-452784B5-F83B-4B3E-9D7A-F07EB7A4F7A6" name="GUID-452784B5-F83B-4B3E-9D7A-F07EB7A4F7A6"></a><h4 id="STRMS-GUID-452784B5-F83B-4B3E-9D7A-F07EB7A4F7A6" class="sect4"><span class="enumeration_section">18.3.3 </span>Revoking System Privileges on Evaluation Contexts, Rule Sets, and Rules
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can use the <code class="codeph">REVOKE_SYSTEM_PRIVILEGE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to revoke system privileges on <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>s, <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>s, and <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>s.
+                        </p>
+                        <p>For example, to revoke from the <code class="codeph">hr</code> user the privilege to create an evaluation context in the user's own schema, enter the following while connected as a user who can grant privileges and alter users:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_RULE_ADM.REVOKE_SYSTEM_PRIVILEGE(
+    privilege    =&gt; SYS.DBMS_RULE_ADM.CREATE_EVALUATION_CONTEXT_OBJ,
+    revokee      =&gt; 'hr');
+END;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div><a id="STRMS827"></a><div class="props_rev_3"><a id="GUID-B22E52F3-E867-425E-9BD1-3E17D01C7E80" name="GUID-B22E52F3-E867-425E-9BD1-3E17D01C7E80"></a><h4 id="STRMS-GUID-B22E52F3-E867-425E-9BD1-3E17D01C7E80" class="sect4"><span class="enumeration_section">18.3.4 </span>Revoking Object Privileges on an Evaluation Context, Rule Set, or Rule
+                  </h4>
+                  <div>
+                     <div class="section">
+                        <p>You can use the <code class="codeph">REVOKE_OBJECT_PRIVILEGE</code> procedure in the <code class="codeph">DBMS_RULE_ADM</code> package to revoke object privileges on a specific <a href="strms_glossary.html#GUID-F9C11C62-21FB-44BC-B128-3AE8BAD093EE"><span class="xrefglossterm">evaluation context</span></a>, <a href="strms_glossary.html#GUID-36BC41F8-E073-4AFE-ADF1-5036DD323379"><span class="xrefglossterm">rule set</span></a>, or <a href="strms_glossary.html#GUID-6779E306-1287-45C6-8182-CD04A7325F91"><span class="xrefglossterm">rule</span></a>. 
+                        </p>
+                        <p>For example, to revoke from the <code class="codeph">hr</code> user the privilege to both alter and execute a rule set named <code class="codeph">hr_capture_rules</code> in the <code class="codeph">strmadmin</code> schema, enter the following:
+                        </p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_RULE_ADM.REVOKE_OBJECT_PRIVILEGE(
+    privilege    =&gt; SYS.DBMS_RULE_ADM.ALL_ON_RULE_SET,
+    object_name  =&gt; 'strmadmin.hr_capture_rules',
+    revokee      =&gt; 'hr');
+END;
+/</pre></div>
+                     <!-- class="section" -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>

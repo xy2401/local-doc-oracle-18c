@@ -1,0 +1,122 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Description of the illustration strex003.eps</title>
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+   
+    <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+    <meta name="dcterms.created" content="2018-01-25T06:41:46+00:00">
+    <meta name="dcterms.title" content="Streams Extended Examples">
+    <meta name="dcterms.category" content="database">
+    <meta name="dcterms.isVersionOf" content="STREX">
+    <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+    <meta name="dcterms.identifier" content="E83782-01">
+    <meta name="dcterms.release" content="Release 18">
+  <script id="ssot-metadata" type="application/json"> {"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}} </script>
+    </head>
+   <body>
+      <article>
+         <header>
+            <h1>Description of the illustration strex003.eps</h1>
+         </header>
+         <div>
+            <p>This illustration shows the existing configuration, as well as the following tables added to <code class="codeph">dbs3.example.com</code>:
+            </p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p><code class="codeph">hr.departments</code></p>
+               </li>
+               <li>
+                  <p><code class="codeph">hr.employees</code></p>
+               </li>
+               <li>
+                  <p><code class="codeph">hr.job_history</code></p>
+               </li>
+               <li>
+                  <p><code class="codeph">hr.jobs</code></p>
+               </li>
+            </ul>
+            <p>The existing configuration includes the following databases:</p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p><code class="codeph">dbs1.example.com</code> (Oracle database)
+                  </p>
+               </li>
+               <li>
+                  <p><code class="codeph">dbs2.example.com</code> (Oracle database)
+                  </p>
+               </li>
+               <li>
+                  <p><code class="codeph">dbs3.example.com</code> (Oracle database)
+                  </p>
+               </li>
+               <li>
+                  <p><code class="codeph">dbs4.example.com</code> (Sybase database)
+                  </p>
+               </li>
+            </ul>
+            <p>The <code class="codeph">dbs1.example.com</code> Oracle database has the following configuration:
+            </p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p>One Oracle Streams queue named <code class="codeph">streams_queue</code> and owned by the user <code class="codeph">strmadmin</code></p>
+               </li>
+               <li>
+                  <p>A capture process named <code class="codeph">capture</code> that captures DML and DDL changes to the tables in the <code class="codeph">hr</code> schema: <code class="codeph">countries</code>, <code class="codeph">departments</code>, <code class="codeph">employees</code>, <code class="codeph">job_history</code>, <code class="codeph">jobs</code>, <code class="codeph">locations</code>, and <code class="codeph">regions</code></p>
+               </li>
+               <li>
+                  <p>A propagation named <code class="codeph">dbs1_to_dbs2</code> that propagates changes from the local queue to the <code class="codeph">strmadmin.streams_queue</code> queue at <code class="codeph">dbs2.example.com</code></p>
+               </li>
+            </ul>
+            <p>The <code class="codeph">dbs2.example.com</code> Oracle database has the following configuration:
+            </p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p>One Oracle Streams queue named <code class="codeph">streams_queue</code> and owned by the user <code class="codeph">strmadmin</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>An apply process named <code class="codeph">apply_db2</code> that applies changes to the <code class="codeph">hr.assignments</code> table.
+                  </p>
+               </li>
+               <li>
+                  <p>An apply process named <code class="codeph">apply_db4</code> that applies changes to the <code class="codeph">hr.jobs</code> table at <code class="codeph">dbs4.example.com</code>, which is a Sybase database. The apply process uses a gateway to apply changes to <code class="codeph">dbs4.example.com</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>A custom rule-based transformation specified for <code class="codeph">apply_db2</code> that modifies LCRs that include DML changes to the <code class="codeph">hr.jobs</code> table to LCRs that include DML changes to the <code class="codeph">hr.assignments</code> table. The transformation function is named <code class="codeph">to_assignments</code>.
+                  </p>
+               </li>
+               <li>
+                  <p>A propagation named <code class="codeph">dbs2_to_dbs3</code> that propagates change from the local queue to the <code class="codeph">strmadmin.streams_queue</code> queue at <code class="codeph">dbs3.example.com</code>. These changes originated at <code class="codeph">dbs1.example.com</code>.
+                  </p>
+               </li>
+            </ul>
+            <p>The <code class="codeph">dbs3.example.com</code> Oracle database has the following configuration:
+            </p>
+            <ul style="list-style-type: disc;">
+               <li>
+                  <p>One Oracle Streams queue named <code class="codeph">streams_queue</code> and owned by the user <code class="codeph">strmadmin</code></p>
+               </li>
+               <li>
+                  <p>An apply process named <code class="codeph">apply</code> that applies changes to the <code class="codeph">hr.countries</code>, <code class="codeph">hr.regions</code>, and <code class="codeph">hr.locations</code> tables
+                  </p>
+               </li>
+            </ul>
+            <p>The <code class="codeph">dbs4.example.com</code> Sybase database contains an <code class="codeph">hr.jobs</code> table.
+            </p>
+         </div>
+      </article>
+      
+      <div class="footer copyrightlogo">
+         <span><a href="https://www.oracle.com/pls/topic/lookup?ctx=cpyr&amp;id=en">Copyright&nbsp;&copy;&nbsp;2008, 2018, Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</a></span></div>
+   </body>
+</html>

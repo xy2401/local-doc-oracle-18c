@@ -1,0 +1,1011 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+
+<!-- saved from url=(0023)https://docs.oracle.com -->
+
+<html xml:lang="en-us" lang="en-us">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Using ANYDATA Queues for User Messages</title>
+      <meta property="og:site_name" content="Oracle Help Center">
+      <meta property="og:title" content="Advanced Queuing User's Guide ">
+      <meta property="og:description" content="">
+      <link rel="stylesheet" href="/sp_common/book-template/ohc-book-template/css/book.css">
+      <link rel="shortcut icon" href="/sp_common/book-template/ohc-common/img/favicon.ico">
+      <meta name="application-name" content="Advanced Queuing User's Guide">
+      <meta name="generator" content="DITA Open Toolkit version 1.8.5 (Mode = doc)">
+      <meta name="plugin" content="SP_docbuilder HTML plugin release 18.1.1">
+      <link rel="alternate" href="oracle-database-advanced-queuing.pdf" title="PDF File" type="application/pdf">
+      <meta name="robots" content="all">
+      <link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+      <meta name="dcterms.created" content="2018-02-03T22:03:10-08:00">
+      
+      <meta name="dcterms.dateCopyrighted" content="1996, 2018">
+      <meta name="dcterms.category" content="database">
+      <meta name="dcterms.identifier" content="E90592-01">
+      
+      <meta name="dcterms.product" content="en/database/oracle/oracle-database/18">
+      <meta name="dcterms.release" content="Release 18">
+      <link rel="prev" href="omg-monitoring.html" title="Previous" type="text/html">
+      <link rel="next" href="streams-messaging-examples.html" title="Next" type="text/html">
+      <script>
+        document.write('<style type="text/css">');
+        document.write('body > .noscript, body > .noscript ~ * { visibility: hidden; }');
+        document.write('</style>');
+     </script>
+      <script data-main="/sp_common/book-template/ohc-book-template/js/book-config" src="/sp_common/book-template/requirejs/require.js"></script>
+      <script>
+            if (window.require === undefined) {
+                document.write('<script data-main="sp_common/book-template/ohc-book-template/js/book-config" src="sp_common/book-template/requirejs/require.js"><\/script>');
+                document.write('<link href="sp_common/book-template/ohc-book-template/css/book.css" rel="stylesheet"/>');
+            }
+        </script>
+      <script type="application/json" id="ssot-metadata">{"primary":{"category":{"short_name":"database","element_name":"Database","display_in_url":true},"suite":{"short_name":"oracle","element_name":"Oracle","display_in_url":true},"product_group":{"short_name":"not-applicable","element_name":"Not applicable","display_in_url":false},"product":{"short_name":"oracle-database","element_name":"Oracle Database","display_in_url":true},"release":{"short_name":"18","element_name":"Release 18","display_in_url":true}}}</script>
+      
+    <meta name="dcterms.title" content="Oracle® Database Advanced Queuing">
+    <meta name="dcterms.isVersionOf" content="ADQUE">
+  </head>
+   <body>
+      <div class="noscript alert alert-danger text-center" role="alert">
+         <a href="omg-monitoring.html" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Previous</a>
+         <a href="streams-messaging-examples.html" class="pull-right">Next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> JavaScript must be enabled to correctly display this content
+        
+      </div>
+      <article>
+         <header>
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+               <li property="itemListElement" typeof="ListItem"><a href="index.html" property="item" typeof="WebPage"><span property="name">Advanced Queuing User's Guide </span></a></li>
+               <li class="active" property="itemListElement" typeof="ListItem">Using ANYDATA Queues for User Messages</li>
+            </ol>
+            <a id="GUID-B87305E8-5E54-4EDA-81DA-7F7D30B7DB23" name="GUID-B87305E8-5E54-4EDA-81DA-7F7D30B7DB23"></a><a id="ADQUE2200"></a>
+            
+            <h2 id="ADQUE-GUID-B87305E8-5E54-4EDA-81DA-7F7D30B7DB23" class="sect2"><span class="enumeration_chapter">22 </span>Using ANYDATA Queues for User Messages
+            </h2>
+         </header>
+         <div class="ind">
+            <div>
+               <p>The following topics describe how to use and manage Oracle Database Advanced Queuing when enqueuing and propagating. It describes <code class="codeph">ANYDATA</code> queues and user messages.
+               </p>
+               <p>Oracle Streams uses queues of type <code class="codeph">ANYDATA</code> to store three types of messages:
+               </p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p>Captured <a href="glossary.html#GUID-BF08E3A6-F356-4EC7-B62F-90ECA54A87E9"><span class="xrefglossterm">logical change record</span></a> (LCR)
+                     </p>
+                     <p>This message type, produced by an Oracle Streams capture process, is not discussed in this guide.</p>
+                  </li>
+                  <li>
+                     <p>User-enqueued LCR</p>
+                     <p>This is a message containing an LCR that was enqueued into a non-sharded queue by a user or application.</p>
+                  </li>
+                  <li>
+                     <p>User message </p>
+                     <p>This is a non-LCR message created and enqueued into a sharded or non-sharded queue by a user or application.</p>
+                  </li>
+               </ul>
+               <p>All three types of messages can be used for information sharing within a single database or between databases.</p>
+               <p>Topics:</p>
+               <ul style="list-style-type: disc;">
+                  <li>
+                     <p><a href="anydata-queues-for-user-messages.html#GUID-ACD829C7-76A9-4C41-8F11-74E5543C2F80">ANYDATA Queues and User Messages</a></p>
+                  </li>
+                  <li>
+                     <p><a href="anydata-queues-for-user-messages.html#GUID-483FE809-CA10-4200-B2C3-344661265DBD">Message Propagation and ANYDATA Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7">Enqueuing User Messages in ANYDATA Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="anydata-queues-for-user-messages.html#GUID-A092CEA8-D867-45F8-AE90-354C980EE200">Dequeuing User Messages from ANYDATA Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A">Propagating User Messages from ANYDATA Queues to Typed Queues</a></p>
+                  </li>
+                  <li>
+                     <p><a href="anydata-queues-for-user-messages.html#GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3">Propagating User-Enqueued LCRs from ANYDATA Queues to Typed Queues</a></p>
+                  </li>
+               </ul>
+               <div class="infoboxnotealso" id="GUID-B87305E8-5E54-4EDA-81DA-7F7D30B7DB23__GUID-98D7B92F-7371-45E4-957D-D31DDEF8EE38">
+                  <p class="notep1">See Also:</p>
+                  <p></p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="../arpls/ANYDATA-TYPE.html#ARPLS077"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">ANYDATA</code> type
+                        </p>
+                     </li>
+                     <li>
+                        <p>"Streams Capture Process" in <a href="../strms/oracle-streams-information-capture.html#STRMS002"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                     </li>
+                  </ul>
+               </div>
+            </div><a id="ADQUE3437"></a><div class="props_rev_3"><a id="GUID-ACD829C7-76A9-4C41-8F11-74E5543C2F80" name="GUID-ACD829C7-76A9-4C41-8F11-74E5543C2F80"></a><h3 id="ADQUE-GUID-ACD829C7-76A9-4C41-8F11-74E5543C2F80" class="sect3"><span class="enumeration_section">22.1 </span>ANYDATA Queues and User Messages
+               </h3>
+               <div>
+                  <p>This section contains these topics:</p>
+                  <ul style="list-style-type: disc;">
+                     <li>
+                        <p><a href="anydata-queues-for-user-messages.html#GUID-D2AA5185-70FA-4BB8-939B-A0247196825B">ANYDATA Wrapper for User Messages Payloads</a></p>
+                     </li>
+                     <li>
+                        <p><a href="anydata-queues-for-user-messages.html#GUID-5F99D5FF-BB57-4C9D-8480-91EFFBBDEA88">Programmatic Interfaces for Enqueue and Dequeue of User Messages</a></p>
+                     </li>
+                  </ul>
+                  <div class="infoboxnotealso" id="GUID-ACD829C7-76A9-4C41-8F11-74E5543C2F80__GUID-D36FCDF7-70A4-4C4F-8F46-91F2CA26C065">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../strms/oracle-streams-staging-and-propagation.html#STRMS111"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                  </div>
+               </div><a id="ADQUE3438"></a><div class="props_rev_3"><a id="GUID-D2AA5185-70FA-4BB8-939B-A0247196825B" name="GUID-D2AA5185-70FA-4BB8-939B-A0247196825B"></a><h4 id="ADQUE-GUID-D2AA5185-70FA-4BB8-939B-A0247196825B" class="sect4"><span class="enumeration_section">22.1.1 </span>ANYDATA Wrapper for User Messages Payloads
+                  </h4>
+                  <div>
+                     <p>You can wrap almost any type of payload in an <code class="codeph">ANYDATA</code> payload with the <code class="codeph">Convert</code><span class="italic"><code class="codeph">data_type</code></span> static functions of the <code class="codeph">ANYDATA</code> type, where <span class="italic"><code class="codeph">data_type</code></span> is the type of object to wrap. These functions take the object as input and return an <code class="codeph">ANYDATA</code> object.
+                     </p>
+                     <p>The following datatypes cannot be wrapped in an <code class="codeph">ANYDATA</code> wrapper:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>Nested table</p>
+                        </li>
+                        <li>
+                           <p><a href="glossary.html#GUID-6690D2D9-B01B-462D-BC02-497A96FC4EB5"><span class="xrefglossterm">NCLOB</span></a></p>
+                        </li>
+                        <li>
+                           <p>ROWID and UROWID</p>
+                        </li>
+                     </ul>
+                     <p>The following datatypes can be directly wrapped in an <code class="codeph">ANYDATA</code> wrapper, but they cannot be present in a user-defined type payload wrapped in an <code class="codeph">ANYDATA</code> wrapper:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><a href="glossary.html#GUID-6A19CAEE-F2E5-435D-B582-2ECB47FD4D06"><span class="xrefglossterm">CLOB</span></a></p>
+                        </li>
+                        <li>
+                           <p><a href="glossary.html#GUID-A62D4CF7-C903-40B3-89DC-0D6E4233D7C9"><span class="xrefglossterm">BLOB</span></a></p>
+                        </li>
+                        <li>
+                           <p><a href="glossary.html#GUID-A8B4B248-A9A3-462C-A52B-517BCFAEE0ED"><span class="xrefglossterm">BFILE</span></a></p>
+                        </li>
+                        <li>
+                           <p><a href="glossary.html#GUID-008A6C9F-3E4D-48C1-8257-68A89CEAD827"><span class="xrefglossterm">VARRAY</span></a></p>
+                           <div class="infoboxnotealso" id="GUID-D2AA5185-70FA-4BB8-939B-A0247196825B__GUID-F9DD8560-F548-4BB4-8046-31549125B66E">
+                              <p class="notep1">See Also:</p>
+                              <p><a href="../arpls/ANYDATA-TYPE.html#ARPLS077"><span class="italic">Oracle Database PL/SQL Packages and Types Reference </span></a>for more information about the <code class="codeph">ANYDATA</code> type
+                              </p>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+               </div><a id="ADQUE3439"></a><div class="props_rev_3"><a id="GUID-5F99D5FF-BB57-4C9D-8480-91EFFBBDEA88" name="GUID-5F99D5FF-BB57-4C9D-8480-91EFFBBDEA88"></a><h4 id="ADQUE-GUID-5F99D5FF-BB57-4C9D-8480-91EFFBBDEA88" class="sect4"><span class="enumeration_section">22.1.2 </span>Programmatic Interfaces for Enqueue and Dequeue of User Messages
+                  </h4>
+                  <div>
+                     <p>Your applications can use the following programmatic interfaces to enqueue user messages into an <code class="codeph">ANYDATA</code> queue and dequeue user messages from an <code class="codeph">ANYDATA</code> queue:
+                     </p>
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p>		PL/SQL (<code class="codeph">DBMS_AQ</code> package) 
+                           </p>
+                        </li>
+                        <li>
+                           <p><a href="glossary.html#GUID-3A98EBD4-296B-4BE8-82AE-5B42D07E9894"><span class="xrefglossterm">Java Message Service</span></a> (JMS)
+                           </p>
+                        </li>
+                        <li>
+                           <p>OCI </p>
+                        </li>
+                     </ul>
+                     <p>The following sections provide information about using these interfaces to enqueue user messages into and dequeue user messages from an <code class="codeph">ANYDATA</code> queue.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-5F99D5FF-BB57-4C9D-8480-91EFFBBDEA88__GUID-CF7941BF-A5A0-4614-B09D-A6BFEF632FD1">
+                        <p class="notep1">See Also:</p>
+                        <p><a href="aq-program-interfaces.html#GUID-9A4C8FD4-235D-4F90-B757-3E36B2E5CF76" title="These topics describe the various language options and elements you must work with and issues to consider in preparing your Oracle Database Advanced Queuing (AQ) application environment.">  Oracle Database Advanced Queuing: Programmatic Interfaces</a><span class="italic"> </span>for more information about these programmatic interfaces
+                        </p>
+                     </div>
+                  </div><a id="ADQUE3440"></a><div class="props_rev_3"><a id="GUID-C0D1B425-EE3B-4881-B34E-9E6FC3B37729" name="GUID-C0D1B425-EE3B-4881-B34E-9E6FC3B37729"></a><h5 id="ADQUE-GUID-C0D1B425-EE3B-4881-B34E-9E6FC3B37729" class="sect5"><span class="enumeration_section">22.1.2.1 </span>Enqueuing User Messages Using PL/SQL
+                     </h5>
+                     <div>
+                        <p>To enqueue a user message containing an LCR into an <code class="codeph">ANYDATA</code> queue using PL/SQL, first create the LCR to be enqueued. You use the constructor for the <code class="codeph">SYS.LCR$_ROW_RECORD</code> type to create a row LCR, and you use the constructor for the <code class="codeph">SYS.LCR$_DDL_RECORD</code> type to create a DDL LCR. Then you use the <code class="codeph">ANYDATA.ConvertObject</code> function to convert the LCR into an <code class="codeph">ANYDATA</code> payload and enqueue it using the <code class="codeph">DBMS_AQ.ENQUEUE</code> procedure.
+                        </p>
+                        <p>To enqueue a user message containing a non-LCR object into an <code class="codeph">ANYDATA</code> queue using PL/SQL, you use one of the <code class="codeph">ANYDATA.Convert*</code> functions to convert the object into an <code class="codeph">ANYDATA</code> payload and enqueue it using the <code class="codeph">DBMS_AQ.ENQUEUE</code> procedure.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-C0D1B425-EE3B-4881-B34E-9E6FC3B37729__GUID-881CA8B7-8AEE-4448-9D51-0A2E7F98A83B">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><a href="aq-operations-using-pl-sql.html#GUID-1CEA86B9-4FDF-445F-93C1-67E21C033D35" title="This procedure adds a message to the specified queue.">Enqueuing Messages</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="streams-messaging-examples.html#GUID-F1E127D4-F6D3-409F-AB19-CE124E883DA7"> Oracle Streams Messaging Examples</a></p>
+                              </li>
+                              <li>
+                                 <p><a href="../strms/oracle-streams-information-capture.html#STRMS303"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="ADQUE3441"></a><div class="props_rev_3"><a id="GUID-380C6C7D-9301-4C65-A1ED-FB4BF74422A4" name="GUID-380C6C7D-9301-4C65-A1ED-FB4BF74422A4"></a><h5 id="ADQUE-GUID-380C6C7D-9301-4C65-A1ED-FB4BF74422A4" class="sect5"><span class="enumeration_section">22.1.2.2 </span>Enqueuing User Messages Using OCI or JMS
+                     </h5>
+                     <div>
+                        <p>To enqueue a user message containing an LCR into an <code class="codeph">ANYDATA</code> queue using JMS or OCI, you must represent the LCR in XML format. To construct an LCR, use the <code class="codeph">oracle.xdb.XMLType</code> class. LCRs are defined in the <code class="codeph">SYS</code> <a href="glossary.html#GUID-CBE1EC43-DFD2-4701-B758-DCE2C98C277A"><span class="xrefglossterm">schema</span></a>. The LCR schema must be loaded into the <code class="codeph">SYS</code> schema using the <code class="codeph">catxlcr.sql</code> script in <span class="italic"><code class="codeph">ORACLE_HOME</code></span><code class="codeph">/rdbms/admin</code>. 
+                        </p>
+                        <p>To enqueue a message using OCI, perform the same actions that you would to enqueue a message into a typed queue. To enqueue a message using JMS, a user must have <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">DBMS_AQ</code>, <code class="codeph">DBMS_AQIN</code> and <code class="codeph">DBMS_AQJMS</code> packages.
+                        </p>
+                        <div class="infoboxnote" id="GUID-380C6C7D-9301-4C65-A1ED-FB4BF74422A4__GUID-B4A33518-4866-41BA-A3D2-DD800CD6FB9C">
+                           <p class="notep1">Note:</p>
+                           <p>Enqueue of JMS types and XML types does not work with <code class="codeph">ANYDATA</code> queues unless you call <code class="codeph">DBMS_AQADM.ENABLE_JMS_TYPES(</code><span class="italic"><code class="codeph">queue_table_name</code></span><code class="codeph">)</code> after <code class="codeph">DBMS_STREAMS_ADM.SET_UP_QUEUE(</code><span class="italic"><code class="codeph">queue_name</code></span><code class="codeph">)</code>. Enabling a queue for these types may affect import/export of the queue table.
+                           </p>
+                        </div>
+                        <p><a id="d125913e693" class="indexterm-anchor"></a><a id="d125913e699" class="indexterm-anchor"></a>A non-LCR user message can be a message of any user-defined type or a JMS type. The JMS types include the following:
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><code class="codeph">javax.jms.TextMessage</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">javax.jms.MapMessage</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">javax.jms.StreamMessage</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">javax.jms.ObjectMessage</code></p>
+                           </li>
+                           <li>
+                              <p><code class="codeph">javax.jms.BytesMessage</code></p>
+                           </li>
+                        </ul>
+                        <p>When using user-defined types, you must generate the Java class for the message using Jpublisher, which implements the <code class="codeph">ORAData</code> interface. To enqueue a message into an <code class="codeph">ANYDATA</code> queue, you can use methods <code class="codeph">QueueSender.send</code> or <code class="codeph">TopicPublisher.publish</code>.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-380C6C7D-9301-4C65-A1ED-FB4BF74422A4__GUID-BE86DACA-FF14-4A97-B231-9659C9233AF9">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7">Enqueuing and Dequeuing Messages Using JMS</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="../adxdb/XML-data-exchange-using-streams-AQ.html#ADXDB3100"><span class="italic">Oracle XML DB Developer's Guide </span></a>for more information about representing messages in XML format
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../jajms"><span class="italic">Oracle Database Advanced Queuing Java API Reference </span></a>for more information about the <code class="codeph">oracle.jms</code> Java package
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">OCIAQenq</code> function in the<a href="../lnoci/streams-advanced-queueing-and-publish-subscribe-functions.html#LNOCI17228"><span class="italic"> Oracle Call Interface Programmer's Guide </span></a>for more information about enqueuing messages using&nbsp;OCI
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div><a id="ADQUE3442"></a><div class="props_rev_3"><a id="GUID-891A264B-A0E4-4741-8B73-83F3D2C51603" name="GUID-891A264B-A0E4-4741-8B73-83F3D2C51603"></a><h5 id="ADQUE-GUID-891A264B-A0E4-4741-8B73-83F3D2C51603" class="sect5"><span class="enumeration_section">22.1.2.3 </span>Dequeuing User Messages Using PL/SQL
+                     </h5>
+                     <div>
+                        <p>To dequeue a user message from an <code class="codeph">ANYDATA</code> queue using PL/SQL, you use the <code class="codeph">DBMS_AQ.DEQUEUE</code> procedure and specify <code class="codeph">ANYDATA</code> as the payload. The user message can contain an LCR or another type of object.
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-891A264B-A0E4-4741-8B73-83F3D2C51603__GUID-04796CE2-E8B9-4F14-8A11-D9EA8920A2E6">
+                           <p class="notep1">See Also:</p>
+                           <p><span class="q">"<a href="aq-operations-using-pl-sql.html#GUID-5F84DA85-7D5B-4EEC-9785-80877F3FCA54" title="This procedure dequeues a message from the specified queue.">Dequeuing Messages</a>"</span></p>
+                        </div>
+                     </div>
+                  </div><a id="ADQUE3443"></a><div class="props_rev_3"><a id="GUID-E13DD0DC-8C46-4A3C-97A0-AC72D6650B8F" name="GUID-E13DD0DC-8C46-4A3C-97A0-AC72D6650B8F"></a><h5 id="ADQUE-GUID-E13DD0DC-8C46-4A3C-97A0-AC72D6650B8F" class="sect5"><span class="enumeration_section">22.1.2.4 </span>Dequeuing User Messages Using OCI or JMS
+                     </h5>
+                     <div>
+                        <p>In an <code class="codeph">ANYDATA</code> queue, user messages containing LCRs in XML format are represented as <code class="codeph">oracle.xdb.XMLType</code>. Non-LCR messages can be any user-defined type or a JMS type.
+                        </p>
+                        <p>To dequeue a message from an <code class="codeph">ANYDATA</code> queue using JMS, you can use methods <code class="codeph">QueueReceiver</code>, <code class="codeph">TopicSubscriber</code>, or <code class="codeph">TopicReceiver</code>. Because the queue can contain different types of objects wrapped in <code class="codeph">ANYDATA</code> wrappers, you must register a list of SQL types and their corresponding Java classes in the type map of the <a href="glossary.html#GUID-F7331CE7-BF82-4FA0-81B3-42D454068F03"><span class="xrefglossterm">JMS session</span></a>. JMS types are already preregistered in the type map.
+                        </p>
+                        <p>For example, suppose a queue contains user-enqueued LCR messages represented as <code class="codeph">oracle.xdb.XMLType</code> and non-LCR messages of type <code class="codeph">person</code> and <code class="codeph">address</code>. The classes <code class="codeph">JPerson.java</code> and <code class="codeph">JAddress.java</code> are the <code class="codeph">ORAData</code> mappings for <code class="codeph">person</code> and <code class="codeph">address</code>, respectively. Before dequeuing the message, the type map must be populated as follows:
+                        </p><pre class="oac_no_warn" dir="ltr">java.util.Map map = ((AQjmsSession)q_sess).getTypeMap();
+
+map.put("SCOTT.PERSON", Class.forName("JPerson"));
+map.put("SCOTT.ADDRESS", Class.forName("JAddress"));
+map.put("SYS.XMLTYPE", Class.forName("oracle.xdb.XMLType"));  // For LCRs
+</pre><p>When using a <code class="codeph">messageSelector</code> with a <code class="codeph">QueueReceiver</code> or <code class="codeph">TopicPublisher</code>, the selector can contain any SQL expression that has a combination of one or more of the following: 
+                        </p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>	<a href="glossary.html#GUID-94D9662C-2A02-4DFC-BFEC-684F85CE4186"><span class="xrefglossterm">JMS message</span></a> header fields or properties 
+                              </p>
+                              <p>These include <code class="codeph">JMSPriority</code>, <code class="codeph">JMSCorrelationID</code>, <code class="codeph">JMSType</code>, <code class="codeph">JMSXUserI</code>, <code class="codeph">JMSXAppID</code>, <code class="codeph">JMSXGroupID</code>, and <code class="codeph">JMSXGroupSeq</code>. An example of a JMS message field <code class="codeph">messageSelector</code> is:
+                              </p><pre class="oac_no_warn" dir="ltr">JMSPriority &lt; 3 AND JMSCorrelationID = 'Fiction'
+</pre></li>
+                           <li>
+                              <p>User-defined message properties</p>
+                              <p>An example of a user-defined message properties <code class="codeph">messageSelector</code> is:
+                              </p><pre class="oac_no_warn" dir="ltr">color IN ('RED', 'BLUE', 'GREEN') AND price &lt; 30000
+</pre></li>
+                           <li>
+                              <p>PL/SQL functions</p>
+                              <p>An example of a PL/SQL function <code class="codeph">messageSelector</code> is:
+                              </p><pre class="oac_no_warn" dir="ltr">hr.GET_TYPE(tab.user_data) = 'HR.EMPLOYEES'	
+</pre></li>
+                        </ul>
+                        <p>To dequeue a message from an <code class="codeph">ANYDATA</code> queue using OCI, perform the same actions that you would to dequeue a message from a typed queue. 
+                        </p>
+                        <div class="infoboxnotealso" id="GUID-E13DD0DC-8C46-4A3C-97A0-AC72D6650B8F__GUID-593CD53D-731E-4439-90C1-DB7DD84CFB04">
+                           <p class="notep1">See Also:</p>
+                           <p></p>
+                           <ul style="list-style-type: disc;">
+                              <li>
+                                 <p><span class="q">"<a href="streams-messaging-examples.html#GUID-DE90AC87-785C-4A20-847D-116FE3DD6FA7">Enqueuing and Dequeuing Messages Using JMS</a>"</span></p>
+                              </li>
+                              <li>
+                                 <p><a href="../adxdb/XML-data-exchange-using-streams-AQ.html#ADXDB3100"><span class="italic">Oracle XML DB Developer's Guide </span></a>for more information about representing messages in XML format
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><a href="../jajms"><span class="italic">Oracle Database Advanced Queuing Java API Reference </span></a>for more information about the <code class="codeph">oracle.jms</code> Java package
+                                 </p>
+                              </li>
+                              <li>
+                                 <p>The <code class="codeph">OCIAQdeq</code> function in the<a href="../lnoci/streams-advanced-queueing-and-publish-subscribe-functions.html#LNOCI17228"><span class="italic"> Oracle Call Interface Programmer's Guide </span></a>for more information about dequeuing messages using&nbsp;OCI
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div><a id="ADQUE3445"></a><a id="ADQUE3444"></a><div class="props_rev_3"><a id="GUID-483FE809-CA10-4200-B2C3-344661265DBD" name="GUID-483FE809-CA10-4200-B2C3-344661265DBD"></a><h3 id="ADQUE-GUID-483FE809-CA10-4200-B2C3-344661265DBD" class="sect3"><span class="enumeration_section">22.2 </span>Message Propagation and ANYDATA Queues
+               </h3>
+               <div>
+                  <p><code class="codeph">ANYDATA</code> queues can interoperate with typed queues. <a href="anydata-queues-for-user-messages.html#GUID-483FE809-CA10-4200-B2C3-344661265DBD__G1010518" title="Rows correspond to propagations. The first column is the source queue, the second column is the destination queue, and the third column describes the transformation involved.">Table 22-1</a> shows the types of propagation possible between queues. 
+                  </p>
+                  <div class="tblformal" id="GUID-483FE809-CA10-4200-B2C3-344661265DBD__G1010518">
+                     <p class="titleintable">Table 22-1 Propagation Between Different Types of Queues</p>
+                     <table cellpadding="4" cellspacing="0" class="Formal" title="Propagation Between Different Types of Queues" summary="Rows correspond to propagations. The first column is the source queue, the second column is the destination queue, and the third column describes the transformation involved." width="100%" frame="hsides" border="1" rules="rows">
+                        <thead>
+                           <tr align="left" valign="top">
+                              <th align="left" valign="bottom" width="20%" id="d125913e1188">Source Queue</th>
+                              <th align="left" valign="bottom" width="24%" id="d125913e1191">Destination Queue</th>
+                              <th align="left" valign="bottom" width="56%" id="d125913e1194">Transformation</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d125913e1199" headers="d125913e1188 ">
+                                 <p><code class="codeph">ANYDATA</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="24%" headers="d125913e1199 d125913e1191 ">
+                                 <p><code class="codeph">ANYDATA</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="56%" headers="d125913e1199 d125913e1194 ">
+                                 <p>None</p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d125913e1213" headers="d125913e1188 ">
+                                 <p>Typed</p>
+                              </td>
+                              <td align="left" valign="top" width="24%" headers="d125913e1213 d125913e1191 ">
+                                 <p><code class="codeph">ANYDATA</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="56%" headers="d125913e1213 d125913e1194 ">
+                                 <p>Implicit</p>
+                                 <p><span class="bold">Note: </span>Propagation is possible only if the messages in the typed queue meet the restrictions outlined in <span class="q">"<a href="aq-introduction.html#GUID-344EBAAB-BF98-4E99-8D27-0A56409050E7__CHDEADFG">Object Type Support</a>"</span>.
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d125913e1233" headers="d125913e1188 ">
+                                 <p><code class="codeph">ANYDATA</code> 
+                                 </p>
+                              </td>
+                              <td align="left" valign="top" width="24%" headers="d125913e1233 d125913e1191 ">
+                                 <p>Typed</p>
+                              </td>
+                              <td align="left" valign="top" width="56%" headers="d125913e1233 d125913e1194 ">
+                                 <p>Requires a rule to filter messages and a user-defined <a href="glossary.html#GUID-A668A987-B1D3-4330-97FD-0589DB780225"><span class="xrefglossterm">transformation</span></a>. Only messages containing a payload of the same type as the typed queue can be propagated to the typed queue.
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr align="left" valign="top">
+                              <td align="left" valign="top" width="20%" id="d125913e1249" headers="d125913e1188 ">
+                                 <p>Typed</p>
+                              </td>
+                              <td align="left" valign="top" width="24%" headers="d125913e1249 d125913e1191 ">
+                                 <p>Typed</p>
+                              </td>
+                              <td align="left" valign="top" width="56%" headers="d125913e1249 d125913e1194 ">
+                                 <p>Follows Oracle Database Advanced Queuing rules</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- class="inftblhruleinformal" -->
+                  <div class="infoboxnote" id="GUID-483FE809-CA10-4200-B2C3-344661265DBD__GUID-FC7C8FC1-9995-45ED-8E43-3B5AD2E91210">
+                     <p class="notep1">Note:</p>
+                     <p>Propagations cannot propagate user-enqueued <code class="codeph">ANYDATA</code> messages that encapsulate payloads of object types, varrays, or nested tables between databases with different character sets. Propagations can propagate such messages between databases with the same character set.
+                     </p>
+                  </div>
+                  <p>Although you cannot use <a href="glossary.html#GUID-E7071131-B116-41B7-B9D8-F54E36AE982F"><span class="xrefglossterm">Simple Object Access Protocol</span></a> (SOAP) to interact directly with an <code class="codeph">ANYDATA</code> queue, you can use SOAP by propagating messages between an <code class="codeph">ANYDATA</code> queue and a typed queue. If you want to enqueue a message into an <code class="codeph">ANYDATA</code> queue using SOAP, you must first configure propagation from a typed queue to the <code class="codeph">ANYDATA</code> queue. Then you can use SOAP to enqueue a message into the typed queue. The message is propagated&nbsp;automatically from the typed queue to the <code class="codeph">ANYDATA</code> queue.
+                  </p>
+                  <p>If you want to use SOAP to dequeue a message that is in an <code class="codeph">ANYDATA</code> queue, then you can configure propagation from the <code class="codeph">ANYDATA</code> queue to a typed queue. The message is propagated automatically from the <code class="codeph">ANYDATA</code> queue to the typed queue, where it is available for access using SOAP.
+                  </p>
+                  <div class="infoboxnotealso" id="GUID-483FE809-CA10-4200-B2C3-344661265DBD__GUID-C8472991-78B6-4523-8BA5-1CE753A0653D">
+                     <p class="notep1">See Also:</p>
+                     <p><a href="../strms/oracle-streams-staging-and-propagation.html#STRMS348"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                  </div>
+               </div>
+            </div><a id="ADQUE3447"></a><a id="ADQUE3448"></a><a id="ADQUE3449"></a><a id="ADQUE3450"></a><a id="ADQUE3451"></a><a id="ADQUE3452"></a><a id="ADQUE3453"></a><a id="ADQUE3454"></a><a id="ADQUE3446"></a><div class="props_rev_3"><a id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7" name="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7"></a><h3 id="ADQUE-GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7" class="sect3"><span class="enumeration_section">22.3 </span>Enqueuing User Messages in ANYDATA Queues
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section provides examples of enqueuing messages into an <code class="codeph">ANYDATA</code> queue. The examples assume you are in a SQL*Plus testing environment with access to two databases named <code class="codeph">db01</code> and <code class="codeph">db02</code>. The first few examples prepare the testing environment for the other examples in this chapter. 
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDDCICA">Example 22-1</a>, you connect as a user with administrative privileges at databases <code class="codeph">db01</code> and <code class="codeph">db02</code> to create administrator user <code class="codeph">strmadmin</code> and to grant <code class="codeph">EXECUTE</code> privilege on the <code class="codeph">DBMS_AQ</code> package to sample schema user <code class="codeph">oe</code>. 
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDHACIF">Example 22-2</a>, you connect to <code class="codeph">db01</code> as <code class="codeph">strmadmin</code> to create <code class="codeph">ANYDATA</code> queue <code class="codeph">oe_queue_any</code>. The <code class="codeph">oe</code> user is configured automatically as a secure user of the <code class="codeph">oe_queue_any</code> queue and is given <code class="codeph">ENQUEUE</code> and <code class="codeph">DEQUEUE</code> privileges on the queue.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDBICIB">Example 22-3</a>, you add a <a href="glossary.html#GUID-3E2C69B7-A56C-4F86-8997-5A708E1F14F3"><span class="xrefglossterm">subscriber</span></a> to the <code class="codeph">oe_queue_any</code> queue. This subscriber performs explicit dequeues of messages. The <code class="codeph">ADD_SUBSCRIBER</code> procedure will automatically create an <code class="codeph">AQ_AGENT</code>.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDDGGDG">Example 22-4</a>, you associate the <code class="codeph">oe</code> user with the <code class="codeph">local_agent</code> agent.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDGCGGJ">Example 22-5</a>, you connect to database <code class="codeph">db01</code> as user <code class="codeph">oe</code> to create an enqueue procedure. It takes an object of <code class="codeph">ANYDATA</code> type as an input parameter and enqueues a message containing the payload into an existing <code class="codeph">ANYDATA</code> queue.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDGIIHF">Example 22-6</a>, you use procedure <code class="codeph">oe.enq_proc</code> to enqueue a message of type <code class="codeph">VARCHAR2</code> into an <code class="codeph">ANYDATA</code> queue.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDIHCEB">Example 22-7</a>, you use procedure <code class="codeph">oe.enq_proc</code> to enqueue a message of type <code class="codeph">NUMBER</code> into an <code class="codeph">ANYDATA</code> queue.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDFBHDA">Example 22-8</a>, you use procedure <code class="codeph">oe.enq_proc</code> to enqueue a user-defined type message into an <code class="codeph">ANYDATA</code> queue.
+                     </p>
+                     <div class="infoboxnotealso" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__GUID-99191939-15B8-403A-8FA4-8632BDF30874">
+                        <p class="notep1">See Also:</p>
+                        <p>"Viewing the Contents of User-Enqueued Events in a Queue" in <a href="../strms/oracle-streams-staging-and-propagation.html#STRMS348"><span class="italic">Oracle Streams Concepts and Administration</span></a></p>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDDCICA">
+                     <p class="titleinexample">Example 22-1 Creating ANYDATA Users</p><pre class="oac_no_warn" dir="ltr">GRANT EXECUTE ON DBMS_AQ TO oe;
+CREATE USER strmadmin IDENTIFIED BY strmadmin DEFAULT TABLESPACE example;
+GRANT DBA TO strmadmin; 
+GRANT EXECUTE ON DBMS_STREAMS_ADM TO strmadmin;
+GRANT EXECUTE ON DBMS_TRANSFORM TO strmadmin;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDHACIF">
+                     <p class="titleinexample">Example 22-2 Creating an ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+BEGIN
+  DBMS_STREAMS_ADM.SET_UP_QUEUE(
+    queue_table  =&gt; 'oe_qtab_any',
+    queue_name   =&gt; 'oe_queue_any',
+    queue_user   =&gt; 'oe');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDBICIB">
+                     <p class="titleinexample">Example 22-3 Adding a Subscriber to the ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">DECLARE
+  subscriber SYS.AQ$_AGENT;
+BEGIN
+  subscriber :=  SYS.AQ$_AGENT('LOCAL_AGENT', NULL, NULL);
+  SYS.DBMS_AQADM.ADD_SUBSCRIBER(
+    queue_name  =&gt;  'strmadmin.oe_queue_any',
+    subscriber  =&gt;  subscriber);
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDDGGDG">
+                     <p class="titleinexample">Example 22-4 Associating a User with an AQ_AGENT</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_AQADM.ENABLE_DB_ACCESS(
+    agent_name  =&gt; 'local_agent',
+    db_username =&gt; 'oe');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDGCGGJ">
+                     <p class="titleinexample">Example 22-5 Creating an Enqueue Procedure</p><pre class="oac_no_warn" dir="ltr">set echo off
+set verify off
+ACCEPT password CHAR PROMPT 'Enter the password for OE: ' HIDE
+CONNECT oe/&amp;password@db01;
+ 
+set echo on
+CREATE PROCEDURE oe.enq_proc (payload ANYDATA)  IS 
+  enqopt     DBMS_AQ.ENQUEUE_OPTIONS_T;
+  mprop      DBMS_AQ.MESSAGE_PROPERTIES_T;
+  enq_msgid  RAW(16);
+BEGIN
+  mprop.SENDER_ID := SYS.AQ$_AGENT('LOCAL_AGENT', NULL, NULL); 
+  DBMS_AQ.ENQUEUE(
+    queue_name          =&gt;  'strmadmin.oe_queue_any',
+    enqueue_options     =&gt;  enqopt,
+    message_properties  =&gt;  mprop,
+    payload             =&gt;  payload,
+    msgid               =&gt;  enq_msgid);
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDGIIHF">
+                     <p class="titleinexample">Example 22-6 Enqueuing a VARCHAR2 Message into an ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">EXEC oe.enq_proc(ANYDATA.ConvertVarchar2('Chemicals - SW'));
+COMMIT;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDIHCEB">
+                     <p class="titleinexample">Example 22-7 Enqueuing a NUMBER Message into an ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">EXEC oe.enq_proc(ANYDATA.ConvertNumber('16'));
+COMMIT;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDFBHDA">
+                     <p class="titleinexample">Example 22-8 Enqueuing a User-Defined Type Message into an ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">BEGIN
+  oe.enq_proc(ANYDATA.ConvertObject(oe.cust_address_typ(
+    '1646 Brazil Blvd','361168','Chennai','Tam', 'IN')));
+END;
+/
+COMMIT;
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3456"></a><a id="ADQUE3457"></a><a id="ADQUE3458"></a><a id="ADQUE3455"></a><div class="props_rev_3"><a id="GUID-A092CEA8-D867-45F8-AE90-354C980EE200" name="GUID-A092CEA8-D867-45F8-AE90-354C980EE200"></a><h3 id="ADQUE-GUID-A092CEA8-D867-45F8-AE90-354C980EE200" class="sect3"><span class="enumeration_section">22.4 </span>Dequeuing User Messages from ANYDATA Queues
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section provides examples of dequeuing messages from an <code class="codeph">ANYDATA</code> queue. The examples assume that you have completed the examples in <span class="q">"<a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7">Enqueuing User Messages in ANYDATA Queues</a>"</span>.
+                     </p>
+                     <p>To dequeue messages, you must know the <a href="glossary.html#GUID-B9071BDE-395F-4686-B2D2-A1B83F986BCC"><span class="xrefglossterm">consumer</span></a> of the messages. To find the consumer for the messages in a queue, connect as the owner of the queue and query the <code class="codeph">AQ$</code><span class="italic"><code class="codeph">queue_table_name</code></span> view, where <span class="italic"><code class="codeph">queue_table_name</code></span> is the name of the <a href="glossary.html#GUID-45894F1F-4871-4A00-9171-2743821BAD3A"><span class="xrefglossterm">queue table</span></a> containing the queue.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-A092CEA8-D867-45F8-AE90-354C980EE200__CHDFIEHG">Example 22-9</a>, you connect to database <code class="codeph">db01</code> as <code class="codeph">strmadmin</code>, the owner of queue <code class="codeph">oe_queue_any</code>, and perform a query on the <code class="codeph">AQ$OE_QTAB_ANY</code> view. The query returns three rows, with <code class="codeph">LOCAL_AGENT</code> as the <code class="codeph">CONSUMER_NAME</code> in each row.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-A092CEA8-D867-45F8-AE90-354C980EE200__CHDDCGJB">Example 22-10</a>, you connect to database <code class="codeph">db01</code> as user <code class="codeph">oe</code> to create a dequeue procedure that takes as an input the consumer of the messages you want to dequeue, dequeues messages of <code class="codeph">oe.cust_address_typ</code>, and prints the contents of the messages.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-A092CEA8-D867-45F8-AE90-354C980EE200__CHDEHBGB">Example 22-11</a>, you use procedure <code class="codeph">oe.get_cust_address</code>, created in <a href="anydata-queues-for-user-messages.html#GUID-A092CEA8-D867-45F8-AE90-354C980EE200__CHDDCGJB">Example 22-10</a>, specifying <code class="codeph">LOCAL_AGENT</code> as the consumer.
+                     </p>
+                     <p>The example returns:</p><pre class="oac_no_warn" dir="ltr">****
+Message TYPE is: SYS.VARCHAR2
+****
+Message TYPE is: SYS.NUMBER
+****
+Message TYPE is: OE.CUST_ADDRESS_TYP
+**** CUSTOMER ADDRESS ****
+1646 Brazil Blvd
+361168
+Chennai
+Tam
+IN
+No more messages</pre></div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-A092CEA8-D867-45F8-AE90-354C980EE200__CHDFIEHG">
+                     <p class="titleinexample">Example 22-9 Determining the Consumer of Messages in a Queue</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+SELECT MSG_ID, MSG_STATE, CONSUMER_NAME FROM AQ$OE_QTAB_ANY;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-A092CEA8-D867-45F8-AE90-354C980EE200__CHDDCGJB">
+                     <p class="titleinexample">Example 22-10 Creating a Dequeue Procedure for an ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">CONNECT oe; -- @db01
+Enter password: <span class="italic">password</span>
+
+CREATE PROCEDURE oe.get_cust_address (
+consumer IN VARCHAR2) AS
+  address         OE.CUST_ADDRESS_TYP;
+  deq_address     ANYDATA; 
+  msgid           RAW(16); 
+  deqopt          DBMS_AQ.DEQUEUE_OPTIONS_T; 
+  mprop           DBMS_AQ.MESSAGE_PROPERTIES_T;
+  new_addresses   BOOLEAN := TRUE;
+  next_trans      EXCEPTION;
+  no_messages     EXCEPTION; 
+  pragma exception_init (next_trans, -25235);
+  pragma exception_init (no_messages, -25228);
+  num_var         pls_integer;
+BEGIN
+  deqopt.consumer_name := consumer;
+  deqopt.wait := 1;
+  WHILE (new_addresses) LOOP
+  BEGIN
+    DBMS_AQ.DEQUEUE( 
+      queue_name          =&gt;  'strmadmin.oe_queue_any',
+      dequeue_options     =&gt;  deqopt,
+      message_properties  =&gt;  mprop,
+      payload             =&gt;  deq_address,
+      msgid               =&gt;  msgid);
+    deqopt.navigation := DBMS_AQ.NEXT;
+    DBMS_OUTPUT.PUT_LINE('****');
+    IF (deq_address.GetTypeName() = 'OE.CUST_ADDRESS_TYP') THEN
+       DBMS_OUTPUT.PUT_LINE('Message TYPE is: ' || deq_address.GetTypeName()); 
+       num_var := deq_address.GetObject(address);
+       DBMS_OUTPUT.PUT_LINE(' **** CUSTOMER ADDRESS **** ');
+       DBMS_OUTPUT.PUT_LINE(address.street_address);
+       DBMS_OUTPUT.PUT_LINE(address.postal_code);
+       DBMS_OUTPUT.PUT_LINE(address.city);
+       DBMS_OUTPUT.PUT_LINE(address.state_province);
+       DBMS_OUTPUT.PUT_LINE(address.country_id);
+    ELSE
+       DBMS_OUTPUT.PUT_LINE('Message TYPE is: ' || deq_address.GetTypeName()); 
+    END IF;
+  COMMIT;
+  EXCEPTION
+     WHEN next_trans THEN
+       deqopt.navigation := DBMS_AQ.NEXT_TRANSACTION;
+     WHEN no_messages THEN
+       new_addresses := FALSE;
+       DBMS_OUTPUT.PUT_LINE('No more messages');
+  END;
+  END LOOP; 
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-A092CEA8-D867-45F8-AE90-354C980EE200__CHDEHBGB">
+                     <p class="titleinexample">Example 22-11 Dequeuing Messages from an ANYDATA Queue</p><pre class="oac_no_warn" dir="ltr">SET SERVEROUTPUT ON SIZE 100000
+EXEC oe.get_cust_address('LOCAL_AGENT');
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3460"></a><a id="ADQUE3461"></a><a id="ADQUE3462"></a><a id="ADQUE3463"></a><a id="ADQUE3464"></a><a id="ADQUE3465"></a><a id="ADQUE3466"></a><a id="ADQUE3467"></a><a id="ADQUE3468"></a><a id="ADQUE3459"></a><div class="props_rev_3"><a id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A" name="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A"></a><h3 id="ADQUE-GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A" class="sect3"><span class="enumeration_section">22.5 </span>Propagating User Messages from ANYDATA Queues to Typed Queues
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>This section provides examples showing how to propagate non-LCR user messages between an <code class="codeph">ANYDATA</code> queue and a typed queue.
+                     </p>
+                     <div class="infoboxnote" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__GUID-A4D00A4D-4ED7-49DD-911B-28D3A36CA91E">
+                        <p class="notep1">Note:</p>
+                        <p>The examples in this section assume that you have completed the examples in <span class="q">"<a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7">Enqueuing User Messages in ANYDATA Queues</a>"</span>.
+                        </p>
+                     </div>
+                     <p>The first few examples set up propagation from the <code class="codeph">ANYDATA</code> queue <code class="codeph">oe_queue_any</code>, created in <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDHACIF">Example 22-2</a>, to a typed queue in database <code class="codeph">db02</code>. In <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDEFCCJ">Example 22-12</a>, you connect as sample schema user <code class="codeph">oe</code> to grant <code class="codeph">EXECUTE</code> privilege on <code class="codeph">oe.cust_address_typ</code> at databases <code class="codeph">db01</code> and <code class="codeph">db02</code> to administrator user <code class="codeph">strmadmin</code>.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDBHAED">Example 22-13</a>, you connect to database <code class="codeph">db02</code> as administrator user <code class="codeph">strmadmin</code> and create a destination queue of type <code class="codeph">oe.cust_address_typ</code>.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDJIJFD">Example 22-14</a>, you connect to database <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create a database link from <code class="codeph">db01</code> to <code class="codeph">db02</code>.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDFDABE">Example 22-15</a>, you create function <code class="codeph">any_to_cust_address_typ</code> in the <code class="codeph">strmadmin</code> schema at <code class="codeph">db01</code> that takes an <code class="codeph">ANYDATA</code> payload containing an <code class="codeph">oe.cust_address_typ</code> object and returns an <code class="codeph">oe.cust_address_typ</code> object.
+                     </p>
+                     <p><a id="d125913e1893" class="indexterm-anchor"></a>In <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDDGCCB">Example 22-16</a>, you create a transformation at <code class="codeph">db01</code> using the <code class="codeph">DBMS_TRANSFORM</code> package.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDCGFJH">Example 22-17</a>, you create a subscriber for the typed queue. The subscriber must contain a rule that ensures that only messages of the appropriate type are propagated to the destination queue.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDGEDCC">Example 22-18</a>, you schedule propagation between the <code class="codeph">ANYDATA</code> queue at <code class="codeph">db01</code> and the typed queue at <code class="codeph">db02</code>.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDGHGJE">Example 22-19</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to enqueue a message of <code class="codeph">oe.cust_address_typ</code> type wrapped in an <code class="codeph">ANYDATA</code> wrapper. This example uses the enqueue procedure <code class="codeph">oe.enq_proc</code> created in <a href="anydata-queues-for-user-messages.html#GUID-0D6D651D-56AD-4F70-AAC3-88259F9704F7__CHDGCGGJ">Example 22-5</a>.
+                     </p>
+                     <p>After allowing some time for propagation, in <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDIACGG">Example 22-20</a> you query queue table <code class="codeph">AQ$OE_QTAB_ADDRESS</code> at <code class="codeph">db02</code> to view the propagated message.
+                     </p>
+                     <p>The example returns one message for <code class="codeph">ADDRESS_AGENT_REMOTE</code>:
+                     </p><pre class="oac_no_warn" dir="ltr">MSG_ID                           MSG_STATE        CONSUMER_NAME
+-------------------------------- ---------------- ------------------------------
+EBEF5CACC4665A6FE030578CE70A370D READY            ADDRESS_AGENT_REMOTE
+ 
+1 row selected.</pre><div class="infoboxnotealso" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__GUID-18C65B53-EDAA-42C8-A43D-7F6D998FAF82">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p><span class="q">"<a href="anydata-queues-for-user-messages.html#GUID-483FE809-CA10-4200-B2C3-344661265DBD">Message Propagation and ANYDATA Queues</a>"</span> for more information about propagation between <code class="codeph">ANYDATA</code> and typed queues.
+                              </p>
+                           </li>
+                           <li>
+                              <p><a href="omg-message-conversion.html#GUID-700BFAE2-DBC0-4DD9-8208-57229D179F48"> Oracle Messaging Gateway Message Conversion</a> for more information about transformations during propagation.
+                              </p>
+                              <p></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDEFCCJ">
+                     <p class="titleinexample">Example 22-12 Granting EXECUTE Privilege on a Type</p><pre class="oac_no_warn" dir="ltr">CONNECT oe; -- @db01
+Enter password: <span class="italic">password</span>
+
+GRANT EXECUTE ON oe.cust_address_typ TO strmadmin;
+CONNECT oe; -- @db02
+Enter password: <span class="italic">password</span>
+
+GRANT EXECUTE ON oe.cust_address_typ TO strmadmin;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDBHAED">
+                     <p class="titleinexample">Example 22-13 Creating a Typed Destination Queue</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+
+BEGIN 
+  DBMS_AQADM.CREATE_QUEUE_TABLE(
+    queue_table         =&gt; 'strmadmin.oe_qtab_address', 
+    queue_payload_type  =&gt; 'oe.cust_address_typ', 
+    multiple_consumers  =&gt; true);
+  DBMS_AQADM.CREATE_QUEUE(
+    queue_name          =&gt; 'strmadmin.oe_queue_address', 
+    queue_table         =&gt; 'strmadmin.oe_qtab_address');
+  DBMS_AQADM.START_QUEUE(
+    queue_name          =&gt; 'strmadmin.oe_queue_address');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDJIJFD">
+                     <p class="titleinexample">Example 22-14 Creating a Database Link</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+
+CREATE DATABASE LINK db02 CONNECT TO strmadmin IDENTIFIED BY <span class="italic">password</span> 
+  USING 'db02'; 
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDFDABE">
+                     <p class="titleinexample">Example 22-15 Creating a Function to Extract a Typed Object from an ANYDATA Object</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+
+CREATE FUNCTION strmadmin.any_to_cust_address_typ(in_any IN ANYDATA) 
+RETURN OE.CUST_ADDRESS_TYP
+AS
+  address       OE.CUST_ADDRESS_TYP;
+  num_var       NUMBER;
+  type_name     VARCHAR2(100);
+BEGIN
+  type_name := in_any.GetTypeName();
+  IF (type_name = 'OE.CUST_ADDRESS_TYP') THEN
+    num_var := in_any.GetObject(address);
+    RETURN address;
+  ELSE
+    raise_application_error(-20101, 'Conversion failed - ' || type_name);
+  END IF;
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDDGCCB">
+                     <p class="titleinexample">Example 22-16 Creating an ANYDATA to Typed Object Transformation </p><pre class="oac_no_warn" dir="ltr">BEGIN
+  DBMS_TRANSFORM.CREATE_TRANSFORMATION( 
+   schema         =&gt; 'strmadmin', 
+   name           =&gt; 'anytoaddress', 
+   from_schema    =&gt; 'SYS', 
+   from_type      =&gt; 'ANYDATA', 
+   to_schema      =&gt; 'oe', 
+   to_type        =&gt; 'cust_address_typ', 
+   transformation =&gt; 'strmadmin.any_to_cust_address_typ(source.user_data)'); 
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDCGFJH">
+                     <p class="titleinexample">Example 22-17 Creating Subscriber ADDRESS_AGENT_REMOTE</p><pre class="oac_no_warn" dir="ltr">DECLARE 
+  subscriber  SYS.AQ$_AGENT; 
+BEGIN 
+  subscriber := SYS.AQ$_AGENT ('ADDRESS_AGENT_REMOTE', 
+                               'STRMADMIN.OE_QUEUE_ADDRESS@DB02', 
+                               0); 
+  DBMS_AQADM.ADD_SUBSCRIBER(
+    queue_name     =&gt; 'strmadmin.oe_queue_any', 
+    subscriber     =&gt; subscriber,
+    rule           =&gt; 'TAB.USER_DATA.GetTypeName()=''OE.CUST_ADDRESS_TYP''',
+    transformation =&gt; 'strmadmin.anytoaddress'); 
+END; 
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDGEDCC">
+                     <p class="titleinexample">Example 22-18 Scheduling Propagation from an ANYDATA Queue to a Typed Queue</p><pre class="oac_no_warn" dir="ltr">BEGIN 
+  DBMS_AQADM.SCHEDULE_PROPAGATION(
+    queue_name   =&gt; 'strmadmin.oe_queue_any', 
+    destination  =&gt; 'db02'); 
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDGHGJE">
+                     <p class="titleinexample">Example 22-19 Enqueuing a Typed Message in an ANYDATA Wrapper</p><pre class="oac_no_warn" dir="ltr">CONNECT oe;
+Enter password: <span class="italic">password</span>
+
+BEGIN
+  oe.enq_proc(ANYDATA.ConvertObject(oe.cust_address_typ(
+    '1668 Chong Tao','111181','Beijing',NULL,'CN')));
+END;
+/
+COMMIT;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDIACGG">
+                     <p class="titleinexample">Example 22-20 Viewing the Propagated Message</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+
+SELECT MSG_ID, MSG_STATE, CONSUMER_NAME FROM AQ$OE_QTAB_ADDRESS;
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div><a id="ADQUE3470"></a><a id="ADQUE3471"></a><a id="ADQUE3472"></a><a id="ADQUE3473"></a><a id="ADQUE3474"></a><a id="ADQUE3475"></a><a id="ADQUE3469"></a><div class="props_rev_3"><a id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3" name="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3"></a><h3 id="ADQUE-GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3" class="sect3"><span class="enumeration_section">22.6 </span>Propagating User-Enqueued LCRs from ANYDATA Queues to Typed Queues
+               </h3>
+               <div>
+                  <div class="section">
+                     <p>You can propagate user-enqueued LCRs to an appropriate typed queue, but propagation of captured LCRs to a typed queue is not supported.</p>
+                     <p>To propagate user-enqueued LCRs from an <code class="codeph">ANYDATA</code> queue to a typed queue, you complete the same steps as you do for non-LCR messages, but Oracle supplies the transformation functions. You can use the following functions in the <code class="codeph">DBMS_STREAMS</code> package to transform LCRs in <code class="codeph">ANYDATA</code> queues to messages in typed queues:
+                     </p>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="section">
+                     <ul style="list-style-type: disc;">
+                        <li>
+                           <p><code class="codeph">CONVERT_ANYDATA_TO_LCR_ROW</code> transforms an <code class="codeph">ANYDATA</code> payload containing a row LCR into a <code class="codeph">SYS.LCR$_ROW_RECORD</code> payload.
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="codeph">CONVERT_ANYDATA_TO_LCR_DDL</code> transforms an <code class="codeph">ANYDATA</code> payload containing a DDL LCR into a <code class="codeph">SYS.LCR$_DDL_RECORD</code> payload.
+                           </p>
+                        </li>
+                     </ul>
+                     <p>The examples in this section set up propagation of row LCRs from an <code class="codeph">ANYDATA</code> queue named <code class="codeph">oe_queue_any</code> to a typed queue of type <code class="codeph">SYS.LCR$_ROW_RECORD</code> named <code class="codeph">oe_queue_lcr</code>. The source queue <code class="codeph">oe_queue_any</code> is at database <code class="codeph">db01</code>, and the destination queue <code class="codeph">oe_queue_lcr</code> is created at database <code class="codeph">db02</code> in <a href="anydata-queues-for-user-messages.html#GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDFFJCE">Example 22-21</a>.
+                     </p>
+                     <div class="infoboxnote" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__GUID-F5139C19-2D92-407F-8FDA-1151A7BD470C">
+                        <p class="notep1">Note:</p>
+                        <p>The examples in this section assume you have already run the examples in the preceding sections of this chapter.</p>
+                     </div>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDGDFAJ">Example 22-22</a>, you connect to <code class="codeph">db01</code> as administrator user <code class="codeph">strmadmin</code> to create an <code class="codeph">ANYDATA</code> to <code class="codeph">LCR$_ROW_RECORD</code> transformation at <code class="codeph">db01</code> using the <code class="codeph">DBMS_TRANSFORM</code> package.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDFFIHB">Example 22-23</a>, you create a subscriber at the typed queue. The subscriber specifies the <code class="codeph">anytolcr</code> transformation created in <a href="anydata-queues-for-user-messages.html#GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDGDFAJ">Example 22-22</a> for the <code class="codeph">transformation</code> parameter.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDHJHAA">Example 22-24</a>, you connect to database <code class="codeph">db01</code> as sample schema user <code class="codeph">oe</code> to create a procedure to construct and enqueue a row LCR into the <code class="codeph">strmadmin.oe_queue_any</code> queue.
+                     </p>
+                     <p>In <a href="anydata-queues-for-user-messages.html#GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDFGAFH">Example 22-25</a>, you use the <code class="codeph">oe.enq_row_lcr_proc</code> procedure first to create a row LCR that inserts a row into the <code class="codeph">oe.inventories</code> table, and then to enqueue the row LCR into the <code class="codeph">strmadmin.oe_queue_any</code> queue.
+                     </p>
+                     <div class="infoboxnote" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__GUID-84BDC1AB-6A4D-4118-AA04-E4A57E9EB941">
+                        <p class="notep1">Note:</p>
+                        <p>This example does not insert a new row in the <code class="codeph">oe.inventories</code> table. The new row is inserted when an Oracle Streams apply process dequeues the row LCR and applies it.
+                        </p>
+                     </div>
+                     <p>The LCR is propagated to database <code class="codeph">db02</code> by the schedule created in <a href="anydata-queues-for-user-messages.html#GUID-431A1054-2D94-4BA1-88CE-FEDE1299F81A__CHDGEDCC">Example 22-18</a>. After allowing some time for propagation, in <a href="anydata-queues-for-user-messages.html#GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDEJHGB">Example 22-26</a> you query queue table <code class="codeph">AQ$OE_QTAB_LCR</code> at <code class="codeph">db02</code> to view the propagated message.
+                     </p>
+                     <p>The example returns one message for <code class="codeph">ROW_LCR_AGENT_REMOTE</code>:
+                     </p><pre class="oac_no_warn" dir="ltr">MSG_ID                           MSG_STATE        CONSUMER_NAME
+-------------------------------- ---------------- ------------------------------
+ECE2B0F912DDFF5EE030578CE70A04BB READY            ROW_LCR_AGENT_REMOTE
+</pre><div class="infoboxnotealso" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__GUID-A9818D9C-26EC-4E5D-B21F-F1CC6FB6667D">
+                        <p class="notep1">See Also:</p>
+                        <ul style="list-style-type: disc;">
+                           <li>
+                              <p>"Streams Capture Process" in <a href="../strms/oracle-streams-information-capture.html#STRMS002"><span class="italic">Oracle Streams Concepts and Administration</span></a> for more information on capture processes
+                              </p>
+                           </li>
+                           <li>
+                              <p>"DBMS_STREAMS" in <a href="../arpls/DBMS_STREAMS.html#ARPLS332"><span class="italic">Oracle Database PL/SQL Packages and Types Reference</span></a><span class="italic"> </span>for more information about the row LCR and DDL LCR conversion functions
+                              </p>
+                              <p></p>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-- class="section" -->
+                  <div class="example" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDFFJCE">
+                     <p class="titleinexample">Example 22-21 Creating a Queue of Type LCR$_ROW_RECORD</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+
+BEGIN 
+  DBMS_AQADM.CREATE_QUEUE_TABLE(
+    queue_table         =&gt; 'strmadmin.oe_qtab_lcr', 
+    queue_payload_type  =&gt; 'SYS.LCR$_ROW_RECORD', 
+    multiple_consumers  =&gt; true);
+  DBMS_AQADM.CREATE_QUEUE(
+    queue_name   =&gt; 'strmadmin.oe_queue_lcr', 
+    queue_table  =&gt; 'strmadmin.oe_qtab_lcr');
+  DBMS_AQADM.START_QUEUE(
+    queue_name   =&gt; 'strmadmin.oe_queue_lcr');
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDGDFAJ">
+                     <p class="titleinexample">Example 22-22 Creating an ANYDATA to LCR$_ROW_RECORD Transformation</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+
+BEGIN
+  DBMS_TRANSFORM.CREATE_TRANSFORMATION( 
+    schema         =&gt; 'strmadmin', 
+    name           =&gt; 'anytolcr', 
+    from_schema    =&gt; 'SYS', 
+    from_type      =&gt; 'ANYDATA', 
+    to_schema      =&gt; 'SYS', 
+    to_type        =&gt; 'LCR$_ROW_RECORD', 
+    transformation =&gt;
+          'SYS.DBMS_STREAMS.CONVERT_ANYDATA_TO_LCR_ROW(source.user_data)'); 
+END;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDFFIHB">
+                     <p class="titleinexample">Example 22-23 Creating Subscriber ROW_LCR_AGENT_REMOTE</p><pre class="oac_no_warn" dir="ltr">DECLARE 
+  subscriber  SYS.AQ$_AGENT; 
+BEGIN 
+  subscriber := SYS.AQ$_AGENT(
+    'ROW_LCR_AGENT_REMOTE', 
+    'STRMADMIN.OE_QUEUE_LCR@DB02', 
+    0); 
+  DBMS_AQADM.ADD_SUBSCRIBER(
+    queue_name     =&gt; 'strmadmin.oe_queue_any',
+    subscriber     =&gt; subscriber,
+    rule           =&gt; 'TAB.USER_DATA.GetTypeName()=''SYS.LCR$_ROW_RECORD''',
+    transformation =&gt; 'strmadmin.anytolcr'); 
+END; 
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDHJHAA">
+                     <p class="titleinexample">Example 22-24 Creating a Procedure to Construct and Enqueue a Row LCR</p><pre class="oac_no_warn" dir="ltr">CONNECT oe;
+Enter password: <span class="italic">password</span>
+
+CREATE PROCEDURE oe.enq_row_lcr_proc(
+  source_dbname  VARCHAR2,
+  cmd_type       VARCHAR2,
+  obj_owner      VARCHAR2,
+  obj_name       VARCHAR2,
+  old_vals       SYS.LCR$_ROW_LIST,
+  new_vals       SYS.LCR$_ROW_LIST) 
+AS
+  eopt           DBMS_AQ.ENQUEUE_OPTIONS_T;
+  mprop          DBMS_AQ.MESSAGE_PROPERTIES_T;
+  enq_msgid      RAW(16);
+  row_lcr        SYS.LCR$_ROW_RECORD;
+BEGIN
+  mprop.SENDER_ID := SYS.AQ$_AGENT('LOCAL_AGENT', NULL, NULL); 
+  row_lcr := SYS.LCR$_ROW_RECORD.CONSTRUCT(
+    source_database_name  =&gt;  source_dbname,
+    command_type          =&gt;  cmd_type,
+    object_owner          =&gt;  obj_owner,
+    object_name           =&gt;  obj_name,
+    old_values            =&gt;  old_vals,
+    new_values            =&gt;  new_vals);
+  DBMS_AQ.ENQUEUE(
+    queue_name            =&gt;  'strmadmin.oe_queue_any', 
+    enqueue_options       =&gt;  eopt,
+    message_properties    =&gt;  mprop,
+    payload               =&gt;  ANYDATA.ConvertObject(row_lcr),
+    msgid                 =&gt;  enq_msgid);
+END enq_row_lcr_proc;
+/
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDFGAFH">
+                     <p class="titleinexample">Example 22-25 Creating and Enqueuing a Row LCR</p><pre class="oac_no_warn" dir="ltr">DECLARE
+  newunit1  SYS.LCR$_ROW_UNIT;
+  newunit2  SYS.LCR$_ROW_UNIT;
+  newunit3  SYS.LCR$_ROW_UNIT;
+  newvals   SYS.LCR$_ROW_LIST;
+BEGIN
+  newunit1 := SYS.LCR$_ROW_UNIT(
+    'PRODUCT_ID', 
+    ANYDATA.ConvertNumber(3503),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  newunit2 := SYS.LCR$_ROW_UNIT(
+    'WAREHOUSE_ID', 
+    ANYDATA.ConvertNumber(1),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  newunit3 := SYS.LCR$_ROW_UNIT(
+    'QUANTITY_ON_HAND', 
+    ANYDATA.ConvertNumber(157),
+    DBMS_LCR.NOT_A_LOB,
+    NULL,
+    NULL);
+  newvals := SYS.LCR$_ROW_LIST(newunit1,newunit2,newunit3);
+oe.enq_row_lcr_proc(
+  source_dbname  =&gt;  'DB01',
+  cmd_type       =&gt;  'INSERT',
+  obj_owner      =&gt;  'OE',
+  obj_name       =&gt;  'INVENTORIES',
+  old_vals       =&gt;  NULL,
+  new_vals       =&gt;  newvals);
+END;
+/
+COMMIT;
+</pre></div>
+                  <!-- class="example" -->
+                  <div class="example" id="GUID-A4EDE214-5094-48B9-B19D-9DD48A60FBC3__CHDEJHGB">
+                     <p class="titleinexample">Example 22-26 Viewing the Propagated LCR</p><pre class="oac_no_warn" dir="ltr">CONNECT strmadmin;
+Enter password: <span class="italic">password</span>
+
+SELECT MSG_ID, MSG_STATE, CONSUMER_NAME FROM AQ$OE_QTAB_LCR;
+</pre></div>
+                  <!-- class="example" -->
+               </div>
+            </div>
+         </div>
+      </article>
+   </body>
+</html>
